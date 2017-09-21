@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Xunit;
+using Yaapii.Atoms.IO;
 using Yaapii.Atoms.List;
-using Yaapii.Atoms.IO;
-using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
 
 #pragma warning disable MaxPublicMethodCount

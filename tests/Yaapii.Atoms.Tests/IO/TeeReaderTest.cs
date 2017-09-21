@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using Xunit;
-using Yaapii.Atoms.IO;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
 
