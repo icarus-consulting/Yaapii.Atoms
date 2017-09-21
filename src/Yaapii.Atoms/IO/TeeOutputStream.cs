@@ -64,17 +64,14 @@ namespace Yaapii.Atoms.IO
             {
                 this._target.Dispose();
             }
-            catch(Exception ex)
-            {
-                
-            }
+            catch (Exception) { }
             finally
             {
                 try
                 {
                     this._copy.Dispose();
                 }
-                catch (Exception ex) { }
+                catch (Exception) { }
             }
         }
 
@@ -86,7 +83,7 @@ namespace Yaapii.Atoms.IO
 
         public override long Length => this._target.Length;
 
-        public override long Position { get { return this._target.Position; }  set { this._target.Position = value; } }
+        public override long Position { get { return this._target.Position; } set { this._target.Position = value; } }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
