@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Tests.Func
                     }
                 ).Invoke(true);
 
-            Thread.Sleep(200);
+            Thread.Sleep(1000);
             Assert.True(future.IsCompleted,"cannot await future");
             Assert.True(future.Result == "done!");
         }
