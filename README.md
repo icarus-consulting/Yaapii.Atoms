@@ -24,10 +24,10 @@ var i = new FuncOf<int, int>((number) => number++).Invoke(1); //i will be 2
 - Cache function output
 ```csharp
 var url = new Url("https://www.google.de");
-var f = new StickyFunc<Url, Text>((u) =>
+var f = new StickyFunc<Url, IText>((u) =>
             new TextOf(
-                new InputOf(u)
-        ).AsString());
+                new InputOf(u)).AsString()
+        ).Invoke(url);
 
 var html = f.Invoke(); //will load the page content from the web
 var html = f.Invoke(); //will load the page content from internal cache
