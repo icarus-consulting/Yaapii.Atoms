@@ -1,0 +1,32 @@
+{
+  "name": "dop",
+  "version": "1.0.0",
+  "description": "Redesign der DOP Software",
+  "scripts": {
+    "commitmsg": "validate-commit-msg"
+  },
+  "devDependencies": {
+    "husky": "^0.13.3",
+    "validate-commit-msg": "^2.12.1"
+  },
+  "config": {
+    "validate-commit-msg": {
+      "types": [
+        "build",
+        "ci",
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "chore",
+        "revert"
+      ],
+      "warnOnFail": false,
+      "helpMessage": "\nPlease fix your commit message by following the ICARUS coding guidelines!\n",
+      "autoFix": false
+    }
+  }
+}

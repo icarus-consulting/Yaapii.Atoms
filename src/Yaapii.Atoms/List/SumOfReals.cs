@@ -1,0 +1,45 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Yaapii.Atoms.Scalar;
+
+namespace Yaapii.Atoms.List
+{
+    /// <summary>
+    /// sums all given reals
+    /// </summary>
+    public sealed class SumOfReals : IScalar<Double>
+    {
+        private readonly IEnumerable<IScalar<Double>> src;
+
+        /// <summary>
+        /// Sum of all given numbers.
+        /// </summary>
+        /// <param name="src">doubles to sum</param>
+        public SumOfReals(params Double[] src) : this(
+            new Mapped<Double, IScalar<Double>>(
+                src, 
+                d => new ScalarOf<Double>(d)))
+        { }
+
+        /// <summary>
+        /// Sum of all given numbers.
+        /// </summary>
+        /// <param name="src">double to sum</param>
+        public SumOfReals(IEnumerable<IScalar<Double>> src)
+        {
+            this.src = src;
+        }
+
+        public Double Value()
+        {
+            IEnumerator<IScalar<Double>> numbers = this.src.GetEnumerator();
+            Double result = 0.0;
+            while (numbers.MoveNext())
+            {
+                result += numbers.Current.Value();
+            }
+            return result;
+        }
+    }
+}

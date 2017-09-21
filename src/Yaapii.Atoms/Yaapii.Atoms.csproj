@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <Version>0.5.0</Version>
+    <Description>Ported .NET version of Cactoos by Yegor Bugayenko.</Description>
+    <NeutralLanguage>en-001</NeutralLanguage>
+    <PackageTags>Cactoos, OOP</PackageTags>
+    <RepositoryUrl>https://github.com/icarus-consulting/Yaapii.Atoms</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/icarus-consulting/Yaapii.Atoms/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/icarus-consulting/Yaapii.Atoms</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>

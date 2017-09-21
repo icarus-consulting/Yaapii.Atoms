@@ -1,0 +1,24 @@
+#------------------------------------------------------------#
+#     CI Build Configuration for master branch pre-release   #
+#------------------------------------------------------------#
+version: 1.0.{build}
+image: Visual Studio 2017
+configuration: Release
+# Automatically register private account and/or project AppVeyor NuGet feeds.
+nuget:
+  account_feed: true
+build_script:
+- ps: .\build.ps1
+test: off
+artifacts:
+- path: '.\artifacts\**\*.nupkg'
+- path: '.\artifacts\**\*.zip'
+deploy:
+  - provider: NuGet
+    on:
+      branch: master # Deploy only on master branch
+    server: https://ci.appveyor.com/nuget/icarus
+    api_key:
+      secure: wVt1RgJAnhNTyIjtK9yFkQbEEM+fBk1TLUzo0j3pe2U=
+    skip_symbols: true
+    artifact: /.*\.nupkg/

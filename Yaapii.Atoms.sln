@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yaapii.Atoms", "src\Yaapii.Atoms\Yaapii.Atoms.csproj", "{2F5E5C9F-A1C1-46EE-BE06-94B36E65F888}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yaapii.Atoms.Tests", "tests\Yaapii.Atoms.Tests\Yaapii.Atoms.Tests.csproj", "{EF7ABB27-5BCB-4CFF-AE84-7CC7CEEA8A60}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F5E5C9F-A1C1-46EE-BE06-94B36E65F888}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F5E5C9F-A1C1-46EE-BE06-94B36E65F888}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F5E5C9F-A1C1-46EE-BE06-94B36E65F888}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F5E5C9F-A1C1-46EE-BE06-94B36E65F888}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF7ABB27-5BCB-4CFF-AE84-7CC7CEEA8A60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF7ABB27-5BCB-4CFF-AE84-7CC7CEEA8A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF7ABB27-5BCB-4CFF-AE84-7CC7CEEA8A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF7ABB27-5BCB-4CFF-AE84-7CC7CEEA8A60}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

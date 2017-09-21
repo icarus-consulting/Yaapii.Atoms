@@ -1,0 +1,146 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using Xunit;
+using Yaapii.Atoms.IO;
+using Yaapii.Atoms.Text;
+
+#pragma warning disable MaxPublicMethodCount // a public methods count maximum
+namespace Yaapii.Atoms.Tests.Text
+{
+    public sealed class TextOfTest
+    {
+
+        [Fact]
+        public void readsInputIntoText()
+        {
+            var content = "привет, друг!";
+
+            Assert.True(
+            new TextOf(
+                new InputOf(content),
+                Encoding.UTF8
+            ).AsString() == content,
+            "Can't read text from Input");
+        }
+
+        [Fact]
+        public void ReadsInputIntoTextWithDefaultCharset()
+        {
+            var content = "Hello, друг! with default charset";
+            Assert.True(
+                new TextOf(
+                    new InputOf(content)
+                ).AsString() == content,
+                "Can't read text from Input with default charset");
+        }
+
+        [Fact]
+        public void ReadsInputIntoTextWithSmallBuffer()
+        {
+            var content = "Hi, товарищ! with small buffer";
+
+            Assert.True(
+                    new TextOf(
+                        new InputOf(content),
+                        2,
+                        Encoding.UTF8
+                    ).AsString() == content,
+                    "Can't read text with a small reading buffer");
+        }
+
+        [Fact]
+        public void ReadsInputIntoTextWithSmallBufferAndDefaultCharset()
+        {
+            var content = "Hello, товарищ! with default charset";
+
+            Assert.True(
+                    new TextOf(
+                        new InputOf(content),
+                        2
+                    ).AsString() == content,
+                    "Can't read text with a small reading buffer and default charset");
+        }
+
+        [Fact]
+        public void ReadsFromReader()
+        {
+            String source = "hello, друг!";
+            Assert.True(
+            new TextOf(
+                new StringReader(source),
+                Encoding.UTF8
+            ).AsString() == Encoding.UTF8.GetString(new BytesOf(source).AsBytes()),
+            "Can't read string through a reader");
+        }
+
+
+        [Fact]
+        public void ReadsFromReaderWithDefaultEncoding()
+        {
+            String source = "hello, друг! with default encoding";
+            Assert.True(
+                new TextOf(new StringReader(source)).AsString() ==
+                    Encoding.UTF8.GetString(new BytesOf(source).AsBytes()),
+                "Can't read string with default encoding through a reader");
+        }
+
+        [Fact]
+        public void readsEncodedArrayOfCharsIntoText()
+        {
+            Assert.True(
+                    new TextOf(
+                        'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
+                        ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a'
+                    ).AsString().CompareTo("O que sera que sera") == 0,
+                    "Can't read array of encoded chars into text.");
+        }
+
+        [Fact]
+        public void ReadsAnArrayOfBytes()
+        {
+            byte[] bytes = new byte[] { (byte)0xCA, (byte)0xFE };
+            Assert.True(
+                new TextOf(
+                    bytes
+                ).AsString().CompareTo(Encoding.UTF8.GetString(bytes)) == 0,
+                "Can't read array of bytes");
+        }
+
+        [Fact]
+        public void ComparesWithASubtext()
+        {
+            Assert.True(
+            new TextOf("here to there").CompareTo(
+                new SubText("from here to there", 5)
+            ) == 0,
+            "Can't compare sub texts");
+        }
+
+        [Fact]
+        public void ReadsStringBuilder()
+        {
+            String starts = "Name it, ";
+            String ends = "then it exists!";
+            Assert.True(
+                    new TextOf(
+                        new StringBuilder(starts).Append(ends)
+                    ).AsString() == starts + ends,
+                    "Can't process a string builder");
+        }
+
+        [Fact]
+        public void PrintsStackTrace()
+        {
+            Assert.True(
+                new TextOf(
+                    new IOException(
+                        "It doesn't work at all"
+                    )
+                ).AsString().Contains("It doesn't work at all"),
+                "Can't print exception stacktrace");
+        }
+    }
+}
+#pragma warning restore MaxPublicMethodCount // a public methods count maximum
