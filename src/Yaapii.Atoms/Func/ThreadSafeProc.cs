@@ -35,6 +35,7 @@ namespace Yaapii.Atoms.Func
         public ThreadSafeProc(IProc<In> prc, object lck)
         {
             this._proc = prc;
+            this._lck = lck;
         }
 
         public void Exec(In input)
