@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 using Yaapii.Atoms.Func;
 
@@ -27,9 +28,9 @@ namespace Yaapii.Atoms.Tests.Func
         }
 
         [Fact]
-        public void RunsInBackgroundWithoutFuture()
+        public async Task RunsInBackgroundWithoutFuture()
         {
-            var future =
+            var future = await
                 new AsyncFunc<bool, string>(
                     input =>
                     {
@@ -38,9 +39,7 @@ namespace Yaapii.Atoms.Tests.Func
                     }
                 ).Invoke(true);
 
-            Thread.Sleep(1000);
-            Assert.True(future.IsCompleted,"cannot await future");
-            Assert.True(future.Result == "done!");
+            Assert.True(future == "done!","cannot await future");
         }
     }
 }
