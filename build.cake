@@ -6,53 +6,24 @@ var configuration   = Argument<string>("configuration", "Release");
 ///////////////////////////////////////////////////////////////////////////////
 var buildArtifacts      = Directory("./artifacts/");
 
-// Yaapii Model packages
-var yaapiiModelStation          = Directory("./src/Yaapii.Station");
-var yaapiiModelKinematic        = Directory("./src/Yaapii.Kinematic");
-var yaapiiModelRobotProgram     = Directory("./src/Yaapii.Olp");
-var yaapiiModelRobotProgramKuka = Directory("./src/Yaapii.Olp.Kuka");
+// packages
 var yaapiiAtoms                 = Directory("./src/Yaapii.Atoms");
-// Infrastructure
-var yaapiiInfStationTmx         = Directory("./src/Yaapii.Station.Tmx");
-var yaapiiInfRobotProgramTmx    = Directory("./src/Yaapii.Olp.Tmx");
 
 // Tests
-var yaapiiTestsModelStation             = Directory("./tests/Yaapii.Station.Tests/Yaapii.Station.Tests.csproj");
-var yaapiiTestsModelRobotProgram        = Directory("./tests/Yaapii.Olp.Tests/Yaapii.Olp.Tests.csproj");
-
+var yaapiiAtomsTest             = Directory("./tests/Yaapii.Atoms.Tests/Yaapii.Atoms.Tests.csproj");
 
 var nuGetPackagesWithNetStandard               = new [] 
                                         {
-                                            yaapiiModelStation,
-                                            yaapiiModelKinematic,
-                                            yaapiiModelRobotProgram,
-                                            yaapiiModelRobotProgramKuka,
-                                            yaapiiInfStationTmx,
-                                            yaapiiInfRobotProgramTmx,
                                             yaapiiAtoms
                                         };
 
 var nuGetPackagesWithDotNetFull               = new [] 
                                         {
-                                            yaapiiInfStationTmx,
-                                            yaapiiInfRobotProgramTmx
                                         };
-
-// Tecnomatix plugins for test purpose
-var yaapiiTestsModelStatinTmxPlugin                      = Directory("./tests/Yaapii.Station.Tmx.Tests.Plugin");
-
-var tmxPlugins                  = new[]
-                                    {
-                                        yaapiiTestsModelStatinTmxPlugin
-                                    };
-
-
-
 
 var tests                  = new [] 
                                             { 
-                                                yaapiiTestsModelStation,
-                                                yaapiiTestsModelRobotProgram 
+                                                yaapiiAtomsTest,
                                             };
 
 
@@ -62,7 +33,6 @@ var isWindows           = IsRunningOnWindows();
 var netcore             = "netcoreapp1.1";
 var net                 = "net461";
 var netstandard         = "netstandard1.4";
-
 
 
 
