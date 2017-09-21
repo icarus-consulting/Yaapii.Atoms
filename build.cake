@@ -17,10 +17,6 @@ var nuGetPackagesWithNetStandard               = new []
                                             yaapiiAtoms
                                         };
 
-var nuGetPackagesWithDotNetFull               = new [] 
-                                        {
-                                        };
-
 var tests                  = new [] 
                                             { 
                                                 yaapiiAtomsTest,
@@ -79,26 +75,6 @@ Task("Build")
         {
             Information("Building " + project);
             DotNetCoreBuild(project,settings);
-        }
-
-        // build tmx plugins which need full .Net Framework
-        settings.Framework = net;
-        
-        foreach (var project in nuGetPackagesWithDotNetFull)
-        {
-            DotNetCoreBuild(project,settings);
-        }
-
-        // build the plugins an create zip archiv
-        foreach (var plugin in tmxPlugins)
-        {
-            var name = new DirectoryPath(plugin).GetDirectoryName();
-            var output = buildArtifacts + Directory(name);
-            settings.OutputDirectory = output;
-
-            var zipTarget = new FilePath(output + Directory(name +".zip"));
-            DotNetCoreBuild(plugin,settings);
-            Zip(output,zipTarget);
         }
     }
 });
@@ -160,14 +136,7 @@ Task("Pack")
     {
         DotNetCorePack(pack, settings);
     }
-
-    foreach (var pack in nuGetPackagesWithDotNetFull)
-    {
-        DotNetCorePack(pack, settings);
-    }
 });
-
-
 
 Task("Default")
   .IsDependentOn("Build")
