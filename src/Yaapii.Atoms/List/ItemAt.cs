@@ -46,6 +46,15 @@ namespace Yaapii.Atoms.List
         { }
 
         /// <summary>
+        /// Element at a position in a <see cref="IEnumerable{T}"/> with a fallback value.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="position">position</param>
+        /// <param name="fallback">fallback func</param>
+        public ItemAt(IEnumerable<T> source, int position, T fallback) : this(source, new FuncOf<IEnumerable<T>, T>(b => fallback))
+        { }
+
+        /// <summary>
         /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">soruce enum</param>
@@ -70,6 +79,15 @@ namespace Yaapii.Atoms.List
                         ).AsString()
                     );
                 }))
+        { }
+
+        /// <summary>
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="position">position of item</param>
+        /// <param name="fallback">fallback func</param>
+        public ItemAt(IEnumerable<T> source, int position, Func<IEnumerable<T>, T> fallback) : this(source, position, new FuncOf<IEnumerable<T>, T>(fallback))
         { }
 
         /// <summary>
