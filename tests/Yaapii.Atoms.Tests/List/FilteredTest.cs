@@ -17,8 +17,7 @@ namespace Yaapii.Atoms.Tests.List
                 new LengthOf<string>(
                     new Filtered<string>(
                         new List<string>() { "A", "B", "C" },
-                        new FuncOf<string, bool>(
-                            (input) => input != "B"))).Value() == 2,
+                            (input) => input != "B")).Value() == 2,
                 "cannot filter items");
         }
 

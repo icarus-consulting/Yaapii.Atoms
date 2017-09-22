@@ -50,6 +50,7 @@ namespace Yaapii.Atoms.Tests.List
             Assert.True(
                 new ItemAt<string>(
                     new EnumerableOf<string>(),
+                    12,
                     fallback
                 ).Value() == fallback,
             "Can't fallback to default value");
