@@ -71,6 +71,25 @@ namespace Yaapii.Atoms.Scalar
         { }
 
         /// <summary>
+        /// Logical and. Returns true if all calls to <see cref="Func{In, bool}" /> were true.
+        /// </summary>
+        /// <param name="func">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public And(params System.Func<bool>[] funcs) : this(new EnumerableOf<System.Func<bool>>(funcs))
+        { }
+
+        /// <summary>
+        /// Logical and. Returns true if all calls to <see cref="Func{In, bool}" /> were true.
+        /// </summary>
+        /// <param name="func">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public And(EnumerableOf<System.Func<bool>> funcs) : this(
+            new Mapped<System.Func<bool>, IScalar<bool>>(
+                funcs, 
+                func => new ScalarOf<bool>(func)))
+        { }
+
+        /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">list of items</param>

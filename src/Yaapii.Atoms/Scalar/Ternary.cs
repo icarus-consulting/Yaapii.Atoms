@@ -17,12 +17,19 @@ namespace Yaapii.Atoms.Scalar
         private readonly IScalar<Out> _consequent;
         private readonly IScalar<Out> _alternative;
 
-        public Ternary(In input, System.Func<In, Boolean> cnd, System.Func<In, Out> cons, System.Func<In, Out> alter)
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
+        /// <param name="input">input</param>
+        /// <param name="cnd">condition</param>
+        /// <param name="cons">consequent</param>
+        /// <param name="alter">alternative</param>
+        public Ternary(In input, System.Func<In, Boolean> condition, System.Func<In, Out> consequent, System.Func<In, Out> alternative)
         :
             this(input,
-                new FuncOf<In, Boolean>(cnd),
-                new FuncOf<In, Out>(cons),
-                new FuncOf<In, Out>(alter))
+                new FuncOf<In, Boolean>(condition),
+                new FuncOf<In, Out>(consequent),
+                new FuncOf<In, Out>(alternative))
         { }
 
         /// <summary>
