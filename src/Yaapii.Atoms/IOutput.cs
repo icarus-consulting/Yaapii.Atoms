@@ -8,8 +8,8 @@ namespace Yaapii.Atoms
 {
     /// Output.
     ///
-    /// <para>Here is for example how {@link Output} can be used
-    /// together with {@link Input} in order to modify the content
+    /// <para>Here is for example how <see cref="IOutput""/> can be used
+    /// together with <see cref="IInput"/> in order to modify the content
     /// of a text file:</p>
     ///
     /// <code> new LengthOfInput(
@@ -29,12 +29,6 @@ namespace Yaapii.Atoms
     ///
     public interface IOutput
     {
-
-        /**
-         * Get write access to it.
-         * @return InputStream to read from
-         * @throws IOException If something goes wrong
-         */
         Stream Stream();
     }
 }
