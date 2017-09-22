@@ -13,7 +13,7 @@ namespace Yaapii.Atoms.Tests.Text
     {
 
         [Fact]
-        public void readsInputIntoText()
+        public void ReadsInputIntoText()
         {
             var content = "привет, друг!";
 

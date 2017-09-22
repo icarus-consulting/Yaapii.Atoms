@@ -13,7 +13,7 @@ namespace Yaapii.Atoms.Tests.Scalar
         {
             IScalar<int> scalar =
                 new StickyScalar<int>(
-                    new ScalarOf<int>(() => new Random().Next()));
+                    () => new Random().Next());
 
             Assert.True(scalar.Value() == scalar.Value(),
                 "cannot return value from cache"
