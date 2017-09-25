@@ -286,7 +286,7 @@ new SumOfInts(
         3
     )).Value(); //will be 3 (0 + 1 + 2)
 ```
- ###Cache list contents
+ ### Cache list contents
  ```csharp
 
 //this snippet has an endless list, which then is limited to the size. Every tome someone call the list, size increases and the list would grow. But StickyEnumerable prevents that and always returns the same list.
@@ -366,10 +366,7 @@ new And<True>(
 
 //you can also pass scalars into AND, and more.
 ```
-### Logical Or
-```csharp
 
-```
 ### Logical ternary
 ```csharp
 new Ternary<bool, int>(
