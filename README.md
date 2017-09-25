@@ -155,9 +155,9 @@ new LengthOf(
     new TeeInput(
         "Welcome to the world of c:!", 
         new OutputTo(new Uri(@"file:///c:\greeting.txt")))
-    ).Value(); //will write "Welcome to the world of c: to the c:\greeting.txt. 
-    //This happens because TeeInput puts every byte that is read to the specified output. 
-    //When calling Value(), every byte is read to count the content.
+    ).Value();  //will write "Welcome to the world of c:!" to the file c:\greeting.txt. 
+                //This happens because TeeInput puts every byte that is read to the specified output. 
+                //When calling Value(), every byte is read to count the content.
 ```
 ### Copy input/output 1:1 while reading or writing
 ```csharp
