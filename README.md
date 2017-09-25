@@ -1,6 +1,6 @@
 # Yaapii.Atoms
 
-[![Build status](https://ci.appveyor.com/api/projects/status/5vcpwy657jhc657o/branch/master?svg=true)](https://ci.appveyor.com/project/icarus-consulting/Yaapii.Atoms/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/py42p14apauef2uy/branch/master?svg=true)](https://ci.appveyor.com/project/icarus-consulting/yaapii-atoms/branch/master)
 
 # Overview
 Object-Oriented Primitives for .NET.
