@@ -1,7 +1,7 @@
 {
-  "name": "dop",
-  "version": "1.0.0",
-  "description": "Redesign der DOP Software",
+  "name": "Yaapii.Atoms",
+  "version": "0.5.0",
+  "description": "Primitive elements for proper OOP development",
   "scripts": {
     "commitmsg": "validate-commit-msg"
   },
@@ -25,7 +25,7 @@
         "revert"
       ],
       "warnOnFail": false,
-      "helpMessage": "\nPlease fix your commit message by following the ICARUS coding guidelines!\n",
+      "helpMessage": "\nPlease fix your commit message by following the coding guidelines!\n",
       "autoFix": false
     }
   }
