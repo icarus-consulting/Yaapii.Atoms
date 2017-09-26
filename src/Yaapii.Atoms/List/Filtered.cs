@@ -60,6 +60,14 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
         /// </summary>
+        /// <param name="src">items to filter</param>
+        /// <param name="fnc">filter function</param>
+        public Filtered(Func<T, Boolean> fnc, params T[] items) : this(new EnumerableOf<T>(items), fnc)
+        { }
+
+        /// <summary>
+        /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
+        /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
         public Filtered(IEnumerable<T> src, Func<T, Boolean> fnc)
