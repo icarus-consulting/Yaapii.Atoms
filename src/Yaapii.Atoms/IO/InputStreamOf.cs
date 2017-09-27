@@ -1,24 +1,24 @@
-﻿/// MIT License
-///
-/// Copyright(c) 2017 ICARUS Consulting GmbH
-///
-/// Permission is hereby granted, free of charge, to any person obtaining a copy
-/// of this software and associated documentation files (the "Software"), to deal
-/// in the Software without restriction, including without limitation the rights
-/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-/// copies of the Software, and to permit persons to whom the Software is
-/// furnished to do so, subject to the following conditions:
-///
-/// The above copyright notice and this permission notice shall be included in all
-/// copies or substantial portions of the Software.
-///
-/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-/// SOFTWARE.
+﻿// MIT License
+//
+// Copyright(c) 2017 ICARUS Consulting GmbH
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 using System;
 using System.Collections.Generic;
@@ -28,6 +28,8 @@ using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
+#pragma warning disable CS1591
+
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
@@ -43,7 +45,7 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// A readable stream out of a file Uri.
         /// </summary>
-        /// <param name="file">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
+        /// <param name="path">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
         public InputStreamOf(Uri path) : this(new InputOf(path))
         { }
 
@@ -57,7 +59,7 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// A readable stream out of Bytes.
         /// </summary>
-        /// <param name="src">a <see cref="IBytes"/> object which will be copied to memory</param>
+        /// <param name="bytes">a <see cref="IBytes"/> object which will be copied to memory</param>
         public InputStreamOf(IBytes bytes) : this(new InputOf(bytes))
         { }
         /// <summary>
@@ -95,7 +97,7 @@ namespace Yaapii.Atoms.IO
         /// A readable stream out of a <see cref="IText"/> with <see cref="Encoding"/>.
         /// </summary>
         /// <param name="text">some <see cref="IText"/></param>
-        /// <param name="encoding"><see cref="Encoding"/> of the text</param>
+        /// <param name="enc"><see cref="Encoding"/> of the text</param>
         public InputStreamOf(IText text, Encoding enc) : this(
             new InputOf(text, enc))
         { }

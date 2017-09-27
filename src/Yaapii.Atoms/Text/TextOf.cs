@@ -1,24 +1,24 @@
-﻿/// MIT License
-///
-/// Copyright(c) 2017 ICARUS Consulting GmbH
-///
-/// Permission is hereby granted, free of charge, to any person obtaining a copy
-/// of this software and associated documentation files (the "Software"), to deal
-/// in the Software without restriction, including without limitation the rights
-/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-/// copies of the Software, and to permit persons to whom the Software is
-/// furnished to do so, subject to the following conditions:
-///
-/// The above copyright notice and this permission notice shall be included in all
-/// copies or substantial portions of the Software.
-///
-/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-/// SOFTWARE.
+﻿// MIT License
+//
+// Copyright(c) 2017 ICARUS Consulting GmbH
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 using System;
 using System.Collections.Generic;
@@ -90,7 +90,7 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="rdr">a <see cref="StreamReader"/></param>
-        /// <param name="encoding"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
+        /// <param name="enc"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
         public TextOf(StringReader rdr, Encoding enc) : this(new BytesOf(rdr), enc)
         { }
 
@@ -105,7 +105,7 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="rdr">a <see cref="StreamReader"/></param>
-        /// <param name="encoding"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
+        /// <param name="cset"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
         public TextOf(StreamReader rdr, Encoding cset) : this(new BytesOf(rdr, cset))
         { }
 
@@ -113,7 +113,8 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="rdr">a <see cref="StreamReader"/></param>
-        /// <param name="encoding"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
+        /// <param name="cset"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
+        /// <param name="max">maximum buffer size</param>
         public TextOf(StreamReader rdr, Encoding cset, int max) : this(new BytesOf(rdr, cset, max))
         { }
 
@@ -128,7 +129,7 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of a <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="builder">a <see cref="StringBuilder"/></param>
-        /// <param name="encoding"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
+        /// <param name="enc"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
         public TextOf(StringBuilder builder, Encoding enc) : this(new BytesOf(builder, enc))
         { }
 
@@ -158,7 +159,6 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of a <see cref="byte"/> array.
         /// </summary>
         /// <param name="bytes">a byte array</param>
-        /// <param name="encoding"><see cref="Encoding"/> of the byte array</param>
         public TextOf(params byte[] bytes) : this(new BytesOf(bytes))
         { }
 
@@ -197,24 +197,21 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A <see cref="IText"/> out of the return value of a <see cref="Func{Out}"/>.
         /// </summary>
-        /// <param name="input">a string</param>
-        /// <param name="encoding"><see cref="Encoding"/> of the string</param>
+        /// <param name="fnc">function returning a string </param>
         public TextOf(Func<string> fnc) : this(new ScalarOf<string>(fnc))
         { }
 
         /// <summary>
         /// A <see cref="IText"/> out of the return value of a <see cref="ICallable{T}"/>.
         /// </summary>
-        /// <param name="input">a string</param>
-        /// <param name="encoding"><see cref="Encoding"/> of the string</param>
+        /// <param name="fnc">callable returning a string</param>
         public TextOf(ICallable<string> fnc) : this(new ScalarOf<string>(fnc))
         { }
 
         /// <summary>
         /// A <see cref="IText"/> out of encapsulating <see cref="IScalar{T}"/>.
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="encoding"></param>
+        /// <param name="scalar">scalar of a string</param>
         public TextOf(IScalar<String> scalar)
         {
             this._origin = scalar;

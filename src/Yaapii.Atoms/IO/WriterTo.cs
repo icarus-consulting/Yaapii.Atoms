@@ -1,24 +1,24 @@
-﻿/// MIT License
-///
-/// Copyright(c) 2017 ICARUS Consulting GmbH
-///
-/// Permission is hereby granted, free of charge, to any person obtaining a copy
-/// of this software and associated documentation files (the "Software"), to deal
-/// in the Software without restriction, including without limitation the rights
-/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-/// copies of the Software, and to permit persons to whom the Software is
-/// furnished to do so, subject to the following conditions:
-///
-/// The above copyright notice and this permission notice shall be included in all
-/// copies or substantial portions of the Software.
-///
-/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-/// SOFTWARE.
+﻿// MIT License
+//
+// Copyright(c) 2017 ICARUS Consulting GmbH
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 using System;
 using System.Collections.Generic;
@@ -75,7 +75,7 @@ namespace Yaapii.Atoms.Tests.IO
         /// A <see cref="StreamWriter"/> to a <see cref="IOutput"/>.
         /// </summary>
         /// <param name="output">the output</param>
-        /// <param name="enc">encoding of the output</param>
+        /// <param name="encoding">encoding of the output</param>
         public WriterTo(IOutput output, string encoding) : this(
              () => new StreamWriter(output.Stream(), Encoding.GetEncoding(encoding)))
         { }
@@ -83,8 +83,7 @@ namespace Yaapii.Atoms.Tests.IO
         /// <summary>
         /// A <see cref="StreamWriter"/> to a <see cref="IOutput"/> returned by a <see cref="Func{StreamWriter}"/>.
         /// </summary>
-        /// <param name="output">the output</param>
-        /// <param name="enc">encoding of the output</param>
+        /// <param name="fnc">Function returning a streamwriter</param>
         private WriterTo(Func<StreamWriter> fnc) : this(new ScalarOf<StreamWriter>(fnc))
         { }
 
@@ -99,6 +98,7 @@ namespace Yaapii.Atoms.Tests.IO
                     new StickyScalar<StreamWriter>(tgt));
         }
 
+#pragma warning disable CS1591
         public override void Write(char[] cbuf)
         {
             this._target.Value().Write(cbuf);
@@ -339,3 +339,4 @@ namespace Yaapii.Atoms.Tests.IO
     }
 }
 #pragma warning restore MaxPublicMethodCount // a public methods count maximum
+#pragma warning restore CS1591
