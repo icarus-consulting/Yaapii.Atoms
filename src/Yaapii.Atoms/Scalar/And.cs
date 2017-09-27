@@ -1,24 +1,24 @@
-﻿/// MIT License
-///
-/// Copyright(c) 2017 ICARUS Consulting GmbH
-///
-/// Permission is hereby granted, free of charge, to any person obtaining a copy
-/// of this software and associated documentation files (the "Software"), to deal
-/// in the Software without restriction, including without limitation the rights
-/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-/// copies of the Software, and to permit persons to whom the Software is
-/// furnished to do so, subject to the following conditions:
-///
-/// The above copyright notice and this permission notice shall be included in all
-/// copies or substantial portions of the Software.
-///
-/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-/// SOFTWARE.
+﻿// MIT License
+//
+// Copyright(c) 2017 ICARUS Consulting GmbH
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 using System;
 using System.Collections.Generic;
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Scalar
         { }
 
         /// <summary>
-        /// Logical and. Returns true if all calls to <see cref="Func{In, bool}" /> were true.
+        /// Logical and. Returns true if all calls to <see cref="Func{In, Out}" /> were true.
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
@@ -93,18 +93,16 @@ namespace Yaapii.Atoms.Scalar
         { }
 
         /// <summary>
-        /// Logical and. Returns true if all calls to <see cref="Func{In, bool}" /> were true.
+        /// Logical and. Returns true if all calls to <see cref="Func{In, Out}" /> were true.
         /// </summary>
-        /// <param name="func">the condition to apply</param>
-        /// <param name="src">list of items</param>
+        /// <param name="funcs">the conditions to apply</param>
         public And(params System.Func<bool>[] funcs) : this(new EnumerableOf<System.Func<bool>>(funcs))
         { }
 
         /// <summary>
-        /// Logical and. Returns true if all calls to <see cref="Func{In, bool}" /> were true.
+        /// Logical and. Returns true if all calls to <see cref="Func{In, Out}" /> were true.
         /// </summary>
-        /// <param name="func">the condition to apply</param>
-        /// <param name="src">list of items</param>
+        /// <param name="funcs">the conditions to apply</param>
         public And(EnumerableOf<System.Func<bool>> funcs) : this(
             new Mapped<System.Func<bool>, IScalar<bool>>(
                 funcs, 
@@ -128,6 +126,10 @@ namespace Yaapii.Atoms.Scalar
             this._enumerable = src;
         }
 
+        /// <summary>
+        /// Get the value.
+        /// </summary>
+        /// <returns>the value</returns>
         public Boolean Value()
         {
             Boolean result = true;
