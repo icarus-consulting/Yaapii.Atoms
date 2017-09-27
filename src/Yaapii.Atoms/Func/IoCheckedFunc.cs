@@ -67,11 +67,11 @@ namespace Yaapii.Atoms.Func
             {
                 throw ex;
             }
-            catch (System.Threading.ThreadStateException ex)
-            {
-                Thread.CurrentThread.Join();
-                throw new IOException(ex.Message, ex);
-            }
+            //catch (System.Threading.ThreadStateException ex)
+            //{
+            //    Thread.CurrentThread.Join();
+            //    throw new IOException(ex.Message, ex);
+            //}
             catch (Exception ex)
             {
                 throw new IOException(ex.Message, ex);

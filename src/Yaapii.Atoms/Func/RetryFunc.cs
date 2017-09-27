@@ -123,12 +123,12 @@ namespace Yaapii.Atoms.Func
                 {
                     return this._func.Invoke(input);
                 }
-                catch (System.Threading.ThreadStateException ex)
-                {
-                    Thread.CurrentThread.Join();
-                    error = ex;
-                    break;
-                }
+                //catch (System.Threading.ThreadStateException ex)
+                //{
+                //    Thread.CurrentThread.Join();
+                //    error = ex;
+                //    break;
+                //}
                 catch (Exception ex)
                 {
                     error = ex;

@@ -112,11 +112,11 @@ namespace Yaapii.Atoms.Func
             {
                 result = this._func.Invoke(input);
             }
-            catch (System.Threading.ThreadStateException ex)
-            {
-                Thread.CurrentThread.Join();
-                result = this._fallback.Invoke(ex);
-            }
+            //catch (System.Threading.ThreadStateException ex)
+            //{
+            //    Thread.CurrentThread.Join();
+            //    result = this._fallback.Invoke(ex);
+            //}
             catch (Exception ex)
             {
                 result = this._fallback.Invoke(ex);
