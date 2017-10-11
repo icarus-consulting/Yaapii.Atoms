@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Func
     /// </summary>
     /// <typeparam name="In">type of input</typeparam>
     /// <typeparam name="Out">type of output</typeparam>
-    public sealed class NoNulls<In, Out> : IFunc<In, Out>
+    public sealed class NoNullsFunc<In, Out> : IFunc<In, Out>
     {
         /// <summary>
         /// The function
@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Func
         /// Function that does not allow null as input.
         /// </summary>
         /// <param name="func">the function</param>
-        public NoNulls(IFunc<In, Out> func)
+        public NoNullsFunc(IFunc<In, Out> func)
         {
             _func = func;
         }
