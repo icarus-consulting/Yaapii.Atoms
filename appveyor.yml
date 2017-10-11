@@ -21,6 +21,14 @@ deploy:
     server: https://ci.appveyor.com/nuget/icarus
     api_key:
       secure: wVt1RgJAnhNTyIjtK9yFkQbEEM+fBk1TLUzo0j3pe2U=
-    skip_symbols: false
-    symbol_server: https://www.myget.org/F/icarus/symbols/api/v2/package
+    skip_symbols: true
     artifact: /.*\.nupkg/
+ - provider: MyGet
+    on:
+      branch: master
+   server: https://www.myget.org/F/icarus/api/v2/package
+   api_key:
+     secure: kckDJNTk6STPsPjJuZy9XNHsgdFSKE3mM6XZRuEZz4rmPbvoOICtScXsc3Ye6Uvw
+   skip_symbols: false
+   symbol_server: https://www.myget.org/F/icarus/symbols/api/v2/package
+
