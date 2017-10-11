@@ -32,10 +32,11 @@ using Yaapii.Atoms.Text;
 namespace Yaapii.Atoms.List
 {
     /// <summary>
-    /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+    /// Element from position, starting with given item in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class ItemAtEnumerator<T> : IScalar<T>
+    public sealed class ItemNeighbourEnumerator<T> : IScalar<T>
+        where T : IComparable<T>
     {
         /// <summary>
         /// enumerator to get item from
@@ -53,45 +54,35 @@ namespace Yaapii.Atoms.List
         private readonly int _pos;
 
         /// <summary>
-        /// First element in a <see cref="IEnumerable{T}"/>.
+        /// item to start with
         /// </summary>
-        /// <param name="src">source <see cref="IEnumerable{T}"/></param>
-        public ItemAtEnumerator(IEnumerator<T> src)
-        :
-            this(
-                src,
-                new FuncOf<IEnumerable<T>, T>(
-                    (e) =>
-                    {
-                        throw new IOException("Enumerator is empty");
-                    })
-                )
+        private readonly T _needle;
+
+        /// <summary>
+        /// Right neighbour of a given item with a fallback value.
+        /// </summary>
+        /// <param name="src">the enumerator</param>
+        /// <param name="item">the item to start with</param>
+        /// <param name="fallback">the fallback to return if fails</param>
+        public ItemNeighbourEnumerator(IEnumerator<T> src, T item, T fallback) : this(
+            src,
+            item,
+            1,
+            new FuncOf<IEnumerable<T>, T>(() => fallback))
         { }
 
         /// <summary>
-        /// First element in a <see cref="IEnumerable{T}"/> with a fallback value.
+        /// Right neighbour of a given item with a fallback value.
         /// </summary>
-        /// <param name="src">source <see cref="IEnumerable{T}"/></param>
-        /// <param name="fallback">fallback value</param>
-        public ItemAtEnumerator(IEnumerator<T> src, T fallback) : this(src, new FuncOf<IEnumerable<T>, T>((e) => fallback))
-        { }
-
-        /// <summary>
-        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="Func{In, Out}"/>.
-        /// </summary>
-        /// <param name="src">source <see cref="IEnumerable{T}"/></param>
-        /// <param name="fallback">fallback function</param>
-        public ItemAtEnumerator(IEnumerator<T> src, Func<IEnumerable<T>, T> fallback)
-            : this(src, 0, new FuncOf<IEnumerable<T>, T>(fallback))
-        { }
-
-        /// <summary>
-        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
-        /// </summary>
-        /// <param name="src">source <see cref="IEnumerable{T}"/></param>
-        /// <param name="fallback">fallback function</param>
-        public ItemAtEnumerator(IEnumerator<T> src, IFunc<IEnumerable<T>, T> fallback)
-            : this(src, 0, fallback)
+        /// <param name="src">the enumerator</param>
+        /// <param name="item">the item to start with</param>
+        /// <param name="pos">position of the neighbour</param>
+        /// <param name="fallback">the fallback to return if fails</param>
+        public ItemNeighbourEnumerator(IEnumerator<T> src, T item, int pos, T fallback) : this(
+            src,
+            item,
+            pos,
+            new FuncOf<IEnumerable<T>, T>(() => fallback))
         { }
 
         /// <summary>
@@ -99,17 +90,19 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="pos">position</param>
-        public ItemAtEnumerator(IEnumerator<T> src, int pos)
+        /// <param name="item">item to start with</param>
+        public ItemNeighbourEnumerator(IEnumerator<T> src, T item, int pos)
         :
             this(
                 src,
+                item,
                 pos,
                 new FuncOf<IEnumerable<T>, T>(
                     (itr) =>
                     {
                         throw new IOException(
                             new FormattedText(
-                                "Enumerator doesn't have an element at #%d position",
+                                "Enumerator doesn't have a neighbour at position {0}",
                                 pos
                             ).AsString()
                         );
@@ -123,14 +116,16 @@ namespace Yaapii.Atoms.List
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="fbk">fallback function</param>
         /// <param name="pos">position</param>
-        public ItemAtEnumerator(
+        /// <param name="item">item to start with</param>
+        public ItemNeighbourEnumerator(
             IEnumerator<T> src,
+            T item,
             int pos,
-            IFunc<IEnumerable<T>, T> fbk
-        )
+            IFunc<IEnumerable<T>, T> fbk)
         {
             this._pos = pos;
             this._src = src;
+            this._needle = item;
             this._fallback = fbk;
         }
 
@@ -140,18 +135,25 @@ namespace Yaapii.Atoms.List
         /// <returns>the item</returns>
         public T Value()
         {
-            new FailPrecise(
-                new FailWhen(this._pos < 0),
-                new IOException(
-                    new FormattedText("The position must be non-negative: %d",
-                        this._pos).AsString())).Go();
-
             T ret;
-
-            for (int cur = 0; cur <= this._pos && this._src.MoveNext(); ++cur) { }
-
             try
             {
+                new FailPrecise(
+                    new FailWhen(!this._src.MoveNext()),
+                    new IOException("cannot get neighbours because enumerable is empty")).Go();
+
+                int cur;
+
+                //Find the needle index
+                for (cur = 0; this._src.Current.CompareTo(this._needle) != 0; cur++)
+                {
+                    if (!this._src.MoveNext()) throw new IOException("cannot get neighbour because item is not in the enumerable.");
+                }
+
+                var idx = cur + this._pos;
+
+                this._src.Reset();
+                for (cur = 0; cur <= idx && this._src.MoveNext(); ++cur) { }
                 ret = this._src.Current;
             }
             catch (Exception)

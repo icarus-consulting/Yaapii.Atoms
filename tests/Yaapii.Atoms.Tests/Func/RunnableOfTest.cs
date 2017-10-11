@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Tests.Func
         {
             var i = 0;
 
-            new RunnableOf<int>(
+            new ActionOf<int>(
                 input =>
                 {
                     i = input;
