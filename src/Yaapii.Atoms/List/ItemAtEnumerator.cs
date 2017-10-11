@@ -141,7 +141,7 @@ namespace Yaapii.Atoms.List
         public T Value()
         {
             new FailPrecise(
-                new FailWhen(() => this._pos < 0),
+                new FailWhen(this._pos < 0),
                 new IOException(
                     new FormattedText("The position must be non-negative: %d",
                         this._pos).AsString())).Go();
