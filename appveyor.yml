@@ -35,3 +35,4 @@ deploy:
       secure: wVt1RgJAnhNTyIjtK9yFkQbEEM+fBk1TLUzo0j3pe2U=
     skip_symbols: true
     artifact: /.*\.nupkg/
+
