@@ -29,7 +29,7 @@ using Yaapii.Atoms.Func;
 
 namespace Yaapii.Atoms.Tests.Func
 {
-    class ChainedFuncTest
+    public class ChainedFuncTest
     {
         [Fact]
         public void WithoutIterable()
