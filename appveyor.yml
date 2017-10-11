@@ -22,5 +22,5 @@ deploy:
     api_key:
       secure: wVt1RgJAnhNTyIjtK9yFkQbEEM+fBk1TLUzo0j3pe2U=
     skip_symbols: false
-    symbol_server: https://www.myget.org/F/icarus/symbols/
+    symbol_server: https://www.myget.org/F/icarus/auth/2b22eebb-b7f7-475a-ba46-d70a57ee6802/symbols/
     artifact: /.*\.nupkg/
