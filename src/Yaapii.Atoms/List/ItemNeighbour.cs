@@ -11,7 +11,7 @@ namespace Yaapii.Atoms.List
     /// </summary>
     /// <typeparam name="T">type of element</typeparam>
     public sealed class ItemNeighbour<T> : IScalar<T>
-        where T: IComparable<T>
+        where T : IComparable<T>
     {
         /// <summary>
         /// source enum
@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.List
         public ItemNeighbour(T item, IEnumerable<T> source) : this(
                 item,
                 source,
-                new FuncOf<IEnumerable<T>, T>(itr => { throw new IOException("The iterable is empty"); }))
+                new FuncOf<IEnumerable<T>, T>(itr => { throw new IOException("Can't get right neighbour from iterable"); }))
         { }
 
         /// <summary>
@@ -51,6 +51,15 @@ namespace Yaapii.Atoms.List
         /// <param name="fallback">fallback func</param>
         /// <param name="item">item to start</param>
         public ItemNeighbour(T item, IEnumerable<T> source, T fallback) : this(item, source, 1, new FuncOf<IEnumerable<T>, T>(b => fallback))
+        { }
+
+        /// <summary>
+        /// Element at a position in a <see cref="IEnumerable{T}"/> with a fallback value.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="relativeposition">requested position relative to the given item</param>
+        /// <param name="item">item to start</param>
+        public ItemNeighbour(T item, IEnumerable<T> source, int relativeposition) : this(item, source, relativeposition, new FuncOf<IEnumerable<T>, T>(itr => { throw new IOException("Can't get neighbour at position from iterable"); }))
         { }
 
         /// <summary>
