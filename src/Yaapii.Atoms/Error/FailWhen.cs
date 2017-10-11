@@ -38,6 +38,21 @@ namespace Yaapii.Atoms.Error
         /// Fail if condition is matched.
         /// </summary>
         /// <param name="condition">condition to apply</param>
+        public FailWhen(bool condition) : this(condition, "Failed because the given function failed.")
+        { }
+
+        /// <summary>
+        /// Fail if condition is matched.
+        /// </summary>
+        /// <param name="condition">condition to apply</param>
+        /// <param name="hint">msg to put in exception</param>
+        public FailWhen(bool condition, string hint) : this(() => condition, hint)
+        { }
+
+        /// <summary>
+        /// Fail if condition is matched.
+        /// </summary>
+        /// <param name="condition">condition to apply</param>
         public FailWhen(Func<bool> condition) : this(condition, "Failed because the given function failed.")
         { }
 
