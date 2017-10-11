@@ -16,15 +16,6 @@ artifacts:
 deploy:
   - provider: NuGet
     on:
-      branch: master # Deploy only on master branch
-      appveyor_repo_tag: true
-    server: https://ci.appveyor.com/nuget/icarus
-    api_key:
-      secure: wVt1RgJAnhNTyIjtK9yFkQbEEM+fBk1TLUzo0j3pe2U=
-    skip_symbols: true
-    artifact: /.*\.nupkg/
-  - provider: NuGet
-    on:
       branch: master
       appveyor_repo_tag: true
     server: https://www.myget.org/F/icarus/api/v2/package
@@ -33,4 +24,12 @@ deploy:
     skip_symbols: false
     symbol_server: https://www.myget.org/F/icarus/symbols/api/v2/package
     artifact: /.*\.nupkg/
-
+  - provider: NuGet
+    on:
+      branch: master # Deploy only on master branch
+      appveyor_repo_tag: true
+    server: https://ci.appveyor.com/nuget/icarus
+    api_key:
+      secure: wVt1RgJAnhNTyIjtK9yFkQbEEM+fBk1TLUzo0j3pe2U=
+    skip_symbols: true
+    artifact: /.*\.nupkg/
