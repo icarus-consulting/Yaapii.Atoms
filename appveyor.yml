@@ -31,5 +31,5 @@ deploy:
     server: https://ci.appveyor.com/nuget/icarus
     api_key:
       secure: wVt1RgJAnhNTyIjtK9yFkQbEEM+fBk1TLUzo0j3pe2U=
-    skip_symbols: false
+    skip_symbols: true
     artifact: /.*\.nupkg/
