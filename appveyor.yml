@@ -14,10 +14,10 @@ artifacts:
 - path: '.\artifacts\**\*.zip'
 deploy:
   - provider: NuGet
-    name: AppVeyor Feed
+    name: MyGet Feed
     on:
-      branch: master
-      appveyor_repo_tag: true
+      branch: debug
+      #appveyor_repo_tag: true
     server: https://www.myget.org/F/icarus/api/v2/package
     api_key:
       secure: kckDJNTk6STPsPjJuZy9XNHsgdFSKE3mM6XZRuEZz4rmPbvoOICtScXsc3Ye6Uvw
@@ -25,10 +25,10 @@ deploy:
     symbol_server: https://www.myget.org/F/icarus/symbols/api/v2/package
     artifact: /.*\.nupkg/
   - provider: NuGet
-    name: MyGet Feed
+    name: AppVeyor Feed
     on:
       branch: master # Deploy only on master branch
-      #appveyor_repo_tag: true
+      appveyor_repo_tag: true
     server: https://ci.appveyor.com/nuget/icarus
     api_key:
       secure: wVt1RgJAnhNTyIjtK9yFkQbEEM+fBk1TLUzo0j3pe2U=
