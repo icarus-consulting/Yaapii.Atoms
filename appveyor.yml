@@ -23,7 +23,7 @@ deploy:
       secure: wVt1RgJAnhNTyIjtK9yFkQbEEM+fBk1TLUzo0j3pe2U=
     skip_symbols: true
     artifact: /.*\.nupkg/
-  - provider: MyGet
+  - provider: NuGet
     on:
       branch: master
     server: https://www.myget.org/F/icarus/api/v2/package
