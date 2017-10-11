@@ -15,6 +15,7 @@ artifacts:
 - path: '.\artifacts\**\*.zip'
 deploy:
   - provider: NuGet
+    name: AppVeyor Feed
     on:
       branch: master
       #appveyor_repo_tag: true
@@ -25,6 +26,7 @@ deploy:
     symbol_server: https://www.myget.org/F/icarus/symbols/api/v2/package
     artifact: /.*\.nupkg/
   - provider: NuGet
+    name: MyGet Feed
     on:
       branch: master # Deploy only on master branch
       #appveyor_repo_tag: true
