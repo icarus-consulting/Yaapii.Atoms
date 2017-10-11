@@ -71,7 +71,7 @@ Task("Test")
   .IsDependentOn("Build")
   .Does(() =>
 {
-    var projectFiles = GetFiles("./test/**/*.csproj");
+    var projectFiles = GetFiles("./tests/**/*.csproj");
     foreach(var file in projectFiles)
     {
         DotNetCoreTest(file.FullPath);
