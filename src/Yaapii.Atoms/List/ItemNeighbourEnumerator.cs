@@ -151,6 +151,7 @@ namespace Yaapii.Atoms.List
                 }
 
                 var idx = cur + this._pos;
+                if (idx < 0) throw new ArgumentOutOfRangeException("position", "cannot get neighbour because position is not in range of the enumerable");
 
                 this._src.Reset();
                 for (cur = 0; cur <= idx && this._src.MoveNext(); ++cur) { }
