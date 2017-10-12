@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using Xunit;
@@ -10,7 +11,7 @@ namespace Yaapii.Atoms.Tests.List
     public class SiblingTest
     {
         [Fact]
-        public void NextNeighbour()
+        public void Next()
         {
             Assert.True(
             new Sibling<int>(
@@ -22,7 +23,7 @@ namespace Yaapii.Atoms.Tests.List
         }
 
         [Fact]
-        public void NeighbourByPos()
+        public void ByPos()
         {
             Assert.True(
                 new Sibling<int>(
@@ -71,11 +72,13 @@ namespace Yaapii.Atoms.Tests.List
         }
 
         [Fact]
-        public void NeighbourWithCustomComparable()
+        public void WithCustomComparable()
         {
-            var nb1 = new FakeNeighbour(DateTime.Parse("11.10.2017"));
-            var nb2 = new FakeNeighbour(DateTime.Parse("10.10.2017"));
-            var nb3 = new FakeNeighbour(DateTime.Parse("13.10.2017"));
+            var format = "dd.MM.yyyy";
+            var provider = CultureInfo.InvariantCulture;
+            var nb1 = new FakeNeighbour(DateTime.ParseExact("11.10.2017", format, provider));
+            var nb2 = new FakeNeighbour(DateTime.ParseExact("10.10.2017", format, provider));
+            var nb3 = new FakeNeighbour(DateTime.ParseExact("13.10.2017", format, provider));
 
             Assert.True(
                 new Sibling<FakeNeighbour>(
