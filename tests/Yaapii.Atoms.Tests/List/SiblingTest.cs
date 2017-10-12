@@ -76,32 +76,32 @@ namespace Yaapii.Atoms.Tests.List
         {
             var format = "dd.MM.yyyy";
             var provider = CultureInfo.InvariantCulture;
-            var nb1 = new FakeNeighbour(DateTime.ParseExact("11.10.2017", format, provider));
-            var nb2 = new FakeNeighbour(DateTime.ParseExact("10.10.2017", format, provider));
-            var nb3 = new FakeNeighbour(DateTime.ParseExact("13.10.2017", format, provider));
+            var nb1 = new FakeSibling(DateTime.ParseExact("11.10.2017", format, provider));
+            var nb2 = new FakeSibling(DateTime.ParseExact("10.10.2017", format, provider));
+            var nb3 = new FakeSibling(DateTime.ParseExact("13.10.2017", format, provider));
 
             Assert.True(
-                new Sibling<FakeNeighbour>(
+                new Sibling<FakeSibling>(
                     nb1,
-                    new EnumerableOf<FakeNeighbour>(nb1, nb2),
+                    new EnumerableOf<FakeSibling>(nb1, nb2),
                     -1,
                     nb2
                 ).Value().TimeStamp() == nb2.TimeStamp(),
             "Can't take the item by position from the enumerable");
         }
 
-        internal class FakeNeighbour : IComparable<FakeNeighbour>
+        internal class FakeSibling : IComparable<FakeSibling>
         {
             private readonly DateTime _stmp;
 
-            public FakeNeighbour(DateTime stmp)
+            public FakeSibling(DateTime stmp)
             {
                 _stmp = stmp;
             }
 
             public DateTime TimeStamp() { return _stmp; }
 
-            public int CompareTo(FakeNeighbour obj)
+            public int CompareTo(FakeSibling obj)
             {
                 return _stmp.CompareTo(obj.TimeStamp());
             }
