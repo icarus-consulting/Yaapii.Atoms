@@ -10,7 +10,7 @@ namespace Yaapii.Atoms.List
     /// Element before another element in a <see cref="IEnumerable{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of element</typeparam>
-    public sealed class ItemNeighbour<T> : IScalar<T>
+    public sealed class Sibling<T> : IScalar<T>
         where T : IComparable<T>
     {
         /// <summary>
@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="item">item to start</param>
-        public ItemNeighbour(T item, IEnumerable<T> source) : this(
+        public Sibling(T item, IEnumerable<T> source) : this(
                 item,
                 source,
                 new FuncOf<IEnumerable<T>, T>(itr => { throw new IOException("Can't get right neighbour from iterable"); }))
@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.List
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="item">item to start</param>
-        public ItemNeighbour(T item, IEnumerable<T> source, T fallback) : this(item, source, 1, new FuncOf<IEnumerable<T>, T>(b => fallback))
+        public Sibling(T item, IEnumerable<T> source, T fallback) : this(item, source, 1, new FuncOf<IEnumerable<T>, T>(b => fallback))
         { }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.List
         /// <param name="source">source enum</param>
         /// <param name="relativeposition">requested position relative to the given item</param>
         /// <param name="item">item to start</param>
-        public ItemNeighbour(T item, IEnumerable<T> source, int relativeposition) : this(item, source, relativeposition, new FuncOf<IEnumerable<T>, T>(itr => { throw new IOException("Can't get neighbour at position from iterable"); }))
+        public Sibling(T item, IEnumerable<T> source, int relativeposition) : this(item, source, relativeposition, new FuncOf<IEnumerable<T>, T>(itr => { throw new IOException("Can't get neighbour at position from iterable"); }))
         { }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Yaapii.Atoms.List
         /// <param name="relativeposition">requested position relative to the given item</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="item">item to start</param>
-        public ItemNeighbour(T item, IEnumerable<T> source, int relativeposition, T fallback) : this(item, source, relativeposition, new FuncOf<IEnumerable<T>, T>(b => fallback))
+        public Sibling(T item, IEnumerable<T> source, int relativeposition, T fallback) : this(item, source, relativeposition, new FuncOf<IEnumerable<T>, T>(b => fallback))
         { }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Yaapii.Atoms.List
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
         /// <param name="item">item to start</param>
-        public ItemNeighbour(T item, IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback) : this(item, source, 1, fallback)
+        public Sibling(T item, IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback) : this(item, source, 1, fallback)
         { }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Yaapii.Atoms.List
         /// <param name="item">item to start</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="relativeposition">requested position relative to the given item</param>
-        public ItemNeighbour(T item, IEnumerable<T> source, int relativeposition, IFunc<IEnumerable<T>, T> fallback)
+        public Sibling(T item, IEnumerable<T> source, int relativeposition, IFunc<IEnumerable<T>, T> fallback)
         {
             this._needle = item;
             this._src = source;
@@ -102,7 +102,7 @@ namespace Yaapii.Atoms.List
         /// <returns>the item</returns>
         public T Value()
         {
-            return new ItemNeighbourEnumerator<T>(
+            return new SiblingEnumerator<T>(
                 this._src.GetEnumerator(), this._needle, this._pos, this._fbk
             ).Value();
         }

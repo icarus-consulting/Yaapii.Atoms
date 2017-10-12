@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.List
     /// Element from position, starting with given item in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class ItemNeighbourEnumerator<T> : IScalar<T>
+    public sealed class SiblingEnumerator<T> : IScalar<T>
         where T : IComparable<T>
     {
         /// <summary>
@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.List
         /// <param name="src">the enumerator</param>
         /// <param name="item">the item to start with</param>
         /// <param name="fallback">the fallback to return if fails</param>
-        public ItemNeighbourEnumerator(IEnumerator<T> src, T item, T fallback) : this(
+        public SiblingEnumerator(IEnumerator<T> src, T item, T fallback) : this(
             src,
             item,
             1,
@@ -78,7 +78,7 @@ namespace Yaapii.Atoms.List
         /// <param name="item">the item to start with</param>
         /// <param name="pos">position of the neighbour</param>
         /// <param name="fallback">the fallback to return if fails</param>
-        public ItemNeighbourEnumerator(IEnumerator<T> src, T item, int pos, T fallback) : this(
+        public SiblingEnumerator(IEnumerator<T> src, T item, int pos, T fallback) : this(
             src,
             item,
             pos,
@@ -91,7 +91,7 @@ namespace Yaapii.Atoms.List
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="pos">position</param>
         /// <param name="item">item to start with</param>
-        public ItemNeighbourEnumerator(IEnumerator<T> src, T item, int pos)
+        public SiblingEnumerator(IEnumerator<T> src, T item, int pos)
         :
             this(
                 src,
@@ -117,7 +117,7 @@ namespace Yaapii.Atoms.List
         /// <param name="fbk">fallback function</param>
         /// <param name="pos">position</param>
         /// <param name="item">item to start with</param>
-        public ItemNeighbourEnumerator(
+        public SiblingEnumerator(
             IEnumerator<T> src,
             T item,
             int pos,
