@@ -91,14 +91,17 @@ Task("Pack")
                           OutputDirectory = buildArtifacts,
 	  	                    VersionSuffix = ""
                       };
+   
+	settings.ArgumentCustomization = args => args.Append("--include-symbols");
 
    if (isAppVeyor)
    {
+
        var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
        if(!tag.IsTag) 
        {
 	       settings.VersionSuffix = "build" + AppVeyor.Environment.Build.Number.ToString().PadLeft(5,'0');
-         settings.ArgumentCustomization = args => args.Append("--include-symbols");
+         
        } else {     
          settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(tag.Name);
        }

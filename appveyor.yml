@@ -11,13 +11,12 @@ build_script:
 - ps: .\build.ps1
 artifacts:
 - path: '.\artifacts\**\*.nupkg'
-- path: '.\artifacts\**\*.zip'
 deploy:
   - provider: NuGet
     name: MyGet Feed
     on:
-      branch: debug
-      #appveyor_repo_tag: true
+      branch: master
+      appveyor_repo_tag: true
     server: https://www.myget.org/F/icarus/api/v2/package
     api_key:
       secure: kckDJNTk6STPsPjJuZy9XNHsgdFSKE3mM6XZRuEZz4rmPbvoOICtScXsc3Ye6Uvw
@@ -33,5 +32,16 @@ deploy:
     api_key:
       secure: wVt1RgJAnhNTyIjtK9yFkQbEEM+fBk1TLUzo0j3pe2U=
     skip_symbols: true
+    artifact: /.*\.nupkg/
+  - provider: NuGet
+    name: MyGet Development Feed
+    on:
+      branch: dev
+      #appveyor_repo_tag: true
+    server: https://www.myget.org/F/icarus/api/v2/package
+    api_key:
+      secure: kckDJNTk6STPsPjJuZy9XNHsgdFSKE3mM6XZRuEZz4rmPbvoOICtScXsc3Ye6Uvw
+    skip_symbols: false
+    symbol_server: https://www.myget.org/F/icarus/symbols/api/v2/package
     artifact: /.*\.nupkg/
 
