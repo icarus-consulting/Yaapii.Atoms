@@ -7,13 +7,13 @@ using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Tests.List
 {
-    public class ItemNeighbourEnumeratorTest
+    public class SiblingEnumeratorTest
     {
         [Fact]
         public void RightNeighbourTest()
         {
             Assert.True(
-            new ItemNeighbourEnumerator<int>(
+            new SiblingEnumerator<int>(
                 new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                 2,
                 1
@@ -25,7 +25,7 @@ namespace Yaapii.Atoms.Tests.List
         public void LeftNeighbourTest()
         {
             Assert.True(
-            new ItemNeighbourEnumerator<int>(
+            new SiblingEnumerator<int>(
                 new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                 2,
                 -1
@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Tests.List
         public void NeighbourByPosTest()
         {
             Assert.True(
-            new ItemNeighbourEnumerator<int>(
+            new SiblingEnumerator<int>(
                 new EnumerableOf<int>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).GetEnumerator(),
                 5,
                 4
@@ -59,9 +59,8 @@ namespace Yaapii.Atoms.Tests.List
         [Fact]
         public void FailForEmptyCollectionTest()
         {
-            Assert.Throws(
-                typeof(IOException),
-                () => new ItemNeighbourEnumerator<int>(
+            Assert.Throws<IOException>(
+                () => new SiblingEnumerator<int>(
                         new EnumerableOf<int>(new int[0]).GetEnumerator(),
                         1,
                         1
@@ -71,9 +70,8 @@ namespace Yaapii.Atoms.Tests.List
         [Fact]
         public void FailForOutOfRangePositionNegTest()
         {
-            Assert.Throws(
-                typeof(IOException),
-                    () => new ItemNeighbourEnumerator<int>(
+            Assert.Throws<IOException>(
+                    () => new SiblingEnumerator<int>(
                         new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                         2,
                         -100
@@ -83,9 +81,8 @@ namespace Yaapii.Atoms.Tests.List
         [Fact]
         public void FailForOutOfRangePositionPosTest()
         {
-            Assert.Throws(
-                typeof(IOException),
-                    () => new ItemNeighbourEnumerator<int>(
+            Assert.Throws<IOException>(
+                    () => new SiblingEnumerator<int>(
                         new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                         2,
                         100
@@ -95,9 +92,8 @@ namespace Yaapii.Atoms.Tests.List
         [Fact]
         public void FailForItemNotInEnumeratorTest()
         {
-            Assert.Throws(
-                typeof(IOException),
-                    () => new ItemNeighbourEnumerator<int>(
+            Assert.Throws<IOException>(
+                    () => new SiblingEnumerator<int>(
                         new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                         4,
                         1
@@ -110,7 +106,7 @@ namespace Yaapii.Atoms.Tests.List
             string fallback = "fallback";
 
             Assert.True(
-            new ItemNeighbourEnumerator<string>(
+            new SiblingEnumerator<string>(
                 new EnumerableOf<string>().GetEnumerator(),
                 "searchthis",
                 fallback

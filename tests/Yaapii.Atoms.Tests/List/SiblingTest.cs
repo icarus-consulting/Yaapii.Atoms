@@ -7,13 +7,13 @@ using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Tests.List
 {
-    public class ItemNeighbourTest
+    public class SiblingTest
     {
         [Fact]
         public void NextNeighbour()
         {
             Assert.True(
-            new ItemNeighbour<int>(
+            new Sibling<int>(
                 2,
                 new EnumerableOf<int>(1, 2, 3)
             ).Value() == 3,
@@ -25,7 +25,7 @@ namespace Yaapii.Atoms.Tests.List
         public void NeighbourByPos()
         {
             Assert.True(
-                new ItemNeighbour<int>(
+                new Sibling<int>(
                     2,
                     new EnumerableOf<int>(1, 2, 3),
                     -1
@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Tests.List
         public void FailForInvalidPosition()
         {
             Assert.True(
-                new ItemNeighbour<string>(
+                new Sibling<string>(
                     "1",
                     new EnumerableOf<string>("1", "2", "3"),
                     -1,
@@ -48,10 +48,9 @@ namespace Yaapii.Atoms.Tests.List
         [Fact]
         public void FailForEmptyCollection()
         {
-            Assert.Throws(
-                typeof(IOException),
+            Assert.Throws<IOException>(
                 () =>
-                    new ItemNeighbour<int>(
+                    new Sibling<int>(
                         1337,
                         new EnumerableOf<int>()
                 ).Value());
@@ -62,7 +61,7 @@ namespace Yaapii.Atoms.Tests.List
         {
             String fallback = "fallback";
             Assert.True(
-                new ItemNeighbour<string>(
+                new Sibling<string>(
                     "Not-there",
                     new EnumerableOf<string>(),
                     12,
@@ -79,7 +78,7 @@ namespace Yaapii.Atoms.Tests.List
             var nb3 = new FakeNeighbour(DateTime.Parse("13.10.2017"));
 
             Assert.True(
-                new ItemNeighbour<FakeNeighbour>(
+                new Sibling<FakeNeighbour>(
                     nb1,
                     new EnumerableOf<FakeNeighbour>(nb1, nb2),
                     -1,
