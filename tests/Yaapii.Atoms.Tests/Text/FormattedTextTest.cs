@@ -58,8 +58,7 @@ namespace Yaapii.Atoms.Tests.Text
         [Fact]
         public void FailsForInvalidPattern()
         {
-            Assert.Throws(
-                typeof(FormatException),
+            Assert.Throws<FormatException>(
                 () => new FormattedText(
                     new TextOf("Formatted { {0} }"),
                     new string[] {"invalid" }

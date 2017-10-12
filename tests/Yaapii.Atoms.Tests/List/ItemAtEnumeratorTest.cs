@@ -56,8 +56,7 @@ namespace Yaapii.Atoms.Tests.List
         [Fact]
         public void FailForEmptyCollectionTest()
         {
-            Assert.Throws(
-                typeof(IOException),
+            Assert.Throws<IOException>(
                 () => new ItemAtEnumerator<int>(
                         new EnumerableOf<int>(new int[0]).GetEnumerator(),
                         0
@@ -67,8 +66,7 @@ namespace Yaapii.Atoms.Tests.List
         [Fact]
         public void FailForNegativePositionTest()
         {
-            Assert.Throws(
-                typeof(IOException),
+            Assert.Throws<IOException>(
                     () => new ItemAtEnumerator<int>(
                         new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                         -1
@@ -91,8 +89,8 @@ namespace Yaapii.Atoms.Tests.List
         [Fact]
         public void FailForPosMoreLengthTest()
         {
-            Assert.Throws(
-                typeof(IOException), () => 
+            Assert.Throws<IOException>(
+                () =>
                 new ItemAtEnumerator<int>(
                     new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                 3

@@ -35,9 +35,9 @@ namespace Yaapii.Atoms.Tests.Func
         [Fact]
         public void RethrowsCheckedToUncheckedException()
         {
-            Assert.Throws(
-                typeof(UncheckedIOException), () =>
-                new UncheckedFunc<int, string>(
+            Assert.Throws<UncheckedIOException>(
+                 () =>
+                 new UncheckedFunc<int, string>(
                     i => throw new IOException("intended")
                 ).Invoke(1));
         }

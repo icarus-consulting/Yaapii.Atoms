@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Tests.IO
         [Fact]
         public void RethrowsCheckedToUncheckedException()
         {
-            Assert.Throws(typeof(UncheckedIOException),
+            Assert.Throws<UncheckedIOException>(
                 () =>
                     new UncheckedBytes(
                         new BytesOf(

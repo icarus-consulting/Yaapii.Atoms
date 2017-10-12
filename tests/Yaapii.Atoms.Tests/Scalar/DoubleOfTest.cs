@@ -42,8 +42,7 @@ namespace Yaapii.Atoms.Tests.Scalar
         [Fact]
         public void FailsIfTextDoesNotRepresentADouble()
         {
-            Assert.Throws(typeof(FormatException),
-            () => new DoubleOf("abc").Value());
+            Assert.Throws<FormatException>(() => new DoubleOf("abc").Value());
         }
     }
 }

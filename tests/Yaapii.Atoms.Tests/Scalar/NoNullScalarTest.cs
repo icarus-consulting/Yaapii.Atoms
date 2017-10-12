@@ -12,9 +12,8 @@ namespace Yaapii.Atoms.Tests.Scalar
         [Fact]
         public void RaisesError()
         {
-            Assert.Throws(
-                typeof(IOException),
-                () => 
+            Assert.Throws<IOException>(
+                () =>
                 new NoNullScalar<string>(null).Value());
         }
 

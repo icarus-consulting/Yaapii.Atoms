@@ -58,8 +58,7 @@ namespace Yaapii.Atoms.Tests.List
         [Fact]
         public void FailForEmptyCollectionTest()
         {
-            Assert.Throws(
-                typeof(IOException),
+            Assert.Throws<IOException>(
                 () => new ItemAt<int>(
                         new EnumerableOf<int>()
                     ).Value());

@@ -35,10 +35,9 @@ namespace Yaapii.Atoms.Tests.Text
     {
 
         [Fact]
-        public void rethrowsCheckedToUncheckedException()
+        public void RethrowsCheckedToUncheckedException()
         {
-            Assert.Throws(
-                typeof(UncheckedIOException),
+            Assert.Throws<UncheckedIOException>(
                 () => new UncheckedText(
                     new FailingText()).AsString());
         }
