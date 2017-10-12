@@ -21,8 +21,11 @@
 // SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Func
 {
@@ -37,12 +40,14 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// original func
         /// </summary>
-        private readonly IBiFunc<In1, In2, Out> func;
+        private readonly IBiFunc<In1, In2, Out> _func;
 
         /// <summary>
         /// cache
         /// </summary>
-        private readonly Dictionary<Dictionary<In1, In2>, Out> cache;
+        private readonly Dictionary<Dictionary<In1, In2>, Out> _cache;
+
+        private readonly KeyMapComparer _comparer;
 
         /// <summary>
         /// Function with two inputs which returns the output from cache.
@@ -57,8 +62,9 @@ namespace Yaapii.Atoms.Func
         /// <param name="fnc">func to cache result from</param>
         public StickyBiFunc(IBiFunc<In1, In2, Out> fnc)
         {
-            this.func = fnc;
-            this.cache = new Dictionary<Dictionary<In1, In2>, Out>(0);
+            this._func = fnc;
+            this._comparer = new KeyMapComparer();
+            this._cache = new Dictionary<Dictionary<In1, In2>, Out>(this._comparer);
         }
 
         /// <summary>
@@ -71,11 +77,54 @@ namespace Yaapii.Atoms.Func
         {
             var keymap = new Dictionary<In1, In2>();
             keymap[first] = second;
-            if (!this.cache.ContainsKey(keymap))
+
+            Out output;
+            var km = new Filtered<Dictionary<In1, In2>>(this._cache.Keys, (key) => this._comparer.Equals(keymap, key));
+            if (km.Count() == 0)
             {
-                this.cache.Add(keymap, this.func.Apply(first, second));
+                output = this._func.Apply(first, second);
+                this._cache.Add(keymap, output);
+                km = new Filtered<Dictionary<In1, In2>>(this._cache.Keys, (key) => this._comparer.Equals(keymap, key));
             }
-            return this.cache[keymap];
+
+            return this._cache[new ItemAt<Dictionary<In1, In2>>(km).Value()];
+        }
+
+        class KeyMapComparer : IEqualityComparer<Dictionary<In1, In2>>
+        {
+            public bool Equals(Dictionary<In1, In2> x, Dictionary<In1, In2> y)
+            {
+                var equal = x.Keys.Count == y.Keys.Count;
+                if (equal)
+                {
+                    for (var i = 0; i < x.Keys.Count; i++)
+                    {
+                        if (!x.Keys.ElementAt(i).Equals(y.Keys.ElementAt(i)))
+                        {
+                            equal = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (equal)
+                {
+                    foreach (var key in x.Keys)
+                    {
+                        if (!x[key].Equals(y[key]))
+                        {
+                            equal = false;
+                            break;
+                        }
+                    }
+                }
+                return equal;
+            }
+
+            public int GetHashCode(Dictionary<In1, In2> obj)
+            {
+                return obj.GetHashCode();
+            }
         }
 
     }
