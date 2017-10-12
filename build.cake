@@ -74,6 +74,7 @@ Task("Test")
     var projectFiles = GetFiles("./tests/**/*.csproj");
     foreach(var file in projectFiles)
     {
+		Information("Discovering Tests in " + file.FullPath);
         DotNetCoreTest(file.FullPath);
     }
 });
