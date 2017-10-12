@@ -75,6 +75,7 @@ Task("Test")
     foreach(var file in projectFiles)
     {
 		Information("Discovering Tests in " + file.FullPath);
+
         DotNetCoreTest(file.FullPath);
     }
 });
