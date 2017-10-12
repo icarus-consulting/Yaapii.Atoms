@@ -34,12 +34,13 @@ namespace Yaapii.Atoms.Tests.IO
         [Fact]
         public void ReadsEmptyContent()
         {
-            Assert.True(
+            Assert.EndsWith(
+                "друг?",
                 new TextOf(
                 new TeeInput(
                     new InputOf("How are you, мой друг?"),
                     new DeadOutput()
-                )).AsString().EndsWith("друг?"));
+                )).AsString());
         }
     }
 }

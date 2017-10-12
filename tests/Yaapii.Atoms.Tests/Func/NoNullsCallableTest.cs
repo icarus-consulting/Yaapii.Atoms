@@ -12,20 +12,21 @@ namespace Yaapii.Atoms.Tests.Func
         [Fact]
         public void RaisesError()
         {
-            Assert.Throws(typeof(IOException), () =>
-            new NoNullsCallable<string>(
-                () => null
-            ).Call());
+            Assert.Throws<IOException>(
+                () =>
+                new NoNullsCallable<string>(
+                    () => null
+                ).Call());
         }
 
         [Fact]
         public void RaisesGivenError()
         {
-            Assert.Throws(typeof(IOException), () =>
-            new NoNullsCallable<string>(
-                () => null,
-                new IOException("got NULL")
-            ).Call());
+            Assert.Throws<IOException>(() =>
+           new NoNullsCallable<string>(
+               () => null,
+               new IOException("got NULL")
+           ).Call());
         }
 
         [Fact]

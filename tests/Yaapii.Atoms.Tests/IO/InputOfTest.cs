@@ -114,13 +114,14 @@ namespace Yaapii.Atoms.Tests.IO
                             new Uri(path)).Stream()))).Value();
 
 
-            Assert.True(
+            Assert.StartsWith(
+                "Hello World",
                 new TextOf(
                     new BytesOf(
                         new InputOf(
                             new Uri(Path.GetFullPath(path))
                             )
-                        ).AsBytes()).AsString().StartsWith("Hello World"));
+                        ).AsBytes()).AsString());
         }
 
         [Fact]

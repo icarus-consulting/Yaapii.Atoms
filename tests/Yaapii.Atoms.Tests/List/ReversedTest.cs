@@ -29,7 +29,7 @@ using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Tests.List
 {
-    class ReversedTest
+    public class ReversedTest
     {
         [Fact]
         public void ReversesIterable()

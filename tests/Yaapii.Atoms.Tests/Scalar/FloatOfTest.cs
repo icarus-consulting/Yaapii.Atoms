@@ -40,8 +40,7 @@ namespace Yaapii.Atoms.Tests.Scalar
         [Fact]
         public void FailsIfTextDoesNotRepresentAFloat()
         {
-            Assert.Throws(
-                typeof(FormatException),
+            Assert.Throws<FormatException>(
                 () => new FloatOf("abc").Value());
         }
     }

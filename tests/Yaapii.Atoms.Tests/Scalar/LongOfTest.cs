@@ -40,8 +40,7 @@ namespace Yaapii.Atoms.Tests.Scalar
         [Fact]
         public void FailsIfTextDoesNotRepresentALong()
         {
-            Assert.Throws(
-                typeof(FormatException),
+            Assert.Throws<FormatException>(
                 () => new LongOf("abc").Value());
         }
     }

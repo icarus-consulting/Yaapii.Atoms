@@ -53,8 +53,7 @@ namespace Yaapii.Atoms.Tests.Func
         [Fact]
         public void ThrowsException()
         {
-            Assert.Throws(
-                typeof(IOException),
+            Assert.Throws<IOException>(
                 () => new IoCheckedBiFunc<int, int, int>(
                     (fst, scd) =>
                     {

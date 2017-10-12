@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using Xunit;
@@ -7,13 +8,13 @@ using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Tests.List
 {
-    public class ItemNeighbourTest
+    public class SiblingTest
     {
         [Fact]
-        public void NextNeighbour()
+        public void Next()
         {
             Assert.True(
-            new ItemNeighbour<int>(
+            new Sibling<int>(
                 2,
                 new EnumerableOf<int>(1, 2, 3)
             ).Value() == 3,
@@ -22,10 +23,10 @@ namespace Yaapii.Atoms.Tests.List
         }
 
         [Fact]
-        public void NeighbourByPos()
+        public void ByPos()
         {
             Assert.True(
-                new ItemNeighbour<int>(
+                new Sibling<int>(
                     2,
                     new EnumerableOf<int>(1, 2, 3),
                     -1
@@ -37,7 +38,7 @@ namespace Yaapii.Atoms.Tests.List
         public void FailForInvalidPosition()
         {
             Assert.True(
-                new ItemNeighbour<string>(
+                new Sibling<string>(
                     "1",
                     new EnumerableOf<string>("1", "2", "3"),
                     -1,
@@ -48,10 +49,9 @@ namespace Yaapii.Atoms.Tests.List
         [Fact]
         public void FailForEmptyCollection()
         {
-            Assert.Throws(
-                typeof(IOException),
+            Assert.Throws<IOException>(
                 () =>
-                    new ItemNeighbour<int>(
+                    new Sibling<int>(
                         1337,
                         new EnumerableOf<int>()
                 ).Value());
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Tests.List
         {
             String fallback = "fallback";
             Assert.True(
-                new ItemNeighbour<string>(
+                new Sibling<string>(
                     "Not-there",
                     new EnumerableOf<string>(),
                     12,
@@ -72,34 +72,36 @@ namespace Yaapii.Atoms.Tests.List
         }
 
         [Fact]
-        public void NeighbourWithCustomComparable()
+        public void WithCustomComparable()
         {
-            var nb1 = new FakeNeighbour(DateTime.Parse("11.10.2017"));
-            var nb2 = new FakeNeighbour(DateTime.Parse("10.10.2017"));
-            var nb3 = new FakeNeighbour(DateTime.Parse("13.10.2017"));
+            var format = "dd.MM.yyyy";
+            var provider = CultureInfo.InvariantCulture;
+            var nb1 = new FakeSibling(DateTime.ParseExact("11.10.2017", format, provider));
+            var nb2 = new FakeSibling(DateTime.ParseExact("10.10.2017", format, provider));
+            var nb3 = new FakeSibling(DateTime.ParseExact("13.10.2017", format, provider));
 
             Assert.True(
-                new ItemNeighbour<FakeNeighbour>(
+                new Sibling<FakeSibling>(
                     nb1,
-                    new EnumerableOf<FakeNeighbour>(nb1, nb2),
+                    new EnumerableOf<FakeSibling>(nb1, nb2),
                     -1,
                     nb2
                 ).Value().TimeStamp() == nb2.TimeStamp(),
             "Can't take the item by position from the enumerable");
         }
 
-        internal class FakeNeighbour : IComparable<FakeNeighbour>
+        internal class FakeSibling : IComparable<FakeSibling>
         {
             private readonly DateTime _stmp;
 
-            public FakeNeighbour(DateTime stmp)
+            public FakeSibling(DateTime stmp)
             {
                 _stmp = stmp;
             }
 
             public DateTime TimeStamp() { return _stmp; }
 
-            public int CompareTo(FakeNeighbour obj)
+            public int CompareTo(FakeSibling obj)
             {
                 return _stmp.CompareTo(obj.TimeStamp());
             }

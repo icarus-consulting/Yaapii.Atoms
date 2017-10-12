@@ -35,8 +35,7 @@ namespace Yaapii.Atoms.Tests.Scalar
         [Fact]
         public void RethrowsCheckedToUncheckedException()
         {
-            Assert.Throws(
-                typeof(UncheckedIOException),
+            Assert.Throws<UncheckedIOException>(
                 () => new UncheckedScalar<int>(
                     () =>
                     {

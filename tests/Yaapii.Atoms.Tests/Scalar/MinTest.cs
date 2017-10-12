@@ -34,8 +34,7 @@ namespace Yaapii.Atoms.Tests.Scalar
         [Fact]
         public void MinAmongEmptyTest()
         {
-            Assert.Throws(
-                typeof(NoSuchElementException),
+            Assert.Throws<NoSuchElementException>(
                 () => new Min<int>(new EnumerableOf<int>()).Value());
         }
 

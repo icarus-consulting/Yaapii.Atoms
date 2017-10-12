@@ -32,11 +32,10 @@ namespace Yaapii.Atoms.Tests.Func
 {
     public sealed class UncheckedBiFuncTest
     {
-
+        [Fact]
         public void RethrowsCheckedToUncheckedException()
         {
-            Assert.Throws(
-                typeof(UncheckedIOException),
+            Assert.Throws<UncheckedIOException>(
                     () => new UncheckedBiFunc<int, int, bool>(
                         (fst, scd) =>
                         {

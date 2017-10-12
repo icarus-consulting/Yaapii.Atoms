@@ -52,8 +52,7 @@ namespace Yaapii.Atoms.Tests.Scalar
         [Fact]
         public void IsFalseIfTextDoesNotRepresentABoolean()
         {
-            Assert.Throws(
-                typeof(IOException),
+            Assert.Throws<IOException>(
                 () => new BoolOf("abc").Value());
         }
     }

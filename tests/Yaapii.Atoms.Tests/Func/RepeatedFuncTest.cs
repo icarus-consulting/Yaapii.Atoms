@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Tests.Func
         [Fact]
         public void DoesntRepeatAny()
         {
-            Assert.Throws(typeof(ArgumentException),
+            Assert.Throws<ArgumentException>(
             () => new RepeatedFunc<bool, IScalar<int>>(
                 input =>
                 {

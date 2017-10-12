@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
-    <VersionPrefix>0.5.1</VersionPrefix>
+    <VersionPrefix>0.5.6</VersionPrefix>
     <Description>Ported .NET version of Cactoos by Yegor Bugayenko.</Description>
     <NeutralLanguage>en-001</NeutralLanguage>
     <PackageTags>Cactoos, OOP</PackageTags>

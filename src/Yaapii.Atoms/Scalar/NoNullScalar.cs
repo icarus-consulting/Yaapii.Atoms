@@ -19,7 +19,6 @@ namespace Yaapii.Atoms.Scalar
         /// A scalar with a fallback if value is null.
         /// </summary>
         /// <param name="origin">the original</param>
-        /// <param name="ex">error to raise if null</param>
         public NoNullScalar(T origin) : this(
             origin, 
             new IOException("got NULL instead of a valid value"))

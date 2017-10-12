@@ -41,7 +41,8 @@ namespace Yaapii.Atoms.Tests.Scalar
                 "Can't compare if two integers are equals");
         }
 
-        public void compareNotEquals()
+        [Fact]
+        public void CompareNotEquals()
         {
             Assert.True(
                 new Equals<int>(

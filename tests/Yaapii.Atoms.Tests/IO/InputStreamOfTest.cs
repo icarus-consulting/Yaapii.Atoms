@@ -31,13 +31,12 @@ namespace Yaapii.Atoms.Tests.IO
 {
     public sealed class InputStreamOfTest
     {
+        [Fact]
         public void ReadsSimpleFileContent()
         {
-            var dir = "atoms-1"; var file = "txt-1"; var path = Path.GetFullPath(Path.Combine(dir, file));
+            var dir = "artifacts/InputStreamOfTest"; var file = "txt-1"; var path = Path.GetFullPath(Path.Combine(dir, file));
             Directory.CreateDirectory(dir);
             if (File.Exists(path)) File.Delete(path);
-
-            var temp = File.Create("atoms-1/txt-1");
 
             String content = "Hello, товарищ!";
             File.WriteAllBytes(path, new BytesOf(new TextOf(content, Encoding.UTF8)).AsBytes());

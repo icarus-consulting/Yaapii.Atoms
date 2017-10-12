@@ -111,7 +111,7 @@ namespace Yaapii.Atoms.Tests.IO
                         Encoding.UTF8);
             }
 
-            Assert.Throws(typeof(IOException), () => t.AsString());
+            Assert.Throws<IOException>(() => t.AsString());
         }
 
 
