@@ -9,6 +9,7 @@ nuget:
   account_feed: true
 build_script:
 - ps: .\build.ps1
+test: off
 artifacts:
 - path: '.\artifacts\**\*.nupkg'
 deploy:
