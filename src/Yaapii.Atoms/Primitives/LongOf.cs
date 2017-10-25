@@ -27,7 +27,7 @@ using System.Text;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Scalar
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// Text as long
