@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Tests.IO
                 Encoding.UTF8.GetString(
                     new InputAsBytes(
                         new InputOf(uri)
-                    ).AsBytes()).CompareTo(s) == 0, //.Equals is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
+                    ).AsBytes()).Trim().CompareTo(s) == 0, //.Equals is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
             "Can't copy Input to Output and return Input");
         }
     }
