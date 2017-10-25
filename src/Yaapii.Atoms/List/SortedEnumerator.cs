@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.List
     public sealed class SortedEnumerator<T> : IEnumerator<T>
         where T : IComparable<T>
     {
-        private readonly UncheckedScalar<IEnumerator<T>> _sorted;
+        private readonly IScalar<IEnumerator<T>> _sorted;
 
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> sorted by the given <see cref="Comparer{T}"/>.
@@ -47,19 +47,18 @@ namespace Yaapii.Atoms.List
         public SortedEnumerator(Comparer<T> cmp, IEnumerator<T> src)
         {
             this._sorted =
-                new UncheckedScalar<IEnumerator<T>>(
-                    new StickyScalar<IEnumerator<T>>(
-                        () =>
+                new StickyScalar<IEnumerator<T>>(
+                    () =>
+                    {
+                        var items = new List<T>();
+                        while (src.MoveNext())
                         {
-                            var items = new List<T>();
-                            while (src.MoveNext())
-                            {
-                                items.Add(src.Current);
-                            }
-                            items.Sort(cmp);
+                            items.Add(src.Current);
+                        }
+                        items.Sort(cmp);
 
-                            return items.GetEnumerator();
-                        }));
+                        return items.GetEnumerator();
+                    });
         }
 
         public void Dispose()

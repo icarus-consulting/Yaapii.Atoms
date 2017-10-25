@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.List
     /// <typeparam name="X"></typeparam>
     public sealed class StickyList<X> : List<X>
     {
-        private readonly UncheckedScalar<List<X>> _gate;
+        private readonly IScalar<List<X>> _gate;
 
         /// <summary>
         /// A <see cref="List{X}"/> which returns the same items from a cache, always.
@@ -56,17 +56,16 @@ namespace Yaapii.Atoms.List
         public StickyList(List<X> list)
         {
             this._gate =
-                new UncheckedScalar<List<X>>(
-                    new StickyScalar<List<X>>(
-                        () =>
+                new StickyScalar<List<X>>(
+                    () =>
+                        {
+                            var temp = new List<X>();
+                            foreach (var item in list)
                             {
-                                var temp = new List<X>();
-                                foreach (var item in list)
-                                {
-                                    temp.Add(item);
-                                }
-                                return temp;
-                            }));
+                                temp.Add(item);
+                            }
+                            return temp;
+                        });
         }
 
 #pragma warning disable CS1591

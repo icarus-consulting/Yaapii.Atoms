@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// alternative input
         /// </summary>
-        private readonly IoCheckedFunc<IOException, IInput> _alternative;
+        private readonly IFunc<IOException, IInput> _alternative;
 
         /// <summary>
         /// Input which returns an alternate value if it fails.
@@ -58,14 +58,14 @@ namespace Yaapii.Atoms.IO
         public InputWithFallback(IInput input, IInput alt) : this(input, (error) => alt)
         { }
 
-        /// <summary>
-        /// Input which returns an alternate value from the given <see cref="IFunc{In, Out}"/> if it fails.
-        /// </summary>
-        /// <param name="input">the input</param>
-        /// <param name="alt">a fallback input</param>
-        public InputWithFallback(IInput input, IFunc<IOException, IInput> alt) : this(
-            input, new IoCheckedFunc<IOException, IInput>(alt))
-        { }
+        ///// <summary>
+        ///// Input which returns an alternate value from the given <see cref="IFunc{In, Out}"/> if it fails.
+        ///// </summary>
+        ///// <param name="input">the input</param>
+        ///// <param name="alt">a fallback input</param>
+        //public InputWithFallback(IInput input, IFunc<IOException, IInput> alt) : this(
+        //    input, new IoCheckedFunc<IOException, IInput>(alt))
+        //{ }
 
         /// <summary>
         /// Input which returns an alternate value from the given <see cref="Func{IOException, IInput}"/>if it fails.
@@ -73,15 +73,15 @@ namespace Yaapii.Atoms.IO
         /// <param name="input">the input</param>
         /// <param name="alt">function to return alternative input</param>
         public InputWithFallback(IInput input, Func<IOException, IInput> alt) : this(input,
-            new IoCheckedFunc<IOException, IInput>(alt))
+            new FuncOf<IOException, IInput>(alt))
         { }
 
         /// <summary>
-        /// Input which returns an alternate value from the given <see cref="IoCheckedFunc{IOException, IInput}"/>if it fails.
+        /// Input which returns an alternate value from the given <see cref="IFunc{IOException, IInput}"/>if it fails.
         /// </summary>
         /// <param name="input">the input</param>
         /// <param name="alt">an alternative input</param>
-        public InputWithFallback(IInput input, IoCheckedFunc<IOException, IInput> alt)
+        public InputWithFallback(IInput input, IFunc<IOException, IInput> alt)
         {
             this._main = input;
             this._alternative = alt;

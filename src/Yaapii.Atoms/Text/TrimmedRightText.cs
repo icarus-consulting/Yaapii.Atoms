@@ -81,7 +81,8 @@ namespace Yaapii.Atoms.Text
         /// <returns>true if equal.</returns>
         public bool Equals(IText other)
         {
-            return new UncheckedText(this).CompareTo(other as IText) == 0;
+            //return new UncheckedText(this).CompareTo(other as IText) == 0;
+            return this.AsString().CompareTo(other.AsString()) == 0;
         }
     }
 }
