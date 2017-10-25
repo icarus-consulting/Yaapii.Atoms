@@ -223,7 +223,7 @@ namespace Yaapii.Atoms.Text
         /// <returns></returns>
         public String AsString()
         {
-            return new IoCheckedScalar<string>(this._origin).Value();
+            return this._origin.Value();
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Yaapii.Atoms.Text
         /// <returns></returns>
         public int CompareTo(IText text)
         {
-            return new UncheckedText(this).CompareTo(text);
+            return this.AsString().CompareTo(text.AsString());
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Yaapii.Atoms.Text
         public new bool Equals(object obj)
         {
             if (obj as IText == null) return false;
-            return new UncheckedText(this).CompareTo(obj as IText) == 0;
+            return this.AsString().CompareTo((obj as IText).AsString()) == 0;
         }
 
         /// <summary>

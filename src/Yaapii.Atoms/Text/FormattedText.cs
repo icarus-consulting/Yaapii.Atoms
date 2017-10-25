@@ -98,7 +98,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>-1 if this is lower, 0 if equal, 1 if this is higher</returns>
         public int CompareTo(IText text)
         {
-            return new UncheckedText(this).CompareTo(text);
+            return this.AsString().CompareTo(text.AsString());
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>true if equal.</returns>
         public bool Equals(IText other)
         {
-            return new UncheckedText(this).Equals(other);
+            return this.AsString().Equals(other);
         }
     }
 }

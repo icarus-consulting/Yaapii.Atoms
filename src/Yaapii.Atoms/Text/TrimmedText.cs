@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>-1 if this is lower, 0 if equal, 1 if this is higher</returns>
         public int CompareTo(IText text)
         {
-            return new UncheckedText(this).CompareTo(text);
+            return this.CompareTo(text);
         }
 
         /// <summary>

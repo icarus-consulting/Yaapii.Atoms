@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// element to repeat
         /// </summary>
-        private readonly UncheckedScalar<T> element;
+        private readonly IScalar<T> element;
 
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> that repeats one element infinitely.
@@ -52,15 +52,8 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> that repeats one element infinitely.
         /// </summary>
-        /// <param name="elm">element to repeat</param>
-        public EndlessEnumerator(IScalar<T> elm) : this(new UncheckedScalar<T>(elm))
-        { }
-
-        /// <summary>
-        /// A <see cref="IEnumerator{T}"/> that repeats one element infinitely.
-        /// </summary>
         /// <param name="elm">scalar of element to repeat</param>
-        public EndlessEnumerator(UncheckedScalar<T> elm)
+        public EndlessEnumerator(IScalar<T> elm)
         {
             this.element = elm;
         }

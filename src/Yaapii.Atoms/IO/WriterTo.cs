@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Tests.IO
         /// <summary>
         /// the target
         /// </summary>
-        private readonly UncheckedScalar<StreamWriter> _target;
+        private readonly IScalar<StreamWriter> _target;
 
         /// <summary>
         /// A <see cref="StreamWriter"/> to a file <see cref="Uri"/>.
@@ -93,9 +93,7 @@ namespace Yaapii.Atoms.Tests.IO
         /// <param name="tgt">the target streamwriter</param>
         private WriterTo(IScalar<StreamWriter> tgt) : base(new DeadStream())
         {
-            this._target =
-                new UncheckedScalar<StreamWriter>(
-                    new StickyScalar<StreamWriter>(tgt));
+            this._target = new StickyScalar<StreamWriter>(tgt);
         }
 
 #pragma warning disable CS1591

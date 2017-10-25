@@ -70,15 +70,9 @@ namespace Yaapii.Atoms.IO
         /// <returns>the value</returns>
         public String Value()
         {
-            try
-            {
-                return WebUtility.UrlDecode(
-                    this._source.AsString()
-                );
-            }
-            catch (IOException ex) {
-                throw new UncheckedIOException(ex);
-            }
-            }
+            return WebUtility.UrlDecode(
+                this._source.AsString()
+            );
         }
     }
+}

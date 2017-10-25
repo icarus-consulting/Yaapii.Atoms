@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// the enumerable
         /// </summary>
-        private readonly UncheckedScalar<IEnumerator<T>> _origin;
+        private readonly IScalar<IEnumerator<T>> _origin;
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of an array.
@@ -68,15 +68,8 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
-        /// <param name="origin">scalar which returns enumerator</param>
-        private EnumerableOf(IScalar<IEnumerator<T>> origin) : this(new UncheckedScalar<IEnumerator<T>>(origin))
-        { }
-
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
-        /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
-        private EnumerableOf(UncheckedScalar<IEnumerator<T>> origin)
+        private EnumerableOf(IScalar<IEnumerator<T>> origin)
         {
             _origin = origin;
         }

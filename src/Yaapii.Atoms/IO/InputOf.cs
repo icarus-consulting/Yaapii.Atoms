@@ -132,7 +132,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="builder">a stringbuilder</param>
         /// <param name="enc">encoding of the stringbuilder</param>
         public InputOf(StringBuilder builder, Encoding enc) : this(
-            new IoCheckedScalar<Stream>(
+            new ScalarOf<Stream>(
                 () => new MemoryStream(
                     new BytesOf(builder, enc).AsBytes())))
         { }
@@ -200,7 +200,7 @@ namespace Yaapii.Atoms.IO
         /// ctor
         /// </summary>
         /// <param name="src">a <see cref="IBytes"/> object which will be copied to memory</param>
-        public InputOf(IBytes src) : this(new IoCheckedScalar<Stream>(
+        public InputOf(IBytes src) : this(new ScalarOf<Stream>(
                         () => 
                         {
                             var b = src.AsBytes();
