@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="input">a input</param>
         /// <param name="max">maximum buffer size</param>
-        public TextOf(IInput input, int max) : this(input, max, Encoding.UTF8)
+        public TextOf(IInput input, int max) : this(input, max, Encoding.GetEncoding(0))
         { }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of <see cref="IBytes"/> object.
         /// </summary>
         /// <param name="bytes">A <see cref="IBytes"/> object</param>
-        public TextOf(IBytes bytes) : this(bytes, Encoding.UTF8)
+        public TextOf(IBytes bytes) : this(bytes, Encoding.GetEncoding(0))
         { }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of <see cref="string"/>.
         /// </summary>
         /// <param name="input">a string</param>
-        public TextOf(String input) : this(input, Encoding.UTF8)
+        public TextOf(String input) : this(input, Encoding.GetEncoding(0))
         { }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="input">a string</param>
         /// <param name="encoding"><see cref="Encoding"/> of the string</param>
         public TextOf(String input, Encoding encoding) : this(
-            () => encoding.GetString(Encoding.GetEncoding(0).GetBytes(input)))
+            () => encoding.GetString(encoding.GetBytes(input)))
         { }
 
         /// <summary>
