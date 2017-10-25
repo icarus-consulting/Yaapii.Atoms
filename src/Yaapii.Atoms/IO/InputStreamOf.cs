@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// the source
         /// </summary>
-        private readonly UncheckedScalar<Stream> _source;
+        private readonly IScalar<Stream> _source;
 
         /// <summary>
         /// A readable stream out of a file Uri.
@@ -147,7 +147,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="src">the source</param>
         private InputStreamOf(IScalar<Stream> src) : base()
         {
-            this._source = new UncheckedScalar<Stream>(new StickyScalar<Stream>(src));
+            this._source = new StickyScalar<Stream>(src);
         }
 
         public override int Read(byte[] buf, int offset, int len)

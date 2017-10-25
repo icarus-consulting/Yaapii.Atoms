@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// the source
         /// </summary>
-        private readonly UncheckedScalar<StreamReader> _source;
+        private readonly IScalar<StreamReader> _source;
 
         /// <summary>
         /// A <see cref="StreamReader"/> out of a <see cref="char"/> array.
@@ -166,7 +166,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="src">scalar of a reader</param>
         private ReaderOf(IScalar<StreamReader> src) : base(new DeadInput().Stream())
         {
-            this._source = new UncheckedScalar<StreamReader>(new StickyScalar<StreamReader>(src));
+            this._source = new StickyScalar<StreamReader>(src);
         }
 
         public override int Read()

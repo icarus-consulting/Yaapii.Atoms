@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.List
         {
             get
             {
-                return new UncheckedFunc<In, Out>(this._func).Invoke(this._enumerator.Current);
+                return this._func.Invoke(this._enumerator.Current);
             }
         }
 

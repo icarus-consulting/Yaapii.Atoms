@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// Cache
         /// </summary>
-        private readonly UncheckedScalar<IEnumerable<X>> _gate;
+        private readonly IScalar<IEnumerable<X>> _gate;
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> that returns content from cache always.
@@ -48,17 +48,16 @@ namespace Yaapii.Atoms.List
         public StickyEnumerable(IEnumerable<X> enumerable)
         {
             this._gate =
-                new UncheckedScalar<IEnumerable<X>>(
-                    new StickyScalar<IEnumerable<X>>(
-                        () =>
+                new StickyScalar<IEnumerable<X>>(
+                    () =>
+                        {
+                            var temp = new LinkedList<X>();
+                            foreach (X item in enumerable)
                             {
-                                var temp = new LinkedList<X>();
-                                foreach (X item in enumerable)
-                                {
-                                    temp.AddLast(item);
-                                }
-                                return temp;
-                            }));
+                                temp.AddLast(item);
+                            }
+                            return temp;
+                        });
         }
 
         /// <summary>

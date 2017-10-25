@@ -97,7 +97,6 @@ namespace Yaapii.Atoms.List
 
         public bool MoveNext()
         {
-            UncheckedFunc<X, Boolean> fnc = new UncheckedFunc<X, Boolean>(this._func);
             if (this._buffer.Count > 0) this._buffer.Dequeue();
 
             if (this._buffer.Count == 0)
@@ -105,7 +104,7 @@ namespace Yaapii.Atoms.List
                 while (this._enumerator.MoveNext())
                 {
                     X obj = this._enumerator.Current;
-                    if (fnc.Invoke(obj))
+                    if (_func.Invoke(obj))
                     {
                         this._buffer.Enqueue(obj);
                         break;
