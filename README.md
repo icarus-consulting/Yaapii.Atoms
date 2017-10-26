@@ -40,7 +40,7 @@ var i = new FuncOf<int, int>(
 var url = new Url("https://www.google.de");
 var f = new StickyFunc<Url, IText>((u) =>
             new TextOf(
-                new InputOf(u)).AsString()
+                new InputOf(u))
         ).Invoke(url);
 
 var html = f.Invoke(); //will load the page content from the web
