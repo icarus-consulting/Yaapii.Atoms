@@ -203,7 +203,7 @@ public interface IEnumerator<out T> : IEnumerator, IDisposable
 ```csharp
 new Filtered<string>(
     new List<string>() { "A", "B", "C" },
-    (input) => input != "B"); //will be a list with "A" and "B" inside
+    (input) => input != "B"); //will be a list with "A" and "C" inside
 ```
 ### Get an item from a list
 ```csharp

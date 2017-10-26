@@ -51,12 +51,11 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         public void Run()
         {
-            new UncheckedFunc<In, bool>(
-                new FuncOf<In, bool>((input) =>
-                    {
-                        this._func.Invoke(this._input);
-                        return true;
-                    })).Invoke(this._input);
+            new FuncOf<In, bool>((input) =>
+                {
+                    this._func.Invoke(this._input);
+                    return true;
+                }).Invoke(this._input);
         }
     }
 }

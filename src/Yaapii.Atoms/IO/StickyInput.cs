@@ -64,9 +64,7 @@ namespace Yaapii.Atoms.IO
         /// <returns>the stream</returns>
         public Stream Stream()
         {
-            return new MemoryStream(
-                new IoCheckedScalar<byte[]>(this._cache).Value()
-            );
+            return new MemoryStream(this._cache.Value());
         }
     }
 }

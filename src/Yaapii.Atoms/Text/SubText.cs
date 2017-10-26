@@ -33,8 +33,8 @@ namespace Yaapii.Atoms.Text
     public sealed class SubText : IText
     {
         private readonly IText _origin;
-        private readonly UncheckedScalar<Int32> _start;
-        private readonly UncheckedScalar<Int32> _end;
+        private readonly IScalar<Int32> _start;
+        private readonly IScalar<Int32> _end;
 
         /// <summary>
         /// Extracted subtext from a <see cref="string"/>.
@@ -70,14 +70,14 @@ namespace Yaapii.Atoms.Text
         public SubText(IText text, int strt, int end) : this(text, new ScalarOf<Int32>(strt), new ScalarOf<Int32>(end))
         { }
 
-        /// <summary>
-        /// Extracted subtext from a <see cref="IText"/>.
-        /// </summary>
-        /// <param name="text">text to extract from</param>
-        /// <param name="strt">where to start encapsulated in a scalar</param>
-        /// <param name="end">where to end encapsulated in a scalar</param>
-        public SubText(IText text, IScalar<Int32> strt, IScalar<Int32> end) : this(text, new UncheckedScalar<Int32>(strt), new UncheckedScalar<Int32>(end))
-        { }
+        ///// <summary>
+        ///// Extracted subtext from a <see cref="IText"/>.
+        ///// </summary>
+        ///// <param name="text">text to extract from</param>
+        ///// <param name="strt">where to start encapsulated in a scalar</param>
+        ///// <param name="end">where to end encapsulated in a scalar</param>
+        //public SubText(IText text, IScalar<Int32> strt, IScalar<Int32> end) : this(text, strt, end)
+        //{ }
 
         /// <summary>
         /// Extracted subtext from a <see cref="IText"/>.
@@ -85,8 +85,8 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start encapsulated in a scalar</param>
         /// <param name="end">where to end encapsulated in a scalar</param>
-        public SubText(IText text, UncheckedScalar<Int32> strt,
-            UncheckedScalar<Int32> end)
+        public SubText(IText text, ScalarOf<Int32> strt,
+            ScalarOf<Int32> end)
         {
             this._origin = text;
             this._start = strt;
@@ -112,7 +112,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>-1 if this is lower, 0 if equal, 1 if this is higher</returns>
         public int CompareTo(IText text)
         {
-            return new UncheckedText(this).CompareTo(text);
+            return this.CompareTo(text);
         }
 
         /// <summary>

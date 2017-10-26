@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.List
     /// <typeparam name="X"></typeparam>
     public sealed class StickyEnumerator<X> : IEnumerator<X>
     {
-        private readonly UncheckedScalar<IEnumerator<X>> _gate;
+        private readonly IScalar<IEnumerator<X>> _gate;
 
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> that returns content from cache always.
@@ -75,18 +75,17 @@ namespace Yaapii.Atoms.List
         public StickyEnumerator(IScalar<IEnumerator<X>> src)
         {
             this._gate =
-                new UncheckedScalar<IEnumerator<X>>(
-                    new StickyScalar<IEnumerator<X>>(
-                        () =>
+                new StickyScalar<IEnumerator<X>>(
+                    () =>
+                    {
+                        var temp = new LinkedList<X>();
+                        var enumerator = src.Value();
+                        while (enumerator.MoveNext())
                         {
-                            var temp = new LinkedList<X>();
-                            var enumerator = src.Value();
-                            while (enumerator.MoveNext())
-                            {
-                                temp.AddLast(enumerator.Current);
-                            }
-                            return temp.GetEnumerator();
-                        }));
+                            temp.AddLast(enumerator.Current);
+                        }
+                        return temp.GetEnumerator();
+                    });
         }
 
 #pragma warning disable CS1591

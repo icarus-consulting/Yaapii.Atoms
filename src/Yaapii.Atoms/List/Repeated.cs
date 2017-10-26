@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.List
     /// <typeparam name="T">type of element to repeat</typeparam>
     public sealed class Repeated<T> : IEnumerable<T>
     {
-        private readonly UncheckedScalar<T> _element;
+        private readonly IScalar<T> _element;
         private readonly int _count;
 
         /// <summary>
@@ -61,18 +61,9 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="elm">scalar of element to repeat</param>
-        /// <param name="cnt">how often to repeat</param>
-        public Repeated(IScalar<T> elm, int cnt) :
-            this(new UncheckedScalar<T>(elm), cnt)
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
-        public Repeated(UncheckedScalar<T> elm, int cnt)
+        public Repeated(IScalar<T> elm, int cnt)
         {
             this._element = elm;
             this._count = cnt;
