@@ -339,7 +339,7 @@ string html = sc.Value(); //will fetch the html from the url and return it as a 
  ### Cache function results
  ```csharp
  var sc =
-    new ScalarOf<string>(
+    new StickyScalar<string>(
         () =>
         new TextOf(
             new InputOf(
