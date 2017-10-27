@@ -29,33 +29,68 @@ namespace Yaapii.Atoms.Func
     /// <summary>
     /// Action with input but no output as runnable.
     /// </summary>
-    /// <typeparam name="In">type of input</typeparam>
-    public sealed class ActionOf<In> : IAction
+    public sealed class ActionOf : IAction
     {
-        private readonly System.Action<In> _func;
-        private readonly In _input;
+        private readonly System.Action _func;
 
         /// <summary>
         /// Action with input but no output as runnable.
         /// </summary>
         /// <param name="fnc"></param>
-        /// <param name="ipt"></param>
-        public ActionOf(System.Action<In> fnc, In ipt)
+        public ActionOf(System.Action fnc)
         {
             this._func = fnc;
-            this._input = ipt;
         }
 
         /// <summary>
         /// Run the runnable.
         /// </summary>
-        public void Run()
+        public void Invoke()
         {
-            new FuncOf<In, bool>((input) =>
+            new FuncOf<bool, bool>((input) =>
                 {
-                    this._func.Invoke(this._input);
+                    this._func.Invoke();
                     return true;
-                }).Invoke(this._input);
+                }).Invoke(true);
         }
     }
+
+    /// <summary>
+    /// Action<typeparamref name="In"/> as IAction<typeparamref name="In"/>
+    /// </summary>
+    /// <typeparam name="In"></typeparam>
+    public sealed class ActionOf<In> : IAction<In>
+    {
+        /// <summary>
+        /// the action
+        /// </summary>
+        private readonly System.Action<In> _func;
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="action">action to execute</param>
+        public ActionOf(Action action) : this((b) => { action.Invoke(); })
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="fnc">action to execute</param>
+        public ActionOf(System.Action<In> fnc)
+        {
+            this._func = fnc;
+        }
+
+        /// <summary>
+        /// Execute the action.
+        /// </summary>
+        /// <param name="input">input argument</param>
+        public void Invoke(In input)
+        {
+            this._func.Invoke(input);
+        }
+    }
+
+
 }

@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.Func
         /// Func that runs in the background.
         /// </summary>
         /// <param name="proc">procedure to call</param>
-        public AsyncFunc(IProc<In> proc) : this(new FuncOf<In, Out>(proc, null)) //@TODO eliminate null passing
+        public AsyncFunc(IAction<In> proc) : this(new FuncOf<In, Out>(proc, null)) //@TODO eliminate null passing
         { }
 
         /// <summary>

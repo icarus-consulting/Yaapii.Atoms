@@ -23,19 +23,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Xunit;
+using Yaapii.Atoms.Func;
 
-namespace Yaapii.Atoms
+namespace Yaapii.Atoms.Tests.Func
 {
-    /// <summary>
-    /// Represents a function that you call without an argument and which returns something.
-    /// </summary>
-    /// <typeparam name="Out"></typeparam>
-    public interface ICallable<Out>
+    public sealed class FuncOfTest
     {
-        /// <summary>
-        /// Call the function and retrieve the output.
-        /// </summary>
-        /// <returns></returns>
-        Out Call();
+        [Fact]
+        public void ConvertsSystemFuncIntoAtomsFunc()
+        {
+            Assert.True(
+            new FuncOf<int>(
+                () => 1
+            ).Invoke() == 1,
+            "cannot convert func into callable");
+        }
     }
 }

@@ -118,7 +118,7 @@ namespace Yaapii.Atoms.Tests.Scalar
         {
             var list = new LinkedList<int>();
             new And<int>(
-                new ProcOf<int>(i => list.AddLast(i)),
+                new ActionOf<int>(i => list.AddLast(i)),
                 1, 1
             ).Value();
 
