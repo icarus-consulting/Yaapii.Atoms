@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="patternStr"> pattern as string </param>
         /// <param name="ignoreCase"> Enables case sensitivity </param>
         public TextContains(string inputStr, string patternStr, bool ignoreCase = false) :
-            this(new ScalarOf<string>(inputStr), new ScalarOf<string>(patternStr), new ScalarOf<StringComparison>(() => ignoreCase ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase))
+            this(new ScalarOf<string>(inputStr), new ScalarOf<string>(patternStr), new ScalarOf<StringComparison>(() => ignoreCase ? StringComparison.CurrentCultureIgnoreCase : StringComparison.CurrentCulture))
         { }
 
         /// <summary> Checks if a text contains a pattern using IText </summary>
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="patternText"> pattern as IText </param>
         /// <param name="ignoreCase"> Enables case sensitivity </param>
         public TextContains(IText inputText, IText patternText, bool ignoreCase = false) :
-            this(new ScalarOf<string>(() => inputText.AsString()), new ScalarOf<string>(() => patternText.AsString()), new ScalarOf<StringComparison>(() => ignoreCase ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase))
+            this(new ScalarOf<string>(() => inputText.AsString()), new ScalarOf<string>(() => patternText.AsString()), new ScalarOf<StringComparison>(() => ignoreCase ? StringComparison.CurrentCultureIgnoreCase : StringComparison.CurrentCulture))
         { }
 
         /// <summary> Checks if a text contains a pattern using IScalar </summary>
