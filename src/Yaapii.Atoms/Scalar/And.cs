@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public And(Action<In> proc, params In[] src) : this(new ProcOf<In>(input => proc.Invoke(input)), src)
+        public And(Action<In> proc, params In[] src) : this(new ActionOf<In>(input => proc.Invoke(input)), src)
         { }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public And(IProc<In> proc, params In[] src) : this(
+        public And(IAction<In> proc, params In[] src) : this(
             proc, new EnumerableOf<In>(src))
         { }
 
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public And(IProc<In> proc, IEnumerable<In> src) : this(new FuncOf<In, bool>(input => { proc.Exec(input); return true; }), src)
+        public And(IAction<In> proc, IEnumerable<In> src) : this(new FuncOf<In, bool>(input => { proc.Invoke(input); return true; }), src)
         { }
 
         /// <summary>

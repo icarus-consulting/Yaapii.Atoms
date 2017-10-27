@@ -29,13 +29,13 @@ namespace Yaapii.Atoms
     /// <summary>
     /// A capsule for anything.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface IScalar<T>
+    /// <typeparam name="OutValue"></typeparam>
+    public interface IScalar<OutValue>
     {
         /// <summary>
         /// Get the value.
         /// </summary>
         /// <returns>the value</returns>
-        T Value();
+        OutValue Value();
     }
 }
