@@ -13,7 +13,7 @@ namespace Yaapii.Atoms.Scalar
     public class NoNullScalar<T> : IScalar<T>
     {
         private readonly IScalar<T> _origin;
-        private readonly ICallable<T> _fallback;
+        private readonly IFunc<T> _fallback;
 
         /// <summary>
         /// A scalar with a fallback if value is null.
@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="ex">error to raise if null</param>
         public NoNullScalar(T origin, Exception ex) : this(
             new ScalarOf<T>(origin), 
-            new CallableOf<T>(() => throw ex))
+            new FuncOf<T>(() => throw ex))
         { }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="fallback">the fallback value</param>
         public NoNullScalar(IScalar<T> origin, T fallback) : this(
             origin, 
-            new CallableOf<T>(() => fallback))
+            new FuncOf<T>(() => fallback))
         { }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="origin">the original scalar</param>
         /// <param name="fallback">the fallback</param>
-        public NoNullScalar(IScalar<T> origin, ICallable<T> fallback)
+        public NoNullScalar(IScalar<T> origin, IFunc<T> fallback)
         {
             _origin = origin;
             _fallback = fallback;
@@ -73,7 +73,7 @@ namespace Yaapii.Atoms.Scalar
         {
             T ret = _origin.Value();
 
-            if (ret == null) ret = _fallback.Call();
+            if (ret == null) ret = _fallback.Invoke();
 
             return ret;
         }

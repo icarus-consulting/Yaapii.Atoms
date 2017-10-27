@@ -202,10 +202,10 @@ namespace Yaapii.Atoms.Text
         { }
 
         /// <summary>
-        /// A <see cref="IText"/> out of the return value of a <see cref="ICallable{T}"/>.
+        /// A <see cref="IText"/> out of the return value of a <see cref="IFunc{T}"/>.
         /// </summary>
-        /// <param name="fnc">callable returning a string</param>
-        public TextOf(ICallable<string> fnc) : this(new ScalarOf<string>(fnc))
+        /// <param name="fnc">func returning a string</param>
+        public TextOf(IFunc<string> fnc) : this(new ScalarOf<string>(fnc))
         { }
 
         /// <summary>

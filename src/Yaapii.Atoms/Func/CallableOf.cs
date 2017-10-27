@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Func
     /// Function that has only output.
     /// </summary>
     /// <typeparam name="Out">type of output</typeparam>
-    public sealed class CallableOf<Out> : ICallable<Out>
+    public sealed class FuncOf<Out> : IFunc<Out>
     {
         /// <summary>
         /// func that will be called
@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Func
         /// Function that has only output.
         /// </summary>
         /// <param name="fnc">func to call</param>
-        public CallableOf(System.Func<Out> fnc)
+        public FuncOf(System.Func<Out> fnc)
         {
             this._func = new FuncOf<bool, Out>(() => fnc.Invoke());
         }
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Func
         /// Call function and retrieve output.
         /// </summary>
         /// <returns>the output</returns>
-        public Out Call()
+        public Out Invoke()
         {
             return this._func.Invoke(true);
         }

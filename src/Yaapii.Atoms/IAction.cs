@@ -34,6 +34,19 @@ namespace Yaapii.Atoms
         /// <summary>
         /// Run the action.
         /// </summary>
-        void Run();
+        void Invoke();
+    }
+
+    /// <summary>
+    /// A function with input, but no output.
+    /// </summary>
+    /// <typeparam name="In"></typeparam>
+    public interface IAction<In>
+    {
+        /// <summary>
+        /// Execute the proc.
+        /// </summary>
+        /// <param name="input">input argument</param>
+        void Invoke(In input);
     }
 }
