@@ -345,7 +345,7 @@ string html = sc.Value(); //will fetch the html from the url and return it as a 
             new InputOf(
                 new Url("http://www.ars-technica.com")
             )
-        ).AsString());
+        ).AsString()).Value();
 
 string html = sc.Value(); //will fetch the html from the url and return it as a string
 string html2 = sc.Value(); //will return the html from the cache
