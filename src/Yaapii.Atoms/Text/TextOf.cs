@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="input">a input</param>
         /// <param name="max">maximum buffer size</param>
-        public TextOf(IInput input, int max) : this(input, max, Encoding.UTF8)
+        public TextOf(IInput input, int max) : this(input, max, Encoding.GetEncoding(0))
         { }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of <see cref="IBytes"/> object.
         /// </summary>
         /// <param name="bytes">A <see cref="IBytes"/> object</param>
-        public TextOf(IBytes bytes) : this(bytes, Encoding.UTF8)
+        public TextOf(IBytes bytes) : this(bytes, Encoding.GetEncoding(0))
         { }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of <see cref="string"/>.
         /// </summary>
         /// <param name="input">a string</param>
-        public TextOf(String input) : this(input, Encoding.UTF8)
+        public TextOf(String input) : this(input, Encoding.GetEncoding(0))
         { }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="input">a string</param>
         /// <param name="encoding"><see cref="Encoding"/> of the string</param>
         public TextOf(String input, Encoding encoding) : this(
-            () => encoding.GetString(Encoding.GetEncoding(0).GetBytes(input)))
+            () => encoding.GetString(encoding.GetBytes(input)))
         { }
 
         /// <summary>
@@ -202,10 +202,10 @@ namespace Yaapii.Atoms.Text
         { }
 
         /// <summary>
-        /// A <see cref="IText"/> out of the return value of a <see cref="ICallable{T}"/>.
+        /// A <see cref="IText"/> out of the return value of a <see cref="IFunc{T}"/>.
         /// </summary>
-        /// <param name="fnc">callable returning a string</param>
-        public TextOf(ICallable<string> fnc) : this(new ScalarOf<string>(fnc))
+        /// <param name="fnc">func returning a string</param>
+        public TextOf(IFunc<string> fnc) : this(new ScalarOf<string>(fnc))
         { }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Yaapii.Atoms.Text
         /// <returns></returns>
         public String AsString()
         {
-            return new IoCheckedScalar<string>(this._origin).Value();
+            return this._origin.Value();
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Yaapii.Atoms.Text
         /// <returns></returns>
         public int CompareTo(IText text)
         {
-            return new UncheckedText(this).CompareTo(text);
+            return this.AsString().CompareTo(text.AsString());
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Yaapii.Atoms.Text
         public new bool Equals(object obj)
         {
             if (obj as IText == null) return false;
-            return new UncheckedText(this).CompareTo(obj as IText) == 0;
+            return this.AsString().CompareTo((obj as IText).AsString()) == 0;
         }
 
         /// <summary>

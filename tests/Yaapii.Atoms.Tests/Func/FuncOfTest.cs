@@ -22,31 +22,22 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Func;
 
-namespace Yaapii.Atoms.Tests.Scalar
+namespace Yaapii.Atoms.Tests.Func
 {
-    public sealed class IoCheckedScalarTest
+    public sealed class FuncOfTest
     {
         [Fact]
-        public void RethrowsCheckedToUncheckedException()
+        public void ConvertsSystemFuncIntoAtomsFunc()
         {
-            var exception = new IOException("intended");
-            try
-            {
-                new IoCheckedScalar<int>(
-                    new ScalarOf<int>(
-                    () => throw exception)
-                ).Value();
-            }
-            catch (IOException ex)
-            {
-                Assert.True(ex == exception);
-            }
+            Assert.True(
+            new FuncOf<int>(
+                () => 1
+            ).Invoke() == 1,
+            "cannot convert func into callable");
         }
-
     }
 }

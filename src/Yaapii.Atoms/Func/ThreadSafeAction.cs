@@ -30,12 +30,12 @@ namespace Yaapii.Atoms.Func
     /// Proc that is threadsafe.
     /// </summary>
     /// <typeparam name="In">type of input</typeparam>
-    public sealed class ThreadSafeProc<In> : IProc<In>
+    public sealed class ThreadSafeAction<In> : IAction<In>
     {
         /// <summary>
         /// original proc
         /// </summary>
-        private readonly IProc<In> _proc;
+        private readonly IAction<In> _proc;
 
         /// <summary>
         /// threadsafe-lock
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Func
         /// Proc that is threadsafe.
         /// </summary>
         /// <param name="prc">proc to make threadsafe</param>
-        public ThreadSafeProc(IProc<In> prc) : this(prc, prc)
+        public ThreadSafeAction(IAction<In> prc) : this(prc, prc)
         { }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="prc">proc to make threadsafe</param>
         /// <param name="lck">object to lock threadsafe</param>
-        public ThreadSafeProc(IProc<In> prc, object lck)
+        public ThreadSafeAction(IAction<In> prc, object lck)
         {
             this._proc = prc;
             this._lck = lck;
@@ -64,11 +64,57 @@ namespace Yaapii.Atoms.Func
         /// Execute procedure with given input.
         /// </summary>
         /// <param name="input"></param>
-        public void Exec(In input)
+        public void Invoke(In input)
         {
             lock (this._lck)
             {
-                this._proc.Exec(input);
+                this._proc.Invoke(input);
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Action that is threadsafe.
+    /// </summary>
+    public sealed class ThreadSafeAction : IAction
+    {
+        /// <summary>
+        /// original proc
+        /// </summary>
+        private readonly IAction _proc;
+
+        /// <summary>
+        /// threadsafe-lock
+        /// </summary>
+        private readonly Object _lck;
+
+        /// <summary>
+        /// Proc that is threadsafe.
+        /// </summary>
+        /// <param name="prc">proc to make threadsafe</param>
+        public ThreadSafeAction(IAction prc) : this(prc, prc)
+        { }
+
+        /// <summary>
+        /// Proc that is threadsafe.
+        /// </summary>
+        /// <param name="prc">proc to make threadsafe</param>
+        /// <param name="lck">object to lock threadsafe</param>
+        public ThreadSafeAction(IAction prc, object lck)
+        {
+            this._proc = prc;
+            this._lck = lck;
+        }
+
+        /// <summary>
+        /// Execute procedure with given input.
+        /// </summary>
+        public void Invoke()
+        {
+            lock (this._lck)
+            {
+                this._proc.Invoke();
             }
         }
 

@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>true if equal.</returns>
         public bool Equals(IText text)
         {
-            return new UncheckedText(this).Equals(text);
+            return this.Equals(text);
         }
     }
 }

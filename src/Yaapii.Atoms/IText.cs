@@ -27,7 +27,7 @@ using System.Text;
 namespace Yaapii.Atoms
 {
     ///
-    /// Text.
+    /// Text. 
     ///
     public interface IText : IEquatable<IText>
     {

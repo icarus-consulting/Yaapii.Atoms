@@ -37,8 +37,8 @@ namespace Yaapii.Atoms.Text
     /// </summary>
     public sealed class SplitText : IEnumerable<String>
     {
-        private readonly UncheckedText _origin;
-        private readonly UncheckedText _regex;
+        private readonly IText _origin;
+        private readonly IText _regex;
 
         /// <summary>
         /// A <see cref="IText"/> which has been splitted at the given string.
@@ -47,8 +47,8 @@ namespace Yaapii.Atoms.Text
         /// <param name="rgx">regex to use for splitting</param>
         public SplitText(String text, String rgx) :
             this(
-                new UncheckedText(new TextOf(text)),
-                new UncheckedText(new TextOf(rgx))
+                new TextOf(text),
+                new TextOf(rgx)
             )
         { }
 
@@ -56,9 +56,9 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> which has been splitted at the given string.
         /// </summary>
         /// <param name="text">text to split</param>
-        /// <param name="rgx">regex to use for splitting</param>        
+        /// <param name="rgx">regex to use for splitting</param>
         public SplitText(String text, IText rgx) :
-            this(new UncheckedText(text), new UncheckedText(rgx))
+            this(new TextOf(text), rgx)
         { }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">text to split</param>
         /// <param name="rgx">regex to use for splitting</param>
         public SplitText(IText text, String rgx) :
-            this(new UncheckedText(text), new UncheckedText(rgx))
+            this(text, new TextOf(rgx))
         { }
 
         /// <summary>
@@ -75,21 +75,11 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to split</param>
         /// <param name="rgx">regex to use for splitting</param>
-        public SplitText(IText text, IText rgx) :
-            this(new UncheckedText(text), new UncheckedText(rgx))
-        { }
-
-        /// <summary>
-        /// A <see cref="IText"/> which has been splitted at the given string.
-        /// </summary>
-        /// <param name="text">text to split</param>
-        /// <param name="rgx">regex to use for splitting</param>
-        public SplitText(UncheckedText text, UncheckedText rgx)
+        public SplitText(IText text, IText rgx)
         {
             this._origin = text;
             this._regex = rgx;
         }
-
 
         public IEnumerator<String> GetEnumerator()
         {

@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// the target
         /// </summary>
-        private readonly UncheckedScalar<Stream> _target;
+        private readonly IScalar<Stream> _target;
 
         /// <summary>
         /// A writable <see cref="Stream"/> of a file path.
@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="tgt">the target</param>
         private OutputStreamTo(IScalar<Stream> tgt) : base()
         {
-            this._target = new UncheckedScalar<Stream>(new StickyScalar<Stream>(tgt));
+            this._target = new StickyScalar<Stream>(tgt);
         }
 
         public async new void WriteAsync(byte[] buffer, int offset, int length)
