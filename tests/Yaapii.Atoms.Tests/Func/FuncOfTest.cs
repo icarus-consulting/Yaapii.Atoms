@@ -28,15 +28,15 @@ using Yaapii.Atoms.Func;
 
 namespace Yaapii.Atoms.Tests.Func
 {
-    public sealed class CallableOfTest
+    public sealed class FuncOfTest
     {
         [Fact]
-        public void ConvertsFuncIntoCallable()
+        public void ConvertsSystemFuncIntoAtomsFunc()
         {
             Assert.True(
-            new CallableOf<int>(
+            new FuncOf<int>(
                 () => 1
-            ).Call() == 1,
+            ).Invoke() == 1,
             "cannot convert func into callable");
         }
     }

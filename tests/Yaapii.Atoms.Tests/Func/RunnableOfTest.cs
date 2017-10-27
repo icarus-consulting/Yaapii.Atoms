@@ -28,7 +28,7 @@ using Yaapii.Atoms.Func;
 
 namespace Yaapii.Atoms.Tests.Func
 {
-    public sealed class RunnableOfTest
+    public sealed class ActionOfTest
     {
         [Fact]
         public void ConvertsFuncIntoRunnable()
@@ -36,12 +36,11 @@ namespace Yaapii.Atoms.Tests.Func
             var i = 0;
 
             new ActionOf<int>(
-                input =>
+                (input) =>
                 {
                     i = input;
-                },
-                1
-            ).Run();
+                }
+            ).Invoke(1);
 
             Assert.True(i == 1,
                 "cannot convert func to runnable");

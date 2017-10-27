@@ -14,19 +14,19 @@ namespace Yaapii.Atoms.Tests.Func
         {
             Assert.Throws<IOException>(
                 () =>
-                new NoNullsCallable<string>(
+                new NoNullsFunc<string>(
                     () => null
-                ).Call());
+                ).Invoke());
         }
 
         [Fact]
         public void RaisesGivenError()
         {
             Assert.Throws<IOException>(() =>
-           new NoNullsCallable<string>(
+           new NoNullsFunc<string>(
                () => null,
                new IOException("got NULL")
-           ).Call());
+           ).Invoke());
         }
 
         [Fact]
@@ -35,10 +35,10 @@ namespace Yaapii.Atoms.Tests.Func
             var fbk = "wtf! its null!";
 
             Assert.True(
-                new NoNullsCallable<string>(
+                new NoNullsFunc<string>(
                     () => null,
                     fbk
-                ).Call() == fbk);
+                ).Invoke() == fbk);
         }
     }
 }
