@@ -60,5 +60,41 @@ namespace Yaapii.Atoms.Tests.Text
         {
             Assert.True(new TextContains(new ScalarOf<string>("Hallo Welt!"), new ScalarOf<string>("welt"), new ScalarOf<StringComparison>(StringComparison.CurrentCultureIgnoreCase)).Value(), "Contains with ignore case works not! (IScalar)");
         }
+
+        [Fact]
+        public void FindsNotStringInString()
+        {
+            Assert.False(new TextContains("Hallo Welt!", "welt").Value(), "Contains works not! (String)");
+        }
+
+        [Fact]
+        public void FindsNotStringInStringIgnoreCase()
+        {
+            Assert.False(new TextContains("Hallo Welt!", "world", true).Value(), "Contains with ignore case works not! (String)");
+        }
+
+        [Fact]
+        public void FindsNotTextInText()
+        {
+            Assert.False(new TextContains(new TextOf("Hallo Welt!"), new TextOf("welt")).Value(), "Contains works not! (IText)");
+        }
+
+        [Fact]
+        public void FindsNotTextInTextIgnoreCase()
+        {
+            Assert.False(new TextContains(new TextOf("Hallo Welt!"), new TextOf("world"), true).Value(), "Contains with ignore case works not! (IText)");
+        }
+
+        [Fact]
+        public void FindsNotStringScalarInStringScalar()
+        {
+            Assert.False(new TextContains(new ScalarOf<string>("Hallo Welt!"), new ScalarOf<string>("welt")).Value(), "Contains works not! (IScalar)");
+        }
+
+        [Fact]
+        public void FindsNotITextInITextIgnoreCase()
+        {
+            Assert.False(new TextContains(new ScalarOf<string>("Hallo Welt!"), new ScalarOf<string>("world"), new ScalarOf<StringComparison>(StringComparison.CurrentCultureIgnoreCase)).Value(), "Contains with ignore case works not! (IScalar)");
+        }
     }
 }
