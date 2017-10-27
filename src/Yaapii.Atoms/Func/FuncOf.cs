@@ -31,17 +31,17 @@ namespace Yaapii.Atoms.Func
     /// <summary>
     /// Function that has input and output
     /// </summary>
-    /// <typeparam name="X">input</typeparam>
-    /// <typeparam name="Y">output</typeparam>
-    public sealed class FuncOf<X, Y> : IFunc<X, Y>
+    /// <typeparam name="In">input</typeparam>
+    /// <typeparam name="Out">output</typeparam>
+    public sealed class FuncOf<In, Out> : IFunc<In, Out>
     {
-        private readonly System.Func<X, Y> _func;
+        private readonly System.Func<In, Out> _func;
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="callable"></param>
-        public FuncOf(System.Func<Y> callable) : this(input => callable.Invoke())
+        /// <param name="fnc"></param>
+        public FuncOf(System.Func<Out> fnc) : this(input => fnc.Invoke())
         { }
 
         /// <summary>
@@ -49,10 +49,10 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="proc">procedure to execute</param>
         /// <param name="result"></param>
-        public FuncOf(IProc<X> proc, Y result) : this(
+        public FuncOf(IAction<In> proc, Out result) : this(
                 input =>
                 {
-                    proc.Exec(input);
+                    proc.Invoke(input);
                     return result;
                 }
         )
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Func
         /// Function that has input and output
         /// </summary>
         /// <param name="func">function to execute</param>
-        public FuncOf(System.Func<X, Y> func)
+        public FuncOf(System.Func<In, Out> func)
         {
             _func = func;
         }
@@ -72,7 +72,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public Y Invoke(X input)
+        public Out Invoke(In input)
         {
             return _func.Invoke(input);
         }

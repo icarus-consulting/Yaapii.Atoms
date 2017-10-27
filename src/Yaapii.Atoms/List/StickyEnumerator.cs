@@ -58,14 +58,14 @@ namespace Yaapii.Atoms.List
         /// A <see cref="IEnumerator{T}"/> from the given that returns content from cache always.
         /// </summary>
         /// <param name="src">function to retrieve enumerator for cache</param>
-        public StickyEnumerator(Func<IEnumerator<X>> src) : this(new CallableOf<IEnumerator<X>>(src))
+        public StickyEnumerator(Func<IEnumerator<X>> src) : this(new FuncOf<IEnumerator<X>>(src))
         { }
 
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> from the given that returns content from cache always.
         /// </summary>
         /// <param name="src">function to retrieve enumerator for cache</param>
-        public StickyEnumerator(ICallable<IEnumerator<X>> src) : this(new ScalarOf<IEnumerator<X>>(src))
+        public StickyEnumerator(IFunc<IEnumerator<X>> src) : this(new ScalarOf<IEnumerator<X>>(src))
         { }
 
         /// <summary>

@@ -27,6 +27,19 @@ using System.Text;
 namespace Yaapii.Atoms
 {
     /// <summary>
+    /// Represents a function that you call without an argument and which returns something.
+    /// </summary>
+    /// <typeparam name="Out"></typeparam>
+    public interface IFunc<Out>
+    {
+        /// <summary>
+        /// Call the function and retrieve the output.
+        /// </summary>
+        /// <returns></returns>
+        Out Invoke();
+    }
+
+    /// <summary>
     /// A function that has one input and an output.
     /// </summary>
     /// <typeparam name="In"></typeparam>
