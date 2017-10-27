@@ -40,7 +40,7 @@ var i = new FuncOf<int, int>(
 var url = new Url("https://www.google.de");
 var f = new StickyFunc<Url, IText>((u) =>
             new TextOf(
-                new InputOf(u)).AsString()
+                new InputOf(u))
         ).Invoke(url);
 
 var html = f.Invoke(); //will load the page content from the web
@@ -339,13 +339,13 @@ string html = sc.Value(); //will fetch the html from the url and return it as a 
  ### Cache function results
  ```csharp
  var sc =
-    new ScalarOf<string>(
+    new StickyScalar<string>(
         () =>
         new TextOf(
             new InputOf(
                 new Url("http://www.ars-technica.com")
             )
-        ).AsString());
+        ).AsString()).Value();
 
 string html = sc.Value(); //will fetch the html from the url and return it as a string
 string html2 = sc.Value(); //will return the html from the cache
