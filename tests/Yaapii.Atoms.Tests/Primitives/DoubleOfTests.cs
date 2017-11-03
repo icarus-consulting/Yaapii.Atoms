@@ -12,8 +12,7 @@ namespace Yaapii.Atoms.Tests.Primitives
         [Fact]
         public void ConvertsDouble()
         {
-            var pi = Math.PI;
-            var piStr = pi.ToString("G17");
+            var piStr = Math.PI.ToString("G17");
             var piFromStr = new DoubleOf(piStr, CultureInfo.CurrentCulture).Value();
             var piStr2 = piFromStr.ToString("G17");
 
