@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.List.Tests
             int size = 42;
             int element = 11;
             Assert.True(
-                new LengthOfEnumerator<int>(
+                new LengthOfEnumerator(
                     new RepeatedEnumerator<int>(
                         element,
                         size
@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.List.Tests
         public void EmptyTest()
         {
             Assert.True(
-                new LengthOfEnumerator<int>(
+                new LengthOfEnumerator(
                     new RepeatedEnumerator<int>(0, 0)
                     ).Value() == 0,
                     "Can't generate an empty enumerator");

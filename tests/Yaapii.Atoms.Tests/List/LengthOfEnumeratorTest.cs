@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.List.Tests
         public void Counts()
         {
             Assert.True(
-                new LengthOfEnumerator<int>(
+                new LengthOfEnumerator(
                     new EnumerableOf<int>(1, 2, 3, 4, 5).GetEnumerator()).Value() == 5,
                 "cannot count items");
         }

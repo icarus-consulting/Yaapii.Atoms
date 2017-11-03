@@ -158,7 +158,7 @@ namespace Yaapii.Atoms.IO.Tests
             ).Value();
 
             Assert.True(
-                new LengthOf<string>(
+                new List.LengthOf(
                     new SplitText(
                         new TextOf(
                             new BytesOf(

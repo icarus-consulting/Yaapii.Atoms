@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.IO.Tests
             if (File.Exists(outputPath)) File.Delete(outputPath);
 
             //Create large file
-            new LengthOf(
+            new IO.LengthOf(
                 new InputOf(
                     new TeeInputStream(
                         new MemoryStream(

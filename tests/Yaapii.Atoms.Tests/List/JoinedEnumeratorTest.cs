@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.List.Tests
         public void JoinsEnumerators()
         {
             Assert.True(
-            new LengthOfEnumerator<IEnumerator<string>>(
+            new LengthOfEnumerator(
                 new JoinedEnumerator<IEnumerator<String>>(
                     new MappedEnumerator<string, IEnumerator<string>>(
                         new EnumerableOf<string>("x", "y", "z").GetEnumerator(),

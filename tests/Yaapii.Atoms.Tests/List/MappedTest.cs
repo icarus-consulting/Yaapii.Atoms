@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.List.Tests
         public void TransformsEmptyList()
         {
             Assert.True(
-                new LengthOf<IText>(
+                new LengthOf(
                     new Mapped<String, IText>(
                         new EnumerableOf<string>(),
                         input => new UpperText(new TextOf(input))

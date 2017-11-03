@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.List.Tests
             int element = 11;
 
             Assert.True(
-                new LengthOf<int>(
+                new LengthOf(
                         new Filtered<int>(
                             new Repeated<int>(
                                 element,
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.List.Tests
         public void EmptyTest()
         {
             Assert.True(
-                new LengthOf<int>(
+                new LengthOf(
                     new Repeated<int>(0, 0)
                 ).Value() == 0,
             "Can't generate an empty iterable");

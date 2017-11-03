@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.IO.Tests
             var str = "Hello World"; var lmt = "\r\n"; var times = 1000;
 
             var length = 
-                new LengthOf(
+                new IO.LengthOf(
                     new InputOf(
                         new TeeInputStream(
                             new MemoryStream(

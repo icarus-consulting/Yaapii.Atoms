@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.List.Tests
                         ));
 
             Assert.True(
-                new LengthOf<int>(list).Value() == new LengthOf<int>(list).Value(),
+                new LengthOf(list).Value() == new LengthOf(list).Value(),
                 "can't ignore changes of underlying iterable");
         }
     }

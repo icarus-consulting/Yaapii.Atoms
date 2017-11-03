@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void SplitEmptyText()
         {
             Assert.True(
-                new LengthOf<string>(
+                new LengthOf(
                     new SplitText("", "\n")).Value() == 0,
                     "Can't split an empty text");
         }

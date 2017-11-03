@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.List.Tests
         public void ConvertsScalarsToEnumerable()
         {
             Assert.True(
-                new LengthOf<string>(
+                new LengthOf(
                     new EnumerableOf<string>(
                         "a", "b", "c"
                     )
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.List.Tests
         public void ConvertsObjectsToEnumerable()
         {
             Assert.True(
-                new LengthOf<IText>(
+                new LengthOf(
                     new EnumerableOf<IText>(
                         new TextOf("a"), new TextOf("b"), new TextOf("c")
                     )
