@@ -27,15 +27,14 @@ using System.Text;
 namespace Yaapii.Atoms.List
 {
     /// <summary>
-    /// Length of an <see cref="IEnumerable{T}"/>
+    /// Length of an <see cref="IEnumerable"/>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public sealed class LengthOf : IScalar<Int32>
     {
         private readonly IEnumerable _enumerable;
 
         /// <summary>
-        /// Length of an <see cref="IEnumerable{T}"/>
+        /// Length of an <see cref="IEnumerable"/>
         /// </summary>
         /// <param name="items">the enumerable</param>
         public LengthOf(IEnumerable items)

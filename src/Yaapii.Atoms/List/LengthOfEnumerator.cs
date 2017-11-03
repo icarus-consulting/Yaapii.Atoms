@@ -29,7 +29,6 @@ namespace Yaapii.Atoms.List
     /// <summary>
     /// Length of an <see cref="IEnumerator"/>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public sealed class LengthOfEnumerator : IScalar<Int32>
     {
         private readonly IEnumerator _enumerator;
