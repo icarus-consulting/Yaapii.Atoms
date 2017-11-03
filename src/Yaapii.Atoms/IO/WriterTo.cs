@@ -29,7 +29,7 @@ using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Yaapii.Atoms.Tests.IO
+namespace Yaapii.Atoms.IO
 {
     /// <summary>
     /// A <see cref="StreamWriter"/> to a target.

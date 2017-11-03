@@ -5,7 +5,7 @@ using Xunit;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Tests.Text
+namespace Yaapii.Atoms.Primitives.Tests
 {
     public sealed class CharOfTest
     {

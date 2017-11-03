@@ -28,7 +28,7 @@ using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
 using System.Linq;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class FilteredTests
     {

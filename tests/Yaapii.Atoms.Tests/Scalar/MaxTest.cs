@@ -27,7 +27,7 @@ using Xunit;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Fail;
 
-namespace Yaapii.Atoms.Tests.Scalar
+namespace Yaapii.Atoms.Scalar.Tests
 {
     public sealed class MaxTest
     {

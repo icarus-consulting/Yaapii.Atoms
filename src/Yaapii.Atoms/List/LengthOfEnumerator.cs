@@ -21,24 +21,24 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Text;
 
 namespace Yaapii.Atoms.List
 {
     /// <summary>
-    /// Length of an <see cref="IEnumerator{T}"/>
+    /// Length of an <see cref="IEnumerator"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class LengthOfEnumerator<T> : IScalar<Int32>
+    public sealed class LengthOfEnumerator : IScalar<Int32>
     {
-        private readonly IEnumerator<T> _enumerator;
+        private readonly IEnumerator _enumerator;
 
         /// <summary>
-        /// Length of an <see cref="IEnumerator{T}"/>
+        /// Length of an <see cref="IEnumerator"/>
         /// </summary>
         /// <param name="items">enumerator to count</param>
-        public LengthOfEnumerator(IEnumerator<T> items)
+        public LengthOfEnumerator(IEnumerator items)
         {
             this._enumerator = items;
         }

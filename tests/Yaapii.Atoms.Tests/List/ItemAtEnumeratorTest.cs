@@ -28,7 +28,7 @@ using Xunit;
 using Yaapii.Atoms.List;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class ItemAtEnumeratorTest
     {

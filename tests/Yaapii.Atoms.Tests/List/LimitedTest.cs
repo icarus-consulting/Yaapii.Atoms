@@ -28,7 +28,7 @@ using Yaapii.Atoms.List;
 using Yaapii.Atoms.Misc;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class LimitedTest
     {
