@@ -50,10 +50,10 @@ namespace Yaapii.Atoms.Tests.IO
             }
 
             Assert.True(
-                Encoding.UTF8.GetString(
+                new TextOf(
                     new InputAsBytes(
                         new InputOf(uri)
-                    ).AsBytes()).Trim().CompareTo(s) == 0, //.Equals is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
+                    )).AsString().CompareTo(s) == 0, //.Equals is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
             "Can't copy Input to Output and return Input");
         }
     }

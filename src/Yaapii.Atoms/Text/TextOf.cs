@@ -175,7 +175,11 @@ namespace Yaapii.Atoms.Text
         /// <param name="bytes">A <see cref="IBytes"/> object</param>
         /// <param name="encoding"><see cref="Encoding"/> of the <see cref="IBytes"/> object</param>
         public TextOf(IBytes bytes, Encoding encoding) : this(
-            () => encoding.GetString(bytes.AsBytes()))
+            () => 
+            {
+                var memoryStream = new MemoryStream(bytes.AsBytes());
+                return new StreamReader(memoryStream).ReadToEnd();
+            })
         { }
 
         /// <summary>
