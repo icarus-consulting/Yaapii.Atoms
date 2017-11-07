@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Text;
 
@@ -56,7 +57,8 @@ namespace Yaapii.Atoms.List
         /// <param name="source">source enum</param>
         public ItemAt(IEnumerable<T> source) : this(
                 source,
-                new FuncOf<IEnumerable<T>, T>(itr => { throw new IOException("The iterable is empty"); }))
+                new FuncOf<IEnumerable<T>, T>(
+                    itr => throw new NoSuchElementException("The enumerable is empty")))
         { }
 
         /// <summary>
@@ -64,7 +66,10 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(IEnumerable<T> source, T fallback) : this(source, new FuncOf<IEnumerable<T>, T>(b => fallback))
+        public ItemAt(IEnumerable<T> source, T fallback) : this(
+            source, 
+            new FuncOf<IEnumerable<T>, T>(
+                b => fallback))
         { }
 
         /// <summary>
@@ -73,7 +78,9 @@ namespace Yaapii.Atoms.List
         /// <param name="source">source enum</param>
         /// <param name="position">position</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(IEnumerable<T> source, int position, T fallback) : this(source, new FuncOf<IEnumerable<T>, T>(b => fallback))
+        public ItemAt(IEnumerable<T> source, int position, T fallback) : this(
+            source, 
+            new FuncOf<IEnumerable<T>, T>(b => fallback))
         { }
 
         /// <summary>
@@ -81,7 +88,8 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
-        public ItemAt(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback) : this(source, 0, fallback)
+        public ItemAt(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback) : this(
+            source, 0, fallback)
         { }
 
         /// <summary>
@@ -94,11 +102,12 @@ namespace Yaapii.Atoms.List
                 position,
                 new FuncOf<IEnumerable<T>, T>(itr =>
                 {
-                    throw new IOException(
-                        new FormattedText(
-                            "The iterable doesn't have the position #%d",
-                            position
-                        ).AsString()
+                    throw 
+                        new NoSuchElementException(
+                            new FormattedText(
+                                "The iterable doesn't have the position #%d",
+                                position
+                            ).AsString()
                     );
                 }))
         { }
@@ -109,7 +118,10 @@ namespace Yaapii.Atoms.List
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(IEnumerable<T> source, int position, Func<IEnumerable<T>, T> fallback) : this(source, position, new FuncOf<IEnumerable<T>, T>(fallback))
+        public ItemAt(IEnumerable<T> source, int position, Func<IEnumerable<T>, T> fallback) : this(
+            source, 
+            position, 
+            new FuncOf<IEnumerable<T>, T>(fallback))
         { }
 
         /// <summary>

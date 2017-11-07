@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Xunit;
+using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.List;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
@@ -56,7 +57,7 @@ namespace Yaapii.Atoms.List.Tests
         [Fact]
         public void FailForEmptyCollectionTest()
         {
-            Assert.Throws<IOException>(
+            Assert.Throws<NoSuchElementException>(
                 () => new ItemAtEnumerator<int>(
                         new EnumerableOf<int>(new int[0]).GetEnumerator(),
                         0
@@ -66,7 +67,7 @@ namespace Yaapii.Atoms.List.Tests
         [Fact]
         public void FailForNegativePositionTest()
         {
-            Assert.Throws<IOException>(
+            Assert.Throws<UnsupportedOperationException>(
                     () => new ItemAtEnumerator<int>(
                         new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                         -1
@@ -89,7 +90,7 @@ namespace Yaapii.Atoms.List.Tests
         [Fact]
         public void FailForPosMoreLengthTest()
         {
-            Assert.Throws<IOException>(
+            Assert.Throws<NoSuchElementException>(
                 () =>
                 new ItemAtEnumerator<int>(
                     new EnumerableOf<int>(1, 2, 3).GetEnumerator(),

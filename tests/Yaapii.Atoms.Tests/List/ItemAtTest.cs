@@ -25,13 +25,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Xunit;
+using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.List.Tests
 {
     public sealed class ItemAtTests
     {
-
         [Fact]
         public void FirstElementTest()
         {
@@ -58,9 +58,9 @@ namespace Yaapii.Atoms.List.Tests
         [Fact]
         public void FailForEmptyCollectionTest()
         {
-            Assert.Throws<IOException>(
+            Assert.Throws<NoSuchElementException>(
                 () => new ItemAt<int>(
-                        new EnumerableOf<int>()
+                        new List<int>()
                     ).Value());
         }
 
