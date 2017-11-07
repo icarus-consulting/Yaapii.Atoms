@@ -26,7 +26,7 @@ using System.IO;
 using System.Text;
 
 #pragma warning disable MaxPublicMethodCount
-namespace Yaapii.Atoms.Tests.IO
+namespace Yaapii.Atoms.IO.Tests
 {
     internal sealed class SlowInputStream : Stream
     {

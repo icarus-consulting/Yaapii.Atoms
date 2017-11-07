@@ -27,7 +27,7 @@ using Xunit;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
 
-namespace Yaapii.Atoms.Tests.Func
+namespace Yaapii.Atoms.Func.Tests
 {
     public class ChainedFuncTest
     {
@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Tests.Func
         public void WithoutIterable()
         {
             Assert.True(
-            new LengthOf<string>(
+            new LengthOf(
                 new Filtered<string>(
                     new Mapped<string, string>(
                         new EnumerableOf<string>("public", "final", "class"),
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Tests.Func
         public void WithIterable()
         {
             Assert.True(
-            new LengthOf<string>(
+            new LengthOf(
                 new Filtered<string>(
                     new Mapped<string, string>(
                         new EnumerableOf<string>("private", "static", "String"),

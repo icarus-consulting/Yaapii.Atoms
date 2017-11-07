@@ -28,7 +28,7 @@ using Xunit;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Tests.Text
+namespace Yaapii.Atoms.Text.Tests
 {
     public sealed class SplitTextTest
     {
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Tests.Text
         public void SplitEmptyText()
         {
             Assert.True(
-                new LengthOf<string>(
+                new LengthOf(
                     new SplitText("", "\n")).Value() == 0,
                     "Can't split an empty text");
         }

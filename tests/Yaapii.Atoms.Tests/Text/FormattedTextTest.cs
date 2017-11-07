@@ -29,7 +29,7 @@ using Xunit;
 using Yaapii.Atoms.Text;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Yaapii.Atoms.Tests.Text
+namespace Yaapii.Atoms.Text.Tests
 {
     public sealed class FormattedTextTest
     {

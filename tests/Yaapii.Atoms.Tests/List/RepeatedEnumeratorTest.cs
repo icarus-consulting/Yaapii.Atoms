@@ -26,7 +26,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.List;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class RepeatedEnumeratorTest
     {
@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Tests.List
             int size = 42;
             int element = 11;
             Assert.True(
-                new LengthOfEnumerator<int>(
+                new LengthOfEnumerator(
                     new RepeatedEnumerator<int>(
                         element,
                         size
@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.Tests.List
         public void EmptyTest()
         {
             Assert.True(
-                new LengthOfEnumerator<int>(
+                new LengthOfEnumerator(
                     new RepeatedEnumerator<int>(0, 0)
                     ).Value() == 0,
                     "Can't generate an empty enumerator");

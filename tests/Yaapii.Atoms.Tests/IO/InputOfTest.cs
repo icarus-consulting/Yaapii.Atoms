@@ -30,7 +30,7 @@ using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
 #pragma warning disable MaxPublicMethodCount
-namespace Yaapii.Atoms.Tests.IO
+namespace Yaapii.Atoms.IO.Tests
 {
     public sealed class InputOfTest
     {
@@ -57,7 +57,7 @@ namespace Yaapii.Atoms.Tests.IO
             Directory.CreateDirectory(dir);
             String content = "Hello, товарищ!";
 
-            new LengthOf(
+            new IO.LengthOf(
                     new InputOf(
                         new TeeInputStream(
                             new MemoryStream(
@@ -158,7 +158,7 @@ namespace Yaapii.Atoms.Tests.IO
             ).Value();
 
             Assert.True(
-                new LengthOf<string>(
+                new List.LengthOf(
                     new SplitText(
                         new TextOf(
                             new BytesOf(

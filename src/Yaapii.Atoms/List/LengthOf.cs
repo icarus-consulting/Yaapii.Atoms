@@ -21,24 +21,23 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Text;
 
 namespace Yaapii.Atoms.List
 {
     /// <summary>
-    /// Length of an <see cref="IEnumerable{T}"/>
+    /// Length of an <see cref="IEnumerable"/>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public sealed class LengthOf<T> : IScalar<Int32>
+    public sealed class LengthOf : IScalar<Int32>
     {
-        private readonly IEnumerable<T> _enumerable;
+        private readonly IEnumerable _enumerable;
 
         /// <summary>
-        /// Length of an <see cref="IEnumerable{T}"/>
+        /// Length of an <see cref="IEnumerable"/>
         /// </summary>
         /// <param name="items">the enumerable</param>
-        public LengthOf(IEnumerable<T> items)
+        public LengthOf(IEnumerable items)
         {
             this._enumerable = items;
         }
@@ -49,7 +48,7 @@ namespace Yaapii.Atoms.List
         /// <returns>the length</returns>
         public Int32 Value()
         {
-            return new LengthOfEnumerator<T>(this._enumerable.GetEnumerator()).Value();
+            return new LengthOfEnumerator(this._enumerable.GetEnumerator()).Value();
         }
 
     }

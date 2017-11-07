@@ -30,7 +30,7 @@ using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class EndlessEnumeratorTest
     {

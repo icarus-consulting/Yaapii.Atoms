@@ -28,7 +28,7 @@ using Yaapii.Atoms.List;
 using Yaapii.Atoms.Misc;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class LimitedTest
     {
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Tests.List
         public void LimitOfZeroProducesEmptyEnumerable()
         {
             Assert.True(
-                new LengthOf<int>(
+                new LengthOf(
                     new Limited<int>(
                         new EnumerableOf<int>(0, 1, 2, 3, 4),
                     0
@@ -72,11 +72,11 @@ namespace Yaapii.Atoms.Tests.List
         public void NegativeLimitProducesEmptyEnumerable()
         {
             Assert.True(
-                new LengthOf<int>(
-                new Limited<int>(
-                    new EnumerableOf<int>(0, 1, 2, 3, 4),
-                    -1
-                )).Value() == 0,
+                new LengthOf(
+                    new Limited<int>(
+                        new EnumerableOf<int>(0, 1, 2, 3, 4),
+                        -1
+                    )).Value() == 0,
                 "Can't limit an iterable to negative number of items");
         }
 
@@ -84,7 +84,7 @@ namespace Yaapii.Atoms.Tests.List
         public void EmptyEnumerableProducesEmptyEnumerable()
         {
             Assert.True(
-                new LengthOf<Nothing>(
+                new LengthOf(
                     new Limited<Nothing>(
                         new EnumerableOf<Nothing>(),
                         10

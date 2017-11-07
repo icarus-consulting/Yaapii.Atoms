@@ -28,7 +28,7 @@ using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Tests.Func
+namespace Yaapii.Atoms.Func.Tests
 {
     public sealed class RepeatedFuncTest
     {

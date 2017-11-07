@@ -27,7 +27,7 @@ using Xunit;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class JoinedEnumeratorTest
     {
@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Tests.List
         public void JoinsEnumerators()
         {
             Assert.True(
-            new LengthOfEnumerator<IEnumerator<string>>(
+            new LengthOfEnumerator(
                 new JoinedEnumerator<IEnumerator<String>>(
                     new MappedEnumerator<string, IEnumerator<string>>(
                         new EnumerableOf<string>("x", "y", "z").GetEnumerator(),

@@ -26,7 +26,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Tests.Text
+namespace Yaapii.Atoms.Text.Tests
 {
     public sealed class RotatedTextTest
     {

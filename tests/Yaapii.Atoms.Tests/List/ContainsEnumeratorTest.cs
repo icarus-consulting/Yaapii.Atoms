@@ -4,7 +4,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.List;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public class ContainsEnumeratorTest
     {

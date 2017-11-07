@@ -26,7 +26,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.List;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class RepeatedTest
     {
@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Tests.List
             int element = 11;
 
             Assert.True(
-                new LengthOf<int>(
+                new LengthOf(
                         new Filtered<int>(
                             new Repeated<int>(
                                 element,
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Tests.List
         public void EmptyTest()
         {
             Assert.True(
-                new LengthOf<int>(
+                new LengthOf(
                     new Repeated<int>(0, 0)
                 ).Value() == 0,
             "Can't generate an empty iterable");

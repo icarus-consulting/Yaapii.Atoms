@@ -31,7 +31,7 @@ using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Yaapii.Atoms.Tests.IO
+namespace Yaapii.Atoms.IO.Tests
 {
     public sealed class BytesOfTest
     {

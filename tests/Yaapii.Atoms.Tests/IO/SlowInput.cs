@@ -26,7 +26,7 @@ using System.IO;
 using System.Text;
 using Yaapii.Atoms.IO;
 
-namespace Yaapii.Atoms.Tests.IO
+namespace Yaapii.Atoms.IO.Tests
 {
     internal sealed class SlowInput : IInput
     {

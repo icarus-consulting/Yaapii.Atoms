@@ -28,6 +28,7 @@ using Yaapii.Atoms.List;
 using Yaapii.Atoms.Error;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Fail;
 
 namespace Yaapii.Atoms.List
 {
@@ -107,12 +108,12 @@ namespace Yaapii.Atoms.List
                 new FuncOf<IEnumerable<T>, T>(
                     (itr) =>
                     {
-                        throw new IOException(
-                            new FormattedText(
-                                "Enumerator doesn't have an element at #%d position",
-                                pos
-                            ).AsString()
-                        );
+                        throw 
+                            new NoSuchElementException(
+                                new FormattedText(
+                                    "Enumerator doesn't have an element at position {0}",
+                                    pos
+                                ).AsString());
                     }
             ))
         { }
@@ -142,19 +143,24 @@ namespace Yaapii.Atoms.List
         {
             new FailPrecise(
                 new FailWhen(this._pos < 0),
-                new IOException(
-                    new FormattedText("The position must be non-negative: %d",
+                new UnsupportedOperationException(
+                    new FormattedText("The position must be non-negative but is {0}",
                         this._pos).AsString())).Go();
-
             T ret;
-
-            for (int cur = 0; cur <= this._pos && this._src.MoveNext(); ++cur) { }
-
             try
             {
+                new FailPrecise(
+                    new FailWhen(!this._src.MoveNext()),
+                    new NoSuchElementException(
+                "Cannot get item because enumerable is empty")).Go(); //will never get out
+
+                this._src.Reset();
+
+                for (int cur = 0; cur <= this._pos && this._src.MoveNext(); ++cur) { }
+
                 ret = this._src.Current;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 ret = this._fallback.Invoke(new EnumerableOf<T>(this._src));
             }
