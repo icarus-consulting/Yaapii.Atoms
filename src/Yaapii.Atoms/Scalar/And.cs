@@ -100,7 +100,7 @@ namespace Yaapii.Atoms.Scalar
         { }
 
         /// <summary>
-        /// Logical and. Returns true if all calls to <see cref="Func{In, Out}" /> were true.
+        /// Logical and. Returns true if all calls to <see cref="Func{Out}" /> were true.
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>
         public And(EnumerableOf<System.Func<bool>> funcs) : this(

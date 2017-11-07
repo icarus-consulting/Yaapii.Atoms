@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
-    <VersionPrefix>0.5.6</VersionPrefix>
+    <VersionPrefix>0.5.8</VersionPrefix>
     <Description>Ported .NET version of Cactoos by Yegor Bugayenko.</Description>
     <NeutralLanguage>en-001</NeutralLanguage>
     <PackageTags>Cactoos, OOP</PackageTags>
@@ -10,7 +10,7 @@
     <PackageLicenseUrl>https://github.com/icarus-consulting/Yaapii.Atoms/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/icarus-consulting/Yaapii.Atoms</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <Authors>Miro Tunk</Authors>
+    <Authors>ICARUS Consulting GmbH</Authors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
