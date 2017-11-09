@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Scalar
 {
     /// <summary>
     /// A <see cref="char"/> out of other objects.
     /// </summary>
     public sealed class CharOf : IScalar<char>
     {
-        private readonly IScalar<char> _chr;
+        private readonly IScalar<char> _converter;
 
         /// <summary>
         /// Converts the value of the specified 32-bit signed integer to its equivalent Unicode character.
@@ -103,19 +102,19 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// Primary ctor
         /// </summary>
-        /// <param name="chr">Converter method who returns the character.</param>
-        private CharOf(IScalar<char> chr)
+        /// <param name="converter">Converter method who returns the character.</param>
+        private CharOf(IScalar<char> converter)
         {
-            _chr = chr;
+            _converter = converter;
         }
 
         /// <summary>
-        /// Returns the char.
+        /// the char
         /// </summary>
         /// <returns></returns>
         public char Value()
         {
-            return _chr.Value();
+            return _converter.Value();
         }
     }
 }

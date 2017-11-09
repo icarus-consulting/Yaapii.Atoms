@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="file">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
         public InputOf(Uri file) : this(
-            () => new FileStream(file.AbsolutePath, FileMode.Open, FileAccess.Read))
+            () => new FileStream(Uri.UnescapeDataString(file.AbsolutePath), FileMode.Open, FileAccess.Read))
         { }
 
         /// <summary>

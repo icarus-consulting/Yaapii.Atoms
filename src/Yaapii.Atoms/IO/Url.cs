@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.IO
         /// <returns></returns>
         public Uri Value()
         {
-            if(!_source.StartsWith("http://") && !_source.StartsWith("https://"))
+            if(!_source.StartsWith("http://") && !_source.StartsWith("https://") &&  !_source.StartsWith("ftp://"))
             {
                 throw new ArgumentException("url must start with http or https");
             }

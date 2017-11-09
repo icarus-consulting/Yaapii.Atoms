@@ -13,17 +13,17 @@ namespace Yaapii.Atoms.List
     public class ContainsEnumerator<T> : IScalar<bool>
         where T: IComparable<T>
     {
-        private readonly T _item;
+        private readonly Func<T, bool> _match;
         private readonly IEnumerator<T> _src;
 
         /// <summary>
         /// Lookup the item in the src.
         /// </summary>
         /// <param name="src">src enumerable</param>
-        /// <param name="item">lookup item</param>
-        public ContainsEnumerator(IEnumerator<T> src, T item)
+        /// <param name="match">lookup item</param>
+        public ContainsEnumerator(IEnumerator<T> src, Func<T,bool> match)
         {
-            _item = item;
+            _match = match;
             _src = src;
         }
 
@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.List
                     new IOException("cannot lookup in empty enumerable")).Go();
 
             var contains = true;
-            for (var cur = 0; this._src.Current.CompareTo(_item) != 0; cur++)
+            for (var cur = 0; !_match.Invoke(this._src.Current); cur++)
             {
                 if (!this._src.MoveNext())
                 {
