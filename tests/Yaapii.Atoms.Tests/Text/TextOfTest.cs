@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using Xunit;
@@ -56,6 +57,64 @@ namespace Yaapii.Atoms.Text.Tests
                     new InputOf(content)
                 ).AsString() == content,
                 "Can't read text from Input with default charset");
+        }
+
+        [Fact]
+        public void ReadsDoubleIntoText()
+        {
+          //  var content = "0,2545";
+
+            double doub = 0.2545;
+
+            var content = doub.ToString(CultureInfo.CurrentCulture);
+
+            Assert.True(
+                    new TextOf(doub
+                    ).AsString() == content,
+                    "Can't read text from double");
+        }
+
+        [Fact]
+        public void ReadsDoubleWithNumberFormatIntoText()
+        {
+            var content = "0.2545";
+            double doub = 0.2545;
+            CultureInfo inf = new CultureInfo("en-US");
+
+            Assert.True(
+                    new TextOf(doub,
+                   inf
+                    ).AsString() == content,
+                    "Can't read text from double with format");
+        }
+
+        [Fact]
+        public void ReadsFloatIntoText()
+        {
+            //var content = "0,2545";
+
+            float doub = 0.2545f;
+            var content = doub.ToString(CultureInfo.CurrentCulture);
+
+            Assert.True(
+                    new TextOf(doub
+                    ).AsString() == content,
+                    "Can't read text from float");
+        }
+
+        [Fact]
+        public void ReadsFloatWithNumberFormatIntoText()
+        {
+            var content = "0.2545";
+            float doub = 0.2545f;
+
+            CultureInfo inf = new CultureInfo("en-US");
+
+            Assert.True(
+                    new TextOf(doub,
+                   inf
+                    ).AsString() == content,
+                    "Can't read text with format from float");
         }
 
         [Fact]
