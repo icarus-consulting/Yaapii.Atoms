@@ -107,6 +107,11 @@ namespace Yaapii.Atoms.Scalar
         {
             _converter = converter;
         }
+
+        /// <summary>
+        /// the char
+        /// </summary>
+        /// <returns></returns>
         public char Value()
         {
             return _converter.Value();
