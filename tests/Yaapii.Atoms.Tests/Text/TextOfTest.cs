@@ -62,9 +62,11 @@ namespace Yaapii.Atoms.Text.Tests
         [Fact]
         public void ReadsDoubleIntoText()
         {
-            var content = "0,2545";
+          //  var content = "0,2545";
 
             double doub = 0.2545;
+
+            var content = doub.ToString(CultureInfo.CurrentCulture);
 
             Assert.True(
                     new TextOf(doub
@@ -89,9 +91,10 @@ namespace Yaapii.Atoms.Text.Tests
         [Fact]
         public void ReadsFloatIntoText()
         {
-            var content = "0,2545";
+            //var content = "0,2545";
 
             float doub = 0.2545f;
+            var content = doub.ToString(CultureInfo.CurrentCulture);
 
             Assert.True(
                     new TextOf(doub
