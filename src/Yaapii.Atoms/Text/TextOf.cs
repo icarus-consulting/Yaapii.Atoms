@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using Yaapii.Atoms.Func;
@@ -45,6 +46,36 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="input">number</param>
         public TextOf(int input) : this(() => input + "")
+        { }
+
+        /// <summary>
+        /// A <see cref="IText"/> out of a double
+        /// </summary>
+        /// <param name="input">a <see cref="double"/></param>
+        public TextOf(double input) : this(input.ToString())
+        { }
+
+        /// <summary>
+        /// A <see cref="IText"/> out of a double
+        /// </summary>
+        /// <param name="input">a <see cref="double"/></param>
+        /// <param name="cultureInfo">The </param>
+        public TextOf(double input, CultureInfo cultureInfo) : this(input.ToString(cultureInfo))
+        { }
+
+        /// <summary>
+        /// A <see cref="IText"/> out of a float
+        /// </summary>
+        /// <param name="input">a <see cref="float"/></param>
+        public TextOf(float input) : this(input.ToString())
+        { }
+
+        /// <summary>
+        /// A <see cref="IText"/> out of a double
+        /// </summary>
+        /// <param name="input">a <see cref="float"/></param>
+        /// <param name="cultureInfo">The </param>
+        public TextOf(float input, CultureInfo cultureInfo) : this(input.ToString(cultureInfo))
         { }
 
         /// <summary>
