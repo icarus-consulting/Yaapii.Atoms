@@ -29,10 +29,10 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="items">enumerable to search through</param>
         /// <param name="match">check to perform on each item</param>
-        public Contains(IEnumerable<T> src, Func<T, bool> match)
+        public Contains(IEnumerable<T> items, Func<T, bool> match)
         {
             _match = match;
-            _items = src;
+            _items = items;
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.List
         /// <returns>true if item is in the enumerable</returns>
         public bool Value()
         {
-            return new ContainsEnumerator<T>(_items.GetEnumerator(), match).Value();
+            return new ContainsEnumerator<T>(_items.GetEnumerator(), _match).Value();
         }
     }
 }

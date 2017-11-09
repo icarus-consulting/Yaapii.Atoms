@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.List
                     new IOException("cannot lookup in empty enumerable")).Go();
 
             var contains = true;
-            for (var cur = 0; _match.Invoke(this._src.Current); cur++)
+            for (var cur = 0; !_match.Invoke(this._src.Current); cur++)
             {
                 if (!this._src.MoveNext())
                 {
