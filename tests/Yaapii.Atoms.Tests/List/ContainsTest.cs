@@ -13,8 +13,8 @@ namespace Yaapii.Atoms.Tests.List
         {
             Assert.True(
                 new Contains<string>(
-                    "cat",
-                    new EnumerableOf<string>("Hello", "my", "cat", "is", "missing")
+                    new EnumerableOf<string>("Hello", "my", "cat", "is", "missing"),
+                    (str) => str == "cat"
                     ).Value());
         }
 
@@ -23,8 +23,8 @@ namespace Yaapii.Atoms.Tests.List
         {
             Assert.False(
                 new Contains<string>(
-                    "elephant",
-                    new EnumerableOf<string>("Hello", "my", "cat", "is", "missing")
+                    new EnumerableOf<string>("Hello", "my", "cat", "is", "missing"),
+                    (str) => str == "elephant"
                     ).Value());
         }
     }
