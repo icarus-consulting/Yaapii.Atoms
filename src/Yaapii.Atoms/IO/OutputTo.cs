@@ -74,7 +74,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="path">a file uri, retrieve with Path.GetFullPath(absOrRelativePath) or prefix with file://. Must be absolute</param>
         public OutputTo(Uri path) : this(
-            () => new FileStream(path.AbsolutePath, FileMode.OpenOrCreate))
+            () => new FileStream(Uri.UnescapeDataString(path.AbsolutePath), FileMode.OpenOrCreate))
         { }
 
         /// <summary>

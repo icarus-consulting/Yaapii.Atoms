@@ -87,5 +87,28 @@ namespace Yaapii.Atoms.Tests.IO
                 new InputStreamOf(content).Length > 0,
                 "Can't show that data is available");
         }
+
+        [Fact]
+        public void ReadsSimpleFileContentWithWhitespacesInUri()
+        {
+            var dir = "artifacts/Input StreamOf Test";
+            var file = "txt-1";
+            var path = Path.GetFullPath(Path.Combine(dir, file));
+
+            Directory.CreateDirectory(dir);
+            if (File.Exists(path)) File.Delete(path);
+
+            String content = "Hello, товарищ!";
+            File.WriteAllBytes(path, new BytesOf(new TextOf(content, Encoding.UTF8)).AsBytes());
+
+            Assert.True(
+                  new TextOf(
+                      new InputAsBytes(
+                          new InputOf(
+                               new InputStreamOf(
+                                    new Uri(path))))
+                   ).AsString() == content,
+                   "Can't read file content");
+        }
     }
 }
