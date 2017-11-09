@@ -14,7 +14,7 @@ namespace Yaapii.Atoms.List.Tests
             Assert.True(
                 new ContainsEnumerator<string>(
                     new EnumerableOf<string>("Hello", "my", "cat", "is", "missing").GetEnumerator(),
-                    "cat"
+                    (str) => str == "cat"
                     ).Value());
         }
 
@@ -24,7 +24,7 @@ namespace Yaapii.Atoms.List.Tests
             Assert.False(
                 new ContainsEnumerator<string>(
                     new EnumerableOf<string>("Hello", "my", "cat", "is", "missing").GetEnumerator(),
-                    "elephant"
+                    (str) => str == "elephant"
                     ).Value());
         }
     }
