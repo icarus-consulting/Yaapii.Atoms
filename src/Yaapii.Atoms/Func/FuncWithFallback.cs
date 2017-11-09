@@ -83,8 +83,10 @@ namespace Yaapii.Atoms.Func
         /// <param name="func">func to call</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="flw">func to call afterwards</param>
-        public FuncWithFallback(System.Func<In, Out> func, System.Func<Exception, Out> fallback, System.Func<Out, Out> flw) :
-            this(new FuncOf<In, Out>((X) => func(X)), new FuncOf<Exception, Out>((e) => fallback(e)), new FuncOf<Out, Out>(flw))
+        public FuncWithFallback(System.Func<In, Out> func, System.Func<Exception, Out> fallback, System.Func<Out, Out> flw) : this(
+            new FuncOf<In, Out>((X) => func(X)), 
+            new FuncOf<Exception, Out>((e) => fallback(e)), 
+            new FuncOf<Out, Out>(flw))
         { }
 
         /// <summary>
@@ -112,11 +114,6 @@ namespace Yaapii.Atoms.Func
             {
                 result = this._func.Invoke(input);
             }
-            //catch (System.Threading.ThreadStateException ex)
-            //{
-            //    Thread.CurrentThread.Join();
-            //    result = this._fallback.Invoke(ex);
-            //}
             catch (Exception ex)
             {
                 result = this._fallback.Invoke(ex);
