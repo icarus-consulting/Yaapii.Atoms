@@ -27,7 +27,7 @@ using Xunit;
 using Yaapii.Atoms.IO;
 
 #pragma warning disable NoStatics // No Statics
-namespace Yaapii.Atoms.Tests.IO
+namespace Yaapii.Atoms.IO.Tests
 {
     public sealed class TeeOutputStreamTest
     {

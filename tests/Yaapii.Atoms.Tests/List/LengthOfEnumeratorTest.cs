@@ -26,7 +26,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.List;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class LengthOfEnumeratorTest
     {
@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Tests.List
         public void Counts()
         {
             Assert.True(
-                new LengthOfEnumerator<int>(
+                new LengthOfEnumerator(
                     new EnumerableOf<int>(1, 2, 3, 4, 5).GetEnumerator()).Value() == 5,
                 "cannot count items");
         }

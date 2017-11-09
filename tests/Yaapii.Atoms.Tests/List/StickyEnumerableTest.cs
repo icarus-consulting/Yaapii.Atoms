@@ -28,7 +28,7 @@ using Xunit;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class StickyEnumerableTest
     {
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Tests.List
                         ));
 
             Assert.True(
-                new LengthOf<int>(list).Value() == new LengthOf<int>(list).Value(),
+                new LengthOf(list).Value() == new LengthOf(list).Value(),
                 "can't ignore changes of underlying iterable");
         }
     }

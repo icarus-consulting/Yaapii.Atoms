@@ -27,8 +27,9 @@ using Xunit;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
 using System.Linq;
+using Yaapii.Atoms.Tests;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class FilteredTests
     {
@@ -36,7 +37,7 @@ namespace Yaapii.Atoms.Tests.List
         public void Filters()
         {
             Assert.True(
-                new LengthOf<string>(
+                new LengthOf(
                     new Filtered<string>(
                         new List<string>() { "A", "B", "C" },
                             (input) => input != "B")).Value() == 2,
@@ -47,7 +48,7 @@ namespace Yaapii.Atoms.Tests.List
         public void FiltersEmptyList()
         {
             Assert.True(
-                new LengthOf<string>(
+                new LengthOf(
                     new Filtered<string>(
                         new EnumerableOf<String>(),
                         input => input.Length > 1)

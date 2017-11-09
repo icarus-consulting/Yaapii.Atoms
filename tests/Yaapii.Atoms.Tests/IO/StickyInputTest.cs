@@ -28,7 +28,7 @@ using Yaapii.Atoms.IO;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Tests.IO
+namespace Yaapii.Atoms.IO.Tests
 {
     public sealed class StickyInputTest
     {
@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Tests.IO
             var str = "Hello World"; var lmt = "\r\n"; var times = 1000;
 
             var length = 
-                new LengthOf(
+                new IO.LengthOf(
                     new InputOf(
                         new TeeInputStream(
                             new MemoryStream(

@@ -27,7 +27,7 @@ using Yaapii.Atoms.IO;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Tests.IO
+namespace Yaapii.Atoms.IO.Tests
 {
     public sealed class WriterAsOutputTest
     {
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Tests.IO
             if (File.Exists(outputPath)) File.Delete(outputPath);
 
             //Create large file
-            new LengthOf(
+            new IO.LengthOf(
                 new InputOf(
                     new TeeInputStream(
                         new MemoryStream(

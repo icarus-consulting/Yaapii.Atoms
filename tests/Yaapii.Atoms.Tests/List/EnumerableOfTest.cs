@@ -27,7 +27,7 @@ using Xunit;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class EnumerableOfTest
     {
@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Tests.List
         public void ConvertsScalarsToEnumerable()
         {
             Assert.True(
-                new LengthOf<string>(
+                new LengthOf(
                     new EnumerableOf<string>(
                         "a", "b", "c"
                     )
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Tests.List
         public void ConvertsObjectsToEnumerable()
         {
             Assert.True(
-                new LengthOf<IText>(
+                new LengthOf(
                     new EnumerableOf<IText>(
                         new TextOf("a"), new TextOf("b"), new TextOf("c")
                     )

@@ -28,7 +28,7 @@ using Xunit;
 using Yaapii.Atoms.IO;
 
 #pragma warning disable NoStatics // No Statics"Can't copy InputStream to OutputStream byte by byte"
-namespace Yaapii.Atoms.Tests.IO
+namespace Yaapii.Atoms.IO.Tests
 {
     public sealed class TeeInputStreamTest
     {

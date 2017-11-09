@@ -27,7 +27,7 @@ using Xunit;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class MappedTest
     {
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Tests.List
         public void TransformsEmptyList()
         {
             Assert.True(
-                new LengthOf<IText>(
+                new LengthOf(
                     new Mapped<String, IText>(
                         new EnumerableOf<string>(),
                         input => new UpperText(new TextOf(input))

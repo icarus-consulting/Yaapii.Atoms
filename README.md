@@ -64,10 +64,7 @@ new RetryFunc<int, int>(
 ```csharp
 var count = 0;
 new RepeatedFunc<int, int>(
-        input =>
-        {
-            input++;
-        },
+        input => input++,
         3
     ).Invoke(count); //will return 3
 ```

@@ -27,7 +27,7 @@ using Xunit;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Fail;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class SkippedEnumeratorTest
     {
@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Tests.List
                             ).GetEnumerator(),
                         2)));
 
-            Assert.True(new LengthOfEnumerator<string>(skipped.GetEnumerator()).Value() == 2, "cannot skip elements");
+            Assert.True(new LengthOfEnumerator(skipped.GetEnumerator()).Value() == 2, "cannot skip elements");
             Assert.False(skipped.Contains("one"), "cannot skip elements");
             Assert.False(skipped.Contains("two"), "cannot skip elements");
             Assert.True(skipped.Contains("three"), "cannot skip elements");

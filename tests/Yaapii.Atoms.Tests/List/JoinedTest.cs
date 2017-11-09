@@ -26,7 +26,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.List;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class JoinedTest
     {
@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Tests.List
         public void TransformsList()
         {
             Assert.True(
-                new LengthOf<string>(
+                new LengthOf(
                     new Joined<string>(
                         new EnumerableOf<string>("hello", "world", "друг"),
                         new EnumerableOf<string>("how", "are", "you"),
@@ -48,12 +48,12 @@ namespace Yaapii.Atoms.Tests.List
         public void JoinsEnumerables()
         {
             Assert.True(
-                new LengthOf<IEnumerable<string>>(
-                new Joined<IEnumerable<string>>(
-                    new Mapped<string, IEnumerable<string>>(
-                        new EnumerableOf<string>("x"),
-                        str => new EnumerableOf<string>(str)
-                    )
+                new LengthOf(
+                    new Joined<IEnumerable<string>>(
+                        new Mapped<string, IEnumerable<string>>(
+                            new EnumerableOf<string>("x"),
+                            str => new EnumerableOf<string>(str)
+                        )
                 )).Value() == 1,
             "cannot join mapped iterables together");
         }

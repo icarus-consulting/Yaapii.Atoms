@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.List
         IEnumerator IEnumerable.GetEnumerator()
 
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
     }
 }
