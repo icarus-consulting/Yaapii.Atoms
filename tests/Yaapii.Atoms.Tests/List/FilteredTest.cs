@@ -39,8 +39,8 @@ namespace Yaapii.Atoms.List.Tests
             Assert.True(
                 new LengthOf(
                     new Filtered<string>(
-                        new List<string>() { "A", "B", "C" },
-                            (input) => input != "B")).Value() == 2,
+                       (input) => input != "B",
+                       new List<string>() { "A", "B", "C" })).Value() == 2,
                 "cannot filter items");
         }
 
@@ -50,8 +50,9 @@ namespace Yaapii.Atoms.List.Tests
             Assert.True(
                 new LengthOf(
                     new Filtered<string>(
-                        new EnumerableOf<String>(),
-                        input => input.Length > 1)
+
+                        input => input.Length > 1,
+                        new EnumerableOf<String>())
                     ).Value() == 0,
                 "cannot filter empty enumerable");
         }
@@ -59,14 +60,15 @@ namespace Yaapii.Atoms.List.Tests
         [Fact]
         public void PerformanceMatchesLinQ()
         {
-            Func<string,bool> filter = (input) => input != "B";
+            Func<string, bool> filter = (input) => input != "B";
 
             var linq = new ElapsedTime(() => new List<string>() { "A", "B", "C" }.Where(filter)).AsTimeSpan();
             var atoms =
                 new ElapsedTime(
                     () => new Filtered<string>(
-                        new List<string>() { "A", "B", "C" },
-                            filter)).AsTimeSpan();
+                        filter,
+                        new List<string>() { "A", "B", "C" }
+                            )).AsTimeSpan();
 
             Assert.True((linq - atoms).Duration().Milliseconds < 10);
         }
