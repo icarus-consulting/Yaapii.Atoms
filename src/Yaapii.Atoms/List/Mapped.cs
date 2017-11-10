@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.List
     public sealed class Mapped<In, Out> : IEnumerable<Out>
     {
         private readonly IEnumerable<In> _enumerable;
-        private readonly IFunc<In, Out> _func;
+        private readonly IBiFunc<In, int, Out> _func;
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
@@ -50,13 +50,31 @@ namespace Yaapii.Atoms.List
         { }
 
         /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
+        /// </summary>
+        /// <param name="src">enumerable to map</param>
+        /// <param name="fnc">function used to map</param>
+        public Mapped(IBiFunc<In, int, Out> fnc, params In[] src) : this(new EnumerableOf<In>(src), fnc)
+        { }
+
+        /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Out}"/> function.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         public Mapped(IEnumerable<In> src, Func<In, Out> fnc) : this(
             src,
-            new FuncOf<In, Out>(fnc))
+            (In1, In2) => fnc.Invoke(In1))
+        { }
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Index, Out}"/> function with index.
+        /// </summary>
+        /// <param name="src">enumerable to map</param>
+        /// <param name="fnc">function used to map</param>
+        public Mapped(IEnumerable<In> src, Func<In, int, Out> fnc) : this(
+            src,
+            new BiFuncOf<In, int, Out>(fnc))
         { }
 
         /// <summary>
@@ -64,7 +82,15 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IEnumerable<In> src, IFunc<In, Out> fnc)
+        public Mapped(IEnumerable<In> src, IFunc<In, Out> fnc) : this(src, new BiFuncOf<In, int, Out>((In1, In2) => fnc.Invoke(In1)))
+        { }
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
+        /// </summary>
+        /// <param name="src">enumerable to map</param>
+        /// <param name="fnc">function used to map</param>
+        public Mapped(IEnumerable<In> src, IBiFunc<In, int, Out> fnc)
         {
             this._enumerable = src;
             this._func = fnc;

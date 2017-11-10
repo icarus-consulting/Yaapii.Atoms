@@ -160,7 +160,7 @@ namespace Yaapii.Atoms.List
 
                 ret = this._src.Current;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ret = this._fallback.Invoke(new EnumerableOf<T>(this._src));
             }

@@ -56,5 +56,19 @@ namespace Yaapii.Atoms.List.Tests
                     )).Value() == 0,
                 "Can't transform an empty iterable");
         }
+
+        [Fact]
+        public void TransformsListUsingIndex()
+        {
+            Assert.True(
+                new ItemAt<IText>(
+                    new Mapped<String, IText>(
+                        new EnumerableOf<string>("hello", "world", "damn"),
+                        (input, index) => new UpperText(new TextOf(input+index))
+                        ),
+                    1
+                ).Value().AsString() == "WORLD1",
+            "Can't get index of enumerable");
+        }
     }
 }

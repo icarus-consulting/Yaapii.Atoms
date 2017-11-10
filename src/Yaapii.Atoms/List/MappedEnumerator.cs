@@ -39,38 +39,64 @@ namespace Yaapii.Atoms.List
     public sealed class MappedEnumerator<In, Out> : IEnumerator<Out>
     {
         private readonly IEnumerator<In> _enumerator;
-        private readonly Func<In, Out> _func;
+        private readonly Func<In, int, Out> _func;
+        private readonly List<int> _index;
 
         /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fnc">mapping function</param>
         public MappedEnumerator(IEnumerator<In> src, IFunc<In, Out> fnc) : this(src,
-            input => fnc.Invoke(input))
+            (input, index) => fnc.Invoke(input))
         { }
 
         /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Out}"/> function.
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Index, Out}"/> function with index.
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fnc">mapping function</param>
-        public MappedEnumerator(IEnumerator<In> src, Func<In, Out> fnc)
+        public MappedEnumerator(IEnumerator<In> src, Func<In, Out> fnc) : this(src, (input, index)=> fnc.Invoke(input))
+        { }
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
+        /// </summary>
+        /// <param name="src">source enumerable</param>
+        /// <param name="fnc">mapping function</param>
+        public MappedEnumerator(IEnumerator<In> src, IBiFunc<In, int, Out> fnc) : this(src,
+        (input, index) => fnc.Apply(input, index))
+        { }
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Index, Out}"/> function with index.
+        /// </summary>
+        /// <param name="src">source enumerable</param>
+        /// <param name="fnc">mapping function</param>
+        public MappedEnumerator(IEnumerator<In> src, Func<In, int, Out> fnc)
         {
             this._enumerator = src;
             this._func = fnc;
+            _index = new List<int>() { -1 };
         }
 
         public Boolean MoveNext()
         {
-            return this._enumerator.MoveNext();
+            var result = this._enumerator.MoveNext();
+
+            if (result)
+            {
+                _index[0] += 1;
+            }
+
+            return result;
         }
 
         public Out Current
         {
             get
             {
-                return this._func.Invoke(this._enumerator.Current);
+                return this._func.Invoke(this._enumerator.Current, _index[0]);
             }
         }
 
@@ -84,6 +110,7 @@ namespace Yaapii.Atoms.List
 
         public void Reset()
         {
+            _index[0] = -1;
             this._enumerator.Reset();
         }
 
