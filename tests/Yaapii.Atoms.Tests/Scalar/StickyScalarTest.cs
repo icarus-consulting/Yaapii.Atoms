@@ -37,9 +37,29 @@ namespace Yaapii.Atoms.Scalar.Tests
                 new StickyScalar<int>(
                     () => new Random().Next());
 
-            Assert.True(scalar.Value() == scalar.Value(),
+            var val1 = scalar.Value();
+            System.Threading.Thread.Sleep(2);
+
+            Assert.True(val1 == scalar.Value(),
                 "cannot return value from cache"
             );
+        }
+
+        [Fact]
+        public void ReloadCachedScalarResults()
+        {
+            IScalar<List<int>> scalar =
+                new StickyScalar<List<int>>(
+                    () => new List<int>() { new Random().Next() },
+                    lst => lst.Count > 1);
+
+            var lst1 = scalar.Value();
+            System.Threading.Thread.Sleep(2);
+
+            Assert.True(lst1.GetHashCode() == scalar.Value().GetHashCode(), "cannot return value from cache");
+            lst1.Add(42);
+
+            Assert.False(lst1.GetHashCode() == scalar.Value().GetHashCode(), "reload doesn't work");
         }
     }
 }

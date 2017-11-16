@@ -144,13 +144,13 @@ namespace Yaapii.Atoms.IO
         {
             try
             {
-                ((IDisposable)this._source).Dispose();
+                _source.Dispose();
             }
             catch (Exception) { }
 
             try
             {
-                ((IDisposable)this._destination).Dispose();
+                _destination.Dispose();
             }
             catch (Exception) { }
         }

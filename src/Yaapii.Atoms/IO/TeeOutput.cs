@@ -95,17 +95,8 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         public void Dispose()
         {
-            try
-            {
-                this._target.Stream().Dispose();
-            }
-            catch (Exception) { }
-
-            try
-            {
-                this._copy.Stream().Dispose();
-            }
-            catch (Exception) { }
+            (_target as IDisposable)?.Dispose();
+            (_copy as IDisposable)?.Dispose();
         }
 
     }

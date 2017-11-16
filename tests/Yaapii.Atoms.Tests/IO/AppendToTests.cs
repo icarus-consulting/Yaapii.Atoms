@@ -17,25 +17,24 @@ namespace Yaapii.Atoms.IO.Tests
             var file = Path.GetFullPath(Path.Combine(temp.FullName, "file.txt"));
             if (File.Exists(file)) File.Delete(file);
 
-            var content = "Hello, товарищ!";
-            var content2 = "Bye,  товарищ!";
-            new LengthOf(
-                new TeeInput(
-                    content,
-                    new OutputTo(file))
-                ).Value();
+            var txt = "Hello, товарищ!";
 
-            new LengthOf(
-                new TeeInput(
-                    content2,
-                    new AppendTo(file))
-                ).Value();
+            var tInput = new TeeInput(
+                    txt,
+                    new AppendTo(
+                        new OutputTo(file)
+                    ));
+
+            var lengthOf = new LengthOf(tInput);
+
+            lengthOf.Value();
+            lengthOf.Value();
 
             Assert.True(
                 new TextOf(
                     new InputAsBytes(
                         new InputOf(new Uri(file))))
-                .AsString() == (content+content2),
+                .AsString() == (txt + txt),
                 "Can't write path content");
         }
 
@@ -50,25 +49,41 @@ namespace Yaapii.Atoms.IO.Tests
             }
 
             var txt = "Hello, друг!";
-            var txt2 = "Bye, друг!";
-            new LengthOf(
+            var lengthOf = new LengthOf(
                 new TeeInput(
                     txt,
-                    new OutputTo(file))
-            ).Value();
+                    new AppendTo(
+                        new OutputTo(file))));
 
-            new LengthOf(
-                new TeeInput(
-                    txt2,
-                    new AppendTo(file))
-                ).Value();
+            lengthOf.Value();
+            lengthOf.Value();
+
 
             Assert.True(
                 new TextOf(
                     new InputAsBytes(
                         new InputOf(file)))
-                .AsString() == txt+txt2,
+                .AsString() == txt + txt,
                 "Can't write file content");
+        }
+
+        [Fact]
+        public void DisposesStream()
+        {
+            var temp = Directory.CreateDirectory("artifacts/OutputToTest");
+            var file = new Uri(Path.GetFullPath(Path.Combine(temp.FullName, "file.txt")));
+
+            var appendTo = new AppendTo(file);
+
+            var stream = appendTo.Stream();
+            Assert.True(stream.CanWrite);
+            stream.Dispose();
+            Assert.False(stream.CanWrite);
+
+            stream = appendTo.Stream();
+            Assert.True(stream.CanWrite);
+            appendTo.Dispose();
+            Assert.False(stream.CanWrite);
         }
     }
 }

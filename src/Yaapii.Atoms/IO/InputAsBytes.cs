@@ -80,7 +80,7 @@ namespace Yaapii.Atoms.IO
         {
             try
             {
-                ((IDisposable)this._source.Stream()).Dispose();
+                (_source as IDisposable)?.Dispose();
             }
             catch (Exception) { }
         }

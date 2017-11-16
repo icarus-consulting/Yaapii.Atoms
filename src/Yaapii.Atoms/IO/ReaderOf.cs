@@ -166,7 +166,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="src">scalar of a reader</param>
         private ReaderOf(IScalar<StreamReader> src) : base(new DeadInput().Stream())
         {
-            this._source = new StickyScalar<StreamReader>(src);
+            this._source = new StickyScalar<StreamReader>(src, stream => !stream.BaseStream.CanRead);
         }
 
         public override int Read()
@@ -221,7 +221,7 @@ namespace Yaapii.Atoms.IO
 
         public new void Dispose()
         {
-            ((IDisposable)this._source.Value()).Dispose();
+            _source.Value().Dispose();
         }
     }
 }

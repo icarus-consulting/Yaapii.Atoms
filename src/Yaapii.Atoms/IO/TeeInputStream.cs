@@ -113,13 +113,13 @@ namespace Yaapii.Atoms.IO
             try
             {
                 this._input.Flush();
-                ((IDisposable)this._input).Dispose(); //unelegant but C#...
+                _input.Dispose(); //unelegant but C#...
             }
             catch (Exception) { }
             try
             {
                 this._output.Flush();
-                ((IDisposable)this._output).Dispose();
+                _output.Dispose();
             }
             catch (Exception) { }
         }

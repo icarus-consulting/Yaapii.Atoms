@@ -44,6 +44,11 @@ namespace Yaapii.Atoms.Func
         private readonly Dictionary<In, Out> _cache;
 
         /// <summary>
+        /// Reload Condition Func
+        /// </summary>
+        private readonly IFunc<Out,bool> _reloadConditionFnc;
+
+        /// <summary>
         /// Func that caches the result and returns from cache.
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
@@ -55,10 +60,44 @@ namespace Yaapii.Atoms.Func
         /// Func that caches the result and returns from cache.
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
-        public StickyFunc(IFunc<In, Out> fnc)
+        public StickyFunc(IFunc<In, Out> fnc) : this(fnc, new Func<Out, bool>(input=>false))
+        { }
+
+        /// <summary>
+        /// Func that caches the result and returns from cache with reload condition func
+        /// </summary>
+        /// <param name="fnc">func to cache output from</param>
+        /// <param name="reloadConditionFnc">reload condition func</param>
+        public StickyFunc(Func<In, Out> fnc, Func<Out, bool> reloadConditionFnc) : this(new FuncOf<In, Out>((X) => fnc(X)), new FuncOf<Out, bool>((output) => reloadConditionFnc(output)))
+        { }
+
+        /// <summary>
+        /// Func that caches the result and returns from cache with reload condition func
+        /// </summary>
+        /// <param name="fnc">func to cache output from</param>
+        /// <param name="reloadConditionFnc">reload condition func</param>
+        public StickyFunc(IFunc<In, Out> fnc, Func<Out, bool> reloadConditionFnc) : this(fnc, new FuncOf<Out,bool> ((output)=>reloadConditionFnc(output)))
+        { }
+
+        /// <summary>
+        /// Func that caches the result and returns from cache with reload condition func
+        /// </summary>
+        /// <param name="fnc">func to cache output from</param>
+        /// <param name="reloadConditionFnc">reload condition func</param>
+        public StickyFunc(Func<In, Out> fnc, IFunc<Out, bool> reloadConditionFnc) : this(new FuncOf<In, Out>((X) => fnc(X)), reloadConditionFnc)
+        { }
+
+
+        /// <summary>
+        /// Func that caches the result and returns from cache with reload condition func
+        /// </summary>
+        /// <param name="fnc">func to cache output from</param>
+        /// <param name="reloadConditionFnc">reload condition func</param>
+        public StickyFunc(IFunc<In, Out> fnc, IFunc<Out, bool> reloadConditionFnc)
         {
             this._func = fnc;
             this._cache = new Dictionary<In, Out>();
+            _reloadConditionFnc = reloadConditionFnc;
         }
 
         /// <summary>
@@ -68,9 +107,9 @@ namespace Yaapii.Atoms.Func
         /// <returns>output</returns>
         public Out Invoke(In input)
         {
-            if (!this._cache.ContainsKey(input))
+            if (!this._cache.ContainsKey(input) || _reloadConditionFnc.Invoke(_cache[input]))
             {
-                this._cache.Add(input, this._func.Invoke(input));
+                this._cache[input] = _func.Invoke(input);
             }
             return this._cache[input];
         }
