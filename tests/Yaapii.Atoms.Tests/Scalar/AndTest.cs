@@ -85,8 +85,8 @@ namespace Yaapii.Atoms.Scalar.Tests
             Assert.True(
                 new And<string>(
                     new Mapped<String, IScalar<Boolean>>(
-                        new EnumerableOf<string>("hello", "world"),
-                        str => { list.AddLast(str); return new True(); }
+                        str => { list.AddLast(str); return new True(); },
+                        new EnumerableOf<string>("hello", "world")
                     )
                 ).Value() == true);
 
@@ -103,8 +103,8 @@ namespace Yaapii.Atoms.Scalar.Tests
             Assert.True(
                 new And<string>(
                     new Mapped<string, IScalar<Boolean>>(
-                        new EnumerableOf<string>(),
-                        str => { list.AddLast(str); return new True(); }
+                       str => { list.AddLast(str); return new True(); },
+                        new EnumerableOf<string>()
                     )
                 ).Value() == true,
                 "Can't enumerate a list"

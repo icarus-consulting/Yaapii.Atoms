@@ -39,11 +39,11 @@ namespace Yaapii.Atoms.List.Tests
             Assert.True(
                 new LengthOf(
                         new Filtered<int>(
-                            new Repeated<int>(
+                        input => input == element,
+                        new Repeated<int>(
                                 element,
                                 size
-                            ),
-                        input => input == element
+                            )
                     )
                 ).Value() == size,
             "Can't generate an iterable with fixed size");

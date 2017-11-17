@@ -38,14 +38,14 @@ namespace Yaapii.Atoms.Scalar
         /// <see cref="IScalar{T}"/> that is a logical disjunction.
         /// </summary>
         /// <param name="scalars">functions returning scalars to chain with or</param>
-        public Or(params Func<Boolean>[] scalars) : this(new Mapped<Func<bool>, IScalar<bool>>(scalars, fnc => new ScalarOf<bool>(fnc)))
+        public Or(params Func<Boolean>[] scalars) : this(new Mapped<Func<bool>, IScalar<bool>>(fnc => new ScalarOf<bool>(fnc), scalars))
         { }
 
         /// <summary>
         /// <see cref="IScalar{T}"/> that is a logical disjunction.
         /// </summary>
         /// <param name="scalars">functions returning scalars to chain with or</param>
-        public Or(params IFunc<Boolean>[] scalars) : this(new Mapped<IFunc<bool>, IScalar<bool>>(scalars, fnc => new ScalarOf<bool>(fnc)))
+        public Or(params IFunc<Boolean>[] scalars) : this(new Mapped<IFunc<bool>, IScalar<bool>>(fnc => new ScalarOf<bool>(fnc), scalars))
         { }
 
         /// <summary>

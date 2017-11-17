@@ -37,14 +37,14 @@ namespace Yaapii.Atoms.Func.Tests
             Assert.True(
             new LengthOf(
                 new Filtered<string>(
+                    input => input.EndsWith("XY"),
                     new Mapped<string, string>(
-                        new EnumerableOf<string>("public", "final", "class"),
                         new ChainedFunc<String, String, String>(
                             input => input += "X",
                             input => input += "Y"
-                        )
-                    ),
-                    input => input.EndsWith("XY")
+                        ),
+                        new EnumerableOf<string>("public", "final", "class")
+                    )
                 )
             ).Value() == 3,
             "cannot chain functions");
@@ -56,8 +56,8 @@ namespace Yaapii.Atoms.Func.Tests
             Assert.True(
             new LengthOf(
                 new Filtered<string>(
-                    new Mapped<string, string>(
-                        new EnumerableOf<string>("private", "static", "String"),
+                    input => !input.StartsWith("st") && input.EndsWith("12"),
+                     new Mapped<string, string>(
                         new ChainedFunc<string, string, string>(
                             input => input += "1",
                             new EnumerableOf<IFunc<string, string>>(
@@ -65,10 +65,10 @@ namespace Yaapii.Atoms.Func.Tests
                                 new FuncOf<string, string>(input => input.Replace("a", "b"))
                             ),
                             input => input.Trim()
-                        )
-                    ),
-                    input => !input.StartsWith("st") && input.EndsWith("12")
+                        ),
+                        new EnumerableOf<string>("private", "static", "String")
                     )
+                   )
                  ).Value() == 2);
         }
     }

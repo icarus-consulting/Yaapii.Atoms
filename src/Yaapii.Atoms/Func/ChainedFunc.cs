@@ -88,8 +88,14 @@ namespace Yaapii.Atoms.Func
         /// <param name="funcs">functions to chain</param>
         /// <param name="after">last function</param>
         public ChainedFunc(System.Func<In, Between> before, IEnumerable<System.Func<Between, Between>> funcs, System.Func<Between, Out> after
-        ) : this(new FuncOf<In, Between>(before), new Mapped<System.Func<Between, Between>, IFunc<Between, Between>>(funcs, f => new FuncOf<Between, Between>(f)), new FuncOf<Between, Out>(after))
+        ) : this(
+                new FuncOf<In, Between>(before), 
+                new Mapped<System.Func<Between, Between>, IFunc<Between, Between>>(
+                    f => new FuncOf<Between, Between>(f), 
+                    funcs),
+                new FuncOf<Between, Out>(after))
         { }
+
 
         /// <summary>
         /// ctor

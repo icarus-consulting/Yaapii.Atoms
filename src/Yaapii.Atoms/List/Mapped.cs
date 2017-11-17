@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IFunc<In, Out> fnc, params In[] src) : this(new EnumerableOf<In>(src), fnc)
+        public Mapped(IFunc<In, Out> fnc, params In[] src) : this(fnc, new EnumerableOf<In>(src))
         { }
 
         /// <summary>
@@ -54,9 +54,8 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IEnumerable<In> src, Func<In, Out> fnc) : this(
-            src,
-            new FuncOf<In, Out>(fnc))
+        public Mapped(Func<In, Out> fnc, IEnumerable<In> src) : this(
+            new FuncOf<In, Out>(fnc), src)
         { }
 
         /// <summary>
@@ -64,7 +63,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IEnumerable<In> src, IFunc<In, Out> fnc)
+        public Mapped( IFunc<In, Out> fnc, IEnumerable<In> src)
         {
             this._enumerable = src;
             this._func = fnc;
