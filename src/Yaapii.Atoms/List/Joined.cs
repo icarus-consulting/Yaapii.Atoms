@@ -42,6 +42,14 @@ namespace Yaapii.Atoms.List
         private readonly IEnumerable<IEnumerable<T>> _list;
 
         /// <summary>
+        /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
+        /// </summary>
+        /// <param name="lst">enumerable of items to join</param>
+        /// <param name="items">array of items to join</param>
+        public Joined(IEnumerable<T> lst, params T[] items) : this(new EnumerableOf<IEnumerable<T>>(lst, new EnumerableOf<T>(items)))
+        { }
+
+        /// <summary>
         /// Multiple <see cref="IEnumerable{T}"/> joined together.
         /// </summary>
         /// <param name="items">enumerables to join</param>
@@ -65,6 +73,7 @@ namespace Yaapii.Atoms.List
                     new StickyFunc<IEnumerable<T>, IEnumerator<T>>( //Sticky Gate
                         new FuncOf<IEnumerable<T>, IEnumerator<T>>(e => e.GetEnumerator()) //Get the Enumerator
                         )
+                    
                 )
             );
         }

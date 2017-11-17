@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public Filtered(IEnumerable<T> src, IFunc<T, Boolean> fnc)
+        public Filtered(IFunc<T, Boolean> fnc, IEnumerable<T> src)
         {
             this._enumerable = src;
             this._func = (input) => fnc.Invoke(input);
@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="items">items to filter</param>
         /// <param name="fnc">filter function</param>
-        public Filtered(Func<T, Boolean> fnc, params T[] items) : this(new EnumerableOf<T>(items), fnc)
+        public Filtered(Func<T, Boolean> fnc, params T[] items) : this(fnc, new EnumerableOf<T>(items))
         { }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public Filtered(IEnumerable<T> src, Func<T, Boolean> fnc)
+        public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src)
         {
             this._enumerable = src;
             this._func = fnc;

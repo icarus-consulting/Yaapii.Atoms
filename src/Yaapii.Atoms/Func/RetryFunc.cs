@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Func
         /// Function that will retry if it fails.
         /// </summary>
         /// <param name="fnc">func to retry</param>
-        public RetryFunc(System.Func<In, Out> fnc) : this(new FuncOf<In, Out>((X) => fnc(X)), 3)
+        public RetryFunc(Func<In, Out> fnc) : this(new FuncOf<In, Out>((X) => fnc(X)), 3)
         { }
 
         /// <summary>

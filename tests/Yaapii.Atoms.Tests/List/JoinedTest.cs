@@ -51,11 +51,28 @@ namespace Yaapii.Atoms.List.Tests
                 new LengthOf(
                     new Joined<IEnumerable<string>>(
                         new Mapped<string, IEnumerable<string>>(
-                            new EnumerableOf<string>("x"),
-                            str => new EnumerableOf<string>(str)
+                           new EnumerableOf<string>("x"),
+                           str => new EnumerableOf<string>(str)
                         )
                 )).Value() == 1,
             "cannot join mapped iterables together");
+        }
+
+        [Fact]
+        public void JoinsSingleElemtns()
+        {
+            Assert.True(
+                new LengthOf(
+                    new Joined<string>(
+                        new EnumerableOf<string>("hello", "world", "друг"),
+                        "how",
+                        "are",
+                        "you",
+                        "what's",
+                        "up"
+                    )
+                ).Value() == 8,
+            "Can't concatenate enumerable with ingle values");
         }
     }
 }

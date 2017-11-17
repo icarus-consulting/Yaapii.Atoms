@@ -40,7 +40,9 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="src"></param>
         public SumOfInts(params Int32[] src) : this(
-            new Mapped<Int32, IScalar<Int32>>(src, i => new ScalarOf<Int32>(i)))
+            new Mapped<Int32, IScalar<Int32>>(
+                src, 
+                i => new ScalarOf<Int32>(i)))
         { }
 
         /// <summary>
@@ -48,7 +50,9 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="src">list of numbers to sum</param>
         public SumOfInts(IEnumerable<Int32> src) : this(
-            new Mapped<Int32, IScalar<Int32>>(src, i => new ScalarOf<Int32>(i)))
+            new Mapped<Int32, IScalar<Int32>>(
+                src, 
+                i => new ScalarOf<Int32>(i)))
         { }
 
         /// <summary>

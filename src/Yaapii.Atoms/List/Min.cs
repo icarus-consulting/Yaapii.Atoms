@@ -52,7 +52,9 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="items">items to compare</param>
         public Min(IEnumerable<T> items) : this(
-            new Mapped<T, IScalar<T>>(items, item => new ScalarOf<T>(item)))
+            new Mapped<T, IScalar<T>>(
+                items,
+                item => new ScalarOf<T>(item)))
         { }
 
         /// <summary>
@@ -60,7 +62,9 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="items">items to compare</param>
         public Min(params T[] items) : this(
-            new Mapped<T, IScalar<T>>(items, item => new ScalarOf<T>(item)))
+            new Mapped<T, IScalar<T>>(
+                items,
+                item => new ScalarOf<T>(item)))
         { }
 
         /// <summary>

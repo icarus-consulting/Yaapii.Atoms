@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Func
         /// Function that is threadsafe.
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
-        public ThreadSafeFunc(System.Func<In, Out> fnc) : this(new FuncOf<In, Out>((X) => fnc(X)))
+        public ThreadSafeFunc(Func<In, Out> fnc) : this(new FuncOf<In, Out>((X) => fnc(X)))
         { }
 
         /// <summary>
