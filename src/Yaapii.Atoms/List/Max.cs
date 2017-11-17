@@ -43,8 +43,8 @@ namespace Yaapii.Atoms.List
         /// <param name="items">list of items</param>
         public Max(params Func<T>[] items) : this(
             new Mapped<Func<T>, IScalar<T>>(
-                item => new ScalarOf<T>(() => item.Invoke()), 
-                new EnumerableOf<Func<T>>(items)))
+                new EnumerableOf<Func<T>>(items),
+                item => new ScalarOf<T>(() => item.Invoke())))
         { }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(IEnumerable<T> items) : this(
-            new Mapped<T, IScalar<T>>(item => new ScalarOf<T>(item), items))
+            new Mapped<T, IScalar<T>>(items, item => new ScalarOf<T>(item)))
         { }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(params T[] items) : this(
-            new Mapped<T, IScalar<T>>(item => new ScalarOf<T>(item), items))
+            new Mapped<T, IScalar<T>>(items, item => new ScalarOf<T>(item)))
         { }
 
         /// <summary>

@@ -58,8 +58,8 @@ namespace Yaapii.Atoms.Text
             this(
                 new TextOf(delimit),
                 new Mapped<string, IText>(
-                    new FuncOf<string, IText>((text) => new TextOf(text)),
-                    strs
+                    strs,
+                    new FuncOf<string, IText>((text) => new TextOf(text))
                 )
             )
         { }
@@ -132,8 +132,9 @@ namespace Yaapii.Atoms.Text
             return String.Join(
                 this._delimiter.AsString(), 
                 new Mapped<IText, string>(
-                    text => text.AsString(),
-                    this._texts.Value()));
+                    this._texts.Value(),
+                    text => text.AsString()
+                    ));
         }
 
         /// <summary>

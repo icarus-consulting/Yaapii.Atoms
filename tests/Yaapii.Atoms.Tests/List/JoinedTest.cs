@@ -51,8 +51,8 @@ namespace Yaapii.Atoms.List.Tests
                 new LengthOf(
                     new Joined<IEnumerable<string>>(
                         new Mapped<string, IEnumerable<string>>(
-                           str => new EnumerableOf<string>(str),
-                            new EnumerableOf<string>("x")
+                           new EnumerableOf<string>("x"),
+                           str => new EnumerableOf<string>(str)
                         )
                 )).Value() == 1,
             "cannot join mapped iterables together");

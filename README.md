@@ -254,6 +254,14 @@ IText greeting =
         0
     ).Value(); //will be "HELLO"
 ```
+```csharp
+// Mapping items of a list to another type using index of items
+new Mapped<string,string>(
+    new List<string>() {"One", "Two", Three"},
+    (input, index) => $"{input}={index+1}");
+// Returns a IEnumerable<string> with Content {"One=1", "Two=2", Three=3"}
+```
+    
 ### Create cycling lists
 ```csharp
 //here is a list with 3 items and you call the 7th item. The cycled list will not fail but start over when it reaches the end.

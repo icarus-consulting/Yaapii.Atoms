@@ -91,8 +91,8 @@ namespace Yaapii.Atoms.Func
         ) : this(
                 new FuncOf<In, Between>(before), 
                 new Mapped<System.Func<Between, Between>, IFunc<Between, Between>>(
-                    f => new FuncOf<Between, Between>(f), 
-                    funcs),
+                    funcs,
+                    f => new FuncOf<Between, Between>(f)),
                 new FuncOf<Between, Out>(after))
         { }
 

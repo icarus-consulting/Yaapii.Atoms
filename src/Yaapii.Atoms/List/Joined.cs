@@ -69,10 +69,11 @@ namespace Yaapii.Atoms.List
         {
             return new JoinedEnumerator<T>(
                 new Mapped<IEnumerable<T>, IEnumerator<T>>(//Map the content of list: Get every enumerator out of it and build one whole enumerator from it
+                    this._list, //List with enumerators
                     new StickyFunc<IEnumerable<T>, IEnumerator<T>>( //Sticky Gate
                         new FuncOf<IEnumerable<T>, IEnumerator<T>>(e => e.GetEnumerator()) //Get the Enumerator
-                        ),
-                    this._list //List with enumerators
+                        )
+                    
                 )
             );
         }

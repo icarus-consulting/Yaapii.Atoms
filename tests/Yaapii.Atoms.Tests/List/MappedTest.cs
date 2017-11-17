@@ -37,8 +37,8 @@ namespace Yaapii.Atoms.List.Tests
             Assert.True(
                 new ItemAt<IText>(
                     new Mapped<String, IText>(
-                        input => new UpperText(new TextOf(input)),
-                        new EnumerableOf<string>("hello", "world", "damn")
+                        new EnumerableOf<string>("hello", "world", "damn"),
+                        input => new UpperText(new TextOf(input))
                         ),
                     0
                 ).Value().AsString() == "HELLO",
@@ -51,10 +51,24 @@ namespace Yaapii.Atoms.List.Tests
             Assert.True(
                 new LengthOf(
                     new Mapped<String, IText>(
-                        input => new UpperText(new TextOf(input)),
-                        new EnumerableOf<string>()
+                        new EnumerableOf<string>(),
+                        input => new UpperText(new TextOf(input))
                     )).Value() == 0,
                 "Can't transform an empty iterable");
+        }
+
+        [Fact]
+        public void TransformsListUsingIndex()
+        {
+            Assert.True(
+                new ItemAt<IText>(
+                    new Mapped<String, IText>(
+                        new EnumerableOf<string>("hello", "world", "damn"),
+                        (input, index) => new UpperText(new TextOf(input+index))
+                        ),
+                    1
+                ).Value().AsString() == "WORLD1",
+            "Can't get index of enumerable");
         }
     }
 }
