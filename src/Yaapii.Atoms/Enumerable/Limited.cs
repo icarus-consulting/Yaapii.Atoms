@@ -38,9 +38,6 @@ namespace Yaapii.Atoms.Enumerable
     /// <typeparam name="T">type of elements</typeparam>
     public sealed class Limited<T> : EnumerableEnvelope<T>
     {
-        private readonly IEnumerable<T> _enumerable;
-        private readonly IScalar<int> _limit;
-
         /// <summary>
         /// ctor
         /// </summary>
@@ -54,9 +51,10 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public Limited(IEnumerable<T> enumerable, IScalar<int> limit) : base(new ScalarOf<IEnumerator<T>>(() =>
-              new LimitedEnumerator<T>(enumerable.GetEnumerator(), limit.Value())                                                                                           
-             ))
+        public Limited(IEnumerable<T> enumerable, IScalar<int> limit) : base(
+             new ScalarOf<IEnumerable<T>>(() =>
+                new EnumerableOf<T>(
+                  new LimitedEnumerator<T>(enumerable.GetEnumerator(), limit.Value()))))
         { }
     }
 }

@@ -57,13 +57,15 @@ namespace Yaapii.Atoms.Enumerable
         /// Multiple <see cref="IEnumerable{T}"/> joined together.
         /// </summary>
         /// <param name="items">enumerables to join</param>
-        public Joined(IEnumerable<IEnumerable<T>> items) : base(new ScalarOf<IEnumerator<T>>(() => 
-           new JoinedEnumerator<T>(
-                new Mapped<IEnumerable<T>, IEnumerator<T>>(//Map the content of list: Get every enumerator out of it and build one whole enumerator from it
-                    items, //List with enumerators
-                    new StickyFunc<IEnumerable<T>, IEnumerator<T>>( //Sticky Gate
-                        new FuncOf<IEnumerable<T>, IEnumerator<T>>(e => e.GetEnumerator()) //Get the Enumerator
-                    )))))
+        public Joined(IEnumerable<IEnumerable<T>> items) : base(
+            new ScalarOf<IEnumerable<T>>(() => 
+                new EnumerableOf<T>(
+                    new JoinedEnumerator<T>(
+                        new Mapped<IEnumerable<T>, IEnumerator<T>>(//Map the content of list: Get every enumerator out of it and build one whole enumerator from it
+                            items, //List with enumerators
+                            new StickyFunc<IEnumerable<T>, IEnumerator<T>>( //Sticky Gate
+                                new FuncOf<IEnumerable<T>, IEnumerator<T>>(e => e.GetEnumerator()) //Get the Enumerator
+                                                                          ))))))
         { }
     }
 }

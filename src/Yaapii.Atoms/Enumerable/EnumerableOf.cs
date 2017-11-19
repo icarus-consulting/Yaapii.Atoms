@@ -58,16 +58,39 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
-        private EnumerableOf(Func<IEnumerator<T>> fnc) : this(new ScalarOf<IEnumerator<T>>(fnc))
+        public EnumerableOf(Func<IEnumerator<T>> fnc) : this(new ScalarOf<IEnumerator<T>>(fnc))
         { }
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
-        private EnumerableOf(IScalar<IEnumerator<T>> origin) : base(
+        public EnumerableOf(IScalar<IEnumerator<T>> origin) : base(
             new ScalarOf<IEnumerable<T>>(() => new EnumeratorAsEnumerable<T>(origin)))
         { }
+
+        private class EnumeratorAsEnumerable<T> : IEnumerable<T>
+        {
+            private readonly IScalar<IEnumerator<T>> _origin;
+
+            public EnumeratorAsEnumerable(IEnumerator<T> enumerator) : this(new ScalarOf<IEnumerator<T>>(enumerator))
+            { }
+
+            public EnumeratorAsEnumerable(IScalar<IEnumerator<T>> enumerator)
+            {
+                _origin = enumerator;
+            }
+
+            public IEnumerator<T> GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 
 

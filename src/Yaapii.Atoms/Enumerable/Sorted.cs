@@ -25,6 +25,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Yaapii.Atoms.Enumerator;
+using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -34,7 +35,7 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class Sorted<T> : IEnumerable<T>
+    public sealed class Sorted<T> : EnumerableEnvelope<T>
         where T : IComparable<T>
     {
         private readonly IEnumerable<T> _enumerable;
@@ -59,21 +60,12 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public Sorted(Comparer<T> cmp, IEnumerable<T> src)
-        {
-            this._enumerable = src;
-            this._comparer = cmp;
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return new SortedEnumerator<T>(this._comparer, this._enumerable.GetEnumerator());
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        public Sorted(Comparer<T> cmp, IEnumerable<T> src) : base(
+            new ScalarOf<IEnumerable<T>>(
+                () =>
+                new EnumerableOf<T>(
+                    new SortedEnumerator<T>(cmp, src.GetEnumerator()))))
+        { }
     }
 }
 #pragma warning restore NoGetOrSet // No Statics

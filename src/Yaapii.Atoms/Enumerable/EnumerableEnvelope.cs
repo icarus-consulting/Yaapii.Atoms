@@ -10,11 +10,6 @@ namespace Yaapii.Atoms.Enumerable
     {
         private readonly IScalar<IEnumerable<T>> _items;
 
-        public EnumerableEnvelope(IScalar<IEnumerator<T>> sc) : this(
-            new ScalarOf<IEnumerable<T>>(
-                () => new EnumeratorAsEnumerable<T>(sc)))
-        { }
-
         public EnumerableEnvelope(IScalar<IEnumerable<T>> sc)
         {
             this._items = sc;

@@ -24,6 +24,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Yaapii.Atoms.Scalar;
+using System.Linq;
+using System.Runtime.InteropServices;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -34,31 +37,22 @@ namespace Yaapii.Atoms.Enumerable
     /// A reversed <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="X">type of items in enumerable</typeparam>
-    public sealed class Reversed<X> : IEnumerable<X>
+    public sealed class Reversed<X> : EnumerableEnvelope<X>
     {
-        private readonly IEnumerable<X> _enumerable;
-
         /// <summary>
         /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
-        public Reversed(IEnumerable<X> src)
-        {
-            this._enumerable = src;
-        }
-
-        public IEnumerator<X> GetEnumerator()
-        {
-            List<X> list = new List<X>(this._enumerable);
-            list.Reverse();
-            return list.GetEnumerator();
-        }
-
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        public Reversed(IEnumerable<X> src) : base(new ScalarOf<IEnumerable<X>>(
+            () =>
+            new EnumerableOf<X>(
+                new ScalarOf<IEnumerator<X>>(
+                    () =>
+                    {
+                        var lst = src.ToList<X>();
+                        lst.Reverse();
+                        return lst.GetEnumerator();
+                    }))))
+        { }
     }
 }
-#pragma warning restore NoGetOrSet // No Statics

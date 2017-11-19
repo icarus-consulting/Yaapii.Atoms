@@ -38,10 +38,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <typeparam name="T">type of element to repeat</typeparam>
     public sealed class Repeated<T> : EnumerableEnvelope<T>
     {
-        private readonly IScalar<T> _element;
-        private readonly int _count;
-
-        /// <summary>
+/// <summary>
         /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
         /// </summary>
         /// <param name="elm">function to get element to repeat</param>
@@ -65,8 +62,10 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
         public Repeated(IScalar<T> elm, int cnt) : base(
-            new ScalarOf<IEnumerator<T>>(() => 
-               new RepeatedEnumerator<T>(elm, cnt)))
+            new ScalarOf<IEnumerable<T>>(
+                () => 
+                new EnumerableOf<T>(
+                    new RepeatedEnumerator<T>(elm, cnt))))
         { }
     }
 }

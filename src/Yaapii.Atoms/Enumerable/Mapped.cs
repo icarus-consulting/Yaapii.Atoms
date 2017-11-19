@@ -93,11 +93,11 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         public Mapped(IEnumerable<In> src, IBiFunc<In, int, Out> fnc) : base(
-            new ScalarOf<IEnumerator<Out>>(() =>
-                new MappedEnumerator<In, Out>(
-                    src.GetEnumerator(), fnc
-                )))
+            new ScalarOf<IEnumerable<Out>>(
+                () =>
+                new EnumerableOf<Out>(               
+                    new MappedEnumerator<In, Out>(
+                        src.GetEnumerator(), fnc))))
         {}
     }
 }
-#pragma warning restore NoGetOrSet // No Statics

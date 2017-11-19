@@ -64,10 +64,11 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
         public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src) : base(
-            new ScalarOf<IEnumerator<T>>(() => 
-                new FilteredEnumerator<T>(
-                    src.GetEnumerator(),
-                    fnc)))
+            new ScalarOf<IEnumerable<T>>(() => 
+                 new EnumerableOf<T>(
+                    new FilteredEnumerator<T>(
+                        src.GetEnumerator(),
+                        fnc))))
         {
             this._enumerable = src;
             this._func = fnc;
