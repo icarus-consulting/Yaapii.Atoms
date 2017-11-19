@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
     /// </summary>
     /// <typeparam name="T">type of element to repeat</typeparam>
-    public sealed class Repeated<T> : IEnumerable<T>
+    public sealed class Repeated<T> : EnumerableEnvelope<T>
     {
         private readonly IScalar<T> _element;
         private readonly int _count;
@@ -64,22 +64,10 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
-        public Repeated(IScalar<T> elm, int cnt)
-        {
-            this._element = elm;
-            this._count = cnt;
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return new RepeatedEnumerator<T>(this._element, this._count);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-
-        {
-            return GetEnumerator();
-        }
+        public Repeated(IScalar<T> elm, int cnt) : base(
+            new ScalarOf<IEnumerator<T>>(() => 
+               new RepeatedEnumerator<T>(elm, cnt)))
+        { }
     }
 }
 #pragma warning restore NoGetOrSet // No Statics

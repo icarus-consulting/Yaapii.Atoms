@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class Limited<T> : IEnumerable<T>
+    public sealed class Limited<T> : EnumerableEnvelope<T>
     {
         private readonly IEnumerable<T> _enumerable;
         private readonly IScalar<int> _limit;
@@ -54,23 +54,10 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public Limited(IEnumerable<T> enumerable, IScalar<int> limit)
-        {
-            this._enumerable = enumerable;
-            this._limit = limit;
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return new LimitedEnumerator<T>(this._enumerable.GetEnumerator(), this._limit.Value());
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        public Limited(IEnumerable<T> enumerable, IScalar<int> limit) : base(new ScalarOf<IEnumerator<T>>(() =>
+              new LimitedEnumerator<T>(enumerable.GetEnumerator(), limit.Value())                                                                                           
+             ))
+        { }
     }
 }
-
-#pragma warning restore NoGetOrSet // No Statics
 

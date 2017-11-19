@@ -25,6 +25,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
@@ -36,13 +37,8 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> out of other objects.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class EnumerableOf<T> : IEnumerable<T>
+    public sealed class EnumerableOf<T> : EnumerableEnvelope<T>
     {
-        /// <summary>
-        /// the enumerable
-        /// </summary>
-        private readonly IScalar<IEnumerator<T>> _origin;
-
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of an array.
         /// </summary>
@@ -69,21 +65,11 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
-        private EnumerableOf(IScalar<IEnumerator<T>> origin)
-        {
-            _origin = origin;
-        }
-
-        public IEnumerator<T> GetEnumerator()
-
-        {
-            return _origin.Value();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _origin.Value();
-        }
+        private EnumerableOf(IScalar<IEnumerator<T>> origin) : base(
+            new ScalarOf<IEnumerable<T>>(() => new EnumeratorAsEnumerable<T>(origin)))
+        { }
     }
+
+
 }
 #pragma warning restore NoGetOrSet // No Statics

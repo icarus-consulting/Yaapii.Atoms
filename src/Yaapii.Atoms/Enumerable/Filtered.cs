@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Text;
 using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -37,7 +38,7 @@ namespace Yaapii.Atoms.Enumerable
     /// Pass a filter function which will applied to all items, similar to List{T}.Where(...) in LinQ
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Filtered<T> : IEnumerable<T>
+    public sealed class Filtered<T> : EnumerableEnvelope<T>
     {
         /// <summary>
         /// the enumerable to filter
@@ -48,17 +49,6 @@ namespace Yaapii.Atoms.Enumerable
         /// filter function
         /// </summary>
         private readonly Func<T, Boolean> _func;
-
-        /// <summary>
-        /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="IFunc{In, Out}"/>.
-        /// </summary>
-        /// <param name="src">enumerable to filter</param>
-        /// <param name="fnc">filter function</param>
-        public Filtered(IFunc<T, Boolean> fnc, IEnumerable<T> src)
-        {
-            this._enumerable = src;
-            this._func = (input) => fnc.Invoke(input);
-        }
 
         /// <summary>
         /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
@@ -73,23 +63,14 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src)
+        public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src) : base(
+            new ScalarOf<IEnumerator<T>>(() => 
+                new FilteredEnumerator<T>(
+                    src.GetEnumerator(),
+                    fnc)))
         {
             this._enumerable = src;
             this._func = fnc;
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return new FilteredEnumerator<T>(
-                this._enumerable.GetEnumerator(),
-                this._func
-            );
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
     }
 }

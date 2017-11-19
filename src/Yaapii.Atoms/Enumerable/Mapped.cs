@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Text;
 using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -37,7 +38,7 @@ namespace Yaapii.Atoms.Enumerable
     /// </summary>
     /// <typeparam name="In">type of input elements</typeparam>
     /// <typeparam name="Out">type of mapped elements</typeparam>
-    public sealed class Mapped<In, Out> : IEnumerable<Out>
+    public sealed class Mapped<In, Out> : EnumerableEnvelope<Out>
     {
         private readonly IEnumerable<In> _enumerable;
         private readonly IBiFunc<In, int, Out> _func;
@@ -91,24 +92,12 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IEnumerable<In> src, IBiFunc<In, int, Out> fnc)
-        {
-            this._enumerable = src;
-            this._func = fnc;
-        }
-
-        public IEnumerator<Out> GetEnumerator()
-        {
-            return new MappedEnumerator<In, Out>(
-                this._enumerable.GetEnumerator(), this._func
-            );
-        }
-
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        public Mapped(IEnumerable<In> src, IBiFunc<In, int, Out> fnc) : base(
+            new ScalarOf<IEnumerator<Out>>(() =>
+                new MappedEnumerator<In, Out>(
+                    src.GetEnumerator(), fnc
+                )))
+        {}
     }
 }
 #pragma warning restore NoGetOrSet // No Statics
