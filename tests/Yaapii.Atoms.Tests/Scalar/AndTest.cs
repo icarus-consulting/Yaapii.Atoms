@@ -28,6 +28,7 @@ using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Enumerable;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 namespace Yaapii.Atoms.Scalar.Tests

@@ -23,6 +23,7 @@
 using System;
 using System.IO;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.List;

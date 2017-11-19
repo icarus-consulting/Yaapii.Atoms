@@ -26,6 +26,8 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Enumerator;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.List.Tests
 {

@@ -28,6 +28,7 @@ using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
 using System.Linq;
 using Yaapii.Atoms.Tests;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.List.Tests
 {

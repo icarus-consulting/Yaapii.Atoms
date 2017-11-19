@@ -27,6 +27,7 @@ using Xunit;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.List.Tests
 {

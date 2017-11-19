@@ -29,6 +29,8 @@ using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Enumerator;
 
 namespace Yaapii.Atoms.List.Tests
 {
