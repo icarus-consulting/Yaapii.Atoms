@@ -11,16 +11,31 @@ namespace Yaapii.Atoms.List
     /// <typeparam name="T"></typeparam>
     public sealed class SolidList<T> : ListEnvelope<T>
     {
-
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="items">items to decorate</param>
         public SolidList(params T[] items) : this(new EnumerableOf<T>(items))
         { }
 
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="items">items to decorate</param>
         public SolidList(IEnumerable<T> items) : this(new ListOf<T>(items))
         { }
 
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="items">items to decorate</param>
         public SolidList(IEnumerator<T> items) : this(new ListOf<T>(items))
         { }
 
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="list">list to decorate</param>
         public SolidList(ICollection<T> list) : base(
             () => new SyncList<T>(
                     new StickyList<T>(

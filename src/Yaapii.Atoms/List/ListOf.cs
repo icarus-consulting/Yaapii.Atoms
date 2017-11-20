@@ -32,6 +32,10 @@ using System.Collections.ObjectModel;
 
 namespace Yaapii.Atoms.List
 {
+    /// <summary>
+    /// Makes a readonly list.
+    /// </summary>
+    /// <typeparam name="T">type of items</typeparam>
     public sealed class ListOf<T> : ListEnvelope<T>
     {
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Collection
 {
@@ -13,16 +14,8 @@ namespace Yaapii.Atoms.Collection
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="list"></param>
-        public Joined(params T[] list) : this(
-            new CollectionOf<T[]>(list))
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
         /// <param name="list">List of collections to join together</param>
-        public Joined(IEnumerable<IEnumerable<T>> list) : base(
+        public Joined(params IEnumerable<T>[] list) : base(
             () => new CollectionOf<T>(
                     new Enumerable.Joined<T>(list)
              ))

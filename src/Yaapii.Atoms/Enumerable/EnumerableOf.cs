@@ -73,7 +73,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
         public EnumerableOf(IScalar<IEnumerator<T>> origin) : base(
-            new ScalarOf<IEnumerable<T>>(() => new EnumeratorAsEnumerable<T>(origin)))
+            new ScalarOf<IEnumerable<T>>(() => new EnumeratorAsEnumerable<T>(origin.Value())))
         { }
 
         /// <summary>
@@ -82,24 +82,21 @@ namespace Yaapii.Atoms.Enumerable
         /// <typeparam name="X"></typeparam>
         private class EnumeratorAsEnumerable<X> : IEnumerable<X>
         {
-            private readonly IScalar<IEnumerator<X>> _origin;
+            private readonly IEnumerator<X> _origin;
 
-            public EnumeratorAsEnumerable(IEnumerator<X> enumerator) : this(new ScalarOf<IEnumerator<X>>(enumerator))
-            { }
-
-            public EnumeratorAsEnumerable(IScalar<IEnumerator<X>> enumerator)
+            public EnumeratorAsEnumerable(IEnumerator<X> enumerator)
             {
                 _origin = enumerator;
             }
 
             public IEnumerator<X> GetEnumerator()
             {
-                return _origin.Value();
+                return _origin;
             }
 
             IEnumerator IEnumerable.GetEnumerator()
             {
-                return GetEnumerator();
+                return this.GetEnumerator();
             }
         }
     }

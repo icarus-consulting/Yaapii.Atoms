@@ -40,8 +40,8 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="list">A threadsafe list</param>
         public SyncList(ICollection<T> list) : base(
-                new SyncScalar<List<T>>(
-                    new ScalarOf<List<T>>(() =>
+                new SyncScalar<IList<T>>(
+                    new ScalarOf<IList<T>>(() =>
                         new ListOf<T>(
                             new SyncCollection<T>(list)))))
         { }
