@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Scalar
     /// A <see cref="IScalar{T}"/> that is threadsafe.
     /// </summary>
     /// <typeparam name="T">type of value</typeparam>
-    public sealed class ThreadSafeScalar<T> : IScalar<T>
+    public sealed class SyncScalar<T> : IScalar<T>
     {
         private readonly IScalar<T> _source;
         private readonly Object _lock;
@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Scalar
         /// A <see cref="IScalar{T}"/> that is threadsafe.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
-        public ThreadSafeScalar(IScalar<T> src) : this(src, src)
+        public SyncScalar(IScalar<T> src) : this(src, src)
         { }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         /// <param name="lck">object to lock while using scalar</param>
-        public ThreadSafeScalar(IScalar<T> src, Object lck)
+        public SyncScalar(IScalar<T> src, Object lck)
         {
             this._source = src;
             this._lock = lck;
