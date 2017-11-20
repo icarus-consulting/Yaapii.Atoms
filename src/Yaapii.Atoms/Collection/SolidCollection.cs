@@ -12,7 +12,6 @@ namespace Yaapii.Atoms.Collection
     ///
     public sealed class SolidCollection<T> : CollectionEnvelope<T>
     {
-
         /// <summary>
         /// ctor
         /// </summary>

@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Collection
                         var temp = new List<T>(list.Count);
                         foreach(var item in list)
                         {
-                            list.Add(item);
+                            temp.Add(item);
                         }
                         return new CollectionOf<T>(temp);
                     }
