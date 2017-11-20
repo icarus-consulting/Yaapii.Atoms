@@ -76,7 +76,7 @@ namespace Yaapii.Atoms.Enumerator
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            
         }
 
         public T Current
