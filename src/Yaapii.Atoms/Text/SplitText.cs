@@ -27,6 +27,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Enumerable;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591

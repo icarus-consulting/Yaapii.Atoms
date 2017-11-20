@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.List
@@ -39,7 +40,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="src">doubles to sum</param>
         public SumOfReals(params Double[] src) : this(
-            new Mapped<Double, IScalar<Double>>(
+            new Enumerable.Mapped<Double, IScalar<Double>>(
                 src,
                 d => new ScalarOf<Double>(d)
                 ))

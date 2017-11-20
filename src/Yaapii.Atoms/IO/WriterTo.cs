@@ -319,7 +319,7 @@ namespace Yaapii.Atoms.IO
             this._target.Value().Flush();
         }
 
-        public new void Dispose()
+        public void Dispose()
         {
             try
             {

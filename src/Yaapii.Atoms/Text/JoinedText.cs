@@ -26,6 +26,7 @@ using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Text
 {
@@ -57,10 +58,10 @@ namespace Yaapii.Atoms.Text
         public JoinedText(String delimit, IEnumerable<String> strs) :
             this(
                 new TextOf(delimit),
-                new Mapped<string, IText>(
-                    strs,
-                    new FuncOf<string, IText>((text) => new TextOf(text))
-                )
+                    new Enumerable.Mapped<string, IText>(
+                        strs,
+                        new FuncOf<string, IText>((text) => new TextOf(text))
+                    )
             )
         { }
 
@@ -131,7 +132,7 @@ namespace Yaapii.Atoms.Text
         {
             return String.Join(
                 this._delimiter.AsString(), 
-                new Mapped<IText, string>(
+                new Enumerable.Mapped<IText, string>(
                     this._texts.Value(),
                     text => text.AsString()
                     ));

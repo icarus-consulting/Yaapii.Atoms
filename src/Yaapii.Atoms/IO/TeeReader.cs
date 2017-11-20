@@ -140,7 +140,7 @@ namespace Yaapii.Atoms.IO
             return done;
         }
 
-        public new void Dispose()
+        public void Dispose()
         {
             try
             {
@@ -157,8 +157,5 @@ namespace Yaapii.Atoms.IO
 
         public override Encoding CurrentEncoding => this._source.CurrentEncoding;
         public override Stream BaseStream => this._source.BaseStream;
-
-#pragma warning restore MaxPublicMethodCount // a public methods count maximum
-#pragma warning restore CS1591
     }
 }

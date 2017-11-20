@@ -276,7 +276,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public new bool Equals(object obj)
+        public bool Equals(object obj)
         {
             if (obj as IText == null) return false;
             return this.AsString().CompareTo((obj as IText).AsString()) == 0;

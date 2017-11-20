@@ -28,6 +28,7 @@ using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Enumerable;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 namespace Yaapii.Atoms.Scalar.Tests
@@ -84,7 +85,7 @@ namespace Yaapii.Atoms.Scalar.Tests
             var list = new LinkedList<string>();
             Assert.True(
                 new And<string>(
-                    new Mapped<String, IScalar<Boolean>>(
+                    new Enumerable.Mapped<String, IScalar<Boolean>>(
                         new EnumerableOf<string>("hello", "world"),
                         str => { list.AddLast(str); return new True(); }
                     )
@@ -102,7 +103,7 @@ namespace Yaapii.Atoms.Scalar.Tests
 
             Assert.True(
                 new And<string>(
-                    new Mapped<string, IScalar<Boolean>>(
+                    new Enumerable.Mapped<string, IScalar<Boolean>>(
                         new EnumerableOf<string>(),
                         str => { list.AddLast(str); return new True(); }
                     )

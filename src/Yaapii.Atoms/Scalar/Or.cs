@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Scalar
@@ -39,7 +40,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="scalars">functions returning scalars to chain with or</param>
         public Or(params Func<Boolean>[] scalars) : this(
-            new Mapped<Func<bool>, IScalar<bool>>(
+            new Enumerable.Mapped<Func<bool>, IScalar<bool>>(
                 scalars,
                 fnc => new ScalarOf<bool>(fnc)))
         { }
@@ -49,7 +50,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="scalars">functions returning scalars to chain with or</param>
         public Or(params IFunc<Boolean>[] scalars) : this(
-            new Mapped<IFunc<bool>, IScalar<bool>>(
+            new Enumerable.Mapped<IFunc<bool>, IScalar<bool>>(
                 scalars,
                 fnc => new ScalarOf<bool>(fnc)))
         { }

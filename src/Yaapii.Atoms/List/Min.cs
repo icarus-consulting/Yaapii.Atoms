@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Scalar;
 
@@ -42,7 +43,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="items"><see cref="Func{TResult}"/> functions which retrieve items to compare</param>
         public Min(params Func<T>[] items) : this(
-            new Mapped<Func<T>, IScalar<T>>(
+            new Enumerable.Mapped<Func<T>, IScalar<T>>(
                 new EnumerableOf<Func<T>>(items),
                 item => new ScalarOf<T>(() => item.Invoke())))
         { }
@@ -52,7 +53,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="items">items to compare</param>
         public Min(IEnumerable<T> items) : this(
-            new Mapped<T, IScalar<T>>(
+            new Enumerable.Mapped<T, IScalar<T>>(
                 items,
                 item => new ScalarOf<T>(item)))
         { }
@@ -62,7 +63,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="items">items to compare</param>
         public Min(params T[] items) : this(
-            new Mapped<T, IScalar<T>>(
+            new Enumerable.Mapped<T, IScalar<T>>(
                 items,
                 item => new ScalarOf<T>(item)))
         { }

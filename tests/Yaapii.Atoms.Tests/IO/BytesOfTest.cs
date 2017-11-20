@@ -29,6 +29,7 @@ using Xunit;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Enumerable;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 namespace Yaapii.Atoms.IO.Tests

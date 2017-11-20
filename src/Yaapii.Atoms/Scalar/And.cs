@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Scalar
 {
@@ -84,7 +85,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="src">list of items</param>
         public And(IFunc<In, Boolean> func, IEnumerable<In> src) :
             this(
-                new Mapped<In, IScalar<Boolean>>(
+                new Enumerable.Mapped<In, IScalar<Boolean>>(
                     src,
                     new FuncOf<In, IScalar<Boolean>>((item) => 
                         new ScalarOf<Boolean>(func.Invoke(item)))                    
@@ -104,7 +105,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>
         public And(EnumerableOf<System.Func<bool>> funcs) : this(
-            new Mapped<System.Func<bool>, IScalar<bool>>(
+            new Enumerable.Mapped<System.Func<bool>, IScalar<bool>>(
                 funcs,
                 func => new ScalarOf<bool>(func)))
         { }

@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Func
@@ -90,10 +91,10 @@ namespace Yaapii.Atoms.Func
         public ChainedFunc(System.Func<In, Between> before, IEnumerable<System.Func<Between, Between>> funcs, System.Func<Between, Out> after
         ) : this(
                 new FuncOf<In, Between>(before), 
-                new Mapped<System.Func<Between, Between>, IFunc<Between, Between>>(
-                    funcs,
-                    f => new FuncOf<Between, Between>(f)),
-                new FuncOf<Between, Out>(after))
+                    new Enumerable.Mapped<System.Func<Between, Between>, IFunc<Between, Between>>(
+                        funcs,
+                        f => new FuncOf<Between, Between>(f)),
+                    new FuncOf<Between, Out>(after))
         { }
 
 

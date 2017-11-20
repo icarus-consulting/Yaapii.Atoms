@@ -25,6 +25,7 @@ using System.Collections;
 using System.IO;
 using System.Text;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
@@ -158,7 +159,7 @@ namespace Yaapii.Atoms.IO.Tests
             ).Value();
 
             Assert.True(
-                new List.LengthOf(
+                new Enumerable.LengthOf(
                     new SplitText(
                         new TextOf(
                             new BytesOf(

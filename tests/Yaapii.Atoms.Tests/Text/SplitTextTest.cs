@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 

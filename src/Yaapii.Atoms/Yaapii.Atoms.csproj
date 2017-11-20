@@ -17,4 +17,8 @@
     <DocumentationFile>bin\Debug\netstandard1.4\.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Enumerable\" />
+    <Folder Include="Enumerator\" />
+  </ItemGroup>
 </Project>

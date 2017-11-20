@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
 
@@ -40,7 +41,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="src"></param>
         public SumOfInts(params Int32[] src) : this(
-            new Mapped<Int32, IScalar<Int32>>(
+            new Enumerable.Mapped<Int32, IScalar<Int32>>(
                 src, 
                 i => new ScalarOf<Int32>(i)))
         { }
@@ -50,7 +51,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="src">list of numbers to sum</param>
         public SumOfInts(IEnumerable<Int32> src) : this(
-            new Mapped<Int32, IScalar<Int32>>(
+            new Enumerable.Mapped<Int32, IScalar<Int32>>(
                 src, 
                 i => new ScalarOf<Int32>(i)))
         { }
