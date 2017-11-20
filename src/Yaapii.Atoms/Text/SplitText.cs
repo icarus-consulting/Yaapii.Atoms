@@ -84,11 +84,11 @@ namespace Yaapii.Atoms.Text
         public IEnumerator<String> GetEnumerator()
         {
             return new Filtered<String>(
-                    new EnumerableOf<String>(
+                    (str) => !String.IsNullOrEmpty(str),
+                     new EnumerableOf<String>(
                         new Regex(this._regex.AsString()).Split(this._origin.AsString())
-                    ),
-                    (str) => !String.IsNullOrEmpty(str))
-                    .GetEnumerator();
+                     )
+            ).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

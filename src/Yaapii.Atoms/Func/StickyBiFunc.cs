@@ -79,12 +79,12 @@ namespace Yaapii.Atoms.Func
             keymap[first] = second;
 
             Out output;
-            var km = new Filtered<Dictionary<In1, In2>>(this._cache.Keys, (key) => this._comparer.Equals(keymap, key));
+            var km = new Filtered<Dictionary<In1, In2>>((key) => this._comparer.Equals(keymap, key), this._cache.Keys);
             if (km.Count() == 0)
             {
                 output = this._func.Apply(first, second);
                 this._cache.Add(keymap, output);
-                km = new Filtered<Dictionary<In1, In2>>(this._cache.Keys, (key) => this._comparer.Equals(keymap, key));
+                km = new Filtered<Dictionary<In1, In2>>((key) => this._comparer.Equals(keymap, key), this._cache.Keys);
             }
 
             return this._cache[new ItemAt<Dictionary<In1, In2>>(km).Value()];

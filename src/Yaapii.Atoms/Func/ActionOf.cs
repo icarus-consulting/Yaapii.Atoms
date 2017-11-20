@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Func
         /// ctor
         /// </summary>
         /// <param name="fnc">action to execute</param>
-        public ActionOf(System.Action<In> fnc)
+        public ActionOf(Action<In> fnc)
         {
             this._func = fnc;
         }

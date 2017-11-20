@@ -86,8 +86,8 @@ namespace Yaapii.Atoms.Scalar
             this(
                 new Mapped<In, IScalar<Boolean>>(
                     src,
-                        new FuncOf<In, IScalar<Boolean>>((item) => 
-                        new ScalarOf<Boolean>(func.Invoke(item)))
+                    new FuncOf<In, IScalar<Boolean>>((item) => 
+                        new ScalarOf<Boolean>(func.Invoke(item)))                    
                 )
             )
         { }
@@ -105,7 +105,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="funcs">the conditions to apply</param>
         public And(EnumerableOf<System.Func<bool>> funcs) : this(
             new Mapped<System.Func<bool>, IScalar<bool>>(
-                funcs, 
+                funcs,
                 func => new ScalarOf<bool>(func)))
         { }
 

@@ -132,8 +132,9 @@ namespace Yaapii.Atoms.Text
             return String.Join(
                 this._delimiter.AsString(), 
                 new Mapped<IText, string>(
-                    this._texts.Value(), 
-                    text => text.AsString()));
+                    this._texts.Value(),
+                    text => text.AsString()
+                    ));
         }
 
         /// <summary>
