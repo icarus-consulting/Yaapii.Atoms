@@ -5,9 +5,9 @@ using Xunit;
 using Yaapii.Atoms.Collection;
 using Yaapii.Atoms.List;
 
-namespace Yaapii.Atoms.Tests.Collection
+namespace Yaapii.Atoms.Collection.Tests
 {
-    public sealed class CollectionOfTests
+    public sealed class CollectionOfTest
     {
         [Fact]
         public void BehavesAsCollection()

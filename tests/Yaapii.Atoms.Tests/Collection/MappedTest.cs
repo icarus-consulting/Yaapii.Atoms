@@ -6,7 +6,7 @@ using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Collection.Tests
 {
-    public sealed class MappedTests
+    public sealed class MappedTest
     {
 
         [Fact]

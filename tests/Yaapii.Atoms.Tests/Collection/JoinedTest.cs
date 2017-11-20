@@ -4,7 +4,7 @@ using Xunit;
 using Yaapii.Atoms.Collection;
 using Yaapii.Atoms.Fail;
 
-namespace Yaapii.Atoms.Tests.Collection
+namespace Yaapii.Atoms.Collection.Tests
 {
     public sealed class JoinedTest
     {

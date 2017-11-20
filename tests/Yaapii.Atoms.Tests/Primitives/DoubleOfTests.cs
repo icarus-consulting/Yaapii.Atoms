@@ -27,7 +27,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Tests.Primitives
+namespace Yaapii.Atoms.Primitives.Tests
 {
     public sealed class DoubleOfTests
     {

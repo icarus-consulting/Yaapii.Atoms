@@ -8,7 +8,7 @@ using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Tests.Collection
+namespace Yaapii.Atoms.Collection.Tests
 {
     public sealed class StickyCollectionTest
     {

@@ -8,7 +8,7 @@ using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Map.Tests
 {
-    public class MapOfTests
+    public class MapOfTest
     {
         [Fact]
         public void BehavesAsMap()

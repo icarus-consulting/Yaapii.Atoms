@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Yaapii.Atoms.Collection.Tests
 {
-    public sealed class SolidCollectionTests
+    public sealed class SolidCollectionTest
     {
 
         [Fact]
