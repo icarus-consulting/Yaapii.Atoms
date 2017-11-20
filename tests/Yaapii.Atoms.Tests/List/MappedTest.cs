@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.List.Tests
         {
             Assert.True(
                 new ItemAt<IText>(
-                    new Mapped<String, IText>(
+                    new Enumerable.Mapped<String, IText>(
                         new EnumerableOf<string>("hello", "world", "damn"),
                         input => new UpperText(new TextOf(input))
                         ),
@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.List.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Mapped<String, IText>(
+                    new Enumerable.Mapped<String, IText>(
                         new EnumerableOf<string>(),
                         input => new UpperText(new TextOf(input))
                     )).Value() == 0,
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.List.Tests
         {
             Assert.True(
                 new ItemAt<IText>(
-                    new Mapped<String, IText>(
+                    new Enumerable.Mapped<String, IText>(
                         new EnumerableOf<string>("hello", "world", "damn"),
                         (input, index) => new UpperText(new TextOf(input+index))
                         ),

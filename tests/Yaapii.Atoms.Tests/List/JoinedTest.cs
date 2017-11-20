@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.List.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Joined<string>(
+                    new Enumerable.Joined<string>(
                         new EnumerableOf<string>("hello", "world", "друг"),
                         new EnumerableOf<string>("how", "are", "you"),
                         new EnumerableOf<string>("what's", "up")
@@ -50,8 +50,8 @@ namespace Yaapii.Atoms.List.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Joined<IEnumerable<string>>(
-                        new Mapped<string, IEnumerable<string>>(
+                    new Enumerable.Joined<IEnumerable<string>>(
+                        new Enumerable.Mapped<string, IEnumerable<string>>(
                            new EnumerableOf<string>("x"),
                            str => new EnumerableOf<string>(str)
                         )
@@ -64,8 +64,8 @@ namespace Yaapii.Atoms.List.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Joined<string>(
-                        new EnumerableOf<string>("hello", "world", "друг"),
+                    new Enumerable.Joined<string>(
+                        new Enumerable.EnumerableOf<string>("hello", "world", "друг"),
                         "how",
                         "are",
                         "you",

@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Func.Tests
             new LengthOf(
                 new Filtered<string>(
                     input => input.EndsWith("XY"),
-                    new Mapped<string, string>(
+                    new Enumerable.Mapped<string, string>(
                         new EnumerableOf<string>("public", "final", "class"),
                         new ChainedFunc<String, String, String>(
                             input => input += "X",
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Func.Tests
             new LengthOf(
                 new Filtered<string>(
                     input => !input.StartsWith("st") && input.EndsWith("12"),
-                     new Mapped<string, string>(
+                     new Enumerable.Mapped<string, string>(
                         new EnumerableOf<string>("private", "static", "String"),
                         new ChainedFunc<string, string, string>(
                             input => input += "1",

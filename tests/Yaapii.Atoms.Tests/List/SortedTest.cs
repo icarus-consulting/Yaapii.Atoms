@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.List.Tests
         {
             Assert.True(
                 new JoinedText(", ",
-                    new Mapped<int, string>(
+                    new Enumerable.Mapped<int, string>(
                         new Sorted<int>(
                             new EnumerableOf<int>(3, 2, 10, 44, -6, 0)
                         ),
