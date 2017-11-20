@@ -50,4 +50,3 @@ namespace Yaapii.Atoms.Enumerable
         { }
     }
 }
-#pragma warning restore NoGetOrSet // No Statics

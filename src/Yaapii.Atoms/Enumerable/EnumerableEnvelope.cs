@@ -18,11 +18,15 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         private readonly IScalar<IEnumerable<T>> _origin;
 
+        internal EnumerableEnvelope(Func<IEnumerable<T>> fnc) : this(
+            new ScalarOf<IEnumerable<T>>(fnc))
+        { }
+
         /// <summary>
         /// Makes envelope for IEnumerable scalars.
         /// </summary>
         /// <param name="sc"></param>
-        public EnumerableEnvelope(IScalar<IEnumerable<T>> sc)
+        internal EnumerableEnvelope(IScalar<IEnumerable<T>> sc)
         {
             this._origin = sc;
         }

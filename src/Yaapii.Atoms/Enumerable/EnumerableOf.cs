@@ -62,6 +62,13 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// </summary>
+        /// <param name="fnc">function which retrieves enumerator</param>
+        public EnumerableOf(Func<IEnumerable<T>> fnc) : this(new ScalarOf<IEnumerator<T>>(() => fnc.Invoke().GetEnumerator()))
+        { }
+
+        /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>

@@ -61,11 +61,20 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
-        public Repeated(IScalar<T> elm, int cnt) : base(
+        public Repeated(IScalar<T> elm, int cnt) : this(
+            elm, new ScalarOf<int>(cnt))
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="elm">scalar to get element to repeat</param>
+        /// <param name="cnt">how often to repeat</param>
+        public Repeated(IScalar<T> elm, IScalar<int> cnt) : base(
             new ScalarOf<IEnumerable<T>>(
                 () => 
                 new EnumerableOf<T>(
-                    new RepeatedEnumerator<T>(elm, cnt))))
+                    new RepeatedEnumerator<T>(elm, cnt.Value()))))
         { }
     }
 }
