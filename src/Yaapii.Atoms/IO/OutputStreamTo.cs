@@ -95,7 +95,7 @@ namespace Yaapii.Atoms.IO
             this._target.Value().Write(buffer, offset, length);
         }
 
-        public new void Dispose()
+        public void Dispose()
         {
             ((IDisposable)this._target.Value()).Dispose();
         }

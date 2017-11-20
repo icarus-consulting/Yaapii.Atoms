@@ -81,7 +81,7 @@ namespace Yaapii.Atoms.IO
         }
 
 
-        public new void Dispose()
+        public void Dispose()
         {
             try
             {

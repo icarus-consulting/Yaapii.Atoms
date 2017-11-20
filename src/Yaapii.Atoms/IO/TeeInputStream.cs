@@ -108,7 +108,7 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// Clean up.
         /// </summary>
-        public new void Dispose()
+        public void Dispose()
         {
             try
             {
