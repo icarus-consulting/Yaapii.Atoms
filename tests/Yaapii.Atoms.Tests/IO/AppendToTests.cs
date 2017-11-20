@@ -13,19 +13,18 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void WritesSimplePathContent()
         {
-            var temp = Directory.CreateDirectory("artifacts/OutputToTest/");
+            var temp = Directory.CreateDirectory("artifacts/AppendToTest/");
             var file = Path.GetFullPath(Path.Combine(temp.FullName, "file.txt"));
             if (File.Exists(file)) File.Delete(file);
 
             var txt = "Hello, товарищ!";
 
-            var tInput = new TeeInput(
+            var lengthOf = new LengthOf(
+                new TeeInput(
                     txt,
                     new AppendTo(
                         new OutputTo(file)
-                    ));
-
-            var lengthOf = new LengthOf(tInput);
+                    )));
 
             lengthOf.Value();
             lengthOf.Value();
@@ -35,13 +34,13 @@ namespace Yaapii.Atoms.IO.Tests
                     new InputAsBytes(
                         new InputOf(new Uri(file))))
                 .AsString() == (txt + txt),
-                "Can't write path content");
+                "Can't append path content");
         }
 
         [Fact]
         public void WritesSimpleFileContent()
         {
-            var temp = Directory.CreateDirectory("artifacts/OutputToTest");
+            var temp = Directory.CreateDirectory("artifacts/AppendToTest");
             var file = new Uri(Path.GetFullPath(Path.Combine(temp.FullName, "file.txt")));
             if (File.Exists(file.AbsolutePath))
             {
@@ -58,19 +57,18 @@ namespace Yaapii.Atoms.IO.Tests
             lengthOf.Value();
             lengthOf.Value();
 
-
             Assert.True(
                 new TextOf(
                     new InputAsBytes(
                         new InputOf(file)))
                 .AsString() == txt + txt,
-                "Can't write file content");
+                "Can't append file content");
         }
 
         [Fact]
         public void DisposesStream()
         {
-            var temp = Directory.CreateDirectory("artifacts/OutputToTest");
+            var temp = Directory.CreateDirectory("artifacts/AppendToTest");
             var file = new Uri(Path.GetFullPath(Path.Combine(temp.FullName, "file.txt")));
 
             var appendTo = new AppendTo(file);

@@ -95,10 +95,10 @@ namespace Yaapii.Atoms.IO
         {
             return this._origin.Value();
         }
+
         public void Dispose()
         {
             _origin.Value().Dispose();
         }
-
     }
 }
