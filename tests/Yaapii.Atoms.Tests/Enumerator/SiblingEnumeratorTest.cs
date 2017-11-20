@@ -29,7 +29,7 @@ using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.List;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerator.Tests
 {
     public class SiblingEnumeratorTest
     {

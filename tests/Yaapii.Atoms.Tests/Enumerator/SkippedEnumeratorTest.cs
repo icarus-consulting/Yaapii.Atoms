@@ -24,37 +24,45 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.List;
+using Yaapii.Atoms.Fail;
+using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Enumerator;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class RepeatedEnumeratorTest
+    public sealed class SkippedEnumeratorTest
     {
         [Fact]
-        public void AllSameTest()
+        public void SkipEnumerator()
         {
-            int size = 42;
-            int element = 11;
-            Assert.True(
-                new LengthOfEnumerator(
-                    new RepeatedEnumerator<int>(
-                        element,
-                        size
-                    )
-                ).Value() == size,
-                "Can't generate an enumerator with fixed size"
-            );
+            var skipped =
+                new List<string>(
+                    new EnumerableOf<string>(
+                        new SkippedEnumerator<string>(
+                            new EnumerableOf<string>(
+                                "one", "two", "three", "four"
+                            ).GetEnumerator(),
+                        2)));
+
+            Assert.True(new LengthOfEnumerator(skipped.GetEnumerator()).Value() == 2, "cannot skip elements");
+            Assert.False(skipped.Contains("one"), "cannot skip elements");
+            Assert.False(skipped.Contains("two"), "cannot skip elements");
+            Assert.True(skipped.Contains("three"), "cannot skip elements");
+            Assert.True(skipped.Contains("four"), "cannot skip elements");
         }
 
         [Fact]
-        public void EmptyTest()
+        public void CannotSkippedMoreThanExists()
         {
-            Assert.True(
-                new LengthOfEnumerator(
-                    new RepeatedEnumerator<int>(0, 0)
-                    ).Value() == 0,
-                    "Can't generate an empty enumerator");
+            Assert.False(
+                new SkippedEnumerator<string>(
+                    new EnumerableOf<string>(
+                        "one", "two"
+                    ).GetEnumerator(),
+                    2
+                ).MoveNext(),
+                "enumerates more elements than exist");
         }
     }
 }

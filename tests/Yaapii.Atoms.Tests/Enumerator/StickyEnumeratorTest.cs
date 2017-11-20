@@ -23,22 +23,38 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using Xunit;
+using Yaapii.Atoms;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.List;
+using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class LengthOfEnumeratorTest
+    public sealed class StickyEnumeratorTest
     {
         [Fact]
-        public void Counts()
+        public void IgnoresChangesInIterable()
         {
+            int count = 10;
             Assert.True(
-                new LengthOfEnumerator(
-                    new EnumerableOf<int>(1, 2, 3, 4, 5).GetEnumerator()).Value() == 5,
-                "cannot count items");
+                new JoinedText(
+                    ", ",
+                    new EnumerableOf<IText>(
+                        new MappedEnumerator<int, IText>(
+                            new StickyEnumerator<int>(
+                                new LimitedEnumerator<int>(
+                                    new EndlessEnumerator<int>(Interlocked.Increment(ref count)),
+                                    20
+                                )
+                            ),
+                            (number) => new TextOf(number + ""))))
+                            .AsString() == "11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11",
+                "cannot cache iterator");
+
         }
     }
 }

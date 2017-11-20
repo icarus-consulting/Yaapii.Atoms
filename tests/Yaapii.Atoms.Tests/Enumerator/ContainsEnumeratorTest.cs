@@ -27,25 +27,29 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.List;
-using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class LimitedEnumeratorTest
+    public class ContainsEnumeratorTest
     {
         [Fact]
-        public void LimitsContent()
+        public void FindsItem()
         {
             Assert.True(
-                new JoinedText(", ",
-                new EnumerableOf<IText>(
-                    new MappedEnumerator<int, IText>(
-                        new LimitedEnumerator<int>(
-                            new EnumerableOf<int>(1, 2, 3, 4).GetEnumerator(),
-                            2), 
-                        str => new TextOf(str + "")))).AsString() == "1, 2",
-            "cannot limit enumertor contents");
-                
+                new ContainsEnumerator<string>(
+                    new EnumerableOf<string>("Hello", "my", "cat", "is", "missing").GetEnumerator(),
+                    (str) => str == "cat"
+                    ).Value());
+        }
+
+        [Fact]
+        public void DoesntFindItem()
+        {
+            Assert.False(
+                new ContainsEnumerator<string>(
+                    new EnumerableOf<string>("Hello", "my", "cat", "is", "missing").GetEnumerator(),
+                    (str) => str == "elephant"
+                    ).Value());
         }
     }
 }

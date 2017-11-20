@@ -24,26 +24,26 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Enumerator;
+using Yaapii.Atoms.List;
+using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class JoinedEnumeratorTest
+    public sealed class MappedEnumeratorTest
     {
         [Fact]
-        public void JoinsEnumerators()
+        public void MapsContents()
         {
             Assert.True(
-            new LengthOfEnumerator(
-                new JoinedEnumerator<IEnumerator<String>>(
-                    new MappedEnumerator<string, IEnumerator<string>>(
-                        new EnumerableOf<string>("x", "y", "z").GetEnumerator(),
-                        (input) => new EnumerableOf<string>(input).GetEnumerator()))
-                    ).Value() == 3,
-            "Can't concatenate mapped iterators together");
+                new ItemAtEnumerator<string>(
+                    new MappedEnumerator<int, string>(
+                        new EnumerableOf<int>(1).GetEnumerator(),
+                        i => new TextOf(i).AsString()),
+                0).Value() == "1",
+            "cannot map contents of enumerator");
         }
     }
 }

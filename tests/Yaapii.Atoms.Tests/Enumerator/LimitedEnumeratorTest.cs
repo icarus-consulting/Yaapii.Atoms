@@ -27,37 +27,25 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.List;
+using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class CycledEnumeratorTest
+    public sealed class LimitedEnumeratorTest
     {
         [Fact]
-        public void RepeatIteratorTest()
+        public void LimitsContent()
         {
-            string expected = "two";
-
             Assert.True(
-                new ItemAtEnumerator<string>(
-                    new CycledEnumerator<string>(
-                        new EnumerableOf<string>(
-                            "one", expected, "three"
-                            )
-                        ),
-                    7).Value() == expected,
-                "Can't repeat enumerator");
-        }
-
-        [Fact]
-        public void EmptyThrowsExceptionTest()
-        {
-            Assert.False(
-                    new CycledEnumerator<string>(
-                        new EnumerableOf<string>(
-                            new string[0]
-                            )
-                        ).MoveNext(),
-                "Can move but am expected to not move");
+                new JoinedText(", ",
+                new EnumerableOf<IText>(
+                    new MappedEnumerator<int, IText>(
+                        new LimitedEnumerator<int>(
+                            new EnumerableOf<int>(1, 2, 3, 4).GetEnumerator(),
+                            2), 
+                        str => new TextOf(str + "")))).AsString() == "1, 2",
+            "cannot limit enumertor contents");
+                
         }
     }
 }

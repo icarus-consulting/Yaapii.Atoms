@@ -29,20 +29,22 @@ using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class FilteredEnumeratorTest
+    public sealed class SortedEnumeratorTest
     {
         [Fact]
-        public void Filters()
+        public void Sorts()
         {
             Assert.True(
-                new JoinedText(" ",
+                new JoinedText(
+                    " ",
                     new EnumerableOf<string>(
-                        new FilteredEnumerator<string>(
-                            new EnumerableOf<string>("Hello", "cruel", "World").GetEnumerator(),
-                                (str) => str != "cruel"))).AsString() == "Hello World",
-                "cannot filter enumerator contents");
+                        new SortedEnumerator<string>(
+                            Comparer<string>.Default,
+                                new EnumerableOf<string>("B", "A", "C", "F", "E", "D").GetEnumerator()
+                        ))).AsString() == "A B C D E F",
+                "cannot sort contents of iterator");
         }
     }
 }

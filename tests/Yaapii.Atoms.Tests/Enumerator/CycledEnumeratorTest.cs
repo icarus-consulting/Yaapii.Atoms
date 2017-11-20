@@ -22,37 +22,42 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
+using Yaapii.Atoms.List;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class EndlessEnumeratorTest
+    public sealed class CycledEnumeratorTest
     {
         [Fact]
-        public void RepeatsTwentyTimes()
+        public void RepeatIteratorTest()
         {
-            var expected = "AAAAAAAAAAAAAAAAAAAA";
+            string expected = "two";
 
             Assert.True(
-                new JoinedText(
-                    "",
-                    new EnumerableOf<IText>(
-                            new MappedEnumerator<string, IText>(
-                                new LimitedEnumerator<string>(
-                                    new EndlessEnumerator<string>("A"),
-                                    20),
-                                str => new TextOf(str)))).AsString() == expected,
-                
-                "cannot repeat endlessly");
+                new ItemAtEnumerator<string>(
+                    new CycledEnumerator<string>(
+                        new EnumerableOf<string>(
+                            "one", expected, "three"
+                            )
+                        ),
+                    7).Value() == expected,
+                "Can't repeat enumerator");
+        }
 
+        [Fact]
+        public void EmptyThrowsExceptionTest()
+        {
+            Assert.False(
+                    new CycledEnumerator<string>(
+                        new EnumerableOf<string>(
+                            new string[0]
+                            )
+                        ).MoveNext(),
+                "Can move but am expected to not move");
         }
     }
 }

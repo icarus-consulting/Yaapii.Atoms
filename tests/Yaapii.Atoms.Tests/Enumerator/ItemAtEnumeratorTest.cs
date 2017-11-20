@@ -31,7 +31,8 @@ using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.List;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Yaapii.Atoms.List.Tests
+
+namespace Yaapii.Atoms.Enumerator.Tests
 {
     public sealed class ItemAtEnumeratorTest
     {
