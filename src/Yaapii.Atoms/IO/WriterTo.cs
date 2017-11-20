@@ -93,7 +93,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="tgt">the target streamwriter</param>
         private WriterTo(IScalar<StreamWriter> tgt) : base(new DeadStream())
         {
-            this._target = new StickyScalar<StreamWriter>(tgt);
+            this._target = new StickyScalar<StreamWriter>(tgt, writer => !writer.BaseStream.CanWrite);
         }
 
 #pragma warning disable CS1591
@@ -319,7 +319,7 @@ namespace Yaapii.Atoms.IO
             this._target.Value().Flush();
         }
 
-        public new void Dispose()
+        protected override void Dispose(bool disposing)
         {
             try
             {
@@ -329,10 +329,11 @@ namespace Yaapii.Atoms.IO
 
             try
             {
-                this._target.Value().BaseStream.Dispose();
+                //this._target.Value().BaseStream.Dispose();
                 ((IDisposable)this._target.Value()).Dispose();
             }
             catch (Exception) { }
+            base.Dispose(disposing);
         }
     }
 }

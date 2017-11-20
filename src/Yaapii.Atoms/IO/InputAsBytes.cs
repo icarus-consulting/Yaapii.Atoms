@@ -70,6 +70,8 @@ namespace Yaapii.Atoms.IO
                 { }
                 output = baos.ToArray();
             }
+
+            Dispose();
             return output;
         }
 

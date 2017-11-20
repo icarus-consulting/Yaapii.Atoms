@@ -219,9 +219,10 @@ namespace Yaapii.Atoms.IO
             return this._source.Value().Peek();
         }
 
-        public new void Dispose()
+        protected override void Dispose(bool disposing)
         {
             _source.Value().Dispose();
+            base.Dispose(disposing);
         }
     }
 }

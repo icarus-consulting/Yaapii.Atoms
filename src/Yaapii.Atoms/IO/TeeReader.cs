@@ -140,7 +140,7 @@ namespace Yaapii.Atoms.IO
             return done;
         }
 
-        public new void Dispose()
+        protected override void Dispose(bool disposing)
         {
             try
             {
@@ -150,9 +150,11 @@ namespace Yaapii.Atoms.IO
 
             try
             {
+                _destination.Flush();
                 _destination.Dispose();
             }
             catch (Exception) { }
+            base.Dispose(disposing);
         }
 
         public override Encoding CurrentEncoding => this._source.CurrentEncoding;

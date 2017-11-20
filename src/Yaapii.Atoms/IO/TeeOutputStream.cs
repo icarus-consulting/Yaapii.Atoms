@@ -80,8 +80,7 @@ namespace Yaapii.Atoms.IO
             }
         }
 
-
-        public new void Dispose()
+        protected override void Dispose(bool disposing)
         {
             try
             {
@@ -96,6 +95,7 @@ namespace Yaapii.Atoms.IO
                 }
                 catch (Exception) { }
             }
+            base.Dispose(disposing);
         }
 
         public override bool CanRead => false;

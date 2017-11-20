@@ -59,13 +59,15 @@ namespace Yaapii.Atoms.IO.Tests
             ).Value();
 
             //Read from large file and write to output file (make a copy)
+            var filestream = new FileStream(outputPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write);
+
             long left;
             left = new LengthOf(
                     new TeeInput(
                         new InputOf(
                             new Uri(Path.GetFullPath(inputPath))),
                         new WriterAsOutput(
-                            new StreamWriter(new FileStream(outputPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write))))
+                            new StreamWriter(filestream)))
                     ).Value();
 
             long right = new LengthOf(

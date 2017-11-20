@@ -195,7 +195,7 @@ namespace Yaapii.Atoms.IO
             throw new NotImplementedException();
         }
 
-        public new void Dispose()
+        protected override void Dispose(bool disposing)
         {
             try
             {
@@ -208,6 +208,7 @@ namespace Yaapii.Atoms.IO
                 this._writer.Dispose();
             }
             catch (Exception) { }
+            base.Dispose(disposing);
         }
     }
 }

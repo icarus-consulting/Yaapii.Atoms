@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.IO
     /// <summary>
     /// Readable <see cref="Stream"/> that copies input to <see cref="IOutput"/> while reading.
     /// </summary>
-    public sealed class TeeInputStream : Stream, IDisposable
+    public sealed class TeeInputStream : Stream
     {
         /// <summary>
         /// input
@@ -108,7 +108,12 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// Clean up.
         /// </summary>
-        public new void Dispose()
+        //public override void Dispose()
+        //{
+
+        //}
+
+        protected override void Dispose(bool disposing)
         {
             try
             {
@@ -122,6 +127,8 @@ namespace Yaapii.Atoms.IO
                 _output.Dispose();
             }
             catch (Exception) { }
+
+            base.Dispose(disposing);
         }
 
         public override void Flush()
