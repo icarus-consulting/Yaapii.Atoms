@@ -27,6 +27,7 @@ using System.Text;
 using Yaapii.Atoms;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.List;
+using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet
 namespace Yaapii.Atoms.Enumerable
@@ -35,12 +36,8 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
     /// </summary>
     /// <typeparam name="T">type of items in enumerable</typeparam>
-    public sealed class Replaced<T> : IEnumerable<T>
+    public sealed class Replaced<T> : EnumerableEnvelope<T>
     {
-        private readonly List<T> _origin;
-        private readonly T _replacement;
-        private readonly IFunc<T, bool> _match;
-
         /// <summary>
         /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
         /// </summary>
@@ -56,46 +53,27 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>
         /// <param name="replacement">item to insert instead</param>
-        public Replaced(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement)
-        {
-            _origin = new List<T>(origin);
-            _replacement = replacement;
-            _match = condition;
-        }
-
-        /// <summary>
-        /// Gets the enumerator.
-        /// </summary>
-        /// <returns>the enumerator</returns>
-        public IEnumerator<T> GetEnumerator()
-        {
-            return Aggregated().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return Aggregated().GetEnumerator();
-        }
-
-        private IEnumerable<T> Aggregated()
-        {
-            var result = new List<T>();
-
-            for (int i = 0; i < _origin.Count;)
+        public Replaced(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement) : base(new ScalarOf<IEnumerable<T>>(
+            () =>
             {
-                var original = _origin[i];
+                var result = new List<T>();
+                var e = origin.GetEnumerator();
 
-                if (_match.Invoke(original))
+                while (e.MoveNext())
                 {
-                    result.Add(_replacement);
-                    continue;
+                    if (condition.Invoke(e.Current))
+                    {
+                        result.Add(replacement);
+                    }
+                    else
+                    {
+                        result.Add(e.Current);
+                    }
                 }
 
-                result.Add(original);
-            }
-
-            return result;
-        }
+                return result;
+            }))
+        { }
     }
 }
 #pragma warning restore NoGetOrSet

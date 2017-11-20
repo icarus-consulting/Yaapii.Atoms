@@ -40,12 +40,6 @@ namespace Yaapii.Atoms.Enumerable
     /// <typeparam name="T">type of the elements</typeparam>
     public sealed class Endless<T> : EnumerableEnvelope<T>
     {
-
-        /// <summary>
-        /// repeated element
-        /// </summary>
-        private readonly T _element;
-
         /// <summary>
         /// A <see cref="IEnumerable"/> that repeats one element infinitely.
         /// </summary>

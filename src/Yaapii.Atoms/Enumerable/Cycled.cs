@@ -39,11 +39,6 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class Cycled<T> : EnumerableEnvelope<T>
     {
         /// <summary>
-        /// the source
-        /// </summary>
-        private readonly IEnumerable<T> _enumerable;
-
-        /// <summary>
         /// A <see cref="IEnumerator{T}"/> that starts from the beginning when ended.
         /// </summary>
         /// <param name="enumerable">an enum to cycle</param>

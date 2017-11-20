@@ -40,9 +40,6 @@ namespace Yaapii.Atoms.Enumerable
     /// <typeparam name="Out">type of mapped elements</typeparam>
     public sealed class Mapped<In, Out> : EnumerableEnvelope<Out>
     {
-        private readonly IEnumerable<In> _enumerable;
-        private readonly IBiFunc<In, int, Out> _func;
-
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
         /// </summary>

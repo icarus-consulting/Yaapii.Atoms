@@ -69,30 +69,31 @@ namespace Yaapii.Atoms.Enumerable
             new ScalarOf<IEnumerable<T>>(() => new EnumeratorAsEnumerable<T>(origin)))
         { }
 
-        private class EnumeratorAsEnumerable<T> : IEnumerable<T>
+        /// <summary>
+        /// Makes enumerable from an enumerator
+        /// </summary>
+        /// <typeparam name="X"></typeparam>
+        private class EnumeratorAsEnumerable<X> : IEnumerable<X>
         {
-            private readonly IScalar<IEnumerator<T>> _origin;
+            private readonly IScalar<IEnumerator<X>> _origin;
 
-            public EnumeratorAsEnumerable(IEnumerator<T> enumerator) : this(new ScalarOf<IEnumerator<T>>(enumerator))
+            public EnumeratorAsEnumerable(IEnumerator<X> enumerator) : this(new ScalarOf<IEnumerator<X>>(enumerator))
             { }
 
-            public EnumeratorAsEnumerable(IScalar<IEnumerator<T>> enumerator)
+            public EnumeratorAsEnumerable(IScalar<IEnumerator<X>> enumerator)
             {
                 _origin = enumerator;
             }
 
-            public IEnumerator<T> GetEnumerator()
+            public IEnumerator<X> GetEnumerator()
             {
-                throw new NotImplementedException();
+                return _origin.Value();
             }
 
             IEnumerator IEnumerable.GetEnumerator()
             {
-                throw new NotImplementedException();
+                return GetEnumerator();
             }
         }
     }
-
-
 }
-#pragma warning restore NoGetOrSet // No Statics

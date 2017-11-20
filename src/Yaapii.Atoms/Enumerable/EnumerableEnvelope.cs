@@ -6,20 +6,40 @@ using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable
 {
+    /// <summary>
+    /// Envelope for Enumerable.
+    /// It bundles the methods offered by IEnumerable and enables scalar based ctors.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class EnumerableEnvelope<T> : IEnumerable<T>
     {
-        private readonly IScalar<IEnumerable<T>> _items;
+        /// <summary>
+        /// The source enumerable.
+        /// </summary>
+        private readonly IScalar<IEnumerable<T>> _origin;
 
+        /// <summary>
+        /// Makes envelope for IEnumerable scalars.
+        /// </summary>
+        /// <param name="sc"></param>
         public EnumerableEnvelope(IScalar<IEnumerable<T>> sc)
         {
-            this._items = sc;
+            this._origin = sc;
         }
 
+        /// <summary>
+        /// Enumerator for this envelope.
+        /// </summary>
+        /// <returns>The enumerator</returns>
         public IEnumerator<T> GetEnumerator()
         {
-            return this._items.Value().GetEnumerator();
+            return this._origin.Value().GetEnumerator();
         }
 
+        /// <summary>
+        /// Enumerator for this envelope.
+        /// </summary>
+        /// <returns>The enumerator</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

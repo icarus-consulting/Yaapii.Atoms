@@ -38,9 +38,6 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class Sorted<T> : EnumerableEnvelope<T>
         where T : IComparable<T>
     {
-        private readonly IEnumerable<T> _enumerable;
-        private readonly Comparer<T> _comparer;
-
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
         /// </summary>
