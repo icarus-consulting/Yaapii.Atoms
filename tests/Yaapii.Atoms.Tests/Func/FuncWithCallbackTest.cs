@@ -34,15 +34,15 @@ namespace Yaapii.Atoms.Func.Tests
         public void UsesMainFunc()
         {
             Assert.True(
-            new FuncWithFallback<bool, string>(
-                input => "It's success",
-                ex => "In case of failure..."
-            ).Invoke(true).Contains("success"),
-            "cannot use main function");
+                new FuncWithFallback<bool, string>(
+                    input => "It's success",
+                    ex => "In case of failure..."
+                ).Invoke(true).Contains("success"),
+                "cannot use main function");
         }
 
         [Fact]
-        public void UsesCallback()
+        public void UsesFallback()
         {
             Assert.True(
                 new FuncWithFallback<bool, string>(
