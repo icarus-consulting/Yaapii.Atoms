@@ -55,8 +55,9 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="func">func to call</param>
         /// <param name="fallback">fallback func</param>
-        public FuncWithFallback(System.Func<In, Out> func, System.Func<Exception, Out> fallback) :
-            this(new FuncOf<In, Out>((X) => func(X)), new FuncOf<Exception, Out>((e) => fallback(e)))
+        public FuncWithFallback(System.Func<In, Out> func, System.Func<Exception, Out> fallback) :this(
+            new FuncOf<In, Out>((X) => func(X)),
+            new FuncOf<Exception, Out>((e) => fallback(e)))
         { }
 
         /// <summary>
@@ -64,8 +65,9 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="func">func to call</param>
         /// <param name="fallback">fallback func</param>
-        public FuncWithFallback(System.Func<In, Out> func, Atoms.IFunc<Exception, Out> fallback) :
-            this(new FuncOf<In, Out>((X) => func(X)), fallback)
+        public FuncWithFallback(System.Func<In, Out> func, Atoms.IFunc<Exception, Out> fallback) : this(
+            new FuncOf<In, Out>((X) => func(X)),
+            fallback)
         { }
 
         /// <summary>
@@ -73,8 +75,10 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="fnc">func to call</param>
         /// <param name="fbk">fallback func</param>
-        public FuncWithFallback(IFunc<In, Out> fnc, IFunc<Exception, Out> fbk) :
-        this(fnc, fbk, new FuncOf<Out, Out>((input) => input))
+        public FuncWithFallback(IFunc<In, Out> fnc, IFunc<Exception, Out> fbk) : this(
+            fnc,
+            fbk,
+            new FuncOf<Out, Out>((input) => input))
         { }
 
         /// <summary>
