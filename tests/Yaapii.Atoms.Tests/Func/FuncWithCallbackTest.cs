@@ -64,6 +64,42 @@ namespace Yaapii.Atoms.Func.Tests
                 ex => "won't happen",
                 input => "follow up"
             ).Invoke(true) == "follow up");
+        }
+
+        [Fact]
+        public void UsesParameterlessMainFunc()
+        {
+            Assert.True(
+            new FuncWithFallback<string>(
+                () => "It's success",
+                ex => "In case of failure..."
+            ).Invoke().Contains("success"),
+            "cannot use main function");
+        }
+
+        [Fact]
+        public void UsesParameterlessCallback()
+        {
+            Assert.True(
+                new FuncWithFallback<string>(
+                    () =>
+                    {
+                        throw new Exception("Failure");
+                    },
+                    ex => "Never mind"
+                ).Invoke() == "Never mind"
+            );
+        }
+
+        [Fact]
+        public void ParameterlessUsesFollowUp()
+        {
+            Assert.True(
+            new FuncWithFallback<string>(
+                () => "works fine",
+                ex => "won't happen",
+                input => "follow up"
+            ).Invoke() == "follow up");
+        }
     }
-}
 }
