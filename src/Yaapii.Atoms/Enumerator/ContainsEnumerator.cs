@@ -55,11 +55,7 @@ namespace Yaapii.Atoms.Enumerator
         /// <returns>true if item is present in enumerable.</returns>
         public bool Value()
         {
-            new FailPrecise(
-                    new FailWhen(!this._src.MoveNext()),
-                    new IOException("cannot lookup in empty enumerable")).Go();
-
-            var contains = true;
+            var contains = _src.MoveNext();
             for (var cur = 0; !_match.Invoke(this._src.Current); cur++)
             {
                 if (!this._src.MoveNext())
