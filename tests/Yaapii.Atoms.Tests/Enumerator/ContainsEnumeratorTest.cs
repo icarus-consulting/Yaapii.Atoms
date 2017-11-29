@@ -51,5 +51,14 @@ namespace Yaapii.Atoms.Enumerator.Tests
                     (str) => str == "elephant"
                     ).Value());
         }
+
+        [Fact]
+        public void DoesentFindInEmtyList()
+        {
+            Assert.False(new ContainsEnumerator<string>(
+                new List<String>().GetEnumerator(),
+                (str) => str == "elephant"
+                ).Value());
+        }
     }
 }
