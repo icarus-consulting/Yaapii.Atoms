@@ -10,7 +10,7 @@ var configuration   = Argument<string>("configuration", "Release");
 // we define where the build artifacts should be places
 // this is relative to the project root folder
 var buildArtifacts      = new DirectoryPath("./artifacts/");
-var framework     = "netstandard1.4";
+var framework     = "netstandard2.0";
 var project = new DirectoryPath("./src/Yaapii.Atoms/Yaapii.Atoms.csproj");
 
 var owner = "icarus-consulting";

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <VersionPrefix>0.5.8</VersionPrefix>
     <Description>Ported .NET version of Cactoos by Yegor Bugayenko.</Description>
     <NeutralLanguage>en-001</NeutralLanguage>
