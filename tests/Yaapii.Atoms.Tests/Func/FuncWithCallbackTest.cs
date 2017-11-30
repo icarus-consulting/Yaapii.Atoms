@@ -34,15 +34,15 @@ namespace Yaapii.Atoms.Func.Tests
         public void UsesMainFunc()
         {
             Assert.True(
-            new FuncWithFallback<bool, string>(
-                input => "It's success",
-                ex => "In case of failure..."
-            ).Invoke(true).Contains("success"),
-            "cannot use main function");
+                new FuncWithFallback<bool, string>(
+                    input => "It's success",
+                    ex => "In case of failure..."
+                ).Invoke(true).Contains("success"),
+                "cannot use main function");
         }
 
         [Fact]
-        public void UsesCallback()
+        public void UsesFallback()
         {
             Assert.True(
                 new FuncWithFallback<bool, string>(
@@ -64,6 +64,42 @@ namespace Yaapii.Atoms.Func.Tests
                 ex => "won't happen",
                 input => "follow up"
             ).Invoke(true) == "follow up");
+        }
+
+        [Fact]
+        public void UsesParameterlessMainFunc()
+        {
+            Assert.True(
+            new FuncWithFallback<string>(
+                () => "It's success",
+                ex => "In case of failure..."
+            ).Invoke().Contains("success"),
+            "cannot use main function");
+        }
+
+        [Fact]
+        public void UsesParameterlessCallback()
+        {
+            Assert.True(
+                new FuncWithFallback<string>(
+                    () =>
+                    {
+                        throw new Exception("Failure");
+                    },
+                    ex => "Never mind"
+                ).Invoke() == "Never mind"
+            );
+        }
+
+        [Fact]
+        public void ParameterlessUsesFollowUp()
+        {
+            Assert.True(
+            new FuncWithFallback<string>(
+                () => "works fine",
+                ex => "won't happen",
+                input => "follow up"
+            ).Invoke() == "follow up");
+        }
     }
-}
 }
