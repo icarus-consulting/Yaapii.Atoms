@@ -31,6 +31,8 @@ using Yaapii.Atoms.Scalar;
 #pragma warning disable MaxVariablesCount // Four fields maximum
 #pragma warning disable Immutability // Fields are readonly or constant
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
+#pragma warning disable CS0108
+
 namespace Yaapii.Atoms.IO
 {
     /// <summary>

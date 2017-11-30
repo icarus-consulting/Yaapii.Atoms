@@ -104,7 +104,7 @@ namespace Yaapii.Atoms.Func
         /// <param name="first">First input argument</param>
         /// <param name="second">Second input argument</param>
         /// <returns>The reault</returns>
-        public Out Apply(In1 first, In2 second)
+        public Out Invoke(In1 first, In2 second)
         {
             Out result;
             try

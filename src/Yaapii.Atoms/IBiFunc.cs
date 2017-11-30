@@ -40,6 +40,6 @@ namespace Yaapii.Atoms
         /// <param name="first"></param>
         /// <param name="second"></param>
         /// <returns>Output</returns>
-        Z Apply(X first, Y second);
+        Z Invoke(X first, Y second);
     }
 }

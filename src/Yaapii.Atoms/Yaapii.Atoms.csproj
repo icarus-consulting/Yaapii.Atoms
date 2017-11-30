@@ -9,12 +9,9 @@
     <RepositoryUrl>https://github.com/icarus-consulting/Yaapii.Atoms</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/icarus-consulting/Yaapii.Atoms/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/icarus-consulting/Yaapii.Atoms</PackageProjectUrl>
+    <DocumentationFile>artifacts\Yaapii.Atoms.xml</DocumentationFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Authors>ICARUS Consulting GmbH</Authors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard1.4\.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

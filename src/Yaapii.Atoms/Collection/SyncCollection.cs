@@ -16,11 +16,6 @@ namespace Yaapii.Atoms.Collection
     public class SyncCollection<T> : CollectionEnvelope<T>
     {
         /// <summary>
-        /// Lock object
-        /// </summary>
-        private readonly object sync;
-
-        /// <summary>
         /// ctor
         /// </summary>
         public SyncCollection() : this(new object())
@@ -56,7 +51,7 @@ namespace Yaapii.Atoms.Collection
             new SyncScalar<ICollection<T>>(
                 new ScalarOf<ICollection<T>>(() =>
                 {
-                    lock (col)
+                    lock (syncRoot)
                     {
                         var tmp = new List<T>();
                         foreach (var item in col)

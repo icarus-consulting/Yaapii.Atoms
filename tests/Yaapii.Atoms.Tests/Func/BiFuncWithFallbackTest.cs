@@ -15,7 +15,7 @@ namespace Yaapii.Atoms.Tests.Func
                 new BiFuncWithFallback<bool, bool, string>(
                     (in1, in2) => "It's success",
                     ex => "In case of failure..."
-                ).Apply(true, true).Contains("success"),
+                ).Invoke(true, true).Contains("success"),
                 "cannot use main function");
         }
 
@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.Tests.Func
                         throw new Exception("Failure");
                     },
                     ex => "Never mind"
-                ).Apply(true, true) == "Never mind"
+                ).Invoke(true, true) == "Never mind"
             );
         }
 
@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Tests.Func
                 (in1, in2) => "works fine",
                 ex => "won't happen",
                 input => "follow up"
-            ).Apply(true, true) == "follow up");
+            ).Invoke(true, true) == "follow up");
         }
     }
 }

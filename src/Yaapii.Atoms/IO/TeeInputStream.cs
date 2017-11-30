@@ -26,6 +26,8 @@ using System.IO;
 using System.Text;
 
 #pragma warning disable MaxPublicMethodCount
+#pragma warning disable CS0108
+
 namespace Yaapii.Atoms.IO
 {
     /// <summary>

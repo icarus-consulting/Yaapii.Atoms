@@ -202,6 +202,11 @@ namespace Yaapii.Atoms.Func
             this._fallback = fbk;
             this._follow = flw;
         }
+
+        /// <summary>
+        /// Get output
+        /// </summary>
+        /// <returns></returns>
         public Out Invoke()
         {
             Out result;

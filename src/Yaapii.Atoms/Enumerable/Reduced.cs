@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Enumerable
             InAndOut memo = this._input;
             foreach (Element item in this._enumerable)
             {
-                memo = this._func.Apply(memo, item);
+                memo = this._func.Invoke(memo, item);
             }
             return memo;
         }

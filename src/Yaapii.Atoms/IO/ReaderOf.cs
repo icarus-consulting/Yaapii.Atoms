@@ -30,6 +30,8 @@ using Yaapii.Atoms.Scalar;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 #pragma warning disable CS1591
+#pragma warning disable CS0108
+
 namespace Yaapii.Atoms.IO
 {
     /// <summary>

@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="src">source enumerable</param>
         /// <param name="fnc">mapping function</param>
         public MappedEnumerator(IEnumerator<In> src, IBiFunc<In, int, Out> fnc) : this(src,
-        (input, index) => fnc.Apply(input, index))
+        (input, index) => fnc.Invoke(input, index))
         { }
 
         /// <summary>

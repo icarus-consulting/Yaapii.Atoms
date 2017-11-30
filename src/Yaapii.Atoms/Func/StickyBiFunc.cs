@@ -83,7 +83,7 @@ namespace Yaapii.Atoms.Func
             var km = new Filtered<Dictionary<In1, In2>>((key) => this._comparer.Equals(keymap, key), this._cache.Keys);
             if (km.Count() == 0)
             {
-                output = this._func.Apply(first, second);
+                output = this._func.Invoke(first, second);
                 this._cache.Add(keymap, output);
                 km = new Filtered<Dictionary<In1, In2>>((key) => this._comparer.Equals(keymap, key), this._cache.Keys);
             }
