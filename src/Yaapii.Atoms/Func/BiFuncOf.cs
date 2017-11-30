@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Func
         /// <param name="arg1">first argument</param>
         /// <param name="arg2">second argument</param>
         /// <returns>the output</returns>
-        public Out Apply(In1 arg1, In2 arg2)
+        public Out Invoke(In1 arg1, In2 arg2)
         {
             return _func.Invoke(arg1, arg2);
         }

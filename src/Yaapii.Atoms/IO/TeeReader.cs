@@ -28,6 +28,8 @@ using System.Threading.Tasks;
 using Yaapii.Atoms.IO;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
+#pragma warning disable CS0108
+
 namespace Yaapii.Atoms.IO
 {
     /// <summary>

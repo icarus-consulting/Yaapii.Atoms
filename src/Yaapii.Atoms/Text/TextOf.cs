@@ -276,7 +276,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public bool Equals(object obj)
+        public override bool Equals(object obj)
         {
             if (obj as IText == null) return false;
             return this.AsString().CompareTo((obj as IText).AsString()) == 0;
@@ -292,5 +292,13 @@ namespace Yaapii.Atoms.Text
             return Equals(text as object);
         }
 
+        /// <summary>
+        /// Hashcode for this text
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
