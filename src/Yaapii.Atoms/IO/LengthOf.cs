@@ -60,18 +60,19 @@ namespace Yaapii.Atoms.IO
         /// <returns>the length</returns>
         public long Value()
         {
-            using (var stream = this._source.Stream())
-            {
-                byte[] buf = new byte[this._size];
-                long length = 0L;
+            var stream = _source.Stream();
 
-                int bytesRead;
-                while ((bytesRead = stream.Read(buf, 0, buf.Length)) > 0)
-                {
-                    length += (long)bytesRead;
-                }
-                return length;
+            byte[] buf = new byte[this._size];
+            long length = 0L;
+
+            int bytesRead;
+            while ((bytesRead = stream.Read(buf, 0, buf.Length)) > 0)
+            {
+                length += (long)bytesRead;
             }
+
+            Dispose();
+            return length;
         }
 
         /// <summary>
@@ -79,7 +80,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         public void Dispose()
         {
-            ((IDisposable)this._source.Stream()).Dispose();
+            (_source as IDisposable)?.Dispose();
         }
     }
 }

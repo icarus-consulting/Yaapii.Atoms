@@ -110,7 +110,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         public void Dispose()
         {
-            ((IDisposable)this.Stream()).Dispose();
+            (_main as IDisposable)?.Dispose();
         }
 
     }

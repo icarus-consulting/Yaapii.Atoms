@@ -88,17 +88,17 @@ namespace Yaapii.Atoms.IO
 
         private OutputTo(IScalar<Stream> origin)
         {
-            this._origin = origin;
+            this._origin = new StickyScalar<Stream>(origin, stream => !stream.CanWrite);
         }
 
         public Stream Stream()
         {
             return this._origin.Value();
         }
+
         public void Dispose()
         {
-            ((IDisposable)this._origin.Value()).Dispose();
+            _origin.Value().Dispose();
         }
-
     }
 }

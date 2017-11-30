@@ -37,12 +37,12 @@ namespace Yaapii.Atoms.IO.Tests
         {
             var temp = Directory.CreateDirectory("artifacts/OutputToTest/");
             var file = Path.GetFullPath(Path.Combine(temp.FullName, "file.txt"));
-            if (File.Exists(file))File.Delete(file);
+            if (File.Exists(file)) File.Delete(file);
 
             String content = "Hello, товарищ!";
             new LengthOf(
                 new TeeInput(
-                    content, 
+                    content,
                     new OutputTo(file))
                 ).Value();
 
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.IO.Tests
             String txt = "Hello, друг!";
             new LengthOf(
                 new TeeInput(
-                    txt, 
+                    txt,
                     new OutputTo(file))
             ).Value();
 
@@ -77,6 +77,6 @@ namespace Yaapii.Atoms.IO.Tests
                         new InputOf(file)))
                 .AsString() == txt,
                 "Can't write file content");
+        }
     }
-}
 }

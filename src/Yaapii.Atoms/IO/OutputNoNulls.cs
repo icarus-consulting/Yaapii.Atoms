@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.OutputDeck
         /// </summary>
         public void Dispose()
         {
-            ((IDisposable)this._origin.Stream()).Dispose();
+            (_origin as IDisposable)?.Dispose();
         }
     }
 }

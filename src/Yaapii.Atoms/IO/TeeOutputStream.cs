@@ -26,8 +26,6 @@ using System.IO;
 using System.Text;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-#pragma warning disable CS0108
-
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
@@ -82,8 +80,7 @@ namespace Yaapii.Atoms.IO
             }
         }
 
-
-        public void Dispose()
+        protected override void Dispose(bool disposing)
         {
             try
             {
@@ -98,6 +95,7 @@ namespace Yaapii.Atoms.IO
                 }
                 catch (Exception) { }
             }
+            base.Dispose(disposing);
         }
 
         public override bool CanRead => false;

@@ -30,8 +30,6 @@ using Yaapii.Atoms.Scalar;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 #pragma warning disable CS1591
-#pragma warning disable CS0108
-
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
@@ -168,7 +166,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="src">scalar of a reader</param>
         private ReaderOf(IScalar<StreamReader> src) : base(new DeadInput().Stream())
         {
-            this._source = new StickyScalar<StreamReader>(src);
+            this._source = new StickyScalar<StreamReader>(src, stream => !stream.BaseStream.CanRead);
         }
 
         public override int Read()
@@ -221,9 +219,10 @@ namespace Yaapii.Atoms.IO
             return this._source.Value().Peek();
         }
 
-        public void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            ((IDisposable)this._source.Value()).Dispose();
+            _source.Value().Dispose();
+            base.Dispose(disposing);
         }
     }
 }

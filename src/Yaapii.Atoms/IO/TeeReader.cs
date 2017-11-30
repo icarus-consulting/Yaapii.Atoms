@@ -28,8 +28,6 @@ using System.Threading.Tasks;
 using Yaapii.Atoms.IO;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-#pragma warning disable CS0108
-
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
@@ -142,22 +140,27 @@ namespace Yaapii.Atoms.IO
             return done;
         }
 
-        public void Dispose()
+        protected override void Dispose(bool disposing)
         {
             try
             {
-                ((IDisposable)this._source).Dispose();
+                _source.Dispose();
             }
             catch (Exception) { }
 
             try
             {
-                ((IDisposable)this._destination).Dispose();
+                _destination.Flush();
+                _destination.Dispose();
             }
             catch (Exception) { }
+            base.Dispose(disposing);
         }
 
         public override Encoding CurrentEncoding => this._source.CurrentEncoding;
         public override Stream BaseStream => this._source.BaseStream;
+
+#pragma warning restore MaxPublicMethodCount // a public methods count maximum
+#pragma warning restore CS1591
     }
 }

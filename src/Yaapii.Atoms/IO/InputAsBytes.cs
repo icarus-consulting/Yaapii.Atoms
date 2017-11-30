@@ -70,6 +70,8 @@ namespace Yaapii.Atoms.IO
                 { }
                 output = baos.ToArray();
             }
+
+            Dispose();
             return output;
         }
 
@@ -80,7 +82,7 @@ namespace Yaapii.Atoms.IO
         {
             try
             {
-                ((IDisposable)this._source.Stream()).Dispose();
+                (_source as IDisposable)?.Dispose();
             }
             catch (Exception) { }
         }
