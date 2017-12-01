@@ -28,9 +28,9 @@ using System.Text;
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
-    /// Input as bytes.
+    /// Input as bytes. (Self-Disposing)
     /// </summary>
-    public sealed class InputAsBytes : IBytes, IDisposable
+    public sealed class InputAsBytes : IBytes
     {
         /// <summary>
         /// input
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.IO
         }
 
         /// <summary>
-        /// Get the content as byte array.
+        /// Get the content as byte array. (Self-Disposing)
         /// </summary>
         /// <returns>content as byte array</returns>
         public byte[] AsBytes()
@@ -70,17 +70,19 @@ namespace Yaapii.Atoms.IO
                 { }
                 output = baos.ToArray();
             }
+
+            Dispose();
             return output;
         }
 
         /// <summary>
         /// Clean up.
         /// </summary>
-        public void Dispose()
+        private void Dispose()
         {
             try
             {
-                ((IDisposable)this._source.Stream()).Dispose();
+                (_source as IDisposable)?.Dispose();
             }
             catch (Exception) { }
         }

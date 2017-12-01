@@ -29,9 +29,9 @@ using System.Text;
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
-    /// Length of <see cref="IInput"/>.
+    /// Length of <see cref="IInput"/>. (Self-Disposing)
     /// </summary>
-    public sealed class LengthOf : IScalar<long>, IDisposable
+    public sealed class LengthOf : IScalar<long>
     {
         /// <summary>
         /// the source
@@ -55,31 +55,32 @@ namespace Yaapii.Atoms.IO
         }
 
         /// <summary>
-        /// Get the length.
+        /// Get the length. (Self-Disposing)
         /// </summary>
         /// <returns>the length</returns>
         public long Value()
         {
-            using (var stream = this._source.Stream())
-            {
-                byte[] buf = new byte[this._size];
-                long length = 0L;
+            var stream = _source.Stream();
 
-                int bytesRead;
-                while ((bytesRead = stream.Read(buf, 0, buf.Length)) > 0)
-                {
-                    length += (long)bytesRead;
-                }
-                return length;
+            byte[] buf = new byte[this._size];
+            long length = 0L;
+
+            int bytesRead;
+            while ((bytesRead = stream.Read(buf, 0, buf.Length)) > 0)
+            {
+                length += (long)bytesRead;
             }
+
+            Dispose();
+            return length;
         }
 
         /// <summary>
         /// Clean up.
         /// </summary>
-        public void Dispose()
+        private void Dispose()
         {
-            ((IDisposable)this._source.Stream()).Dispose();
+            (_source as IDisposable)?.Dispose();
         }
     }
 }

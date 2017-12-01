@@ -50,6 +50,14 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
+        public And(Action<In> proc, IEnumerable<In> src) : this(new ActionOf<In>(ipt => proc.Invoke(ipt)), src)
+        { }
+
+        /// <summary>
+        /// Logical and. Returns true after calling <see cref="IAction{X}"/> for every element.
+        /// </summary>
+        /// <param name="proc">the condition to apply</param>
+        /// <param name="src">list of items</param>
         public And(IAction<In> proc, params In[] src) : this(
             proc, new EnumerableOf<In>(src))
         { }

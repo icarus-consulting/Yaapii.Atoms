@@ -26,14 +26,12 @@ using System.IO;
 using System.Text;
 
 #pragma warning disable MaxPublicMethodCount
-#pragma warning disable CS0108
-
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
     /// Readable <see cref="Stream"/> that copies input to <see cref="IOutput"/> while reading.
     /// </summary>
-    public sealed class TeeInputStream : Stream, IDisposable
+    public sealed class TeeInputStream : Stream
     {
         /// <summary>
         /// input
@@ -110,20 +108,27 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// Clean up.
         /// </summary>
-        public void Dispose()
+        //public override void Dispose()
+        //{
+
+        //}
+
+        protected override void Dispose(bool disposing)
         {
             try
             {
                 this._input.Flush();
-                ((IDisposable)this._input).Dispose(); //unelegant but C#...
+                _input.Dispose(); //unelegant but C#...
             }
             catch (Exception) { }
             try
             {
                 this._output.Flush();
-                ((IDisposable)this._output).Dispose();
+                _output.Dispose();
             }
             catch (Exception) { }
+
+            base.Dispose(disposing);
         }
 
         public override void Flush()

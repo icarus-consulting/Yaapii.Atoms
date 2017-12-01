@@ -98,7 +98,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="max">maximum buffer size</param>
         public ReaderAsBytes(IScalar<StreamReader> rdr, Encoding enc, int max)
         {
-            this._reader = rdr;
+            this._reader = new StickyScalar<StreamReader>(rdr, reader=> !reader.BaseStream.CanRead);
             this._encoding = enc;
             this._size = max;
         }
@@ -130,7 +130,7 @@ namespace Yaapii.Atoms.IO
         {
             try
             {
-                ((IDisposable)this._reader).Dispose();
+                _reader.Value().Dispose();
             }
             catch (Exception) { }
         }

@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Text.Tests
     public sealed class UpperTextTest
     {
         [Fact]
-        public void convertsText()
+        public void ConvertsText()
         {
             Assert.True(
                 new UpperText(new TextOf("Hello!")).AsString() == "HELLO!",

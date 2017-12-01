@@ -201,7 +201,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="src">a <see cref="IBytes"/> object which will be copied to memory</param>
         public InputOf(IBytes src) : this(new ScalarOf<Stream>(
-                        () => 
+                        () =>
                         {
                             var b = src.AsBytes();
                             var m = new MemoryStream();
@@ -231,7 +231,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="stream">the input <see cref="Stream"/></param>
         private InputOf(IScalar<Stream> stream)
         {
-            this._origin = stream;
+            this._origin = new StickyScalar<Stream>(stream, streamObj => !streamObj.CanRead);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         public void Dispose()
         {
-            ((IDisposable)this.Stream()).Dispose();
+            Stream().Dispose();
         }
     }
 }

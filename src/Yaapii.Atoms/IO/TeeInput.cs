@@ -105,14 +105,9 @@ namespace Yaapii.Atoms.IO
         {
             try
             {
-                ((IDisposable)this._source).Dispose();
-            }
-            catch (Exception) { }
-
-            try
-            {
+                (_source as IDisposable)?.Dispose();
                 this._target.Stream().Flush();
-                ((IDisposable)this._target).Dispose();
+                (_target as IDisposable)?.Dispose();
             }
             catch (Exception) { }
         }
