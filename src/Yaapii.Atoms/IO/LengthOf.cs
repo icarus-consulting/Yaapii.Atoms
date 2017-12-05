@@ -29,9 +29,9 @@ using System.Text;
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
-    /// Length of <see cref="IInput"/>.
+    /// Length of <see cref="IInput"/>. (Self-Disposing)
     /// </summary>
-    public sealed class LengthOf : IScalar<long>, IDisposable
+    public sealed class LengthOf : IScalar<long>
     {
         /// <summary>
         /// the source
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.IO
         }
 
         /// <summary>
-        /// Get the length.
+        /// Get the length. (Self-Disposing)
         /// </summary>
         /// <returns>the length</returns>
         public long Value()
@@ -78,7 +78,7 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// Clean up.
         /// </summary>
-        public void Dispose()
+        private void Dispose()
         {
             (_source as IDisposable)?.Dispose();
         }
