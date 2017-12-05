@@ -12,6 +12,7 @@
     <DocumentationFile>artifacts\Yaapii.Atoms.xml</DocumentationFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Authors>ICARUS Consulting GmbH</Authors>
+    <Version>0.7</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -20,15 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.List;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 

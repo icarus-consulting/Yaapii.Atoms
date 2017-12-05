@@ -22,8 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Func;
@@ -40,17 +38,17 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// source enum
         /// </summary>
-        private readonly IEnumerable<T> src;
+        private readonly IEnumerable<T> _src;
 
         /// <summary>
         /// fallback func
         /// </summary>
-        private readonly IFunc<IEnumerable<T>, T> fbk;
+        private readonly IBiFunc<Exception, IEnumerable<T>, T> _fbk;
 
         /// <summary>
         /// position
         /// </summary>
-        private readonly int pos;
+        private readonly int _pos;
 
         /// <summary>
         /// First element in a <see cref="IEnumerable{T}"/>.
@@ -58,8 +56,8 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         public ItemAt(IEnumerable<T> source) : this(
                 source,
-                new FuncOf<IEnumerable<T>, T>(
-                    itr => throw new NoSuchElementException("The enumerable is empty")))
+                new BiFuncOf<Exception, IEnumerable<T>, T>(
+                    (ex, itr) => throw new NoSuchElementException(new FormattedText("Cannot get first element: {0}", ex.Message).AsString())))
         { }
 
         /// <summary>
@@ -89,6 +87,15 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
+        public ItemAt(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback) : this(
+            source, 0, fallback)
+        { }
+
+        /// <summary>
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">soruce enum</param>
+        /// <param name="fallback">fallback value</param>
         public ItemAt(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback) : this(
             source, 0, fallback)
         { }
@@ -101,13 +108,14 @@ namespace Yaapii.Atoms.Enumerable
         public ItemAt(IEnumerable<T> source, int position) : this(
                 source,
                 position,
-                new FuncOf<IEnumerable<T>, T>(itr =>
+                new BiFuncOf<Exception, IEnumerable<T>, T>((ex, itr) =>
                 {
                     throw 
                         new NoSuchElementException(
                             new FormattedText(
-                                "The iterable doesn't have the position #%d",
-                                position
+                                "Cannot get element at position {0}: {1}",
+                                position,
+                                ex.Message
                             ).AsString()
                     );
                 }))
@@ -119,10 +127,10 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(IEnumerable<T> source, int position, Func<IEnumerable<T>, T> fallback) : this(
-            source, 
-            position, 
-            new FuncOf<IEnumerable<T>, T>(fallback))
+        public ItemAt(IEnumerable<T> source, int position, IFunc<IEnumerable<T>, T> fallback) : this(
+            source,
+            position,
+            (ex, enumerable) => fallback.Invoke(enumerable))
         { }
 
         /// <summary>
@@ -131,11 +139,35 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(IEnumerable<T> source, int position, IFunc<IEnumerable<T>, T> fallback)
+        public ItemAt(IEnumerable<T> source, int position, Func<IEnumerable<T>, T> fallback) : this(
+            source, 
+            position,
+            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback.Invoke(enumerable)))
+        { }
+
+        /// <summary>
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="position">position of item</param>
+        /// <param name="fallback">fallback func</param>
+        public ItemAt(IEnumerable<T> source, int position, Func<Exception, IEnumerable<T>, T> fallback) : this(
+            source,
+            position,
+            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback.Invoke(ex, enumerable)))
+        { }
+
+        /// <summary>
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="position">position of item</param>
+        /// <param name="fallback">fallback func</param>
+        public ItemAt(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback)
         {
-            this.pos = position;
-            this.src = source;
-            this.fbk = fallback;
+            this._pos = position;
+            this._src = source;
+            this._fbk = fallback;
         }
 
         /// <summary>
@@ -145,7 +177,7 @@ namespace Yaapii.Atoms.Enumerable
         public T Value()
         {
             return new ItemAtEnumerator<T>(
-                this.src.GetEnumerator(), this.pos, this.fbk
+                this._src.GetEnumerator(), this._pos, this._fbk
             ).Value();
         }
     }
