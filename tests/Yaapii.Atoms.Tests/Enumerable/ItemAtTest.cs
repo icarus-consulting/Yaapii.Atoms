@@ -22,12 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.List.Tests
 {
@@ -76,6 +73,17 @@ namespace Yaapii.Atoms.List.Tests
                     fallback
                 ).Value() == fallback,
             "Can't fallback to default value");
+        }
+
+        [Fact]
+        public void FallbackShowsErrorTest()
+        {
+            Assert.Throws<NoSuchElementException>(() =>
+                new ItemAt<string>(
+                    new EnumerableOf<string>(),
+                    12,
+                    (ex, enumerable) => throw ex
+                ).Value());
         }
     }
 }

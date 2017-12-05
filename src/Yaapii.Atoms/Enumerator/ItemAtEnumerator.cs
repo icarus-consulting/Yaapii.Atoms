@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Enumerator
         /// <summary>
         /// fallback function for alternative value
         /// </summary>
-        private readonly IFunc<IEnumerable<T>, T> _fallback;
+        private readonly IBiFunc<Exception, IEnumerable<T>, T> _fallback;
 
         /// <summary>
         /// position of the item
@@ -62,10 +62,12 @@ namespace Yaapii.Atoms.Enumerator
         :
             this(
                 src,
-                new FuncOf<IEnumerable<T>, T>(
-                    (e) =>
+                new BiFuncOf<Exception, IEnumerable<T>, T>(
+                    (ex, item) =>
                     {
-                        throw new IOException("Enumerator is empty");
+                        throw 
+                            new NoSuchElementException(
+                                new FormattedText("Cannot get item: {0}", ex.Message).AsString());
                     })
                 )
         { }
@@ -75,7 +77,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="fallback">fallback value</param>
-        public ItemAtEnumerator(IEnumerator<T> src, T fallback) : this(src, new FuncOf<IEnumerable<T>, T>((e) => fallback))
+        public ItemAtEnumerator(IEnumerator<T> src, T fallback) : this(src, new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback))
         { }
 
         /// <summary>
@@ -84,7 +86,16 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="fallback">fallback function</param>
         public ItemAtEnumerator(IEnumerator<T> src, Func<IEnumerable<T>, T> fallback)
-            : this(src, 0, new FuncOf<IEnumerable<T>, T>(fallback))
+            : this(src, 0, new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback.Invoke(enumerable)))
+        { }
+
+        /// <summary>
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="Func{In, Out}"/>.
+        /// </summary>
+        /// <param name="src">source <see cref="IEnumerable{T}"/></param>
+        /// <param name="fallback">fallback function</param>
+        public ItemAtEnumerator(IEnumerator<T> src, Func<Exception, IEnumerable<T>, T> fallback)
+            : this(src, 0, new BiFuncOf<Exception, IEnumerable<T>, T>(fallback))
         { }
 
         /// <summary>
@@ -92,7 +103,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="fallback">fallback function</param>
-        public ItemAtEnumerator(IEnumerator<T> src, IFunc<IEnumerable<T>, T> fallback)
+        public ItemAtEnumerator(IEnumerator<T> src, IBiFunc<Exception, IEnumerable<T>, T> fallback)
             : this(src, 0, fallback)
         { }
 
@@ -106,14 +117,14 @@ namespace Yaapii.Atoms.Enumerator
             this(
                 src,
                 pos,
-                new FuncOf<IEnumerable<T>, T>(
-                    (itr) =>
+                new BiFuncOf<Exception, IEnumerable<T>, T>(
+                    (ex, itr) =>
                     {
                         throw 
                             new NoSuchElementException(
                                 new FormattedText(
-                                    "Enumerator doesn't have an element at position {0}",
-                                    pos
+                                    "Cannot get item: {0}",
+                                    ex.Message
                                 ).AsString());
                     }
             ))
@@ -128,7 +139,7 @@ namespace Yaapii.Atoms.Enumerator
         public ItemAtEnumerator(
             IEnumerator<T> src,
             int pos,
-            IFunc<IEnumerable<T>, T> fbk
+            IBiFunc<Exception, IEnumerable<T>, T> fbk
         )
         {
             this._pos = pos;
@@ -153,17 +164,15 @@ namespace Yaapii.Atoms.Enumerator
                 new FailPrecise(
                     new FailWhen(!this._src.MoveNext()),
                     new NoSuchElementException(
-                "Cannot get item because enumerable is empty")).Go(); //will never get out
+                "The enumerable is empty")).Go(); //will never get out
 
-                this._src.Reset();
-
-                for (int cur = 0; cur <= this._pos && this._src.MoveNext(); ++cur) { }
+                for (int cur = 1; cur <= this._pos && this._src.MoveNext(); ++cur) { }
 
                 ret = this._src.Current;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                ret = this._fallback.Invoke(new EnumerableOf<T>(this._src));
+                ret = this._fallback.Invoke(ex, new EnumerableOf<T>(this._src));
             }
             return ret;
 
