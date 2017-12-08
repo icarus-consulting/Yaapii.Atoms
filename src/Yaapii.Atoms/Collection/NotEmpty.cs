@@ -16,10 +16,28 @@ namespace Yaapii.Atoms.Collection
         /// Ensures that <see cref="ICollection{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Collection</param>
-        public NotEmpty(ICollection<T> origin) : base(new ScalarOf<ICollection<T>>(
+        public NotEmpty(ICollection<T> origin) : this(
+            origin,
+            new Exception("Collection is empty"))
+        { }
+
+        /// <summary>
+        /// Ensures that <see cref="ICollection{T}" /> is not empty/>
+        /// </summary>
+        /// <param name="origin">Collection</param>
+        /// <param name="ex">Execption to be thrown if empty</param>
+        public NotEmpty(ICollection<T> origin, Exception ex) : base(new ScalarOf<ICollection<T>>(
             () =>
             {
-                new FailEmpty<T>(origin).Go();
+                try
+                {
+                    new FailEmpty<T>(origin).Go();
+                }
+                catch (Exception)
+                {
+                    throw ex;
+                }
+                
                 return origin;
             }
             ))

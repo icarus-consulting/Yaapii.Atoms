@@ -27,5 +27,16 @@ namespace Yaapii.Atoms.List.Tests
                         new ListOf<bool>(false)
                     )).Value() == 1);
         }
+
+        [Fact]
+        public void EmptyCollectionThrowsCustomExeption()
+        {
+            Assert.Throws<OperationCanceledException>(() =>
+                new LengthOf(
+                    new NotEmpty<bool>(
+                        new ListOf<bool>(),
+                        new OperationCanceledException()
+                    )).Value());
+        }
     }
 }

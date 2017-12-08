@@ -17,10 +17,30 @@ namespace Yaapii.Atoms.Enumerable
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
-        public NotEmpty(IEnumerable<T> origin) : base(new ScalarOf<IEnumerable<T>>(
+        public NotEmpty(IEnumerable<T> origin) : this(
+            origin,
+            new Exception("Enumerable is empty"))
+        {
+
+        }
+
+        /// <summary>
+        /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
+        /// </summary>
+        /// <param name="origin">Enumerable</param>
+        /// <param name="ex">Execption to be thrown if empty</param>
+        public NotEmpty(IEnumerable<T> origin, Exception ex) : base(new ScalarOf<IEnumerable<T>>(
             () =>
             {
-                new FailEmpty<T>(origin).Go();
+                try
+                {
+                    new FailEmpty<T>(origin).Go();
+                }
+                catch (Exception)
+                {
+                    throw ex;
+                }
+                
                 return origin;
             }
             ))

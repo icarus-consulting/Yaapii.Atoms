@@ -26,5 +26,16 @@ namespace Yaapii.Atoms.Enumerable.Tests
                         new EnumerableOf<bool>(false)
                     )).Value() == 1);
         }
+
+        [Fact]
+        public void EmptyCollectionThrowsCustomExeption()
+        {
+            Assert.Throws<OperationCanceledException>(() =>
+                new LengthOf(
+                    new NotEmpty<bool>(
+                        new EnumerableOf<bool>(),
+                        new OperationCanceledException()
+                    )).Value());
+        }
     }
 }
