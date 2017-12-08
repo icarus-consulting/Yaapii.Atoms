@@ -40,17 +40,18 @@ namespace Yaapii.Atoms.Text
     {
         private readonly IText _origin;
         private readonly IText _regex;
+        private readonly bool _remEmpty;
 
         /// <summary>
         /// A <see cref="IText"/> which has been splitted at the given string.
         /// </summary>
         /// <param name="text">text to split</param>
         /// <param name="rgx">regex to use for splitting</param>
-        public SplitText(String text, String rgx) :
-            this(
-                new TextOf(text),
-                new TextOf(rgx)
-            )
+        /// <param name="remEmpty">switch to remove empty stirngs from result or not</param>
+        public SplitText(String text, String rgx, bool remEmpty = true) : this(
+            new TextOf(text),
+            new TextOf(rgx),
+            remEmpty)
         { }
 
         /// <summary>
@@ -58,8 +59,11 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to split</param>
         /// <param name="rgx">regex to use for splitting</param>
-        public SplitText(String text, IText rgx) :
-            this(new TextOf(text), rgx)
+        /// <param name="remEmpty">switch to remove empty stirngs from result or not</param>
+        public SplitText(String text, IText rgx, bool remEmpty = true) : this(
+            new TextOf(text),
+            rgx,
+            remEmpty)
         { }
 
         /// <summary>
@@ -67,8 +71,11 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to split</param>
         /// <param name="rgx">regex to use for splitting</param>
-        public SplitText(IText text, String rgx) :
-            this(text, new TextOf(rgx))
+        /// <param name="remEmpty">switch to remove empty stirngs from result or not</param>
+        public SplitText(IText text, String rgx, bool remEmpty = true) : this(
+            text,
+            new TextOf(rgx),
+            remEmpty)
         { }
 
         /// <summary>
@@ -76,20 +83,26 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to split</param>
         /// <param name="rgx">regex to use for splitting</param>
-        public SplitText(IText text, IText rgx)
+        /// <param name="remEmpty">switch to remove empty stirngs from result or not</param>
+        public SplitText(IText text, IText rgx, bool remEmpty = true)
         {
             this._origin = text;
             this._regex = rgx;
+            this._remEmpty = remEmpty;
         }
 
         public IEnumerator<String> GetEnumerator()
         {
-            return new Filtered<String>(
+            var splitted =
+                new EnumerableOf<String>(
+                    new Regex(this._regex.AsString()).Split(this._origin.AsString()));
+
+            return 
+                this._remEmpty 
+                ? new Filtered<String>(
                     (str) => !String.IsNullOrEmpty(str),
-                     new EnumerableOf<String>(
-                        new Regex(this._regex.AsString()).Split(this._origin.AsString())
-                     )
-            ).GetEnumerator();
+                    splitted).GetEnumerator() 
+                : splitted.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

@@ -82,5 +82,27 @@ namespace Yaapii.Atoms.Text.Tests
                 "Can't split an text with text regex");
         }
 
+        [Fact]
+        public void SplitTextRemoveEmptyStrings()
+        {
+            Assert.True(
+                new LengthOf(
+                    new SplitText(
+                        new TextOf("Split##OOP!"),
+                        "\\W+")).Value() == 2,
+                "Can't remove empty strings");
+        }
+
+        [Fact]
+        public void SplitTextContainsEmptyStrings()
+        {
+            Assert.True(
+                new LengthOf(
+                    new SplitText(
+                        new TextOf("Split##OOP!"),
+                        "\\W+",
+                        false)).Value() == 3,
+                "Split text doesn't contain empty strings");
+        }
     }
 }
