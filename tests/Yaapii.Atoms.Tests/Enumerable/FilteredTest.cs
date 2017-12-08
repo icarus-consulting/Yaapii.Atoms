@@ -73,5 +73,16 @@ namespace Yaapii.Atoms.List.Tests
 
             Assert.True((linq - atoms).Duration().Milliseconds < 10);
         }
+
+        [Fact]
+        public void FilterItemsGivenByParamsCtor()
+        {
+            Assert.True(
+                new LengthOf(
+                    new Filtered<string>(
+                       (input) => input != "B",
+                       "A", "B", "C")).Value() == 2,
+                "cannot filter items");
+        }
     }
 }
