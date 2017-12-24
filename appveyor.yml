@@ -28,7 +28,7 @@ deploy:
     name: AppVeyor Feed
     on:
       branch: master # Deploy only on master branch
-      
+      appveyor_repo_tag: true
     server: https://ci.appveyor.com/nuget/icarus
     api_key:
       secure: wVt1RgJAnhNTyIjtK9yFkQbEEM+fBk1TLUzo0j3pe2U=
@@ -38,7 +38,7 @@ deploy:
     name: Nuget feed
     on:
       branch: master
-      appveyor_repo_tag: true
+     
     api_key:
       secure: AuUbKCY+YVcotkpwDEqZMGpK3G64913kOq3+Xt9DYBCZbdADh/xYvHHatjirUpy/
     skip_symbols: false
