@@ -28,7 +28,7 @@ using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class MappedTest
     {

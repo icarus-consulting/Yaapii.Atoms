@@ -27,7 +27,7 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.List;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class JoinedTest
     {
