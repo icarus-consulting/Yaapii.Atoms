@@ -35,14 +35,12 @@ deploy:
     skip_symbols: true
     artifact: /.*\.nupkg/
   - provider: NuGet
-    name: MyGet Development Feed
+    name: Nuget feed
     on:
-      branch: dev
-      #appveyor_repo_tag: true
-    server: https://www.myget.org/F/icarus/api/v2/package
+      branch: master
+      appveyor_repo_tag: true
     api_key:
-      secure: kckDJNTk6STPsPjJuZy9XNHsgdFSKE3mM6XZRuEZz4rmPbvoOICtScXsc3Ye6Uvw
+      secure: AuUbKCY+YVcotkpwDEqZMGpK3G64913kOq3+Xt9DYBCZbdADh/xYvHHatjirUpy/
     skip_symbols: false
-    symbol_server: https://www.myget.org/F/icarus/symbols/api/v2/package
     artifact: /.*\.nupkg/
 
