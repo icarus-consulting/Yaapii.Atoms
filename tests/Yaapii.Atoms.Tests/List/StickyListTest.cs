@@ -28,7 +28,7 @@ using Xunit;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Tests.List
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class StickyListTest
     {
@@ -39,13 +39,13 @@ namespace Yaapii.Atoms.Tests.List
             var list =
                 new StickyList<int>(
                     new ListOf<int>(
-                    new Enumerable.Limited<int>(
-                        new Enumerable.Endless<int>(1),
+                    new Yaapii.Atoms.Enumerable.Limited<int>(
+                        new Yaapii.Atoms.Enumerable.Endless<int>(1),
                         new ScalarOf<int>(() => Interlocked.Increment(ref size))
                         )));
 
             Assert.True(
-                new Enumerable.LengthOf(list).Value() == new Enumerable.LengthOf(list).Value(),
+                new Yaapii.Atoms.Enumerable.LengthOf(list).Value() == new Yaapii.Atoms.Enumerable.LengthOf(list).Value(),
                 "can't ignore changes of underlying list");
         }
     }
