@@ -44,8 +44,8 @@ namespace Yaapii.Atoms.List
         /// <param name="items"><see cref="Func{TResult}"/> functions which retrieve items to compare</param>
         public Min(params Func<T>[] items) : this(
             new Enumerable.Mapped<Func<T>, IScalar<T>>(
-                new EnumerableOf<Func<T>>(items),
-                item => new ScalarOf<T>(() => item.Invoke())))
+                item => new ScalarOf<T>(() => item.Invoke()),
+                new EnumerableOf<Func<T>>(items)))
         { }
 
         /// <summary>
@@ -54,8 +54,8 @@ namespace Yaapii.Atoms.List
         /// <param name="items">items to compare</param>
         public Min(IEnumerable<T> items) : this(
             new Enumerable.Mapped<T, IScalar<T>>(
-                items,
-                item => new ScalarOf<T>(item)))
+                item => new ScalarOf<T>(item),
+                items))
         { }
 
         /// <summary>
@@ -64,8 +64,8 @@ namespace Yaapii.Atoms.List
         /// <param name="items">items to compare</param>
         public Min(params T[] items) : this(
             new Enumerable.Mapped<T, IScalar<T>>(
-                items,
-                item => new ScalarOf<T>(item)))
+                item => new ScalarOf<T>(item),
+                items))
         { }
 
         /// <summary>

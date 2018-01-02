@@ -41,8 +41,8 @@ namespace Yaapii.Atoms.List
         /// <param name="src">doubles to sum</param>
         public SumOfReals(params Double[] src) : this(
             new Enumerable.Mapped<Double, IScalar<Double>>(
-                src,
-                d => new ScalarOf<Double>(d)
+                d => new ScalarOf<Double>(d),
+                src
                 ))
         { }
 

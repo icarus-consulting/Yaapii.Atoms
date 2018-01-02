@@ -150,7 +150,6 @@ namespace Yaapii.Atoms.Number
         { }
 
         /// <summary>
-        /// <summary>
         /// Average of integers.
         ///
         /// <para>Here is how you can use it to fine mathematical average of numbers:</para>
@@ -224,7 +223,6 @@ namespace Yaapii.Atoms.Number
             )
         { }
 
-        /// <summary>
         /// <summary>
         /// Average of integers.
         ///

@@ -87,6 +87,13 @@ namespace Yaapii.Atoms.Number
             new ScalarOf<float>(() => Convert.ToSingle(dbl.Value())))
         { }
 
+        /// <summary>
+        /// A <see cref="INumber"/> from the given inputs
+        /// </summary>
+        /// <param name="dbl"></param>
+        /// <param name="itg"></param>
+        /// <param name="lng"></param>
+        /// <param name="flt"></param>
         public NumberEnvelope(IScalar<double> dbl, IScalar<int> itg, IScalar<long> lng, IScalar<float> flt)
         {
             _dbl = dbl;
