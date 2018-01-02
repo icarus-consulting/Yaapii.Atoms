@@ -29,6 +29,36 @@ using Yaapii.Atoms.Misc;
 namespace Yaapii.Atoms.Func
 {
     /// <summary>
+    /// Function that has only output.
+    /// </summary>
+    /// <typeparam name="Out">type of output</typeparam>
+    public sealed class FuncOf<Out> : IFunc<Out>
+    {
+        /// <summary>
+        /// func that will be called
+        /// </summary>
+        private readonly IFunc<bool, Out> _func;
+
+        /// <summary>
+        /// Function that has only output.
+        /// </summary>
+        /// <param name="fnc">func to call</param>
+        public FuncOf(System.Func<Out> fnc)
+        {
+            this._func = new FuncOf<bool, Out>(() => fnc.Invoke());
+        }
+
+        /// <summary>
+        /// Call function and retrieve output.
+        /// </summary>
+        /// <returns>the output</returns>
+        public Out Invoke()
+        {
+            return this._func.Invoke(true);
+        }
+    }
+
+    /// <summary>
     /// Function that has input and output
     /// </summary>
     /// <typeparam name="In">input</typeparam>
