@@ -15,6 +15,26 @@ namespace Yaapii.Atoms.List
     public sealed class Joined<T> : ListEnvelope<T>
     {
         /// <summary>
+        /// Multiple <see cref="IList{T}"/> joined together
+        /// </summary>
+        /// <param name="origin">a list to join</param>
+        /// <param name="src">lists to join</param>
+        public Joined(IList<T> origin, params IList<T>[] src) : this(
+            new Enumerable.Joined<IList<T>>(
+                new EnumerableOf<IList<T>>(origin), src))
+        { }
+
+        /// <summary>
+        /// Multiple <see cref="IList{T}"/> joined together
+        /// </summary>
+        /// <param name="src">The lists to join together</param>
+        /// <param name="origin">a list to join</param>
+        public Joined(IList<T> origin, params T[] src) : this(
+            new Enumerable.Joined<IList<T>>(
+                new EnumerableOf<IList<T>>(origin), src))
+        { }
+
+        /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">The lists to join together</param>
