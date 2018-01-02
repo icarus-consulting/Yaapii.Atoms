@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="src">source collection</param>
         public Mapped(Func<In, Out> fnc, ICollection<In> src) : base(
             () => new CollectionOf<Out>(
-                new Enumerable.Mapped<In, Out>(src, fnc)
+                new Enumerable.Mapped<In, Out>(fnc, src)
             ))
         { }
     }

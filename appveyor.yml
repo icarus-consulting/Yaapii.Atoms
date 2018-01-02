@@ -4,6 +4,8 @@
 version: 1.0.{build}
 image: Visual Studio 2017
 configuration: Release
+# Do not build feature branch with open Pull Requests
+skip_branch_with_pr: true
 # Automatically register private account and/or project AppVeyor NuGet feeds.
 nuget:
   account_feed: true
@@ -13,17 +15,6 @@ test: off
 artifacts:
 - path: '.\artifacts\**\*.nupkg'
 deploy:
-  - provider: NuGet
-    name: MyGet Feed
-    on:
-      branch: master
-      appveyor_repo_tag: true
-    server: https://www.myget.org/F/icarus/api/v2/package
-    api_key:
-      secure: kckDJNTk6STPsPjJuZy9XNHsgdFSKE3mM6XZRuEZz4rmPbvoOICtScXsc3Ye6Uvw
-    skip_symbols: false
-    symbol_server: https://www.myget.org/F/icarus/symbols/api/v2/package
-    artifact: /.*\.nupkg/
   - provider: NuGet
     name: AppVeyor Feed
     on:

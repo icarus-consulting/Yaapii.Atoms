@@ -109,7 +109,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="entry"></param>
         public StickyMap(IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry) : this(
             new Dictionary<Key, Value>(),
-            new Mapped<Source, KeyValuePair<Key, Value>>(list, entry))
+            new Mapped<Source, KeyValuePair<Key, Value>>(entry, list))
         { }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="entry"></param>
         public StickyMap(IDictionary<Key, Value> map, IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry) : this(
             map, 
-            new Mapped<Source, KeyValuePair<Key,Value>>(list, entry))
+            new Mapped<Source, KeyValuePair<Key,Value>>(entry, list))
         { }
 
         /// <summary>

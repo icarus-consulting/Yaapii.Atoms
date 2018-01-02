@@ -23,51 +23,38 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Scalar;
+using Xunit;
+using Yaapii.Atoms.List;
+using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.List.Tests
 {
-    /// <summary>
-    /// sums all given reals
-    /// </summary>
-    public sealed class SumOfReals : IScalar<Double>
+    public sealed class MappedTest
     {
-        private readonly IEnumerable<IScalar<Double>> src;
-
-        /// <summary>
-        /// Sum of all given numbers.
-        /// </summary>
-        /// <param name="src">doubles to sum</param>
-        public SumOfReals(params Double[] src) : this(
-            new Enumerable.Mapped<Double, IScalar<Double>>(
-                src,
-                d => new ScalarOf<Double>(d)
-                ))
-        { }
-
-        /// <summary>
-        /// Sum of all given numbers.
-        /// </summary>
-        /// <param name="src">double to sum</param>
-        public SumOfReals(IEnumerable<IScalar<Double>> src)
+        [Fact]
+        public void TransformsList()
         {
-            this.src = src;
+            Assert.True(
+                new Enumerable.ItemAt<IText>(
+                    new Mapped<String, IText>(
+                        input => new UpperText(new TextOf(input)),
+                        new ListOf<string>("hello", "world", "damn")
+                        ),
+                    0
+                ).Value().AsString() == "HELLO",
+            "Can't transform an enumerable");
         }
 
-        /// <summary>
-        /// Get the sum.
-        /// </summary>
-        /// <returns>the sum</returns>
-        public Double Value()
+        [Fact]
+        public void TransformsEmptyList()
         {
-            IEnumerator<IScalar<Double>> numbers = this.src.GetEnumerator();
-            Double result = 0.0;
-            while (numbers.MoveNext())
-            {
-                result += numbers.Current.Value();
-            }
-            return result;
+            Assert.True(
+                new Enumerable.LengthOf(
+                    new Mapped<String, IText>(
+                        input => new UpperText(new TextOf(input)),
+                        new ListOf<string>()
+                    )).Value() == 0,
+                "Can't transform an empty iterable");
         }
     }
 }

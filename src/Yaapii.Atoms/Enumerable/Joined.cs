@@ -62,11 +62,17 @@ namespace Yaapii.Atoms.Enumerable
                 new EnumerableOf<T>(
                     new JoinedEnumerator<T>(
                         new Mapped<IEnumerable<T>, IEnumerator<T>>(//Map the content of list: Get every enumerator out of it and build one whole enumerator from it
-                            items, //List with enumerators
                             new StickyFunc<IEnumerable<T>, IEnumerator<T>>( //Sticky Gate
-                                new FuncOf<IEnumerable<T>, IEnumerator<T>>(e => e.GetEnumerator()) //Get the Enumerator
-                                                                          ))))))
+                                new FuncOf<IEnumerable<T>, IEnumerator<T>>(
+                                    e => e.GetEnumerator() //Get the Enumerator
+                                )
+                            ),
+                            items //List with enumerators
+                        )
+                    )
+                )
+            )
+        )
         { }
     }
 }
-#pragma warning restore NoGetOrSet // No Statics

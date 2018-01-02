@@ -27,7 +27,7 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.List;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class JoinedTest
     {
@@ -52,8 +52,8 @@ namespace Yaapii.Atoms.List.Tests
                 new LengthOf(
                     new Enumerable.Joined<IEnumerable<string>>(
                         new Enumerable.Mapped<string, IEnumerable<string>>(
-                           new EnumerableOf<string>("x"),
-                           str => new EnumerableOf<string>(str)
+                           str => new EnumerableOf<string>(str),
+                           new EnumerableOf<string>("x")
                         )
                 )).Value() == 1,
             "cannot join mapped iterables together");

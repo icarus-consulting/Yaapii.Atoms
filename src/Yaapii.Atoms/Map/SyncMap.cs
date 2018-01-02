@@ -105,7 +105,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="list">list of values to merge</param>
         /// <param name="entry">func to get the entry</param>
         public SyncMap(IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry) : this(
-            new Mapped<Source, KeyValuePair<Key,Value>>(list, entry))
+            new Mapped<Source, KeyValuePair<Key,Value>>(entry, list))
         { }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="entry"></param>
         public SyncMap(IDictionary<Key, Value> map, IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry) : this(
             map, 
-            new Mapped<Source,KeyValuePair<Key, Value>>(list, entry))
+            new Mapped<Source,KeyValuePair<Key, Value>>(entry, list))
         { }
 
         /// <summary>

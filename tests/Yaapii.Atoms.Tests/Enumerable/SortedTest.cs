@@ -29,7 +29,7 @@ using Yaapii.Atoms.List;
 using Yaapii.Atoms.Misc;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class SortedTest
     {
@@ -39,12 +39,13 @@ namespace Yaapii.Atoms.List.Tests
             Assert.True(
                 new JoinedText(", ",
                     new Enumerable.Mapped<int, string>(
+                        i => i.ToString(),
                         new Sorted<int>(
                             new EnumerableOf<int>(3, 2, 10, 44, -6, 0)
-                        ),
-                        i => i.ToString())
-                    ).AsString() == "-6, 0, 2, 3, 10, 44",
-                "Can't sort an enumerable");
+                        )
+                    )
+                ).AsString() == "-6, 0, 2, 3, 10, 44",
+            "Can't sort an enumerable");
         }
 
         [Fact]

@@ -7,27 +7,31 @@ using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Collection
 {
+    /// <summary>
+    /// A sorted <see cref="ICollection{T}"/>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public sealed class Sorted<T> : CollectionEnvelope<T>
         where T : IComparable<T>
     {
         /// <summary>
-        /// ctor
+        /// A list with default sorting (ascending)
         /// </summary>
         /// <param name="src">the source enumerable</param>
         public Sorted(params T[] src) : this(new ListOf<T>(src))
         { }
 
         /// <summary>
-        /// ctor
+        /// A <see cref="ICollection{T}"/> with default sorting (ascending)
         /// </summary>
         /// <param name="src">the source enumerable</param>
         public Sorted(IEnumerable<T> src) : this(
-                Comparer<T>.Default,
-                new CollectionOf<T>(src))
+            Comparer<T>.Default,
+            new CollectionOf<T>(src))
         { }
 
         /// <summary>
-        /// ctor
+        /// A <see cref="ICollection{T}"/> sorted using the given <see cref="Comparer{T}"/>
         /// </summary>
         /// <param name="cmp">the comparer</param>
         /// <param name="src">the source enumerable</param>
@@ -35,7 +39,7 @@ namespace Yaapii.Atoms.Collection
         { }
 
         /// <summary>
-        /// ctor
+        /// A <see cref="ICollection{T}"/> sorted using the given <see cref="Comparer{T}"/>
         /// </summary>
         /// <param name="cmp">the comparer</param>
         /// <param name="src">the source enumerator</param>
@@ -43,7 +47,7 @@ namespace Yaapii.Atoms.Collection
         { }
 
         /// <summary>
-        /// ctor
+        /// A <see cref="ICollection{T}"/> sorted using the given <see cref="Comparer{T}"/>
         /// </summary>
         /// <param name="cmp">the comparer</param>
         /// <param name="src">the source enumerable</param>
@@ -51,7 +55,7 @@ namespace Yaapii.Atoms.Collection
         { }
 
         /// <summary>
-        /// 
+        /// A <see cref="ICollection{T}"/> sorted using the given <see cref="Comparer{T}"/>
         /// </summary>
         /// <param name="cmp">the comparer</param>
         /// <param name="src">the source collection</param>
