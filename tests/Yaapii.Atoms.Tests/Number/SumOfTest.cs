@@ -5,7 +5,7 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Number;
 
-namespace Yaapii.Atoms.Tests.Number
+namespace Yaapii.Atoms.Number.Tests
 {
     public sealed class SumOfTest
     {

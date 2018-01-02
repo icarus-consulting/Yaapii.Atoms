@@ -4,7 +4,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.Number;
 
-namespace Yaapii.Atoms.Tests.Number
+namespace Yaapii.Atoms.Number.Tests
 {
     public sealed class MaxOfTest
     {
