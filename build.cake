@@ -21,6 +21,8 @@ var password = "";
 
 var isAppVeyor          = AppVeyor.IsRunningOnAppVeyor;
 
+var version = "0.8.0";
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // CLEAN
@@ -116,6 +118,16 @@ Task("Pack")
 });
 
 ///////////////////////////////////////////////////////////////////////////////
+// Version
+///////////////////////////////////////////////////////////////////////////////
+Task("Version")
+  .WithCriteria(() => isAppVeyor && BuildSystem.AppVeyor.Environment.Repository.Tag.IsTag)
+  .Does(() => 
+{
+    version = BuildSystem.AppVeyor.Environment.Repository.Tag.Name;
+});
+
+///////////////////////////////////////////////////////////////////////////////
 // Release
 ///////////////////////////////////////////////////////////////////////////////
 Task("GetCredentials")
@@ -127,10 +139,10 @@ Task("GetCredentials")
 
 Task("Release")
   .WithCriteria(() => isAppVeyor && BuildSystem.AppVeyor.Environment.Repository.Tag.IsTag)
+  .IsDependentOn("Version")
   .IsDependentOn("Pack")
   .IsDependentOn("GetCredentials")
   .Does(() => {
-    var version = BuildSystem.AppVeyor.Environment.Repository.Tag.Name;
      GitReleaseManagerCreate(username, password, owner, repository, new GitReleaseManagerCreateSettings {
             Milestone         = version,
             Name              = version,
