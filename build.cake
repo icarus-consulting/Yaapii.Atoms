@@ -1,4 +1,5 @@
 #tool nuget:?package=GitReleaseManager
+#addin nuget:?package=Cake.AppVeyor
 
 var target = Argument("target", "Default");
 var configuration   = Argument<string>("configuration", "Release");
