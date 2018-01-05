@@ -101,10 +101,9 @@ Task("Pack")
 
 	if (isAppVeyor)
 	{
-
+		var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
 		Information("AppVeyor Build - Setting package version to " +tag.Name);
 
-		var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
 		if(!tag.IsTag) 
 		{
 			settings.VersionSuffix = "build" + AppVeyor.Environment.Build.Number.ToString().PadLeft(5,'0');
