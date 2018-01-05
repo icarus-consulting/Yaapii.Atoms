@@ -1,4 +1,6 @@
 #tool nuget:?package=GitReleaseManager
+#tool nuget:?package=OpenCover
+#tool nuget:?package=xunit.runner.console&version=2.3.1
 
 var target = Argument("target", "Default");
 var configuration   = Argument<string>("configuration", "Release");
@@ -60,7 +62,7 @@ Task("Build")
   .Does(() =>
 {
 
-    DotNetCoreBuild(project.ToString(),new DotNetCoreBuildSettings() {
+    DotNetCoreBuild(project.ToString(), new DotNetCoreBuildSettings() {
       Framework = framework,
       Configuration = configuration
     });
@@ -74,12 +76,41 @@ Task("Test")
   .Does(() =>
 {
     var projectFiles = GetFiles("./tests/**/*.csproj");
-    foreach(var file in projectFiles)
+	//var projectFiles = GetFiles("./tests/Yaapii.Atoms.Tests/bin/Debug/netcoreapp2.0/*.tests.dll");
+    
+	foreach(var file in projectFiles)
     {
 		Information("Discovering Tests in " + file.FullPath);
 
         DotNetCoreTest(file.FullPath);
+		//XUnit2(file.FullPath);
     }
+});
+
+///////////////////////////////////////////////////////////////////////////////
+// Code Coverage
+///////////////////////////////////////////////////////////////////////////////
+Task("Coverage")
+.IsDependentOn("Build")
+.Does(() => 
+{
+	try
+	{
+		OpenCover(
+			tool => 
+			{
+				XUnit2("./tests/Yaapii.Atoms.Tests/**/Yaapii.Atoms.Tests.dll");
+			},
+			new FilePath("./result.xml"),
+			new OpenCoverSettings()
+				.WithFilter("+[Yaapii.Atoms.Tests]*")
+				.WithFilter("-[Yaapii.Atoms]*")
+		);
+	}
+	catch(Exception ex)
+	{
+		Information("Error: " + ex.StackTrace);
+	}
 });
 
 ///////////////////////////////////////////////////////////////////////////////
