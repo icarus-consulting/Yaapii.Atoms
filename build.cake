@@ -89,27 +89,32 @@ Task("Pack")
   .IsDependentOn("Build")
   .Does(() => 
 {
-  var settings = new DotNetCorePackSettings()
-                      {
-                          Configuration = configuration,
-                          OutputDirectory = buildArtifacts,
-	  	                    VersionSuffix = ""
-                      };
+  
+	var settings = new DotNetCorePackSettings()
+    {
+        Configuration = configuration,
+        OutputDirectory = buildArtifacts,
+	  	VersionSuffix = ""
+    };
    
 	settings.ArgumentCustomization = args => args.Append("--include-symbols");
 
-   if (isAppVeyor)
-   {
+	if (isAppVeyor)
+	{
 
-       var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
-       if(!tag.IsTag) 
-       {
-	       settings.VersionSuffix = "build" + AppVeyor.Environment.Build.Number.ToString().PadLeft(5,'0');
+		Information("AppVeyor Build - Setting package version to " +tag.Name);
+
+		var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
+		if(!tag.IsTag) 
+		{
+			settings.VersionSuffix = "build" + AppVeyor.Environment.Build.Number.ToString().PadLeft(5,'0');
          
-       } else {     
-         settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(tag.Name);
-       }
-   }
+		} 
+		else 
+		{
+			settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(tag.Name);
+		}
+	}
 	
     DotNetCorePack(
                 project.ToString(),
