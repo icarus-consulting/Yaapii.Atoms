@@ -77,7 +77,7 @@ Task("Test")
     var projectFiles = GetFiles("./tests/**/*.csproj");
     foreach(var file in projectFiles)
     {
-	Information("Discovering Tests in " + file.FullPath);
+	Information("### Discovering Tests in " + file.FullPath);
         DotNetCoreTest(file.FullPath);
     }
 });
@@ -98,11 +98,11 @@ Task("Pack")
     };
    
 	settings.ArgumentCustomization = args => args.Append("--include-symbols");
+	Information("### AppVeyor: " + isAppVeyor);
 
 	if (isAppVeyor)
 	{
 		var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
-		Information("AppVeyor Build - Setting package version to " + tag.Name);
 
 		if(!tag.IsTag) 
 		{
@@ -110,14 +110,15 @@ Task("Pack")
 		} 
 		else 
 		{
+			Information("### AppVeyor Build - Setting package version to " + tag.Name);
 			settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(tag.Name);
 		}
 	}
 	
 	DotNetCorePack(
 		project.ToString(),
-                settings
-              );
+		settings
+    );
 });
 
 ///////////////////////////////////////////////////////////////////////////////
