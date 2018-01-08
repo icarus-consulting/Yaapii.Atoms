@@ -77,8 +77,7 @@ Task("Test")
     var projectFiles = GetFiles("./tests/**/*.csproj");
     foreach(var file in projectFiles)
     {
-		Information("Discovering Tests in " + file.FullPath);
-
+	Information("Discovering Tests in " + file.FullPath);
         DotNetCoreTest(file.FullPath);
     }
 });
@@ -103,12 +102,11 @@ Task("Pack")
 	if (isAppVeyor)
 	{
 		var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
-		Information("AppVeyor Build - Setting package version to " +tag.Name);
+		Information("AppVeyor Build - Setting package version to " + tag.Name);
 
 		if(!tag.IsTag) 
 		{
 			settings.VersionSuffix = "build" + AppVeyor.Environment.Build.Number.ToString().PadLeft(5,'0');
-         
 		} 
 		else 
 		{
@@ -116,8 +114,8 @@ Task("Pack")
 		}
 	}
 	
-    DotNetCorePack(
-                project.ToString(),
+	DotNetCorePack(
+		project.ToString(),
                 settings
               );
 });
@@ -155,17 +153,18 @@ Task("Release")
             TargetCommitish   = "master"
     });
           
-    var nugetFiles = string.Join(";", GetFiles("./artifacts/**/*.nupkg").Select(f => f.FullPath) );
+var nugetFiles = string.Join(";", GetFiles("./artifacts/**/*.nupkg").Select(f => f.FullPath) );
+Information("Nuget artifacts: " + nugetFiles);
 
-    GitReleaseManagerAddAssets(
-        username,
-        password,
-        owner,
-        repository,
-        version,
-        nugetFiles
-      );
-  });
+GitReleaseManagerAddAssets(
+	username,
+	password,
+	owner,
+	repository,
+	version,
+	nugetFiles
+	);
+});
 
 Task("Default")
   .IsDependentOn("Build")
@@ -173,8 +172,6 @@ Task("Default")
   .IsDependentOn("Pack")
   .IsDependentOn("Release")
   .Does(() =>
-{
-  
-});
+{ });
 
 RunTarget(target);
