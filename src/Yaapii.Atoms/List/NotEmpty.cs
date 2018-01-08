@@ -29,18 +29,14 @@ namespace Yaapii.Atoms.List
         public NotEmpty(IList<T> origin, Exception ex) : base(new ScalarOf<IList<T>>(
             () =>
             {
-                try
-                {
-                    new FailEmpty<T>(origin).Go();
-                }
-                catch (Exception)
-                {
-                    throw ex;
-                }
+                new FailPrecise(
+                    new FailEmpty<T>(
+                        origin),
+                    ex).Go();
 
                 return origin;
             }
             ))
         { }
-    }
+           }
 }

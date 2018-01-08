@@ -29,15 +29,11 @@ namespace Yaapii.Atoms.Collection
         public NotEmpty(ICollection<T> origin, Exception ex) : base(new ScalarOf<ICollection<T>>(
             () =>
             {
-                try
-                {
-                    new FailEmpty<T>(origin).Go();
-                }
-                catch (Exception)
-                {
-                    throw ex;
-                }
-                
+                new FailPrecise(
+                    new FailEmpty<T>(
+                        origin),
+                    ex).Go();
+
                 return origin;
             }
             ))

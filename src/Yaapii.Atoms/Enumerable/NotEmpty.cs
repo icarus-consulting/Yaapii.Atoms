@@ -32,14 +32,10 @@ namespace Yaapii.Atoms.Enumerable
         public NotEmpty(IEnumerable<T> origin, Exception ex) : base(new ScalarOf<IEnumerable<T>>(
             () =>
             {
-                try
-                {
-                    new FailEmpty<T>(origin).Go();
-                }
-                catch (Exception)
-                {
-                    throw ex;
-                }
+                new FailPrecise(
+                    new FailEmpty<T>(
+                        origin),
+                    ex).Go();
                 
                 return origin;
             }
