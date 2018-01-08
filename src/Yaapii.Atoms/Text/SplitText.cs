@@ -40,18 +40,18 @@ namespace Yaapii.Atoms.Text
     {
         private readonly IText _origin;
         private readonly IText _regex;
-        private readonly bool _remEmpty;
+        private readonly bool _remBlank;
 
         /// <summary>
         /// A <see cref="IText"/> which has been splitted at the given string.
         /// </summary>
         /// <param name="text">text to split</param>
         /// <param name="rgx">regex to use for splitting</param>
-        /// <param name="remEmpty">switch to remove empty stirngs from result or not</param>
-        public SplitText(String text, String rgx, bool remEmpty = true) : this(
+        /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
+        public SplitText(String text, String rgx, bool remBlank = true) : this(
             new TextOf(text),
             new TextOf(rgx),
-            remEmpty)
+            remBlank)
         { }
 
         /// <summary>
@@ -59,11 +59,11 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to split</param>
         /// <param name="rgx">regex to use for splitting</param>
-        /// <param name="remEmpty">switch to remove empty stirngs from result or not</param>
-        public SplitText(String text, IText rgx, bool remEmpty = true) : this(
+        /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
+        public SplitText(String text, IText rgx, bool remBlank = true) : this(
             new TextOf(text),
             rgx,
-            remEmpty)
+            remBlank)
         { }
 
         /// <summary>
@@ -71,11 +71,11 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to split</param>
         /// <param name="rgx">regex to use for splitting</param>
-        /// <param name="remEmpty">switch to remove empty stirngs from result or not</param>
-        public SplitText(IText text, String rgx, bool remEmpty = true) : this(
+        /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
+        public SplitText(IText text, String rgx, bool remBlank = true) : this(
             text,
             new TextOf(rgx),
-            remEmpty)
+            remBlank)
         { }
 
         /// <summary>
@@ -83,12 +83,12 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to split</param>
         /// <param name="rgx">regex to use for splitting</param>
-        /// <param name="remEmpty">switch to remove empty stirngs from result or not</param>
-        public SplitText(IText text, IText rgx, bool remEmpty = true)
+        /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
+        public SplitText(IText text, IText rgx, bool remBlank = true)
         {
             this._origin = text;
             this._regex = rgx;
-            this._remEmpty = remEmpty;
+            this._remBlank = remBlank;
         }
 
         public IEnumerator<String> GetEnumerator()
@@ -98,9 +98,10 @@ namespace Yaapii.Atoms.Text
                     new Regex(this._regex.AsString()).Split(this._origin.AsString()));
 
             return 
-                this._remEmpty 
+                this._remBlank 
                 ? new Filtered<String>(
-                    (str) => !String.IsNullOrEmpty(str),
+                    //(str) => !String.IsNullOrEmpty(str),
+                    (str) => !String.IsNullOrWhiteSpace(str),
                     splitted).GetEnumerator() 
                 : splitted.GetEnumerator();
         }
