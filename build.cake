@@ -22,7 +22,7 @@ var password = "";
 
 var isAppVeyor          = AppVeyor.IsRunningOnAppVeyor;
 
-var version = "0.9.0";
+var version = "0.10.0";
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -87,17 +87,18 @@ Task("Test")
 ///////////////////////////////////////////////////////////////////////////////
 Task("Pack")
   .IsDependentOn("Build")
+  .IsDependentOn("Version")
   .Does(() => 
 {
   
 	var settings = new DotNetCorePackSettings()
     {
         Configuration = configuration,
-        OutputDirectory = buildArtifacts,
-	  	VersionSuffix = ""
+        OutputDirectory = buildArtifacts
     };
    
 	settings.ArgumentCustomization = args => args.Append("--include-symbols");
+	
 	Information("### AppVeyor: " + isAppVeyor);
 
 	if (isAppVeyor)
@@ -106,12 +107,13 @@ Task("Pack")
 
 		if(!tag.IsTag) 
 		{
+
 			settings.VersionSuffix = "build" + AppVeyor.Environment.Build.Number.ToString().PadLeft(5,'0');
 		} 
 		else 
 		{
-			Information("### AppVeyor Build - Setting package version to " + tag.Name);
-			settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(tag.Name);
+			Information("### AppVeyor Build - Setting package version to " + version);
+			settings.ArgumentCustomization = args => args.Append("/p:Version=" + version);
 		}
 	}
 	
