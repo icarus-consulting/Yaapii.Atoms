@@ -27,7 +27,7 @@ var codecovToken = "";
 
 var isAppVeyor          = AppVeyor.IsRunningOnAppVeyor;
 
-var version = "0.8.0";
+var version = "0.9.0";
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -98,8 +98,7 @@ Task("Test")
     
 	foreach(var file in projectFiles)
     {
-		Information("Discovering Tests in " + file.FullPath);
-
+	Information("### Discovering Tests in " + file.FullPath);
         DotNetCoreTest(file.FullPath);
 		//XUnit2(file.FullPath);
     }
@@ -153,12 +152,13 @@ Task("Pack")
   .IsDependentOn("Build")
   .Does(() => 
 {
-  var settings = new DotNetCorePackSettings()
-                      {
-                          Configuration = configuration,
-                          OutputDirectory = buildArtifacts,
-	  	                    VersionSuffix = ""
-                      };
+  
+	var settings = new DotNetCorePackSettings()
+    {
+        Configuration = configuration,
+        OutputDirectory = buildArtifacts,
+	  	VersionSuffix = ""
+    };
    
 	settings.ArgumentCustomization = args => args.Append("--include-symbols");
 
@@ -177,10 +177,10 @@ Task("Pack")
        }
    }
 	
-    DotNetCorePack(
-                project.ToString(),
-                settings
-              );
+	DotNetCorePack(
+		project.ToString(),
+		settings
+    );
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -217,17 +217,18 @@ Task("Release")
             TargetCommitish   = "master"
     });
           
-    var nugetFiles = string.Join(";", GetFiles("./artifacts/**/*.nupkg").Select(f => f.FullPath) );
+var nugetFiles = string.Join(";", GetFiles("./artifacts/**/*.nupkg").Select(f => f.FullPath) );
+Information("Nuget artifacts: " + nugetFiles);
 
-    GitReleaseManagerAddAssets(
-        username,
-        password,
-        owner,
-        repository,
-        version,
-        nugetFiles
-      );
-  });
+GitReleaseManagerAddAssets(
+	username,
+	password,
+	owner,
+	repository,
+	version,
+	nugetFiles
+	);
+});
 
 Task("Default")
   .IsDependentOn("Build")
@@ -237,8 +238,6 @@ Task("Default")
   .IsDependentOn("Pack")
   .IsDependentOn("Release")
   .Does(() =>
-{
-  
-});
+{ });
 
 RunTarget(target);
