@@ -57,11 +57,16 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="item1">first item to filter</param>
         /// <param name="item2">secound item to filter</param>
         /// <param name="items">other items to filter</param>
-        public Filtered(Func<T, Boolean> fnc, T item1, T item2, params T[] items) : 
-            this(fnc, new EnumerableOf<T>(new ScalarOf<IEnumerator<T>>(() => {
-                var lst = new List<T>() { item1, item2 };
-                lst.AddRange(items);
-                return lst.GetEnumerator(); })))
+        public Filtered(Func<T, Boolean> fnc, T item1, T item2, params T[] items) :
+            this(
+                fnc,
+                new EnumerableOf<T>(
+                    new ScalarOf<IEnumerator<T>>(
+                        () => new Joined<T>(
+                            new EnumerableOf<T>(
+                                item1,
+                                item2),
+                            items).GetEnumerator())))
         { }
 
         /// <summary>
@@ -70,7 +75,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
         public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src) : base(
-            new ScalarOf<IEnumerable<T>>(() => 
+            new ScalarOf<IEnumerable<T>>(() =>
                  new EnumerableOf<T>(
                     new FilteredEnumerator<T>(
                         src.GetEnumerator(),
