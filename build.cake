@@ -110,7 +110,6 @@ Task("Test")
 ///////////////////////////////////////////////////////////////////////////////
 Task("Generate-Coverage")
 .IsDependentOn("Build")
-.WithCriteria()
 .Does(() => 
 {
 	try
