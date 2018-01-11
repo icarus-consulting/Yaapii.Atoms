@@ -41,8 +41,8 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="scalars">functions returning scalars to chain with or</param>
         public Or(params Func<Boolean>[] scalars) : this(
             new Enumerable.Mapped<Func<bool>, IScalar<bool>>(
-                scalars,
-                fnc => new ScalarOf<bool>(fnc)))
+                fnc => new ScalarOf<bool>(fnc),
+                scalars))
         { }
 
         /// <summary>
@@ -51,8 +51,10 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="scalars">functions returning scalars to chain with or</param>
         public Or(params IFunc<Boolean>[] scalars) : this(
             new Enumerable.Mapped<IFunc<bool>, IScalar<bool>>(
-                scalars,
-                fnc => new ScalarOf<bool>(fnc)))
+                fnc => new ScalarOf<bool>(fnc),
+                scalars
+            )
+        )
         { }
 
         /// <summary>

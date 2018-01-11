@@ -56,11 +56,10 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="before">first function</param>
         /// <param name="after">last function</param>
-        public ChainedFunc(System.Func<In, Between> before, System.Func<Between, Out> after) :
-                this(
-                    new FuncOf<In, Between>(input => before(input)),
-                    new List<IFunc<Between, Between>>(),
-                    new FuncOf<Between, Out>((bet) => after(bet)))
+        public ChainedFunc(System.Func<In, Between> before, System.Func<Between, Out> after) : this(
+            new FuncOf<In, Between>(input => before(input)),
+            new List<IFunc<Between, Between>>(),
+            new FuncOf<Between, Out>((bet) => after(bet)))
         { }
 
         /// <summary>
@@ -68,8 +67,10 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="before">first function</param>
         /// <param name="after">last function</param>
-        public ChainedFunc(IFunc<In, Between> before, IFunc<Between, Out> after) :
-                this(before, new List<IFunc<Between, Between>>(), after)
+        public ChainedFunc(IFunc<In, Between> before, IFunc<Between, Out> after) :this(
+            before, 
+            new List<IFunc<Between, Between>>(), 
+            after)
         { }
 
         /// <summary>
@@ -78,8 +79,10 @@ namespace Yaapii.Atoms.Func
         /// <param name="before">first function</param>
         /// <param name="funcs">functions to chain</param>
         /// <param name="after">last function</param>
-        public ChainedFunc(System.Func<In, Between> before, IEnumerable<IFunc<Between, Between>> funcs, System.Func<Between, Out> after
-        ) : this(new FuncOf<In, Between>(before), funcs, new FuncOf<Between, Out>(after))
+        public ChainedFunc(System.Func<In, Between> before, IEnumerable<IFunc<Between, Between>> funcs, System.Func<Between, Out> after) : this(
+            new FuncOf<In, Between>(before),
+            funcs,
+            new FuncOf<Between, Out>(after))
         { }
 
         /// <summary>
@@ -90,10 +93,10 @@ namespace Yaapii.Atoms.Func
         /// <param name="after">last function</param>
         public ChainedFunc(System.Func<In, Between> before, IEnumerable<System.Func<Between, Between>> funcs, System.Func<Between, Out> after
         ) : this(
-                new FuncOf<In, Between>(before), 
+                new FuncOf<In, Between>(before),
                     new Enumerable.Mapped<System.Func<Between, Between>, IFunc<Between, Between>>(
-                        funcs,
-                        f => new FuncOf<Between, Between>(f)),
+                        f => new FuncOf<Between, Between>(f),
+                        funcs),
                     new FuncOf<Between, Out>(after))
         { }
 

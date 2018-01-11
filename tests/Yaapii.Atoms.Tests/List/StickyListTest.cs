@@ -23,38 +23,30 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Misc;
+using System.Threading;
+using Xunit;
+using Yaapii.Atoms.List;
+using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Func
+namespace Yaapii.Atoms.List.Tests
 {
-    /// <summary>
-    /// Function that has only output.
-    /// </summary>
-    /// <typeparam name="Out">type of output</typeparam>
-    public sealed class FuncOf<Out> : IFunc<Out>
+    public sealed class StickyListTest
     {
-        /// <summary>
-        /// func that will be called
-        /// </summary>
-        private readonly IFunc<bool, Out> _func;
-
-        /// <summary>
-        /// Function that has only output.
-        /// </summary>
-        /// <param name="fnc">func to call</param>
-        public FuncOf(System.Func<Out> fnc)
+        [Fact]
+        public void IgnoresChangesInList()
         {
-            this._func = new FuncOf<bool, Out>(() => fnc.Invoke());
-        }
+            int size = 2;
+            var list =
+                new StickyList<int>(
+                    new ListOf<int>(
+                    new Yaapii.Atoms.Enumerable.Limited<int>(
+                        new Yaapii.Atoms.Enumerable.Endless<int>(1),
+                        new ScalarOf<int>(() => Interlocked.Increment(ref size))
+                        )));
 
-        /// <summary>
-        /// Call function and retrieve output.
-        /// </summary>
-        /// <returns>the output</returns>
-        public Out Invoke()
-        {
-            return this._func.Invoke(true);
+            Assert.True(
+                new Yaapii.Atoms.Enumerable.LengthOf(list).Value() == new Yaapii.Atoms.Enumerable.LengthOf(list).Value(),
+                "can't ignore changes of underlying list");
         }
     }
 }

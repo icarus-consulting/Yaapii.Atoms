@@ -25,33 +25,55 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms;
-using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.List.Tests
 {
-    public sealed class SumOfRealsTest
+    public sealed class JoinedTest
     {
-
         [Fact]
-        public void WithVarargsCtor()
+        public void TransformsList()
         {
             Assert.True(
-                Math.Round(new SumOfReals(1.2, 2.5, 3.3).Value(), 1) == 7.0);
+                new Enumerable.LengthOf(
+                    new Joined<string>(
+                        new ListOf<string>("hello", "world", "друг"),
+                        new ListOf<string>("how", "are", "you"),
+                        new ListOf<string>("what's", "up")
+                    )
+                ).Value() == 8,
+            "Can't concatenate enumerables together");
         }
 
         [Fact]
-        public void WithIterCtor()
+        public void JoinsEnumerables()
         {
             Assert.True(
-                Math.Round(
-            new SumOfReals(
-                new EnumerableOf<IScalar<Double>>(
-                    new ScalarOf<Double>(7.1),
-                    new ScalarOf<Double>(8.1),
-                    new ScalarOf<Double>(10.1))
-                ).Value(),1) == 25.3);
+                new Enumerable.LengthOf(
+                    new Joined<string>(
+                        new Mapped<string, IList<string>>(
+                           str => new ListOf<string>(str),
+                           new ListOf<string>("x")
+                        )
+                    )
+                ).Value() == 1,
+            "cannot join mapped iterables together");
+        }
+
+        [Fact]
+        public void JoinsSingleElemtns()
+        {
+            Assert.True(
+                new Enumerable.LengthOf(
+                    new Joined<string>(
+                        new ListOf<string>("hello", "world", "друг"),
+                        "how",
+                        "are",
+                        "you",
+                        "what's",
+                        "up"
+                    )
+                ).Value() == 8,
+            "Can't concatenate enumerable with single values");
         }
     }
 }

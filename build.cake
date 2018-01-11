@@ -1,4 +1,5 @@
 #tool nuget:?package=GitReleaseManager
+#addin nuget:?package=Cake.AppVeyor
 
 var target = Argument("target", "Default");
 var configuration   = Argument<string>("configuration", "Release");
@@ -20,6 +21,8 @@ var username = "";
 var password = "";
 
 var isAppVeyor          = AppVeyor.IsRunningOnAppVeyor;
+
+var version = "0.9.0";
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -74,8 +77,7 @@ Task("Test")
     var projectFiles = GetFiles("./tests/**/*.csproj");
     foreach(var file in projectFiles)
     {
-		Information("Discovering Tests in " + file.FullPath);
-
+	Information("### Discovering Tests in " + file.FullPath);
         DotNetCoreTest(file.FullPath);
     }
 });
@@ -87,32 +89,46 @@ Task("Pack")
   .IsDependentOn("Build")
   .Does(() => 
 {
-  var settings = new DotNetCorePackSettings()
-                      {
-                          Configuration = configuration,
-                          OutputDirectory = buildArtifacts,
-	  	                    VersionSuffix = ""
-                      };
+  
+	var settings = new DotNetCorePackSettings()
+    {
+        Configuration = configuration,
+        OutputDirectory = buildArtifacts,
+	  	VersionSuffix = ""
+    };
    
 	settings.ArgumentCustomization = args => args.Append("--include-symbols");
+	Information("### AppVeyor: " + isAppVeyor);
 
-   if (isAppVeyor)
-   {
+	if (isAppVeyor)
+	{
+		var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
 
-       var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
-       if(!tag.IsTag) 
-       {
-	       settings.VersionSuffix = "build" + AppVeyor.Environment.Build.Number.ToString().PadLeft(5,'0');
-         
-       } else {     
-         settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(tag.Name);
-       }
-   }
+		if(!tag.IsTag) 
+		{
+			settings.VersionSuffix = "build" + AppVeyor.Environment.Build.Number.ToString().PadLeft(5,'0');
+		} 
+		else 
+		{
+			Information("### AppVeyor Build - Setting package version to " + tag.Name);
+			settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(tag.Name);
+		}
+	}
 	
-    DotNetCorePack(
-                project.ToString(),
-                settings
-              );
+	DotNetCorePack(
+		project.ToString(),
+		settings
+    );
+});
+
+///////////////////////////////////////////////////////////////////////////////
+// Version
+///////////////////////////////////////////////////////////////////////////////
+Task("Version")
+  .WithCriteria(() => isAppVeyor && BuildSystem.AppVeyor.Environment.Repository.Tag.IsTag)
+  .Does(() => 
+{
+    version = BuildSystem.AppVeyor.Environment.Repository.Tag.Name;
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -127,10 +143,10 @@ Task("GetCredentials")
 
 Task("Release")
   .WithCriteria(() => isAppVeyor && BuildSystem.AppVeyor.Environment.Repository.Tag.IsTag)
+  .IsDependentOn("Version")
   .IsDependentOn("Pack")
   .IsDependentOn("GetCredentials")
   .Does(() => {
-    var version = BuildSystem.AppVeyor.Environment.Repository.Tag.Name;
      GitReleaseManagerCreate(username, password, owner, repository, new GitReleaseManagerCreateSettings {
             Milestone         = version,
             Name              = version,
@@ -138,17 +154,18 @@ Task("Release")
             TargetCommitish   = "master"
     });
           
-    var nugetFiles = string.Join(";", GetFiles("./artifacts/**/*.nupkg").Select(f => f.FullPath) );
+var nugetFiles = string.Join(";", GetFiles("./artifacts/**/*.nupkg").Select(f => f.FullPath) );
+Information("Nuget artifacts: " + nugetFiles);
 
-    GitReleaseManagerAddAssets(
-        username,
-        password,
-        owner,
-        repository,
-        version,
-        nugetFiles
-      );
-  });
+GitReleaseManagerAddAssets(
+	username,
+	password,
+	owner,
+	repository,
+	version,
+	nugetFiles
+	);
+});
 
 Task("Default")
   .IsDependentOn("Build")
@@ -156,8 +173,6 @@ Task("Default")
   .IsDependentOn("Pack")
   .IsDependentOn("Release")
   .Does(() =>
-{
-  
-});
+{ });
 
 RunTarget(target);

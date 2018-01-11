@@ -27,9 +27,10 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Misc;
+using Yaapii.Atoms.Number;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class LimitedTest
     {
@@ -37,11 +38,11 @@ namespace Yaapii.Atoms.List.Tests
         public void EnumeratesOverPrefixOfGivenLength()
         {
             Assert.True(
-                new SumOfInts(
+                new SumOf(
                 new Limited<int>(
                     new EnumerableOf<int>(0, 1, 2, 3, 4),
                     3
-                )).Value() == 3,
+                )).AsInt() == 3,
             "Can't limit an enumerable with more items");
         }
 
@@ -49,11 +50,11 @@ namespace Yaapii.Atoms.List.Tests
         public void IteratesOverWholeEnumerableIfThereAreNotEnoughItems()
         {
             Assert.True(
-                new SumOfInts(
+                new SumOf(
                 new Limited<int>(
                     new EnumerableOf<int>(0, 1, 2, 3, 4, 5),
                     10
-                )).Value() == 15,
+                )).AsInt() == 15,
             "Can't limit an enumerable with less items");
         }
 

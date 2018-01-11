@@ -30,7 +30,7 @@ using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class StickyEnumerableTest
     {

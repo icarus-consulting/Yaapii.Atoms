@@ -18,15 +18,21 @@ public interface IFunc<In, Out>
 }
 
 //Function with output only
-public interface ICallable<T>
+public interface IFunc<Out>
 {
-    T Call();
+    Out Invoke();
+}
+
+//Function with two inputs and one output
+public interface IFunc<In1, In2, Out>
+{
+    Out Invoke(In1 input1, In2 input2);
 }
 
 //Function with input only
-public interface IProc<X>
+public interface IAction<In>
 {
-    void Exec(X input);
+    void Invoke(In input);
 }
 ```
 ### Execute functions
@@ -275,7 +281,7 @@ new ItemAt<string>(
 ```
 ### Join lists together
 ```csharp
-new LengthOf<string>(
+new LengthOf(
     new Joined<string>(
         new EnumerableOf<string>("hello", "world", "Miro"),
         new EnumerableOf<string>("how", "are", "you"),
@@ -294,7 +300,7 @@ new SumOfInts(
  ### Cache list contents
  ```csharp
 
-//this snippet has an endless list, which then is limited to the size. Every tome someone call the list, size increases and the list would grow. But StickyEnumerable prevents that and always returns the same list.
+//this snippet has an endless list, which then is limited to the size. Every time someone calls the list, size increases and the list would grow. But StickyEnumerable prevents that and always returns the same list.
  int size = 2;
  var list =
     new StickyEnumerable<int>(

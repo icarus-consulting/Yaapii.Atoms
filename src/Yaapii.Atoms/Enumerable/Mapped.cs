@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IFunc<In, Out> fnc, params In[] src) : this(new EnumerableOf<In>(src), fnc)
+        public Mapped(IFunc<In, Out> fnc, params In[] src) : this(fnc, new EnumerableOf<In>(src))
         { }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IBiFunc<In, int, Out> fnc, params In[] src) : this(new EnumerableOf<In>(src), fnc)
+        public Mapped(IBiFunc<In, int, Out> fnc, params In[] src) : this(fnc, new EnumerableOf<In>(src))
         { }
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IEnumerable<In> src, Func<In, Out> fnc) : this(
-            src,
-            (In1, In2) => fnc.Invoke(In1))
+        public Mapped(Func<In, Out> fnc, IEnumerable<In> src) : this(
+            (In1, In2) => fnc.Invoke(In1),
+            src)
         { }
 
         /// <summary>
@@ -71,9 +71,9 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IEnumerable<In> src, Func<In, int, Out> fnc) : this(
-            src,
-            new BiFuncOf<In, int, Out>(fnc))
+        public Mapped(Func<In, int, Out> fnc, IEnumerable<In> src) : this(
+            new BiFuncOf<In, int, Out>(fnc),
+            src)
         { }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IEnumerable<In> src, IFunc<In, Out> fnc) : this(src, new BiFuncOf<In, int, Out>((In1, In2) => fnc.Invoke(In1)))
+        public Mapped(IFunc<In, Out> fnc, IEnumerable<In> src) : this(new BiFuncOf<In, int, Out>((In1, In2) => fnc.Invoke(In1)), src)
         { }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IEnumerable<In> src, IBiFunc<In, int, Out> fnc) : base(
+        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src) : base(
             new ScalarOf<IEnumerable<Out>>(
                 () =>
                 new EnumerableOf<Out>(               

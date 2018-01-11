@@ -30,7 +30,7 @@ using System.Linq;
 using Yaapii.Atoms.Tests;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class FilteredTests
     {

@@ -45,13 +45,17 @@ namespace Yaapii.Atoms.Map
         { }
 
         /// <summary>
-        /// Makes a map by taking the given entries.
+        /// A map by taking the given entries.
         /// </summary>
         /// <param name="entries">enumerator of KeyValuePairs</param>
         public MapOf(IEnumerator<KeyValuePair<Key, Value>> entries) : this(
             new EnumerableOf<KeyValuePair<Key, Value>>(entries))
         { }
 
+        /// <summary>
+        /// A map from the given function result
+        /// </summary>
+        /// <param name="fnc"></param>
         public MapOf(Func<IEnumerable<KeyValuePair<Key,Value>>> fnc) : this(
             new EnumerableOf<KeyValuePair<Key,Value>>(fnc))
         { }
@@ -101,7 +105,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="entry"></param>
         public MapOf(IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry) : this(
             new Dictionary<Key,Value>(),
-            new Mapped<Source, KeyValuePair<Key, Value>>(list, entry))
+            new Mapped<Source, KeyValuePair<Key, Value>>(entry, list))
         { }
 
         /// <summary>
@@ -111,7 +115,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="list"></param>
         /// <param name="entry"></param>
         public MapOf(IDictionary<Key, Value> src, IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry) : this(
-            src, new Enumerable.Mapped<Source, KeyValuePair<Key, Value>>(list, entry))
+            src, new Enumerable.Mapped<Source, KeyValuePair<Key, Value>>(entry, list))
         { }
 
         /// <summary>
