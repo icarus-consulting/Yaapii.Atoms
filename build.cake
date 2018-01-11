@@ -128,7 +128,7 @@ Task("Generate-Coverage")
 			{
 				OldStyle = true
 			}
-			.WithFilter("+[Yaapii.Atoms.Tests]*")
+			.WithFilter("+[Yaapii.Atoms]*")
 		);
 	}
 	catch(Exception ex)
