@@ -149,6 +149,7 @@ Task("Upload-Coverage")
 // Packaging
 ///////////////////////////////////////////////////////////////////////////////
 Task("Pack")
+  .IsDependentOn("Version")
   .IsDependentOn("Build")
   .Does(() => 
 {
@@ -160,6 +161,7 @@ Task("Pack")
 	  	VersionSuffix = ""
     };
    
+	settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(version);
 	settings.ArgumentCustomization = args => args.Append("--include-symbols");
 
    if (isAppVeyor)
@@ -169,13 +171,13 @@ Task("Pack")
        if(!tag.IsTag) 
        {
 			settings.VersionSuffix = "build" + AppVeyor.Environment.Build.Number.ToString().PadLeft(5,'0');
-         
        } 
 	   else 
 	   {     
 			settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(tag.Name);
        }
    }
+
 	
 	DotNetCorePack(
 		project.ToString(),
