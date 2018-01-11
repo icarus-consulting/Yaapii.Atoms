@@ -1,6 +1,8 @@
 #tool nuget:?package=GitReleaseManager
 #tool nuget:?package=OpenCover
-#tool nuget:?package=xunit.runner.console&version=2.3.1
+#tool nuget:?package=xunit.runner.console
+#tool nuget:?package=Codecov
+#addin nuget:?package=Cake.Codecov
 
 var target = Argument("target", "Default");
 var configuration   = Argument<string>("configuration", "Release");
@@ -13,6 +15,7 @@ var configuration   = Argument<string>("configuration", "Release");
 // this is relative to the project root folder
 var buildArtifacts      = new DirectoryPath("./artifacts/");
 var framework     = "netstandard2.0";
+var testFramework = "netcoreapp2.0";
 var project = new DirectoryPath("./src/Yaapii.Atoms/Yaapii.Atoms.csproj");
 
 var owner = "icarus-consulting";
@@ -20,6 +23,7 @@ var repository = "Yaapii.Atoms";
 
 var username = "";
 var password = "";
+var codecovToken = "";
 
 var isAppVeyor          = AppVeyor.IsRunningOnAppVeyor;
 
@@ -60,12 +64,26 @@ Task("Build")
   .IsDependentOn("Clean") // we can define Task`s which a dependet on other task like this
   .IsDependentOn("Restore")
   .Does(() =>
-{
+{	
+	//main = netstandard2.0, tests = netcoreapp2.0
+	var projects = GetFiles("./src/**/*.csproj");	//main project(s)
+	var testProjects = GetFiles("./tests/**/*.csproj"); //test project(s)
 
-    DotNetCoreBuild(project.ToString(), new DotNetCoreBuildSettings() {
-      Framework = framework,
-      Configuration = configuration
-    });
+	foreach(var project in projects)
+	{
+		DotNetCoreBuild(project.ToString(), new DotNetCoreBuildSettings() {
+		  Framework = framework,
+		  Configuration = configuration
+		});
+	}
+
+	foreach(var project in testProjects)
+	{
+		DotNetCoreBuild(project.ToString(), new DotNetCoreBuildSettings() {
+		  Framework = testFramework,
+		  Configuration = configuration
+		});
+	}
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -90,8 +108,9 @@ Task("Test")
 ///////////////////////////////////////////////////////////////////////////////
 // Code Coverage
 ///////////////////////////////////////////////////////////////////////////////
-Task("Coverage")
+Task("Generate-Coverage")
 .IsDependentOn("Build")
+.WithCriteria()
 .Does(() => 
 {
 	try
@@ -99,18 +118,33 @@ Task("Coverage")
 		OpenCover(
 			tool => 
 			{
-				XUnit2("./tests/Yaapii.Atoms.Tests/**/Yaapii.Atoms.Tests.dll");
+				tool.DotNetCoreTest("./tests/Yaapii.Atoms.Tests/",
+				new DotNetCoreTestSettings
+				{
+					 Configuration = "Release"
+				});
 			},
-			new FilePath("./result.xml"),
+			new FilePath("./coverage.xml"),
 			new OpenCoverSettings()
-				.WithFilter("+[Yaapii.Atoms.Tests]*")
-				.WithFilter("-[Yaapii.Atoms]*")
+			{
+				OldStyle = true
+			}
+			.WithFilter("+[Yaapii.Atoms.Tests]*")
 		);
 	}
 	catch(Exception ex)
 	{
-		Information("Error: " + ex.StackTrace);
+		Information("Error: " + ex.ToString());
 	}
+});
+
+Task("Upload-Coverage")
+.IsDependentOn("Generate-Coverage")
+.IsDependentOn("GetCredentials")
+.WithCriteria(() => isAppVeyor)
+.Does(() =>
+{
+    Codecov("coverage.xml", codecovToken);
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -135,10 +169,12 @@ Task("Pack")
        var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
        if(!tag.IsTag) 
        {
-	       settings.VersionSuffix = "build" + AppVeyor.Environment.Build.Number.ToString().PadLeft(5,'0');
+			settings.VersionSuffix = "build" + AppVeyor.Environment.Build.Number.ToString().PadLeft(5,'0');
          
-       } else {     
-         settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(tag.Name);
+       } 
+	   else 
+	   {     
+			settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(tag.Name);
        }
    }
 	
@@ -166,6 +202,7 @@ Task("GetCredentials")
 {
     username = EnvironmentVariable("GITHUB_USERNAME");
     password = EnvironmentVariable("GITHUB_PASSWORD");
+	codecovToken = EnvironmentVariable("CODECOV_TOKEN");
 });
 
 Task("Release")
@@ -196,6 +233,8 @@ Task("Release")
 Task("Default")
   .IsDependentOn("Build")
   .IsDependentOn("Test")
+  .IsDependentOn("Generate-Coverage")
+  .IsDependentOn("Upload-Coverage")
   .IsDependentOn("Pack")
   .IsDependentOn("Release")
   .Does(() =>
