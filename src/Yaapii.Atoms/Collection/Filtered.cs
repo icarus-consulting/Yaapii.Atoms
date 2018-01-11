@@ -21,12 +21,15 @@ namespace Yaapii.Atoms.Collection
         /// <param name="item2">secound item to filter</param>
         /// <param name="items">other items to filter</param>
         public Filtered(Func<T, Boolean> func, T item1, T item2, params T[] items) :
-            this(func, new EnumerableOf<T>(new ScalarOf<IEnumerator<T>>(() =>
-            {
-                var lst = new List<T>() { item1, item2 };
-                lst.AddRange(items);
-                return lst.GetEnumerator();
-            })))
+            this(
+                func,
+                new EnumerableOf<T>(
+                    new ScalarOf<IEnumerator<T>>(
+                        () => new Joined<T>(
+                            new EnumerableOf<T>(
+                                item1,
+                                item2),
+                            items).GetEnumerator())))
         { }
 
         /// <summary>
