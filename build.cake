@@ -1,5 +1,8 @@
 #tool nuget:?package=GitReleaseManager
-#addin nuget:?package=Cake.AppVeyor
+#tool nuget:?package=OpenCover
+#tool nuget:?package=xunit.runner.console
+#tool nuget:?package=Codecov
+#addin nuget:?package=Cake.Codecov
 
 var target = Argument("target", "Default");
 var configuration   = Argument<string>("configuration", "Release");
@@ -12,6 +15,7 @@ var configuration   = Argument<string>("configuration", "Release");
 // this is relative to the project root folder
 var buildArtifacts      = new DirectoryPath("./artifacts/");
 var framework     = "netstandard2.0";
+var testFramework = "netcoreapp2.0";
 var project = new DirectoryPath("./src/Yaapii.Atoms/Yaapii.Atoms.csproj");
 
 var owner = "icarus-consulting";
@@ -19,10 +23,11 @@ var repository = "Yaapii.Atoms";
 
 var username = "";
 var password = "";
+var codecovToken = "";
 
 var isAppVeyor          = AppVeyor.IsRunningOnAppVeyor;
 
-var version = "0.9.0";
+var version = "0.10.0";
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -59,12 +64,26 @@ Task("Build")
   .IsDependentOn("Clean") // we can define Task`s which a dependet on other task like this
   .IsDependentOn("Restore")
   .Does(() =>
-{
+{	
+	//main = netstandard2.0, tests = netcoreapp2.0
+	var projects = GetFiles("./src/**/*.csproj");	//main project(s)
+	var testProjects = GetFiles("./tests/**/*.csproj"); //test project(s)
 
-    DotNetCoreBuild(project.ToString(),new DotNetCoreBuildSettings() {
-      Framework = framework,
-      Configuration = configuration
-    });
+	foreach(var project in projects)
+	{
+		DotNetCoreBuild(project.ToString(), new DotNetCoreBuildSettings() {
+		  Framework = framework,
+		  Configuration = configuration
+		});
+	}
+
+	foreach(var project in testProjects)
+	{
+		DotNetCoreBuild(project.ToString(), new DotNetCoreBuildSettings() {
+		  Framework = testFramework,
+		  Configuration = configuration
+		});
+	}
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -75,17 +94,62 @@ Task("Test")
   .Does(() =>
 {
     var projectFiles = GetFiles("./tests/**/*.csproj");
-    foreach(var file in projectFiles)
+	//var projectFiles = GetFiles("./tests/Yaapii.Atoms.Tests/bin/Debug/netcoreapp2.0/*.tests.dll");
+    
+	foreach(var file in projectFiles)
     {
 	Information("### Discovering Tests in " + file.FullPath);
         DotNetCoreTest(file.FullPath);
+		//XUnit2(file.FullPath);
     }
+});
+
+///////////////////////////////////////////////////////////////////////////////
+// Code Coverage
+///////////////////////////////////////////////////////////////////////////////
+Task("Generate-Coverage")
+.IsDependentOn("Build")
+.Does(() => 
+{
+	try
+	{
+		OpenCover(
+			tool => 
+			{
+				tool.DotNetCoreTest("./tests/Yaapii.Atoms.Tests/",
+				new DotNetCoreTestSettings
+				{
+					 Configuration = "Release"
+				});
+			},
+			new FilePath("./coverage.xml"),
+			new OpenCoverSettings()
+			{
+				OldStyle = true
+			}
+			.WithFilter("+[Yaapii.Atoms]*")
+		);
+	}
+	catch(Exception ex)
+	{
+		Information("Error: " + ex.ToString());
+	}
+});
+
+Task("Upload-Coverage")
+.IsDependentOn("Generate-Coverage")
+.IsDependentOn("GetCredentials")
+.WithCriteria(() => isAppVeyor)
+.Does(() =>
+{
+    Codecov("coverage.xml", codecovToken);
 });
 
 ///////////////////////////////////////////////////////////////////////////////
 // Packaging
 ///////////////////////////////////////////////////////////////////////////////
 Task("Pack")
+  .IsDependentOn("Version")
   .IsDependentOn("Build")
   .Does(() => 
 {
@@ -97,23 +161,23 @@ Task("Pack")
 	  	VersionSuffix = ""
     };
    
+	settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(version);
 	settings.ArgumentCustomization = args => args.Append("--include-symbols");
-	Information("### AppVeyor: " + isAppVeyor);
 
-	if (isAppVeyor)
-	{
-		var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
+   if (isAppVeyor)
+   {
 
-		if(!tag.IsTag) 
-		{
+       var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
+       if(!tag.IsTag) 
+       {
 			settings.VersionSuffix = "build" + AppVeyor.Environment.Build.Number.ToString().PadLeft(5,'0');
-		} 
-		else 
-		{
-			Information("### AppVeyor Build - Setting package version to " + tag.Name);
+       } 
+	   else 
+	   {     
 			settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(tag.Name);
-		}
-	}
+       }
+   }
+
 	
 	DotNetCorePack(
 		project.ToString(),
@@ -139,6 +203,7 @@ Task("GetCredentials")
 {
     username = EnvironmentVariable("GITHUB_USERNAME");
     password = EnvironmentVariable("GITHUB_PASSWORD");
+	codecovToken = EnvironmentVariable("CODECOV_TOKEN");
 });
 
 Task("Release")
@@ -170,6 +235,8 @@ GitReleaseManagerAddAssets(
 Task("Default")
   .IsDependentOn("Build")
   .IsDependentOn("Test")
+  .IsDependentOn("Generate-Coverage")
+  .IsDependentOn("Upload-Coverage")
   .IsDependentOn("Pack")
   .IsDependentOn("Release")
   .Does(() =>

@@ -5,6 +5,12 @@
     <Version>0.5.0</Version>    
     <Description>Unittests for Yaapii.Atoms</Description>    
     <PackageTags></PackageTags>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;RELEASE;NETCOREAPP2_0</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +23,11 @@
 
   <ItemGroup>
     <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.console" Version="2.3.1" />
+    <PackageReference Include="xunit.extensibility.core" Version="2.3.1" />
+    <PackageReference Include="xunit.extensibility.execution" Version="2.3.1" />
     <PackageReference Include="xunit.runner.console" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.reporters" Version="2.3.1" />
     <PackageReference Include="xunit.runner.utility" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
