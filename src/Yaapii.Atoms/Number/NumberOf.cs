@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Number
         /// <param name="decimalSeperator">seperator for floating point numbers, for example 16,235 </param>
         public NumberOf(string text, string decimalSeperator, string blockSeperator) : this(
             new TextOf(text),
-            new ScalarOf<IFormatProvider>(() => 
+            new ScalarOf<IFormatProvider>(() =>
                 new NumberFormatInfo()
                 {
                     NumberDecimalSeparator = decimalSeperator,
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="text">text to parse</param>
         public NumberOf(string text) : this(
-            new TextOf(text), 
+            new TextOf(text),
             new ScalarOf<IFormatProvider>(
                 () => NumberFormatInfo.CurrentInfo
             )
@@ -75,7 +75,7 @@ namespace Yaapii.Atoms.Number
         /// <param name="text">text to parse</param>
         /// <param name="provider">a number format provider</param>
         public NumberOf(string text, IFormatProvider provider) : this(
-            new TextOf(text), 
+            new TextOf(text),
             new ScalarOf<IFormatProvider>(provider)
         )
         { }
@@ -87,10 +87,10 @@ namespace Yaapii.Atoms.Number
         /// <param name="numberFormat">a number format provider</param>
         public NumberOf(IText text, IScalar<IFormatProvider> numberFormat)
         {
-            _lng = new StickyScalar<long>(() => Convert.ToInt64(text.AsString(), numberFormat.Value()));
-            _itg = new StickyScalar<int>(() => Convert.ToInt32(text.AsString(), numberFormat.Value()));
-            _flt = new StickyScalar<float>(() => Convert.ToSingle(text.AsString(), numberFormat.Value()));
-            _dbl = new StickyScalar<double>(() => Convert.ToDouble(text.AsString(), numberFormat.Value()));
+            _lng = new StickyScalar<long>(() => { try { return Convert.ToInt64(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
+            _itg = new StickyScalar<int>(() => { try { return Convert.ToInt32(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
+            _flt = new StickyScalar<float>(() => { try { return Convert.ToSingle(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
+            _dbl = new StickyScalar<double>(() => { try { return Convert.ToDouble(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
         }
 
         /// <summary>
@@ -131,6 +131,15 @@ namespace Yaapii.Atoms.Number
         public long AsLong()
         {
             return _lng.Value();
+        }
+
+        private ArgumentException ArgError(IText txt)
+        {
+            return 
+                new ArgumentException(
+                    new FormattedText("'{0}' is not a number.", txt.AsString()
+                ).AsString()
+            );
         }
     }
 }
