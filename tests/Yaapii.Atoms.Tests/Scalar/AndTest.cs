@@ -22,11 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
 using Yaapii.Atoms.Enumerable;
 
@@ -39,7 +36,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         public void AllTrue()
         {
             Assert.True(
-            new And<True>(
+            new And(
                 new True(),
                 new True(),
                 new True()
@@ -50,7 +47,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         public void OneFalse()
         {
             Assert.True(
-                new And<bool>(
+                new And(
                     new True(),
                     new False(),
                     new True()
@@ -62,7 +59,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         public void AllFalse()
         {
             Assert.True(
-                    new And<string>(
+                    new And(
                         new EnumerableOf<IScalar<Boolean>>(
                             new False(),
                             new False(),
@@ -75,7 +72,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         public void EmptyIterator()
         {
             Assert.True(
-                    new And<bool>(new EnumerableOf<IScalar<Boolean>>())
+                    new And(new EnumerableOf<IScalar<Boolean>>())
                     .Value() == true);
         }
 
@@ -84,11 +81,10 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             var list = new LinkedList<string>();
             Assert.True(
-                new And<string>(
-                    new Enumerable.Mapped<String, IScalar<Boolean>>(
-                        str => { list.AddLast(str); return new True(); },
+                new And<string>(                    
+                        str => { list.AddLast(str); return true; },
                         new EnumerableOf<string>("hello", "world")
-                    )
+                    
                 ).Value() == true);
 
             Assert.True(
@@ -103,10 +99,8 @@ namespace Yaapii.Atoms.Scalar.Tests
 
             Assert.True(
                 new And<string>(
-                    new Enumerable.Mapped<string, IScalar<Boolean>>(
-                        str => { list.AddLast(str); return new True(); },
+                        str => { list.AddLast(str); return true; },
                         new EnumerableOf<string>()
-                    )
                 ).Value() == true,
                 "Can't enumerate a list"
                 );

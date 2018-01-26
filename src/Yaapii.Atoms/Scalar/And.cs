@@ -22,9 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using Yaapii.Atoms.List;
 using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Scalar
@@ -35,7 +33,7 @@ namespace Yaapii.Atoms.Scalar
     /// <typeparam name="In"></typeparam>
     public sealed class And<In> : IScalar<Boolean>
     {
-        private readonly IEnumerable<IScalar<Boolean>> _enumerable;
+        private readonly And _and;
 
         /// <summary>
         /// Logical and. Returns true after calling <see cref="IAction{X}"/> for every element.
@@ -75,7 +73,15 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public And(System.Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), new EnumerableOf<In>(src))
+        public And(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), new EnumerableOf<In>(src))
+        { }
+
+        /// <summary>
+        /// Logical and. Returns true if all calls to <see cref="Func{In, Out}" /> were true.
+        /// </summary>
+        /// <param name="func">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public And(Func<In, bool> func, IEnumerable<In> src) : this(new FuncOf<In, bool>(func), src)
         { }
 
         /// <summary>
@@ -94,12 +100,41 @@ namespace Yaapii.Atoms.Scalar
         public And(IFunc<In, Boolean> func, IEnumerable<In> src) :
             this(
                 new Enumerable.Mapped<In, IScalar<Boolean>>(
-                    new FuncOf<In, IScalar<Boolean>>((item) => 
+                    new FuncOf<In, IScalar<Boolean>>((item) =>
                         new ScalarOf<Boolean>(func.Invoke(item))),
                     src
                 )
             )
         { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">list of items</param>
+        private And(IEnumerable<IScalar<Boolean>> src) : this (new And(src))
+        { }
+
+        private And(And and)
+        {
+            _and = and;
+        }
+
+        /// <summary>
+        /// Get the value.
+        /// </summary>
+        /// <returns>the value</returns>
+        public Boolean Value()
+        {
+            return _and.Value();
+        }
+    }
+
+    /// <summary>
+    /// Logical and. Returns true if all contents return true.
+    /// </summary>
+    public sealed class And : IScalar<bool>
+    {
+        private readonly IEnumerable<IScalar<bool>> _enumerable;
 
         /// <summary>
         /// Logical and. Returns true if all calls to <see cref="Func{In, Out}" /> were true.
@@ -130,16 +165,36 @@ namespace Yaapii.Atoms.Scalar
         /// ctor
         /// </summary>
         /// <param name="src">list of items</param>
+        public And(params bool[] src) : this(
+            new Mapped<bool, IScalar<bool>>(
+                tBool => new ScalarOf<bool>(tBool),
+                src))
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">list of items</param>
+        public And(IEnumerable<bool> src) : this(
+            new Mapped<bool, IScalar<bool>>(
+                tBool => new ScalarOf<bool>(tBool),
+                src))
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">list of items</param>
         public And(IEnumerable<IScalar<Boolean>> src)
         {
-            this._enumerable = src;
+            _enumerable = src;
         }
 
         /// <summary>
         /// Get the value.
         /// </summary>
         /// <returns>the value</returns>
-        public Boolean Value()
+        public bool Value()
         {
             Boolean result = true;
             foreach (IScalar<Boolean> item in this._enumerable)
@@ -152,6 +207,5 @@ namespace Yaapii.Atoms.Scalar
             }
             return result;
         }
-
     }
 }
