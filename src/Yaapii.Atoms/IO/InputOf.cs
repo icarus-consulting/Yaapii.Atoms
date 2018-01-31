@@ -52,6 +52,14 @@ namespace Yaapii.Atoms.IO
         { }
 
         /// <summary>
+        /// Input out of a file Uri.
+        /// </summary>
+        /// <param name="file">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
+        public InputOf(FileInfo file) : this(
+            () => new FileStream(Uri.UnescapeDataString(file.FullName), FileMode.Open, FileAccess.Read))
+        { }
+
+        /// <summary>
         /// Input out of a Url.
         /// </summary>
         /// <param name="url">a url starting with http:// or https://</param>

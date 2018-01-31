@@ -79,6 +79,35 @@ namespace Yaapii.Atoms.Text
         { }
 
         /// <summary>
+        /// A <see cref="IText"/> out of a <see cref="Uri"/>.
+        /// </summary>
+        /// <param name="uri">a file <see cref="Uri"/></param>
+        public TextOf(Uri uri) : this(new InputOf(uri))
+        { }
+
+        /// <summary>
+        /// A <see cref="IText"/> out of a <see cref="Uri"/>.
+        /// </summary>
+        /// <param name="uri">a file <see cref="Uri"/></param>
+        public TextOf(Uri uri, Encoding encoding) : this(new InputOf(uri), encoding)
+        { }
+
+        /// <summary>
+        /// A <see cref="IText"/> out of a <see cref="FileInfo"/>
+        /// </summary>
+        /// <param name="file"></param>
+        public TextOf(FileInfo file) : this(new InputOf(file))
+        { }
+
+        /// <summary>
+        /// A <see cref="IText"/> out of a <see cref="FileInfo"/>
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="encoding"></param>
+        public TextOf(FileInfo file, Encoding encoding) : this(new InputOf(file), encoding)
+        { }
+
+        /// <summary>
         /// A <see cref="IText"/> out of a <see cref="IInput"/>.
         /// </summary>
         /// <param name="input">a <see cref="IInput"/></param>
