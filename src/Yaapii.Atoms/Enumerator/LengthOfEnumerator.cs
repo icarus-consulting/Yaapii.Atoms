@@ -56,6 +56,5 @@ namespace Yaapii.Atoms.Enumerator
             }
             return size;
         }
-
     }
 }
