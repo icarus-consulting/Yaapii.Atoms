@@ -36,6 +36,26 @@ namespace Yaapii.Atoms.Text.Tests
     public sealed class TextOfTest
     {
         [Fact]
+        public void ReadsUriIntoTextWithEncoding()
+        {
+            var path = new Uri(Path.GetFullPath("Assets/TextOf/readfile.txt"));
+            new Tidy(path, () =>
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path.AbsolutePath));
+
+                var content = "el file";
+                File.WriteAllText(path.AbsolutePath, content, Encoding.BigEndianUnicode);
+                
+                Assert.True(
+                    new TextOf(
+                        path,
+                        Encoding.BigEndianUnicode
+                    ).AsString() == content,
+                    "Can't read text from Input");
+            }).Invoke();
+        }
+
+                [Fact]
         public void ReadsUriIntoText()
         {
             var path = new Uri(Path.GetFullPath("Assets/TextOf/readfile.txt"));
@@ -48,8 +68,27 @@ namespace Yaapii.Atoms.Text.Tests
                 
                 Assert.True(
                     new TextOf(
-                        path,
-                        Encoding.UTF8
+                        path
+                    ).AsString() == content,
+                    "Can't read text from Input");
+            }).Invoke();
+        }
+
+        [Fact]
+        public void ReadsFileIntoTextWithEncoding()
+        {
+            var path = new Uri(Path.GetFullPath("Assets/TextOf/readfile.txt"));
+            new Tidy(path, () =>
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path.AbsolutePath));
+
+                var content = "el file";
+                File.WriteAllText(path.AbsolutePath, content, Encoding.BigEndianUnicode);
+
+                Assert.True(
+                    new TextOf(
+                        new FileInfo(path.AbsolutePath),
+                        Encoding.BigEndianUnicode
                     ).AsString() == content,
                     "Can't read text from Input");
             }).Invoke();
