@@ -27,6 +27,7 @@ using System.IO;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.IO;
+using Yaapii.Atoms.Tests;
 using Yaapii.Atoms.Text;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
@@ -34,6 +35,45 @@ namespace Yaapii.Atoms.Text.Tests
 {
     public sealed class TextOfTest
     {
+        [Fact]
+        public void ReadsUriIntoText()
+        {
+            var path = new Uri(Path.GetFullPath("Assets/TextOf/readfile.txt"));
+            new Tidy(path, () =>
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path.AbsolutePath));
+
+                var content = "el file";
+                File.WriteAllText(path.AbsolutePath, content);
+                
+                Assert.True(
+                    new TextOf(
+                        path,
+                        Encoding.UTF8
+                    ).AsString() == content,
+                    "Can't read text from Input");
+            }).Invoke();
+        }
+
+        [Fact]
+        public void ReadsFileIntoText()
+        {
+            var path = new Uri(Path.GetFullPath("Assets/TextOf/readfile.txt"));
+            new Tidy(path, () =>
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path.AbsolutePath));
+
+                var content = "el file";
+                File.WriteAllText(path.AbsolutePath, content);
+
+                Assert.True(
+                    new TextOf(
+                        new FileInfo(path.AbsolutePath),
+                        Encoding.UTF8
+                    ).AsString() == content,
+                    "Can't read text from Input");
+            }).Invoke();
+        }
 
         [Fact]
         public void ReadsInputIntoText()
@@ -62,7 +102,7 @@ namespace Yaapii.Atoms.Text.Tests
         [Fact]
         public void ReadsDoubleIntoText()
         {
-          //  var content = "0,2545";
+            //  var content = "0,2545";
 
             double doub = 0.2545;
 
