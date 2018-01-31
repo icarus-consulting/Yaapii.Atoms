@@ -21,9 +21,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>TRACE;RELEASE;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Enumerator\" />
-  </ItemGroup>
 </Project>
