@@ -52,10 +52,10 @@ namespace Yaapii.Atoms.Enumerable.Tests
         }
 
         [Fact]
-        public void DoesentFindInEmtyList()
+        public void DoesntFindInEmtyList()
         {
             Assert.False(new Contains<string>(
-                new List<String>(),
+                new EnumerableOf<String>(),
                 (str) => str == "elephant"
                 ).Value());
         }
