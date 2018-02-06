@@ -21,9 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
 
@@ -38,6 +36,9 @@ namespace Yaapii.Atoms.Number
         private readonly IScalar<float> _flt;
         private readonly IScalar<int> _itg;
         private readonly IScalar<double> _dbl;
+
+
+
 
         /// <summary>
         /// A <see cref="IText"/> as a <see cref="INumber"/>
@@ -79,6 +80,64 @@ namespace Yaapii.Atoms.Number
             new ScalarOf<IFormatProvider>(provider)
         )
         { }
+
+
+        /// <summary>
+        /// A <see cref="int"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="integer">The integer</param>
+        /// <param name="provider">a number format provider</param>
+        public NumberOf(int integer, IFormatProvider provider) : this(
+                new TextOf(
+                    integer
+                ),
+                new ScalarOf<IFormatProvider>(
+                    provider)
+                )
+        { }
+
+        /// <summary>
+        /// A <see cref="double"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="dbl">the double</param>
+        /// <param name="provider">a number format provider</param>
+        public NumberOf(double dbl, IFormatProvider provider) : this(
+                new TextOf(
+                    dbl,
+                    CultureInfo.InvariantCulture
+                ),
+                new ScalarOf<IFormatProvider>(
+                    provider)
+                )
+        { }
+        /// <summary>
+        /// A <see cref="long"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="lng">the long</param>
+        /// <param name="provider">a number format provider</param>
+        public NumberOf(long lng, IFormatProvider provider) : this(
+                new TextOf(
+                    lng
+                ),
+                new ScalarOf<IFormatProvider>(
+                    provider)
+                )
+        { }
+        /// <summary>
+        /// A <see cref="int"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="flt">The float</param>
+        /// <param name="provider">a number format provider</param>
+        public NumberOf(float flt, IFormatProvider provider) : this(
+                new TextOf(
+                    flt,
+                    CultureInfo.InvariantCulture
+                ),
+                new ScalarOf<IFormatProvider>(
+                    provider)
+                )
+        { }
+      
 
         /// <summary>
         /// A <see cref="IText"/> as a <see cref="INumber"/>
@@ -135,7 +194,7 @@ namespace Yaapii.Atoms.Number
 
         private ArgumentException ArgError(IText txt)
         {
-            return 
+            return
                 new ArgumentException(
                     new FormattedText("'{0}' is not a number.", txt.AsString()
                 ).AsString()
