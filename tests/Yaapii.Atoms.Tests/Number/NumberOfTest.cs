@@ -72,5 +72,61 @@ namespace Yaapii.Atoms.Number.Tests
                 new NumberOf("ghki").AsLong()
             );
         }
+
+        [Fact]
+        public void IntToDouble()
+        {
+            Assert.True(
+                new NumberOf(
+                    5,
+                    NumberFormatInfo.InvariantInfo
+                ).AsDouble() == 5d
+            );
+        }
+
+        [Fact]
+        public void DoubleToFloat()
+        {
+            Assert.True(
+                new NumberOf(
+                    (551515155.451d),
+                    NumberFormatInfo.InvariantInfo
+                ).AsFloat() == 551515155.451f
+            );
+        }
+
+        [Fact]
+        public void FloatAsDouble()
+        {
+            Assert.True(
+                new NumberOf(
+                    (5.243),
+                    NumberFormatInfo.InvariantInfo
+                ).AsDouble() == 5.243d
+            );
+        }
+
+        [Fact]
+        public void LongAsInt()
+        {
+            Assert.True(
+                new NumberOf(
+                    (50l),
+                    NumberFormatInfo.InvariantInfo
+                ).AsInt() == 50
+            );
+        }
+
+
+        [Fact]
+        public void IntAsLong()
+        {
+            Assert.True(
+                new NumberOf(
+                    (50),
+                    NumberFormatInfo.InvariantInfo
+                ).AsLong() == 50l
+            );
+        }
     }
 }
