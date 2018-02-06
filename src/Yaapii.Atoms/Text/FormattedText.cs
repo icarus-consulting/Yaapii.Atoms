@@ -91,6 +91,12 @@ namespace Yaapii.Atoms.Text
             }))
         { }
 
+        /// <summary>
+        /// A <see cref="IText"/> formatted with arguments.
+        /// </summary>
+        /// <param name="ptn">pattern to put argument</param>
+        /// <param name="locale">a specific culture</param>
+        /// <param name="arguments">arguments to apply</param>
         public FormattedText(IText ptn, CultureInfo locale, IScalar<object[]> arguments)
         {
             this._pattern = ptn;
