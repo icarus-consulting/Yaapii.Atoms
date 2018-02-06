@@ -21,9 +21,9 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
+using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Text
 {
@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Text
     public sealed class FormattedText : IText
     {
         private readonly IText _pattern;
-        private readonly object[] _args;
+        private readonly IScalar<object[]> _args;
         private readonly CultureInfo _locale;
 
         /// <summary>
@@ -71,11 +71,27 @@ namespace Yaapii.Atoms.Text
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="locale">a specific culture</param>
         /// <param name="arguments">arguments to apply</param>
-        public FormattedText(
-            IText ptn,
-            CultureInfo locale,
-            object[] arguments
-        )
+        public FormattedText(IText ptn, CultureInfo locale, object[] arguments) : this(
+            ptn, locale, new ScalarOf<object[]>(() =>
+            {
+                object[] strings = new object[new LengthOf(arguments).Value()];
+                for (int i = 0; i < new LengthOf(arguments).Value(); i++)
+                {
+                    if (arguments[i] is IText)
+                    {
+                        strings[i] = (arguments[i] as IText).AsString();
+                    }
+
+                    else
+                    {
+                        strings[i] = arguments[i];
+                    }
+                }
+                return strings;
+            }))
+        { }
+
+        public FormattedText(IText ptn, CultureInfo locale, IScalar<object[]> arguments)
         {
             this._pattern = ptn;
             this._locale = locale;
@@ -88,7 +104,11 @@ namespace Yaapii.Atoms.Text
         /// <returns>the content as a string</returns>
         public String AsString()
         {
-            return String.Format(this._locale, _pattern.AsString(), _args);
+            return String.Format(
+                this._locale, 
+                _pattern.AsString(), 
+                _args.Value()
+            );
         }
 
         /// <summary>
