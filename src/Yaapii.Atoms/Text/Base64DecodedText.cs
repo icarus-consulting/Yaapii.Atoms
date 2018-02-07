@@ -21,8 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using Yaapii.Atoms.Bytes;
+using Yaapii.Atoms.IO;
 
 namespace Yaapii.Atoms.Text
 {
@@ -46,7 +46,12 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">text to decode</param>
         public Base64DecodedText(IText text)
         {
-            this._origin = text;
+            this._origin =
+                new TextOf(
+                    new Base64Bytes(
+                        new BytesOf(text)
+                    )
+                );
         }
 
         /// <summary>
@@ -55,8 +60,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>the content as a string</returns>
         public String AsString()
         {
-            return new TextOf(
-                Convert.FromBase64String(this._origin.AsString())).AsString();
+            return this._origin.AsString();
         }
 
         /// <summary>
@@ -66,7 +70,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>true if equal.</returns>
         public bool Equals(IText text)
         {
-            return this.Equals(text);
+            return _origin.Equals(text);
         }
     }
 }
