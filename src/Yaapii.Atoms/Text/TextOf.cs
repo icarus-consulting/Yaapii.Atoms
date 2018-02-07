@@ -21,15 +21,11 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using Yaapii.Atoms.Func;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Misc;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
 
 #pragma warning disable MaxClassLength // Class length max
 namespace Yaapii.Atoms.Text
@@ -238,7 +234,7 @@ namespace Yaapii.Atoms.Text
             () => 
             {
                 var memoryStream = new MemoryStream(bytes.AsBytes());
-                return new StreamReader(memoryStream).ReadToEnd();
+                return new StreamReader(memoryStream).ReadToEnd(); // removes the BOM from the Byte-Array
             })
         { }
 
