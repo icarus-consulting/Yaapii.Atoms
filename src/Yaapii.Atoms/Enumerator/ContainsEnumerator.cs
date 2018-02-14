@@ -55,12 +55,13 @@ namespace Yaapii.Atoms.Enumerator
         /// <returns>true if item is present in enumerable.</returns>
         public bool Value()
         {
-            var contains = _src.MoveNext();
-            for (var cur = 0; !_match.Invoke(this._src.Current); cur++)
+            bool contains = false;
+
+            for (var cur = 0; this._src.MoveNext(); cur++)
             {
-                if (!this._src.MoveNext())
+                if (_match.Invoke(this._src.Current))
                 {
-                    contains = false;
+                    contains = true;
                     break;
                 }
             }

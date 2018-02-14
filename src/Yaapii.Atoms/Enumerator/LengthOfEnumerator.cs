@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections;
+using System.Diagnostics;
 using System.Text;
 
 namespace Yaapii.Atoms.Enumerator
@@ -55,6 +56,5 @@ namespace Yaapii.Atoms.Enumerator
             }
             return size;
         }
-
     }
 }

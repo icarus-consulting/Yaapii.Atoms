@@ -20,7 +20,7 @@ namespace Yaapii.Atoms.Number.Tests
         [Fact]
         public void RejectsNoFloatText()
         {
-            Assert.Throws<FormatException>(() =>
+            Assert.Throws<ArgumentException>(() =>
                 new NumberOf("ghki").AsFloat()
             );
         }
@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Number.Tests
         [Fact]
         public void RejectsNoIntText()
         {
-            Assert.Throws<FormatException>(() =>
+            Assert.Throws<ArgumentException>(() =>
                 new NumberOf("ghki").AsInt()
             );
         }
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Number.Tests
         [Fact]
         public void RejectsNoDoubleText()
         {
-            Assert.Throws<FormatException>(() =>
+            Assert.Throws<ArgumentException>(() =>
                 new NumberOf("ghki").AsDouble()
             );
         }
@@ -68,7 +68,7 @@ namespace Yaapii.Atoms.Number.Tests
         [Fact]
         public void RejectsNoLongText()
         {
-            Assert.Throws<FormatException>(() =>
+            Assert.Throws<ArgumentException>(() =>
                 new NumberOf("ghki").AsLong()
             );
         }
