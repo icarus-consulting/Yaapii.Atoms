@@ -155,4 +155,136 @@ namespace Yaapii.Atoms.Scalar
         }
 
     }
+
+
+    /// <summary>
+    /// <see cref="IScalar{T}"/> that is a logical disjunction.
+    /// </summary>
+    public sealed class Or : IScalar<Boolean>
+    {
+        private readonly IEnumerable<IScalar<Boolean>> origin;
+
+        /// <summary>
+        /// Logical or. Returns true after calling <see cref="IAction{X}"/> for every element.
+        /// </summary>
+        /// <param name="proc">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public Or(Action<Boolean> proc, params Boolean[] src) : this(new ActionOf<Boolean>(input => proc.Invoke(input)), src)
+        { }
+
+        /// <summary>
+        /// Logical or. Returns true after calling <see cref="IAction{X}"/> for every element.
+        /// </summary>
+        /// <param name="proc">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public Or(Action<Boolean> proc, IEnumerable<Boolean> src) : this(new ActionOf<Boolean>(ipt => proc.Invoke(ipt)), src)
+        { }
+
+        /// <summary>
+        /// Logical or. Returns true after calling <see cref="IAction{X}"/> for every element.
+        /// </summary>
+        /// <param name="proc">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public Or(IAction<Boolean> proc, params Boolean[] src) : this(
+            proc, new EnumerableOf<Boolean>(src))
+        { }
+
+        /// <summary>
+        /// Logical or. Returns true after calling <see cref="IAction{X}"/> for every element.
+        /// </summary>
+        /// <param name="proc">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public Or(IAction<Boolean> proc, IEnumerable<Boolean> src) : this(new FuncOf<Boolean, bool>(input => { proc.Invoke(input); return true; }), src)
+        { }
+
+        /// <summary>
+        /// Logical or. Returns true if all calls to <see cref="Func{Boolean, Out}" /> were true.
+        /// </summary>
+        /// <param name="func">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public Or(System.Func<Boolean, bool> func, params Boolean[] src) : this(new FuncOf<Boolean, bool>(func), new EnumerableOf<Boolean>(src))
+        { }
+
+        /// <summary>
+        /// Logical or. Returns true if all calls to <see cref="IFunc{Boolean, Out}" /> were true.
+        /// </summary>
+        /// <param name="func">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public Or(IFunc<Boolean, Boolean> func, params Boolean[] src) : this(func, new EnumerableOf<Boolean>(src))
+        { }
+
+        /// <summary>
+        /// Logical or. Returns true if all calls to <see cref="IFunc{Boolean, Out}" /> were true.
+        /// </summary>
+        /// <param name="func">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public Or(IFunc<Boolean, Boolean> func, IEnumerable<Boolean> src) :
+            this(
+                new Enumerable.Mapped<Boolean, IScalar<Boolean>>(
+                    new FuncOf<Boolean, IScalar<Boolean>>((item) =>
+                        new ScalarOf<Boolean>(func.Invoke(item))),
+                    src
+                )
+            )
+        { }
+
+        /// <summary>
+        /// <see cref="IScalar{T}"/> that is a logical disjunction.
+        /// </summary>
+        /// <param name="scalars">functions returning scalars to chain with or</param>
+        public Or(params Func<Boolean>[] scalars) : this(
+            new Enumerable.Mapped<Func<bool>, IScalar<bool>>(
+                fnc => new ScalarOf<bool>(fnc),
+                scalars))
+        { }
+
+        /// <summary>
+        /// <see cref="IScalar{T}"/> that is a logical disjunction.
+        /// </summary>
+        /// <param name="scalars">functions returning scalars to chain with or</param>
+        public Or(params IFunc<Boolean>[] scalars) : this(
+            new Enumerable.Mapped<IFunc<bool>, IScalar<bool>>(
+                fnc => new ScalarOf<bool>(fnc),
+                scalars
+            )
+        )
+        { }
+
+        /// <summary>
+        /// <see cref="IScalar{T}"/> that is a logical disjunction.
+        /// </summary>
+        /// <param name="scalars">scalars to chain with or</param>        
+        public Or(params IScalar<Boolean>[] scalars) : this(new EnumerableOf<IScalar<bool>>(scalars))
+        { }
+
+        /// <summary>
+        /// <see cref="IScalar{T}"/> that is a logical disjunction.
+        /// </summary>
+        /// <param name="scalars">scalars to chain with or</param>
+        public Or(IEnumerable<IScalar<Boolean>> scalars)
+        {
+            this.origin = scalars;
+        }
+
+        /// <summary>
+        /// Get the result.
+        /// </summary>
+        /// <returns>the result</returns>
+        public Boolean Value()
+        {
+            bool result = false;
+            foreach (IScalar<Boolean> item in this.origin)
+            {
+                if (item.Value())
+                {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
+        }
+
+    }
 }
+
+
