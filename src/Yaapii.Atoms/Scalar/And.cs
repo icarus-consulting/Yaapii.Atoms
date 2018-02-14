@@ -22,10 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Func;
 
 namespace Yaapii.Atoms.Scalar
 {
@@ -66,16 +64,98 @@ namespace Yaapii.Atoms.Scalar
         /// Logical and. Returns true if all calls to <see cref="Func{In, Out}" /> were true.
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>
-        public And(params System.Func<bool>[] funcs) : this(new EnumerableOf<System.Func<bool>>(funcs))
+        public And(params System.Func<Boolean>[] funcs) : this(new EnumerableOf<System.Func<Boolean>>(funcs))
         { }
 
         /// <summary>
         /// Logical and. Returns true if all calls to <see cref="Func{Out}" /> were true.
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>
-        public And(EnumerableOf<System.Func<bool>> funcs) : this(
-            new Enumerable.Mapped<System.Func<bool>, IScalar<bool>>(
-                func => new ScalarOf<bool>(func),
+        public And(EnumerableOf<System.Func<Boolean>> funcs) : this(
+            new Enumerable.Mapped<System.Func<Boolean>, IScalar<Boolean>>(
+                func => new ScalarOf<Boolean>(func),
+                funcs))
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">list of items</param>
+        public And(params IScalar<Boolean>[] src) : this(
+            new EnumerableOf<IScalar<Boolean>>(src))
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">list of items</param>
+        public And(IEnumerable<IScalar<Boolean>> src)
+        {
+            this._enumerable = src;
+        }
+
+        /// <summary>
+        /// Get the value.
+        /// </summary>
+        /// <returns>the value</returns>
+        public Boolean Value()
+        {
+            Boolean result = true;
+            foreach (IScalar<Boolean> item in this._enumerable)
+            {
+                if (!item.Value())
+                {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        }
+
+    }
+    public sealed class And : IScalar<Boolean>
+    {
+        private readonly IEnumerable<IScalar<Boolean>> _enumerable;
+
+
+
+        /// <summary>
+        /// Logical and. Returns true if all calls to <see cref="IFunc{Boolean, Out}" /> were true.
+        /// </summary>
+        /// <param name="func">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public And(IFunc<Boolean, Boolean> func, params Boolean[] src) : this(func, new EnumerableOf<Boolean>(src))
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="func">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public And(IFunc<Boolean, Boolean> func, IEnumerable<Boolean> src) :
+            this(
+                new Enumerable.Mapped<Boolean, IScalar<Boolean>>(
+                    new FuncOf<Boolean, IScalar<Boolean>>((item) =>
+                        new ScalarOf<Boolean>(func.Invoke(item))),
+                    src
+                )
+            )
+        { }
+
+        /// <summary>
+        /// Logical and. Returns true if all calls to <see cref="Func{In, Out}" /> were true.
+        /// </summary>
+        /// <param name="funcs">the conditions to apply</param>
+        public And(params System.Func<Boolean>[] funcs) : this(new EnumerableOf<System.Func<Boolean>>(funcs))
+        { }
+
+        /// <summary>
+        /// Logical and. Returns true if all calls to <see cref="Func{Out}" /> were true.
+        /// </summary>
+        /// <param name="funcs">the conditions to apply</param>
+        public And(EnumerableOf<System.Func<Boolean>> funcs) : this(
+            new Enumerable.Mapped<System.Func<Boolean>, IScalar<Boolean>>(
+                func => new ScalarOf<Boolean>(func),
                 funcs))
         { }
 

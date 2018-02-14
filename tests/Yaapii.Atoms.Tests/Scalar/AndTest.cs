@@ -22,13 +22,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
 using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Text;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 namespace Yaapii.Atoms.Scalar.Tests
@@ -123,6 +120,31 @@ namespace Yaapii.Atoms.Scalar.Tests
                         1, -1, 0
                     ).Value() == false);
         }
+
+        [Fact]
+        public void TestNonGenFunc()
+        {
+            Assert.True(
+                new And(
+                    new FuncOf<bool,bool>((i) => { return true; }),
+                    true,
+                    true
+                ).Value()
+            );
+        }
+        [Fact]
+        public void TestNonGenScalar()
+        {
+            Assert.True(
+                    new And(
+                        new ScalarOf<bool>(true),
+                        new ScalarOf<bool>(true),
+                        new ScalarOf<bool>(true)
+                    ).Value()
+            );
+        }
+
+
     }
 }
 #pragma warning restore MaxPublicMethodCount // a public methods count maximum
