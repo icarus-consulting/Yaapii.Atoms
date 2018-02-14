@@ -109,20 +109,6 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
-        public void TestProc()
-        {
-            var list = new LinkedList<int>();
-            new And<int>(
-                new ActionOf<int>(i => list.AddLast(i)),
-                1, 1
-            ).Value();
-
-
-            Assert.True(
-                list.Count == 2);
-        }
-
-        [Fact]
         public void TestFunc()
         {
             Assert.True(

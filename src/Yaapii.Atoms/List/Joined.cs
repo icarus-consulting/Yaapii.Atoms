@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.List
                 var blocking = new BlockingCollection<T>();
                 foreach (var lst in src)
                 {
-                    new And<T>(item => blocking.Add(item), lst).Value();
+                    new And<T>(item => { blocking.Add(item); return true; }, lst).Value();
                 }
 
                 return new ListOf<T>(blocking);

@@ -36,39 +36,6 @@ namespace Yaapii.Atoms.Scalar
         private readonly And _and;
 
         /// <summary>
-        /// Logical and. Returns true after calling <see cref="IAction{X}"/> for every element.
-        /// </summary>
-        /// <param name="proc">the condition to apply</param>
-        /// <param name="src">list of items</param>
-        public And(Action<In> proc, params In[] src) : this(new ActionOf<In>(input => proc.Invoke(input)), src)
-        { }
-
-        /// <summary>
-        /// Logical and. Returns true after calling <see cref="IAction{X}"/> for every element.
-        /// </summary>
-        /// <param name="proc">the condition to apply</param>
-        /// <param name="src">list of items</param>
-        public And(Action<In> proc, IEnumerable<In> src) : this(new ActionOf<In>(ipt => proc.Invoke(ipt)), src)
-        { }
-
-        /// <summary>
-        /// Logical and. Returns true after calling <see cref="IAction{X}"/> for every element.
-        /// </summary>
-        /// <param name="proc">the condition to apply</param>
-        /// <param name="src">list of items</param>
-        public And(IAction<In> proc, params In[] src) : this(
-            proc, new EnumerableOf<In>(src))
-        { }
-
-        /// <summary>
-        /// Logical and. Returns true after calling <see cref="IAction{X}"/> for every element.
-        /// </summary>
-        /// <param name="proc">the condition to apply</param>
-        /// <param name="src">list of items</param>
-        public And(IAction<In> proc, IEnumerable<In> src) : this(new FuncOf<In, bool>(input => { proc.Invoke(input); return true; }), src)
-        { }
-
-        /// <summary>
         /// Logical and. Returns true if all calls to <see cref="Func{In, Out}" /> were true.
         /// </summary>
         /// <param name="func">the condition to apply</param>
@@ -140,15 +107,15 @@ namespace Yaapii.Atoms.Scalar
         /// Logical and. Returns true if all calls to <see cref="Func{In, Out}" /> were true.
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>
-        public And(params System.Func<bool>[] funcs) : this(new EnumerableOf<System.Func<bool>>(funcs))
+        public And(params Func<bool>[] funcs) : this(new EnumerableOf<System.Func<bool>>(funcs))
         { }
 
         /// <summary>
         /// Logical and. Returns true if all calls to <see cref="Func{Out}" /> were true.
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>
-        public And(EnumerableOf<System.Func<bool>> funcs) : this(
-            new Enumerable.Mapped<System.Func<bool>, IScalar<bool>>(
+        public And(EnumerableOf<Func<bool>> funcs) : this(
+            new Mapped<System.Func<bool>, IScalar<bool>>(
                 func => new ScalarOf<bool>(func),
                 funcs))
         { }
@@ -197,7 +164,7 @@ namespace Yaapii.Atoms.Scalar
         public bool Value()
         {
             Boolean result = true;
-            foreach (IScalar<Boolean> item in this._enumerable)
+            foreach (IScalar<Boolean> item in _enumerable)
             {
                 if (!item.Value())
                 {

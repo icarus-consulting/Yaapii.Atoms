@@ -21,7 +21,7 @@ namespace Yaapii.Atoms.Enumerable
             var blocking = new BlockingCollection<object>();
             foreach (var lst in src)
             {
-                new And<object>(item => blocking.Add(item), lst).Value();
+                new And<object>(item => { blocking.Add(item); return true; }, lst).Value();
             }
 
             return blocking;
