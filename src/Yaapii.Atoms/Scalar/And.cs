@@ -37,46 +37,7 @@ namespace Yaapii.Atoms.Scalar
     {
         private readonly IEnumerable<IScalar<Boolean>> _enumerable;
 
-        /// <summary>
-        /// Logical and. Returns true after calling <see cref="IAction{X}"/> for every element.
-        /// </summary>
-        /// <param name="proc">the condition to apply</param>
-        /// <param name="src">list of items</param>
-        public And(Action<In> proc, params In[] src) : this(new ActionOf<In>(input => proc.Invoke(input)), src)
-        { }
-
-        /// <summary>
-        /// Logical and. Returns true after calling <see cref="IAction{X}"/> for every element.
-        /// </summary>
-        /// <param name="proc">the condition to apply</param>
-        /// <param name="src">list of items</param>
-        public And(Action<In> proc, IEnumerable<In> src) : this(new ActionOf<In>(ipt => proc.Invoke(ipt)), src)
-        { }
-
-        /// <summary>
-        /// Logical and. Returns true after calling <see cref="IAction{X}"/> for every element.
-        /// </summary>
-        /// <param name="proc">the condition to apply</param>
-        /// <param name="src">list of items</param>
-        public And(IAction<In> proc, params In[] src) : this(
-            proc, new EnumerableOf<In>(src))
-        { }
-
-        /// <summary>
-        /// Logical and. Returns true after calling <see cref="IAction{X}"/> for every element.
-        /// </summary>
-        /// <param name="proc">the condition to apply</param>
-        /// <param name="src">list of items</param>
-        public And(IAction<In> proc, IEnumerable<In> src) : this(new FuncOf<In, bool>(input => { proc.Invoke(input); return true; }), src)
-        { }
-
-        /// <summary>
-        /// Logical and. Returns true if all calls to <see cref="Func{In, Out}" /> were true.
-        /// </summary>
-        /// <param name="func">the condition to apply</param>
-        /// <param name="src">list of items</param>
-        public And(System.Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), new EnumerableOf<In>(src))
-        { }
+      
 
         /// <summary>
         /// Logical and. Returns true if all calls to <see cref="IFunc{In, Out}" /> were true.

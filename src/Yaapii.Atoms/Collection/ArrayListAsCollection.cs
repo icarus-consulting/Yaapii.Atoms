@@ -21,7 +21,7 @@ namespace Yaapii.Atoms.Collection
             var blocking = new BlockingCollection<object>();
             foreach (var lst in src)
             {
-                new And<object>(item => blocking.Add(item), lst).Value();
+                new Each<object>(item => blocking.Add(item), lst).Invoke();
             }
 
             return new CollectionOf<object>(blocking.ToArray());
