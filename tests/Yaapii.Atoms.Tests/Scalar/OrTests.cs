@@ -14,7 +14,7 @@ namespace Yaapii.Atoms.Tests.Scalar
         public void TrueOrGenEnumerable()
         {
             Assert.True(
-                new Or<bool>(
+                new Or(
                     new EnumerableOf<IScalar<bool>>(
                         new ScalarOf<bool>(true),
                         new ScalarOf<bool>(false)
@@ -37,22 +37,11 @@ namespace Yaapii.Atoms.Tests.Scalar
         public void TrueOrGenScalar()
         {
             Assert.True(
-                new Or<bool>(
+                new Or(
                     new True(),
                     new False(),
                     new True()
                     ).Value() == true
-            );
-        }
-        [Fact]
-        public void TrueOrGenAction()
-        {
-            Assert.True(
-                new Or<IAction<bool>>(
-                    act => act.Invoke(true),
-                    new ActionOf<bool>(() => new True()),
-                    new ActionOf<bool>(() => new True())
-                ).Value() == true
             );
         }
     }
