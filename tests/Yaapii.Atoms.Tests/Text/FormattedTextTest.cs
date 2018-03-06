@@ -88,7 +88,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new FormattedText(
                     "{0} is a {1} test",
-                    "This",
+                    new TextOf("This"),
                     new TextOf("FormattedText")
                 ).AsString() == "This is a FormattedText test"
             );
