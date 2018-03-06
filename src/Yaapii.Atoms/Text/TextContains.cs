@@ -28,15 +28,9 @@ namespace Yaapii.Atoms.Text
     /// <summary> Check if a text contains a pattern </summary>
     public sealed class TextContains : IScalar<bool>
     {
-        #region Fields
-
         private readonly IScalar<string> _inputValue;
         private readonly IScalar<string> _pattern;
         private readonly IScalar<StringComparison> _stringComparison;
-
-        #endregion Fields
-
-        #region Constructors
 
         /// <summary> Checks if a text contains a pattern using strings </summary>
         /// <param name="inputStr"> text as string </param>
@@ -72,17 +66,11 @@ namespace Yaapii.Atoms.Text
             _stringComparison = stringComparison;
         }
 
-        #endregion Constructors
-
-        #region Methods
-
         /// <summary> Returns if the inputValue contains the pattern </summary>
         /// <returns> bool </returns>
         public bool Value()
         {
             return _inputValue.Value().IndexOf(_pattern.Value(), _stringComparison.Value()) >= 0;
         }
-
-        #endregion Methods
     }
 }
