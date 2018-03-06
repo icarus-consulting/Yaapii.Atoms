@@ -60,6 +60,19 @@ namespace Yaapii.Atoms.Text
             )
         { }
 
+
+        /// <summary>
+        /// A <see cref="IText"/> formatted with arguments.
+        /// </summary>
+        /// <param name="ptn">pattern</param>
+        /// <param name="local">CultureInfo</param>
+        /// <param name="arguments">arguments to apply</param>
+
+        public FormattedText(IText ptn, CultureInfo local, params object[] arguments) : this(
+            ptn, local, new ScalarOf<object[]>(arguments)
+            )
+        { }
+
         /// <summary>
         /// A <see cref="IText"/> formatted with arguments.
         /// </summary>
@@ -75,7 +88,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="arguments">arguments as <see cref="IText"/> to apply</param>
-        public FormattedText(string ptn, params IText[] arguments) : this(new TextOf(ptn), new ScalarOf<object[]>(
+        public FormattedText(string ptn, params IText[] arguments) : this(new TextOf(ptn), CultureInfo.InvariantCulture, new ScalarOf<object[]>(
            () =>
            {
                object[] strings = new object[new LengthOf(arguments).Value()];
