@@ -9,6 +9,14 @@ This is a .NET port of the java library [Cactoos](https://github.com/yegor256/ca
 
 It follows all the rules suggested in the two "[Elegant Objects](https://www.amazon.de/Elegant-Objects-Yegor-Bugayenko/dp/1519166915)" books.
 
+# Table Of Contents
+- [Functions](#Functions)
+- [IO Input / Output](#IO-Input-/-Output)
+- [Lists](#Lists)
+- [Scalar](#Scalar)
+- [Text](#Text)
+- [LinQ Analogy](#LinQ-Analogy)
+
 ## Functions
 The interfaces are:
 ```csharp
@@ -512,3 +520,58 @@ new TextOf(
     new IOException("It doesn't work at all")
 );
 ```
+
+## LinQ Analogy
+### Standard Query Operators
+LinQ              | Yaapii.Atoms
+------------------|-------------
+Aggregate         |
+All               |
+Any               |
+AsEnumerable      |
+Average           |
+Cast              |
+Concat            |
+Contains          |
+Count             |
+DefaultIfEmpty    |
+Distinct          |
+ElementAt         |
+ElementAtOrDefault|
+Empty             |
+Except            |
+First             | <code>&nbsp;var list = new EnumerableO<int>(1, 2, 3);<br>&nbsp;var first = new ItemAt<int>(list).Value();<br>&nbsp;// first = 1</code>
+FirstOrDefault    |
+GroupBy           |
+GroupJoin         |
+Intersect         |
+Join              |
+Last              |
+LastOrDefault     |
+LongCount         |
+Max               |
+Min               |
+OfType            |
+OrderBy           |
+OrderByDescending |
+Range             |
+Repeat            |
+Reverse           |
+Select            |
+SelectMany        |
+SequenceEqual     |
+Single            |
+SingleOrDefault   |
+Skip              |
+SkipWhile         |
+Sum               |
+Take              |
+TakeWhile         |
+ThenBy            |
+ThenByDescending  |
+ToArray           |
+ToDictionary      |
+ToList            |
+ToLookup          |
+Union             |
+Where             |
