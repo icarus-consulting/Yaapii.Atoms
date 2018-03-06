@@ -5,7 +5,8 @@
 coverage.xml
 
 # Cake Build
-/tools
+tools/*
+!tools/packages.config
 
 
 # Tecnomatix unit tests
