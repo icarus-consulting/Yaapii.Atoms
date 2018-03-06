@@ -25,7 +25,7 @@ namespace Yaapii.Atoms.Scalar
     /// <typeparam name="In"></typeparam>
     public sealed class And<In> : IScalar<Boolean>
     {
-        private readonly And _and;
+        IEnumerable<IScalar<Boolean>> _enumerable;
 
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>
@@ -58,21 +58,29 @@ namespace Yaapii.Atoms.Scalar
             )
         { }
 
-        /// <summary> ctor </summary>
-        /// <param name="src"> list of items </param>
-        private And(IEnumerable<IScalar<Boolean>> src) : this(new And(src))
-        { }
-
-        private And(And and)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="src"></param>
+        private And(IEnumerable<IScalar<Boolean>> src)
         {
-            _and = and;
+            _enumerable = src;
         }
 
         /// <summary> Get the value. </summary>
         /// <returns> the value </returns>
         public Boolean Value()
         {
-            return _and.Value();
+            Boolean result = true;
+            foreach (IScalar<Boolean> item in this._enumerable)
+            {
+                if (!item.Value())
+                {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
         }
     }
 
@@ -120,7 +128,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="src"> list of items </param>
         public And(IEnumerable<IScalar<Boolean>> src)
         {
-            _enumerable = src;
+            this._enumerable = src;
         }
 
         /// <summary> Get the value. </summary>
@@ -128,7 +136,7 @@ namespace Yaapii.Atoms.Scalar
         public bool Value()
         {
             Boolean result = true;
-            foreach (IScalar<Boolean> item in _enumerable)
+            foreach (IScalar<Boolean> item in this._enumerable)
             {
                 if (!item.Value())
                 {
