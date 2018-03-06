@@ -16,7 +16,9 @@ namespace Yaapii.Atoms.Scalar
         private readonly IEnumerable<In> _enumerable;
 
         /// <summary>
-        /// Logical and. Returns true after calling <see cref="IAction{X}"/> for every element.
+        /// Executes the given Action for every element in the params.
+        /// Replaces ForEach in LinQ. 
+        /// <para>Object is <see cref="IAction"/></para>
         /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
@@ -24,7 +26,9 @@ namespace Yaapii.Atoms.Scalar
         { }
 
         /// <summary>
-        /// Logical and. Returns true after calling <see cref="IAction{X}"/> for every element.
+        ///  Executes the given Action for every element in the Enumerable.
+        /// Replaces ForEach in LinQ.
+        /// <para>Object is <see cref="IAction"/></para>
         /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
@@ -32,8 +36,9 @@ namespace Yaapii.Atoms.Scalar
         { }
 
         /// <summary>
-        /// Logical and. Returns true after calling <see cref="IAction{X}"/> for every element.
-        /// </summary>
+        ///  Executes the given IAction for every element in the params.
+        /// Replaces ForEach in LinQ.
+        /// <para>Object is <see cref="IAction"/></para>        /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
         public Each(IAction<In> proc, params In[] src) : this(
@@ -42,7 +47,9 @@ namespace Yaapii.Atoms.Scalar
 
 
         /// <summary>
-        /// 
+        ///  Executes the given IAction for every element in the Enumerable.
+        /// Replaces ForEach in LinQ.
+        /// <para>Object is <see cref="IAction"/></para>
         /// </summary>
         /// <param name="action"></param>
         /// <param name="enumerable"></param>
@@ -53,7 +60,7 @@ namespace Yaapii.Atoms.Scalar
         }
 
         /// <summary>
-        /// 
+        /// Execute Action for each element
         /// </summary>
         public void Invoke()
         {
