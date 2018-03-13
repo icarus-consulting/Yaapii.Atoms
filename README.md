@@ -1,7 +1,12 @@
-# Yaapii.Atoms
+<a href="https://icarus-consult.de">
+    <img src="https://xpertify.de/wp-content/uploads/cache/images/icarus-consulting-gmbh-lueneburg-logo/icarus-consulting-gmbh-lueneburg-logo-850777872.png" alt="Icarus logo" title="Icarus" align="right" width="200" />
+	<div style="float: left"><h1>Yaapii.Atoms</h1></div>
+</a>
 
 [![Build status](https://ci.appveyor.com/api/projects/status/py42p14apauef2uy/branch/master?svg=true)](https://ci.appveyor.com/project/icarus-consulting/yaapii-atoms/branch/master)
 [![codecov](https://codecov.io/gh/icarus-consulting/Yaapii.Atoms/branch/master/graph/badge.svg)](https://codecov.io/gh/icarus-consulting/Yaapii.Atoms)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
 
 # Overview
 Object-Oriented Primitives for .NET.
@@ -10,12 +15,12 @@ This is a .NET port of the java library [Cactoos](https://github.com/yegor256/ca
 It follows all the rules suggested in the two "[Elegant Objects](https://www.amazon.de/Elegant-Objects-Yegor-Bugayenko/dp/1519166915)" books.
 
 # Table Of Contents
-- [Functions](#Functions)
-- [IO Input / Output](#IO-Input-/-Output)
-- [Lists](#Lists)
-- [Scalar](#Scalar)
-- [Text](#Text)
-- [LinQ Analogy](#LinQ-Analogy)
+- [Functions](#functions)
+- [IO Input / Output](#io-input--output)
+- [Lists](#lists)
+- [Scalar](#scalar)
+- [Text](#text)
+- [LinQ Analogy](#linq-analogy)
 
 ## Functions
 The interfaces are:
@@ -524,56 +529,56 @@ new TextOf(
 ## LinQ Analogy
 ### Standard Query Operators
 
-|LinQ                  | Yaapii.Atoms|
-|----------------------|-------------|
-|**Aggregate**         |*Not aviable yet*|
-|**All**               |<pre>var newFiltered = new Filtered&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;() { "A", "B", "C" },<br>&nbsp;&nbsp;(input) => input != "B"<br>); //newFiltered contains A & C</pre>|
-|**Any**		       |<pre>var b = new Contains&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("Hello", "my", "cat", "is", "missing"),<br>&nbsp;&nbsp;(str) => str == "cat"<br>).Value()); //b = true </pre> |
-|**AsEnumerable**      |<pre>var list = new EnumerableOf&lt;int&gt;(<br>&nbsp;&nbsp;new List&lt;int&gt; { 1, 2, 3, 4 }.GetEnumerator()<br>);</pre>|
-|**Average**           |<pre>var avg = new AvgOf(1, 2, 3, 4).AsFloat(); //avg = 2.5</pre>|
-|**Cast**              |*Not aviable yet*|
-|**Concat**            |<pre>var joined = new Joined&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&ltstring&gt;("dies", "ist"),<br>&nbsp;&nbsp;new EnumerableOf&ltstring&gt;("ein", "Test")<br>).Value(); //joined = {"dies", "ist", "ein", "Test"}</pre>|
-|**Contains**          |<pre>var b = new Contains&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("Hello", "my", "cat", "is", "missing"),<br>&nbsp;&nbsp;(str) => str == "cat"<br>).Value()); //b = true|
-|**Count**             |<pre>var length = new LengthOf&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(1, 2, 3, 4, 5)<br>).Value(); //length will be 5</pre>|
-|**DefaultIfEmpty**    |*Not aviable yet*|
-|**Distinct**          |<pre>var dis = new Distinct&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(1, 2, 3),<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(10, 2, 30)<br>).Value() // dis = {1, 2, 3, 10, 30}</pre> //actual with bug|
-|**ElementAt**         |<pre>var itm = new ItemAt&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(0,2,5),<br>&nbsp;&nbsp; 2<br>).Value() //itm = 2</pre>|
-|**ElementAtOrDefault**|<pre>var itm = new ItemAt&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;(),<br>&nbsp;&nbsp;12,<br>&nbsp;&nbsp;fallback<br>).Value() // itm = "fallback"</pre>|
-|**Empty**             |<pre>new EnmuerableOf&lt;int&gt;()</pre>|
-|**Except**            |*Not aviable yet*|
-|**First**             |<pre>var list = new EnumerableO&lt;int&gt;(1, 2, 3);<br>&nbsp;var first = new ItemAt&lt;int&gt;(list).Value();<br>&nbsp;// first = 1</pre>|
-|**FirstOrDefault**    |<pre>var itm = new ItemAt&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;(),<br>&nbsp;&nbsp;1,<br>&nbsp;&nbsp;fallback<br>).Value() // itm = "fallback"</pre>|
-|**Foreach**		   |<pre>var list = new List[];<br> new Each&lt;int&gt;(<br>&nbsp;&nbsp;(i) => lst[i] = i,<br>&nbsp;&nbsp;0,1,2<br>).Invoke(); //eachlist = {0,1,2}|
-|**GroupBy**           |*Not aviable yet*|
-|**GroupJoin**         |*Not aviable yet*|
-|**Intersect**         |*Not aviable yet*|
-|**Join**              |*Not aviable yet*|
-|**Last**              |<pre>var last = new ItemAt&lt;int&gt;(<br>&nbsp;&nbsp;new Reversed&lt;int&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;new EnumerableOf(5, 6 ,7 ,8)<br>&nbsp;&nbsp;)<br>).Value() // last = 8</pre>|
-|**LastOrDefault**     |<pre>var itm = new ItemAt&lt;string&gt;(<br>&nbsp;&nbsp;new Reversed&lt;string&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;new EnumerableOf&lt;string&gt;()<br>&nbsp;&nbsp;),<br>&nbsp;&nbsp;1,<br>&nbsp;&nbsp;fallback<br>).Value() // itm = "fallback"</pre>|
-|**LongCount**         |*Not aviable yet**|
-|**Max**               |<pre>var max = new MaxOf(22, 2.5, 35.8).AsDouble(); //max = 35.8; .AsInt() = 35</pre>|
-|**Min**               |<pre>var max = new MaxOf(22, 2.5, 35.8).AsDouble(); //max = 2.5; .AsInt() = 2</pre>|
-|**OfType**            |*Not aviable yet*|
-|**OrderBy**           |<pre>var sorted = new Sorted&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(3, 2, 10, 44, -6, 0)<br>) //sorted = {-6, 0, 2, 3, 10, 44</pre>|
-|**OrderByDescending** |<pre>var sorted = new Sorted&lt;string&gt;(<br>&nbsp;&nbsp;IReverseComparer&lt;string&gt;.Default,<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("a", "c", "hello", "dude", "Friend")<br>) //sorted = {hello, Friend, dude, c, a}</pre>|
-|**Range**             |*Not aviable yet*|
-|**Repeat**            |<pre>var repeated = new Repeated&lt;int&gt;(10,5) // repeated = {10, 10, 10, 10, 10}</pre>|
-|**Reverse**           |<pre> var reversed = new Reversed&lt;int&gt;(EnumerableOf<int>(2,3,4)); //reversed = {4,3,2}</pre>|
-|**Select**            |<pre>var selected = Mapped&lt;string,string&gt;(<br>&nbsp;&nbsp;new List&lt;string&gt;() {"One", "Two", Three"}, <br>&nbsp;&nbsp;(tStr, index) => $"{tStr}={index+1}"<br>)// selected = {"One=1", "Two=2", Three=3"}</pre>|
-|**SelectMany**        |*Not aviable yet*|
-|**SequenceEqual**     |*Not aviable yet*|
-|**Single**            |*Not aviable yet*|
-|**SingleOrDefault**   |*Not aviable yet*|
-|**Skip**              |<pre>var skipped = new Skipped&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("one", "two", "three", "four"),<br>&nbsp;&nbsp;2<br>) // skipped = {three, four}</pre>|
-|**SkipWhile**         |*Not aviable yet*|
-|**Sum**               |<pre>var sum = new SumOf(<br>&nbsp;&nbsp;1.5F, 2.5F, 3.5F<br>).AsFloat() //sum = 7.5</pre>|
-|**Take**              |<pre>var lmt = new Limited&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(0, 1, 2, 3, 4),<br>&nbsp;&nbsp;3<br>)//lmt = {0, 1, 2}</pre>|
-|**TakeWhile**         |*Not aviable yet*|
-|**ThenBy**            |*Not aviable yet*|
-|**ThenByDescending**  |*Not aviable yet*|
-|**ToArray**           |*Not aviable yet*|
-|**ToDictionary**      |<pre>var dic = new MapOf(<br>&nbsp;&nbsp;new Enumerable&lt;KeyValuePair<string,string&gt;>(<br>&nbsp;&nbsp;&nbsp;&nbsp;new KyValuePair&lt;string,string&gt;("key","value"),<br>&nbsp;&nbsp;&nbsp;&nbsp;new KyValuePair&lt;string,string&gt;("key2", "value2")<br>&nbsp;&nbsp;)<br>) // dic = {{key, value}{key2, value2}}</pre>|
-|**ToList**            |<pre>var list = new CollectionOf&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(1,2,3,4)<br>);</pre>|
-|**ToLookup**          |*Not aviable yet*|
-|**Union**             |<pre>var enu = new Distinct&lt;int&gt;(<br>&nbsp;&nbsp;new Joined&lt;int&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(1,2,3,4),<br>&nbsp;&nbsp;&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(3,4,5,6)<br>&nbsp;&nbsp;).Value()<br>).Value(); //enu ={1,2,3,4,5,6} </pre>|
-|**Where**             |<pre>var newFiltered = new Filtered&lt;string&gt;(<br>&nbsp;&nbsp;new List&lt;string&gt;() { "A", "B", "C" },<br>&nbsp;&nbsp;(input) => input != "B"<br>); //newFiltered contains A & C</pre>
+LinQ                  | Yaapii.Atoms
+----------------------|-------------
+**Aggregate**         |*Not aviable yet*
+**All**               |<pre>var newFiltered = new Filtered&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;() { "A", "B", "C" },<br>&nbsp;&nbsp;(input) => input != "B"<br>); //newFiltered contains A & C</pre>
+**Any**		       |<pre>var b = new Contains&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("Hello", "my", "cat", "is", "missing"),<br>&nbsp;&nbsp;(str) => str == "cat"<br>).Value()); //b = true </pre> 
+**AsEnumerable**      |<pre>var list = new EnumerableOf&lt;int&gt;(<br>&nbsp;&nbsp;new List&lt;int&gt; { 1, 2, 3, 4 }.GetEnumerator()<br>);</pre>
+**Average**           |<pre>var avg = new AvgOf(1, 2, 3, 4).AsFloat(); //avg = 2.5</pre>
+**Cast**              |*Not aviable yet*
+**Concat**            |<pre>var joined = new Joined&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&ltstring&gt;("dies", "ist"),<br>&nbsp;&nbsp;new EnumerableOf&ltstring&gt;("ein", "Test")<br>).Value(); //joined = {"dies", "ist", "ein", "Test"}</pre>
+**Contains**          |<pre>var b = new Contains&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("Hello", "my", "cat", "is", "missing"),<br>&nbsp;&nbsp;(str) => str == "cat"<br>).Value()); //b = true
+**Count**             |<pre>var length = new LengthOf&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(1, 2, 3, 4, 5)<br>).Value(); //length will be 5</pre>
+**DefaultIfEmpty**    |*Not aviable yet*
+**Distinct**          |<pre>var dis = new Distinct&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(1, 2, 3),<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(10, 2, 30)<br>).Value() // dis = {1, 2, 3, 10, 30}</pre> //actual with bug
+**ElementAt**         |<pre>var itm = new ItemAt&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(0,2,5),<br>&nbsp;&nbsp; 2<br>).Value() //itm = 2</pre>
+**ElementAtOrDefault**|<pre>var itm = new ItemAt&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;(),<br>&nbsp;&nbsp;12,<br>&nbsp;&nbsp;fallback<br>).Value() // itm = "fallback"</pre>
+**Empty**             |<pre>new EnmuerableOf&lt;int&gt;()</pre>
+**Except**            |*Not aviable yet*
+**First**             |<pre>var list = new EnumerableO&lt;int&gt;(1, 2, 3);<br>&nbsp;var first = new ItemAt&lt;int&gt;(list).Value();<br>&nbsp;// first = 1</pre>
+**FirstOrDefault**    |<pre>var itm = new ItemAt&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;(),<br>&nbsp;&nbsp;1,<br>&nbsp;&nbsp;fallback<br>).Value() // itm = "fallback"</pre>
+**Foreach**		   |<pre>var list = new List[];<br> new Each&lt;int&gt;(<br>&nbsp;&nbsp;(i) => lst[i] = i,<br>&nbsp;&nbsp;0,1,2<br>).Invoke(); //eachlist = {0,1,2}
+**GroupBy**           |*Not aviable yet*
+**GroupJoin**         |*Not aviable yet*
+**Intersect**         |*Not aviable yet*
+**Join**              |*Not aviable yet*
+**Last**              |<pre>var last = new ItemAt&lt;int&gt;(<br>&nbsp;&nbsp;new Reversed&lt;int&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;new EnumerableOf(5, 6 ,7 ,8)<br>&nbsp;&nbsp;)<br>).Value() // last = 8</pre>
+**LastOrDefault**     |<pre>var itm = new ItemAt&lt;string&gt;(<br>&nbsp;&nbsp;new Reversed&lt;string&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;new EnumerableOf&lt;string&gt;()<br>&nbsp;&nbsp;),<br>&nbsp;&nbsp;1,<br>&nbsp;&nbsp;fallback<br>).Value() // itm = "fallback"</pre>
+**LongCount**         |*Not aviable yet**
+**Max**               |<pre>var max = new MaxOf(22, 2.5, 35.8).AsDouble(); //max = 35.8; .AsInt() = 35</pre>|
+**Min**               |<pre>var max = new MaxOf(22, 2.5, 35.8).AsDouble(); //max = 2.5; .AsInt() = 2</pre>
+**OfType**            |*Not aviable yet*
+**OrderBy**           |<pre>var sorted = new Sorted&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(3, 2, 10, 44, -6, 0)<br>) //sorted = {-6, 0, 2, 3, 10, 44</pre>
+**OrderByDescending** |<pre>var sorted = new Sorted&lt;string&gt;(<br>&nbsp;&nbsp;IReverseComparer&lt;string&gt;.Default,<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("a", "c", "hello", "dude", "Friend")<br>) //sorted = {hello, Friend, dude, c, a}</pre>
+**Range**             |*Not aviable yet*
+**Repeat**            |<pre>var repeated = new Repeated&lt;int&gt;(10,5) // repeated = {10, 10, 10, 10, 10}</pre>
+**Reverse**           |<pre> var reversed = new Reversed&lt;int&gt;(EnumerableOf<int>(2,3,4)); //reversed = {4,3,2}</pre>
+**Select**            |<pre>var selected = Mapped&lt;string,string&gt;(<br>&nbsp;&nbsp;new List&lt;string&gt;() {"One", "Two", Three"}, <br>&nbsp;&nbsp;(tStr, index) => $"{tStr}={index+1}"<br>)// selected = {"One=1", "Two=2", Three=3"}</pre>
+**SelectMany**        |*Not aviable yet*
+**SequenceEqual**     |*Not aviable yet*
+**Single**            |*Not aviable yet*
+**SingleOrDefault**   |*Not aviable yet*
+**Skip**              |<pre>var skipped = new Skipped&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("one", "two", "three", "four"),<br>&nbsp;&nbsp;2<br>) // skipped = {three, four}</pre>
+**SkipWhile**         |*Not aviable yet*
+**Sum**               |<pre>var sum = new SumOf(<br>&nbsp;&nbsp;1.5F, 2.5F, 3.5F<br>).AsFloat() //sum = 7.5</pre>
+**Take**              |<pre>var lmt = new Limited&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(0, 1, 2, 3, 4),<br>&nbsp;&nbsp;3<br>)//lmt = {0, 1, 2}</pre>
+**TakeWhile**         |*Not aviable yet*
+**ThenBy**            |*Not aviable yet*
+**ThenByDescending**  |*Not aviable yet*
+**ToArray**           |*Not aviable yet*
+**ToDictionary**      |<pre>var dic = new MapOf(<br>&nbsp;&nbsp;new Enumerable&lt;KeyValuePair<string,string&gt;>(<br>&nbsp;&nbsp;&nbsp;&nbsp;new KyValuePair&lt;string,string&gt;("key","value"),<br>&nbsp;&nbsp;&nbsp;&nbsp;new KyValuePair&lt;string,string&gt;("key2", "value2")<br>&nbsp;&nbsp;)<br>) // dic = {{key, value}{key2, value2}}</pre>
+**ToList**            |<pre>var list = new CollectionOf&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(1,2,3,4)<br>);</pre>
+**ToLookup**          |*Not aviable yet*
+**Union**             |<pre>var enu = new Distinct&lt;int&gt;(<br>&nbsp;&nbsp;new Joined&lt;int&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(1,2,3,4),<br>&nbsp;&nbsp;&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(3,4,5,6)<br>&nbsp;&nbsp;).Value()<br>).Value(); //enu ={1,2,3,4,5,6} </pre>
+**Where**             |<pre>var newFiltered = new Filtered&lt;string&gt;(<br>&nbsp;&nbsp;new List&lt;string&gt;() { "A", "B", "C" },<br>&nbsp;&nbsp;(input) => input != "B"<br>); //newFiltered contains A & C</pre>
