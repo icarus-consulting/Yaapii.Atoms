@@ -13,14 +13,21 @@ namespace Yaapii.Atoms.Number.Tests
         public void ParsesFloat()
         {
             Assert.True(
-                new NumberOf("4673.4534", NumberFormatInfo.InvariantInfo).AsFloat() == 4673.4534F
+                new NumberOf(4673.453F).AsFloat() == 4673.453F
+            );
+        }
+        [Fact]
+        public void ParsesCultureFloat()
+        {
+            Assert.True(
+                new NumberOf(4673.453F, CultureInfo.GetCultureInfo("de-DE")).AsFloat().ToString() == "4673,453"
             );
         }
 
         [Fact]
         public void RejectsNoFloatText()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<FormatException>(() =>
                 new NumberOf("ghki").AsFloat()
             );
         }
@@ -29,14 +36,22 @@ namespace Yaapii.Atoms.Number.Tests
         public void ParsesInt()
         {
             Assert.True(
-                new NumberOf("1337").AsInt() == 1337
+                new NumberOf(1337).AsInt() == 1337
+            );
+        }
+
+        [Fact]
+        public void ParsesCultureInt()
+        {
+            Assert.True(
+                new NumberOf(1337, CultureInfo.GetCultureInfo("de-DE")).AsInt() == 1337
             );
         }
 
         [Fact]
         public void RejectsNoIntText()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<FormatException>(() =>
                 new NumberOf("ghki").AsInt()
             );
         }
@@ -45,14 +60,22 @@ namespace Yaapii.Atoms.Number.Tests
         public void ParsesDouble()
         {
             Assert.True(
-                new NumberOf("843.23969274001", NumberFormatInfo.InvariantInfo).AsDouble() == 843.23969274001D
+                new NumberOf(843.23969274001D).AsDouble() == 843.23969274001D
+            );
+        }
+
+        [Fact]
+        public void ParsesCultureDouble()
+        {
+            Assert.True(
+                new NumberOf(843.23969274001D, CultureInfo.GetCultureInfo("de-DE")).AsDouble().ToString() == "843,23969274001"
             );
         }
 
         [Fact]
         public void RejectsNoDoubleText()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<FormatException>(() =>
                 new NumberOf("ghki").AsDouble()
             );
         }
@@ -61,14 +84,22 @@ namespace Yaapii.Atoms.Number.Tests
         public void ParsesLong()
         {
             Assert.True(
-                new NumberOf("139807814253711").AsLong() == 139807814253711L
+                new NumberOf(139807814253711).AsLong() == 139807814253711L
+            );
+        }
+
+        [Fact]
+        public void ParsesCultureLong()
+        {
+            Assert.True(
+                new NumberOf(139807814253711, CultureInfo.GetCultureInfo("de-DE")).AsLong() == 139807814253711L
             );
         }
 
         [Fact]
         public void RejectsNoLongText()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<FormatException>(() =>
                 new NumberOf("ghki").AsLong()
             );
         }

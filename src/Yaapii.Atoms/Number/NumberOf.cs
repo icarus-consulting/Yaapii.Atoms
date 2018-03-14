@@ -47,14 +47,32 @@ namespace Yaapii.Atoms.Number
         /// <param name="blockSeperator">seperator for blocks, for example 1.000</param>
         /// <param name="decimalSeperator">seperator for floating point numbers, for example 16,235 </param>
         public NumberOf(string text, string decimalSeperator, string blockSeperator) : this(
-            new TextOf(text),
-            new ScalarOf<IFormatProvider>(() =>
+            new ScalarOf<long>(() => Convert.ToInt64(
+                text,
                 new NumberFormatInfo()
                 {
                     NumberDecimalSeparator = decimalSeperator,
                     NumberGroupSeparator = blockSeperator
-                }
-            )
+                })),
+            new ScalarOf<int>(() => Convert.ToInt32(
+                text, 
+                new NumberFormatInfo()
+                {
+                    NumberDecimalSeparator = decimalSeperator,
+                    NumberGroupSeparator = blockSeperator
+                })),
+            new ScalarOf<float>(() => (float)Convert.ToDecimal(text, new NumberFormatInfo()
+                {
+                    NumberDecimalSeparator = decimalSeperator,
+                    NumberGroupSeparator = blockSeperator
+                })),
+            new ScalarOf<double>(() => Convert.ToDouble(
+                text, 
+                new NumberFormatInfo()
+                {
+                    NumberDecimalSeparator = decimalSeperator,
+                    NumberGroupSeparator = blockSeperator
+                }))
         )
         { }
 
@@ -63,10 +81,10 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="text">text to parse</param>
         public NumberOf(string text) : this(
-            new TextOf(text),
-            new ScalarOf<IFormatProvider>(
-                () => NumberFormatInfo.CurrentInfo
-            )
+            new ScalarOf<long>(() => Convert.ToInt64(text, CultureInfo.InvariantCulture)),
+            new ScalarOf<int>(() => Convert.ToInt32(text, CultureInfo.InvariantCulture)),
+            new ScalarOf<float>(() => (float)Convert.ToDecimal(text, CultureInfo.InvariantCulture)),
+            new ScalarOf<double>(() => Convert.ToDouble(text, CultureInfo.InvariantCulture))
         )
         { }
 
@@ -76,8 +94,10 @@ namespace Yaapii.Atoms.Number
         /// <param name="text">text to parse</param>
         /// <param name="provider">a number format provider</param>
         public NumberOf(string text, IFormatProvider provider) : this(
-            new TextOf(text),
-            new ScalarOf<IFormatProvider>(provider)
+            new ScalarOf<long>(() => Convert.ToInt64(text, provider)),
+            new ScalarOf<int>(() => Convert.ToInt32(text, provider)),
+            new ScalarOf<float>(() => (float)Convert.ToDecimal(text, provider)),
+            new ScalarOf<double>(() => Convert.ToDouble(text, provider))
         )
         { }
 
@@ -88,12 +108,24 @@ namespace Yaapii.Atoms.Number
         /// <param name="integer">The integer</param>
         /// <param name="provider">a number format provider</param>
         public NumberOf(int integer, IFormatProvider provider) : this(
-                new TextOf(
-                    integer
-                ),
-                new ScalarOf<IFormatProvider>(
-                    provider)
-                )
+            new ScalarOf<long>(() => Convert.ToInt64(integer, provider)),
+            new ScalarOf<int>(() => Convert.ToInt32(integer, provider)),
+            new ScalarOf<float>(() => (float)Convert.ToDecimal(integer, provider)),
+            new ScalarOf<double>(() => Convert.ToDouble(integer, provider))
+            )
+        { }
+
+        /// <summary>
+        /// A <see cref="int"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="integer">The integer</param>
+        public NumberOf(int integer) : this(
+            new ScalarOf<long>(() => Convert.ToInt64(integer, CultureInfo.InvariantCulture)),
+            new ScalarOf<int>(() => Convert.ToInt32(integer, CultureInfo.InvariantCulture)),
+            new ScalarOf<float>(() => (float)Convert.ToDecimal(integer, CultureInfo.InvariantCulture)),
+            new ScalarOf<double>(() => Convert.ToDouble(integer, CultureInfo.InvariantCulture))
+            )
+           
         { }
 
         /// <summary>
@@ -102,54 +134,87 @@ namespace Yaapii.Atoms.Number
         /// <param name="dbl">the double</param>
         /// <param name="provider">a number format provider</param>
         public NumberOf(double dbl, IFormatProvider provider) : this(
-                new TextOf(
-                    dbl,
-                    CultureInfo.InvariantCulture
-                ),
-                new ScalarOf<IFormatProvider>(
-                    provider)
-                )
+            new ScalarOf<long>(() => Convert.ToInt64(dbl, provider)),
+            new ScalarOf<int>(() => Convert.ToInt32(dbl, provider)),
+            new ScalarOf<float>(() => (float)Convert.ToDecimal(dbl, provider)),
+            new ScalarOf<double>(() => Convert.ToDouble(dbl, provider))
+            )
         { }
+
+        /// <summary>
+        /// A <see cref="double"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="dbl">the double</param>
+        public NumberOf(double dbl) : this(
+            new ScalarOf<long>(() => Convert.ToInt64(dbl, CultureInfo.InvariantCulture)),
+            new ScalarOf<int>(() => Convert.ToInt32(dbl, CultureInfo.InvariantCulture)),
+            new ScalarOf<float>(() => (float)Convert.ToDecimal(dbl, CultureInfo.InvariantCulture)),
+            new ScalarOf<double>(() => Convert.ToDouble(dbl, CultureInfo.InvariantCulture))
+           )
+        { }
+
         /// <summary>
         /// A <see cref="long"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="lng">the long</param>
         /// <param name="provider">a number format provider</param>
         public NumberOf(long lng, IFormatProvider provider) : this(
-                new TextOf(
-                    lng
-                ),
-                new ScalarOf<IFormatProvider>(
-                    provider)
-                )
+            new ScalarOf<long>(() => Convert.ToInt64(lng, provider)),
+            new ScalarOf<int>(() => Convert.ToInt32(lng, provider)),
+            new ScalarOf<float>(() => (float)Convert.ToDecimal(lng, provider)),
+            new ScalarOf<double>(() => Convert.ToDouble(lng, provider)))
         { }
+
+        /// <summary>
+        /// A <see cref="long"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="lng">the long</param>
+        public NumberOf(long lng) : this(
+            new ScalarOf<long>(() => Convert.ToInt64(lng, CultureInfo.InvariantCulture)),
+            new ScalarOf<int>(() => Convert.ToInt32(lng, CultureInfo.InvariantCulture)),
+            new ScalarOf<float>(() => (float)Convert.ToDecimal(lng, CultureInfo.InvariantCulture)),
+            new ScalarOf<double>(() => Convert.ToDouble(lng, CultureInfo.InvariantCulture))
+            )
+        { }
+
         /// <summary>
         /// A <see cref="int"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="flt">The float</param>
         /// <param name="provider">a number format provider</param>
         public NumberOf(float flt, IFormatProvider provider) : this(
-                new TextOf(
-                    flt,
-                    CultureInfo.InvariantCulture
-                ),
-                new ScalarOf<IFormatProvider>(
-                    provider)
-                )
+            new ScalarOf<long>(() => Convert.ToInt64(flt, provider)),
+            new ScalarOf<int>(() => Convert.ToInt32(flt, provider)),
+            new ScalarOf<float>(() => (float)Convert.ToDecimal(flt, provider)),
+            new ScalarOf<double>(() => Convert.ToDouble(flt, provider)))
         { }
-      
+
+
+        /// <summary>
+        /// A <see cref="int"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="flt">The float</param>
+        public NumberOf(float flt) : this(
+            new ScalarOf<long>(() => Convert.ToInt64(flt, CultureInfo.InvariantCulture)),
+            new ScalarOf<int>(() => Convert.ToInt32(flt, CultureInfo.InvariantCulture)),
+            new ScalarOf<float>(() => (float)Convert.ToDecimal(flt, CultureInfo.InvariantCulture)),
+            new ScalarOf<double>(() => Convert.ToDouble(flt, CultureInfo.InvariantCulture))
+           )
+        { }
 
         /// <summary>
         /// A <see cref="IText"/> as a <see cref="INumber"/>
         /// </summary>
-        /// <param name="text">text to parse</param>
-        /// <param name="numberFormat">a number format provider</param>
-        public NumberOf(IText text, IScalar<IFormatProvider> numberFormat)
+        /// <param name="lng"></param>
+        /// <param name="itg"></param>
+        /// <param name="flt"></param>
+        /// <param name="dbl"></param>
+        public NumberOf(IScalar<long> lng, IScalar<int> itg, IScalar<float> flt, IScalar<double> dbl)
         {
-            _lng = new StickyScalar<long>(() => { try { return Convert.ToInt64(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
-            _itg = new StickyScalar<int>(() => { try { return Convert.ToInt32(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
-            _flt = new StickyScalar<float>(() => { try { return Convert.ToSingle(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
-            _dbl = new StickyScalar<double>(() => { try { return Convert.ToDouble(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
+            _lng = lng; //new StickyScalar<long>(() => { try { return Convert.ToInt64(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
+            _itg = itg; //new StickyScalar<int>(() => { try { return Convert.ToInt32(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
+            _flt = flt; //new StickyScalar<float>(() => { try { return Convert.ToSingle(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
+            _dbl = dbl; //new StickyScalar<double>(() => { try { return Convert.ToDouble(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
         }
 
         /// <summary>
