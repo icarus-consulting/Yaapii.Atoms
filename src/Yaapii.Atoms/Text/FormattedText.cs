@@ -24,6 +24,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Text
 {
@@ -34,16 +36,18 @@ namespace Yaapii.Atoms.Text
     public sealed class FormattedText : IText
     {
         private readonly IText _pattern;
-        private readonly object[] _args;
+        private readonly IScalar<object[]> _args;
         private readonly CultureInfo _locale;
 
+
+        
         /// <summary>
         /// A <see cref="IText"/> formatted with arguments.
         /// </summary>
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="arguments">arguments to apply</param>
         public FormattedText(String ptn, params object[] arguments) : this(
-            new TextOf(ptn), CultureInfo.InvariantCulture, arguments)
+            new TextOf(ptn), CultureInfo.InvariantCulture, new ScalarOf<object[]>(arguments))
         { }
 
         /// <summary>
@@ -52,7 +56,21 @@ namespace Yaapii.Atoms.Text
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="arguments">arguments to apply</param>
         public FormattedText(IText ptn, params object[] arguments) : this(
-            ptn, CultureInfo.InvariantCulture, arguments)
+            ptn, CultureInfo.InvariantCulture, new ScalarOf<object[]>(arguments)
+            )
+        { }
+
+
+        /// <summary>
+        /// A <see cref="IText"/> formatted with arguments.
+        /// </summary>
+        /// <param name="ptn">pattern</param>
+        /// <param name="local">CultureInfo</param>
+        /// <param name="arguments">arguments to apply</param>
+
+        public FormattedText(IText ptn, CultureInfo local, params object[] arguments) : this(
+            ptn, local, new ScalarOf<object[]>(arguments)
+            )
         { }
 
         /// <summary>
@@ -62,7 +80,42 @@ namespace Yaapii.Atoms.Text
         /// <param name="locale">a specific culture</param>
         /// <param name="arguments">arguments to apply</param>
         public FormattedText(String ptn, CultureInfo locale, params object[] arguments) : this(
-            new TextOf(ptn), locale, arguments)
+            new TextOf(ptn), locale, new ScalarOf<object[]>(arguments))
+        { }
+       
+        /// <summary>
+        ///  A <see cref="IText"/> formatted with arguments.
+        /// </summary>
+        /// <param name="ptn">pattern to put arguments in</param>
+        /// <param name="arguments">arguments as <see cref="IText"/> to apply</param>
+        public FormattedText(string ptn, params IText[] arguments) : this(new TextOf(ptn), CultureInfo.InvariantCulture, new ScalarOf<object[]>(
+           () =>
+           {
+               object[] strings = new object[new LengthOf(arguments).Value()];
+               for (int i = 0; i < arguments.Length; i++)
+               {
+                   strings[i] = arguments[i].AsString();
+               }
+               return strings;
+           }))
+        { }
+        /// <summary>
+        ///  A <see cref="IText"/> formatted with arguments.
+        /// </summary>
+        /// <param name="ptn">pattern to put arguments in</param>
+        /// <param name="locale">a specific culture</param>
+        /// <param name="arguments">arguments as <see cref="IText"/> to apply</param>
+
+        public FormattedText(string ptn, CultureInfo locale, params IText[] arguments) : this(new TextOf(ptn), locale, new ScalarOf<object[]>(
+            () =>
+            {
+                object[] strings = new object[new LengthOf(arguments).Value()];
+                for (int i = 0; i < arguments.Length; i++)
+                {
+                    strings[i] = arguments[i].AsString();
+                }
+                return strings;
+            }))
         { }
 
         /// <summary>
@@ -74,7 +127,7 @@ namespace Yaapii.Atoms.Text
         public FormattedText(
             IText ptn,
             CultureInfo locale,
-            object[] arguments
+            IScalar<object[]> arguments
         )
         {
             this._pattern = ptn;
@@ -88,7 +141,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>the content as a string</returns>
         public String AsString()
         {
-            return String.Format(this._locale, _pattern.AsString(), _args);
+            return String.Format(this._locale, _pattern.AsString(), _args.Value());
         }
 
         /// <summary>
