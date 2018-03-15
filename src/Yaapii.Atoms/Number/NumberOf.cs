@@ -37,9 +37,6 @@ namespace Yaapii.Atoms.Number
         private readonly IScalar<int> _itg;
         private readonly IScalar<double> _dbl;
 
-
-
-
         /// <summary>
         /// A <see cref="IText"/> as a <see cref="INumber"/>
         /// </summary>
@@ -55,19 +52,19 @@ namespace Yaapii.Atoms.Number
                     NumberGroupSeparator = blockSeperator
                 })),
             new ScalarOf<int>(() => Convert.ToInt32(
-                text, 
+                text,
                 new NumberFormatInfo()
                 {
                     NumberDecimalSeparator = decimalSeperator,
                     NumberGroupSeparator = blockSeperator
                 })),
             new ScalarOf<float>(() => (float)Convert.ToDecimal(text, new NumberFormatInfo()
-                {
-                    NumberDecimalSeparator = decimalSeperator,
-                    NumberGroupSeparator = blockSeperator
-                })),
+            {
+                NumberDecimalSeparator = decimalSeperator,
+                NumberGroupSeparator = blockSeperator
+            })),
             new ScalarOf<double>(() => Convert.ToDouble(
-                text, 
+                text,
                 new NumberFormatInfo()
                 {
                     NumberDecimalSeparator = decimalSeperator,
@@ -77,28 +74,75 @@ namespace Yaapii.Atoms.Number
         { }
 
         /// <summary>
-        /// A <see cref="IText"/> as a <see cref="INumber"/>
+        /// A <see cref="int"/> as a <see cref="INumber"/>
         /// </summary>
-        /// <param name="text">text to parse</param>
-        public NumberOf(string text) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(text, CultureInfo.InvariantCulture)),
-            new ScalarOf<int>(() => Convert.ToInt32(text, CultureInfo.InvariantCulture)),
-            new ScalarOf<float>(() => (float)Convert.ToDecimal(text, CultureInfo.InvariantCulture)),
-            new ScalarOf<double>(() => Convert.ToDouble(text, CultureInfo.InvariantCulture))
-        )
+        /// <param name="str">The string</param>
+        public NumberOf(string str) : this(str, new ScalarOf<IFormatProvider>(() => CultureInfo.InvariantCulture))
         { }
 
         /// <summary>
-        /// A <see cref="IText"/> as a <see cref="INumber"/>
+        /// A <see cref="int"/> as a <see cref="INumber"/>
         /// </summary>
-        /// <param name="text">text to parse</param>
+        /// <param name="str">The string</param>
         /// <param name="provider">a number format provider</param>
-        public NumberOf(string text, IFormatProvider provider) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(text, provider)),
-            new ScalarOf<int>(() => Convert.ToInt32(text, provider)),
-            new ScalarOf<float>(() => (float)Convert.ToDecimal(text, provider)),
-            new ScalarOf<double>(() => Convert.ToDouble(text, provider))
-        )
+        public NumberOf(string str, IFormatProvider provider) : this(str, new ScalarOf<IFormatProvider>(provider))
+        { }
+
+        /// <summary>
+        /// A <see cref="string"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="str">The string</param>
+        /// <param name="provider">a number format provider</param>
+        public NumberOf(string str, IScalar<IFormatProvider> provider) : this(
+            new ScalarOf<long>(
+                () =>
+                {
+                    try
+                    {
+                        return Convert.ToInt64(str, provider.Value());
+                    }
+                    catch (FormatException)
+                    {
+                        throw new ArgumentException(new FormattedText("'{0}' is not a number.", str).AsString());
+                    }
+                }),
+            new ScalarOf<int>(
+                () =>
+                {
+                    try
+                    {
+                        return Convert.ToInt32(str, provider.Value());
+                    }
+                    catch (FormatException)
+                    {
+                        throw new ArgumentException(new FormattedText("'{0}' is not a number.", str).AsString());
+                    }
+                }),
+            new ScalarOf<float>(
+                () =>
+                {
+                    try
+                    {
+                        return Convert.ToSingle(str, provider.Value());
+                    }
+                    catch (FormatException)
+                    {
+                        throw new ArgumentException(new FormattedText("'{0}' is not a number.", str).AsString());
+                    }
+                }),
+            new ScalarOf<double>(
+                () =>
+                {
+                    try
+                    {
+                        return Convert.ToDouble(str, provider.Value());
+                    }
+                    catch (FormatException)
+                    {
+                        throw new ArgumentException(new FormattedText("'{0}' is not a number.", str).AsString());
+                    }
+                })
+            )
         { }
 
 
@@ -106,100 +150,112 @@ namespace Yaapii.Atoms.Number
         /// A <see cref="int"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="integer">The integer</param>
-        /// <param name="provider">a number format provider</param>
-        public NumberOf(int integer, IFormatProvider provider) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(integer, provider)),
-            new ScalarOf<int>(() => Convert.ToInt32(integer, provider)),
-            new ScalarOf<float>(() => (float)Convert.ToDecimal(integer, provider)),
-            new ScalarOf<double>(() => Convert.ToDouble(integer, provider))
-            )
+        public NumberOf(int integer) : this(integer, new ScalarOf<IFormatProvider>(() => CultureInfo.InvariantCulture))
         { }
 
         /// <summary>
         /// A <see cref="int"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="integer">The integer</param>
-        public NumberOf(int integer) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(integer, CultureInfo.InvariantCulture)),
-            new ScalarOf<int>(() => Convert.ToInt32(integer, CultureInfo.InvariantCulture)),
-            new ScalarOf<float>(() => (float)Convert.ToDecimal(integer, CultureInfo.InvariantCulture)),
-            new ScalarOf<double>(() => Convert.ToDouble(integer, CultureInfo.InvariantCulture))
-            )
-           
+        /// <param name="provider">a number format provider</param>
+        public NumberOf(int integer, IFormatProvider provider) : this(integer, new ScalarOf<IFormatProvider>(provider))
         { }
 
         /// <summary>
-        /// A <see cref="double"/> as a <see cref="INumber"/>
+        /// A <see cref="int"/> as a <see cref="INumber"/>
         /// </summary>
-        /// <param name="dbl">the double</param>
+        /// <param name="integer">The integer</param>
         /// <param name="provider">a number format provider</param>
-        public NumberOf(double dbl, IFormatProvider provider) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(dbl, provider)),
-            new ScalarOf<int>(() => Convert.ToInt32(dbl, provider)),
-            new ScalarOf<float>(() => (float)Convert.ToDecimal(dbl, provider)),
-            new ScalarOf<double>(() => Convert.ToDouble(dbl, provider))
+        public NumberOf(int integer, IScalar<IFormatProvider> provider) : this(
+            new ScalarOf<long>(() => Convert.ToInt64(integer, provider.Value())),
+            new ScalarOf<int>(() => Convert.ToInt32(integer, provider.Value())),
+            new ScalarOf<float>(() => Convert.ToSingle(integer, provider.Value())),
+            new ScalarOf<double>(() => Convert.ToDouble(integer, provider.Value()))
             )
         { }
 
         /// <summary>
         /// A <see cref="double"/> as a <see cref="INumber"/>
         /// </summary>
-        /// <param name="dbl">the double</param>
-        public NumberOf(double dbl) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(dbl, CultureInfo.InvariantCulture)),
-            new ScalarOf<int>(() => Convert.ToInt32(dbl, CultureInfo.InvariantCulture)),
-            new ScalarOf<float>(() => (float)Convert.ToDecimal(dbl, CultureInfo.InvariantCulture)),
-            new ScalarOf<double>(() => Convert.ToDouble(dbl, CultureInfo.InvariantCulture))
-           )
+        /// <param name="dbl">The float</param>
+        public NumberOf(double dbl) : this(dbl, new ScalarOf<IFormatProvider>(() => CultureInfo.InvariantCulture))
         { }
 
         /// <summary>
-        /// A <see cref="long"/> as a <see cref="INumber"/>
+        /// A <see cref="double"/> as a <see cref="INumber"/>
         /// </summary>
-        /// <param name="lng">the long</param>
+        /// <param name="dbl">The float</param>
         /// <param name="provider">a number format provider</param>
-        public NumberOf(long lng, IFormatProvider provider) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(lng, provider)),
-            new ScalarOf<int>(() => Convert.ToInt32(lng, provider)),
-            new ScalarOf<float>(() => (float)Convert.ToDecimal(lng, provider)),
-            new ScalarOf<double>(() => Convert.ToDouble(lng, provider)))
+        public NumberOf(double dbl, IFormatProvider provider) : this(dbl, new ScalarOf<IFormatProvider>(provider))
         { }
 
         /// <summary>
-        /// A <see cref="long"/> as a <see cref="INumber"/>
+        /// A <see cref="double"/> as a <see cref="INumber"/>
         /// </summary>
-        /// <param name="lng">the long</param>
-        public NumberOf(long lng) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(lng, CultureInfo.InvariantCulture)),
-            new ScalarOf<int>(() => Convert.ToInt32(lng, CultureInfo.InvariantCulture)),
-            new ScalarOf<float>(() => (float)Convert.ToDecimal(lng, CultureInfo.InvariantCulture)),
-            new ScalarOf<double>(() => Convert.ToDouble(lng, CultureInfo.InvariantCulture))
+        /// <param name="dbl">The double</param>
+        /// <param name="provider">a number format provider</param>
+        public NumberOf(double dbl, IScalar<IFormatProvider> provider) : this(
+            new ScalarOf<long>(() => Convert.ToInt64(dbl, provider.Value())),
+            new ScalarOf<int>(() => Convert.ToInt32(dbl, provider.Value())),
+            new ScalarOf<float>(() => Convert.ToSingle(dbl, provider.Value())),
+            new ScalarOf<double>(() => Convert.ToDouble(dbl, provider.Value()))
             )
         { }
 
         /// <summary>
-        /// A <see cref="int"/> as a <see cref="INumber"/>
+        /// A <see cref="long"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="lng">The long</param>
+        public NumberOf(long lng) : this(lng, new ScalarOf<IFormatProvider>(() => CultureInfo.InvariantCulture))
+        { }
+
+        /// <summary>
+        /// A <see cref="long"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="lng">The long</param>
+        /// <param name="provider">a number format provider</param>
+        public NumberOf(long lng, IFormatProvider provider) : this(lng, new ScalarOf<IFormatProvider>(provider))
+        { }
+
+        /// <summary>
+        /// A <see cref="long"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="lng">The long</param>
+        /// <param name="provider">a number format provider</param>
+        public NumberOf(long lng, IScalar<IFormatProvider> provider) : this(
+            new ScalarOf<long>(() => Convert.ToInt64(lng, provider.Value())),
+            new ScalarOf<int>(() => Convert.ToInt32(lng, provider.Value())),
+            new ScalarOf<float>(() => Convert.ToSingle(lng, provider.Value())),
+            new ScalarOf<double>(() => Convert.ToDouble(lng, provider.Value()))
+            )
+        { }
+
+        /// <summary>
+        /// A <see cref="float"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="flt">The float</param>
+        public NumberOf(float flt) : this(flt, new ScalarOf<IFormatProvider>(() => CultureInfo.InvariantCulture))
+        { }
+
+        /// <summary>
+        /// A <see cref="float"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="flt">The float</param>
         /// <param name="provider">a number format provider</param>
-        public NumberOf(float flt, IFormatProvider provider) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(flt, provider)),
-            new ScalarOf<int>(() => Convert.ToInt32(flt, provider)),
-            new ScalarOf<float>(() => (float)Convert.ToDecimal(flt, provider)),
-            new ScalarOf<double>(() => Convert.ToDouble(flt, provider)))
+        public NumberOf(float flt, IFormatProvider provider) : this(flt, new ScalarOf<IFormatProvider>(provider))
         { }
 
-
         /// <summary>
-        /// A <see cref="int"/> as a <see cref="INumber"/>
+        /// A <see cref="float"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="flt">The float</param>
-        public NumberOf(float flt) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(flt, CultureInfo.InvariantCulture)),
-            new ScalarOf<int>(() => Convert.ToInt32(flt, CultureInfo.InvariantCulture)),
-            new ScalarOf<float>(() => (float)Convert.ToDecimal(flt, CultureInfo.InvariantCulture)),
-            new ScalarOf<double>(() => Convert.ToDouble(flt, CultureInfo.InvariantCulture))
-           )
+        /// <param name="provider">a number format provider</param>
+        public NumberOf(float flt, IScalar<IFormatProvider> provider) : this(
+            new ScalarOf<long>(() => Convert.ToInt64(flt, provider.Value())),
+            new ScalarOf<int>(() => Convert.ToInt32(flt, provider.Value())),
+            new ScalarOf<float>(() => Convert.ToSingle(flt, provider.Value())),
+            new ScalarOf<double>(() => Convert.ToDouble(flt, provider.Value()))
+            )
         { }
 
         /// <summary>

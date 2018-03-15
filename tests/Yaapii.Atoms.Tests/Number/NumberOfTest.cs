@@ -27,7 +27,7 @@ namespace Yaapii.Atoms.Number.Tests
         [Fact]
         public void RejectsNoFloatText()
         {
-            Assert.Throws<FormatException>(() =>
+            Assert.Throws<ArgumentException>(() =>
                 new NumberOf("ghki").AsFloat()
             );
         }
