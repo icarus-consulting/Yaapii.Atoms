@@ -45,5 +45,16 @@ namespace Yaapii.Atoms.Tests.Enumerable
                     )
                 ).Value() == 0);
         }
+
+        [Fact]
+        public void DoubleRunDistinct()
+        {
+            var dst =
+                new Distinct<string>(
+                    new EnumerableOf<string>("test", "test")
+                );
+            Assert.True(
+                new LengthOf(dst).Value() == new LengthOf(dst).Value());
+        }
     }
 }

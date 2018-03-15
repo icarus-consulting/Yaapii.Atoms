@@ -50,8 +50,12 @@ namespace Yaapii.Atoms.Enumerator
         {
             //skip all entries that are already known
             SkipKnown();
-
-            return this._buffer.Count > 0;
+            bool cnt = _buffer.Count > 0;
+            if (!cnt)
+            {
+                this.Reset();
+            }
+            return cnt;
         }
 
         /// <summary>
@@ -71,7 +75,7 @@ namespace Yaapii.Atoms.Enumerator
         {
             while (this._buffer.Count > 0)
             {
-                while(this._buffer.Count > 0 && !this._buffer.Peek().MoveNext())
+                while (this._buffer.Count > 0 && !this._buffer.Peek().MoveNext())
                 {
                     this._buffer.Dequeue();
                 }
