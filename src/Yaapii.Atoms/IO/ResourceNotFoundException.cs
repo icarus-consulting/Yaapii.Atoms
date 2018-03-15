@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.IO.Error
+namespace Yaapii.Atoms.IO.Error
 {
     /// <summary>
     /// When a resource cannot be found.
