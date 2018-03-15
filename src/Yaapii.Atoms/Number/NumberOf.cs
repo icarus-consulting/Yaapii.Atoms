@@ -267,10 +267,10 @@ namespace Yaapii.Atoms.Number
         /// <param name="dbl"></param>
         public NumberOf(IScalar<long> lng, IScalar<int> itg, IScalar<float> flt, IScalar<double> dbl)
         {
-            _lng = lng; //new StickyScalar<long>(() => { try { return Convert.ToInt64(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
-            _itg = itg; //new StickyScalar<int>(() => { try { return Convert.ToInt32(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
-            _flt = flt; //new StickyScalar<float>(() => { try { return Convert.ToSingle(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
-            _dbl = dbl; //new StickyScalar<double>(() => { try { return Convert.ToDouble(text.AsString(), numberFormat.Value()); } catch (FormatException) { throw ArgError(text); } });
+            _lng = lng;
+            _itg = itg;
+            _flt = flt;
+            _dbl = dbl;
         }
 
         /// <summary>
