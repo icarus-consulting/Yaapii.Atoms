@@ -532,8 +532,8 @@ new TextOf(
 LinQ                  | Yaapii.Atoms
 ----------------------|-------------
 **Aggregate**         |*Not aviable yet*
-**All**               |<pre>var newFiltered = new Filtered&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;() { "A", "B", "C" },<br>&nbsp;&nbsp;(input) => input != "B"<br>); //newFiltered contains A & C</pre>
-**Any**		       |<pre>var b = new Contains&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("Hello", "my", "cat", "is", "missing"),<br>&nbsp;&nbsp;(str) => str == "cat"<br>).Value()); //b = true </pre> 
+**All**               | And&lt;T&gt; <!--pre>var allResult = new And&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;() { "A", "B", "C" },<br>&nbsp;&nbsp;(input) => input != "B"<br>); //newFiltered contains A & C</pre-->
+**Any**		       |Or&lt;T&gt;<!--pre>var b = new Contains&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("Hello", "my", "cat", "is", "missing"),<br>&nbsp;&nbsp;(str) => str == "cat"<br>).Value()); //b = true </pre--> 
 **AsEnumerable**      |<pre>var list = new EnumerableOf&lt;int&gt;(<br>&nbsp;&nbsp;new List&lt;int&gt; { 1, 2, 3, 4 }.GetEnumerator()<br>);</pre>
 **Average**           |<pre>var avg = new AvgOf(1, 2, 3, 4).AsFloat(); //avg = 2.5</pre>
 **Cast**              |*Not aviable yet*
