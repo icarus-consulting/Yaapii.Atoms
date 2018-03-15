@@ -21,12 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Text;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 namespace Yaapii.Atoms.Text.Tests
@@ -85,6 +81,18 @@ namespace Yaapii.Atoms.Text.Tests
                 ).AsString() == "1234567890,0",
                 "Can't format a text with Locale");
         }
+
+        [Fact]
+        public void FormatsWithstringAndText()
+        {
+            Assert.True(
+                new FormattedText(
+                    "{0} is a {1} test",
+                    new TextOf("This"),
+                    new TextOf("FormattedText")
+                ).AsString() == "This is a FormattedText test"
+            );
+                    
+        }
     }
 }
-#pragma warning restore MaxPublicMethodCount // a public methods count maximum
