@@ -68,7 +68,7 @@ namespace Yaapii.Atoms.Number.Tests
         public void ParsesCultureDouble()
         {
             Assert.True(
-                new NumberOf(843.23969274001D, CultureInfo.GetCultureInfo("de-DE")).AsDouble().ToString() == "843,23969274001"
+                new NumberOf(843.23969274001D, CultureInfo.GetCultureInfo("de-DE")).AsDouble().ToString(CultureInfo.GetCultureInfo("de-DE")) == "843,23969274001"
             );
         }
 
