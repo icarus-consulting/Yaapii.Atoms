@@ -145,60 +145,27 @@ namespace Yaapii.Atoms.Number
             )
         { }
 
-
         /// <summary>
         /// A <see cref="int"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="integer">The integer</param>
-        public NumberOf(int integer) : this(integer, new ScalarOf<IFormatProvider>(() => CultureInfo.InvariantCulture))
-        { }
-
-        /// <summary>
-        /// A <see cref="int"/> as a <see cref="INumber"/>
-        /// </summary>
-        /// <param name="integer">The integer</param>
-        /// <param name="provider">a number format provider</param>
-        public NumberOf(int integer, IFormatProvider provider) : this(integer, new ScalarOf<IFormatProvider>(provider))
-        { }
-
-        /// <summary>
-        /// A <see cref="int"/> as a <see cref="INumber"/>
-        /// </summary>
-        /// <param name="integer">The integer</param>
-        /// <param name="provider">a number format provider</param>
-        public NumberOf(int integer, IScalar<IFormatProvider> provider) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(integer, provider.Value())),
-            new ScalarOf<int>(() => Convert.ToInt32(integer, provider.Value())),
-            new ScalarOf<float>(() => Convert.ToSingle(integer, provider.Value())),
-            new ScalarOf<double>(() => Convert.ToDouble(integer, provider.Value()))
-            )
-        { }
-
-        /// <summary>
-        /// A <see cref="double"/> as a <see cref="INumber"/>
-        /// </summary>
-        /// <param name="dbl">The float</param>
-        public NumberOf(double dbl) : this(dbl, new ScalarOf<IFormatProvider>(() => CultureInfo.InvariantCulture))
-        { }
-
-        /// <summary>
-        /// A <see cref="double"/> as a <see cref="INumber"/>
-        /// </summary>
-        /// <param name="dbl">The float</param>
-        /// <param name="provider">a number format provider</param>
-        public NumberOf(double dbl, IFormatProvider provider) : this(dbl, new ScalarOf<IFormatProvider>(provider))
+        public NumberOf(int integer) : this(
+            new ScalarOf<long>(() => Convert.ToInt64(integer)),
+            new ScalarOf<int>(integer),
+            new ScalarOf<float>(() => Convert.ToSingle(integer)),
+            new ScalarOf<double>(() => Convert.ToDouble(integer))
+        )
         { }
 
         /// <summary>
         /// A <see cref="double"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="dbl">The double</param>
-        /// <param name="provider">a number format provider</param>
-        public NumberOf(double dbl, IScalar<IFormatProvider> provider) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(dbl, provider.Value())),
-            new ScalarOf<int>(() => Convert.ToInt32(dbl, provider.Value())),
-            new ScalarOf<float>(() => Convert.ToSingle(dbl, provider.Value())),
-            new ScalarOf<double>(() => Convert.ToDouble(dbl, provider.Value()))
+        public NumberOf(double dbl) : this(
+            new ScalarOf<long>(() => Convert.ToInt64(dbl)),
+            new ScalarOf<int>(() => Convert.ToInt32(dbl)),
+            new ScalarOf<float>(() => Convert.ToSingle(dbl)),
+            new ScalarOf<double>(dbl)
             )
         { }
 
@@ -206,27 +173,11 @@ namespace Yaapii.Atoms.Number
         /// A <see cref="long"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="lng">The long</param>
-        public NumberOf(long lng) : this(lng, new ScalarOf<IFormatProvider>(() => CultureInfo.InvariantCulture))
-        { }
-
-        /// <summary>
-        /// A <see cref="long"/> as a <see cref="INumber"/>
-        /// </summary>
-        /// <param name="lng">The long</param>
-        /// <param name="provider">a number format provider</param>
-        public NumberOf(long lng, IFormatProvider provider) : this(lng, new ScalarOf<IFormatProvider>(provider))
-        { }
-
-        /// <summary>
-        /// A <see cref="long"/> as a <see cref="INumber"/>
-        /// </summary>
-        /// <param name="lng">The long</param>
-        /// <param name="provider">a number format provider</param>
-        public NumberOf(long lng, IScalar<IFormatProvider> provider) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(lng, provider.Value())),
-            new ScalarOf<int>(() => Convert.ToInt32(lng, provider.Value())),
-            new ScalarOf<float>(() => Convert.ToSingle(lng, provider.Value())),
-            new ScalarOf<double>(() => Convert.ToDouble(lng, provider.Value()))
+        public NumberOf(long lng) : this(
+            new ScalarOf<long>(() => lng),
+            new ScalarOf<int>(() => Convert.ToInt32(lng)),
+            new ScalarOf<float>(() => Convert.ToSingle(lng)),
+            new ScalarOf<double>(() => Convert.ToDouble(lng))
             )
         { }
 
@@ -234,27 +185,11 @@ namespace Yaapii.Atoms.Number
         /// A <see cref="float"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="flt">The float</param>
-        public NumberOf(float flt) : this(flt, new ScalarOf<IFormatProvider>(() => CultureInfo.InvariantCulture))
-        { }
-
-        /// <summary>
-        /// A <see cref="float"/> as a <see cref="INumber"/>
-        /// </summary>
-        /// <param name="flt">The float</param>
-        /// <param name="provider">a number format provider</param>
-        public NumberOf(float flt, IFormatProvider provider) : this(flt, new ScalarOf<IFormatProvider>(provider))
-        { }
-
-        /// <summary>
-        /// A <see cref="float"/> as a <see cref="INumber"/>
-        /// </summary>
-        /// <param name="flt">The float</param>
-        /// <param name="provider">a number format provider</param>
-        public NumberOf(float flt, IScalar<IFormatProvider> provider) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(flt, provider.Value())),
-            new ScalarOf<int>(() => Convert.ToInt32(flt, provider.Value())),
-            new ScalarOf<float>(() => Convert.ToSingle(flt, provider.Value())),
-            new ScalarOf<double>(() => Convert.ToDouble(flt, provider.Value()))
+        public NumberOf(float flt) : this(
+            new ScalarOf<long>(() => Convert.ToInt64(flt)),
+            new ScalarOf<int>(() => Convert.ToInt32(flt)),
+            new ScalarOf<float>(() => Convert.ToSingle(flt)),
+            new ScalarOf<double>(() => Convert.ToDouble(flt))
             )
         { }
 

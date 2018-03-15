@@ -16,13 +16,6 @@ namespace Yaapii.Atoms.Number.Tests
                 new NumberOf(4673.453F).AsFloat() == 4673.453F
             );
         }
-        [Fact]
-        public void ParsesCultureFloat()
-        {
-            Assert.True(
-                new NumberOf(4673.453F, CultureInfo.GetCultureInfo("de-DE")).AsFloat().ToString() == "4673,453"
-            );
-        }
 
         [Fact]
         public void RejectsNoFloatText()
@@ -37,14 +30,6 @@ namespace Yaapii.Atoms.Number.Tests
         {
             Assert.True(
                 new NumberOf(1337).AsInt() == 1337
-            );
-        }
-
-        [Fact]
-        public void ParsesCultureInt()
-        {
-            Assert.True(
-                new NumberOf(1337, CultureInfo.GetCultureInfo("de-DE")).AsInt() == 1337
             );
         }
 
@@ -65,14 +50,6 @@ namespace Yaapii.Atoms.Number.Tests
         }
 
         [Fact]
-        public void ParsesCultureDouble()
-        {
-            Assert.True(
-                new NumberOf(843.23969274001D, CultureInfo.GetCultureInfo("de-DE")).AsDouble().ToString(CultureInfo.GetCultureInfo("de-DE")) == "843,23969274001"
-            );
-        }
-
-        [Fact]
         public void RejectsNoDoubleText()
         {
             Assert.Throws<ArgumentException>(() =>
@@ -89,14 +66,6 @@ namespace Yaapii.Atoms.Number.Tests
         }
 
         [Fact]
-        public void ParsesCultureLong()
-        {
-            Assert.True(
-                new NumberOf(139807814253711, CultureInfo.GetCultureInfo("de-DE")).AsLong() == 139807814253711L
-            );
-        }
-
-        [Fact]
         public void RejectsNoLongText()
         {
             Assert.Throws<ArgumentException>(() =>
@@ -109,8 +78,7 @@ namespace Yaapii.Atoms.Number.Tests
         {
             Assert.True(
                 new NumberOf(
-                    5,
-                    NumberFormatInfo.InvariantInfo
+                    5
                 ).AsDouble() == 5d
             );
         }
@@ -120,8 +88,7 @@ namespace Yaapii.Atoms.Number.Tests
         {
             Assert.True(
                 new NumberOf(
-                    (551515155.451d),
-                    NumberFormatInfo.InvariantInfo
+                    (551515155.451d)
                 ).AsFloat() == 551515155.451f
             );
         }
@@ -131,8 +98,7 @@ namespace Yaapii.Atoms.Number.Tests
         {
             Assert.True(
                 new NumberOf(
-                    (5.243),
-                    NumberFormatInfo.InvariantInfo
+                    (5.243)
                 ).AsDouble() == 5.243d
             );
         }
@@ -142,21 +108,18 @@ namespace Yaapii.Atoms.Number.Tests
         {
             Assert.True(
                 new NumberOf(
-                    (50l),
-                    NumberFormatInfo.InvariantInfo
+                    (50L)
                 ).AsInt() == 50
             );
         }
-
 
         [Fact]
         public void IntAsLong()
         {
             Assert.True(
                 new NumberOf(
-                    (50),
-                    NumberFormatInfo.InvariantInfo
-                ).AsLong() == 50l
+                    (50)
+                ).AsLong() == 50L
             );
         }
     }
