@@ -33,7 +33,6 @@ namespace Yaapii.Atoms.Enumerator
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class ContainsEnumerator<T> : IScalar<bool>
-        where T: IComparable<T>
     {
         private readonly Func<T, bool> _match;
         private readonly IEnumerator<T> _src;

@@ -32,7 +32,6 @@ namespace Yaapii.Atoms.Enumerable
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class Contains<T> : IScalar<bool>
-        where T : IComparable<T>
     {
         private readonly IEnumerable<T> _items;
         private readonly Func<T, bool> _match;
