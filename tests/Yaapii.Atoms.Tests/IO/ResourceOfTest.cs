@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
+﻿using System.Reflection;
 using Xunit;
+using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
-using Yaapii.IO;
 
 namespace Yaapii.Atoms.Tests.IO
 {

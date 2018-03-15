@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
-using Yaapii.Atoms;
-using Yaapii.Atoms.Error;
+using Yaapii.Atoms.IO.Error;
 using Yaapii.Atoms.Scalar;
-using Yaapii.IO.Error;
 
-namespace Yaapii.IO
+namespace Yaapii.Atoms.IO
 {
     /// <summary>
     /// <para>A embedded resource.</para>
