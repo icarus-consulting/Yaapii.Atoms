@@ -3,7 +3,7 @@ using Xunit;
 using Yaapii.Atoms.Collection;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Tests.Enumerable
+namespace Yaapii.Atoms.Enumerable.Tests
 {
     public class ArrayListAsCollectionTest
     {

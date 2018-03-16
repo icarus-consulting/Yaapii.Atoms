@@ -3,7 +3,7 @@ using Xunit;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Tests.Scalar
+namespace Yaapii.Atoms.Scalar.Tests
 {
     public sealed class EachTests
     {

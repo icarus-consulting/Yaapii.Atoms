@@ -4,7 +4,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.Func;
 
-namespace Yaapii.Atoms.Tests.Func
+namespace Yaapii.Atoms.Func.Tests
 {
     public sealed class BiFuncWithFallbackTest
     {

@@ -3,7 +3,7 @@ using Xunit;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Tests.IO
+namespace Yaapii.Atoms.IO.Tests
 {
     public class ResourceOfTest
     {

@@ -3,7 +3,7 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Tests.Enumerable
+namespace Yaapii.Atoms.Enumerable.Tests
 {
 
     public class StickyEnumerableTests
