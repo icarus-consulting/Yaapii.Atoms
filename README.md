@@ -582,3 +582,4 @@ LinQ                  | Yaapii.Atoms
 **ToLookup**          |*Not aviable yet*
 **Union**             |<pre>var enu = new Distinct&lt;int&gt;(<br>&nbsp;&nbsp;new Joined&lt;int&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(1,2,3,4),<br>&nbsp;&nbsp;&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(3,4,5,6)<br>&nbsp;&nbsp;).Value()<br>).Value(); //enu ={1,2,3,4,5,6} </pre>
 **Where**             |<pre>var newFiltered = new Filtered&lt;string&gt;(<br>&nbsp;&nbsp;new List&lt;string&gt;() { "A", "B", "C" },<br>&nbsp;&nbsp;(input) => input != "B"<br>); //newFiltered contains A & C</pre>
+**Zip**               |*Not aviable yet*
