@@ -28,17 +28,17 @@ using System.Text;
 namespace Yaapii.Atoms.Text
 {
     /// <summary>
-    /// Checks if a text is blank.
+    /// Checks if a text is whitespace.
     /// </summary>
-    public sealed class IsBlank : IScalar<Boolean>
+    public sealed class IsWhitespace : IScalar<Boolean>
     {
         private readonly IText _origin;
 
         /// <summary>
-        /// Checks if a A <see cref="IText"/> is blank.
+        /// Checks if a A <see cref="IText"/> is whitespace.
         /// </summary>
         /// <param name="text">text to check</param>
-        public IsBlank(IText text)
+        public IsWhitespace(IText text)
         {
             this._origin = text;
         }
