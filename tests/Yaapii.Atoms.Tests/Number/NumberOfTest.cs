@@ -13,7 +13,7 @@ namespace Yaapii.Atoms.Number.Tests
         public void ParsesFloat()
         {
             Assert.True(
-                new NumberOf("4673.4534", NumberFormatInfo.InvariantInfo).AsFloat() == 4673.4534F
+                new NumberOf(4673.453F).AsFloat() == 4673.453F
             );
         }
 
@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.Number.Tests
         public void ParsesInt()
         {
             Assert.True(
-                new NumberOf("1337").AsInt() == 1337
+                new NumberOf(1337).AsInt() == 1337
             );
         }
 
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Number.Tests
         public void ParsesDouble()
         {
             Assert.True(
-                new NumberOf("843.23969274001", NumberFormatInfo.InvariantInfo).AsDouble() == 843.23969274001D
+                new NumberOf(843.23969274001D).AsDouble() == 843.23969274001D
             );
         }
 
@@ -61,7 +61,7 @@ namespace Yaapii.Atoms.Number.Tests
         public void ParsesLong()
         {
             Assert.True(
-                new NumberOf("139807814253711").AsLong() == 139807814253711L
+                new NumberOf(139807814253711).AsLong() == 139807814253711L
             );
         }
 
@@ -70,6 +70,56 @@ namespace Yaapii.Atoms.Number.Tests
         {
             Assert.Throws<ArgumentException>(() =>
                 new NumberOf("ghki").AsLong()
+            );
+        }
+
+        [Fact]
+        public void IntToDouble()
+        {
+            Assert.True(
+                new NumberOf(
+                    5
+                ).AsDouble() == 5d
+            );
+        }
+
+        [Fact]
+        public void DoubleToFloat()
+        {
+            Assert.True(
+                new NumberOf(
+                    (551515155.451d)
+                ).AsFloat() == 551515155.451f
+            );
+        }
+
+        [Fact]
+        public void FloatAsDouble()
+        {
+            Assert.True(
+                new NumberOf(
+                    (5.243)
+                ).AsDouble() == 5.243d
+            );
+        }
+
+        [Fact]
+        public void LongAsInt()
+        {
+            Assert.True(
+                new NumberOf(
+                    (50L)
+                ).AsInt() == 50
+            );
+        }
+
+        [Fact]
+        public void IntAsLong()
+        {
+            Assert.True(
+                new NumberOf(
+                    (50)
+                ).AsLong() == 50L
             );
         }
     }
