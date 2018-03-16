@@ -20,41 +20,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Text.Tests
 {
-    public sealed class IsBlankTest
+    public sealed class IsWhitespaceTest
     {
         [Fact]
-        public void DeterminesEmptyText()
+        public void DoesntMatchEmpty()
         {
             Assert.True(
-                new IsBlank(
+                new IsWhitespace(
                     new TextOf("")
                 ).Value(),
                 "Can't determine an empty text");
         }
 
         [Fact]
-        public void DeterminesBlankText()
+        public void MatchesWhitespace()
         {
             Assert.True(
-                new IsBlank(
+                new IsWhitespace(
                     new TextOf("  ")
                 ).Value(),
                 "Can't determine an empty text with spaces");
         }
 
         [Fact]
-        public void determinesNotBlankText()
+        public void DoesntMatchNotWhitespace()
         {
             Assert.False(
-                new IsBlank(
+                new IsWhitespace(
                     new TextOf("not empty")
                 ).Value(),
                 "Can't detect a nonempty text");
