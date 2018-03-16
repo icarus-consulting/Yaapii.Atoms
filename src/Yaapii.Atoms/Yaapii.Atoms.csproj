@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <VersionPrefix>0.5.8</VersionPrefix>
     <Description>Ported .NET version of Cactoos by Yegor Bugayenko.</Description>
     <NeutralLanguage>en-001</NeutralLanguage>
     <PackageTags>yaapii, elegant objects, cactoos, oop, encapsulation, primitives</PackageTags>
@@ -12,9 +11,6 @@
     <DocumentationFile>artifacts\Yaapii.Atoms.xml</DocumentationFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Authors>ICARUS Consulting GmbH</Authors>
-    <Version>0.11.0</Version>
-    <AssemblyVersion>0.11.0.0</AssemblyVersion>
-    <FileVersion>0.11.0.0</FileVersion>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
