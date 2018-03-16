@@ -6,7 +6,7 @@ using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.List;
 
-namespace Yaapii.Atoms.Tests.Enumerator
+namespace Yaapii.Atoms.Enumerator.Tests
 {
     public sealed class DistinctEnumeratorTest
     {

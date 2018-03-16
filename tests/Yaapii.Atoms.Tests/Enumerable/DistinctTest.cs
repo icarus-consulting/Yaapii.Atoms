@@ -4,7 +4,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Tests.Enumerable
+namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class DistinctTest
     {

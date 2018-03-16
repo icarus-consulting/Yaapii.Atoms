@@ -39,79 +39,87 @@ namespace Yaapii.Atoms.Text.Tests
         public void ReadsUriIntoTextWithEncoding()
         {
             var path = new Uri(Path.GetFullPath("Assets/TextOf/readfile.txt"));
-            new Tidy(path, () =>
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(path.AbsolutePath));
+            new Tidy(() =>
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(path.AbsolutePath));
 
-                var content = "el file";
-                File.WriteAllText(path.AbsolutePath, content, Encoding.BigEndianUnicode);
-                
-                Assert.True(
-                    new TextOf(
-                        path,
-                        Encoding.BigEndianUnicode
-                    ).AsString() == content,
-                    "Can't read text from Input");
-            }).Invoke();
+                    var content = "el file";
+                    File.WriteAllText(path.AbsolutePath, content, Encoding.BigEndianUnicode);
+
+                    Assert.True(
+                        new TextOf(
+                            path,
+                            Encoding.BigEndianUnicode
+                        ).AsString() == content,
+                        "Can't read text from Input");
+                },
+                path
+            ).Invoke();
         }
 
-                [Fact]
+        [Fact]
         public void ReadsUriIntoText()
         {
             var path = new Uri(Path.GetFullPath("Assets/TextOf/readfile.txt"));
-            new Tidy(path, () =>
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(path.AbsolutePath));
+            new Tidy(() =>
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(path.AbsolutePath));
 
-                var content = "el file";
-                File.WriteAllText(path.AbsolutePath, content);
-                
-                Assert.True(
-                    new TextOf(
-                        path
-                    ).AsString() == content,
-                    "Can't read text from Input");
-            }).Invoke();
+                    var content = "el file";
+                    File.WriteAllText(path.AbsolutePath, content);
+
+                    Assert.True(
+                        new TextOf(
+                            path
+                        ).AsString() == content,
+                        "Can't read text from Input");
+                },
+                path
+            ).Invoke();
         }
 
         [Fact]
         public void ReadsFileIntoTextWithEncoding()
         {
             var path = new Uri(Path.GetFullPath("Assets/TextOf/readfile.txt"));
-            new Tidy(path, () =>
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(path.AbsolutePath));
+            new Tidy(() =>
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(path.AbsolutePath));
 
-                var content = "el file";
-                File.WriteAllText(path.AbsolutePath, content, Encoding.BigEndianUnicode);
+                    var content = "el file";
+                    File.WriteAllText(path.AbsolutePath, content, Encoding.BigEndianUnicode);
 
-                Assert.True(
-                    new TextOf(
-                        new FileInfo(path.AbsolutePath),
-                        Encoding.BigEndianUnicode
-                    ).AsString() == content,
-                    "Can't read text from Input");
-            }).Invoke();
+                    Assert.True(
+                        new TextOf(
+                            new FileInfo(path.AbsolutePath),
+                            Encoding.BigEndianUnicode
+                        ).AsString() == content,
+                        "Can't read text from Input");
+                },
+                path
+            ).Invoke();
         }
 
         [Fact]
         public void ReadsFileIntoText()
         {
             var path = new Uri(Path.GetFullPath("Assets/TextOf/readfile.txt"));
-            new Tidy(path, () =>
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(path.AbsolutePath));
+            new Tidy(() =>
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(path.AbsolutePath));
 
-                var content = "el file";
-                File.WriteAllText(path.AbsolutePath, content);
+                    var content = "el file";
+                    File.WriteAllText(path.AbsolutePath, content);
 
-                Assert.True(
-                    new TextOf(
-                        new FileInfo(path.AbsolutePath),
-                        Encoding.UTF8
-                    ).AsString() == content,
-                    "Can't read text from Input");
-            }).Invoke();
+                    Assert.True(
+                        new TextOf(
+                            new FileInfo(path.AbsolutePath),
+                            Encoding.UTF8
+                        ).AsString() == content,
+                        "Can't read text from Input");
+                },
+                path
+            ).Invoke();
         }
 
         [Fact]
