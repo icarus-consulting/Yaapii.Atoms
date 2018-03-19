@@ -21,57 +21,47 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Text;
+using System.IO.Compression;
 
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
-    /// Length of <see cref="IInput"/>. (Self-Disposing)
+    /// A output that compresses.
     /// </summary>
-    public sealed class LengthOf : IScalar<long>
+    public sealed class GZipOutput : IOutput
     {
-        /// <summary>
-        /// the source
-        /// </summary>
-        private readonly IInput _source;
+        // The input.
+        private readonly IOutput _output;
+
+        // The buffer size.
+        private readonly CompressionLevel _level;
 
         /// <summary>
-        /// buffer size
+        /// The output as a gzip output. It compresses with level 'optimal'.
         /// </summary>
-        private readonly int _size;
+        /// <param name="output">the input</param>
+        public GZipOutput(IOutput output) : this(output, CompressionLevel.Optimal)
+        { }
 
         /// <summary>
-        /// Length of <see cref="IInput"/> by reading all bytes.
+        /// The output as a gzip compressed stream.
         /// </summary>
-        /// <param name="input">the input</param>
-        /// <param name="max">maximum buffer size</param>
-        public LengthOf(IInput input, int max = 16 << 10)
+        /// <param name="output">the output to compress</param>
+        /// <param name="level">the compression level</param>
+        public GZipOutput(IOutput output, CompressionLevel level)
         {
-            this._source = input;
-            this._size = max;
+            this._output = output;
+            this._level = level;
         }
 
         /// <summary>
-        /// Get the length. (Self-Disposing)
+        /// A stream configured to decompressing.
         /// </summary>
-        /// <returns>the length</returns>
-        public long Value()
+        /// <returns></returns>
+        public Stream Stream()
         {
-            long length = 0L;
-            using (var stream = _source.Stream())
-            {
-                byte[] buf = new byte[this._size];
-
-                int bytesRead;
-                while ((bytesRead = stream.Read(buf, 0, buf.Length)) > 0)
-                {
-                    length += (long)bytesRead;
-                }
-            }
-            return length;
+            return new GZipStream(this._output.Stream(), this._level);
         }
     }
 }

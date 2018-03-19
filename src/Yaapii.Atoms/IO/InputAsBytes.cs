@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.IO
             using (var source = this._source.Stream())
             using (var stream = new TeeInput(new InputOf(source), new OutputTo(baos)).Stream())
             {
-                output = new byte[source.Length];
+                //output = new byte[source.Length];
                 byte[] readBuffer = new byte[this._size];
                 while ((stream.Read(readBuffer, 0, readBuffer.Length)) > 0)
                 { }

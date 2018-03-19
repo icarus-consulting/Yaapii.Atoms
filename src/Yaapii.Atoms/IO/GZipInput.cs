@@ -20,58 +20,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Text;
+using System.IO.Compression;
 
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
-    /// Length of <see cref="IInput"/>. (Self-Disposing)
+    /// A input that decompresses.
     /// </summary>
-    public sealed class LengthOf : IScalar<long>
+    public sealed class GZipInput : IInput
     {
-        /// <summary>
-        /// the source
-        /// </summary>
-        private readonly IInput _source;
+        // The input.
+        private readonly IInput _origin;
 
-        /// <summary>
-        /// buffer size
-        /// </summary>
+        // The buffer size.
         private readonly int _size;
 
         /// <summary>
-        /// Length of <see cref="IInput"/> by reading all bytes.
+        /// The input as a gzip stream.
         /// </summary>
         /// <param name="input">the input</param>
-        /// <param name="max">maximum buffer size</param>
-        public LengthOf(IInput input, int max = 16 << 10)
+        public GZipInput(IInput input)
         {
-            this._source = input;
-            this._size = max;
+            this._origin = input;
         }
 
         /// <summary>
-        /// Get the length. (Self-Disposing)
+        /// A stream which is decompressing.
         /// </summary>
-        /// <returns>the length</returns>
-        public long Value()
+        /// <returns></returns>
+        public Stream Stream() 
         {
-            long length = 0L;
-            using (var stream = _source.Stream())
-            {
-                byte[] buf = new byte[this._size];
-
-                int bytesRead;
-                while ((bytesRead = stream.Read(buf, 0, buf.Length)) > 0)
-                {
-                    length += (long)bytesRead;
-                }
-            }
-            return length;
+            return new GZipStream(this._origin.Stream(), CompressionMode.Decompress);
         }
     }
 }
