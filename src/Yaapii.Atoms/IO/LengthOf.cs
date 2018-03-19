@@ -73,13 +73,5 @@ namespace Yaapii.Atoms.IO
             }
             return length;
         }
-
-        /// <summary>
-        /// Clean up.
-        /// </summary>
-        private void Dispose()
-        {
-            (_source as IDisposable)?.Dispose();
-        }
     }
 }
