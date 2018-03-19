@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.IO
     /// <summary>
     /// A output that compresses.
     /// </summary>
-    public sealed class GZipOutput : IOutput, IDisposable
+    public sealed class GZipOutput : IOutput
     {
         // The input.
         private readonly IOutput _output;
@@ -62,11 +62,6 @@ namespace Yaapii.Atoms.IO
         public Stream Stream()
         {
             return new GZipStream(this._output.Stream(), this._level);
-        }
-
-        public void Dispose()
-        {
-            ((this._output) as IDisposable)?.Dispose();
         }
     }
 }
