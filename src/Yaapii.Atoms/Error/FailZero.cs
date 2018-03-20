@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         public void Go()
         {
-            if (!_number.Equals(0)) throw this._ex;
+            if (_number.Equals(0)) throw this._ex;
         }
     }
 }
