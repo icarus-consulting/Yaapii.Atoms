@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Scalar.Tests
 {
@@ -22,6 +19,7 @@ namespace Yaapii.Atoms.Scalar.Tests
                 ).Value()
             );
         }
+
         [Fact]
         public void TrueOrGenFuncs()
         {
@@ -33,6 +31,7 @@ namespace Yaapii.Atoms.Scalar.Tests
                     ).Value() == true
             );
         }
+
         [Fact]
         public void TrueOrGenScalar()
         {
@@ -56,6 +55,16 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
+        public void TestFunc2()
+        {
+            Assert.True(
+                    new Or<int>(
+                        input => input > 0,
+                        new List<int>() { 1, -1, 0 }
+                    ).Value());
+        }
+
+        [Fact]
         public void TestIFunc()
         {
             Assert.False(
@@ -71,14 +80,14 @@ namespace Yaapii.Atoms.Scalar.Tests
         [InlineData("DEF", false)]
         public void TestValueAndFunctionList(string value, bool expected)
         {
-            var and =
+            var or =
                 new Or<string>(
                     value,
                     str => str.Contains("A"),
                     str => str.Contains("B"),
                     str => str.Contains("C"));
 
-            Assert.Equal(expected, and.Value());
+            Assert.Equal(expected, or.Value());
         }
 
         [Fact]
@@ -100,4 +109,3 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
     }
 }
-

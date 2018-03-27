@@ -154,6 +154,12 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.False(new And(new List<bool>() { true, false, true }).Value());
         }
+
+        [Fact]
+        public void InputBoolFunctionsToFalse()
+        {
+            Assert.False(new And(() => true, () => false).Value());
+        }
     }
 }
 #pragma warning restore MaxPublicMethodCount // a public methods count maximum
