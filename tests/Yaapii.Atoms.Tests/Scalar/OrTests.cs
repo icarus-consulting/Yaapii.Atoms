@@ -68,7 +68,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         public void TestIFunc()
         {
             Assert.False(
-                    new And<int>(
+                    new Or<int>(
                         new FuncOf<int, bool>(input => input > 0),
                         -1, -2, -3
                     ).Value());
