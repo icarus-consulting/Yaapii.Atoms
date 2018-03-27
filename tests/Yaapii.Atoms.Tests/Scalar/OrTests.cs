@@ -44,6 +44,60 @@ namespace Yaapii.Atoms.Scalar.Tests
                     ).Value() == true
             );
         }
+
+        [Fact]
+        public void TestFunc()
+        {
+            Assert.True(
+                    new Or<int>(
+                        input => input > 0,
+                        1, -1, 0
+                    ).Value());
+        }
+
+        [Fact]
+        public void TestIFunc()
+        {
+            Assert.False(
+                    new And<int>(
+                        new FuncOf<int, bool>(input => input > 0),
+                        -1, -2, -3
+                    ).Value());
+        }
+
+        [Theory]
+        [InlineData("DB", true)]
+        [InlineData("ABC", true)]
+        [InlineData("DEF", false)]
+        public void TestValueAndFunctionList(string value, bool expected)
+        {
+            var and =
+                new Or<string>(
+                    value,
+                    str => str.Contains("A"),
+                    str => str.Contains("B"),
+                    str => str.Contains("C"));
+
+            Assert.Equal(expected, and.Value());
+        }
+
+        [Fact]
+        public void InputBoolValuesToTrue()
+        {
+            Assert.True(new Or(false, true, false).Value());
+        }
+
+        [Fact]
+        public void InputBoolValuesToFalse()
+        {
+            Assert.False(new Or(new List<bool>() { false, false, false }).Value());
+        }
+
+        [Fact]
+        public void InputBoolFunctionsToTrue()
+        {
+            Assert.True(new Or(() => true, () => false).Value());
+        }
     }
 }
 

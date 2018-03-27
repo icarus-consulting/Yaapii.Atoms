@@ -81,10 +81,10 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             var list = new LinkedList<string>();
             Assert.True(
-                new And<string>(                    
+                new And<string>(
                         str => { list.AddLast(str); return true; },
                         new EnumerableOf<string>("hello", "world")
-                    
+
                 ).Value() == true);
 
             Assert.True(
@@ -116,6 +116,43 @@ namespace Yaapii.Atoms.Scalar.Tests
                         input => input > 0,
                         1, -1, 0
                     ).Value() == false);
+        }
+
+        [Fact]
+        public void TestIFunc()
+        {
+            Assert.True(
+                    new And<int>(
+                        new FuncOf<int,bool>(input => input > 0),
+                        1, 2, 3
+                    ).Value());
+        }
+
+        [Theory]
+        [InlineData("AB", false)]
+        [InlineData("ABC", true)]
+        public void TestValueAndFunctionList(string value, bool expected)
+        {
+            var and = 
+                new And<string>(
+                    value,
+                    str => str.Contains("A"),
+                    str => str.Contains("B"),
+                    str => str.Contains("C"));
+
+            Assert.Equal(expected, and.Value());
+        }
+
+        [Fact]
+        public void InputBoolValuesToTrue()
+        {
+            Assert.True(new And(true, true, true).Value());
+        }
+
+        [Fact]
+        public void InputBoolValuesToFalse()
+        {
+            Assert.False(new And(new List<bool>() { true, false, true }).Value());
         }
     }
 }

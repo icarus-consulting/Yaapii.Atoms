@@ -65,6 +65,13 @@ namespace Yaapii.Atoms.Scalar
             )
         { }
 
+        /// <summary> True if any functions return true with given input value </summary>
+        /// <param name="value"> Input value wich will executed by all given functions </param>
+        /// <param name="functions"> Functions wich will executed with given input value </param>
+        public Or(In value, params Func<In, bool>[] functions)
+            : this(tValue => new Or(new Mapped<Func<In, bool>, bool>(tFunc => tFunc.Invoke(tValue), functions)).Value(), value)
+        { }
+
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         private Or(IEnumerable<IScalar<Boolean>> src) : this(new Or(src))
