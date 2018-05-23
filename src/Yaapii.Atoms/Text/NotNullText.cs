@@ -53,6 +53,7 @@ namespace Yaapii.Atoms.Text
             {
                 throw new IOException("invalid text (null)");
             }
+
             return this._origin.AsString();
         }
 
