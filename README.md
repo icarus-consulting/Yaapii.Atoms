@@ -529,7 +529,7 @@ LinQ                  | Yaapii.Atoms
 **Aggregate**         |*Not available yet*
 **All**               | And&lt;T&gt; <!--pre>var allResult = new And&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;() { "A", "B", "C" },<br>&nbsp;&nbsp;(input) => input != "B"<br>); //newFiltered contains A & C</pre-->
 **Any**		       |Or&lt;T&gt;<!--pre>var b = new Contains&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("Hello", "my", "cat", "is", "missing"),<br>&nbsp;&nbsp;(str) => str == "cat"<br>).Value()); //b = true </pre--> 
-**AsEnumerable**      |<pre>var list = new EnumerableOf&lt;int&gt;(<br>&nbsp;&nbsp;var arr = new int[]{ 1, 2, 3, 4 }; new EnumerableOf&lt;int&gt;(arr)<br>);</pre>
+**AsEnumerable**      |<pre>var arr = new int[]{ 1, 2, 3, 4 }; <br>var enumerable = new EnumerableOf&lt;int&gt;(arr);</pre>
 **Average**           |<pre>var avg = new AvgOf(1, 2, 3, 4).AsFloat(); //avg = 2.5</pre>
 **Cast**              |*Not available yet*
 **Concat**            |<pre>var joined = new Joined&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("dies", "ist"),<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("ein", "Test")<br>).Value(); //joined = {"dies", "ist", "ein", "Test"}</pre>
