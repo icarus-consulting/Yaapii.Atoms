@@ -6,19 +6,22 @@ using Yaapii.Atoms.IO;
 
 namespace Yaapii.Atoms.Text
 {
+    /// <summary>
+    /// A <see cref="IText"/> as Base64 encoded <see cref="IText"/>
+    /// </summary>
     public sealed class TextBase64 : IText
     {
         private readonly IText origin;
 
         /// <summary>
-        /// A <see cref="string"/> as string <see cref="IText"/>
+        /// A <see cref="string"/> as Base64-Encoded <see cref="IText"/>
         /// </summary>
         /// <param name="str">string to encode</param>
         public TextBase64(String str) : this(new TextOf(str))
         { }
 
         /// <summary>
-        /// A <see cref="IText"/> as IText <see cref="IText"/>
+        /// A <see cref="IText"/> as Base64-Encoded <see cref="IText"/>
         /// </summary>
         /// <param name="text">text to encode</param>
         public TextBase64(IText text)
