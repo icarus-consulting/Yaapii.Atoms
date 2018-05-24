@@ -85,5 +85,17 @@ namespace Yaapii.Atoms.Enumerable.Tests
                     (ex, enumerable) => throw ex
                 ).Value());
         }
+        [Fact]
+        public void StickyTest()
+        {
+            var list = new List<string>();
+            list.Add("pre");
+            var sticky = new ItemAt<string>(list);
+            sticky.Value();
+            list.Clear();
+            list.Add("post");
+             
+             Assert.Equal("pre" , sticky.Value());
+        }
     }
 }
