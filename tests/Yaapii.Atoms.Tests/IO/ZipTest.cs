@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Xunit;
+using System.IO;
+
+namespace Yaapii.Atoms.IO.Tests
+{
+    public class ZipTest
+    {
+        [Fact]
+        public void ReturnsStreamGreater0()
+        {
+            string folderPath = Path.GetTempPath() + "\\" + "ZipTestFolder";
+            try
+            {
+                var folder = Directory.CreateDirectory(folderPath);
+                var newFile = File.Create(folder.FullName + "\\FileToZipOne.txt");
+                newFile.Close();
+                newFile = File.Create(folder.FullName + "\\FileToZipTwo.txt");
+                newFile.Close();
+                newFile = File.Create(folder.FullName + "\\FileToZipThree.txt");
+                newFile.Close();
+
+                var streamOfZipped = new Zip(folder);
+
+                Assert.InRange<long>(streamOfZipped.Stream().Length, 1, long.MaxValue);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                Directory.Delete(folderPath, true);
+            }
+        }
+    }
+}
