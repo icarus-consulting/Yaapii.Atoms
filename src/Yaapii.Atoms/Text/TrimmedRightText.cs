@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Yaapii.Atoms.Text
 {
@@ -31,16 +29,79 @@ namespace Yaapii.Atoms.Text
     /// </summary>
     public sealed class TrimmedRightText : IText
     {
-        private readonly IText _origin;
+        private readonly IText text;
+        private readonly IText trimText;
+
+        /// <summary>
+        /// A <see cref="string"/> trimmed (removed whitespaces) on the right side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        public TrimmedRightText(string text) : this(new TextOf(text))
+        {
+        }
 
         /// <summary>
         /// A <see cref="IText"/> trimmed (removed whitespaces) on the right side.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public TrimmedRightText(IText text)
+        public TrimmedRightText(IText text) : this(text, new TextOf("\b\f\n\r\t\v "))
         {
-            this._origin = text;
+            //this.text = text;
         }
+        /// <summary>
+        /// A <see cref="string"/> trimmed with another <see cref="string"/> on the right side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        /// <param name="trimText">text that trims the text</param>
+        public TrimmedRightText(string text, string trimText) : this(new TextOf(text), new TextOf(trimText))
+        {
+        }
+        /// <summary>
+        /// A <see cref="string"/> trimmed with a <see cref="char"/>[] on the right side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        /// <param name="trimText">text that trims the text</param>
+        public TrimmedRightText(string text, char[] trimText) : this(new TextOf(text), new TextOf(trimText))
+        {
+        }
+
+        /// <summary>
+        /// A <see cref="string"/> trimmed with a <see cref="IText"/> on the right side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        /// <param name="trimText">text that trims the text</param>
+        public TrimmedRightText(string text, IText trimText) : this(new TextOf(text), trimText)
+        {
+        }
+
+        /// <summary>
+        /// A <see cref="IText"/> trimmed with a <see cref="string"/> on the right side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        /// <param name="trimText">text that trims the text</param>
+        public TrimmedRightText(IText text, string trimText) : this(text, new TextOf(trimText))
+        {
+        }
+        /// <summary>
+        /// A <see cref="IText"/> trimmed with a <see cref="char"/>[] on the right side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        /// <param name="trimText">text that trims the text</param>
+        public TrimmedRightText(IText text, char[] trimText) : this(text, new TextOf(trimText))
+        {
+        }
+
+        /// <summary>
+        /// A <see cref="IText"/> trimmed with another <see cref="IText"/> on the right side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        /// <param name="trimText">text that trims the text</param>
+        public TrimmedRightText(IText text, IText trimText)
+        {
+            this.text = text;
+            this.trimText = trimText;
+        }
+
 
         /// <summary>
         /// Get content as a string.
@@ -48,8 +109,9 @@ namespace Yaapii.Atoms.Text
         /// <returns>the content as a string</returns>
         public String AsString()
         {
-            String text = this._origin.AsString();
-            return text.TrimEnd();
+            return this.text.AsString().TrimEnd(
+                this.trimText.AsString().ToCharArray()
+            );
         }
 
         /// <summary>
@@ -59,7 +121,6 @@ namespace Yaapii.Atoms.Text
         /// <returns>true if equal.</returns>
         public bool Equals(IText other)
         {
-            //return new UncheckedText(this).CompareTo(other as IText) == 0;
             return this.AsString().CompareTo(other.AsString()) == 0;
         }
     }
