@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Yaapii.Atoms.Error
+namespace Yaapii.Atoms
 {
     /// <summary>
     /// Something that can fail when calling go.
