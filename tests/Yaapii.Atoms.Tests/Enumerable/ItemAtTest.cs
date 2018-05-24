@@ -97,6 +97,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 ).Value()
             );
         }
+
         [Fact]
         public void StickyTest()
         {
