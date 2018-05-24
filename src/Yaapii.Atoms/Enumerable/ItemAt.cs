@@ -54,8 +54,8 @@ namespace Yaapii.Atoms.Enumerable
         /// First element in a <see cref="IEnumerable{T}"/> with given Exception thrwon on fallback
         /// </summary>
         /// <param name="source"></param>
-        /// <param name="exToThrow"></param>
-        public ItemAt(IEnumerable<T> source, Exception exToThrow) : this(source, 0, exToThrow)
+        /// <param name="ex"></param>
+        public ItemAt(IEnumerable<T> source, Exception ex) : this(source, 0, ex)
         { }
 
         /// <summary>
@@ -63,12 +63,12 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source"></param>
         /// <param name="position"></param>
-        /// <param name="exToThrow"></param>
-        public ItemAt(IEnumerable<T> source, int position, Exception exToThrow) : this(
+        /// <param name="ex"></param>
+        public ItemAt(IEnumerable<T> source, int position, Exception ex) : this(
             source,
             position,
             new FuncOf<IEnumerable<T>, T>(
-                (itr) => throw exToThrow
+                (itr) => throw ex
             )
         )
         { }
