@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerable
@@ -49,6 +50,7 @@ namespace Yaapii.Atoms.Enumerable
         /// position
         /// </summary>
         private readonly int _pos;
+        private readonly IScalar<T> saved;
 
         /// <summary>
         /// First element in a <see cref="IEnumerable{T}"/>.
@@ -163,22 +165,30 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+        public ItemAt(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback) : this(
+            new ScalarOf<T>(
+                ()=>
+                    {
+                        return new ItemAtEnumerator<T>(
+                           source.GetEnumerator(), position, fallback
+                       ).Value();
+                    }
+                )
+            )
         {
-            this._pos = position;
-            this._src = source;
-            this._fbk = fallback;
         }
 
+        public ItemAt(IScalar<T> saved)
+        {
+            this.saved = new StickyScalar<T>(saved);
+        }
         /// <summary>
         /// Get the item.
         /// </summary>
         /// <returns>the item</returns>
         public T Value()
         {
-            return new ItemAtEnumerator<T>(
-                this._src.GetEnumerator(), this._pos, this._fbk
-            ).Value();
+            return saved.Value();
         }
     }
 }
