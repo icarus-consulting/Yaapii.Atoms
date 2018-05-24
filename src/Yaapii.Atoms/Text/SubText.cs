@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Text
@@ -34,7 +32,7 @@ namespace Yaapii.Atoms.Text
     {
         private readonly IText _origin;
         private readonly IScalar<Int32> _start;
-        private readonly IScalar<Int32> _end;
+        private readonly IScalar<Int32> _length;
 
         /// <summary>
         /// Extracted subtext from a <see cref="string"/>.
@@ -84,13 +82,13 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start encapsulated in a scalar</param>
-        /// <param name="end">where to end encapsulated in a scalar</param>
+        /// <param name="len">where to end encapsulated in a scalar</param>
         public SubText(IText text, ScalarOf<Int32> strt,
-            ScalarOf<Int32> end)
+            ScalarOf<Int32> len)
         {
             this._origin = text;
             this._start = strt;
-            this._end = end;
+            this._length = len;
         }
 
         /// <summary>
@@ -101,7 +99,7 @@ namespace Yaapii.Atoms.Text
         {
             return this._origin.AsString().Substring(
                 this._start.Value(),
-                this._end.Value()
+                this._length.Value()
             );
         }
 

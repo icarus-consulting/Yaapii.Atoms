@@ -4,7 +4,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Tests.Enumerable
+namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class DistinctTest
     {
@@ -44,6 +44,17 @@ namespace Yaapii.Atoms.Tests.Enumerable
                         new EnumerableOf<string>()
                     )
                 ).Value() == 0);
+        }
+
+        [Fact]
+        public void DoubleRunDistinct()
+        {
+            var dst =
+                new Distinct<string>(
+                    new EnumerableOf<string>("test", "test")
+                );
+            Assert.True(
+                new LengthOf(dst).Value() == new LengthOf(dst).Value());
         }
     }
 }

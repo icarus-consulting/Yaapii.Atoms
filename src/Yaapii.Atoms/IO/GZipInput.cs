@@ -20,34 +20,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
+using System.IO;
+using System.IO.Compression;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.IO
 {
-    public sealed class StickyEnumerableTest
+    /// <summary>
+    /// A input that decompresses.
+    /// </summary>
+    public sealed class GZipInput : IInput
     {
-        [Fact]
-        public void IgnoresChangesInIterable()
-        {
-            int size = 2;
-            var list =
-                new StickyEnumerable<int>(
-                    new Limited<int>(
-                        new Endless<int>(1),
-                        new ScalarOf<int>(() => Interlocked.Increment(ref size))
-                        ));
+        // The input.
+        private readonly IInput _origin;
 
-            Assert.True(
-                new LengthOf(list).Value() == new LengthOf(list).Value(),
-                "can't ignore changes of underlying iterable");
+        // The buffer size.
+        private readonly int _size;
+
+        /// <summary>
+        /// The input as a gzip stream.
+        /// </summary>
+        /// <param name="input">the input</param>
+        public GZipInput(IInput input)
+        {
+            this._origin = input;
+        }
+
+        /// <summary>
+        /// A stream which is decompressing.
+        /// </summary>
+        /// <returns></returns>
+        public Stream Stream() 
+        {
+            return new GZipStream(this._origin.Stream(), CompressionMode.Decompress);
         }
     }
 }

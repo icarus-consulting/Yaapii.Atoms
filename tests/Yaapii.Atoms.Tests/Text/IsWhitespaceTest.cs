@@ -20,40 +20,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
+using Xunit;
 
-namespace Yaapii.Atoms.Enumerable
+namespace Yaapii.Atoms.Text.Tests
 {
-    /// <summary>
-    /// Length of an <see cref="IEnumerable"/>.
-    /// Important: You must understand that this object will iterate over the passed items 
-    /// every time when you call .Value(). It is recommended to use a StickyScalar, 
-    /// if you want to re-use its value.
-    /// </summary>
-    public sealed class LengthOf : IScalar<Int32>
+    public sealed class IsWhitespaceTest
     {
-        private readonly IEnumerable _enumerable;
-
-        /// <summary>
-        /// Length of an <see cref="IEnumerable"/>
-        /// </summary>
-        /// <param name="items">the enumerable</param>
-        public LengthOf(IEnumerable items)
+        [Fact]
+        public void DoesntMatchEmpty()
         {
-            this._enumerable = items;
+            Assert.True(
+                new IsWhitespace(
+                    new TextOf("")
+                ).Value(),
+                "Can't determine an empty text");
         }
 
-        /// <summary>
-        /// Get the length.
-        /// </summary>
-        /// <returns>the length</returns>
-        public Int32 Value()
+        [Fact]
+        public void MatchesWhitespace()
         {
-            return new LengthOfEnumerator(this._enumerable.GetEnumerator()).Value();
+            Assert.True(
+                new IsWhitespace(
+                    new TextOf("  ")
+                ).Value(),
+                "Can't determine an empty text with spaces");
         }
 
+        [Fact]
+        public void DoesntMatchNotWhitespace()
+        {
+            Assert.False(
+                new IsWhitespace(
+                    new TextOf("not empty")
+                ).Value(),
+                "Can't detect a nonempty text");
+        }
     }
 }

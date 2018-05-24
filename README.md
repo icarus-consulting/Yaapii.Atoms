@@ -1,5 +1,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/py42p14apauef2uy/branch/master?svg=true)](https://ci.appveyor.com/project/icarus-consulting/yaapii-atoms/branch/master)
 [![codecov](https://codecov.io/gh/icarus-consulting/Yaapii.Atoms/branch/master/graph/badge.svg)](https://codecov.io/gh/icarus-consulting/Yaapii.Atoms)
+![EO](https://www.elegantobjects.org/badge.svg)
+
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
 [![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)

@@ -22,50 +22,34 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Text;
-using Yaapii.Atoms.Error;
 
-namespace Yaapii.Atoms.Enumerator
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
-    /// Lookup if an item is in a enumerable
+    /// Checks if a text is whitespace.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class ContainsEnumerator<T> : IScalar<bool>
+    public sealed class IsWhitespace : IScalar<Boolean>
     {
-        private readonly Func<T, bool> _match;
-        private readonly IEnumerator<T> _src;
+        private readonly IText _origin;
 
         /// <summary>
-        /// Lookup the item in the src.
+        /// Checks if a A <see cref="IText"/> is whitespace.
         /// </summary>
-        /// <param name="src">src enumerable</param>
-        /// <param name="match">lookup item</param>
-        public ContainsEnumerator(IEnumerator<T> src, Func<T,bool> match)
+        /// <param name="text">text to check</param>
+        public IsWhitespace(IText text)
         {
-            _match = match;
-            _src = src;
+            this._origin = text;
         }
 
         /// <summary>
-        /// Determine if the item is in the enumerable.
+        /// Get the result.
         /// </summary>
-        /// <returns>true if item is present in enumerable.</returns>
-        public bool Value()
+        /// <returns>the result</returns>
+        public Boolean Value()
         {
-            bool contains = false;
-
-            for (var cur = 0; this._src.MoveNext(); cur++)
-            {
-                if (_match.Invoke(this._src.Current))
-                {
-                    contains = true;
-                    break;
-                }
-            }
-
-            return contains;
+            return !this._origin.AsString().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + ""));
         }
     }
 }

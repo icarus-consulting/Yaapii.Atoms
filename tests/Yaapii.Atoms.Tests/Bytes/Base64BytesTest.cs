@@ -5,7 +5,7 @@ using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 
-namespace Yaapii.Atoms.Tests.Bytes
+namespace Yaapii.Atoms.Bytes.Tests
 {
     public sealed class Base64BytesTest
     {
