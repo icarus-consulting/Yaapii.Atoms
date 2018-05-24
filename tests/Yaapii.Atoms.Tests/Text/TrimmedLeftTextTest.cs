@@ -20,11 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Text.Tests
 {
@@ -44,6 +40,72 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new TrimmedLeftText(new TextOf("  \t ")).AsString() == "",
                 "Can't trim a blank text");
+        }
+
+        [Fact]
+        public void TrimsString()
+        {
+            Assert.True(
+                new TrimmedLeftText(" \b  Hello!").AsString() == "Hello!"
+            );
+        }
+        [Fact]
+        public void TrimsCharArray()
+        {
+            Assert.True(
+                new TrimmedLeftText(new char[] { ' ', '\t', '\b', 'H', 'e', 'l', 'l', 'o', '!', ' ', '\t', '\b' }).AsString() == "Hello! \t\b"
+            );
+        }
+        [Fact]
+        public void TrimsIText()
+        {
+            Assert.True(
+                new TrimmedLeftText(new TextOf(" \b  Hello! \b  ")).AsString() == "Hello! \b  "
+            );
+        }
+
+        [Fact]
+        public void TrimsStringWithString()
+        {
+            Assert.True(
+                new TrimmedLeftText("Hello!", "Hell").AsString() == "o!"
+            );
+        }
+        [Fact]
+        public void TrimsStringWithCharArray()
+        {
+            Assert.True(
+                new TrimmedLeftText(" \b   \t      Hello! \t \b  ", new char[] { '\b', '\t', ' ' }).AsString() == "Hello! \t \b  "
+            );
+        }
+        [Fact]
+        public void TrimsStringWithIText()
+        {
+            Assert.True(
+                new TrimmedLeftText("Hello! ", new TextOf("Hell")).AsString() == "o! "
+            );
+        }
+
+        [Fact]
+        public void TrimsITextWithString()
+        {
+            Assert.True(
+                new TrimmedLeftText(new TextOf(" \b   \t      Hello! \t \b  "), " \b   \t      ").AsString() == "Hello! \t \b  "
+            );
+        }
+        [Fact]
+        public void TrimsITextWithCharArray()
+        {
+            Assert.True(
+                new TrimmedLeftText(new TextOf(" \b   \t      Hello! \t \b  "), new char[] { '\b', '\t', ' ' }).AsString() == "Hello! \t \b  "
+            );
+        }
+        [Fact]
+        public void TrimsITextWithIText()
+        {
+            Assert.True(
+                new TrimmedLeftText(new TextOf(" \b   \t      Hello! \t \b  "), new TextOf(" \b   \t      ")).AsString() == "Hello! \t \b  "
+            );
         }
     }
 }

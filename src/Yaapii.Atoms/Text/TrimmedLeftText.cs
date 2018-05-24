@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Yaapii.Atoms.Text
 {
@@ -31,15 +29,84 @@ namespace Yaapii.Atoms.Text
     /// </summary>
     public sealed class TrimmedLeftText : IText
     {
-        private readonly IText _origin;
+        private readonly IText text;
+        private readonly IText trimText;
 
+        /// <summary>
+        /// A <see cref="string"/> trimmed (removed whitespaces) on the left side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        public TrimmedLeftText(string text) : this(new TextOf(text))
+        {
+        }
+
+        /// <summary>
+        /// A <see cref="char"/>[] trimmed (removed whitespaces) on the left side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        public TrimmedLeftText(char[] text) : this(new TextOf(text))
+        {
+        }
         /// <summary>
         /// A <see cref="IText"/> trimmed (removed whitespaces) on the left side.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public TrimmedLeftText(IText text)
+        public TrimmedLeftText(IText text) : this(text, new TextOf("\b\f\n\r\t\v "))
         {
-            this._origin = text;
+        }
+
+        /// <summary>
+        /// A <see cref="string"/> trimmed with another <see cref="string"/> on the left side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        /// <param name="trimText">text that trims the text</param>
+        public TrimmedLeftText(string text, string trimText) : this(new TextOf(text), new TextOf(trimText))
+        {
+        }
+        /// <summary>
+        /// A <see cref="string"/> trimmed with a <see cref="char"/>[] on the left side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        /// <param name="trimText">text that trims the text</param>
+        public TrimmedLeftText(string text, char[] trimText) : this(new TextOf(text), new TextOf(trimText))
+        {
+        }
+
+        /// <summary>
+        /// A <see cref="string"/> trimmed with a <see cref="IText"/> on the left side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        /// <param name="trimText">text that trims the text</param>
+        public TrimmedLeftText(string text, IText trimText) : this(new TextOf(text), trimText)
+        {
+        }
+
+        /// <summary>
+        /// A <see cref="IText"/> trimmed with a <see cref="string"/> on the left side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        /// <param name="trimText">text that trims the text</param>
+        public TrimmedLeftText(IText text, string trimText) : this(text, new TextOf(trimText))
+        {
+        }
+        /// <summary>
+        /// A <see cref="IText"/> trimmed with a <see cref="char"/>[] on the left side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        /// <param name="trimText">text that trims the text</param>
+        public TrimmedLeftText(IText text, char[] trimText) : this(text, new TextOf(trimText))
+        {
+        }
+
+        /// <summary>
+        /// A <see cref="IText"/> trimmed with another <see cref="IText"/> on the left side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        /// <param name="trimText">text that trims the text</param>
+        public TrimmedLeftText(IText text, IText trimText)
+        {
+            this.text = text;
+            this.trimText = trimText;
         }
 
         /// <summary>
@@ -48,8 +115,9 @@ namespace Yaapii.Atoms.Text
         /// <returns>the content as a string</returns>
         public String AsString()
         {
-            String text = this._origin.AsString();
-            return text.TrimStart();
+            return this.text.AsString().TrimStart(
+                this.trimText.AsString().ToCharArray()
+            );
         }
 
         /// <summary>
