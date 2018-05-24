@@ -85,6 +85,19 @@ namespace Yaapii.Atoms.Enumerable.Tests
                     (ex, enumerable) => throw ex
                 ).Value());
         }
+
+        [Fact]
+        public void FallbackShowsGivenError()
+        {
+            Assert.Throws<NotFiniteNumberException>(() =>
+                new ItemAt<string>(
+                    new EnumerableOf<string>(),
+                    12,
+                    new NotFiniteNumberException("Cannot do this!")
+                ).Value()
+            );
+        }
+
         [Fact]
         public void StickyTest()
         {

@@ -53,6 +53,29 @@ namespace Yaapii.Atoms.Enumerable
         private readonly IScalar<T> saved;
 
         /// <summary>
+        /// First element in a <see cref="IEnumerable{T}"/> with given Exception thrwon on fallback
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="ex"></param>
+        public ItemAt(IEnumerable<T> source, Exception ex) : this(source, 0, ex)
+        { }
+
+        /// <summary>
+        /// Element at position in <see cref="IEnumerable{T}"/> with given Exception thrown on fallback
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="position"></param>
+        /// <param name="ex"></param>
+        public ItemAt(IEnumerable<T> source, int position, Exception ex) : this(
+            source,
+            position,
+            new FuncOf<IEnumerable<T>, T>(
+                (itr) => throw ex
+            )
+        )
+        { }
+
+        /// <summary>
         /// First element in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
