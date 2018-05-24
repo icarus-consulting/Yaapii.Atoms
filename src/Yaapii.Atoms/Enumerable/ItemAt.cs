@@ -51,6 +51,29 @@ namespace Yaapii.Atoms.Enumerable
         private readonly int _pos;
 
         /// <summary>
+        /// First element in a <see cref="IEnumerable{T}"/> with given Exception thrwon on fallback
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="exToThrow"></param>
+        public ItemAt(IEnumerable<T> source, Exception exToThrow) : this(source, 0, exToThrow)
+        { }
+
+        /// <summary>
+        /// Element at position in <see cref="IEnumerable{T}"/> with given Exception thrown on fallback
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="position"></param>
+        /// <param name="exToThrow"></param>
+        public ItemAt(IEnumerable<T> source, int position, Exception exToThrow) : this(
+            source,
+            position,
+            new FuncOf<IEnumerable<T>, T>(
+                (itr) => throw exToThrow
+            )
+        )
+        { }
+
+        /// <summary>
         /// First element in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
