@@ -41,13 +41,6 @@ namespace Yaapii.Atoms.Text
         }
 
         /// <summary>
-        /// A <see cref="char"/>[] trimmed (removed whitespaces) on the left side.
-        /// </summary>
-        /// <param name="text">text to trim</param>
-        public TrimmedLeftText(char[] text) : this(new TextOf(text))
-        {
-        }
-        /// <summary>
         /// A <see cref="IText"/> trimmed (removed whitespaces) on the left side.
         /// </summary>
         /// <param name="text">text to trim</param>

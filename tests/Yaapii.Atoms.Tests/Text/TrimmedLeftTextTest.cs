@@ -50,13 +50,6 @@ namespace Yaapii.Atoms.Text.Tests
             );
         }
         [Fact]
-        public void TrimsCharArray()
-        {
-            Assert.True(
-                new TrimmedLeftText(new char[] { ' ', '\t', '\b', 'H', 'e', 'l', 'l', 'o', '!', ' ', '\t', '\b' }).AsString() == "Hello! \t\b"
-            );
-        }
-        [Fact]
         public void TrimsIText()
         {
             Assert.True(
