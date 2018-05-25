@@ -45,10 +45,10 @@ public sealed class Zip : IInput
     private readonly System.IO.DirectoryInfo origin;
 
     /// <summary>
-    /// Zips the Stream
+    /// Zip all Files in an Directory
     /// not recursive
     /// </summary>
-    /// <param name="origin"></param>
+    /// <param name="origin"> the directory with the files to zip</param>
     public Zip(System.IO.DirectoryInfo origin)
     {
         this.origin = origin;
