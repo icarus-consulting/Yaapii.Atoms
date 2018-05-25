@@ -36,7 +36,8 @@ using Yaapii.Atoms;
 using Yaapii.Atoms.IO;
 
 // <summary>
-/// Zip Files an Directory
+/// Zip all Files in an Directory
+/// 
 /// </summary>
 public sealed class Zip : IInput
 {
@@ -45,6 +46,7 @@ public sealed class Zip : IInput
 
     /// <summary>
     /// Zips the Stream
+    /// not recursive
     /// </summary>
     /// <param name="origin"></param>
     public Zip(System.IO.DirectoryInfo origin)
@@ -53,7 +55,7 @@ public sealed class Zip : IInput
     }
 
     /// <summary>
-    /// Zipped Stream
+    /// The Zipped Files as a Stream
     /// </summary>
     /// <returns></returns>
     public Stream Stream()

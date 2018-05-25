@@ -23,7 +23,6 @@ namespace Yaapii.Atoms.IO.Tests
                 newFile.Close();
 
                 var streamOfZipped = new Zip(folder);
-
                 Assert.InRange<long>(streamOfZipped.Stream().Length, 1, long.MaxValue);
 
             }
@@ -31,6 +30,32 @@ namespace Yaapii.Atoms.IO.Tests
             {
 
                 throw;
+            }
+            finally
+            {
+                Directory.Delete(folderPath, true);
+            }
+        }
+
+        [Fact]
+        public void EntryExistsInStream()
+        {
+            string folderPath = Path.GetTempPath() + "\\" + "ZipTestFolder";
+            try
+            {
+                var folder = Directory.CreateDirectory(folderPath);
+                var newFile = File.Create(folder.FullName + "\\FileToZipOne.txt");
+                newFile.Close();
+                newFile = File.Create(folder.FullName + "\\FileToZipTwo.txt");
+                newFile.Close();
+                newFile = File.Create(folder.FullName + "\\FileToZipThree.txt");
+                newFile.Close();
+
+                var streamOfZipped = new Zip(folder);
+
+                var archive = new System.IO.Compression.ZipArchive(streamOfZipped.Stream());
+                Assert.True(archive.GetEntry(folder.FullName + "\\FileToZipTwo.txt") != null);
+
             }
             finally
             {
