@@ -26,11 +26,6 @@ namespace Yaapii.Atoms.IO.Tests
                 Assert.InRange<long>(streamOfZipped.Stream().Length, 1, long.MaxValue);
 
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
             finally
             {
                 Directory.Delete(folderPath, true);
