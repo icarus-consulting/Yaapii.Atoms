@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using System.IO;
+using System.IO.Compression;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -48,7 +49,7 @@ namespace Yaapii.Atoms.IO.Tests
 
                 var streamOfZipped = new Zip(folder);
 
-                var archive = new System.IO.Compression.ZipArchive(streamOfZipped.Stream());
+                var archive = new ZipArchive(streamOfZipped.Stream());
                 Assert.True(archive.GetEntry(folder.FullName + "\\FileToZipTwo.txt") != null);
 
             }

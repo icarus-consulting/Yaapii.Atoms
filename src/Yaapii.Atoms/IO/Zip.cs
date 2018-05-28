@@ -32,6 +32,7 @@ using java.util.zip.ZipEntry;
 using java.util.zip.ZipOutputStream;
 */
 using System.IO;
+using System.IO.Compression;
 using Yaapii.Atoms;
 using Yaapii.Atoms.IO;
 
@@ -61,7 +62,7 @@ public sealed class Zip : IInput
     public Stream Stream()
     {
         MemoryStream memory = new MemoryStream();
-        using (var zip = new System.IO.Compression.ZipArchive(memory, System.IO.Compression.ZipArchiveMode.Create, true))
+        using (var zip = new ZipArchive(memory, System.IO.Compression.ZipArchiveMode.Create, true))
         {
             foreach (var file in origin.GetFiles())
             {
