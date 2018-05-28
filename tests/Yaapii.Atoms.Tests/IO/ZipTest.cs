@@ -12,7 +12,7 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void HasData()
         {
-            string folderPath = Path.GetDirectoryName("ZipTests"); //Path.GetTempPath() + "\\" + "ZipTestFolder";
+            string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "ZipTest");
             try
             {
                 var folder = Directory.CreateDirectory(folderPath);
@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void HasEntry()
         {
-            string folderPath = Path.GetDirectoryName("ZipTests");  //Path.GetTempPath() + "\\" + "ZipTestFolder";
+            string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "ZipTest");
             try
             {
                 var folder = Directory.CreateDirectory(folderPath);
