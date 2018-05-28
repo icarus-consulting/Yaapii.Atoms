@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void HasEntry()
         {
-            string folderPath = Path.GetTempPath() + "\\" + "ZipTestFolder";
+            string folderPath = Path.GetDirectoryName("ZipTests");  //Path.GetTempPath() + "\\" + "ZipTestFolder";
             try
             {
                 var folder = Directory.CreateDirectory(folderPath);
