@@ -9,7 +9,7 @@ namespace Yaapii.Atoms.IO.Tests
     public class ZipTest
     {
         [Fact]
-        public void ReturnsStreamGreater0()
+        public void HasData()
         {
             string folderPath = Path.GetTempPath() + "\\" + "ZipTestFolder";
             try
