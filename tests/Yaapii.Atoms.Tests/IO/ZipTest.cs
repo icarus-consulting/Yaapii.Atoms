@@ -22,8 +22,8 @@ namespace Yaapii.Atoms.IO.Tests
                 newFile = File.Create(folder.FullName + "\\FileToZipThree.txt");
                 newFile.Close();
 
-                var streamOfZipped = new Zip(folder);
-                Assert.InRange<long>(streamOfZipped.Stream().Length, 1, long.MaxValue);
+                var stream = new Zip(folder);
+                Assert.InRange<long>(stream.Stream().Length, 1, long.MaxValue);
 
             }
             finally
