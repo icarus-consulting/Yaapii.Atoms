@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.IO.Tests
         }
 
         [Fact]
-        public void EntryExistsInStream()
+        public void HasEntry()
         {
             string folderPath = Path.GetTempPath() + "\\" + "ZipTestFolder";
             try
