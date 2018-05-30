@@ -12,15 +12,15 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void HasData()
         {
-            string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "ZipTest");
+            string folder = Path.Combine(Directory.GetCurrentDirectory(), "ZipTest");
             try
             {
-                var folder = Directory.CreateDirectory(folderPath);
-                var newFile = File.Create(folder.FullName + "\\FileToZipOne.txt");
+                Directory.CreateDirectory(folder);
+                var newFile = File.Create(folder + "\\FileToZipOne.txt");
                 newFile.Close();
-                newFile = File.Create(folder.FullName + "\\FileToZipTwo.txt");
+                newFile = File.Create(folder + "\\FileToZipTwo.txt");
                 newFile.Close();
-                newFile = File.Create(folder.FullName + "\\FileToZipThree.txt");
+                newFile = File.Create(folder + "\\FileToZipThree.txt");
                 newFile.Close();
 
                 var stream = new Zip(folder);
@@ -29,33 +29,33 @@ namespace Yaapii.Atoms.IO.Tests
             }
             finally
             {
-                Directory.Delete(folderPath, true);
+                Directory.Delete(folder, true);
             }
         }
 
         [Fact]
         public void HasEntry()
         {
-            string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "ZipTest");
+            string folder = Path.Combine(Directory.GetCurrentDirectory(), "ZipTest");
             try
             {
-                var folder = Directory.CreateDirectory(folderPath);
-                var newFile = File.Create(folder.FullName + "\\FileToZipOne.txt");
+                Directory.CreateDirectory(folder);
+                var newFile = File.Create(folder + "\\FileToZipOne.txt");
                 newFile.Close();
-                newFile = File.Create(folder.FullName + "\\FileToZipTwo.txt");
+                newFile = File.Create(folder + "\\FileToZipTwo.txt");
                 newFile.Close();
-                newFile = File.Create(folder.FullName + "\\FileToZipThree.txt");
+                newFile = File.Create(folder + "\\FileToZipThree.txt");
                 newFile.Close();
 
                 var streamOfZipped = new Zip(folder);
 
                 var archive = new ZipArchive(streamOfZipped.Stream());
-                Assert.True(archive.GetEntry(folder.FullName + "\\FileToZipTwo.txt") != null);
+                Assert.True(archive.GetEntry(folder + "\\FileToZipTwo.txt") != null);
 
             }
             finally
             {
-                Directory.Delete(folderPath, true);
+                Directory.Delete(folder, true);
             }
         }
     }

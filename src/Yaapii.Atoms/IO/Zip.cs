@@ -19,29 +19,27 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
 using System.IO;
 using System.IO.Compression;
 using Yaapii.Atoms;
+using Yaapii.Atoms.Error;
 using Yaapii.Atoms.IO;
+using Yaapii.Atoms.Text;
 
-// <summary>
-/// Zip all Files in an Directory
-/// 
-/// </summary>
+///<summary>
+///Zips all Files in a Directory
+///</summary>
 public sealed class Zip : IInput
 {
-
-    private readonly System.IO.DirectoryInfo origin;
+    private readonly string path;
 
     /// <summary>
-    /// Zip all Files in an Directory
-    /// not recursive
+    /// Zips all Files in a Directory
     /// </summary>
-    /// <param name="origin"> the directory with the files to zip</param>
-    public Zip(System.IO.DirectoryInfo origin)
+    /// <param name="path"> the directory with the files to zip</param>
+    public Zip(string path)
     {
-        this.origin = origin;
+        this.path = path;
     }
 
     /// <summary>
@@ -50,13 +48,13 @@ public sealed class Zip : IInput
     /// <returns></returns>
     public Stream Stream()
     {
-        MemoryStream memory = new MemoryStream();
-        using (var zip = new ZipArchive(memory, System.IO.Compression.ZipArchiveMode.Create, true))
+        AssumeIsDirectory(this.path);
+        var memory = new MemoryStream();
+        using (var zip = new ZipArchive(memory, ZipArchiveMode.Create, true))
         {
-            foreach (var file in origin.GetFiles())
+            foreach (var file in Directory.GetFiles(this.path,"*",SearchOption.AllDirectories))
             {
-                var entry = zip.CreateEntry(file.FullName);
-
+                var entry = zip.CreateEntry(file);
                 new LengthOf(
                     new TeeInput(
                         new InputOf(file),
@@ -66,5 +64,18 @@ public sealed class Zip : IInput
             }
         }
         return memory;
+    }
+
+    private void AssumeIsDirectory(string path)
+    {
+        new FailPrecise(
+            new FailWhen(() => !Directory.Exists(path)),
+            new DirectoryNotFoundException(
+                new FormattedText(
+                    "Path is not a directory or does not exist: {0}",
+                    path
+                ).AsString()
+            )
+        ).Go();
     }
 }
