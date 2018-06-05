@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.Text
     /// <summary>
     /// A <see cref="IText"/> as Base64 decoded <see cref="IText"/>
     /// </summary>
-    public sealed class Base64DecodedText : IText
+    public sealed class Base64Text : IText
     {
         private readonly IText _origin;
 
@@ -37,14 +37,14 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="string"/> as Base64 decoded <see cref="IText"/>
         /// </summary>
         /// <param name="str">string to decode</param>
-        public Base64DecodedText(String str) : this(new TextOf(str))
+        public Base64Text(String str) : this(new TextOf(str))
         { }
 
         /// <summary>
         /// A <see cref="IText"/> as Base64 decoded <see cref="IText"/>
         /// </summary>
         /// <param name="text">text to decode</param>
-        public Base64DecodedText(IText text)
+        public Base64Text(IText text)
         {
             this._origin =
                 new TextOf(
