@@ -21,61 +21,53 @@
 // SOFTWARE.
 
 using System;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Text
 {
     /// <summary>
-    /// A <see cref="IText"/> trimmed (removed whitespaces) on the right side.
+    /// A <see cref="IText"/> trimmed (removed whitespaces) on the left side.
     /// </summary>
-    public sealed class TrimmedRightText : IText
+    public sealed class RemovedRightText : IText
     {
         private readonly IText text;
-        private readonly IScalar<char[]> trimText;
+        private readonly IText removeText;
 
         /// <summary>
-        /// A <see cref="string"/> trimmed (removed whitespaces) on the right side.
+        /// A <see cref="string"/> trimmed with another <see cref="string"/> on the left side.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public TrimmedRightText(string text) : this(new TextOf(text))
+        /// <param name="removeText">text that trims the text</param>
+        public RemovedRightText(string text, string removeText) : this(new TextOf(text), new TextOf(removeText))
         {
         }
 
         /// <summary>
-        /// A <see cref="IText"/> trimmed (removed whitespaces) on the right side.
+        /// A <see cref="string"/> trimmed with a <see cref="IText"/> on the left side.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public TrimmedRightText(IText text) : this(text, new ScalarOf<char[]>(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' }))
+        /// <param name="removeText">text that trims the text</param>
+        public RemovedRightText(string text, IText removeText) : this(new TextOf(text), removeText)
         {
         }
 
         /// <summary>
-        /// A <see cref="string"/> trimmed with a <see cref="char"/>[] on the right side.
+        /// A <see cref="IText"/> trimmed with a <see cref="string"/> on the left side.
         /// </summary>
         /// <param name="text">text to trim</param>
-        /// <param name="trimText">text that trims the text</param>
-        public TrimmedRightText(string text, char[] trimText) : this(new TextOf(text), trimText)
+        /// <param name="removeText">text that trims the text</param>
+        public RemovedRightText(IText text, string removeText) : this(text, new TextOf(removeText))
         {
         }
 
         /// <summary>
-        /// A <see cref="IText"/> trimmed with a <see cref="char"/>[] on the right side.
+        /// A <see cref="IText"/> trimmed with another <see cref="IText"/> on the left side.
         /// </summary>
         /// <param name="text">text to trim</param>
-        /// <param name="trimText">text that trims the text</param>
-        public TrimmedRightText(IText text, char[] trimText) : this(text, new ScalarOf<char[]>(trimText))
-        {
-        }
-
-        /// <summary>
-        /// A <see cref="IText"/> trimmed with a IScalar<see cref="char"/>[] on the right side.
-        /// </summary>
-        /// <param name="text">text to trim</param>
-        /// <param name="trimText">text that trims the text</param>
-        public TrimmedRightText(IText text, IScalar<char[]> trimText)
+        /// <param name="removeText">text that trims the text</param>
+        public RemovedRightText(IText text, IText removeText)
         {
             this.text = text;
-            this.trimText = trimText;
+            this.removeText = removeText;
         }
 
         /// <summary>
@@ -84,9 +76,17 @@ namespace Yaapii.Atoms.Text
         /// <returns>the content as a string</returns>
         public String AsString()
         {
-            return this.text.AsString()
-                .TrimEnd(this.trimText.Value()
-            );
+            var endsWith =
+                this.text.AsString()
+                .EndsWith(
+                    this.removeText.AsString()
+                );
+            if (endsWith)
+            {
+                int startIndex = this.text.AsString().Length - this.removeText.AsString().Length;
+                return this.text.AsString().Remove(startIndex, this.removeText.AsString().Length);
+            }
+            return this.text.AsString();
         }
 
         /// <summary>

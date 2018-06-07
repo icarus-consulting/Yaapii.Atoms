@@ -21,83 +21,57 @@
 // SOFTWARE.
 
 using Xunit;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Text.Tests
 {
     public sealed class TrimmedLeftTextTest
     {
         [Fact]
-        public void ConvertsText()
-        {
-            Assert.True(
-                new TrimmedLeftText(new TextOf("  Hello!   \t ")).AsString() == "Hello!   \t ",
-                "Can't trim text");
-        }
-
-        [Fact]
-        public void TrimmedBlankTextIsEmptyText()
-        {
-            Assert.True(
-                new TrimmedLeftText(new TextOf("  \t ")).AsString() == "",
-                "Can't trim a blank text");
-        }
-
-        [Fact]
         public void TrimsString()
         {
             Assert.True(
-                new TrimmedLeftText(" \b  Hello!").AsString() == "Hello!"
+                new TrimmedLeftText(" \b   \t      Hello! \t \b  ").AsString() == "Hello! \t \b  "
             );
         }
+
         [Fact]
         public void TrimsIText()
         {
             Assert.True(
-                new TrimmedLeftText(new TextOf(" \b  Hello! \b  ")).AsString() == "Hello! \b  "
+                new TrimmedLeftText(new TextOf(" \b   \t      Hello! \t \b  ")).AsString() == "Hello! \t \b  "
             );
         }
 
-        [Fact]
-        public void TrimsStringWithString()
-        {
-            Assert.True(
-                new TrimmedLeftText("Hello!", "Hell").AsString() == "o!"
-            );
-        }
         [Fact]
         public void TrimsStringWithCharArray()
         {
             Assert.True(
-                new TrimmedLeftText(" \b   \t      Hello! \t \b  ", new char[] { '\b', '\t', ' ' }).AsString() == "Hello! \t \b  "
-            );
-        }
-        [Fact]
-        public void TrimsStringWithIText()
-        {
-            Assert.True(
-                new TrimmedLeftText("Hello! ", new TextOf("Hell")).AsString() == "o! "
+                new TrimmedLeftText(" \b   \t      Hello! \t \b  ", new char[] { '\b', '\t', ' ', 'H', 'o' }).AsString() == "ello! \t \b  "
             );
         }
 
         [Fact]
-        public void TrimsITextWithString()
-        {
-            Assert.True(
-                new TrimmedLeftText(new TextOf(" \b   \t      Hello! \t \b  "), " \b   \t      ").AsString() == "Hello! \t \b  "
-            );
-        }
-        [Fact]
         public void TrimsITextWithCharArray()
         {
             Assert.True(
-                new TrimmedLeftText(new TextOf(" \b   \t      Hello! \t \b  "), new char[] { '\b', '\t', ' ' }).AsString() == "Hello! \t \b  "
+                new TrimmedLeftText(new TextOf(" \b   \t      Hello! \t \b  "), new char[] { '\b', '\t', ' ', 'H', 'o' }).AsString() == "ello! \t \b  "
             );
         }
+
         [Fact]
-        public void TrimsITextWithIText()
+        public void TrimsITextWithIScalar()
         {
             Assert.True(
-                new TrimmedLeftText(new TextOf(" \b   \t      Hello! \t \b  "), new TextOf(" \b   \t      ")).AsString() == "Hello! \t \b  "
+                new TrimmedLeftText(new TextOf(" \b   \t      Hello! \t \b  "), new ScalarOf<char[]>(() => new char[] { '\b', '\t', ' ', 'H', 'o' })).AsString() == "ello! \t \b  "
+            );
+        }
+
+        [Fact]
+        public void TrimsWhitespaceEscapeSequences()
+        {
+            Assert.True(
+                new TrimmedLeftText(new TextOf("   \b \f \n \r \t \v   ")).AsString() == string.Empty
             );
         }
     }

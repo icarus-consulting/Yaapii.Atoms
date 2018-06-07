@@ -20,29 +20,50 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Yaapii.Atoms.Text.Tests
 {
-    public sealed class TrimmedTextTest
+    public sealed class RemovedRightTextTests
     {
         [Fact]
-        public void ConvertsText()
+        public void RemovesStringInString()
         {
             Assert.True(
-                new TrimmedText(new TextOf("  Hello!   \t ")).AsString() == "Hello!",
-                "Can't trim a text");
+                new RemovedRightText(" Hello! ", "o! ").AsString() == " Hell"
+            );
         }
 
         [Fact]
-        public void TrimmedBlankTextIsEmptyText()
+        public void RemovesStringInIText()
         {
             Assert.True(
-                new TrimmedText(new TextOf("  \t ")).AsString() == "",
-                "Can't trim a blank text");
+                new RemovedRightText(" Hello! ", new TextOf("o! ")).AsString() == " Hell"
+            );
+        }
+
+        [Fact]
+        public void RemovesITextInString()
+        {
+            Assert.True(
+                new RemovedRightText(new TextOf(" Hello! "), "o! ").AsString() == " Hell"
+            );
+        }
+
+        [Fact]
+        public void RemovesITextInIText()
+        {
+            Assert.True(
+                new RemovedRightText(new TextOf(" Hello! "), new TextOf("o! ")).AsString() == " Hell"
+            );
+        }
+
+        [Fact]
+        public void RemovesWhitespaces()
+        {
+            Assert.True(
+                new RemovedRightText(new TextOf("   "), new TextOf("   ")).AsString() == string.Empty
+            );
         }
     }
 }

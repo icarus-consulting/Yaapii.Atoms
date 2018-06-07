@@ -21,8 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Text
 {
@@ -31,15 +30,70 @@ namespace Yaapii.Atoms.Text
     /// </summary>
     public sealed class TrimmedText : IText
     {
-        private readonly IText _origin;
+        private readonly IText text;
+        private readonly IScalar<char[]> trimText;
+
+        ///// <summary>
+        ///// A <see cref="IText"/> without whitespaces or control characters on both sides.
+        ///// </summary>
+        ///// <param name="text">text to trim</param>
+        //public TrimmedText(IText text) : this(text, new TextOf("\b\f\n\r\t\v "))
+        //{
+        //}
+
+        ///// <summary>
+        ///// A <see cref="IText"/> trimmed with another <see cref="IText"/> on the right side.
+        ///// </summary>
+        ///// <param name="text">text to trim</param>
+        ///// <param name="trimText">text that trims the text</param>
+        //public TrimmedText(IText text, IText trimText)
+        //{
+        //    this.text = text;
+        //    this.trimText = trimText;
+        //}
 
         /// <summary>
-        /// A <see cref="IText"/> without whitespaces or control characters on both sides.
+        /// A <see cref="string"/> trimmed (removed whitespaces) on the left side.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public TrimmedText(IText text)
+        public TrimmedText(string text) : this(new TextOf(text))
         {
-            this._origin = text;
+        }
+
+        /// <summary>
+        /// A <see cref="IText"/> trimmed (removed whitespaces) on the left side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        public TrimmedText(IText text) : this(text, new ScalarOf<char[]>(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' }))
+        {
+        }
+
+        /// <summary>
+        /// A <see cref="string"/> trimmed with a <see cref="char"/>[] on the left side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        /// <param name="trimText">text that trims the text</param>
+        public TrimmedText(string text, char[] trimText) : this(new TextOf(text), trimText)
+        {
+        }
+
+        /// <summary>
+        /// A <see cref="IText"/> trimmed with a <see cref="char"/>[] on the left side.
+        /// </summary>
+        /// <param name="text">text to trim</param>
+        /// <param name="trimText">text that trims the text</param>
+        public TrimmedText(IText text, char[] trimText) : this(text, new ScalarOf<char[]>(trimText))
+        {
+        }
+        /// <summary>
+        /// A <see cref="IText"/> trimmed with a IScalar<see cref="char"/>[] on the left side.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="trimText"></param>
+        public TrimmedText(IText text, IScalar<char[]> trimText)
+        {
+            this.text = text;
+            this.trimText = trimText;
         }
 
         /// <summary>
@@ -48,7 +102,8 @@ namespace Yaapii.Atoms.Text
         /// <returns>the content as a string</returns>
         public String AsString()
         {
-            return this._origin.AsString().Trim();
+            return this.text.AsString()
+                .Trim(trimText.Value());
         }
 
         /// <summary>
@@ -70,6 +125,5 @@ namespace Yaapii.Atoms.Text
         {
             return other.AsString().Equals(this.AsString());
         }
-
     }
 }
