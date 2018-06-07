@@ -20,50 +20,49 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+
 using System;
+using System.Collections.Generic;
+using System.Text;
+using Xunit;
 
-namespace Yaapii.Atoms.Error
+namespace Yaapii.Atoms.Text.Tests
 {
-    /// <summary>
-    /// Fail if object is null.
-    /// </summary>
-    public sealed class FailNull : IFail
+    public sealed class ComparableTextTests
     {
-        private readonly object _obj;
-        private readonly Exception _ex;
-
-        /// <summary>
-        /// Fail if object is null.
-        /// </summary>
-        /// <param name="obj">object to check</param>
-        public FailNull(object obj) : this(obj, "Parameter is null") { }
-
-        /// <summary>
-        /// Fail if object is null.
-        /// </summary>
-        /// <param name="obj">object to check</param>
-        /// <param name="hint">msg to put in exception</param>
-        public FailNull(object obj, string hint) :this(
-            obj, new ArgumentNullException(hint))
-        { }
-
-        /// <summary>
-        /// Fail if object is null.
-        /// </summary>
-        /// <param name="obj">object to check</param>
-        /// <param name="ex">specific exception which will be thrown</param>
-        public FailNull(object obj, Exception ex)
+        [Fact]
+        public void Compares()
         {
-            this._obj = obj;
-            this._ex = ex;
+            Assert.True(
+                new ComparableText(
+                    new TextOf("Hallo Welt")
+                ).CompareTo(
+                    new TextOf("Tschüss Welt")
+                ) <= -1
+            );
         }
 
-        /// <summary>
-        /// Fail if necessary.
-        /// </summary>
-        public void Go()
+        [Fact]
+        public void SeesDIfferences()
         {
-            if (_obj == null) throw this._ex;
+            Assert.True(
+                new ComparableText(
+                    new TextOf("Timm")
+                ).Equals(
+                    new TextOf("Jan-Peter")
+                ) == false
+            );
+        }
+
+        [Fact]
+        public void MatchesString()
+        {
+            Assert.True(
+                new ComparableText(
+                    new TextOf("Timm")
+                ).AsString()
+                == "Timm"
+            );
         }
     }
 }
