@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
-        public void TestFunc()
+        public void WorksWithFuncAndParamItems()
         {
             Assert.True(
                     new Or<int>(
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
-        public void TestFunc2()
+        public void WorksWithFuncAndListItems()
         {
             Assert.True(
                     new Or<int>(
@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
-        public void TestIFunc()
+        public void WorksWithIFunc()
         {
             Assert.False(
                     new Or<int>(
@@ -78,7 +78,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         [InlineData("DB", true)]
         [InlineData("ABC", true)]
         [InlineData("DEF", false)]
-        public void TestValueAndFunctionList(string value, bool expected)
+        public void WorksWithValueAndFunctions(string value, bool expected)
         {
             var or =
                 new Or<string>(
