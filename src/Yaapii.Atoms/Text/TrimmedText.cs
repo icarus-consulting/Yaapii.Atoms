@@ -33,25 +33,6 @@ namespace Yaapii.Atoms.Text
         private readonly IText text;
         private readonly IScalar<char[]> trimText;
 
-        ///// <summary>
-        ///// A <see cref="IText"/> without whitespaces or control characters on both sides.
-        ///// </summary>
-        ///// <param name="text">text to trim</param>
-        //public TrimmedText(IText text) : this(text, new TextOf("\b\f\n\r\t\v "))
-        //{
-        //}
-
-        ///// <summary>
-        ///// A <see cref="IText"/> trimmed with another <see cref="IText"/> on the right side.
-        ///// </summary>
-        ///// <param name="text">text to trim</param>
-        ///// <param name="trimText">text that trims the text</param>
-        //public TrimmedText(IText text, IText trimText)
-        //{
-        //    this.text = text;
-        //    this.trimText = trimText;
-        //}
-
         /// <summary>
         /// A <see cref="string"/> trimmed (removed whitespaces) on the left side.
         /// </summary>

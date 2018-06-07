@@ -25,7 +25,7 @@ using System;
 namespace Yaapii.Atoms.Text
 {
     /// <summary>
-    /// A <see cref="IText"/> trimmed (removed whitespaces) on the left side.
+    /// A <see cref="IText"/> from which another text is removed on the right side.
     /// </summary>
     public sealed class RemovedRightText : IText
     {
@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Text
         private readonly IText removeText;
 
         /// <summary>
-        /// A <see cref="string"/> trimmed with another <see cref="string"/> on the left side.
+        /// A <see cref="string"/> from which a <see cref="string"/> is removed on the right side.
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that trims the text</param>
@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Text
         }
 
         /// <summary>
-        /// A <see cref="string"/> trimmed with a <see cref="IText"/> on the left side.
+        /// A <see cref="string"/> from which a <see cref="IText"/> is removed on the right side.
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that trims the text</param>
@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Text
         }
 
         /// <summary>
-        /// A <see cref="IText"/> trimmed with a <see cref="string"/> on the left side.
+        /// A <see cref="IText"/> from which a <see cref="string"/> is removed on the right side.
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that trims the text</param>
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Text
         }
 
         /// <summary>
-        /// A <see cref="IText"/> trimmed with another <see cref="IText"/> on the left side.
+        /// A <see cref="IText"/> from which a <see cref="IText"/> is removed on the right side.
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that trims the text</param>
