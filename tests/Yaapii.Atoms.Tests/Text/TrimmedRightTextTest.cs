@@ -28,6 +28,14 @@ namespace Yaapii.Atoms.Text.Tests
     public sealed class TrimmedRightTextTest
     {
         [Fact]
+        public void TrimsWhitespaceEscapeSequences()
+        {
+            Assert.True(
+                new TrimmedRightText(new TextOf("   \b \f \n \r \t \v   ")).AsString() == string.Empty
+            );
+        }
+
+        [Fact]
         public void TrimsString()
         {
             Assert.True(
@@ -36,7 +44,7 @@ namespace Yaapii.Atoms.Text.Tests
         }
 
         [Fact]
-        public void TrimsIText()
+        public void TrimsText()
         {
             Assert.True(
                 new TrimmedRightText(new TextOf(" \b   \t      Hello! \t \b  ")).AsString() == " \b   \t      Hello!"
@@ -52,7 +60,7 @@ namespace Yaapii.Atoms.Text.Tests
         }
 
         [Fact]
-        public void TrimsITextWithCharArray()
+        public void TrimsTextWithCharArray()
         {
             Assert.True(
                 new TrimmedRightText(new TextOf(" \b   \t      Hello! \t \b  "), new char[] { '\b', '\t', ' ', 'H', '!', 'o' }).AsString() == " \b   \t      Hell"
@@ -60,7 +68,7 @@ namespace Yaapii.Atoms.Text.Tests
         }
 
         [Fact]
-        public void TrimsITextWithIText()
+        public void TrimsTextWithScalar()
         {
             Assert.True(
                 new TrimmedRightText(new TextOf(" \b   \t      Hello! \t \b  "), new ScalarOf<char[]>(() => new char[] { '\b', '\t', ' ', 'H', '!', 'o' })).AsString() == " \b   \t      Hell"
@@ -68,10 +76,50 @@ namespace Yaapii.Atoms.Text.Tests
         }
 
         [Fact]
-        public void TrimsWhitespaceEscapeSequences()
+        public void RemovesStringFromString()
         {
             Assert.True(
-                new TrimmedRightText(new TextOf("   \b \f \n \r \t \v   ")).AsString() == string.Empty
+                new TrimmedRightText(" \b   \t      Hello! \t \b   \t      H", " \b   \t      H").AsString() == " \b   \t      Hello! \t"
+            );
+        }
+
+        [Fact]
+        public void RemovesTextFromString()
+        {
+            Assert.True(
+                new TrimmedRightText(new TextOf(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").AsString() == " \b   \t      Hello! \t"
+            );
+        }
+
+        [Fact]
+        public void RemovesStringFromText()
+        {
+            Assert.True(
+                new TrimmedRightText(" \b   \t      Hello! \t \b   \t      H", new TextOf(" \b   \t      H")).AsString() == " \b   \t      Hello! \t"
+            );
+        }
+
+        [Fact]
+        public void RemovesTextFromText()
+        {
+            Assert.True(
+                new TrimmedRightText(new TextOf(" \b   \t      Hello! \t \b   \t      H"), new TextOf(" \b   \t      H")).AsString() == " \b   \t      Hello! \t"
+            );
+        }
+
+        [Fact]
+        public void RemovesTextFromScalar()
+        {
+            Assert.True(
+                new TrimmedRightText(new TextOf(" \b   \t      Hello! \t \b   \t      H"), new ScalarOf<IText>(() => new TextOf(" \b   \t      H"))).AsString() == " \b   \t      Hello! \t"
+            );
+        }
+
+        [Fact]
+        public void CanCheckTextEquality()
+        {
+            Assert.True(
+                new TrimmedRightText(new TextOf(" \b   \t      Hello! \t \b   \t      ")).Equals(new TextOf(" \b   \t      Hello!"))
             );
         }
     }
