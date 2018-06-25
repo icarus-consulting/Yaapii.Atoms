@@ -27,7 +27,7 @@ using System.Collections.Generic;
 namespace Yaapii.Atoms.Enumerator
 {
     /// <summary>
-    /// Partitioned Enumerable
+    /// Partitiones an Enumerator by a given size
     /// <para>Is a IEnumerator</para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -35,9 +35,13 @@ namespace Yaapii.Atoms.Enumerator
     {
         private readonly int size;
         private readonly IEnumerator<T> enumerator;
-
         private readonly List<T> buffer;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="enumerator"></param>
         public Partitioned(int size, IEnumerator<T> enumerator) : this(
             size,
             enumerator,
@@ -52,6 +56,9 @@ namespace Yaapii.Atoms.Enumerator
             this.buffer = buffer;
         }
         
+        /// <summary>
+        /// Returns the current buffer value.
+        /// </summary>
         public IEnumerable<T> Current
         {
             get {
@@ -71,6 +78,10 @@ namespace Yaapii.Atoms.Enumerator
             
         }
 
+        /// <summary>
+        /// Moves to the next object in the Enumerator
+        /// </summary>
+        /// <returns></returns>ma
         public bool MoveNext()
         {
             if (this.size < 1)
@@ -81,6 +92,9 @@ namespace Yaapii.Atoms.Enumerator
             return Partitionate();           
         }
 
+        /// <summary>
+        /// Resets the enumerator as well as the control buffer.
+        /// </summary>
         public void Reset()
         {
             this.enumerator.Reset();
