@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of a double
         /// </summary>
         /// <param name="input">a <see cref="double"/></param>
-        public TextOf(double input) : this(input.ToString())
+        public TextOf(double input) : this(input.ToString(CultureInfo.InvariantCulture))
         { }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of a float
         /// </summary>
         /// <param name="input">a <see cref="float"/></param>
-        public TextOf(float input) : this(input.ToString())
+        public TextOf(float input) : this(input.ToString(CultureInfo.InvariantCulture))
         { }
 
         /// <summary>
