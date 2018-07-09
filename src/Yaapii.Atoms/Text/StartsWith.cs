@@ -3,7 +3,7 @@
 namespace Yaapii.Atoms.Text
 {
     /// <summary>
-    /// Checks if a text starts with an given content.
+    /// Checks if a text starts with a given content.
     /// </summary>
     public sealed class StartsWith : IScalar<bool>
     {
@@ -11,7 +11,7 @@ namespace Yaapii.Atoms.Text
         private readonly IText _start;
 
         /// <summary>
-        /// Checks if a <see cref="IText"/> ends with an given <see cref="string"/>
+        /// Checks if a <see cref="IText"/> starts with a given <see cref="string"/>
         /// </summary>
         /// <param name="text">Text to test</param>
         /// <param name="start">Starting content to use in the test</param>
@@ -22,7 +22,7 @@ namespace Yaapii.Atoms.Text
         { }
 
         /// <summary>
-        /// Checks if a <see cref="IText"/> ends with an given <see cref="IText"/>
+        /// Checks if a <see cref="IText"/> starts with a given <see cref="IText"/>
         /// </summary>
         /// <param name="text">Text to test</param>
         /// <param name="start">Starting content to use in the test</param>

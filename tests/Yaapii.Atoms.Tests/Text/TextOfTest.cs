@@ -153,7 +153,7 @@ namespace Yaapii.Atoms.Text.Tests
 
             double doub = 0.2545;
 
-            var content = doub.ToString(CultureInfo.CurrentCulture);
+            var content = doub.ToString(CultureInfo.InvariantCulture);
 
             Assert.True(
                     new TextOf(doub
@@ -181,7 +181,7 @@ namespace Yaapii.Atoms.Text.Tests
             //var content = "0,2545";
 
             float doub = 0.2545f;
-            var content = doub.ToString(CultureInfo.CurrentCulture);
+            var content = doub.ToString(CultureInfo.InvariantCulture);
 
             Assert.True(
                     new TextOf(doub

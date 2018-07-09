@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Yaapii.Atoms.Error
 {
@@ -32,7 +30,7 @@ namespace Yaapii.Atoms.Error
     public sealed class FailWhen : IFail
     {
         private readonly Func<bool> _condition;
-        private readonly string _hint;
+        private readonly Exception _ex;
 
         /// <summary>
         /// Fail if condition is matched.
@@ -61,10 +59,20 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         /// <param name="condition">condition to apply</param>
         /// <param name="hint">msg to put in exception</param>
-        public FailWhen(Func<bool> condition, string hint)
+        public FailWhen(Func<bool> condition, string hint) : this(
+            condition, new ArgumentException(hint)
+        )
+        { }
+
+        /// <summary>
+        /// Fail if condition is matched.
+        /// </summary>
+        /// <param name="condition">condition to apply</param>
+        /// <param name="ex">specific exception which will be thrown</param>
+        public FailWhen(Func<bool> condition, Exception ex)
         {
-            _condition = condition;
-            _hint = hint;
+            this._condition = condition;
+            this._ex = ex;
         }
 
         /// <summary>
@@ -72,7 +80,7 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         public void Go()
         {
-            if (_condition.Invoke()) throw new ArgumentException(_hint);
+            if (_condition.Invoke()) throw this._ex;
         }
     }
 }

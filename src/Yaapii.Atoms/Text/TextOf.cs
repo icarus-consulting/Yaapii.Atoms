@@ -48,7 +48,11 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of a double
         /// </summary>
         /// <param name="input">a <see cref="double"/></param>
-        public TextOf(double input) : this(input.ToString())
+        public TextOf(double input) : this(
+            new StickyScalar<string>(
+                () => input.ToString(CultureInfo.InvariantCulture)
+            )
+        )
         { }
 
         /// <summary>
@@ -56,14 +60,22 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="input">a <see cref="double"/></param>
         /// <param name="cultureInfo">The </param>
-        public TextOf(double input, CultureInfo cultureInfo) : this(input.ToString(cultureInfo))
+        public TextOf(double input, CultureInfo cultureInfo) : this(
+            new StickyScalar<string>(
+                () => input.ToString(cultureInfo)
+            )
+        )
         { }
 
         /// <summary>
         /// A <see cref="IText"/> out of a float
         /// </summary>
         /// <param name="input">a <see cref="float"/></param>
-        public TextOf(float input) : this(input.ToString())
+        public TextOf(float input) : this(
+            new StickyScalar<string>(
+                () => input.ToString(CultureInfo.InvariantCulture)
+            )
+        )
         { }
 
         /// <summary>
@@ -71,7 +83,11 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="input">a <see cref="float"/></param>
         /// <param name="cultureInfo">The </param>
-        public TextOf(float input, CultureInfo cultureInfo) : this(input.ToString(cultureInfo))
+        public TextOf(float input, CultureInfo cultureInfo) : this(
+            new StickyScalar<string>(
+                () => input.ToString(cultureInfo)
+            )
+        )
         { }
 
         /// <summary>
