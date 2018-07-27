@@ -35,56 +35,64 @@ namespace Yaapii.Atoms.Map.Tests
         [Fact]
         public void ContainsWithExistingItem()
         {
-            var map = new MapNoNulls<int, int>(
-                new Dictionary<int, int> {
-                    {0, 0}
-                }
+            Assert.Contains(
+                new KeyValuePair<int, int>(0, 0),
+                new MapNoNulls<int, int>(
+                    new MapOf<int, int>(
+                        new KeyValuePair<int, int>(0, 0)
+                    )
+                )
             );
-            Assert.True(map.Contains(new KeyValuePair<int, int>(0, 0)));
         }
 
         [Fact]
         public void ContainsWithMissingItemKey()
         {
-            var map = new MapNoNulls<int, int>(
-                new Dictionary<int, int> {
-                    {0, 0}
-                }
+            Assert.DoesNotContain(
+                new KeyValuePair<int, int>(1, 0),
+                new MapNoNulls<int, int>(
+                    new MapOf<int, int>(
+                        new KeyValuePair<int, int>(0, 0)
+                    )
+                )
             );
-            Assert.False(map.Contains(new KeyValuePair<int, int>(1, 0)));
         }
 
         [Fact]
         public void ContainsWithMissingValue()
         {
-            var map = new MapNoNulls<int, int>(
-                new Dictionary<int, int> {
-                    {0, 0}
-                }
+            Assert.DoesNotContain(
+                new KeyValuePair<int, int>(0, 1),
+                new MapNoNulls<int, int>(
+                    new MapOf<int, int>(
+                        new KeyValuePair<int, int>(0, 0)
+                    )
+                )
             );
-            Assert.False(map.Contains(new KeyValuePair<int, int>(0, 1)));
         }
 
         [Fact]
         public void ContainsWithMissingItem()
         {
-            var map = new MapNoNulls<int, int>(
-                new Dictionary<int, int> {
-                    {0, 0}
-                }
+            Assert.DoesNotContain(
+                new KeyValuePair<int, int>(1, 1),
+                new MapNoNulls<int, int>(
+                    new MapOf<int, int>(
+                        new KeyValuePair<int, int>(0, 0)
+                    )
+                )
             );
-            Assert.False(map.Contains(new KeyValuePair<int, int>(1, 1)));
         }
 
         [Fact]
         public void ContainsWithNullKey()
         {
             var map = new MapNoNulls<object, object>(
-                new Dictionary<object, object> {
-                    {0, 0}
-                }
+                new MapOf<object, object>(
+                    new KeyValuePair<object, object>(0, 0)
+                )
             );
-            Assert.Throws(typeof(ArgumentNullException), 
+            Assert.Throws<ArgumentNullException>(
                 () => map.Contains(new KeyValuePair<object, object>(null, 0))
             );
         }
@@ -93,11 +101,11 @@ namespace Yaapii.Atoms.Map.Tests
         public void ContainsWithNullValue()
         {
             var map = new MapNoNulls<object, object>(
-                new Dictionary<object, object> {
-                    {0, 0}
-                }
+                new MapOf<object, object>(
+                    new KeyValuePair<object, object>(0, 0)
+                )
             );
-            Assert.Throws(typeof(ArgumentNullException), 
+            Assert.Throws<ArgumentNullException>(
                 () => map.Contains(new KeyValuePair<object, object>(0, null))
             );
         }
@@ -106,11 +114,11 @@ namespace Yaapii.Atoms.Map.Tests
         public void ContainsWithNullKeyAndNullValue()
         {
             var map = new MapNoNulls<object, object>(
-                new Dictionary<object, object> {
-                    {0, 0}
-                }
+                new MapOf<object, object>(
+                    new KeyValuePair<object, object>(0, 0)
+                )
             );
-            Assert.Throws(typeof(ArgumentNullException), 
+            Assert.Throws<ArgumentNullException>(
                 () => map.Contains(new KeyValuePair<object, object>(null, null))
             );
         }
@@ -119,9 +127,9 @@ namespace Yaapii.Atoms.Map.Tests
         public void ContainsKeyWithExistingKey()
         {
             var map = new MapNoNulls<int, int>(
-                new Dictionary<int, int> {
-                    {0, 0}
-                }
+                new MapOf<int, int> (
+                    new KeyValuePair<int, int>(0, 0)
+                )
             );
             Assert.True(map.ContainsKey(0));
         }
@@ -145,7 +153,7 @@ namespace Yaapii.Atoms.Map.Tests
                     {0, 0}
                 }
             );
-            Assert.Throws(typeof(ArgumentNullException), () => map.ContainsKey(null));
+            Assert.Throws<ArgumentNullException>(() => map.ContainsKey(null));
         }
 
         [Fact]
@@ -159,8 +167,8 @@ namespace Yaapii.Atoms.Map.Tests
         [Fact]
         public void AddEntryWithNullKey()
         {
-            var map = new MapNoNulls<object, object>(new Dictionary<object, object>());
-            Assert.Throws(typeof(ArgumentNullException),
+            var map = new MapNoNulls<object, object>(new MapOf<object, object>());
+            Assert.Throws<ArgumentNullException>(
                 () => map.Add(new KeyValuePair<object, object>(null, 0))
             );
         }
@@ -168,8 +176,8 @@ namespace Yaapii.Atoms.Map.Tests
         [Fact]
         public void AddEntryWithNullValue()
         {
-            var map = new MapNoNulls<object, object>(new Dictionary<object, object>());
-            Assert.Throws(typeof(ArgumentNullException),
+            var map = new MapNoNulls<object, object>(new MapOf<object, object>());
+            Assert.Throws<ArgumentNullException>(
                 () => map.Add(new KeyValuePair<object, object>(0, null))
             );
         }
@@ -177,8 +185,8 @@ namespace Yaapii.Atoms.Map.Tests
         [Fact]
         public void AddEntryWithNullKeyAndNullValue()
         {
-            var map = new MapNoNulls<object, object>(new Dictionary<object, object>());
-            Assert.Throws(typeof(ArgumentNullException),
+            var map = new MapNoNulls<object, object>(new MapOf<object, object>());
+            Assert.Throws<ArgumentNullException>(
                 () => map.Add(new KeyValuePair<object, object>(null, null))
             );
         }
@@ -195,28 +203,28 @@ namespace Yaapii.Atoms.Map.Tests
         public void AddNullKeyAndValue()
         {
             var map = new MapNoNulls<object, object>(new Dictionary<object, object>());
-            Assert.Throws(typeof(ArgumentNullException), () => map.Add(null, 0));
+            Assert.Throws<ArgumentNullException>(() => map.Add(null, 0));
         }
 
         [Fact]
         public void AddKeyAndNullValue()
         {
             var map = new MapNoNulls<object, object>(new Dictionary<object, object>());
-            Assert.Throws(typeof(ArgumentNullException), () => map.Add(0, null));
+            Assert.Throws<ArgumentNullException>(() => map.Add(0, null));
         }
 
         [Fact]
         public void AddNullKeyAndNullValue()
         {
             var map = new MapNoNulls<object, object>(new Dictionary<object, object>());
-            Assert.Throws(typeof(ArgumentNullException), () => map.Add(null, null));
+            Assert.Throws<ArgumentNullException>(() => map.Add(null, null));
         }
 
         [Fact]
         public void TryGetValueWithExistingKey()
         {
             var map = new MapNoNulls<int, int>(
-                new Dictionary<int, int> {
+                new Dictionary<int, int>{
                     {0, 0}
                 }
             );
@@ -229,7 +237,7 @@ namespace Yaapii.Atoms.Map.Tests
         public void TryGetValueWithMissingKey()
         {
             var map = new MapNoNulls<int, int>(
-                new Dictionary<int, int> {
+                new Dictionary<int, int>{
                     {0, 0}
                 }
             );
@@ -241,21 +249,21 @@ namespace Yaapii.Atoms.Map.Tests
         public void TryGetValueWithNullKey()
         {
             var map = new MapNoNulls<object, object>(
-                new Dictionary<object, object> {
-                    {0, 0}
-                }
+                new MapOf<object, object>(
+                    new KeyValuePair<object, object>(0, 0)
+                )
             );
             object outValue;
-            Assert.Throws(typeof(ArgumentNullException), () => map.TryGetValue(null, out outValue));
+            Assert.Throws<ArgumentNullException>(() => map.TryGetValue(null, out outValue));
         }
 
         [Fact]
         public void GetValue()
         {
             var map = new MapNoNulls<int, int>(
-                new Dictionary<int, int> {
-                    {0, 0}
-                }
+                new MapOf<int, int>(
+                    new KeyValuePair<int, int>(0, 0)
+                )
             );
             Assert.Equal(0, map[0]);
         }
@@ -264,18 +272,18 @@ namespace Yaapii.Atoms.Map.Tests
         public void GetValueWithNullKey()
         {
             var map = new MapNoNulls<object, object>(
-                new Dictionary<object, object> {
-                    {0, 0}
-                }
+                new MapOf<object, object>(
+                    new KeyValuePair<object, object>(0, 0)
+                )
             );
-            Assert.Throws(typeof(ArgumentNullException), () => map[null]);
+            Assert.Throws<ArgumentNullException>(() => map[null]);
         }
 
         [Fact]
         public void SetValue()
         {
             var map = new MapNoNulls<int, int>(
-                new Dictionary<int, int> {
+                new Dictionary<int, int>{
                     {0, 0}
                 }
             );
@@ -287,33 +295,33 @@ namespace Yaapii.Atoms.Map.Tests
         public void SetValueWithNullKey()
         {
             var map = new MapNoNulls<object, object>(
-                new Dictionary<object, object> {
-                    {0, 0}
-                }
+                new MapOf<object, object>(
+                    new KeyValuePair<object, object>(0, 0)
+                )
             );
-            Assert.Throws(typeof(ArgumentNullException), () => map[null]=1);
+            Assert.Throws<ArgumentNullException>(() => map[null]=1);
         }
 
         [Fact]
         public void SetValueWithNullValue()
         {
             var map = new MapNoNulls<object, object>(
-                new Dictionary<object, object> {
-                    {0, 0}
-                }
+                new MapOf<object, object>(
+                    new KeyValuePair<object, object>(0, 0)
+                )
             );
-            Assert.Throws(typeof(ArgumentNullException), () => map[0]=null);
+            Assert.Throws<ArgumentNullException>(() => map[0]=null);
         }
 
         [Fact]
         public void SetValueWithNullKeyAndNullValue()
         {
             var map = new MapNoNulls<object, object>(
-                new Dictionary<object, object> {
-                    {0, 0}
-                }
+                new MapOf<object, object>(
+                    new KeyValuePair<object, object>(0, 0)
+                )
             );
-            Assert.Throws(typeof(ArgumentNullException), () => map[null]=null);
+            Assert.Throws<ArgumentNullException>(() => map[null]=null);
         }
     }
 }
