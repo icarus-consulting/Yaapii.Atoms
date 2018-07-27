@@ -258,6 +258,18 @@ namespace Yaapii.Atoms.Map.Tests
         }
 
         [Fact]
+        public void TryGetNullValue()
+        {
+            var map = new MapNoNulls<object, object>(
+                new Dictionary<object, object>{
+                    {0, null}
+                }
+            );
+            object outValue;
+            Assert.Throws<ArgumentNullException>(() => map.TryGetValue(0, out outValue));
+        }
+
+        [Fact]
         public void GetValue()
         {
             var map = new MapNoNulls<int, int>(
@@ -277,6 +289,17 @@ namespace Yaapii.Atoms.Map.Tests
                 )
             );
             Assert.Throws<ArgumentNullException>(() => map[null]);
+        }
+
+        [Fact]
+        public void GetNullValue()
+        {
+            var map = new MapNoNulls<object, object>(
+                new MapOf<object, object>(
+                    new KeyValuePair<object, object>(0, null)
+                )
+            );
+            Assert.Throws<ArgumentNullException>(() => map[0]);
         }
 
         [Fact]

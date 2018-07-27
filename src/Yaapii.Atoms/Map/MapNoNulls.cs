@@ -191,7 +191,9 @@ namespace Yaapii.Atoms.Map
         public bool TryGetValue(Key key, out Value value)
         {
             new Error.FailNull(key, "key can't be null.").Go();
-            return _map.TryGetValue(key, out value);
+            var result = _map.TryGetValue(key, out value);
+            new Error.FailNull(value, $"Value returned by [{key}] is null.").Go();
+            return result;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
