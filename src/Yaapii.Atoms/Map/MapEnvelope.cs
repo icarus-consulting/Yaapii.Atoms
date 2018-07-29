@@ -192,7 +192,7 @@ namespace Yaapii.Atoms.Map
         /// <returns>true if success</returns>
         public bool TryGetValue(Key key, out Value value)
         {
-            throw this._readonly;
+            return this._map.Value().TryGetValue(key, out value);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
