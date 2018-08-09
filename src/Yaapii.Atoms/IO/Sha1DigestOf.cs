@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.IO
     /// <summary>
     /// SHA-1 checksum calculation
     /// </summary>
-    public sealed class Sha1DigestOf : IInput
+    public sealed class Sha1DigestOf : IBytes
     {
         private readonly IInput _source;
 
@@ -49,11 +49,11 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// SHA-1 checksum calculation of IInput.
         /// </summary>
-        public Stream Stream()
+        public byte[] AsBytes()
         {
             using(var sha = new SHA1CryptoServiceProvider())
             {
-                return new MemoryStream(sha.ComputeHash(_source.Stream()));
+                return sha.ComputeHash(_source.Stream());
             }
         }
     }

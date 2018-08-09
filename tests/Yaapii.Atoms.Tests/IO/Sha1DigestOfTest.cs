@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.IO.Tests
            Assert.Equal(
                 "da39a3ee5e6b4b0d3255bfef95601890afd80709",
                 new HexOf(
-                    new BytesOf(new Sha1DigestOf(new InputOf(string.Empty)))
+                    new Sha1DigestOf(new InputOf(string.Empty))
                 ).AsString()
            );
         }
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.IO.Tests
             Assert.Equal(
                 "2ef7bde608ce5404e97d5f042f95f89f1c232871",
                 new HexOf(
-                    new BytesOf(new Sha1DigestOf(new InputOf("Hello World!")))
+                    new Sha1DigestOf(new InputOf("Hello World!"))
                 ).AsString()
             );
         }
@@ -60,12 +60,10 @@ namespace Yaapii.Atoms.IO.Tests
             Assert.Equal(
                 "34f80bdab9b93af514004f127e440139aad63e2d",
                 new HexOf(
-                    new BytesOf(
-                        new Sha1DigestOf(
-                            new ResourceOf(
-                                "IO/Resources/digest-calculation.txt",
-                                this.GetType()
-                            )
+                    new Sha1DigestOf(
+                        new ResourceOf(
+                            "IO/Resources/digest-calculation.txt",
+                            this.GetType()
                         )
                     )
                 ).AsString()
