@@ -31,17 +31,33 @@ using Yaapii.Atoms.Scalar;
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
-    /// SHA-1 checksum calculation
+    /// Digest Envelope
     /// </summary>
-    public sealed class Sha1DigestOf : DigestEnvelope
+    public abstract class DigestEnvelope : IBytes
     {
+        private readonly IInput _source;
+        private readonly IScalar<HashAlgorithm> _algorithmFactory;
 
         /// <summary>
-        /// SHA-1 checksum calculation of IInput.
+        /// Digest Envelope of Input
         /// </summary>
         /// <param name="source">Input</param>
-        public Sha1DigestOf(IInput source) :
-            base(source, new ScalarOf<HashAlgorithm>(() => new SHA1CryptoServiceProvider()))
-        { }
+        /// <param name="algorithmFactory">Factory to create Hash Algorithm</param>
+        public DigestEnvelope(IInput source, IScalar<HashAlgorithm> algorithmFactory)
+        {
+            this._source = source;
+            this._algorithmFactory = algorithmFactory;
+        }
+
+        /// <summary>
+        /// Digest
+        /// </summary>
+        public byte[] AsBytes()
+        {
+            using(var sha = _algorithmFactory.Value())
+            {
+                return sha.ComputeHash(_source.Stream());
+            }
+        }
     }
 }

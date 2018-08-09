@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.IO
     /// <summary>
     /// SHA-256 checksum calculation
     /// </summary>
-    public sealed class Sha256DigestOf : IBytes
+    public sealed class Sha256DigestOf : DigestEnvelope
     {
         private readonly IInput _source;
 
@@ -41,20 +41,8 @@ namespace Yaapii.Atoms.IO
         /// SHA-256 checksum calculation of IInput.
         /// </summary>
         /// <param name="source">Input</param>
-        public Sha256DigestOf(IInput source)
-        {
-            this._source = source;
-        }
-
-        /// <summary>
-        /// SHA-256 checksum calculation of IInput.
-        /// </summary>
-        public byte[] AsBytes()
-        {
-            using(var sha = new SHA256CryptoServiceProvider())
-            {
-                return sha.ComputeHash(_source.Stream());
-            }
-        }
+        public Sha256DigestOf(IInput source) :
+            base(source, new ScalarOf<HashAlgorithm>(() => new SHA256CryptoServiceProvider()))
+        { }
     }
 }
