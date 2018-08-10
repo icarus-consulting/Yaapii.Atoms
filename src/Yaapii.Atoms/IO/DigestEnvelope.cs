@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //
 // Copyright(c) 2017 ICARUS Consulting GmbH
 //
@@ -21,50 +21,43 @@
 // SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Error
+namespace Yaapii.Atoms.IO
 {
     /// <summary>
-    /// Fail if number is 0.
+    /// Digest Envelope
     /// </summary>
-    public sealed class FailZero : IFail
+    public abstract class DigestEnvelope : IBytes
     {
-        private readonly long _number;
-        private readonly Exception _ex;
+        private readonly IInput _source;
+        private readonly IScalar<HashAlgorithm> _algorithmFactory;
 
         /// <summary>
-        /// Fail if number is 0.
+        /// Digest Envelope of Input
         /// </summary>
-        /// <param name="number">number to check</param>
-        public FailZero(long number) : this(number, "Number is zero") { }
-
-        /// <summary>
-        /// Fail if number is 0.
-        /// </summary>
-        /// <param name="number">number to check</param>
-        /// <param name="hint">msg to put in exception</param>
-        public FailZero(long number, string hint) : this(
-            number, new Exception(hint)
-        )
-        { }
-
-        /// <summary>
-        /// Fail if number is 0.
-        /// </summary>
-        /// <param name="number">number to check</param>
-        /// <param name="ex">specific exception which will be thrown</param>
-        public FailZero(long number, Exception ex)
+        /// <param name="source">Input</param>
+        /// <param name="algorithmFactory">Factory to create Hash Algorithm</param>
+        public DigestEnvelope(IInput source, IScalar<HashAlgorithm> algorithmFactory)
         {
-            this._number = number;
-            this._ex = ex;
+            this._source = source;
+            this._algorithmFactory = algorithmFactory;
         }
 
         /// <summary>
-        /// Fail if necessary.
+        /// Digest
         /// </summary>
-        public void Go()
+        public byte[] AsBytes()
         {
-            if (_number.Equals(0)) throw this._ex;
+            using(var sha = _algorithmFactory.Value())
+            {
+                return sha.ComputeHash(_source.Stream());
+            }
         }
     }
 }

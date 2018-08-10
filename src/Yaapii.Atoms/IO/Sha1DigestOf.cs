@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //
 // Copyright(c) 2017 ICARUS Consulting GmbH
 //
@@ -21,50 +21,27 @@
 // SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Error
+namespace Yaapii.Atoms.IO
 {
     /// <summary>
-    /// Fail if number is 0.
+    /// SHA-1 checksum calculation
     /// </summary>
-    public sealed class FailZero : IFail
+    public sealed class Sha1DigestOf : DigestEnvelope
     {
-        private readonly long _number;
-        private readonly Exception _ex;
 
         /// <summary>
-        /// Fail if number is 0.
+        /// SHA-1 checksum calculation of IInput.
         /// </summary>
-        /// <param name="number">number to check</param>
-        public FailZero(long number) : this(number, "Number is zero") { }
-
-        /// <summary>
-        /// Fail if number is 0.
-        /// </summary>
-        /// <param name="number">number to check</param>
-        /// <param name="hint">msg to put in exception</param>
-        public FailZero(long number, string hint) : this(
-            number, new Exception(hint)
-        )
+        /// <param name="source">Input</param>
+        public Sha1DigestOf(IInput source) :
+            base(source, new ScalarOf<HashAlgorithm>(() => new SHA1CryptoServiceProvider()))
         { }
-
-        /// <summary>
-        /// Fail if number is 0.
-        /// </summary>
-        /// <param name="number">number to check</param>
-        /// <param name="ex">specific exception which will be thrown</param>
-        public FailZero(long number, Exception ex)
-        {
-            this._number = number;
-            this._ex = ex;
-        }
-
-        /// <summary>
-        /// Fail if necessary.
-        /// </summary>
-        public void Go()
-        {
-            if (_number.Equals(0)) throw this._ex;
-        }
     }
 }

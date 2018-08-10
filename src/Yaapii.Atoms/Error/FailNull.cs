@@ -21,9 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Error;
 
 namespace Yaapii.Atoms.Error
 {
@@ -33,7 +30,7 @@ namespace Yaapii.Atoms.Error
     public sealed class FailNull : IFail
     {
         private readonly object _obj;
-        private readonly string _hint;
+        private readonly Exception _ex;
 
         /// <summary>
         /// Fail if object is null.
@@ -46,10 +43,19 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         /// <param name="obj">object to check</param>
         /// <param name="hint">msg to put in exception</param>
-        public FailNull(object obj, string hint)
+        public FailNull(object obj, string hint) :this(
+            obj, new ArgumentNullException(hint))
+        { }
+
+        /// <summary>
+        /// Fail if object is null.
+        /// </summary>
+        /// <param name="obj">object to check</param>
+        /// <param name="ex">specific exception which will be thrown</param>
+        public FailNull(object obj, Exception ex)
         {
-            _obj = obj;
-            _hint = hint;
+            this._obj = obj;
+            this._ex = ex;
         }
 
         /// <summary>
@@ -57,7 +63,7 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         public void Go()
         {
-            if (_obj == null) throw new ArgumentNullException(_hint);
+            if (_obj == null) throw this._ex;
         }
     }
 }

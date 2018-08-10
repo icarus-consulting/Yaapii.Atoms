@@ -25,7 +25,7 @@ using System.Text.RegularExpressions;
 namespace Yaapii.Atoms.Text
 {
     /// <summary>
-    /// Checks if a text ends with an given content.
+    /// Checks if a text ends with a given content.
     /// </summary>
     public sealed class EndsWith : IScalar<bool>
     {
@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Text
         private readonly IText _tail;
 
         /// <summary>
-        /// Checks if a <see cref="IText"/> ends with an given <see cref="string"/>
+        /// Checks if a <see cref="IText"/> ends with a given <see cref="string"/>
         /// </summary>
         /// <param name="text">Text to test</param>
         /// <param name="tail">Ending content to use in the test</param>
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Text
         { }
 
         /// <summary>
-        /// Checks if a <see cref="IText"/> ends with an given <see cref="IText"/>
+        /// Checks if a <see cref="IText"/> ends with a given <see cref="IText"/>
         /// </summary>
         /// <param name="text">Text to test</param>
         /// <param name="tail">Ending content to use in the test</param>
