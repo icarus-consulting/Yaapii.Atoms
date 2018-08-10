@@ -277,6 +277,18 @@ namespace Yaapii.Atoms.Text.Tests
         }
 
         [Fact]
+        public void ReadsBytesWithEncoding()
+        {
+            byte[] bytes = new byte[] { (byte)0xCA, (byte)0xFE };
+            Assert.True(
+                new TextOf(
+                    new BytesOf(bytes),
+                    Encoding.ASCII
+                ).AsString().CompareTo(Encoding.ASCII.GetString(bytes)) == 0,
+                "Can't read array of bytes");
+        }
+
+        [Fact]
         public void ComparesWithASubtext()
         {
             Assert.True(
