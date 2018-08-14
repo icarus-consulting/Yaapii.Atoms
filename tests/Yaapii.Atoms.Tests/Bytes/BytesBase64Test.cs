@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿using Xunit;
 using Yaapii.Atoms.IO;
 
-namespace Yaapii.Atoms.Bytes
+namespace Yaapii.Atoms.Bytes.Tests
 {
     public sealed class BytesBase64Test
     {

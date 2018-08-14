@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using Xunit;
-using Yaapii.Atoms;
-using Yaapii.Atoms.Collection;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Collection
+namespace Yaapii.Atoms.Collection.Tests
 {
 
     public sealed class FilteredTest
@@ -14,8 +12,7 @@ namespace Yaapii.Atoms.Collection
         public void BehavesAsCollection()
         {
             var col =
-                new Yaapii.Atoms.Collection.Filtered<int>(i => i < 2, 1, 2, 0, -1);
-
+                new Filtered<int>(i => i < 2, 1, 2, 0, -1);
             Assert.True(col.Contains(1) && col.Contains(-1));
         }
 
@@ -23,22 +20,23 @@ namespace Yaapii.Atoms.Collection
         public void FiltersList()
         {
             Assert.True(
-                new Yaapii.Atoms.Enumerable.LengthOf(
-                    new Yaapii.Atoms.Collection.Filtered<string>(
+                new LengthOf(
+                    new Filtered<string>(
                         input => input.Length > 4,
                         new EnumerableOf<string>("hello", "world", "друг"))
                 ).Value() == 2,
-                "cannot filter list");
+                "cannot filter list"
+            );
         }
 
         [Fact]
         public void FiltersEmptyList()
         {
             var col =
-                new Yaapii.Atoms.Collection.Filtered<string>(
+                new Filtered<string>(
                     input => input.Length > 4,
-                    new List<string>());
-
+                    new List<string>()
+                );
             Assert.Empty(col);
         }
 
@@ -46,30 +44,33 @@ namespace Yaapii.Atoms.Collection
         public void Size()
         {
             Assert.True(
-                new Yaapii.Atoms.Collection.Filtered<string>(
+                new Filtered<string>(
                     input => input.Length >= 4,
                     new EnumerableOf<string>("some", "text", "yes")
-                ).Count == 2);
+                ).Count == 2
+            );
         }
 
         [Fact]
         public void WithItemsNotEmpty()
         {
             Assert.NotEmpty(
-                new Yaapii.Atoms.Collection.Filtered<string>(
+                new Filtered<string>(
                     input => input.Length > 4,
                     new EnumerableOf<string>("first", "second")
-                ));
+                )
+            );
         }
 
         [Fact]
         public void WithoutItemsIsEmpty()
         {
             Assert.Empty(
-                new Yaapii.Atoms.Collection.Filtered<string>(
+                new Filtered<string>(
                     input => input.Length > 16,
                     new EnumerableOf<string>("third", "fourth")
-                ));
+                )
+            );
         }
     }
 }
