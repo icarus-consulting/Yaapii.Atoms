@@ -22,6 +22,7 @@
 
 using System;
 using System.IO;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.IO
 {
@@ -30,28 +31,40 @@ namespace Yaapii.Atoms.IO
     /// </summary>
     public sealed class TempDirectory : IScalar<DirectoryInfo>, IDisposable
     {
-        private readonly string path;
+        private readonly IScalar<string> path;
 
-        public TempDirectory(string path)
+        public TempDirectory() : this(
+            new StickyScalar<string>(() =>
+                Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())
+            )
+        )
+        { }
+
+        public TempDirectory(string path) : this(
+            new ScalarOf<string>(path)
+        )
+        { }
+
+        private TempDirectory(IScalar<string> path)
         {
             this.path = path;
         }
 
         public void Dispose()
         {
-            if (Directory.Exists(path))
+            if (Directory.Exists(path.Value()))
             {
-                DeleteDirectory(path);
+                DeleteDirectory(path.Value());
             }
         }
 
         public DirectoryInfo Value()
         {
-            if (!Directory.Exists(this.path))
+            if (!Directory.Exists(this.path.Value()))
             {
-                Directory.CreateDirectory(this.path);
+                Directory.CreateDirectory(this.path.Value());
             }
-            return new DirectoryInfo(this.path);
+            return new DirectoryInfo(this.path.Value());
         }
 
         private void DeleteDirectory(string path)
