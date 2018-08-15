@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using System.IO;
 using Xunit;
 
@@ -37,6 +38,29 @@ namespace Yaapii.Atoms.IO.Tests
                 Assert.True(
                     Directory.Exists(path)
                 );
+            }
+            finally
+            {
+                if (Directory.Exists(path))
+                {
+                    Directory.Delete(path, true);
+                }
+            }
+        }
+
+        [Fact]
+        public void CreatesRandomDirectory()
+        {
+            string path = String.Empty;
+            try
+            {
+                using (var td = new TempDirectory())
+                {
+                    path = td.Value().FullName;
+                    Assert.True(
+                        Directory.Exists(path)
+                    );
+                }
             }
             finally
             {
