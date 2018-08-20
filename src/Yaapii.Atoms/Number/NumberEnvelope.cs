@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Number
     /// <summary>
     /// Wraps up Conversions to <see cref="INumber"/>
     /// </summary>
-    public class NumberEnvelope : INumber
+    public abstract class NumberEnvelope : INumber
     {
         private readonly IScalar<double> _dbl;
         private readonly IScalar<int> _int;

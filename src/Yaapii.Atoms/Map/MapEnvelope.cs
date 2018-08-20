@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Map
     /// </summary>
     /// <typeparam name="Key"></typeparam>
     /// <typeparam name="Value"></typeparam>
-    public class MapEnvelope<Key, Value> : IDictionary<Key, Value>
+    public abstract class MapEnvelope<Key, Value> : IDictionary<Key, Value>
     {
         private readonly IScalar<ReadOnlyDictionary<Key, Value>> _map;
         private readonly UnsupportedOperationException _readonly = new UnsupportedOperationException("Not supported, it's a read-only map");

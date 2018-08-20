@@ -11,7 +11,7 @@ namespace Yaapii.Atoms.Collection
     /// Envelope for Collections. It enables ICollection classes frmo .Net to accept scalars.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class CollectionEnvelope<T> : ICollection<T>
+    public abstract class CollectionEnvelope<T> : ICollection<T>
     {
         /// <summary>
         /// scalar of collection

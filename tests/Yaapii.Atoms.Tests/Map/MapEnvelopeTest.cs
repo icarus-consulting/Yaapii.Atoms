@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Map.Tests
         public void TryGetValueWithExistingKey()
         {
 
-            var map = new MapEnvelope<int, int>(() => new Dictionary<int, int> {{7, 42}});
+            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
             int outValue;
             Assert.True(map.TryGetValue(7, out outValue));
             Assert.Equal(42, outValue);
@@ -47,9 +47,15 @@ namespace Yaapii.Atoms.Map.Tests
         public void TryGetValueWithMissingKey()
         {
 
-            var map = new MapEnvelope<int, int>(() => new Dictionary<int, int> {{7, 42}});
+            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
             int outValue;
             Assert.False(map.TryGetValue(0, out outValue));
+        }
+
+        private class NonAbstractEnvelope : MapEnvelope<int, int>
+        {
+            public NonAbstractEnvelope(IDictionary<int, int> map) : base(() => map)
+            { }
         }
     }
 }
