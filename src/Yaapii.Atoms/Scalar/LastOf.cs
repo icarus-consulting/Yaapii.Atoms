@@ -27,7 +27,7 @@ using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Scalar
+namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
     /// Last element in a <see cref="IEnumerable{T}"/>

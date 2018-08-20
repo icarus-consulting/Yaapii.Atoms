@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
 
-namespace Yaapii.Atoms.Scalar
+namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
     /// The greatest item in the given <see cref="IEnumerable{T}"/>

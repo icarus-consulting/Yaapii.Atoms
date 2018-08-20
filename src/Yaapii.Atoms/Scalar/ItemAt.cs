@@ -28,7 +28,7 @@ using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Scalar
+namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
     /// Element from position in a <see cref="IEnumerable{T}"/>.
