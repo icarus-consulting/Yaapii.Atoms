@@ -14,10 +14,10 @@ namespace Yaapii.Atoms.List
     /// List envelope. Can make a readonly list from a scalar.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ListEnvelope<T> : IList<T>
+    public abstract class ListEnvelope<T> : IList<T>
     {
-        private readonly IScalar<IList<T>> _lst;
-        private readonly UnsupportedOperationException _readonly = new UnsupportedOperationException("The list is readonly.");
+        private readonly IScalar<IList<T>> lst;
+        private readonly UnsupportedOperationException readOnlyError = new UnsupportedOperationException("The list is readonly.");
 
         /// <summary>
         /// ctor
@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.List
         /// <param name="sc"></param>
         public ListEnvelope(IScalar<IList<T>> sc)
         {
-            _lst = sc;
+            lst = sc;
         }
 
         /// <summary>
@@ -44,18 +44,18 @@ namespace Yaapii.Atoms.List
         {
             get
             {
-                return this._lst.Value()[index];
+                return this.lst.Value()[index];
             }
             set
             {
-                throw this._readonly;
+                throw this.readOnlyError;
             }
         }
 
         /// <summary>
         /// Count elements
         /// </summary>
-        public int Count { get { return this._lst.Value().Count; } }
+        public int Count { get { return this.lst.Value().Count; } }
 
         /// <summary>
         /// This is a readonly collection, always true.
@@ -66,14 +66,14 @@ namespace Yaapii.Atoms.List
         /// Not supported.
         /// </summary>
         /// <param name="item"></param>
-        public void Add(T item) { throw this._readonly; }
+        public void Add(T item) { throw this.readOnlyError; }
 
         /// <summary>
         /// Unsupported.
         /// </summary>
         public void Clear()
         {
-            throw this._readonly;
+            throw this.readOnlyError;
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Yaapii.Atoms.List
         /// <returns>true if item is found</returns>
         public bool Contains(T item)
         {
-            return this._lst.Value().Contains(item);
+            return this.lst.Value().Contains(item);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Yaapii.Atoms.List
         /// <param name="arrayIndex">write start index</param>
         public void CopyTo(T[] array, int arrayIndex)
         {
-            this._lst.Value().CopyTo(array, arrayIndex);
+            this.lst.Value().CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Yaapii.Atoms.List
         /// <returns>Enumerator</returns>
         public IEnumerator<T> GetEnumerator()
         {
-            return this._lst.Value().GetEnumerator();
+            return this.lst.Value().GetEnumerator();
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Yaapii.Atoms.List
         /// <returns></returns>
         public int IndexOf(T item)
         {
-            return this._lst.Value().IndexOf(item);
+            return this.lst.Value().IndexOf(item);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Yaapii.Atoms.List
         /// <param name="item"></param>
         public void Insert(int index, T item)
         {
-            throw this._readonly;
+            throw this.readOnlyError;
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Yaapii.Atoms.List
         /// <returns></returns>
         public bool Remove(T item)
         {
-            throw _readonly;
+            throw readOnlyError;
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Yaapii.Atoms.List
         /// <param name="index"></param>
         public void RemoveAt(int index)
         {
-            throw this._readonly;
+            throw this.readOnlyError;
         }
     }
 }

@@ -20,13 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Security.Cryptography;
-using System.Text;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.IO
 {
@@ -35,8 +29,8 @@ namespace Yaapii.Atoms.IO
     /// </summary>
     public abstract class DigestEnvelope : IBytes
     {
-        private readonly IInput _source;
-        private readonly IScalar<HashAlgorithm> _algorithmFactory;
+        private readonly IInput source;
+        private readonly IScalar<HashAlgorithm> algorithmFactory;
 
         /// <summary>
         /// Digest Envelope of Input
@@ -45,8 +39,8 @@ namespace Yaapii.Atoms.IO
         /// <param name="algorithmFactory">Factory to create Hash Algorithm</param>
         public DigestEnvelope(IInput source, IScalar<HashAlgorithm> algorithmFactory)
         {
-            this._source = source;
-            this._algorithmFactory = algorithmFactory;
+            this.source = source;
+            this.algorithmFactory = algorithmFactory;
         }
 
         /// <summary>
@@ -54,9 +48,9 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         public byte[] AsBytes()
         {
-            using(var sha = _algorithmFactory.Value())
+            using(var sha = algorithmFactory.Value())
             {
-                return sha.ComputeHash(_source.Stream());
+                return sha.ComputeHash(source.Stream());
             }
         }
     }
