@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.Fail;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Collection.Tests
 {
@@ -13,7 +14,7 @@ namespace Yaapii.Atoms.Collection.Tests
         public void BehavesAsCollection()
         {
             Assert.True(
-                new Enumerable.ItemAt<int>(
+                new ItemAt<int>(
                     new Reversed<int>(
                         new Enumerable.EnumerableOf<int>(0, -1, 2))
                 ).Value() == 2,
@@ -25,7 +26,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             String last = "last";
             Assert.True(
-                new Enumerable.ItemAt<string>(
+                new ItemAt<string>(
                     new Reversed<string>(
                         new Enumerable.EnumerableOf<string>(
                             "item", last)

@@ -21,25 +21,43 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.Scalar.Tests
 {
-    public sealed class EndlessTest
+    public sealed class FirstOfTests
     {
         [Fact]
-        public void EndlessIterableTest()
+        public void ThrowsCustomException()
         {
-            Assert.True(
-                new ItemAt<int>(
-                    new Endless<int>(1),
-                    0).Value() == 1,
-                "Can't get unique endless iterable item");
+            Assert.Throws<InvalidOperationException>(() =>
+                new FirstOf<string>(
+                    new EnumerableOf<string>(),
+                    new InvalidOperationException()
+                ).Value()
+            );
+        }
+
+        [Fact]
+        public void ReturnsFallBack()
+        {
+            Assert.Equal(
+                "gotcha",
+                new FirstOf<string>(
+                    new EnumerableOf<string>(), "gotcha").Value()
+                );
+        }
+
+        [Fact]
+        public void ReturnsFirstValue()
+        {
+            var list = new EnumerableOf<string>("hallo", "ich", "heisse", "Max");
+
+            Assert.Equal(
+                "hallo",
+                new FirstOf<string>(list).Value()
+            );
         }
     }
 }

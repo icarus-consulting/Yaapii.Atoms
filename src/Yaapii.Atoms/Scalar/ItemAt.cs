@@ -28,7 +28,7 @@ using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Enumerable
+namespace Yaapii.Atoms.Scalar
 {
     /// <summary>
     /// Element from position in a <see cref="IEnumerable{T}"/>.
@@ -205,6 +205,7 @@ namespace Yaapii.Atoms.Enumerable
         {
             this.saved = new StickyScalar<T>(saved);
         }
+
         /// <summary>
         /// Get the item.
         /// </summary>

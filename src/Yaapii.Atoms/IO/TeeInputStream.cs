@@ -20,10 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 #pragma warning disable MaxPublicMethodCount
 namespace Yaapii.Atoms.IO
@@ -36,12 +35,12 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// input
         /// </summary>
-        private readonly Stream _input;
+        private readonly Stream input;
 
         /// <summary>
         /// destination
         /// </summary>
-        private readonly Stream _output;
+        private readonly Stream output;
 
         /// <summary>
         /// Readable <see cref="Stream"/> that copies input to <see cref="IOutput"/> while reading.
@@ -50,17 +49,17 @@ namespace Yaapii.Atoms.IO
         /// <param name="tgt">the destination</param>
         public TeeInputStream(Stream src, Stream tgt) : base()
         {
-            this._input = src;
-            this._output = tgt;
+            this.input = src;
+            this.output = tgt;
         }
 
 #pragma warning disable CS1591
         public int Read()
         {
-            var data = (Byte)this._input.ReadByte();
+            var data = (Byte)this.input.ReadByte();
             if (data >= 0)
             {
-                this._output.WriteByte(data);
+                this.output.WriteByte(data);
             }
             return data;
         }
@@ -72,59 +71,54 @@ namespace Yaapii.Atoms.IO
 
         public override int Read(byte[] buf, int offset, int len)
         {
-            int max = this._input.Read(buf, offset, len);
+            int max = this.input.Read(buf, offset, len);
             if (max > 0)
             {
-                this._output.Write(buf, offset, max);
+                this.output.Write(buf, offset, max);
             }
             return max;
         }
 
         public long Skip(long num)
         {
-            return this._input.Seek(num, SeekOrigin.Current);
+            return this.input.Seek(num, SeekOrigin.Current);
         }
 
-        public override bool CanRead => _input.CanRead;
+        public override bool CanRead => input.CanRead;
 
-        public override bool CanSeek => _input.CanSeek;
+        public override bool CanSeek => input.CanSeek;
 
-        public override bool CanWrite => _input.CanWrite;
+        public override bool CanWrite => input.CanWrite;
 
-        public override long Length => _input.Length;
+        public override long Length => input.Length;
 
         public override long Position
         {
             get
             {
-                return _input.Position;
+                return input.Position;
             }
             set
             {
-                _input.Position = value;
+                input.Position = value;
             }
         }
 
         /// <summary>
         /// Clean up.
         /// </summary>
-        //public override void Dispose()
-        //{
-
-        //}
-
         protected override void Dispose(bool disposing)
         {
             try
             {
-                this._input.Flush();
-                _input.Dispose(); //unelegant but C#...
+                this.input.Flush();
+                input.Dispose();
             }
             catch (Exception) { }
             try
             {
-                this._output.Flush();
-                _output.Dispose();
+                this.output.Flush();
+                this.output.Dispose();
             }
             catch (Exception) { }
 
@@ -133,17 +127,17 @@ namespace Yaapii.Atoms.IO
 
         public override void Flush()
         {
-            _input.Flush();
+            input.Flush();
         }
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            return _input.Seek(offset, origin);
+            return input.Seek(offset, origin);
         }
 
         public override void SetLength(long value)
         {
-            _input.SetLength(value);
+            input.SetLength(value);
         }
 
         public override void Write(byte[] buffer, int offset, int count)
