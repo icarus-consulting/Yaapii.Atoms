@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.List;
+using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.List.Tests
@@ -35,7 +36,7 @@ namespace Yaapii.Atoms.List.Tests
         public void TransformsList()
         {
             Assert.True(
-                new Enumerable.ItemAt<IText>(
+                new ItemAt<IText>(
                     new Mapped<String, IText>(
                         input => new UpperText(new TextOf(input)),
                         new ListOf<string>("hello", "world", "damn")
