@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Text;

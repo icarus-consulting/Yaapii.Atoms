@@ -21,11 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.List.Tests

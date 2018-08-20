@@ -24,8 +24,9 @@ using System;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
+using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Scalar
+namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
     /// Find the smallest item in a <see cref="IEnumerable{T}"/>
