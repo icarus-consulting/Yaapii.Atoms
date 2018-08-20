@@ -118,6 +118,7 @@ namespace Yaapii.Atoms.IO
             try
             {
                 this.output.Flush();
+                this.output.Dispose();
             }
             catch (Exception) { }
 
