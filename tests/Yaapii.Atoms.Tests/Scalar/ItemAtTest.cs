@@ -26,7 +26,7 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.Scalar.Tests
 {
     public sealed class ItemAtTests
     {
