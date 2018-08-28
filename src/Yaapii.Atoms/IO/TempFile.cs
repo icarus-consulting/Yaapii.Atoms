@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.IO
 {
     /// <summary>
     /// Temporary file.
-    /// The temporary file is delete when the object is diposabled.
+    /// The temporary file is deleted when the object is disposed.
     /// </summary>
     public sealed class TempFile : IScalar<String>, IDisposable
     {
