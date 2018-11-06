@@ -11,8 +11,8 @@ namespace Yaapii.Atoms.IO
     /// </summary>
     public class ResourceOf : IInput
     {
-        private readonly IScalar<string> _resourceName;
-        private readonly IScalar<Assembly> _container;
+        private readonly string name;
+        private readonly IScalar<Assembly> container;
 
         /// <summary>
         /// <para>A resource embedded in the container.</para>
@@ -53,21 +53,10 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="name">name of the resource</param>
         /// <param name="container">container to search in. Use Assembly.GetExecutingAssembly() for the assembly your current code is in.</param>
-        public ResourceOf(string name, IScalar<Assembly> container) : this(
-            new ScalarOf<string>(() => container.Value().GetName().Name + "." + name.Replace('/', '.').Replace('\\', '.')),
-            container
-            )
-        { }
-
-        /// <summary>
-        /// ctor.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="container"></param>
-        private ResourceOf(IScalar<string> name, IScalar<Assembly> container)
+        public ResourceOf(string name, IScalar<Assembly> container)
         {
-            this._container = container;
-            this._resourceName = name;
+            this.name = name;
+            this.container = container;
         }
 
         /// <summary>
@@ -77,8 +66,8 @@ namespace Yaapii.Atoms.IO
         /// <returns>stream of the resource</returns>
         public Stream Stream()
         {
-            var asm = this._container.Value();
-            var fullName = this._resourceName.Value();
+            var asm = this.container.Value();
+            var fullName = FullName();
             var s = asm.GetManifestResourceStream(fullName);
 
             if (s == null)
@@ -87,6 +76,79 @@ namespace Yaapii.Atoms.IO
             }
 
             return s;
+        }
+
+        private string FullName()
+        {
+            var folders = this.name.Split('\\', '/');
+            for (int current = 0; current < folders.Length - 1; current++)
+            {
+                folders[current] =
+                    TranslateDash(
+                        TranslateNumbers(
+                            TranslateDots(folders[current])
+                        )
+                    );
+            }
+            return container.Value().GetName().Name + "." + String.Join(".", folders);
+        }
+
+        /// <summary>
+        /// Replace all occurence of '.' by "._"
+        /// Existing "._" will be considered.
+        /// Example: "_version8.1" -> "_version8._1"
+        /// </summary>
+        /// <param name="folder">The folder to translate</param>
+        /// <returns>Result</returns>
+        private string TranslateDots(string folder)
+        {
+            var pieces = folder.Split('.');
+            for (int piece = 1; piece < pieces.Length; piece++)
+            {
+                if (pieces[piece].StartsWith("_"))
+                {
+                    pieces[piece] = pieces[piece].Substring(1);
+                }
+            }
+            folder = String.Join("._", pieces);
+            return folder;
+        }
+
+        /// <summary>
+        /// When the folder begins with a digit it will be amended by a leading '_'.
+        /// Example: "7text7" -> "_7text7"
+        /// </summary>
+        /// <param name="folder">The folder to translate</param>
+        /// <returns>Result</returns>
+        private string TranslateNumbers(string folder)
+        {
+            if (folder.Length > 0)
+            {
+                var first = folder.Substring(0, 1).ToCharArray()[0];
+                if (first >= '0' && first <= '9')
+                {
+                    folder = "_" + folder;
+                }
+            }
+            return folder;
+        }
+
+        /// <summary>
+        /// Replaces all '-' by '_'.
+        /// When the folder name is equal "-" is will be replaced by "__".
+        /// Example: "unique-name" -> "unique_name"
+        /// Example: "-" -> "__"
+        /// </summary>
+        /// <param name="folder">The folder to translate</param>
+        /// <returns>Result</returns>
+        private string TranslateDash(string folder)
+        {
+            if (folder.Equals("-"))
+            {
+                folder = "__";
+            }
+            folder = folder.Replace("-", "_");
+            return folder;
         }
     }
 }
