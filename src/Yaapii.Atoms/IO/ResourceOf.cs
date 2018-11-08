@@ -7,7 +7,7 @@ using Yaapii.Atoms.Scalar;
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
-    /// <para>A embedded resource.</para>
+    /// <para>An embedded resource.</para>
     /// </summary>
     public class ResourceOf : IInput
     {
@@ -117,19 +117,19 @@ namespace Yaapii.Atoms.IO
         /// When the folder begins with a digit it will be amended by a leading '_'.
         /// Example: "7text7" -> "_7text7"
         /// </summary>
-        /// <param name="folder">The folder to translate</param>
+        /// <param name="path">The path to translate</param>
         /// <returns>Result</returns>
-        private string NumbersEncoded(string folder)
+        private string NumbersEncoded(string path)
         {
-            if (folder.Length > 0)
+            if (path.Length > 0)
             {
-                var first = folder.Substring(0, 1).ToCharArray()[0];
+                var first = path.Substring(0, 1).ToCharArray()[0];
                 if (first >= '0' && first <= '9')
                 {
-                    folder = "_" + folder;
+                    path = "_" + path;
                 }
             }
-            return folder;
+            return path;
         }
 
         /// <summary>
@@ -138,16 +138,16 @@ namespace Yaapii.Atoms.IO
         /// Example: "unique-name" -> "unique_name"
         /// Example: "-" -> "__"
         /// </summary>
-        /// <param name="folder">The folder to translate</param>
+        /// <param name="path">The path to translate</param>
         /// <returns>Result</returns>
-        private string DashesEncoded(string folder)
+        private string DashesEncoded(string path)
         {
-            if (folder.Equals("-"))
+            if (path.Equals("-"))
             {
-                folder = "__";
+                path = "__";
             }
-            folder = folder.Replace("-", "_");
-            return folder;
+            path = path.Replace("-", "_");
+            return path;
         }
     }
 }
