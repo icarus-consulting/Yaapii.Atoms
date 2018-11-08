@@ -84,9 +84,9 @@ namespace Yaapii.Atoms.IO
             for (int current = 0; current < folders.Length - 1; current++)
             {
                 folders[current] =
-                    TranslateDash(
-                        TranslateNumbers(
-                            TranslateDots(folders[current])
+                    DashesEncoded(
+                        NumbersEncoded(
+                            DotsEncoded(folders[current])
                         )
                     );
             }
@@ -95,23 +95,22 @@ namespace Yaapii.Atoms.IO
 
         /// <summary>
         /// Replace all occurence of '.' by "._"
-        /// Existing "._" will be considered.
         /// Example: "_version8.1" -> "_version8._1"
         /// </summary>
-        /// <param name="folder">The folder to translate</param>
+        /// <param name="path">The path to translate</param>
         /// <returns>Result</returns>
-        private string TranslateDots(string folder)
+        private string DotsEncoded(string path)
         {
-            var pieces = folder.Split('.');
-            for (int piece = 1; piece < pieces.Length; piece++)
+            var pieces = path.Split('.');
+            for (int idx = 1; idx < pieces.Length; idx++)
             {
-                if (pieces[piece].StartsWith("_"))
+                if (pieces[idx].StartsWith("_"))
                 {
-                    pieces[piece] = pieces[piece].Substring(1);
+                    pieces[idx] = pieces[idx].Substring(1);
                 }
             }
-            folder = String.Join("._", pieces);
-            return folder;
+            path = String.Join("._", pieces);
+            return path;
         }
 
         /// <summary>
@@ -120,7 +119,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="folder">The folder to translate</param>
         /// <returns>Result</returns>
-        private string TranslateNumbers(string folder)
+        private string NumbersEncoded(string folder)
         {
             if (folder.Length > 0)
             {
@@ -141,7 +140,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="folder">The folder to translate</param>
         /// <returns>Result</returns>
-        private string TranslateDash(string folder)
+        private string DashesEncoded(string folder)
         {
             if (folder.Equals("-"))
             {
