@@ -14,24 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="IO\Resources\A-B\test.txt" />
-    <None Remove="IO\Resources\-\test.txt" />
-    <None Remove="IO\Resources\-A\test.txt" />
-    <None Remove="IO\Resources\1\test.txt" />
-    <None Remove="IO\Resources\test.txt" />
-    <None Remove="IO\Resources\digest-calculation.txt" />
-    <None Remove="IO\Resources\A.2\test.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="IO\Resources\A-B\test.txt" />
-    <EmbeddedResource Include="IO\Resources\-\test.txt" />
-    <EmbeddedResource Include="IO\Resources\-A\test.txt" />
-    <EmbeddedResource Include="IO\Resources\xxx\test.txt" />
-    <EmbeddedResource Include="IO\Resources\1\test.txt" />
-    <EmbeddedResource Include="IO\Resources\test.txt" />
-    <EmbeddedResource Include="IO\Resources\digest-calculation.txt" />
-    <EmbeddedResource Include="IO\Resources\A.2\test.txt" />
+    <EmbeddedResource Include="IO\Resources\**" />
   </ItemGroup>
 
   <ItemGroup>
