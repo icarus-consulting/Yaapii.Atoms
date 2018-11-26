@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Yaapii.Atoms.IO.Error;
@@ -13,6 +14,7 @@ namespace Yaapii.Atoms.IO
     {
         private readonly string name;
         private readonly IScalar<Assembly> container;
+        private readonly IEnumerable<char> symbols;
 
         /// <summary>
         /// <para>A resource embedded in the container.</para>
@@ -53,10 +55,31 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="name">name of the resource</param>
         /// <param name="container">container to search in. Use Assembly.GetExecutingAssembly() for the assembly your current code is in.</param>
-        public ResourceOf(string name, IScalar<Assembly> container)
+        public ResourceOf(string name, IScalar<Assembly> container) : this(
+            name,
+            container,
+            new List<char>()
+            {
+                '!', '§', '$', '=', '+', '-', '(', ')', '[', ']', '{', '}', ';', ',', '`', '´', '\''
+            }
+        )
+        { }
+
+        /// <summary>
+        /// <para>A resource embedded in the container.</para>
+        /// <para>Name must be provided as a relative path:</para>
+        /// <para>If the resource is in project root path project\resource.txt, address it with resource.txt</para>
+        /// <para>If the resource is in a subpath project\resources\resource.txt, address it with resources\resource.txt</para>
+        /// <para>Please note that the the path is case sensitive.</para>
+        /// </summary>
+        /// <param name="name">name of the resource</param>
+        /// <param name="container">container to search in. Use Assembly.GetExecutingAssembly() for the assembly your current code is in.</param>
+        /// <param name="symbols">list of symbols which has to be encoded.</param>
+        public ResourceOf(string name, IScalar<Assembly> container, IEnumerable<char> symbols)
         {
             this.name = name;
             this.container = container;
+            this.symbols = symbols;
         }
 
         /// <summary>
@@ -84,7 +107,7 @@ namespace Yaapii.Atoms.IO
             for (int current = 0; current < folders.Length - 1; current++)
             {
                 folders[current] =
-                    DashesEncoded(
+                    SymbolsEndoced(
                         NumbersEncoded(
                             DotsEncoded(folders[current])
                         )
@@ -133,21 +156,25 @@ namespace Yaapii.Atoms.IO
         }
 
         /// <summary>
-        /// Replaces all '-' by '_'.
-        /// When the folder name is equal "-" is will be replaced by "__".
+        /// Replaces all symbols by '_'.
+        /// When the path is equal to that symbol is will be replaced by "__".
         /// Example: "unique-name" -> "unique_name"
-        /// Example: "-" -> "__"
+        /// Example: "{" -> "__"
         /// </summary>
         /// <param name="path">The path to translate</param>
         /// <returns>Result</returns>
-        private string DashesEncoded(string path)
+        private string SymbolsEndoced(string path)
         {
-            if (path.Equals("-"))
+            var encoded = path;
+            foreach (var symbol in this.symbols)
             {
-                path = "__";
+                if (encoded.Equals(symbol.ToString()))
+                {
+                    encoded = "__";
+                }
+                encoded = encoded.Replace(symbol, '_');
             }
-            path = path.Replace("-", "_");
-            return path;
+            return encoded;
         }
     }
 }
