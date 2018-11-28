@@ -14,7 +14,7 @@ namespace Yaapii.Atoms.Map.Tests
     public sealed class GroupedTest
     {
         [Fact]
-        public void GroupsListToDictionaryOfKeysAndLists()
+        public void GroupsList()
         {
             var srcList = new ListOf<string>("ABC", "ABCD", "ABCDE");
             var keyFunc =
