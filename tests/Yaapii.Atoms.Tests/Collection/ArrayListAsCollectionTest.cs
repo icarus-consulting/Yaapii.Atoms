@@ -2,6 +2,7 @@
 using Xunit;
 using Yaapii.Atoms.Collection;
 using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {

@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Yaapii.Atoms.Error
 {
@@ -32,7 +30,7 @@ namespace Yaapii.Atoms.Error
     public sealed class FailNotNull : IFail
     {
         private readonly object _obj;
-        private readonly string _hint;
+        private readonly Exception _ex;
 
         /// <summary>
         /// Fail if object is not null.
@@ -45,10 +43,20 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         /// <param name="obj">object to check</param>
         /// <param name="hint">msg to display</param>
-        public FailNotNull(object obj, string hint)
+        public FailNotNull(object obj, string hint) : this(
+            obj, new ArgumentException(hint)
+        )
+        { }
+
+        /// <summary>
+        /// Fail if object is not null.
+        /// </summary>
+        /// <param name="obj">object to check</param>
+        /// <param name="ex">specific exception which will be thrown</param>
+        public FailNotNull(object obj, Exception ex)
         {
-            _obj = obj;
-            _hint = hint;
+            this._obj = obj;
+            this._ex = ex;
         }
 
         /// <summary>
@@ -56,7 +64,7 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         public void Go()
         {
-            if (_obj != null) throw new ArgumentException(_hint);
+            if (_obj != null) throw this._ex;
         }
     }
 }

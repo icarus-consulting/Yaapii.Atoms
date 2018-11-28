@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.List.Tests
 {

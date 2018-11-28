@@ -205,6 +205,7 @@ namespace Yaapii.Atoms.Enumerable
         {
             this.saved = new StickyScalar<T>(saved);
         }
+
         /// <summary>
         /// Get the item.
         /// </summary>

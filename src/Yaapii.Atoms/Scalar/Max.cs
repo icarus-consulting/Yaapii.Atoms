@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Scalar;
@@ -30,66 +29,62 @@ using Yaapii.Atoms.Scalar;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// Find the smallest item in a <see cref="IEnumerable{T}"/>
+    /// The greatest item in the given <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Min<T> : IScalar<T>
+    public sealed class Max<T> : IScalar<T>
         where T : IComparable<T>
     {
         private readonly IEnumerable<IScalar<T>> items;
 
         /// <summary>
-        /// Find the smallest item in a <see cref="IEnumerable{T}"/>
+        /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
-        /// <param name="items"><see cref="Func{TResult}"/> functions which retrieve items to compare</param>
-        public Min(params Func<T>[] items) : this(
+        /// <param name="items">list of items</param>
+        public Max(params Func<T>[] items) : this(
             new Enumerable.Mapped<Func<T>, IScalar<T>>(
                 item => new ScalarOf<T>(() => item.Invoke()),
-                new EnumerableOf<Func<T>>(items)))
+                new EnumerableOf<Func<T>>(items)
+            )
+        )
         { }
 
         /// <summary>
-        /// Find the smallest item in a <see cref="IEnumerable{T}"/>
+        /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
-        /// <param name="items">items to compare</param>
-        public Min(IEnumerable<T> items) : this(
-            new Enumerable.Mapped<T, IScalar<T>>(
-                item => new ScalarOf<T>(item),
-                items))
+        /// <param name="items">list of items</param>
+        public Max(IEnumerable<T> items) : this(
+            new Enumerable.Mapped<T, IScalar<T>>(item => new ScalarOf<T>(item), items))
         { }
 
         /// <summary>
-        /// Find the smallest item in the given items
+        /// The greatest item in the given items.
         /// </summary>
-        /// <param name="items">items to compare</param>
-        public Min(params T[] items) : this(
-            new Enumerable.Mapped<T, IScalar<T>>(
-                item => new ScalarOf<T>(item),
-                items))
+        /// <param name="items">list of items</param>
+        public Max(params T[] items) : this(
+            new Enumerable.Mapped<T, IScalar<T>>(item => new ScalarOf<T>(item), items))
         { }
 
         /// <summary>
-        /// Find the smallest item in a <see cref="IEnumerable{T}"/>
+        /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
-        /// <param name="items">items to compare</param>
-        public Min(IEnumerable<IScalar<T>> items)
-        {
-            this.items = items; //C# params Bug
-        }
+        /// <param name="items">list of items</param>
+        public Max(params IScalar<T>[] items) : this(new EnumerableOf<IScalar<T>>(items))
+        { }
 
         /// <summary>
-        /// Find the smallest item in the given scalars.
+        /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
-        /// <param name="items">items to compare</param>
-        public Min(params IScalar<T>[] items)
+        /// <param name="items">list of items</param>
+        public Max(IEnumerable<IScalar<T>> items)
         {
             this.items = items;
         }
 
         /// <summary>
-        /// Get the minimum.
+        /// Get the maximum.
         /// </summary>
-        /// <returns>the minimum</returns>
+        /// <returns>the maximum</returns>
         public T Value()
         {
             IEnumerator<IScalar<T>> e = this.items.GetEnumerator();
@@ -98,16 +93,16 @@ namespace Yaapii.Atoms.Enumerable
                 throw new NoSuchElementException("Can't find greater element in an empty iterable");
             }
 
-            T min = e.Current.Value();
+            T max = e.Current.Value();
             while (e.MoveNext())
             {
                 T next = e.Current.Value();
-                if (next.CompareTo(min) < 0)
+                if (next.CompareTo(max) > 0)
                 {
-                    min = next;
+                    max = next;
                 }
             }
-            return min;
+            return max;
         }
 
     }

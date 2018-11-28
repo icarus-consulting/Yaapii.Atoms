@@ -25,7 +25,7 @@ namespace Yaapii.Atoms.Scalar
     /// <typeparam name="In"></typeparam>
     public sealed class And<In> : IScalar<Boolean>
     {
-        IEnumerable<IScalar<Boolean>> _enumerable;
+        private IEnumerable<IScalar<Boolean>> _enumerable;
 
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>
@@ -58,9 +58,14 @@ namespace Yaapii.Atoms.Scalar
             )
         { }
 
-        /// <summary>
-        /// 
-        /// </summary>
+        /// <summary> True if all functions return true with given input value </summary>
+        /// <param name="value"> Input value wich will executed by all given functions </param>
+        /// <param name="functions"> Functions wich will executed with given input value </param>
+        public And(In value, params Func<In, bool>[] functions)
+            : this(tValue => new And(new Mapped<Func<In, bool>, bool>(tFunc => tFunc.Invoke(tValue), functions)).Value(), value)
+        { }
+
+        /// <summary></summary>
         /// <param name="src"></param>
         private And(IEnumerable<IScalar<Boolean>> src)
         {

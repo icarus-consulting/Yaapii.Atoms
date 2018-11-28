@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Yaapii.Atoms.Error
 {
@@ -32,7 +30,7 @@ namespace Yaapii.Atoms.Error
     public sealed class FailNullOrEmpty : IFail
     {
         private readonly string _string;
-        private readonly string _hint;
+        private readonly Exception _ex;
 
         /// <summary>
         /// Fail if object is null or empty.
@@ -45,10 +43,20 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         /// <param name="str">string to check</param>
         /// <param name="hint">msg to display in exception</param>
-        public FailNullOrEmpty(string str, string hint)
+        public FailNullOrEmpty(string str, string hint) : this(
+            str, new ArgumentNullException(hint)
+        )
+        { }
+
+        /// <summary>
+        /// Fail if object is null or empty.
+        /// </summary>
+        /// <param name="str">string to check</param>
+        /// <param name="ex">specific exception which will be thrown</param>
+        public FailNullOrEmpty(string str, Exception ex)
         {
-            _string = str;
-            _hint = hint;
+            this._string = str;
+            this._ex = ex;
         }
 
         /// <summary>
@@ -56,7 +64,7 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         public void Go()
         {
-            if (String.IsNullOrEmpty(_string)) throw new ArgumentNullException(_hint);
+            if (String.IsNullOrEmpty(_string)) throw this._ex;
         }
     }
 }
