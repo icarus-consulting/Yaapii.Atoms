@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //
 // Copyright(c) 2017 ICARUS Consulting GmbH
 //
@@ -21,38 +21,53 @@
 // SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.IO.Tests
 {
-    public sealed class MappedTest
+    public sealed class Sha256DigestOfTest
     {
         [Fact]
-        public void TransformsList()
+        public void ChecksumOfEmptyString()
         {
-            Assert.True(
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
-                        input => new UpperText(new TextOf(input)),
-                        new ListOf<string>("hello", "world", "damn")
-                        ),
-                    0
-                ).Value().AsString() == "HELLO",
-            "Can't transform an enumerable");
+           Assert.Equal(
+                "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                new HexOf(
+                    new Sha256DigestOf(new InputOf(string.Empty))
+                ).AsString()
+           );
         }
 
         [Fact]
-        public void TransformsEmptyList()
+        public void ChecksumOfString()
         {
-            Assert.True(
-                new Enumerable.LengthOf(
-                    new Mapped<String, IText>(
-                        input => new UpperText(new TextOf(input)),
-                        new ListOf<string>()
-                    )).Value() == 0,
-                "Can't transform an empty iterable");
+            Assert.Equal(
+                "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069",
+                new HexOf(
+                    new Sha256DigestOf(new InputOf("Hello World!"))
+                ).AsString()
+            );
+        }
+
+        [Fact]
+        public void ChecksumFromFile()
+        {
+            Assert.Equal(
+                "c94451bd1476a3728669de11e22c645906d806e63a95c5797de1f3e84f126a3e",
+                new HexOf(
+                    new Sha256DigestOf(
+                        new ResourceOf(
+                            "IO/Resources/digest-calculation.txt",
+                            this.GetType()
+                        )
+                    )
+                ).AsString()
+            );
         }
     }
 }

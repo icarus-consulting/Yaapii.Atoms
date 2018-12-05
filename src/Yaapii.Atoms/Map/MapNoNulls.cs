@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //
 // Copyright(c) 2017 ICARUS Consulting GmbH
 //
@@ -34,30 +34,21 @@ using Yaapii.Atoms.Text;
 namespace Yaapii.Atoms.Map
 {
     /// <summary>
-    /// Envelope of map.
+    /// A decorator of map that tolerates no NULLs.
     /// </summary>
-    /// <typeparam name="Key"></typeparam>
-    /// <typeparam name="Value"></typeparam>
-    public abstract class MapEnvelope<Key, Value> : IDictionary<Key, Value>
+    /// <typeparam name="Key">type of key</typeparam>
+    /// <typeparam name="Value">type of value</typeparam>
+    public sealed class MapNoNulls<Key, Value> : IDictionary<Key, Value>
     {
-        private readonly IScalar<ReadOnlyDictionary<Key, Value>> _map;
-        private readonly UnsupportedOperationException _readonly = new UnsupportedOperationException("Not supported, it's a read-only map");
+        private readonly IDictionary<Key, Value> _map;
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="fnc">func returning IDictionary</param>
-        public MapEnvelope(Func<IDictionary<Key, Value>> fnc) : this(
-            new ScalarOf<IDictionary<Key, Value>>(fnc))
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="scalar">Scalar of IDictionary</param>
-        public MapEnvelope(IScalar<IDictionary<Key, Value>> scalar)
+        /// <param name="map">IDictionary</param>
+        public MapNoNulls(IDictionary<Key, Value> map)
         {
-            this._map = new ScalarOf<ReadOnlyDictionary<Key, Value>>(() => new ReadOnlyDictionary<Key, Value>(scalar.Value()));
+            this._map = map;
         }
 
         /// <summary>
@@ -65,73 +56,95 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public Value this[Key key] { get { return _map.Value()[key]; } set { throw this._readonly; } }
+        public Value this[Key key] 
+        { 
+            get 
+            {
+                new Error.FailNull(key, "key can't be null.").Go();
+                var value = _map[key];
+                new Error.FailNull(value, $"Value returned by [{key}] is null.").Go();
+                return _map[key];
+            } 
+            set
+            {
+                new Error.FailNull(key, "key can't be null.").Go();
+                new Error.FailNull(value, "value can't be null.").Go();
+                _map[key] = value;
+            }
+        }
 
         /// <summary>
         /// Access all keys
         /// </summary>
-        public ICollection<Key> Keys => _map.Value().Keys;
+        public ICollection<Key> Keys => _map.Keys;
 
         /// <summary>
         /// Access all values
         /// </summary>
-        public ICollection<Value> Values => _map.Value().Values;
+        public ICollection<Value> Values => _map.Values;
 
         /// <summary>
         /// Count entries
         /// </summary>
-        public int Count => _map.Value().Count;
+        public int Count => _map.Count;
 
         /// <summary>
-        /// Yes its readonly
+        /// Gets a value indicating whether the map is read-only.
         /// </summary>
-        public bool IsReadOnly => true;
+        public bool IsReadOnly => _map.IsReadOnly;
 
         /// <summary>
-        /// Unsupported
+        /// Adds an element with the provided key and value to the map
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         public void Add(Key key, Value value)
         {
-            throw this._readonly;
+            new Error.FailNull(key, "key can't be null.").Go();
+            new Error.FailNull(value, "value can't be null.").Go();
+            _map.Add(key, value);
         }
 
         /// <summary>
-        /// Unsupported
+        /// Adds an element with the provided entry to the map
         /// </summary>
         /// <param name="item"></param>
         public void Add(KeyValuePair<Key, Value> item)
         {
-            throw this._readonly;
+            new Error.FailNull(item.Key, "key can't be null.").Go();
+            new Error.FailNull(item.Value, "value can't be null.").Go();
+            _map.Add(item);
         }
 
         /// <summary>
-        /// Unsupported
+        /// Removes all elements from the map
         /// </summary>
         public void Clear()
         {
-            throw this._readonly;
+            _map.Clear();
         }
 
         /// <summary>
         /// Test if map contains entry
         /// </summary>
         /// <param name="item">item to check</param>
-        /// <returns>true if it contains</returns>
+        /// <returns>true if it contains the entry</returns>
         public bool Contains(KeyValuePair<Key, Value> item)
         {
-            return this._map.Value().ContainsKey(item.Key) && this._map.Value()[item.Key].Equals(item.Value);
+            new Error.FailNull(item.Key, "key can't be null.").Go();
+            new Error.FailNull(item.Value, "value can't be null.").Go();
+            return _map.Contains(item);
         }
 
         /// <summary>
         /// Test if map contains key
         /// </summary>
         /// <param name="key"></param>
-        /// <returns></returns>
+        /// <returns>true if it contains the key</returns>
         public bool ContainsKey(Key key)
         {
-            return this._map.Value().ContainsKey(key);
+            new Error.FailNull(key, "key can't be null.").Go();
+            return _map.ContainsKey(key);
         }
 
         /// <summary>
@@ -141,18 +154,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="arrayIndex">index to start</param>
         public void CopyTo(KeyValuePair<Key, Value>[] array, int arrayIndex)
         {
-            if (arrayIndex > this._map.Value().Count)
-            {
-                throw
-                    new ArgumentOutOfRangeException(
-                        new FormattedText(
-                            "arrayIndex {0} is higher than the item count in the map {1}.",
-                            arrayIndex,
-                            this._map.Value().Count
-                        ).AsString());
-            }
-
-            new ListOf<KeyValuePair<Key, Value>>(this).CopyTo(array, arrayIndex);
+            _map.CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -161,27 +163,23 @@ namespace Yaapii.Atoms.Map
         /// <returns>The enumerator</returns>
         public IEnumerator<KeyValuePair<Key, Value>> GetEnumerator()
         {
-            return this._map.Value().GetEnumerator();
+            return _map.GetEnumerator();
         }
 
         /// <summary>
-        /// Unsupported
+        ///  Removes the entry with the specified key from the map
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
         public bool Remove(Key key)
         {
-            throw this._readonly;
+            return _map.Remove(key);
         }
 
         /// <summary>
-        /// Unsupported
+        /// Removes the first occurrence of a specific entry from the map
         /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
         public bool Remove(KeyValuePair<Key, Value> item)
         {
-            throw this._readonly;
+            return _map.Remove(item);
         }
 
         /// <summary>
@@ -192,12 +190,15 @@ namespace Yaapii.Atoms.Map
         /// <returns>true if success</returns>
         public bool TryGetValue(Key key, out Value value)
         {
-            return this._map.Value().TryGetValue(key, out value);
+            new Error.FailNull(key, "key can't be null.").Go();
+            var result = _map.TryGetValue(key, out value);
+            new Error.FailNull(value, $"Value returned by [{key}] is null.").Go();
+            return result;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return _map.GetEnumerator();
         }
     }
 }

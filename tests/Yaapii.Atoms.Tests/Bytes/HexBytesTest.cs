@@ -20,26 +20,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.Bytes.Tests
 {
-    public sealed class EndlessTest
+    public sealed class HexBytesTests
     {
-        [Fact]
-        public void EndlessIterableTest()
+        [Theory]
+        [InlineData("foobar", "666f6f626172")]
+        public void BytesFromHex(string expected, string hex)
         {
-            Assert.True(
-                new ItemAt<int>(
-                    new Endless<int>(1),
-                    0).Value() == 1,
-                "Can't get unique endless iterable item");
+            Assert.Equal(
+                    expected,
+                    new TextOf(new HexBytes(new TextOf(hex))).AsString()
+                );
         }
     }
 }

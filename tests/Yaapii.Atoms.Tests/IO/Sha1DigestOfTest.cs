@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //
 // Copyright(c) 2017 ICARUS Consulting GmbH
 //
@@ -22,24 +22,52 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.IO;
+using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.IO.Tests
 {
-    public sealed class EndlessTest
+    public sealed class Sha1DigestOfTest
     {
         [Fact]
-        public void EndlessIterableTest()
+        public void ChecksumOfEmptyString()
         {
-            Assert.True(
-                new ItemAt<int>(
-                    new Endless<int>(1),
-                    0).Value() == 1,
-                "Can't get unique endless iterable item");
+           Assert.Equal(
+                "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                new HexOf(
+                    new Sha1DigestOf(new InputOf(string.Empty))
+                ).AsString()
+           );
+        }
+
+        [Fact]
+        public void ChecksumOfString()
+        {
+            Assert.Equal(
+                "2ef7bde608ce5404e97d5f042f95f89f1c232871",
+                new HexOf(
+                    new Sha1DigestOf(new InputOf("Hello World!"))
+                ).AsString()
+            );
+        }
+
+        [Fact]
+        public void ChecksumFromFile()
+        {
+            Assert.Equal(
+                "34f80bdab9b93af514004f127e440139aad63e2d",
+                new HexOf(
+                    new Sha1DigestOf(
+                        new ResourceOf(
+                            "IO/Resources/digest-calculation.txt",
+                            this.GetType()
+                        )
+                    )
+                ).AsString()
+            );
         }
     }
 }

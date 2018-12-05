@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //
 // Copyright(c) 2017 ICARUS Consulting GmbH
 //
@@ -21,25 +21,48 @@
 // SOFTWARE.
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
-using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.IO
 {
-    public sealed class EndlessTest
+    /// <summary>
+    /// Temporary file.
+    /// The temporary file is deleted when the object is disposed.
+    /// </summary>
+    public sealed class TempFile : IScalar<String>, IDisposable
     {
-        [Fact]
-        public void EndlessIterableTest()
+        private readonly IScalar<string> _path;
+
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        public TempFile() :
+            this(new StickyScalar<string>(()=>Path.GetTempFileName()))
+        { }
+
+        private TempFile(IScalar<string> path)
         {
-            Assert.True(
-                new ItemAt<int>(
-                    new Endless<int>(1),
-                    0).Value() == 1,
-                "Can't get unique endless iterable item");
+            _path = path;
+        }
+
+        /// <summary>
+        /// Temporary file's path.
+        /// The first call create the temporary file.
+        /// </summary>
+        public string Value()
+        {
+            return _path.Value();
+        }
+
+        /// <summary>
+        /// Delete the temporary file.
+        /// </summary>
+        public void Dispose()
+        {
+            File.Delete(_path.Value());
         }
     }
 }

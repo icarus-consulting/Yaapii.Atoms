@@ -20,13 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Func
 {

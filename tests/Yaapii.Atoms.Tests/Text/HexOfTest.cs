@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //
 // Copyright(c) 2017 ICARUS Consulting GmbH
 //
@@ -22,24 +22,35 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Bytes;
+using Yaapii.Atoms.IO;
+using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.Text.Tests
 {
-    public sealed class EndlessTest
+    public sealed class HexOfTest
     {
         [Fact]
-        public void EndlessIterableTest()
+        public void EmptyString()
         {
-            Assert.True(
-                new ItemAt<int>(
-                    new Endless<int>(1),
-                    0).Value() == 1,
-                "Can't get unique endless iterable item");
+            Assert.Equal(
+                string.Empty,
+                new HexOf(new BytesOf(string.Empty.ToCharArray())).AsString()
+            );
+        }
+
+        [Fact]
+        public void Sentence()
+        {
+            Assert.Equal(
+                "5768617427732075702c20d0b4d180d183d0b33f",
+                new HexOf(
+                    new BytesOf("What's up, друг?")
+                ).AsString()
+            );
         }
     }
 }

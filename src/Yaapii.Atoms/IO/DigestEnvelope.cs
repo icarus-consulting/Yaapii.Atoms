@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //
 // Copyright(c) 2017 ICARUS Consulting GmbH
 //
@@ -20,26 +20,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
+using System.Security.Cryptography;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.IO
 {
-    public sealed class EndlessTest
+    /// <summary>
+    /// Digest Envelope
+    /// </summary>
+    public abstract class DigestEnvelope : IBytes
     {
-        [Fact]
-        public void EndlessIterableTest()
+        private readonly IInput source;
+        private readonly IScalar<HashAlgorithm> algorithmFactory;
+
+        /// <summary>
+        /// Digest Envelope of Input
+        /// </summary>
+        /// <param name="source">Input</param>
+        /// <param name="algorithmFactory">Factory to create Hash Algorithm</param>
+        public DigestEnvelope(IInput source, IScalar<HashAlgorithm> algorithmFactory)
         {
-            Assert.True(
-                new ItemAt<int>(
-                    new Endless<int>(1),
-                    0).Value() == 1,
-                "Can't get unique endless iterable item");
+            this.source = source;
+            this.algorithmFactory = algorithmFactory;
+        }
+
+        /// <summary>
+        /// Digest
+        /// </summary>
+        public byte[] AsBytes()
+        {
+            using(var sha = algorithmFactory.Value())
+            {
+                return sha.ComputeHash(source.Stream());
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //
 // Copyright(c) 2017 ICARUS Consulting GmbH
 //
@@ -21,25 +21,29 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
+using System.Collections;
+using System.IO;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.IO;
 using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.IO.Tests
 {
-    public sealed class EndlessTest
+    public sealed class TempFileTest
     {
+
         [Fact]
-        public void EndlessIterableTest()
+        public void CreateAndDeleteTemporyFile()
         {
-            Assert.True(
-                new ItemAt<int>(
-                    new Endless<int>(1),
-                    0).Value() == 1,
-                "Can't get unique endless iterable item");
+            var file = new TempFile();
+            using(file)
+            {
+                Assert.True(File.Exists(file.Value()));
+            }
+            Assert.False(File.Exists(file.Value()));
         }
     }
 }

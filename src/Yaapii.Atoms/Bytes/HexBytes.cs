@@ -21,25 +21,45 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
+using System.IO;
+using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.Bytes
 {
-    public sealed class EndlessTest
+    /// <summary>
+    /// Bytes from Hex String
+    /// </summary>
+    public sealed class HexBytes : IBytes
     {
-        [Fact]
-        public void EndlessIterableTest()
+        private readonly IText origin;
+
+        /// <summary>
+        /// Bytes from Hex String
+        /// </summary>
+        /// <param name="origin">The string in Hex format</param>
+        public HexBytes(string origin) : this(new TextOf(origin))
+        { }
+        /// <summary>
+        /// Bytes from Hex String
+        /// </summary>
+        /// <param name="origin">The string in Hex format</param>
+        public HexBytes(IText origin)
         {
-            Assert.True(
-                new ItemAt<int>(
-                    new Endless<int>(1),
-                    0).Value() == 1,
-                "Can't get unique endless iterable item");
+            this.origin = origin;
+        }
+        public byte[] AsBytes()
+        {
+            var hex = this.origin.AsString();
+            if ((hex.Length & 1) == 1)
+            {
+                throw new IOException("Length of hexadecimal text is odd");
+            }
+            byte[] raw = new byte[hex.Length / 2];
+            for (int i = 0; i < raw.Length; i++)
+            {
+                raw[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
+            }
+            return raw;
         }
     }
 }

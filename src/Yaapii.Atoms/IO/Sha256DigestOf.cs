@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //
 // Copyright(c) 2017 ICARUS Consulting GmbH
 //
@@ -22,24 +22,27 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Security.Cryptography;
 using System.Text;
-using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.IO
 {
-    public sealed class EndlessTest
+    /// <summary>
+    /// SHA-256 checksum calculation
+    /// </summary>
+    public sealed class Sha256DigestOf : DigestEnvelope
     {
-        [Fact]
-        public void EndlessIterableTest()
-        {
-            Assert.True(
-                new ItemAt<int>(
-                    new Endless<int>(1),
-                    0).Value() == 1,
-                "Can't get unique endless iterable item");
-        }
+        private readonly IInput _source;
+
+        /// <summary>
+        /// SHA-256 checksum calculation of IInput.
+        /// </summary>
+        /// <param name="source">Input</param>
+        public Sha256DigestOf(IInput source) :
+            base(source, new ScalarOf<HashAlgorithm>(() => new SHA256CryptoServiceProvider()))
+        { }
     }
 }

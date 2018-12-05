@@ -32,8 +32,8 @@ namespace Yaapii.Atoms.Scalar
     /// <typeparam name="Out">Type of output value</typeparam>
     public class ScalarWithFallback<Out> : IScalar<Out>
     {
-        private readonly IScalar<Out> _origin;
-        private readonly Func<Exception, Out> _fallback;
+        private readonly IScalar<Out> origin;
+        private readonly Func<Exception, Out> fbk;
 
         /// <summary>
         /// ctor
@@ -62,8 +62,8 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="fbk">fallback to apply when fails</param>
         public ScalarWithFallback(IScalar<Out> origin, Func<Exception, Out> fbk)
         {
-            _origin = origin;
-            _fallback = fbk;
+            this.origin = origin;
+            this.fbk = fbk;
         }
 
         /// <summary>
@@ -74,11 +74,11 @@ namespace Yaapii.Atoms.Scalar
         {
             try
             {
-                return _origin.Value();
+                return origin.Value();
             }
             catch (Exception ex)
             {
-                return _fallback.Invoke(ex);
+                return fbk.Invoke(ex);
             }
 
         }

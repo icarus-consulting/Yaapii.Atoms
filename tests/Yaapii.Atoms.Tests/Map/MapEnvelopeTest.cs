@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 //
 // Copyright(c) 2017 ICARUS Consulting GmbH
 //
@@ -20,26 +20,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.Map.Tests
 {
-    public sealed class EndlessTest
+    public class MapEnvelopeTest
     {
         [Fact]
-        public void EndlessIterableTest()
+        public void TryGetValueWithExistingKey()
         {
-            Assert.True(
-                new ItemAt<int>(
-                    new Endless<int>(1),
-                    0).Value() == 1,
-                "Can't get unique endless iterable item");
+
+            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
+            int outValue;
+            Assert.True(map.TryGetValue(7, out outValue));
+            Assert.Equal(42, outValue);
+        }
+
+        [Fact]
+        public void TryGetValueWithMissingKey()
+        {
+
+            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
+            int outValue;
+            Assert.False(map.TryGetValue(0, out outValue));
+        }
+
+        private class NonAbstractEnvelope : MapEnvelope<int, int>
+        {
+            public NonAbstractEnvelope(IDictionary<int, int> map) : base(() => map)
+            { }
         }
     }
 }

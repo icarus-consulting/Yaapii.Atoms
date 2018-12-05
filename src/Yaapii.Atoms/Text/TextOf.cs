@@ -250,7 +250,7 @@ namespace Yaapii.Atoms.Text
             () => 
             {
                 var memoryStream = new MemoryStream(bytes.AsBytes());
-                return new StreamReader(memoryStream).ReadToEnd(); // removes the BOM from the Byte-Array
+                return new StreamReader(memoryStream, encoding).ReadToEnd(); // removes the BOM from the Byte-Array
             })
         { }
 
