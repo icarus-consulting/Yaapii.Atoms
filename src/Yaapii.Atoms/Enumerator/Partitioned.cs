@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Enumerator
         private readonly List<T> buffer;
 
         /// <summary>
-        /// 
+        /// Partitiones an Enumerator by a given size
         /// </summary>
         /// <param name="size"></param>
         /// <param name="enumerator"></param>
@@ -55,18 +55,18 @@ namespace Yaapii.Atoms.Enumerator
             this.enumerator = enumerator;
             this.buffer = buffer;
         }
-        
+
         /// <summary>
         /// Returns the current buffer value.
         /// </summary>
         public IEnumerable<T> Current
         {
-            get {
+            get
+            {
                 if (buffer.Count < 1)
                 {
                     throw new InvalidOperationException();
                 }
-
                 return buffer;
             }
         }
@@ -75,7 +75,7 @@ namespace Yaapii.Atoms.Enumerator
 
         public void Dispose()
         {
-            
+            this.enumerator.Dispose();
         }
 
         /// <summary>
@@ -88,8 +88,7 @@ namespace Yaapii.Atoms.Enumerator
             {
                 throw new ArgumentException("Partition size < 1");
             }
-
-            return Partitionate();           
+            return Partitionate();
         }
 
         /// <summary>
@@ -104,25 +103,21 @@ namespace Yaapii.Atoms.Enumerator
         private bool Partitionate()
         {
             bool result = true;
-
             this.buffer.Clear();
 
             if (!this.enumerator.MoveNext())
             {
                 result = false;
             }
-
             else
             {
                 this.buffer.Add(this.enumerator.Current);
-
                 for (int i = 0; i < this.size - 1 && this.enumerator.MoveNext(); ++i)
                 {
                     this.buffer.Add(this.enumerator.Current);
                 }
             }
-          
             return result;
         }
-    }    
+    }
 }
