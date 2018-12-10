@@ -16,6 +16,14 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source enumerator</param>
+        public Mapped(IFunc<In, Out> fnc, IEnumerable<In> src) : this((input)=>fnc.Invoke(input), src)
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="fnc">mapping function</param>
+        /// <param name="src">source enumerator</param>
         public Mapped(Func<In, Out> fnc, IEnumerator<In> src) : this(fnc, new ListOf<In>(src))
         { }
 

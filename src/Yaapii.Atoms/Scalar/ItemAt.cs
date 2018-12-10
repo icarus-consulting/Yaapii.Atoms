@@ -49,7 +49,6 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// position
         /// </summary>
-        private readonly int _pos;
         private readonly IScalar<T> saved;
 
         /// <summary>
@@ -91,7 +90,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
         public ItemAt(IEnumerable<T> source, T fallback) : this(
-            source, 
+            source,
             new FuncOf<IEnumerable<T>, T>(
                 b => fallback))
         { }
@@ -103,7 +102,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="position">position</param>
         /// <param name="fallback">fallback func</param>
         public ItemAt(IEnumerable<T> source, int position, T fallback) : this(
-            source, 
+            source,
             new FuncOf<IEnumerable<T>, T>(b => fallback))
         { }
 
@@ -135,7 +134,7 @@ namespace Yaapii.Atoms.Enumerable
                 position,
                 new BiFuncOf<Exception, IEnumerable<T>, T>((ex, itr) =>
                 {
-                    throw 
+                    throw
                         new NoSuchElementException(
                             new FormattedText(
                                 "Cannot get element at position {0}: {1}",
@@ -165,7 +164,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
         public ItemAt(IEnumerable<T> source, int position, Func<IEnumerable<T>, T> fallback) : this(
-            source, 
+            source,
             position,
             new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback.Invoke(enumerable)))
         { }
@@ -190,7 +189,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="fallback">fallback func</param>
         public ItemAt(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback) : this(
             new ScalarOf<T>(
-                ()=>
+                () =>
                     {
                         return new ItemAtEnumerator<T>(
                            source.GetEnumerator(), position, fallback
@@ -198,8 +197,7 @@ namespace Yaapii.Atoms.Enumerable
                     }
                 )
             )
-        {
-        }
+        { }
 
         internal ItemAt(IScalar<T> saved)
         {
