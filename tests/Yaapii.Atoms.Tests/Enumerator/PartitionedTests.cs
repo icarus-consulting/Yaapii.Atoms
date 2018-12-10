@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Yaapii.Atoms.Enumerator
@@ -10,70 +9,111 @@ namespace Yaapii.Atoms.Enumerator
         [Fact]
         public void CountsPartititions()
         {
-            int size = 3;
-            IEnumerator<int> enumerator = new List<int>() {1,2,3,4,5,6,7,8,9,10}.GetEnumerator();
+            IEnumerator<int> enumerator =
+                new List<int>()
+                {
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                }.GetEnumerator();
 
-
-            var partition = new Partitioned<int>(size, enumerator);
+            var partition =
+                new Partitioned<int>(
+                    3,
+                    enumerator
+                );
 
             partition.MoveNext();
             partition.MoveNext();
             partition.MoveNext();
             partition.MoveNext();
 
-            Assert.Equal(new List<int>() { 10}, partition.Current);
+            Assert.Equal(
+                new List<int>() { 10 },
+                partition.Current
+            );
         }
 
 
         [Fact]
         public void Partionate()
         {
-            int size = 1;
-            IEnumerator<string> enumerator = new List<string>() { "Christian","Sauer"}.GetEnumerator();
+            IEnumerator<string> enumerator =
+                new List<string>()
+                {
+                    "Christian",
+                    "Sauer"
+                }.GetEnumerator();
 
-
-            var partition = new Partitioned<string>(size, enumerator);
+            var partition =
+                new Partitioned<string>(
+                    1,
+                    enumerator
+                );
 
             partition.MoveNext();
-
-           // Assert.Equal(new List<string>() { "Christian", "Sauer" }, partition.Current);
-            Assert.Equal(new List<string>() { "Christian"}, partition.Current);
+            Assert.Equal(
+                new List<string>() { "Christian" },
+                partition.Current
+            );
         }
 
         [Fact]
         public void ThrowsExceptionOnInvalidSize()
         {
-            int size = 0;
             IEnumerator<string> enumerator = new List<string>() { }.GetEnumerator();
-                     
-            Assert.Throws<ArgumentException>(()=>
-            new Partitioned<string>(size, enumerator).MoveNext()
+
+            Assert.Throws<ArgumentException>(() =>
+                new Partitioned<string>(
+                    0,
+                    enumerator
+                ).MoveNext()
             );
         }
 
         [Fact]
         public void CurrentThrowsException()
         {
-            int size = 2;
             IEnumerator<string> enumerator = new List<string>() { }.GetEnumerator();
 
             Assert.Throws<InvalidOperationException>(() =>
-            new Partitioned<string>(size, enumerator).Current
+                new Partitioned<string>(
+                    2,
+                    enumerator
+                ).Current
             );
         }
 
         [Fact]
         public void FailsOnEnd()
         {
-            int size = 5;
-            IEnumerator<int> enumerator = new List<int>() { 1, 2, 3, 4, 5}.GetEnumerator();
+            IEnumerator<int> enumerator =
+                new List<int>()
+                {
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                }.GetEnumerator();
 
-            var partition = new Partitioned<int>(size, enumerator);
-            
+            var partition =
+                new Partitioned<int>(
+                    5,
+                    enumerator
+                );
+
             partition.MoveNext();
-            partition.MoveNext();            
+            partition.MoveNext();
 
-            Assert.Throws<InvalidOperationException>(()=>
+            Assert.Throws<InvalidOperationException>(() =>
             partition.Current
             );
         }
