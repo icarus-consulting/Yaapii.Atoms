@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Yaapii.Atoms.Error
 {
@@ -32,7 +30,7 @@ namespace Yaapii.Atoms.Error
     public sealed class FailEmptyOpt : IFail
     {
         private readonly IOpt _opt;
-        private readonly string _hint;
+        private readonly Exception _ex;
 
         /// <summary>
         /// Fail if opt is empty.
@@ -46,10 +44,20 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         /// <param name="opt">opt to check</param>
         /// <param name="hint">msg in exception</param>
-        public FailEmptyOpt(IOpt opt, string hint)
+        public FailEmptyOpt(IOpt opt, string hint) : this(
+            opt, new Exception(hint)
+        )
+        { }
+
+        /// <summary>
+        /// Fail if opt is empty.
+        /// </summary>
+        /// <param name="opt">opt to check</param>
+        /// <param name="ex">specific exception which will be thrown</param>
+        public FailEmptyOpt(IOpt opt, Exception ex)
         {
-            _opt = opt;
-            _hint = hint;
+            this._opt = opt;
+            this._ex = ex;
         }
 
         /// <summary>
@@ -57,7 +65,7 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         public void Go()
         {
-            if (!_opt.Has()) throw new Exception(_hint);
+            if (!_opt.Has()) throw this._ex;
         }
     }
 }

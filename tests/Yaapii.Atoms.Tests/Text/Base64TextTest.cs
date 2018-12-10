@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Text.Tests
                 ).Value();
 
                 Assert.True(
-                    new Base64DecodedText(
+                    new Base64Text(
                         new TextOf(
                             new Uri(file)
                         )

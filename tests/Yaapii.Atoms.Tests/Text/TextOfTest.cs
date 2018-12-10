@@ -153,7 +153,7 @@ namespace Yaapii.Atoms.Text.Tests
 
             double doub = 0.2545;
 
-            var content = doub.ToString(CultureInfo.CurrentCulture);
+            var content = doub.ToString(CultureInfo.InvariantCulture);
 
             Assert.True(
                     new TextOf(doub
@@ -181,7 +181,7 @@ namespace Yaapii.Atoms.Text.Tests
             //var content = "0,2545";
 
             float doub = 0.2545f;
-            var content = doub.ToString(CultureInfo.CurrentCulture);
+            var content = doub.ToString(CultureInfo.InvariantCulture);
 
             Assert.True(
                     new TextOf(doub
@@ -273,6 +273,18 @@ namespace Yaapii.Atoms.Text.Tests
                 new TextOf(
                     bytes
                 ).AsString().CompareTo(Encoding.UTF8.GetString(bytes)) == 0,
+                "Can't read array of bytes");
+        }
+
+        [Fact]
+        public void ReadsBytesWithEncoding()
+        {
+            byte[] bytes = new byte[] { (byte)0xCA, (byte)0xFE };
+            Assert.True(
+                new TextOf(
+                    new BytesOf(bytes),
+                    Encoding.ASCII
+                ).AsString().CompareTo(Encoding.ASCII.GetString(bytes)) == 0,
                 "Can't read array of bytes");
         }
 

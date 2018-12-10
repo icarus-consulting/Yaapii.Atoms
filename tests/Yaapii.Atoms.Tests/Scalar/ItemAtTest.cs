@@ -26,7 +26,7 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.Scalar.Tests
 {
     public sealed class ItemAtTests
     {
@@ -84,6 +84,31 @@ namespace Yaapii.Atoms.Enumerable.Tests
                     12,
                     (ex, enumerable) => throw ex
                 ).Value());
+        }
+
+        [Fact]
+        public void FallbackShowsGivenError()
+        {
+            Assert.Throws<NotFiniteNumberException>(() =>
+                new ItemAt<string>(
+                    new EnumerableOf<string>(),
+                    12,
+                    new NotFiniteNumberException("Cannot do this!")
+                ).Value()
+            );
+        }
+
+        [Fact]
+        public void StickyTest()
+        {
+            var list = new List<string>();
+            list.Add("pre");
+            var sticky = new ItemAt<string>(list);
+            sticky.Value();
+            list.Clear();
+            list.Add("post");
+             
+             Assert.Equal("pre" , sticky.Value());
         }
     }
 }

@@ -11,14 +11,14 @@ namespace Yaapii.Atoms.Enumerable
     /// It bundles the methods offered by IEnumerable and enables scalar based ctors.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class EnumerableEnvelope<T> : IEnumerable<T>
+    public abstract class EnumerableEnvelope<T> : IEnumerable<T>
     {
         /// <summary>
         /// The source enumerable.
         /// </summary>
-        private readonly IScalar<IEnumerable<T>> _origin;
+        private readonly IScalar<IEnumerable<T>> origin;
 
-        internal EnumerableEnvelope(Func<IEnumerable<T>> fnc) : this(
+        public EnumerableEnvelope(Func<IEnumerable<T>> fnc) : this(
             new ScalarOf<IEnumerable<T>>(fnc))
         { }
 
@@ -26,9 +26,9 @@ namespace Yaapii.Atoms.Enumerable
         /// Makes envelope for IEnumerable scalars.
         /// </summary>
         /// <param name="sc"></param>
-        internal EnumerableEnvelope(IScalar<IEnumerable<T>> sc)
+        public EnumerableEnvelope(IScalar<IEnumerable<T>> sc)
         {
-            this._origin = sc;
+            this.origin = sc;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <returns>The enumerator</returns>
         public IEnumerator<T> GetEnumerator()
         {
-            return this._origin.Value().GetEnumerator();
+            return this.origin.Value().GetEnumerator();
         }
 
         /// <summary>

@@ -21,56 +21,45 @@
 // SOFTWARE.
 
 using System;
-using Yaapii.Atoms.Bytes;
-using Yaapii.Atoms.IO;
+using System.IO;
+using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Bytes
 {
     /// <summary>
-    /// A <see cref="IText"/> as Base64 decoded <see cref="IText"/>
+    /// Bytes from Hex String
     /// </summary>
-    public sealed class Base64DecodedText : IText
+    public sealed class HexBytes : IBytes
     {
-        private readonly IText _origin;
+        private readonly IText origin;
 
         /// <summary>
-        /// A <see cref="string"/> as Base64 decoded <see cref="IText"/>
+        /// Bytes from Hex String
         /// </summary>
-        /// <param name="str">string to decode</param>
-        public Base64DecodedText(String str) : this(new TextOf(str))
+        /// <param name="origin">The string in Hex format</param>
+        public HexBytes(string origin) : this(new TextOf(origin))
         { }
-
         /// <summary>
-        /// A <see cref="IText"/> as Base64 decoded <see cref="IText"/>
+        /// Bytes from Hex String
         /// </summary>
-        /// <param name="text">text to decode</param>
-        public Base64DecodedText(IText text)
+        /// <param name="origin">The string in Hex format</param>
+        public HexBytes(IText origin)
         {
-            this._origin =
-                new TextOf(
-                    new Base64Bytes(
-                        new BytesOf(text)
-                    )
-                );
+            this.origin = origin;
         }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
+        public byte[] AsBytes()
         {
-            return this._origin.AsString();
-        }
-
-        /// <summary>
-        /// Check for equality.
-        /// </summary>
-        /// <param name="text">other object to compare to</param>
-        /// <returns>true if equal.</returns>
-        public bool Equals(IText text)
-        {
-            return _origin.Equals(text);
+            var hex = this.origin.AsString();
+            if ((hex.Length & 1) == 1)
+            {
+                throw new IOException("Length of hexadecimal text is odd");
+            }
+            byte[] raw = new byte[hex.Length / 2];
+            for (int i = 0; i < raw.Length; i++)
+            {
+                raw[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
+            }
+            return raw;
         }
     }
 }
