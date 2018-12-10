@@ -22,6 +22,7 @@
 
 using System;
 using System.IO;
+using Yaapii.Atoms.IO;
 
 namespace Yaapii.Atoms.Bytes
 {
