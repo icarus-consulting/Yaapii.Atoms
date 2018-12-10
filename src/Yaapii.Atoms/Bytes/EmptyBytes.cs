@@ -20,11 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Yaapii.Atoms.IO
+namespace Yaapii.Atoms.Bytes
 {
     /// <summary>
     /// Bytes without data.

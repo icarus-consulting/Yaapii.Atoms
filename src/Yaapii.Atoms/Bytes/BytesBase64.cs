@@ -9,7 +9,7 @@ namespace Yaapii.Atoms.Bytes
     /// </summary>
     public sealed class BytesBase64 : IBytes
     {
-        private readonly IBytes _bytes;
+        private readonly IBytes bytes;
 
         /// <summary>
         /// Encoded origin bytes using the Base64 encoding scheme.
@@ -17,7 +17,7 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="bytes"></param>
         public BytesBase64(IBytes bytes)
         {
-            _bytes = bytes;
+            this.bytes = bytes;
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.Bytes
             return 
                 Encoding.UTF8.GetBytes(
                     Convert.ToBase64String(
-                        _bytes.AsBytes()
+                        bytes.AsBytes()
                     )
                 );
         }
