@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable MaxClassLength // Class length max
