@@ -46,6 +46,7 @@ namespace Yaapii.Atoms.Scalar
         /// A <see cref="IScalar{T}"/> that is threadsafe.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
+        /// <param name="lck">the object to lock</param>
         public SyncScalar(Func<T> src, object lck) : this(new ScalarOf<T>(src), lck)
         { }
 

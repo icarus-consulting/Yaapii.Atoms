@@ -47,6 +47,7 @@ namespace Yaapii.Atoms.Scalar
         /// A <see cref="IScalar{T}"/> that is threadsafe and sticky.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
+        /// <param name="lck">the object to lock</param>
         public SolidScalar(Func<T> src, object lck) : this(new ScalarOf<T>(src), lck)
         { }
 
