@@ -25,11 +25,14 @@ using System.Collections.Generic;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// Partitiones a given enumerable by a given size.
+    /// Enumerable partitioned by a given size.
     /// <para>Is a IEnumerable</para>
     /// </summary>
     public sealed class Partitioned<T> : EnumerableEnvelope<IEnumerable<T>>
     {
+        /// <summary>
+        /// Enumerable partitioned by a given size.
+        /// </summary>
         public Partitioned(int size, IEnumerable<T> list) : base(() =>
             new EnumerableOf<IEnumerable<T>>(
                 new Enumerator.Partitioned<T>(
