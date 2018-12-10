@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Func
     /// </summary>
     /// <typeparam name="In">type of input</typeparam>
     /// <typeparam name="Out">type of output</typeparam>
-    public sealed class ThreadSafeFunc<In, Out> : IFunc<In, Out>
+    public sealed class SyncFunc<In, Out> : IFunc<In, Out>
     {
         /// <summary>
         /// original func
@@ -47,14 +47,14 @@ namespace Yaapii.Atoms.Func
         /// Function that is threadsafe.
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
-        public ThreadSafeFunc(Func<In, Out> fnc) : this(new FuncOf<In, Out>((X) => fnc(X)))
+        public SyncFunc(Func<In, Out> fnc) : this(new FuncOf<In, Out>((X) => fnc(X)))
         { }
 
         /// <summary>
         /// Function that is threadsafe.
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
-        public ThreadSafeFunc(IFunc<In, Out> fnc): this(fnc, fnc)
+        public SyncFunc(IFunc<In, Out> fnc): this(fnc, fnc)
         { }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="fnc">func to cache result from</param>
         /// <param name="lck">object that will be locked</param>
-        public ThreadSafeFunc(IFunc<In, Out> fnc, object lck)
+        public SyncFunc(IFunc<In, Out> fnc, object lck)
         {
             this._func = fnc;
             this._lck = lck;

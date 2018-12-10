@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections;
-using System.Text;
 using Yaapii.Atoms.Enumerator;
 
 namespace Yaapii.Atoms.Enumerable

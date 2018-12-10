@@ -30,23 +30,23 @@ namespace Yaapii.Atoms.Func
     /// Proc that is threadsafe.
     /// </summary>
     /// <typeparam name="In">type of input</typeparam>
-    public sealed class ThreadSafeAction<In> : IAction<In>
+    public sealed class SyncAction<In> : IAction<In>
     {
         /// <summary>
         /// original proc
         /// </summary>
-        private readonly IAction<In> _proc;
+        private readonly IAction<In> act;
 
         /// <summary>
         /// threadsafe-lock
         /// </summary>
-        private readonly Object _lck;
+        private readonly Object lck;
 
         /// <summary>
         /// Proc that is threadsafe.
         /// </summary>
         /// <param name="prc">proc to make threadsafe</param>
-        public ThreadSafeAction(IAction<In> prc) : this(prc, prc)
+        public SyncAction(IAction<In> prc) : this(prc, prc)
         { }
 
         /// <summary>
@@ -54,10 +54,10 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="prc">proc to make threadsafe</param>
         /// <param name="lck">object to lock threadsafe</param>
-        public ThreadSafeAction(IAction<In> prc, object lck)
+        public SyncAction(IAction<In> prc, object lck)
         {
-            this._proc = prc;
-            this._lck = lck;
+            this.act = prc;
+            this.lck = lck;
         }
 
         /// <summary>
@@ -66,9 +66,9 @@ namespace Yaapii.Atoms.Func
         /// <param name="input"></param>
         public void Invoke(In input)
         {
-            lock (this._lck)
+            lock (this.lck)
             {
-                this._proc.Invoke(input);
+                this.act.Invoke(input);
             }
         }
 
@@ -77,23 +77,23 @@ namespace Yaapii.Atoms.Func
     /// <summary>
     /// Action that is threadsafe.
     /// </summary>
-    public sealed class ThreadSafeAction : IAction
+    public sealed class SyncAction : IAction
     {
         /// <summary>
         /// original proc
         /// </summary>
-        private readonly IAction _proc;
+        private readonly IAction proc;
 
         /// <summary>
         /// threadsafe-lock
         /// </summary>
-        private readonly Object _lck;
+        private readonly Object lck;
 
         /// <summary>
         /// Proc that is threadsafe.
         /// </summary>
         /// <param name="prc">proc to make threadsafe</param>
-        public ThreadSafeAction(IAction prc) : this(prc, prc)
+        public SyncAction(IAction prc) : this(prc, prc)
         { }
 
         /// <summary>
@@ -101,10 +101,10 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="prc">proc to make threadsafe</param>
         /// <param name="lck">object to lock threadsafe</param>
-        public ThreadSafeAction(IAction prc, object lck)
+        public SyncAction(IAction prc, object lck)
         {
-            this._proc = prc;
-            this._lck = lck;
+            this.proc = prc;
+            this.lck = lck;
         }
 
         /// <summary>
@@ -112,9 +112,9 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         public void Invoke()
         {
-            lock (this._lck)
+            lock (this.lck)
             {
-                this._proc.Invoke();
+                this.proc.Invoke();
             }
         }
 

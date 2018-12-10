@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Scalar
         private readonly IFunc<T> _func;
 
         /// <summary>
-        /// A <see cref="IScalar{T}"/> out of a object.
+        /// A <see cref="IScalar{T}"/> out of an object.
         /// </summary>
         /// <param name="org"></param>
         public ScalarOf(T org) : this((b) => org)
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Scalar
         { }
 
         /// <summary>
-        /// A <see cref="IScalar{T}"/> out of the return value from a <see cref="IFunc{In, Out}"/>
+        /// A <see cref="IScalar{T}"/> out of the return value from an <see cref="IFunc{In, Out}"/>
         /// </summary>
         /// <param name="func"></param>
         public ScalarOf(IFunc<bool, T> func) : this(new FuncOf<T>(() => func.Invoke(true)))
