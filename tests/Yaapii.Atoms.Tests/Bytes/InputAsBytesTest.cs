@@ -25,6 +25,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.IO;
+using Yaapii.Atoms.IO.Tests;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Bytes.Tests

@@ -45,7 +45,6 @@ namespace Yaapii.Atoms.Tests.Scalar
         [Fact]
         public void WorksInMultipleThreads()
         {
-            var check = 0;
             var sc = new SolidScalar<IList<int>>(() => new ListOf<int>(1, 2));
             var max = Environment.ProcessorCount << 8;
             Parallel.For(0, max, (nr) => sc.Value());
