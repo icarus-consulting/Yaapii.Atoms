@@ -1,5 +1,4 @@
-﻿
-// MIT License
+﻿// MIT License
 //
 // Copyright(c) 2017 ICARUS Consulting GmbH
 //
@@ -23,16 +22,20 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Yaapii.Atoms.Error;
 
 namespace Yaapii.Atoms.Text
 {
+    /// <summary>
+    /// A Text that can be compared using the Equals method.
+    /// </summary>
     public sealed class ComparableText : IText, IComparable
     {
         private readonly IText text;
 
+        /// <summary>
+        /// A Text that can be compared using the Equals method.
+        /// </summary>
         public ComparableText(IText text)
         {
             this.text = text;
