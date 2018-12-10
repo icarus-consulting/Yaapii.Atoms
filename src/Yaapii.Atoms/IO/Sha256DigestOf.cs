@@ -20,12 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Security.Cryptography;
-using System.Text;
-using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.IO
@@ -35,8 +30,6 @@ namespace Yaapii.Atoms.IO
     /// </summary>
     public sealed class Sha256DigestOf : DigestEnvelope
     {
-        private readonly IInput _source;
-
         /// <summary>
         /// SHA-256 checksum calculation of IInput.
         /// </summary>
