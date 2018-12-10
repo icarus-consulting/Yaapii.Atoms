@@ -21,14 +21,12 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.IO.Tests
+namespace Yaapii.Atoms.Bytes.Tests
 {
     public sealed class ReaderAsBytesTest
     {

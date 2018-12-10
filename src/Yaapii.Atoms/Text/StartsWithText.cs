@@ -20,48 +20,48 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.Collections.Generic;
-using Yaapii.Atoms.Enumerable;
+using System.Text.RegularExpressions;
 
-namespace Yaapii.Atoms.Collection
+namespace Yaapii.Atoms.Text
 {
-    ///
-    /// A <see cref="ICollection{T}"/> that is both synchronized and sticky.
-    ///
-    /// <para>Objects of this class are thread-safe.</para>
-    ///
-    public sealed class SolidCollection<T> : CollectionEnvelope<T>
+    /// <summary>
+    /// Checks if a text starts with a given content.
+    /// </summary>
+    public sealed class StartsWithText : IScalar<bool>
     {
+        private readonly IText _text;
+        private readonly IText _start;
+
         /// <summary>
-        /// ctor
+        /// Checks if a <see cref="IText"/> starts with a given <see cref="string"/>
         /// </summary>
-        /// <param name="array">source items</param>
-        public SolidCollection(params T[] array) : this(new EnumerableOf<T>(array))
+        /// <param name="text">Text to test</param>
+        /// <param name="start">Starting content to use in the test</param>
+        public StartsWithText(IText text, string start) : this(
+            text,
+            new TextOf(start)
+        )
         { }
 
         /// <summary>
-        /// ctor
+        /// Checks if a <see cref="IText"/> starts with a given <see cref="IText"/>
         /// </summary>
-        /// <param name="src">source enumerator</param>
-        public SolidCollection(IEnumerator<T> src) : this(new EnumerableOf<T>(src))
-        { }
+        /// <param name="text">Text to test</param>
+        /// <param name="start">Starting content to use in the test</param>
+        public StartsWithText(IText text, IText start)
+        {
+            this._text = text;
+            this._start = start;
+        }
 
         /// <summary>
-        /// ctor
+        /// Gets the result
         /// </summary>
-        /// <param name="src">source enumerable</param>
-        public SolidCollection(IEnumerable<T> src) : this(new CollectionOf<T>(src))
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="src">source collection</param>
-        public SolidCollection(ICollection<T> src) : base(
-            () => 
-                new SyncCollection<T>(
-                    new StickyCollection<T>(src)))
-        { }
-
+        /// <returns>The result</returns>
+        public bool Value()
+        {
+            var regex = new Regex("^" + Regex.Escape(this._start.AsString()));
+            return regex.IsMatch(this._text.AsString());
+        }
     }
 }

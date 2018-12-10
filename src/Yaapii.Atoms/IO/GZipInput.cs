@@ -31,10 +31,7 @@ namespace Yaapii.Atoms.IO
     public sealed class GZipInput : IInput
     {
         // The input.
-        private readonly IInput _origin;
-
-        // The buffer size.
-        private readonly int _size;
+        private readonly IInput origin;
 
         /// <summary>
         /// The input as a gzip stream.
@@ -42,7 +39,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="input">the input</param>
         public GZipInput(IInput input)
         {
-            this._origin = input;
+            this.origin = input;
         }
 
         /// <summary>
@@ -51,7 +48,7 @@ namespace Yaapii.Atoms.IO
         /// <returns></returns>
         public Stream Stream() 
         {
-            return new GZipStream(this._origin.Stream(), CompressionMode.Decompress);
+            return new GZipStream(this.origin.Stream(), CompressionMode.Decompress);
         }
     }
 }

@@ -21,12 +21,10 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.IO;
 
-namespace Yaapii.Atoms.IO
+namespace Yaapii.Atoms.Bytes
 {
     /// <summary>
     /// Bytes as input.
@@ -36,7 +34,7 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// the source
         /// </summary>
-        private readonly IBytes _source;
+        private readonly IBytes source;
 
         /// <summary>
         /// Bytes as input.
@@ -65,7 +63,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="bytes">bytes</param>
         public BytesAsInput(IBytes bytes)
         {
-            this._source = bytes;
+            this.source = bytes;
         }
 
         /// <summary>
@@ -74,7 +72,7 @@ namespace Yaapii.Atoms.IO
         /// <returns>the stream</returns>
         public Stream Stream()
         {
-            return new MemoryStream(this._source.AsBytes());
+            return new MemoryStream(this.source.AsBytes());
         }
     }
 }

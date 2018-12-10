@@ -20,27 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using Yaapii.Atoms.IO;
 
-namespace Yaapii.Atoms.IO
+namespace Yaapii.Atoms.Bytes
 {
     /// <summary>
-    /// Input as bytes. (Self-Disposing)
+    /// Input as bytes. Disposes input.
     /// </summary>
     public sealed class InputAsBytes : IBytes
     {
         /// <summary>
         /// input
         /// </summary>
-        private readonly IInput _source;
+        private readonly IInput source;
 
         /// <summary>
         /// buffer size
         /// </summary>
-        private readonly int _size;
+        private readonly int size;
 
         /// <summary>
         /// Input as bytes.
@@ -49,8 +47,8 @@ namespace Yaapii.Atoms.IO
         /// <param name="max">maximum buffer size</param>
         public InputAsBytes(IInput input, int max = 16 << 10)
         {
-            this._source = input;
-            this._size = max;
+            this.source = input;
+            this.size = max;
         }
 
         /// <summary>
@@ -61,30 +59,15 @@ namespace Yaapii.Atoms.IO
         {
             var baos = new MemoryStream();
             byte[] output;
-            using (var source = this._source.Stream())
+            using (var source = this.source.Stream())
             using (var stream = new TeeInput(new InputOf(source), new OutputTo(baos)).Stream())
             {
-                //output = new byte[source.Length];
-                byte[] readBuffer = new byte[this._size];
+                byte[] readBuffer = new byte[this.size];
                 while ((stream.Read(readBuffer, 0, readBuffer.Length)) > 0)
                 { }
                 output = baos.ToArray();
             }
-
-            Dispose();
             return output;
-        }
-
-        /// <summary>
-        /// Clean up.
-        /// </summary>
-        private void Dispose()
-        {
-            try
-            {
-                (_source as IDisposable)?.Dispose();
-            }
-            catch (Exception) { }
         }
     }
 }

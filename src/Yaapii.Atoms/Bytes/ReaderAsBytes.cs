@@ -21,12 +21,11 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.IO
+namespace Yaapii.Atoms.Bytes
 {
     /// <summary>
     /// A <see cref="StringReader"/> as <see cref="IBytes"/>

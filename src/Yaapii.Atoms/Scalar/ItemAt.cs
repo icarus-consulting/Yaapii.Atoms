@@ -37,16 +37,6 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class ItemAt<T> : IScalar<T>
     {
         /// <summary>
-        /// source enum
-        /// </summary>
-        private readonly IEnumerable<T> _src;
-
-        /// <summary>
-        /// fallback func
-        /// </summary>
-        private readonly IBiFunc<Exception, IEnumerable<T>, T> _fbk;
-
-        /// <summary>
         /// position
         /// </summary>
         private readonly IScalar<T> saved;

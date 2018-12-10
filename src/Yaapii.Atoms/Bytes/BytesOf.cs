@@ -25,10 +25,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.IO;
+using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
 
 #pragma warning disable MaxClassLength // Class length max
 namespace Yaapii.Atoms.IO

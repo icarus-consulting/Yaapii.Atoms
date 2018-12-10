@@ -29,24 +29,24 @@ namespace Yaapii.Atoms.Text
     /// <summary>
     /// A text as a <see cref="Uri"/>
     /// </summary>
-    public sealed class StringAsUri : IScalar<Uri>
+    public sealed class TextUri : IScalar<Uri>
     {
-        private readonly IText _source;
+        private readonly IText source;
 
         /// <summary>
         /// A <see cref="string"/> as a <see cref="Uri"/>
         /// </summary>
         /// <param name="url">url as a string</param>
-        public StringAsUri(String url) : this(new TextOf(url))
+        public TextUri(String url) : this(new TextOf(url))
         { }
 
         /// <summary>
         /// A <see cref="IText"/> as a <see cref="Uri"/>
         /// </summary>
         /// <param name="url">uri as text</param>
-        public StringAsUri(IText url)
+        public TextUri(IText url)
         {
-            this._source = url;
+            this.source = url;
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>the uri</returns>
         public Uri Value()
         {
-            return new UriBuilder(this._source.AsString()).Uri;
+            return new UriBuilder(this.source.AsString()).Uri;
         }
     }
 }

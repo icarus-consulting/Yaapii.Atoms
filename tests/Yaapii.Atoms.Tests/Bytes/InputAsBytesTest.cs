@@ -21,15 +21,14 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
 using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.IO;
+using Yaapii.Atoms.IO.Tests;
+using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.IO.Tests
+namespace Yaapii.Atoms.Bytes.Tests
 {
     public sealed class InputAsBytesTest
     {
