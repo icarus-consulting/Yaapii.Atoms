@@ -15,10 +15,10 @@
 - [ ] Other... Please describe:
 
 ### What is the current behavior? (You can also link to an open issue here)
-<!-- Descripe the current behavior or link to a open issue -->
+<!-- Describe the current behavior or link to a open issue -->
 
 ### What is the new behavior?
-<!-- Descripe the new behavior -->
+<!-- Describe the new behavior -->
 
 ### Does this PR introduce a breaking change? (check one with "x")
 - [ ] Yes
