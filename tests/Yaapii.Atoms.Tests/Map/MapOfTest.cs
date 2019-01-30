@@ -50,13 +50,13 @@ namespace Yaapii.Atoms.Map.Tests
         public void MakesMapFromEnumerableSequence()
         {
             Assert.Equal(
-                "C",
+                "D",
                 new MapOf<string,string>(
                     new EnumerableOf<Tuple<string,string>>(
                         new Tuple<string, string>("A", "B"),
                         new Tuple<string, string>("C", "D")
                     )
-                )["D"]
+                )["C"]
             );
         }
 
