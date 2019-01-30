@@ -35,7 +35,28 @@ namespace Yaapii.Atoms.Map
     public sealed class StickyMap<Key, Value> : MapEnvelope<Key, Value>
     {
         /// <summary>
-        /// Makes a map from the given values.
+        /// A map from the given Tuple pairs.
+        /// </summary>
+        /// <param name="pairs">Pairs of mappings</param>
+        public StickyMap(params Tuple<Key, Value>[] pairs) : this(
+            new EnumerableOf<Tuple<Key, Value>>(pairs)
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given Tuple pairs.
+        /// </summary>
+        /// <param name="pairs">Pairs of mappings</param>
+        public StickyMap(IEnumerable<Tuple<Key, Value>> pairs) : this(
+            new Mapped<Tuple<Key, Value>, KeyValuePair<Key, Value>>(
+                tpl => new KeyValuePair<Key, Value>(tpl.Item1, tpl.Item2),
+                pairs
+            )
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given values.
         /// </summary>
         /// <param name="list"></param>
         public StickyMap(params KeyValuePair<Key, Value>[] list) : this(
@@ -43,7 +64,7 @@ namespace Yaapii.Atoms.Map
         { }
 
         /// <summary>
-        /// Makes a map by merging the given values into the given dictionary.
+        /// A map by merging the given values into the given dictionary.
         /// </summary>
         /// <param name="map">map to merge to</param>
         /// <param name="list">list of values to merge</param>
@@ -51,21 +72,21 @@ namespace Yaapii.Atoms.Map
         { }
 
         /// <summary>
-        /// ctor
+        /// A map from the given pairs.
         /// </summary>
-        /// <param name="list">List of values</param>        
+        /// <param name="list">List of pairs</param>        
         public StickyMap(IEnumerable<KeyValuePair<Key, Value>> list) : this(new MapOf<Key, Value>(list))
         { }
 
         /// <summary>
-        /// ctor
+        /// A map from the given pairs.
         /// </summary>
         /// <param name="list">List of values</param>
         public StickyMap(IEnumerator<KeyValuePair<Key, Value>> list) : this(new EnumerableOf<KeyValuePair<Key, Value>>(list))
         { }
 
         /// <summary>
-        /// ctor
+        /// A map from the given pairs.
         /// </summary>
         /// <param name="map">map to merge to</param>
         /// <param name="list">list of values to merge</param>
@@ -74,7 +95,7 @@ namespace Yaapii.Atoms.Map
         { }
 
         /// <summary>
-        /// ctor
+        /// A map from the given pairs.
         /// </summary>
         /// <param name="map">the map</param>
         public StickyMap(IDictionary<Key, Value> map) : base(

@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 
@@ -33,6 +34,26 @@ namespace Yaapii.Atoms.Map
     /// <typeparam name="Value">type of value</typeparam>
     public sealed class SolidMap<Key, Value> : MapEnvelope<Key, Value>
     {
+        /// <summary>
+        /// A map from the given Tuple pairs.
+        /// </summary>
+        /// <param name="pairs">Pairs of mappings</param>
+        public SolidMap(Tuple<Key, Value>[] pairs) : this(
+            new EnumerableOf<Tuple<Key, Value>>(pairs)
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given Tuple pairs.
+        /// </summary>
+        /// <param name="pairs">Pairs of mappings</param>
+        public SolidMap(IEnumerable<Tuple<Key, Value>> pairs) : this(
+            new Mapped<Tuple<Key, Value>, KeyValuePair<Key, Value>>(
+                tpl => new KeyValuePair<Key, Value>(tpl.Item1, tpl.Item2),
+                pairs
+            )
+        )
+        { }
 
         /// <summary>
         /// Makes a map from the given values.

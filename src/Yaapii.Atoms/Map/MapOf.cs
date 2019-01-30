@@ -22,8 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Map
@@ -37,7 +35,28 @@ namespace Yaapii.Atoms.Map
     public sealed class MapOf<Key, Value> : MapEnvelope<Key, Value>
     {
         /// <summary>
-        /// Makes a map from the given KeyValuePairs
+        /// A map from the given Tuple pairs.
+        /// </summary>
+        /// <param name="pairs">Pairs of mappings</param>
+        public MapOf(Tuple<Key, Value>[] pairs) : this(
+            new EnumerableOf<Tuple<Key, Value>>(pairs)
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given Tuple pairs.
+        /// </summary>
+        /// <param name="pairs">Pairs of mappings</param>
+        public MapOf(IEnumerable<Tuple<Key, Value>> pairs) : this(
+            new Mapped<Tuple<Key, Value>, KeyValuePair<Key, Value>>(
+                tpl => new KeyValuePair<Key, Value>(tpl.Item1, tpl.Item2),
+                pairs
+            )
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
         /// </summary>
         /// <param name="list">list of KeyValue pairs</param>
         public MapOf(params KeyValuePair<Key, Value>[] list) : this(
@@ -45,7 +64,7 @@ namespace Yaapii.Atoms.Map
         { }
 
         /// <summary>
-        /// Makes a map from the given KeyValuePairs and appends them to the given Dictionary.
+        /// A map from the given KeyValuePairs and appends them to the given Dictionary.
         /// </summary>
         /// <param name="src">source dictionary</param>
         /// <param name="list">KeyValuePairs to append</param>
@@ -55,7 +74,7 @@ namespace Yaapii.Atoms.Map
         { }
 
         /// <summary>
-        /// Makes a map by merging the given KeyValuePairs to the given Dictionary.
+        /// A map by merging the given KeyValuePairs to the given Dictionary.
         /// </summary>
         /// <param name="src"></param>
         /// <param name="list"></param>

@@ -24,12 +24,42 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Map.Tests
 {
     public class MapOfTest
     {
+        [Fact]
+        public void MakesMapFromTupleArray()
+        {
+            Assert.Equal(
+                "B",
+                new MapOf<string, string>(
+                    new Tuple<string, string>[]
+                    {
+                        new Tuple<string, string>("A", "B"),
+                        new Tuple<string, string>("C", "D")
+                    }
+                )["A"]
+            );
+        }
+
+        [Fact]
+        public void MakesMapFromEnumerableSequence()
+        {
+            Assert.Equal(
+                "C",
+                new MapOf<string,string>(
+                    new EnumerableOf<Tuple<string,string>>(
+                        new Tuple<string, string>("A", "B"),
+                        new Tuple<string, string>("C", "D")
+                    )
+                )["D"]
+            );
+        }
+
         [Fact]
         public void BehavesAsMap()
         {
