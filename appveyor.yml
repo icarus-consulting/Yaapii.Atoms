@@ -16,16 +16,6 @@ artifacts:
 - path: '.\artifacts\**\*.nupkg'
 deploy:
   - provider: NuGet
-    name: AppVeyor Feed
-    on:
-      #branch: master # Deploy only on master branch
-      appveyor_repo_tag: true
-    server: https://ci.appveyor.com/nuget/icarus
-    api_key:
-      secure: wVt1RgJAnhNTyIjtK9yFkQbEEM+fBk1TLUzo0j3pe2U=
-    skip_symbols: true
-    artifact: /.*\.nupkg/
-  - provider: NuGet
     name: Nuget feed
     on:
       #branch: master

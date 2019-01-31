@@ -212,24 +212,26 @@ Task("Release")
   .IsDependentOn("Pack")
   .IsDependentOn("GetCredentials")
   .Does(() => {
-     GitReleaseManagerCreate(username, password, owner, repository, new GitReleaseManagerCreateSettings {
+		GitReleaseManagerCreate(username, password, owner, repository, new GitReleaseManagerCreateSettings {
             Milestone         = version,
             Name              = version,
             Prerelease        = false,
             TargetCommitish   = "master"
     });
           
-var nugetFiles = string.Join(";", GetFiles("./artifacts/**/*.nupkg").Select(f => f.FullPath) );
-Information("Nuget artifacts: " + nugetFiles);
+		var nugetFiles = string.Join(",", GetFiles("./artifacts/**/*.nupkg").Select(f => f.FullPath) );
+		Information("Nuget artifacts: " + nugetFiles);
 
-GitReleaseManagerAddAssets(
-	username,
-	password,
-	owner,
-	repository,
-	version,
-	nugetFiles
-	);
+		GitReleaseManagerAddAssets(
+			username,
+			password,
+			owner,
+			repository,
+			version,
+			nugetFiles
+		);
+
+		GitReleaseManagerPublish(username, password, owner, repository, version);
 });
 
 Task("Default")

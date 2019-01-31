@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2019 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,11 +27,10 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.IO;
-using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
 #pragma warning disable MaxPublicMethodCount
+
 namespace Yaapii.Atoms.IO.Tests
 {
     public sealed class InputOfTest

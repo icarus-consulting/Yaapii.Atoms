@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2019 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="file">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
         public InputOf(Uri file) : this(
-            () => new FileStream(Uri.UnescapeDataString(file.AbsolutePath), FileMode.Open, FileAccess.Read))
+            () => new FileStream(Uri.UnescapeDataString(file.LocalPath), FileMode.Open, FileAccess.Read))
         { }
 
         /// <summary>
