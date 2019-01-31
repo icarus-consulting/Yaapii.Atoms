@@ -21,7 +21,8 @@ var project = new DirectoryPath("./src/Yaapii.Atoms/Yaapii.Atoms.csproj");
 var owner = "icarus-consulting";
 var repository = "Yaapii.Atoms";
 
-var githubToken = "";
+var username = "";
+var password = "";
 var codecovToken = "";
 
 var isAppVeyor          = AppVeyor.IsRunningOnAppVeyor;
@@ -197,11 +198,11 @@ Task("Version")
 ///////////////////////////////////////////////////////////////////////////////
 // Release
 ///////////////////////////////////////////////////////////////////////////////
-Task("GetAuth")
-	.WithCriteria(() => isAppVeyor)
+Task("GetCredentials")
     .Does(() =>
 {
-    githubToken = EnvironmentVariable("GITHUB_TOKEN");
+    username = EnvironmentVariable("GITHUB_USERNAME");
+    password = EnvironmentVariable("GITHUB_PASSWORD");
 	codecovToken = EnvironmentVariable("CODECOV_TOKEN");
 });
 
@@ -209,26 +210,28 @@ Task("Release")
   .WithCriteria(() => isAppVeyor && BuildSystem.AppVeyor.Environment.Repository.Tag.IsTag)
   .IsDependentOn("Version")
   .IsDependentOn("Pack")
-  .IsDependentOn("GetAuth")
+  .IsDependentOn("GetCredentials")
   .Does(() => {
-     GitReleaseManagerCreate(username, password, owner, repository, new GitReleaseManagerCreateSettings {
+		GitReleaseManagerCreate(username, password, owner, repository, new GitReleaseManagerCreateSettings {
             Milestone         = version,
             Name              = version,
             Prerelease        = false,
             TargetCommitish   = "master"
     });
           
-var nugetFiles = string.Join(";", GetFiles("./artifacts/**/*.nupkg").Select(f => f.FullPath) );
-Information("Nuget artifacts: " + nugetFiles);
+		var nugetFiles = string.Join(",", GetFiles("./artifacts/**/*.nupkg").Select(f => f.FullPath) );
+		Information("Nuget artifacts: " + nugetFiles);
 
-GitReleaseManagerAddAssets(
-	username,
-	password,
-	owner,
-	repository,
-	version,
-	nugetFiles
-	);
+		GitReleaseManagerAddAssets(
+			username,
+			password,
+			owner,
+			repository,
+			version,
+			nugetFiles
+		);
+
+		GitReleaseManagerPublish(githubToken, owner, repository, version);
 });
 
 Task("Default")
