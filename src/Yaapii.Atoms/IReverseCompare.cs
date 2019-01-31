@@ -34,19 +34,19 @@ namespace Yaapii.Atoms.Misc
     /// <see cref="Comparer{T}"/> that can compare reverse to help reversing lists.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class IReverseComparer<T> : Comparer<T>
+    public sealed class IReverseCompare<T> : Comparer<T>
     {
-        public static new readonly IReverseComparer<T> Default = new IReverseComparer<T>(Comparer<T>.Default);
+        public static new readonly IReverseCompare<T> Default = new IReverseCompare<T>(Comparer<T>.Default);
 
 
-        public static IReverseComparer<T> Reverse(Comparer<T> comparer)
+        public static IReverseCompare<T> Reverse(Comparer<T> comparer)
         {
-            return new IReverseComparer<T>(comparer);
+            return new IReverseCompare<T>(comparer);
         }
 
         private readonly Comparer<T> comparer = Default;
 
-        private IReverseComparer(Comparer<T> comparer)
+        private IReverseCompare(Comparer<T> comparer)
         {
             this.comparer = comparer;
         }
