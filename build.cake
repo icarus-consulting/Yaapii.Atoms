@@ -21,8 +21,7 @@ var project = new DirectoryPath("./src/Yaapii.Atoms/Yaapii.Atoms.csproj");
 var owner = "icarus-consulting";
 var repository = "Yaapii.Atoms";
 
-var username = "";
-var password = "";
+var githubToken = "";
 var codecovToken = "";
 
 var isAppVeyor          = AppVeyor.IsRunningOnAppVeyor;
@@ -198,11 +197,11 @@ Task("Version")
 ///////////////////////////////////////////////////////////////////////////////
 // Release
 ///////////////////////////////////////////////////////////////////////////////
-Task("GetCredentials")
+Task("GetAuth")
+	.WithCriteria(() => isAppVeyor)
     .Does(() =>
 {
-    username = EnvironmentVariable("GITHUB_USERNAME");
-    password = EnvironmentVariable("GITHUB_PASSWORD");
+    githubToken = EnvironmentVariable("GITHUB_TOKEN");
 	codecovToken = EnvironmentVariable("CODECOV_TOKEN");
 });
 
@@ -210,7 +209,7 @@ Task("Release")
   .WithCriteria(() => isAppVeyor && BuildSystem.AppVeyor.Environment.Repository.Tag.IsTag)
   .IsDependentOn("Version")
   .IsDependentOn("Pack")
-  .IsDependentOn("GetCredentials")
+  .IsDependentOn("GetAuth")
   .Does(() => {
      GitReleaseManagerCreate(username, password, owner, repository, new GitReleaseManagerCreateSettings {
             Milestone         = version,
