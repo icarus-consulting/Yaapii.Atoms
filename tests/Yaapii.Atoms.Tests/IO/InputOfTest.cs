@@ -27,11 +27,10 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.IO;
-using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
 #pragma warning disable MaxPublicMethodCount
+
 namespace Yaapii.Atoms.IO.Tests
 {
     public sealed class InputOfTest
