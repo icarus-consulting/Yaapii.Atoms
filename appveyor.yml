@@ -10,10 +10,10 @@ skip_branch_with_pr: true
 nuget:
   account_feed: true
 build_script:
-    - ps: .\build.ps1
+- ps: .\build.ps1
 test: off
 artifacts:
-    - path: '.\artifacts\**\*.nupkg'
+- path: '.\artifacts\**\*.nupkg'
 deploy:
   - provider: NuGet
     name: Nuget feed
