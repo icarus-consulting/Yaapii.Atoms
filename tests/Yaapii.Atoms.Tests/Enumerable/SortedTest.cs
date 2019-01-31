@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new JoinedText(", ",
                     new Sorted<string>(
-                        IReverseComparer<string>.Default,
+                        IReverseCompare<string>.Default,
                         new EnumerableOf<string>(
                             "a", "c", "hello", "dude", "Friend"
                         )
