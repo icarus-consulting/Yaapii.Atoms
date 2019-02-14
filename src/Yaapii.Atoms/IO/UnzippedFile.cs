@@ -29,9 +29,9 @@ namespace Yaapii.Atoms.IO
             this.stream = new StickyScalar<Stream>(() =>
             {
                 new FailPrecise(
-                new FailWhen(!IsZip(zip.Stream())),
-                new InvalidOperationException($"Content is not compressed with either GZIP or PKZIP")
-            ).Go();
+                    new FailWhen(!IsZip(zip.Stream())),
+                    new InvalidOperationException($"Content is not compressed with either GZIP or PKZIP")
+                ).Go();
 
                 Stream content;
                 using (var archive = new ZipArchive(this.zip.Stream(), ZipArchiveMode.Read, true))
