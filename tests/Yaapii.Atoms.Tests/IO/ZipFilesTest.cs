@@ -46,6 +46,16 @@ namespace Yaapii.Atoms.IO.Tests
             );
         }
 
+        [Fact]
+        public void InputStreamPositionZero()
+        {
+            var res = new ResourceOf(
+                        "Assets/Zip/ZipWithThreeFiles.zip",
+                        this.GetType());
+            new ZipFiles(res);
 
+
+            Assert.InRange(res.Stream().Position, 0, 0);
+        }
     }
 }
