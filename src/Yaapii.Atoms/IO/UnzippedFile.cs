@@ -28,13 +28,11 @@ namespace Yaapii.Atoms.IO
 
             this.stream = new StickyScalar<Stream>(() =>
             {
-                new FailPrecise(
-                    new FailWhen(!IsZip(zip.Stream())),
-                    new InvalidOperationException($"Content is not compressed with either GZIP or PKZIP")
-                ).Go();
-
                 Stream content;
-                using (var archive = new ZipArchive(this.zip.Stream(), ZipArchiveMode.Read, true))
+                using (var archive = new ZipArchive(
+                                        new ValidatedZip(this.zip).Stream(),
+                                        ZipArchiveMode.Read,
+                                        true))
                 {
                     var zipEntry =
                         new FirstOf<ZipArchiveEntry>(
@@ -66,43 +64,7 @@ namespace Yaapii.Atoms.IO
             return content;
         }
 
-        private bool IsPkZip(byte[] bytes)
-        {
-            var zipLeadBytes = 0x04034b50;
-            bool isZip = false;
-            if (bytes.Length > 4)
-            {
-                isZip = false;
-            }
-            else
-            {
-                isZip = (BitConverter.ToInt32(bytes, 0) == zipLeadBytes);
-            }
-            return isZip;
-        }
-
-        private bool IsGZip(byte[] bytes)
-        {
-            var gzipLeadBytes = 0x8b1f;
-            bool isZip = false;
-            if (bytes == null && bytes.Length >= 2)
-            {
-                isZip = false;
-            }
-            else
-            {
-                isZip = (BitConverter.ToUInt16(bytes, 0) == gzipLeadBytes);
-            }
-            return isZip;
-        }
-
-        private bool IsZip(Stream content)
-        {
-            byte[] bytes = new byte[4];
-            content.Read(bytes, 0, 4);
-            content.Position = 0;
-            return IsPkZip(bytes) || IsGZip(bytes);
-        }
+     
 
 
     }
