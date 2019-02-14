@@ -19,6 +19,7 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// The files in a ZIP archive.
         /// Note: Extraction is sticky.
+        /// leaves zip stream open
         /// </summary>
         /// <param name="input"></param>
         public ZipFiles(IInput input)
@@ -27,13 +28,13 @@ namespace Yaapii.Atoms.IO
                 new StickyScalar<IEnumerable<string>>(() =>
                 {
                     IEnumerable<string> files;
-                    var copy = new MemoryStream();
-                    input.Stream().Position = 0;
-                    input.Stream().CopyTo(copy);
-                    input.Stream().Position = 0;
-                    copy.Position = 0;
+                    //var copy = new MemoryStream(); // I don't know if that is neccessary - code copied from bpa
+                    //input.Stream().Position = 0;
+                    //input.Stream().CopyTo(copy);
+                    //input.Stream().Position = 0;
+                    //copy.Position = 0;
 
-                    using (var zip = new ZipArchive(copy, ZipArchiveMode.Read, true))
+                    using (var zip = new ZipArchive(/*copy*/input.Stream(), ZipArchiveMode.Read, true))
                     {
                         files =
                             new Mapped<ZipArchiveEntry, string>(
@@ -41,6 +42,7 @@ namespace Yaapii.Atoms.IO
                                 zip.Entries
                             );
                     }
+                    input.Stream().Position = 0;
                     return files;
                 });
         }
