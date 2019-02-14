@@ -24,10 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Zip\NotAZip" />
     <None Remove="Assets\Zip\ZipWithThreeFiles.zip" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Assets\Zip\NotAZip" />
     <EmbeddedResource Include="Assets\Zip\ZipWithThreeFiles.zip" />
   </ItemGroup>
 

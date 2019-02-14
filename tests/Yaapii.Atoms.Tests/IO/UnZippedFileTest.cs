@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using System.IO;
 using System.IO.Compression;
 using Xunit;
@@ -64,6 +65,23 @@ namespace Yaapii.Atoms.IO.Tests
                    )
                 ).AsString()
             ); 
+        }
+
+        [Fact]
+        public void ThrowsExcWhenNotAZip()
+        {            
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                new UnzippedFile(
+                             new ResourceOf(
+                                 "Assets/Zip/NotAZip",
+                                 this.GetType()
+                             ),
+                             "irrelevant"
+                     ).Stream();
+            });
+
+            
         }
     }
 }
