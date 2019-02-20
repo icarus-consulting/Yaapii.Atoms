@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.IO
     /// Content of a file in a zip archive
     /// is tolerant to slash style
     /// </summary>
-    public sealed class UnzippedFile : IInput 
+    public sealed class UnzippedFile : IInput
     {
         private readonly IInput zip;
         private readonly string filePath;
@@ -42,8 +42,16 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// Content of a file in a zip archive
         /// is tolerant to slash style
+        /// leaves zip stream open
         /// </summary>
-        public UnzippedFile(IInput zip, string virtualPath)
+        public UnzippedFile(IInput zip, string virtualPath) : this(zip, virtualPath, true)
+        { }
+
+        /// <summary>
+        /// Content of a file in a zip archive
+        /// is tolerant to slash style
+        /// </summary>
+        public UnzippedFile(IInput zip, string virtualPath, bool leaveOpen)
         {
             this.zip = zip;
             this.filePath = virtualPath;
@@ -54,7 +62,7 @@ namespace Yaapii.Atoms.IO
                 using (var archive = new ZipArchive(
                                         new ValidatedZip(this.zip).Stream(),
                                         ZipArchiveMode.Read,
-                                        true))
+                                        leaveOpen))
                 {
                     var zipEntry =
                         new FirstOf<ZipArchiveEntry>(
@@ -79,14 +87,15 @@ namespace Yaapii.Atoms.IO
         private Stream Content(ZipArchiveEntry zipEntry)
         {
             MemoryStream content = new MemoryStream();
-            Stream zipEntryStream = zipEntry.Open();
-            zipEntryStream.CopyTo(content);
-            zipEntryStream.Close();
-            content.Seek(0, SeekOrigin.Begin);
+            using (Stream zipEntryStream = zipEntry.Open())
+            {
+                zipEntryStream.CopyTo(content);
+                zipEntryStream.Close();
+                content.Seek(0, SeekOrigin.Begin);
+            }
             return content;
         }
 
-     
 
 
     }

@@ -49,6 +49,12 @@ namespace Yaapii.Atoms.IO
            
         }
 
+        /// <summary>
+        /// The files in a ZIP archive.
+        /// Note: Extraction is sticky.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="leaveOpen"></param>
         public ZipFiles(IInput input, bool leaveOpen)
         {
             this.files =
