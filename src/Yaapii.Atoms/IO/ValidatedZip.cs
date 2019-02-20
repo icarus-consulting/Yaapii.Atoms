@@ -29,7 +29,10 @@ using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.IO
 {
-    class ValidatedZip : IInput
+    /// <summary>
+    /// A validated Zip archive which is either a Pkzip or a Gzip (checked via lead bytes)
+    /// </summary>
+    public sealed class ValidatedZip : IInput
     {
         private readonly StickyScalar<Stream> stream;
 
