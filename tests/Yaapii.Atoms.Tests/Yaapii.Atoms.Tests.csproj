@@ -18,6 +18,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Assets\Zips\**" />
+    <EmbeddedResource Remove="Assets\Zips\**" />
+    <None Remove="Assets\Zips\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Zip\NotAZip" />
+    <None Remove="Assets\Zip\ZipWithThreeFiles.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Zip\NotAZip" />
+    <EmbeddedResource Include="Assets\Zip\ZipWithThreeFiles.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.console" Version="2.3.1" />
     <PackageReference Include="xunit.extensibility.core" Version="2.3.1" />
