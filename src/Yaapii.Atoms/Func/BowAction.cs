@@ -57,8 +57,8 @@ namespace Yaapii.Atoms.Func
                         {
                             if (this.trigger.Invoke())
                             {
-                                completed = true;
                                 this.shoot();
+                                completed = true;
                                 break;
                             }
                             System.Threading.Thread.Sleep(1);
@@ -82,11 +82,6 @@ namespace Yaapii.Atoms.Func
             {
                 throw new ApplicationException($"The task did not complete within {this.timeout.TotalMilliseconds}ms.");
             }
-        }
-
-        private void Wait()
-        {
-
         }
     }
 
@@ -124,8 +119,8 @@ namespace Yaapii.Atoms.Func
                     {
                         if (this.trigger.Invoke())
                         {
-                            completed = true;
                             this.shoot(parameter);
+                            completed = true;
                             break;
                         }
                         System.Threading.Thread.Sleep(1);
