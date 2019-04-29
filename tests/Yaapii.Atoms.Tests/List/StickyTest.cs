@@ -26,7 +26,7 @@ using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.List.Tests
 {
-    public sealed class StickyListTest
+    public sealed class StickyTest
     {
         [Fact]
         public void IgnoresChangesInList()
@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.List.Tests
             var list =
                 new StickyList<int>(
                     new ListOf<int>(
-                    new Yaapii.Atoms.Enumerable.Limited<int>(
+                    new Yaapii.Atoms.Enumerable.HeadOf<int>(
                         new Yaapii.Atoms.Enumerable.Endless<int>(1),
                         new ScalarOf<int>(() => Interlocked.Increment(ref size))
                         )));

@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
                     new EnumerableOf<IText>(
                         new Mapped<int, IText>(
                             new Sticky<int>(
-                                new Limited<int>(
+                                new HeadOf<int>(
                                     new Endless<int>(Interlocked.Increment(ref count)),
                                     20
                                 )
