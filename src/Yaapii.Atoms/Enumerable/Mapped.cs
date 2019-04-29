@@ -93,7 +93,7 @@ namespace Yaapii.Atoms.Enumerable
             new ScalarOf<IEnumerable<Out>>(
                 () =>
                 new EnumerableOf<Out>(               
-                    new MappedEnumerator<In, Out>(
+                    new Enumerator.Mapped<In, Out>(
                         src.GetEnumerator(), fnc))))
         {}
     }

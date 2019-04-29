@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Enumerator
     /// <see cref="IEnumerator{T}"/> which repeats one value multiple times.
     /// </summary>
     /// <typeparam name="T">type of element to repeat</typeparam>
-    public sealed class RepeatedEnumerator<T> : IEnumerator<T>
+    public sealed class Repeated<T> : IEnumerator<T>
     {
         private readonly IScalar<T> _element;
         private int _left;
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="elm">element to repeat</param>
         /// <param name="max">how often to repeat</param>
-        public RepeatedEnumerator(T elm, int max) : this(new ScalarOf<T>(elm), max)
+        public Repeated(T elm, int max) : this(new ScalarOf<T>(elm), max)
         { }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="elm">element to repeat</param>
         /// <param name="max">how often to repeat</param>
-        public RepeatedEnumerator(IScalar<T> elm, int max)
+        public Repeated(IScalar<T> elm, int max)
         {
             this._element = elm;
             this._max = max;

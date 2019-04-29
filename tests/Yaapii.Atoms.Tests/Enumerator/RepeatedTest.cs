@@ -24,21 +24,37 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class LengthOfEnumeratorTest
+    public sealed class RepeatedTest
     {
         [Fact]
-        public void Counts()
+        public void AllSameTest()
+        {
+            int size = 42;
+            int element = 11;
+            Assert.True(
+                new LengthOf(
+                    new Repeated<int>(
+                        element,
+                        size
+                    )
+                ).Value() == size,
+                "Can't generate an enumerator with fixed size"
+            );
+        }
+
+        [Fact]
+        public void EmptyTest()
         {
             Assert.True(
-                new LengthOfEnumerator(
-                    new EnumerableOf<int>(1, 2, 3, 4, 5).GetEnumerator()).Value() == 5,
-                "cannot count items");
+                new LengthOf(
+                    new Repeated<int>(0, 0)
+                    ).Value() == 0,
+                    "Can't generate an empty enumerator");
         }
     }
 }

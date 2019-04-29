@@ -21,40 +21,29 @@
 // SOFTWARE.
 
 using System;
-using System.Collections;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Text;
+using Xunit;
+using Yaapii.Atoms.List;
+using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Enumerator;
+using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Enumerator
+namespace Yaapii.Atoms.Enumerator.Tests
 {
-    /// <summary>
-    /// Length of an <see cref="IEnumerator"/>
-    /// </summary>
-    public sealed class LengthOfEnumerator : IScalar<Int32>
+    public sealed class JoinedTest
     {
-        private readonly IEnumerator _enumerator;
-
-        /// <summary>
-        /// Length of an <see cref="IEnumerator"/>
-        /// </summary>
-        /// <param name="items">enumerator to count</param>
-        public LengthOfEnumerator(IEnumerator items)
+        [Fact]
+        public void JoinsEnumerators()
         {
-            this._enumerator = items;
-        }
-
-        /// <summary>
-        /// Get the length.
-        /// </summary>
-        /// <returns>the length</returns>
-        public Int32 Value()
-        {
-            int size = 0;
-            while (this._enumerator.MoveNext())
-            {
-                ++size;
-            }
-            return size;
+            Assert.True(
+            new LengthOf(
+                new Joined<IEnumerator<String>>(
+                    new Mapped<string, IEnumerator<string>>(
+                        new EnumerableOf<string>("x", "y", "z").GetEnumerator(),
+                        (input) => new EnumerableOf<string>(input).GetEnumerator()))
+                    ).Value() == 3,
+            "Can't concatenate mapped iterators together");
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <returns>the length</returns>
         public Int32 Value()
         {
-            return new LengthOfEnumerator(this._enumerable.GetEnumerator()).Value();
+            return new Enumerator.LengthOf(this._enumerable.GetEnumerator()).Value();
         }
 
     }

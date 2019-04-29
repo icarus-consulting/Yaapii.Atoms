@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Enumerator
     /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class ItemAtEnumerator<T> : IScalar<T>
+    public sealed class ItemAt<T> : IScalar<T>
     {
         /// <summary>
         /// enumerator to get item from
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Enumerator
         /// First element in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
-        public ItemAtEnumerator(IEnumerator<T> src)
+        public ItemAt(IEnumerator<T> src)
         :
             this(
                 src,
@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="fallback">fallback value</param>
-        public ItemAtEnumerator(IEnumerator<T> src, T fallback) : this(src, new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback))
+        public ItemAt(IEnumerator<T> src, T fallback) : this(src, new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback))
         { }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="fallback">fallback function</param>
-        public ItemAtEnumerator(IEnumerator<T> src, Func<IEnumerable<T>, T> fallback)
+        public ItemAt(IEnumerator<T> src, Func<IEnumerable<T>, T> fallback)
             : this(src, 0, new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback.Invoke(enumerable)))
         { }
 
@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="fallback">fallback function</param>
-        public ItemAtEnumerator(IEnumerator<T> src, Func<Exception, IEnumerable<T>, T> fallback)
+        public ItemAt(IEnumerator<T> src, Func<Exception, IEnumerable<T>, T> fallback)
             : this(src, 0, new BiFuncOf<Exception, IEnumerable<T>, T>(fallback))
         { }
 
@@ -103,7 +103,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="fallback">fallback function</param>
-        public ItemAtEnumerator(IEnumerator<T> src, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+        public ItemAt(IEnumerator<T> src, IBiFunc<Exception, IEnumerable<T>, T> fallback)
             : this(src, 0, fallback)
         { }
 
@@ -112,7 +112,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="pos">position</param>
-        public ItemAtEnumerator(IEnumerator<T> src, int pos)
+        public ItemAt(IEnumerator<T> src, int pos)
         :
             this(
                 src,
@@ -136,7 +136,7 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="fbk">fallback function</param>
         /// <param name="pos">position</param>
-        public ItemAtEnumerator(
+        public ItemAt(
             IEnumerator<T> src,
             int pos,
             IBiFunc<Exception, IEnumerable<T>, T> fbk

@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Enumerator
     /// A <see cref="IEnumerator{T}"/> that returns content from cache always.
     /// </summary>
     /// <typeparam name="X"></typeparam>
-    public sealed class StickyEnumerator<X> : IEnumerator<X>
+    public sealed class Sticky<X> : IEnumerator<X>
     {
         private readonly IScalar<IEnumerator<X>> _gate;
 
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Enumerator
         /// A <see cref="IEnumerator{T}"/> that returns content from cache always.
         /// </summary>
         /// <param name="src">items</param>
-        public StickyEnumerator(params X[] src) : this(
+        public Sticky(params X[] src) : this(
             () => new EnumerableOf<X>(src).GetEnumerator())
         { }
 
@@ -54,28 +54,28 @@ namespace Yaapii.Atoms.Enumerator
         /// ctor
         /// </summary>
         /// <param name="src">enumerator to put to cache</param>
-        public StickyEnumerator(IEnumerator<X> src) : this(new ScalarOf<IEnumerator<X>>(src))
+        public Sticky(IEnumerator<X> src) : this(new ScalarOf<IEnumerator<X>>(src))
         { }
 
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> from the given that returns content from cache always.
         /// </summary>
         /// <param name="src">function to retrieve enumerator for cache</param>
-        public StickyEnumerator(Func<IEnumerator<X>> src) : this(new FuncOf<IEnumerator<X>>(src))
+        public Sticky(Func<IEnumerator<X>> src) : this(new FuncOf<IEnumerator<X>>(src))
         { }
 
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> from the given that returns content from cache always.
         /// </summary>
         /// <param name="src">function to retrieve enumerator for cache</param>
-        public StickyEnumerator(IFunc<IEnumerator<X>> src) : this(new ScalarOf<IEnumerator<X>>(src))
+        public Sticky(IFunc<IEnumerator<X>> src) : this(new ScalarOf<IEnumerator<X>>(src))
         { }
 
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> that returns content from cache always.
         /// </summary>
         /// <param name="src">scalar of enumerator to cache</param>
-        public StickyEnumerator(IScalar<IEnumerator<X>> src)
+        public Sticky(IScalar<IEnumerator<X>> src)
         {
             this._gate =
                 new Scalar.Sticky<IEnumerator<X>>(

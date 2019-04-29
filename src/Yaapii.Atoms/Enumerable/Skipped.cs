@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Enumerable
         public Skipped(IEnumerable<T> enumerable, int skip) : base(new ScalarOf<IEnumerable<T>>(
             () =>
             new EnumerableOf<T>(
-                new SkippedEnumerator<T>(enumerable.GetEnumerator(), skip))))
+                new Enumerator.Skipped<T>(enumerable.GetEnumerator(), skip))))
         { }
     }
 }

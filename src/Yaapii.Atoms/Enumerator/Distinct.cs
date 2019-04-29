@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Enumerator
     /// Enumerator that only gives the distinct elements of multiple enumerators.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class DistinctEnumerator<T> : IEnumerator<T>
+    public sealed class Distinct<T> : IEnumerator<T>
     {
         private readonly IEnumerable<IEnumerator<T>> _originals;
         private readonly Queue<IEnumerator<T>> _buffer = new Queue<IEnumerator<T>>();
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Enumerator
         /// Enumerator that only gives the distinct elements of multiple enumerators.
         /// </summary>
         /// <param name="enumerators"></param>
-        public DistinctEnumerator(IEnumerable<IEnumerator<T>> enumerators)
+        public Distinct(IEnumerable<IEnumerator<T>> enumerators)
         {
             _originals = enumerators;
             _buffer = new Queue<IEnumerator<T>>(enumerators);

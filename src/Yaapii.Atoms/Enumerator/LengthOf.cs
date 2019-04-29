@@ -21,40 +21,40 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
+using System.Collections;
+using System.Diagnostics;
 using System.Text;
-using Xunit;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
 
-namespace Yaapii.Atoms.Enumerator.Tests
+namespace Yaapii.Atoms.Enumerator
 {
-    public sealed class RepeatedEnumeratorTest
+    /// <summary>
+    /// Length of an <see cref="IEnumerator"/>
+    /// </summary>
+    public sealed class LengthOf : IScalar<Int32>
     {
-        [Fact]
-        public void AllSameTest()
+        private readonly IEnumerator enumerator;
+
+        /// <summary>
+        /// Length of an <see cref="IEnumerator"/>
+        /// </summary>
+        /// <param name="items">enumerator to count</param>
+        public LengthOf(IEnumerator items)
         {
-            int size = 42;
-            int element = 11;
-            Assert.True(
-                new LengthOfEnumerator(
-                    new RepeatedEnumerator<int>(
-                        element,
-                        size
-                    )
-                ).Value() == size,
-                "Can't generate an enumerator with fixed size"
-            );
+            this.enumerator = items;
         }
 
-        [Fact]
-        public void EmptyTest()
+        /// <summary>
+        /// Get the length.
+        /// </summary>
+        /// <returns>the length</returns>
+        public Int32 Value()
         {
-            Assert.True(
-                new LengthOfEnumerator(
-                    new RepeatedEnumerator<int>(0, 0)
-                    ).Value() == 0,
-                    "Can't generate an empty enumerator");
+            int size = 0;
+            while (this.enumerator.MoveNext())
+            {
+                ++size;
+            }
+            return size;
         }
     }
 }

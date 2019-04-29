@@ -22,50 +22,27 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
-using Yaapii.Atoms.Error;
+using Xunit;
+using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Enumerator;
+using Yaapii.Atoms.List;
+using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Enumerator
+namespace Yaapii.Atoms.Enumerator.Tests
 {
-    /// <summary>
-    /// Lookup if an item is in a enumerable
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class ContainsEnumerator<T> : IScalar<bool>
+    public sealed class FilteredTest
     {
-        private readonly Func<T, bool> _match;
-        private readonly IEnumerator<T> _src;
-
-        /// <summary>
-        /// Lookup the item in the src.
-        /// </summary>
-        /// <param name="src">src enumerable</param>
-        /// <param name="match">lookup item</param>
-        public ContainsEnumerator(IEnumerator<T> src, Func<T,bool> match)
+        [Fact]
+        public void Filters()
         {
-            _match = match;
-            _src = src;
-        }
-
-        /// <summary>
-        /// Determine if the item is in the enumerable.
-        /// </summary>
-        /// <returns>true if item is present in enumerable.</returns>
-        public bool Value()
-        {
-            bool contains = false;
-
-            for (var cur = 0; this._src.MoveNext(); cur++)
-            {
-                if (_match.Invoke(this._src.Current))
-                {
-                    contains = true;
-                    break;
-                }
-            }
-
-            return contains;
+            Assert.True(
+                new JoinedText(" ",
+                    new EnumerableOf<string>(
+                        new Filtered<string>(
+                            new EnumerableOf<string>("Hello", "cruel", "World").GetEnumerator(),
+                                (str) => str != "cruel"))).AsString() == "Hello World",
+                "cannot filter enumerator contents");
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Enumerator
     /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition.
     /// </summary>
     /// <typeparam name="X"></typeparam>
-    public sealed class FilteredEnumerator<X> : IEnumerator<X>
+    public sealed class Filtered<X> : IEnumerator<X>
     {
         /// <summary>
         /// enumerator to filter
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public FilteredEnumerator(IEnumerator<X> src, Func<X, Boolean> fnc) : this(src, new FuncOf<X, Boolean>(fnc))
+        public Filtered(IEnumerator<X> src, Func<X, Boolean> fnc) : this(src, new FuncOf<X, Boolean>(fnc))
         { }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public FilteredEnumerator(IEnumerator<X> src, IFunc<X, Boolean> fnc)
+        public Filtered(IEnumerator<X> src, IFunc<X, Boolean> fnc)
         {
             this._enumerator = src;
             this._func = fnc;

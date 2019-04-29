@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Enumerable
         public Limited(IEnumerable<T> enumerable, IScalar<int> limit) : base(
              new ScalarOf<IEnumerable<T>>(() =>
                 new EnumerableOf<T>(
-                  new LimitedEnumerator<T>(enumerable.GetEnumerator(), limit.Value()))))
+                  new Enumerator.Limited<T>(enumerable.GetEnumerator(), limit.Value()))))
         { }
     }
 }

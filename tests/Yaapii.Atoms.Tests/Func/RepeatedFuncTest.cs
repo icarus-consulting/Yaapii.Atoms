@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Func.Tests
         [Fact]
         public void RunsFuncMultipleTimes()
         {
-            var iter = new StickyEnumerator<int>(1, 2, 5, 6);
+            var iter = new Enumerator.Sticky<int>(1, 2, 5, 6);
             var func = new RepeatedFunc<bool, IScalar<int>>(
                 input =>
                 {

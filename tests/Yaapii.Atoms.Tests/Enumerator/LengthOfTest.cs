@@ -27,23 +27,18 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class MappedEnumeratorTest
+    public sealed class LengthOfTest
     {
         [Fact]
-        public void MapsContents()
+        public void Counts()
         {
             Assert.True(
-                new ItemAtEnumerator<string>(
-                    new MappedEnumerator<int, string>(
-                        new EnumerableOf<int>(1).GetEnumerator(),
-                        i => new TextOf(i).AsString()),
-                0).Value() == "1",
-            "cannot map contents of enumerator");
+                new LengthOf(
+                    new EnumerableOf<int>(1, 2, 3, 4, 5).GetEnumerator()).Value() == 5,
+                "cannot count items");
         }
     }
 }

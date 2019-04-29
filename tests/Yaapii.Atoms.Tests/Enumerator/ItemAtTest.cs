@@ -28,13 +28,13 @@ using Yaapii.Atoms.Fail;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class ItemAtEnumeratorTest
+    public sealed class ItemAtTest
     {
         [Fact]
         public void FirstElementTest()
         {
             Assert.True(
-            new ItemAtEnumerator<int>(
+            new ItemAt<int>(
                 new EnumerableOf<int>(1, 2, 3).GetEnumerator()
             ).Value() == 1,
             "Can't take the first item from the enumerator");
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void ElementByPosTest()
         {
             Assert.True(
-                new ItemAtEnumerator<int>(
+                new ItemAt<int>(
                     new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                     1
                 ).Value() == 2,
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void FailForEmptyCollectionTest()
         {
             Assert.Throws<NoSuchElementException>(
-                () => new ItemAtEnumerator<int>(
+                () => new ItemAt<int>(
                         new EnumerableOf<int>(new int[0]).GetEnumerator(),
                         0
                         ).Value());
@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void FailForNegativePositionTest()
         {
             Assert.Throws<UnsupportedOperationException>(
-                    () => new ItemAtEnumerator<int>(
+                    () => new ItemAt<int>(
                         new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                         -1
             ).Value());
@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
             string fallback = "fallback";
 
             Assert.True(
-            new ItemAtEnumerator<string>(
+            new ItemAt<string>(
                 new EnumerableOf<string>().GetEnumerator(),
                 fallback
             ).Value() == fallback,
@@ -89,7 +89,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.Throws<NoSuchElementException>(
                 () =>
-                new ItemAtEnumerator<int>(
+                new ItemAt<int>(
                     new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                 3
             ).Value());

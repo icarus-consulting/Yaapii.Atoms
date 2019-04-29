@@ -27,38 +27,23 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.List;
+using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public class ContainsEnumeratorTest
+    public sealed class MappedTest
     {
         [Fact]
-        public void FindsItem()
+        public void MapsContents()
         {
             Assert.True(
-                new ContainsEnumerator<string>(
-                    new EnumerableOf<string>("Hello", "my", "cat", "is", "missing").GetEnumerator(),
-                    (str) => str == "cat"
-                    ).Value());
-        }
-
-        [Fact]
-        public void DoesntFindItem()
-        {
-            Assert.False(
-                new ContainsEnumerator<string>(
-                    new EnumerableOf<string>("Hello", "my", "cat", "is", "missing").GetEnumerator(),
-                    (str) => str == "elephant"
-                    ).Value());
-        }
-
-        [Fact]
-        public void DoesentFindInEmtyList()
-        {
-            Assert.False(new ContainsEnumerator<string>(
-                new List<String>().GetEnumerator(),
-                (str) => str == "elephant"
-                ).Value());
+                new ItemAt<string>(
+                    new Mapped<int, string>(
+                        new EnumerableOf<int>(1).GetEnumerator(),
+                        i => new TextOf(i).AsString()),
+                0).Value() == "1",
+            "cannot map contents of enumerator");
         }
     }
 }

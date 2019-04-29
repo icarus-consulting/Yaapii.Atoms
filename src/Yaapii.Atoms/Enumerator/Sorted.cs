@@ -23,60 +23,73 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
+using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoProperties // No Properties
-#pragma warning disable Immutability // Fields are readonly or constant
 #pragma warning disable CS1591
 
 namespace Yaapii.Atoms.Enumerator
 {
     /// <summary>
-    /// A <see cref="IEnumerator{T}"/> limited to an item maximum.
+    /// A <see cref="IEnumerator{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
-    /// <typeparam name="T">type of the enumerator content</typeparam>
-    public sealed class LimitedEnumerator<T> : IEnumerator<T>
+    /// <typeparam name="T">type of items in enumertor</typeparam>
+    public sealed class Sorted<T> : IEnumerator<T>
+        where T : IComparable<T>
     {
-        private readonly IEnumerator<T> _enumerator;
-        private readonly int _limit;
-        private int _consumed;
+        private readonly IScalar<IEnumerator<T>> _sorted;
 
         /// <summary>
-        /// A <see cref="IEnumerator{T}"/> limited to an item maximum.
+        /// A <see cref="IEnumerator{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
-        /// <param name="enumerator">enumerator to limit</param>
-        /// <param name="limit">maximum item count</param>
-        public LimitedEnumerator(IEnumerator<T> enumerator, int limit)
+        /// <param name="cmp">comparer</param>
+        /// <param name="src">enumerator to sort</param>
+        public Sorted(Comparer<T> cmp, IEnumerator<T> src)
         {
-            this._enumerator = enumerator;
-            this._limit = limit;
-            this._consumed = 0;
-        }
+            this._sorted =
+                new Scalar.Sticky<IEnumerator<T>>(
+                    () =>
+                    {
+                        var items = new List<T>();
+                        while (src.MoveNext())
+                        {
+                            items.Add(src.Current);
+                        }
+                        items.Sort(cmp);
 
-        public Boolean MoveNext()
-        {
-            return this._consumed++ < this._limit && this._enumerator.MoveNext();
-        }
-
-        public void Reset()
-        {
-            this._enumerator.Reset();
-            this._consumed = 0;
+                        return items.GetEnumerator();
+                    });
         }
 
         public void Dispose()
         { }
 
+        public Boolean MoveNext()
+        {
+            return this._sorted.Value().MoveNext();
+        }
+
         public T Current
         {
             get
             {
-                return this._enumerator.Current;
+                return this._sorted.Value().Current;
             }
         }
 
-        object IEnumerator.Current => throw new NotImplementedException();
+        object IEnumerator.Current
+        {
+            get
+            {
+                return this._sorted.Value().Current;
+            }
+        }
+
+        public void Reset()
+        {
+            throw new NotSupportedException("#Reset() is not supported");
+        }
     }
 }
 #pragma warning restore NoProperties // No Properties
-#pragma warning restore Immutability // Fields are readonly or constant

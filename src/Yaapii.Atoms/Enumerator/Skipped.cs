@@ -20,45 +20,62 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Yaapii.Atoms.List;
+using System.Text;
 
+#pragma warning disable Immutability // Fields are readonly or constant
 #pragma warning disable NoProperties // No Properties
 #pragma warning disable CS1591
+
 namespace Yaapii.Atoms.Enumerator
 {
     /// <summary>
-    /// Multiple <see cref="IEnumerator{T}"/> joined together.
+    /// A <see cref="IEnumerator{Tests}"/> which skips a given count of items.
     /// </summary>
-    /// <typeparam name="T">type of elements</typeparam>
-    public sealed class JoinedEnumerator<T> : IEnumerator<T>
+    /// <typeparam name="T">type of items in enumerable</typeparam>
+    public sealed class Skipped<T> : IEnumerator<T>
     {
-        private readonly IEnumerable<IEnumerator<T>> _list;
-        private readonly Queue<IEnumerator<T>> _buffer;
+        private readonly IEnumerator<T> _enumerator;
+        private readonly int _skip;
+        private int _left;
 
         /// <summary>
-        /// Multiple <see cref="IEnumerator{T}"/> joined together.
+        /// A <see cref="IEnumerator{Tests}"/> which skips a given count of items.
         /// </summary>
-        /// <param name="items">enumerables to join together</param>
-        public JoinedEnumerator(params IEnumerator<T>[] items) : this(new List<IEnumerator<T>>(items))
-        { }
-
-        /// <summary>
-        /// Multiple <see cref="IEnumerator{T}"/> joined together.
-        /// </summary>
-        /// <param name="items">enumerables to join together</param>
-        public JoinedEnumerator(IEnumerable<IEnumerator<T>> items)
+        /// <param name="enumerator"><see cref="IEnumerator{T}"/> to skip items in</param>
+        /// <param name="skip">how many to skip</param>
+        public Skipped(IEnumerator<T> enumerator, int skip)
         {
-            this._list = items;
-            this._buffer = new Queue<IEnumerator<T>>(items);
+            this._enumerator = enumerator;
+            this._skip = skip;
+            this._left = this._skip;
         }
+
+        public Boolean MoveNext()
+        {
+            while (this._left > 0 && this._enumerator.MoveNext())
+            {
+                --this._left;
+            }
+            return this._enumerator.MoveNext();
+        }
+
+        public void Reset()
+        {
+            this._left = this._skip;
+            this._enumerator.Reset();
+        }
+
+        public void Dispose()
+        { }
 
         public T Current
         {
             get
             {
-                return this._buffer.Peek().Current;
+                return this._enumerator.Current;
             }
         }
 
@@ -69,32 +86,7 @@ namespace Yaapii.Atoms.Enumerator
                 return Current;
             }
         }
-
-        public void Dispose()
-        {
-
-        }
-
-        public bool MoveNext()
-        {
-            while(this._buffer.Count > 0 && !this._buffer.Peek().MoveNext())
-            {
-                this._buffer.Dequeue();
-            }
-
-            return this._buffer.Count > 0;
-        }
-
-        public void Reset()
-        {
-            this._buffer.Clear();
-            var e = this._list.GetEnumerator();
-            while (e.MoveNext())
-            {
-                this._buffer.Enqueue(e.Current);
-            }
-            
-        }
     }
 }
+#pragma warning restore Immutability // Fields are readonly or constant
 #pragma warning restore NoProperties // No Properties

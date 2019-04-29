@@ -125,7 +125,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <returns>the item</returns>
         public T Value()
         {
-            return new SiblingEnumerator<T>(
+            return new Enumerator.Sibling<T>(
                 this._src.GetEnumerator(), this._needle, this._pos, this._fbk
             ).Value();
         }

@@ -31,13 +31,13 @@ using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public class SiblingEnumeratorTest
+    public class SiblingTest
     {
         [Fact]
         public void RightNeighbourTest()
         {
             Assert.True(
-            new SiblingEnumerator<int>(
+            new Sibling<int>(
                 new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                 2,
                 1
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void LeftNeighbourTest()
         {
             Assert.True(
-            new SiblingEnumerator<int>(
+            new Sibling<int>(
                 new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                 2,
                 -1
@@ -61,7 +61,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void NeighbourByPosTest()
         {
             Assert.True(
-            new SiblingEnumerator<int>(
+            new Sibling<int>(
                 new EnumerableOf<int>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).GetEnumerator(),
                 5,
                 4
@@ -84,7 +84,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void FailForEmptyCollectionTest()
         {
             Assert.Throws<IOException>(
-                () => new SiblingEnumerator<int>(
+                () => new Sibling<int>(
                         new EnumerableOf<int>(new int[0]).GetEnumerator(),
                         1,
                         1
@@ -95,7 +95,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void FailForOutOfRangePositionNegTest()
         {
             Assert.Throws<IOException>(
-                    () => new SiblingEnumerator<int>(
+                    () => new Sibling<int>(
                         new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                         2,
                         -100
@@ -106,7 +106,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void FailForOutOfRangePositionPosTest()
         {
             Assert.Throws<IOException>(
-                    () => new SiblingEnumerator<int>(
+                    () => new Sibling<int>(
                         new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                         2,
                         100
@@ -117,7 +117,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void FailForItemNotInEnumeratorTest()
         {
             Assert.Throws<IOException>(
-                    () => new SiblingEnumerator<int>(
+                    () => new Sibling<int>(
                         new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                         4,
                         1
@@ -130,7 +130,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
             string fallback = "fallback";
 
             Assert.True(
-            new SiblingEnumerator<string>(
+            new Sibling<string>(
                 new EnumerableOf<string>().GetEnumerator(),
                 "searchthis",
                 fallback

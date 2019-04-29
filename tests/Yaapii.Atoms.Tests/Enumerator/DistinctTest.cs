@@ -30,15 +30,15 @@ using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class DistinctEnumeratorTest
+    public sealed class DistinctTest
     {
         [Fact]
         public void MergesEntries()
         {
             Assert.True(
-                new LengthOf(
+                new Enumerable.LengthOf(
                     new EnumerableOf<string>(
-                        new DistinctEnumerator<string>(
+                        new Distinct<string>(
                             new EnumerableOf<IEnumerator<string>>(
                                 new EnumerableOf<string>("A", "B", "F").GetEnumerator(),
                                 new EnumerableOf<string>("A", "E", "F").GetEnumerator()
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void Resets()
         {
             var e =
-                new DistinctEnumerator<string>(
+                new Distinct<string>(
                     new EnumerableOf<IEnumerator<string>>(
                         new EnumerableOf<string>("A").GetEnumerator(),
                         new EnumerableOf<string>("A").GetEnumerator()
@@ -69,9 +69,9 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void WorksWithEmpties()
         {
             Assert.True(
-                new LengthOf(
+                new Enumerable.LengthOf(
                     new EnumerableOf<string>(
-                        new DistinctEnumerator<string>(
+                        new Distinct<string>(
                             new EnumerableOf<IEnumerator<string>>(
                                 new EnumerableOf<string>().GetEnumerator(),
                                 new EnumerableOf<string>().GetEnumerator()

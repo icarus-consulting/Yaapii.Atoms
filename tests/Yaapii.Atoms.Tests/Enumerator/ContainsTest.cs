@@ -22,39 +22,40 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using Xunit;
-using Yaapii.Atoms;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class StickyEnumeratorTest
+    public class ContainsTest
     {
         [Fact]
-        public void IgnoresChangesInIterable()
+        public void FindsItem()
         {
-            int count = 10;
             Assert.True(
-                new JoinedText(
-                    ", ",
-                    new EnumerableOf<IText>(
-                        new MappedEnumerator<int, IText>(
-                            new StickyEnumerator<int>(
-                                new LimitedEnumerator<int>(
-                                    new EndlessEnumerator<int>(Interlocked.Increment(ref count)),
-                                    20
-                                )
-                            ),
-                            (number) => new TextOf(number + ""))))
-                            .AsString() == "11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11",
-                "cannot cache iterator");
+                new Contains<string>(
+                    new EnumerableOf<string>("Hello", "my", "cat", "is", "missing").GetEnumerator(),
+                    (str) => str == "cat"
+                    ).Value());
+        }
 
+        [Fact]
+        public void DoesntFindItem()
+        {
+            Assert.False(
+                new Contains<string>(
+                    new EnumerableOf<string>("Hello", "my", "cat", "is", "missing").GetEnumerator(),
+                    (str) => str == "elephant"
+                    ).Value());
+        }
+
+        [Fact]
+        public void DoesentFindInEmtyList()
+        {
+            Assert.False(new Contains<string>(
+                new List<String>().GetEnumerator(),
+                (str) => str == "elephant"
+                ).Value());
         }
     }
 }

@@ -22,37 +22,29 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
+using Yaapii.Atoms.List;
+using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class EndlessEnumeratorTest
+    public sealed class SortedTest
     {
         [Fact]
-        public void RepeatsTwentyTimes()
+        public void Sorts()
         {
-            var expected = "AAAAAAAAAAAAAAAAAAAA";
-
             Assert.True(
                 new JoinedText(
-                    "",
-                    new EnumerableOf<IText>(
-                            new MappedEnumerator<string, IText>(
-                                new LimitedEnumerator<string>(
-                                    new EndlessEnumerator<string>("A"),
-                                    20),
-                                str => new TextOf(str)))).AsString() == expected,
-                
-                "cannot repeat endlessly");
-
+                    " ",
+                    new EnumerableOf<string>(
+                        new Sorted<string>(
+                            Comparer<string>.Default,
+                                new EnumerableOf<string>("B", "A", "C", "F", "E", "D").GetEnumerator()
+                        ))).AsString() == "A B C D E F",
+                "cannot sort contents of iterator");
         }
     }
 }

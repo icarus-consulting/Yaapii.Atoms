@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Enumerable
         public Distinct(IEnumerable<IEnumerable<T>> enumerables) : base(
             new ScalarOf<IEnumerable<T>>(
                 new EnumerableOf<T>(
-                    new DistinctEnumerator<T>(
+                    new Enumerator.Distinct<T>(
                         new Mapped<IEnumerable<T>, IEnumerator<T>>(
                             (e) => e.GetEnumerator(),
                             enumerables

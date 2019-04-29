@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Enumerator
     /// </summary>
     /// <typeparam name="In">type of items</typeparam>
     /// <typeparam name="Out">type of mapped items</typeparam>
-    public sealed class MappedEnumerator<In, Out> : IEnumerator<Out>
+    public sealed class Mapped<In, Out> : IEnumerator<Out>
     {
         private readonly IEnumerator<In> _enumerator;
         private readonly Func<In, int, Out> _func;
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fnc">mapping function</param>
-        public MappedEnumerator(IEnumerator<In> src, IFunc<In, Out> fnc) : this(src,
+        public Mapped(IEnumerator<In> src, IFunc<In, Out> fnc) : this(src,
             (input, index) => fnc.Invoke(input))
         { }
 
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fnc">mapping function</param>
-        public MappedEnumerator(IEnumerator<In> src, Func<In, Out> fnc) : this(src, (input, index)=> fnc.Invoke(input))
+        public Mapped(IEnumerator<In> src, Func<In, Out> fnc) : this(src, (input, index)=> fnc.Invoke(input))
         { }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fnc">mapping function</param>
-        public MappedEnumerator(IEnumerator<In> src, IBiFunc<In, int, Out> fnc) : this(src,
+        public Mapped(IEnumerator<In> src, IBiFunc<In, int, Out> fnc) : this(src,
         (input, index) => fnc.Invoke(input, index))
         { }
 
@@ -73,7 +73,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fnc">mapping function</param>
-        public MappedEnumerator(IEnumerator<In> src, Func<In, int, Out> fnc)
+        public Mapped(IEnumerator<In> src, Func<In, int, Out> fnc)
         {
             this._enumerator = src;
             this._func = fnc;

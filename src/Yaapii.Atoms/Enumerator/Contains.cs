@@ -22,29 +22,50 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
-using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Error;
 
-namespace Yaapii.Atoms.Enumerator.Tests
+namespace Yaapii.Atoms.Enumerator
 {
-    public sealed class SortedEnumeratorTest
+    /// <summary>
+    /// Lookup if an item is in a enumerable
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class Contains<T> : IScalar<bool>
     {
-        [Fact]
-        public void Sorts()
+        private readonly Func<T, bool> _match;
+        private readonly IEnumerator<T> _src;
+
+        /// <summary>
+        /// Lookup the item in the src.
+        /// </summary>
+        /// <param name="src">src enumerable</param>
+        /// <param name="match">lookup item</param>
+        public Contains(IEnumerator<T> src, Func<T,bool> match)
         {
-            Assert.True(
-                new JoinedText(
-                    " ",
-                    new EnumerableOf<string>(
-                        new SortedEnumerator<string>(
-                            Comparer<string>.Default,
-                                new EnumerableOf<string>("B", "A", "C", "F", "E", "D").GetEnumerator()
-                        ))).AsString() == "A B C D E F",
-                "cannot sort contents of iterator");
+            _match = match;
+            _src = src;
+        }
+
+        /// <summary>
+        /// Determine if the item is in the enumerable.
+        /// </summary>
+        /// <returns>true if item is present in enumerable.</returns>
+        public bool Value()
+        {
+            bool contains = false;
+
+            for (var cur = 0; this._src.MoveNext(); cur++)
+            {
+                if (_match.Invoke(this._src.Current))
+                {
+                    contains = true;
+                    break;
+                }
+            }
+
+            return contains;
         }
     }
 }

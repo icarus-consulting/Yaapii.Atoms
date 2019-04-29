@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Enumerable
         public Joined(IEnumerable<IEnumerable<T>> items) : base(
             new ScalarOf<IEnumerable<T>>(() => 
                 new EnumerableOf<T>(
-                    new JoinedEnumerator<T>(
+                    new Enumerator.Joined<T>(
                         new Mapped<IEnumerable<T>, IEnumerator<T>>(//Map the content of list: Get every enumerator out of it and build one whole enumerator from it
                             new StickyFunc<IEnumerable<T>, IEnumerator<T>>( //Sticky Gate
                                 new FuncOf<IEnumerable<T>, IEnumerator<T>>(

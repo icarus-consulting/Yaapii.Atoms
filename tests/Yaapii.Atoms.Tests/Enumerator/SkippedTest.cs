@@ -24,40 +24,45 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using Yaapii.Atoms.List;
+using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class CycledEnumeratorTest
+    public sealed class SkippedTest
     {
         [Fact]
-        public void RepeatIteratorTest()
+        public void SkipEnumerator()
         {
-            string expected = "two";
+            var skipped =
+                new List<string>(
+                    new EnumerableOf<string>(
+                        new Skipped<string>(
+                            new EnumerableOf<string>(
+                                "one", "two", "three", "four"
+                            ).GetEnumerator(),
+                        2)));
 
-            Assert.True(
-                new ItemAtEnumerator<string>(
-                    new CycledEnumerator<string>(
-                        new EnumerableOf<string>(
-                            "one", expected, "three"
-                            )
-                        ),
-                    7).Value() == expected,
-                "Can't repeat enumerator");
+            Assert.True(new LengthOf(skipped.GetEnumerator()).Value() == 2, "cannot skip elements");
+            Assert.False(skipped.Contains("one"), "cannot skip elements");
+            Assert.False(skipped.Contains("two"), "cannot skip elements");
+            Assert.True(skipped.Contains("three"), "cannot skip elements");
+            Assert.True(skipped.Contains("four"), "cannot skip elements");
         }
 
         [Fact]
-        public void EmptyThrowsExceptionTest()
+        public void CannotSkippedMoreThanExists()
         {
             Assert.False(
-                    new CycledEnumerator<string>(
-                        new EnumerableOf<string>(
-                            new string[0]
-                            )
-                        ).MoveNext(),
-                "Can move but am expected to not move");
+                new Skipped<string>(
+                    new EnumerableOf<string>(
+                        "one", "two"
+                    ).GetEnumerator(),
+                    2
+                ).MoveNext(),
+                "enumerates more elements than exist");
         }
     }
 }

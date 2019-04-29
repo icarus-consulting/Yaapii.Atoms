@@ -25,47 +25,43 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-#pragma warning disable Immutability // Fields are readonly or constant
 #pragma warning disable NoProperties // No Properties
+#pragma warning disable Immutability // Fields are readonly or constant
 #pragma warning disable CS1591
 
 namespace Yaapii.Atoms.Enumerator
 {
     /// <summary>
-    /// A <see cref="IEnumerator{Tests}"/> which skips a given count of items.
+    /// A <see cref="IEnumerator{T}"/> limited to an item maximum.
     /// </summary>
-    /// <typeparam name="T">type of items in enumerable</typeparam>
-    public sealed class SkippedEnumerator<T> : IEnumerator<T>
+    /// <typeparam name="T">type of the enumerator content</typeparam>
+    public sealed class Limited<T> : IEnumerator<T>
     {
         private readonly IEnumerator<T> _enumerator;
-        private readonly int _skip;
-        private int _left;
+        private readonly int _limit;
+        private int _consumed;
 
         /// <summary>
-        /// A <see cref="IEnumerator{Tests}"/> which skips a given count of items.
+        /// A <see cref="IEnumerator{T}"/> limited to an item maximum.
         /// </summary>
-        /// <param name="enumerator"><see cref="IEnumerator{T}"/> to skip items in</param>
-        /// <param name="skip">how many to skip</param>
-        public SkippedEnumerator(IEnumerator<T> enumerator, int skip)
+        /// <param name="enumerator">enumerator to limit</param>
+        /// <param name="limit">maximum item count</param>
+        public Limited(IEnumerator<T> enumerator, int limit)
         {
             this._enumerator = enumerator;
-            this._skip = skip;
-            this._left = this._skip;
+            this._limit = limit;
+            this._consumed = 0;
         }
 
         public Boolean MoveNext()
         {
-            while (this._left > 0 && this._enumerator.MoveNext())
-            {
-                --this._left;
-            }
-            return this._enumerator.MoveNext();
+            return this._consumed++ < this._limit && this._enumerator.MoveNext();
         }
 
         public void Reset()
         {
-            this._left = this._skip;
             this._enumerator.Reset();
+            this._consumed = 0;
         }
 
         public void Dispose()
@@ -79,14 +75,8 @@ namespace Yaapii.Atoms.Enumerator
             }
         }
 
-        object IEnumerator.Current
-        {
-            get
-            {
-                return Current;
-            }
-        }
+        object IEnumerator.Current => throw new NotImplementedException();
     }
 }
-#pragma warning restore Immutability // Fields are readonly or constant
 #pragma warning restore NoProperties // No Properties
+#pragma warning restore Immutability // Fields are readonly or constant

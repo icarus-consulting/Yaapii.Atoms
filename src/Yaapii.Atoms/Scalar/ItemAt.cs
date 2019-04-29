@@ -181,7 +181,7 @@ namespace Yaapii.Atoms.Enumerable
             new ScalarOf<T>(
                 () =>
                     {
-                        return new ItemAtEnumerator<T>(
+                        return new Enumerator.ItemAt<T>(
                            source.GetEnumerator(), position, fallback
                        ).Value();
                     }

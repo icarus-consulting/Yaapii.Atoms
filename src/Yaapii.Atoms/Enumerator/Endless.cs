@@ -24,6 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoProperties // No Properties
 #pragma warning disable CS1591
@@ -31,66 +32,52 @@ using System.Text;
 namespace Yaapii.Atoms.Enumerator
 {
     /// <summary>
-    /// A <see cref="IEnumerator{T}"/> that starts from the beginning when ended.
+    /// A <see cref="IEnumerator{T}"/> that repeats one element infinitely.
     /// </summary>
     /// <typeparam name="T">type of the contents</typeparam>
-    public sealed class CycledEnumerator<T> : IEnumerator<T>
+    public sealed class Endless<T> : IEnumerator<T>
     {
         /// <summary>
-        /// enum to cycle
+        /// element to repeat
         /// </summary>
-        private readonly IEnumerable<T> _enumerable;
+        private readonly IScalar<T> element;
 
         /// <summary>
-        /// cache
+        /// A <see cref="IEnumerator{T}"/> that repeats one element infinitely.
         /// </summary>
-        private readonly Queue<IEnumerator<T>> _buffer = new Queue<IEnumerator<T>>();
+        /// <param name="elm">element to repeat</param>
+        public Endless(T elm) : this(new ScalarOf<T>(elm))
+        { }
 
         /// <summary>
-        /// A <see cref="IEnumerator{T}"/> that starts from the beginning when ended.
+        /// A <see cref="IEnumerator{T}"/> that repeats one element infinitely.
         /// </summary>
-        /// <param name="enumerable">enum to cycle</param>
-        public CycledEnumerator(IEnumerable<T> enumerable)
+        /// <param name="elm">scalar of element to repeat</param>
+        public Endless(IScalar<T> elm)
         {
-            this._enumerable = enumerable;
+            this.element = elm;
         }
 
         public bool MoveNext()
         {
-            if (this._buffer.Count == 0 || !this._buffer.Peek().MoveNext())
-            {
-                this._buffer.Clear();
-                this._buffer.Enqueue(this._enumerable.GetEnumerator());
-                return this._buffer.Peek().MoveNext();
-            }
             return true;
         }
 
         public void Reset()
-        {
-            this._buffer.Clear();
-        }
+        { }
 
         public void Dispose()
-        {
-            
-        }
+        { }
 
         public T Current
         {
             get
             {
-                return this._buffer.Peek().Current;
+                return this.element.Value();
             }
         }
 
-        object IEnumerator.Current
-        {
-            get
-            {
-                return Current;
-            }
-        }
+        object IEnumerator.Current => throw new NotImplementedException();
     }
 }
 #pragma warning restore NoProperties // No Properties
