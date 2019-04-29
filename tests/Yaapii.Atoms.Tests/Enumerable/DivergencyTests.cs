@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Enumerable.Test
         }
 
         [Theory]
-        [InlineData(new int[] { 5, 6 }, new int[] { 1, 2 }, new int[] { 1, 2, 5, 6 })]
+        [InlineData(new int[] { 5, 6 }, new int[] { 1, 2 }, new int[] { 5, 6, 1, 2 })]
         [InlineData(new int[] { 1, 2 }, new int[] { 1 }, new int[] { 2 })]
         public void MatchesInt(IEnumerable<int> a, IEnumerable<int> b, IEnumerable<int> expected)
         {
