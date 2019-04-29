@@ -36,18 +36,24 @@ namespace Yaapii.Atoms.Scalar
     public sealed class FirstOf<T> : IScalar<T>
     {
         private readonly IEnumerable<T> src;
-        private readonly IBiFunc<Exception, IEnumerable<T>, T> fbk;
+        private readonly Func<IEnumerable<T>, T> fallBack;
+        private readonly Func<T, bool> condition;
 
         /// <summary>
-        /// First element in <see cref="IEnumerable{T}"/> with given Exception thrown on fallback
+        /// Element from position in a <see cref="IEnumerable{T}"/>.
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="ex"></param>
+        /// <param name="source">source enum</param>
         public FirstOf(IEnumerable<T> source, Exception ex) : this(
+            (enm) => true,
             source,
-            new FuncOf<IEnumerable<T>, T>(
-                (itr) => throw ex
-            )
+            (enm) => throw ex
+        )
+        { }
+
+        public FirstOf(IEnumerable<T> source) : this(
+            (enm) => true,
+            source,
+            new NoSuchElementException("Cannot get first element - no match.")
         )
         { }
 
@@ -55,18 +61,14 @@ namespace Yaapii.Atoms.Scalar
         /// Element from position in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
-        public FirstOf(IEnumerable<T> source) : this(
-                source,
-                new BiFuncOf<Exception, IEnumerable<T>, T>((ex, itr) =>
-                {
-                    throw
-                        new NoSuchElementException(
-                            new FormattedText(
-                                "Cannot get first element: {0}",
-                                ex.Message
-                            ).AsString()
-                    );
-                }))
+        public FirstOf(Func<T, bool> condition, IEnumerable<T> source, Exception ex) : this(
+            condition,
+            source,
+            (enm) =>
+            {
+                throw ex;
+            }
+        )
         { }
 
         /// <summary>
@@ -75,19 +77,21 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
         public FirstOf(IEnumerable<T> source, T fallback) : this(
+            enm => true,
             source,
-            new FuncOf<IEnumerable<T>, T>(b => fallback)
+            (b) => fallback
         )
         { }
 
         /// <summary>
-        /// First element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback value.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public FirstOf(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback) : this(
+        public FirstOf(Func<T, bool> condition, IEnumerable<T> source, T fallback) : this(
+            condition,
             source,
-            (ex, enumerable) => fallback.Invoke(enumerable)
+            (b) => fallback
         )
         { }
 
@@ -96,27 +100,41 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public FirstOf(IEnumerable<T> source, Func<Exception, IEnumerable<T>, T> fallback) : this(
+        public FirstOf(IEnumerable<T> source, IScalar<T> fallback) : this(
+            enm => true,
             source,
-            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback.Invoke(ex, enumerable)
-            )
+            (enm) => fallback.Value()
         )
         { }
 
         /// <summary>
         /// First element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IBiFunc{X, Y, Z}"/>
         /// </summary>
-        /// <param name="src"></param>
-        /// <param name="fallback"></param>
-        public FirstOf(IEnumerable<T> src, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+        /// <param name="src">source enumerable</param>
+        /// <param name="fallback">fallback if no match</param>
+        public FirstOf(IEnumerable<T> src, Func<IEnumerable<T>, T> fallback) : this(item => true, src, fallback)
+        { }
+
+        /// <summary>
+        /// First element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IBiFunc{X, Y, Z}"/>
+        /// </summary>
+        /// <param name="src">source enumerable</param>
+        /// <param name="fallback">fallback if no match</param>
+        /// <param name="condition">condition to match</param>
+        public FirstOf(Func<T, bool> condition, IEnumerable<T> src, Func<IEnumerable<T>, T> fallback)
         {
             this.src = src;
-            this.fbk = fallback;
+            this.fallBack = fallback;
+            this.condition = condition;
         }
 
         public T Value()
         {
-            return new ItemAt<T>(this.src, this.fbk).Value();
+            return 
+                new ItemAt<T>(
+                    new HeadOf<T>(this.src, 1),
+                    this.fallBack
+                ).Value();
         }
     }
 }
