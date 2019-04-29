@@ -32,13 +32,13 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Contains(
                 -1,
-                new SolidCollection<int>(1, 2, 0, -1));
+                new Solid<int>(1, 2, 0, -1));
         }
 
         [Fact]
         public void MakesListFromMappedIterable()
         {
-            var list = new SolidCollection<int>(
+            var list = new Solid<int>(
                 new List.Mapped<int, int>(
                     i => i + 1,
                     new Enumerable.EnumerableOf<int>(1, -1, 0, 1)));

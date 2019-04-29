@@ -21,54 +21,63 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
-using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Collection
 {
     /// <summary>
-    /// Makes a collection that iterates only once.
+    /// A collection which is threadsafe.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class StickyCollection<T> : CollectionEnvelope<T>
+    public class Sync<T> : CollectionEnvelope<T>
     {
         /// <summary>
-        /// Makes a collection of given items.
+        /// ctor
         /// </summary>
-        /// <param name="items">source items</param>
-        public StickyCollection(params T[] items) : this(new EnumerableOf<T>(items))
+        public Sync() : this(new object())
         { }
 
         /// <summary>
-        /// Makes a collection of given items.
+        /// ctor
         /// </summary>
-        /// <param name="items">source items</param>
-        public StickyCollection(IEnumerator<T> items) : this(new EnumerableOf<T>(items))
+        /// <param name="syncRoot"></param>
+        public Sync(object syncRoot) : this(syncRoot, new CollectionOf<T>())
         { }
 
         /// <summary>
-        /// Makes a collection of given items.
+        /// ctor
         /// </summary>
-        /// <param name="items">source items</param>
-        public StickyCollection(IEnumerable<T> items) : this(new CollectionOf<T>(items))
+        /// <param name="items">items to make collection from</param>
+        public Sync(params T[] items) : this(new CollectionOf<T>(items))
         { }
 
         /// <summary>
-        /// Makes a collection of given items.
+        /// ctor
         /// </summary>
-        /// <param name="list">list of source items</param>
-        public StickyCollection(ICollection<T> list) : base(
-                new Scalar.Sticky<ICollection<T>>( //Make a sticky scalar which copies the items once and returns them always.
-                    () =>
+        /// <param name="col">Collection to sync</param>
+        public Sync(ICollection<T> col) : this(col, col)
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="syncRoot">root object to sync</param>
+        /// <param name="col"></param>
+        public Sync(object syncRoot, ICollection<T> col) : base(
+            new Sync<ICollection<T>>(
+                new ScalarOf<ICollection<T>>(() =>
+                {
+                    lock (syncRoot)
                     {
-                        var temp = new List<T>(list.Count);
-                        foreach(var item in list)
+                        var tmp = new List<T>();
+                        foreach (var item in col)
                         {
-                            temp.Add(item);
+                            tmp.Add(item);
                         }
-                        return new CollectionOf<T>(temp);
+                        return tmp;
                     }
-            ))
+                }
+        )))
         { }
     }
 }

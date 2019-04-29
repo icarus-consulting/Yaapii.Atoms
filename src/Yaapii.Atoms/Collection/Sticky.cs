@@ -22,46 +22,53 @@
 
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Collection
 {
-    ///
-    /// A <see cref="ICollection{T}"/> that is both synchronized and sticky.
-    ///
-    /// <para>Objects of this class are thread-safe.</para>
-    ///
-    public sealed class SolidCollection<T> : CollectionEnvelope<T>
+    /// <summary>
+    /// Makes a collection that iterates only once.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public sealed class Sticky<T> : CollectionEnvelope<T>
     {
         /// <summary>
-        /// ctor
+        /// Makes a collection of given items.
         /// </summary>
-        /// <param name="array">source items</param>
-        public SolidCollection(params T[] array) : this(new EnumerableOf<T>(array))
+        /// <param name="items">source items</param>
+        public Sticky(params T[] items) : this(new EnumerableOf<T>(items))
         { }
 
         /// <summary>
-        /// ctor
+        /// Makes a collection of given items.
         /// </summary>
-        /// <param name="src">source enumerator</param>
-        public SolidCollection(IEnumerator<T> src) : this(new EnumerableOf<T>(src))
+        /// <param name="items">source items</param>
+        public Sticky(IEnumerator<T> items) : this(new EnumerableOf<T>(items))
         { }
 
         /// <summary>
-        /// ctor
+        /// Makes a collection of given items.
         /// </summary>
-        /// <param name="src">source enumerable</param>
-        public SolidCollection(IEnumerable<T> src) : this(new CollectionOf<T>(src))
+        /// <param name="items">source items</param>
+        public Sticky(IEnumerable<T> items) : this(new CollectionOf<T>(items))
         { }
 
         /// <summary>
-        /// ctor
+        /// Makes a collection of given items.
         /// </summary>
-        /// <param name="src">source collection</param>
-        public SolidCollection(ICollection<T> src) : base(
-            () => 
-                new SyncCollection<T>(
-                    new StickyCollection<T>(src)))
+        /// <param name="list">list of source items</param>
+        public Sticky(ICollection<T> list) : base(
+                new Scalar.Sticky<ICollection<T>>( //Make a sticky scalar which copies the items once and returns them always.
+                    () =>
+                    {
+                        var temp = new List<T>(list.Count);
+                        foreach(var item in list)
+                        {
+                            temp.Add(item);
+                        }
+                        return new CollectionOf<T>(temp);
+                    }
+            ))
         { }
-
     }
 }
