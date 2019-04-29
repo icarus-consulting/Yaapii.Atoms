@@ -32,27 +32,27 @@ namespace Yaapii.Atoms.Enumerable
     /// The sticky represantation of an <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T">The type of the enumerable</typeparam>
-    public class StickyEnumerable<T> : EnumerableEnvelope<T>
+    public class Sticky<T> : EnumerableEnvelope<T>
     {
         /// <summary>
         /// Makes a sticky enumerable
         /// </summary>
         /// <param name="items">The items</param>
-        public StickyEnumerable(params T[] items) : this(new EnumerableOf<T>(items))
+        public Sticky(params T[] items) : this(new EnumerableOf<T>(items))
         { }
        
         /// <summary>
         /// Makes a sticky enumerable
         /// </summary>
         /// <param name="item">The enumerator</param>
-        public StickyEnumerable(IEnumerator<T> item) : this(new EnumerableOf<T>(item))
+        public Sticky(IEnumerator<T> item) : this(new EnumerableOf<T>(item))
         { }
        
         /// <summary>
         /// Makes a sticky enumerable
         /// </summary>
         /// <param name="src"></param>
-        public StickyEnumerable(IEnumerable<T> src) : base(
+        public Sticky(IEnumerable<T> src) : base(
             new StickyScalar<IEnumerable<T>>(() =>
             {
                 List<T> lst = new List<T>();
