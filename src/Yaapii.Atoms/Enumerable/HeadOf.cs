@@ -21,51 +21,37 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
-using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Collection
+#pragma warning disable NoGetOrSet // No Statics
+#pragma warning disable CS1591
+
+namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// A collection which is limited to a number of elements.
+    /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public sealed class Limited<T> : CollectionEnvelope<T>
+    /// <typeparam name="T">type of elements</typeparam>
+    public sealed class HeadOf<T> : EnumerableEnvelope<T>
     {
-
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="lmt">max number of items to limit to</param>
-        /// <param name="src">items to limit</param>
-        public Limited(int lmt, params T[] src) : this(lmt, new EnumerableOf<T>(src))
+        /// <param name="enumerable">enumerable to limit</param>
+        /// <param name="limit">maximum item count</param>
+        public HeadOf(IEnumerable<T> enumerable, int limit) : this(enumerable, new ScalarOf<int>(limit))
         { }
 
         /// <summary>
-        /// ctor
+        /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
         /// </summary>
-        /// <param name="lmt">max number of items to limit to</param>
-        /// <param name="src">Enumerator to limit</param>
-        public Limited(int lmt, IEnumerator<T> src) : this(lmt, new EnumerableOf<T>(src))
+        /// <param name="enumerable">enumerable to limit</param>
+        /// <param name="limit">maximum item count</param>
+        public HeadOf(IEnumerable<T> enumerable, IScalar<int> limit) : base(
+             new ScalarOf<IEnumerable<T>>(() =>
+                new EnumerableOf<T>(
+                  new Enumerator.HeadOf<T>(enumerable.GetEnumerator(), limit.Value()))))
         { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="lmt">requested number of items</param>
-        /// <param name="src">enumerable of items</param>
-        public Limited(int lmt, IEnumerable<T> src) : this(lmt, new CollectionOf<T>(src))
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="src">source collection</param>
-        /// <param name="lmt">requested number of elements</param>
-        public Limited(int lmt, ICollection<T> src) : base(
-            () => new CollectionOf<T>(
-                new Enumerable.Limited<T>(src, lmt)
-            ))
-        { }
-
     }
 }
+

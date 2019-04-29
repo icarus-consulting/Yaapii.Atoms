@@ -20,42 +20,52 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Enumerable;
 
-#pragma warning disable NoGetOrSet // No Statics
-#pragma warning disable CS1591
-
-namespace Yaapii.Atoms.Enumerable
+namespace Yaapii.Atoms.Collection
 {
     /// <summary>
-    /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
+    /// A collection which is limited to a number of elements.
     /// </summary>
-    /// <typeparam name="T">type of elements</typeparam>
-    public sealed class Limited<T> : EnumerableEnvelope<T>
+    /// <typeparam name="T"></typeparam>
+    public sealed class HeadOf<T> : CollectionEnvelope<T>
     {
+
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="enumerable">enumerable to limit</param>
-        /// <param name="limit">maximum item count</param>
-        public Limited(IEnumerable<T> enumerable, int limit) : this(enumerable, new ScalarOf<int>(limit))
+        /// <param name="lmt">max number of items to limit to</param>
+        /// <param name="src">items to limit</param>
+        public HeadOf(int lmt, params T[] src) : this(lmt, new EnumerableOf<T>(src))
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
+        /// ctor
         /// </summary>
-        /// <param name="enumerable">enumerable to limit</param>
-        /// <param name="limit">maximum item count</param>
-        public Limited(IEnumerable<T> enumerable, IScalar<int> limit) : base(
-             new ScalarOf<IEnumerable<T>>(() =>
-                new EnumerableOf<T>(
-                  new Enumerator.Limited<T>(enumerable.GetEnumerator(), limit.Value()))))
+        /// <param name="lmt">max number of items to limit to</param>
+        /// <param name="src">Enumerator to limit</param>
+        public HeadOf(int lmt, IEnumerator<T> src) : this(lmt, new EnumerableOf<T>(src))
         { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="lmt">requested number of items</param>
+        /// <param name="src">enumerable of items</param>
+        public HeadOf(int lmt, IEnumerable<T> src) : this(lmt, new CollectionOf<T>(src))
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">source collection</param>
+        /// <param name="lmt">requested number of elements</param>
+        public HeadOf(int lmt, ICollection<T> src) : base(
+            () => new CollectionOf<T>(
+                new Enumerable.HeadOf<T>(src, lmt)
+            ))
+        { }
+
     }
 }
-

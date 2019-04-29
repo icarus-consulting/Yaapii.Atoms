@@ -31,7 +31,7 @@ using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
-    public sealed class LimitedTest
+    public sealed class HeadOfTest
     {
         [Fact]
         public void LimitsContent()
@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
                 new JoinedText(", ",
                 new EnumerableOf<IText>(
                     new Mapped<int, IText>(
-                        new Limited<int>(
+                        new HeadOf<int>(
                             new EnumerableOf<int>(1, 2, 3, 4).GetEnumerator(),
                             2), 
                         str => new TextOf(str + "")))).AsString() == "1, 2",

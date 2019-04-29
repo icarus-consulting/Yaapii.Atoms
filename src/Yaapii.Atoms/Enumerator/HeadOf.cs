@@ -35,33 +35,33 @@ namespace Yaapii.Atoms.Enumerator
     /// A <see cref="IEnumerator{T}"/> limited to an item maximum.
     /// </summary>
     /// <typeparam name="T">type of the enumerator content</typeparam>
-    public sealed class Limited<T> : IEnumerator<T>
+    public sealed class HeadOf<T> : IEnumerator<T>
     {
-        private readonly IEnumerator<T> _enumerator;
-        private readonly int _limit;
-        private int _consumed;
+        private readonly IEnumerator<T> enumerator;
+        private readonly int limit;
+        private int consumed;
 
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> limited to an item maximum.
         /// </summary>
         /// <param name="enumerator">enumerator to limit</param>
         /// <param name="limit">maximum item count</param>
-        public Limited(IEnumerator<T> enumerator, int limit)
+        public HeadOf(IEnumerator<T> enumerator, int limit)
         {
-            this._enumerator = enumerator;
-            this._limit = limit;
-            this._consumed = 0;
+            this.enumerator = enumerator;
+            this.limit = limit;
+            this.consumed = 0;
         }
 
         public Boolean MoveNext()
         {
-            return this._consumed++ < this._limit && this._enumerator.MoveNext();
+            return this.consumed++ < this.limit && this.enumerator.MoveNext();
         }
 
         public void Reset()
         {
-            this._enumerator.Reset();
-            this._consumed = 0;
+            this.enumerator.Reset();
+            this.consumed = 0;
         }
 
         public void Dispose()
@@ -71,11 +71,18 @@ namespace Yaapii.Atoms.Enumerator
         {
             get
             {
-                return this._enumerator.Current;
+                return this.enumerator.Current;
             }
         }
 
-        object IEnumerator.Current => throw new NotImplementedException();
+        object IEnumerator.Current
+        {
+            get
+            {
+                return Current;
+            }
+            
+        }
     }
 }
 #pragma warning restore NoProperties // No Properties

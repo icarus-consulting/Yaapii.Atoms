@@ -32,14 +32,14 @@ using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
-    public sealed class LimitedTest
+    public sealed class HeadOfTest
     {
         [Fact]
         public void EnumeratesOverPrefixOfGivenLength()
         {
             Assert.True(
                 new SumOf(
-                new Limited<int>(
+                new HeadOf<int>(
                     new EnumerableOf<int>(0, 1, 2, 3, 4),
                     3
                 )).AsInt() == 3,
@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new SumOf(
-                new Limited<int>(
+                new HeadOf<int>(
                     new EnumerableOf<int>(0, 1, 2, 3, 4, 5),
                     10
                 )).AsInt() == 15,
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Limited<int>(
+                    new HeadOf<int>(
                         new EnumerableOf<int>(0, 1, 2, 3, 4),
                     0
                 )).Value() == 0,
@@ -75,7 +75,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Limited<int>(
+                    new HeadOf<int>(
                         new EnumerableOf<int>(0, 1, 2, 3, 4),
                         -1
                     )).Value() == 0,
@@ -87,7 +87,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Limited<Nothing>(
+                    new HeadOf<Nothing>(
                         new EnumerableOf<Nothing>(),
                         10
                     )).Value() == 0,
