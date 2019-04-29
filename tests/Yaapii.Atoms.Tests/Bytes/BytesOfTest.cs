@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.IO.Tests
                     new InputOf(
                         new JoinedText(
                             "",
-                            new Limited<string>(
+                            new HeadOf<string>(
                                 new Endless<string>(body),
                                 multiplier
                             )

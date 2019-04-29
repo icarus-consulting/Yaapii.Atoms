@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new MemoryStream(
                             new BytesOf(
                                 new JoinedText(",",
-                                new Limited<string>(
+                                new HeadOf<string>(
                                     new Endless<string>("Hello World"),
                                     1000))
                                 ).AsBytes()),

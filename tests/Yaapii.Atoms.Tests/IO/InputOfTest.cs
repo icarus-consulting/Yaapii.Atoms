@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.IO.Tests
                             new MemoryStream(
                                 new BytesOf(
                                     new JoinedText("\r\n",
-                                    new Limited<string>(
+                                    new HeadOf<string>(
                                         new Endless<string>(content),
                                         10))
                                     ).AsBytes()),
@@ -107,7 +107,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new MemoryStream(
                             new BytesOf(
                                 new JoinedText("\r\n",
-                                new Limited<string>(
+                                new HeadOf<string>(
                                     new Endless<string>("Hello World"),
                                     10))
                                 ).AsBytes()),
@@ -150,7 +150,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new MemoryStream(
                             new BytesOf(
                                 new JoinedText("\r\n",
-                                new Limited<string>(
+                                new HeadOf<string>(
                                     new Endless<string>("Hello World"),
                                     1000))
                                 ).AsBytes()),

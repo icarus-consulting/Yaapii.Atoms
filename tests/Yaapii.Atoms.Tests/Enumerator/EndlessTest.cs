@@ -20,17 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Enumerator;
+using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
@@ -46,7 +38,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
                     "",
                     new EnumerableOf<IText>(
                             new Mapped<string, IText>(
-                                new Limited<string>(
+                                new HeadOf<string>(
                                     new Endless<string>("A"),
                                     20),
                                 str => new TextOf(str)))).AsString() == expected,

@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Bytes.Tests
                         new InputOf(
                         String.Join(
                             "",
-                                new Limited<string>(
+                                new HeadOf<string>(
                                 new Endless<string>(body),
                                 multiplier
                             )
