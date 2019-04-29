@@ -27,14 +27,14 @@ using Yaapii.Atoms.Fail;
 
 namespace Yaapii.Atoms.Collection.Tests
 {
-    public sealed class LimitedTest
+    public sealed class HeadOfTest
     {
 
         [Fact]
         public void BehavesAsCollection()
         {
             Assert.Contains(
-                new Limited<int>(
+                new HeadOf<int>(
                     2,
                     new Enumerable.EnumerableOf<int>(1, -1, 2, 0)
                 ),
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Collection.Tests
         public void Size()
         {
             Assert.True(
-                new Limited<string>(
+                new HeadOf<string>(
                     2,
                     new Enumerable.EnumerableOf<string>(
                         "hello", "world", "друг")
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Collection.Tests
         public void SizeEmptyReturnZero()
         {
             Assert.True(
-                new Limited<int>(
+                new HeadOf<int>(
                     2,
                     new List<int>()
                 ).Count == 0);
@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.Collection.Tests
         public void SizeLimitZeroReturnZero()
         {
             Assert.True(
-                new Limited<string>(
+                new HeadOf<string>(
                     0,
                     new Enumerable.EnumerableOf<string>("1", "2", "3")
                 ).Count == 0);
@@ -76,7 +76,7 @@ namespace Yaapii.Atoms.Collection.Tests
         public void WithItemsNotEmpty()
         {
             Assert.NotEmpty(
-                new Limited<String>(
+                new HeadOf<String>(
                     2,
                     new Enumerable.EnumerableOf<string>("first", "second")
                 ));
@@ -86,7 +86,7 @@ namespace Yaapii.Atoms.Collection.Tests
         public void WithoutItemsIsEmpty()
         {
             Assert.Empty(
-                new Limited<String>(
+                new HeadOf<String>(
                     0, new Enumerable.EnumerableOf<string>("third", "fourth")
                 ));
         }
@@ -95,7 +95,7 @@ namespace Yaapii.Atoms.Collection.Tests
         public void RejectsAdd()
         {
             Assert.Throws<UnsupportedOperationException>(() =>
-            new Limited<int>(
+            new HeadOf<int>(
                 2,
                 new Enumerable.EnumerableOf<int>(1, 2, 3, 4)
             ).Add(6));
@@ -105,7 +105,7 @@ namespace Yaapii.Atoms.Collection.Tests
         public void RejectsRemove()
         {
             Assert.Throws<UnsupportedOperationException>(() =>
-               new Limited<int>(
+               new HeadOf<int>(
                    2,
                    new Enumerable.EnumerableOf<int>(1, 2, 3, 4)
                ).Remove(1));
@@ -115,7 +115,7 @@ namespace Yaapii.Atoms.Collection.Tests
         public void RejectsClear()
         {
             Assert.Throws<UnsupportedOperationException>(() =>
-                new Limited<int>(
+                new HeadOf<int>(
                     2, new Enumerable.EnumerableOf<int>(1, 2, 3, 4)
                 ).Clear());
         }
