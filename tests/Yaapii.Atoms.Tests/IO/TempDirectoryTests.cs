@@ -101,7 +101,7 @@ namespace Yaapii.Atoms.IO.Tests
             using (var td = new TempDirectory(path))
             {
                 td.Value();
-                File.WriteAllBytes(Path.Combine(path, "rainig.txt"), new byte[] { 0xAB });
+                File.WriteAllBytes(Path.Combine(path, "raining.txt"), new byte[] { 0xAB });
             }
             try
             {
@@ -114,6 +114,32 @@ namespace Yaapii.Atoms.IO.Tests
                 if (Directory.Exists(path))
                 {
                     Directory.Delete(path, true);
+                }
+            }
+        }
+
+        [Fact]
+        public void DeletesWhenWriteProtectedFilesInside()
+        {
+            var tempPath = Path.Combine(Path.GetTempPath(), "SunnyDirectory");
+            using (var td = new TempDirectory(tempPath))
+            {
+                td.Value();
+                var file = Path.Combine(tempPath, "raining.txt");
+                File.WriteAllBytes(file, new byte[] { 0xAB });
+                new FileInfo(file).Attributes = FileAttributes.ReadOnly;
+            }
+            try
+            {
+                Assert.False(
+                    Directory.Exists(tempPath)
+                );
+            }
+            finally
+            {
+                if (Directory.Exists(tempPath))
+                {
+                    Directory.Delete(tempPath, true);
                 }
             }
         }
