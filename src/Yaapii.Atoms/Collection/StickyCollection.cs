@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="list">list of source items</param>
         public StickyCollection(ICollection<T> list) : base(
-                new StickyScalar<ICollection<T>>( //Make a sticky scalar which copies the items once and returns them always.
+                new Scalar.Sticky<ICollection<T>>( //Make a sticky scalar which copies the items once and returns them always.
                     () =>
                     {
                         var temp = new List<T>(list.Count);

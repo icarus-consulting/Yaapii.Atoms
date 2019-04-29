@@ -191,7 +191,7 @@ namespace Yaapii.Atoms.Enumerable
 
         internal ItemAt(IScalar<T> saved)
         {
-            this.saved = new StickyScalar<T>(saved);
+            this.saved = new Scalar.Sticky<T>(saved);
         }
 
         /// <summary>

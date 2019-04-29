@@ -21,39 +21,26 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Scalar.Tests
+namespace Yaapii.Atoms.Tests.Scalar
 {
-    /**
-     * Test case for {@link RetryScalar}.
-     *
-     * @author Yegor Bugayenko (yegor256@gmail.com)
-     * @version $Id$
-     * @since 0.9
-     * @checkstyle JavadocMethodCheck (500 lines)
-     */
-    public sealed class RetryScalarTest
+    public sealed class SyncTest
     {
         [Fact]
-        public void RunsScalarMultipleTimes()
+        public void WorksInMultipleThreads()
         {
-            Assert.True(
-                new RetryScalar<int>(
-                    () =>
-                    {
-                        if (new Random().NextDouble() > 0.3d)
-                        {
-                            throw new ArgumentException("May happen");
-                        }
-                        return 0;
-                    },
-                int.MaxValue
-            ).Value() == 0);
-        }
+            var check = 0;
+            var sc = new Sync<int>(() => check += 1);
 
+            var max = Environment.ProcessorCount << 8;
+            Parallel.For(0, max, (nr) => sc.Value());
+
+            Assert.Equal(
+                max, check
+            );
+        }
     }
 }

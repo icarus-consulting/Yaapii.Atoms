@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.IO
         public ZipFiles(IInput input, bool leaveOpen)
         {
             this.files =
-                new StickyScalar<IEnumerable<string>>(() =>
+                new Scalar.Sticky<IEnumerable<string>>(() =>
                 {
                     try
                     {

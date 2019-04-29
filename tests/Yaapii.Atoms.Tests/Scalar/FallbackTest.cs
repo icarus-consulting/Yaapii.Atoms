@@ -22,36 +22,49 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Tests.Scalar
+namespace Yaapii.Atoms.Scalar.Tests
 {
-    public sealed class SolidScalarTest
+    public class FallbackTest
     {
         [Fact]
-        public void CachesResult()
+        public void GivesFallback()
         {
-            var check = 0;
-            var sc = new SolidScalar<int>(() => check += 1);
-            var max = Environment.ProcessorCount << 8;
-            Parallel.For(0, max, (nr) => sc.Value());
+            var fbk = "strong string";
 
-            Assert.Equal(sc.Value(), sc.Value());
+            Assert.True(
+                new Fallback<string>(
+                    new ScalarOf<string>(
+                        () => throw new Exception("NO STRINGS ATTACHED HAHAHA")),
+                    fbk
+                    ).Value() == fbk);
         }
 
         [Fact]
-        public void WorksInMultipleThreads()
+        public void GivesFallbackByFunc()
         {
-            var sc = new SolidScalar<IList<int>>(() => new ListOf<int>(1, 2));
-            var max = Environment.ProcessorCount << 8;
-            Parallel.For(0, max, (nr) => sc.Value());
+            var fbk = "strong string";
 
-            Assert.Equal(
-                sc.Value(), sc.Value()
-            );
+            Assert.True(
+                new Fallback<string>(
+                    new ScalarOf<string>(
+                        () => throw new Exception("NO STRINGS ATTACHED HAHAHA")),
+                    () => fbk
+                    ).Value() == fbk);
+        }
+
+        [Fact]
+        public void InjectsException()
+        {
+            var notAmused = new Exception("All is broken :(");
+
+            Assert.True(
+                new Fallback<string>(
+                    new ScalarOf<string>(
+                        () => throw notAmused),
+                    (ex) => ex.Message).Value() == notAmused.Message);
         }
     }
 }

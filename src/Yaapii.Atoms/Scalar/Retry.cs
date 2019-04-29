@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Scalar
     /// <see cref="IScalar{T}"/> which will retry multiple times before throwing an exception.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class RetryScalar<T> : IScalar<T>
+    public sealed class Retry<T> : IScalar<T>
     {
         private readonly IScalar<T> _scalar;
         private readonly IFunc<Int32, bool> _exit;
@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="slr">func to retry when needed</param>
         /// <param name="attempts">how often to retry</param>
-        public RetryScalar(Func<T> slr, int attempts = 3) : this(new ScalarOf<T>(() => slr.Invoke()), attempts)
+        public Retry(Func<T> slr, int attempts = 3) : this(new ScalarOf<T>(() => slr.Invoke()), attempts)
         { }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="slr">scalar to retry when needed</param>
         /// <param name="attempts">how often to retry</param>
-        public RetryScalar(IScalar<T> slr, int attempts = 3) :
+        public Retry(IScalar<T> slr, int attempts = 3) :
             this(slr, new FuncOf<int, bool>(attempt => attempt >= attempts))
         { }
 
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="slr">scalar to retry when needed</param>
         /// <param name="exit"></param>
-        public RetryScalar(IScalar<T> slr, IFunc<Int32, Boolean> exit)
+        public Retry(IScalar<T> slr, IFunc<Int32, Boolean> exit)
         {
             this._scalar = slr;
             this._exit = exit;

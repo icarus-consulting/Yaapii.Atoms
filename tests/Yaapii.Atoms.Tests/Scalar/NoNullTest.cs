@@ -22,44 +22,31 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Scalar.Tests
 {
-    public sealed class StickyScalarTest
+    public class NoNullTest
     {
         [Fact]
-        public void CachesScalarResults()
+        public void RaisesError()
         {
-            IScalar<int> scalar =
-                new StickyScalar<int>(
-                    () => new Random().Next());
-
-            var val1 = scalar.Value();
-            System.Threading.Thread.Sleep(2);
-
-            Assert.True(val1 == scalar.Value(),
-                "cannot return value from cache"
-            );
+            Assert.Throws<IOException>(
+                () =>
+                new NoNull<string>(null).Value());
         }
 
         [Fact]
-        public void ReloadCachedScalarResults()
+        public void GivesFallback()
         {
-            IScalar<List<int>> scalar =
-                new StickyScalar<List<int>>(
-                    () => new List<int>() { new Random().Next() },
-                    lst => lst.Count > 1);
-
-            var lst1 = scalar.Value();
-            System.Threading.Thread.Sleep(2);
-
-            Assert.True(lst1.GetHashCode() == scalar.Value().GetHashCode(), "cannot return value from cache");
-            lst1.Add(42);
-
-            Assert.False(lst1.GetHashCode() == scalar.Value().GetHashCode(), "reload doesn't work");
+            var fbk = "Here, take this instead";
+            string val = null;
+            Assert.True(
+                new NoNull<string>(val, fbk).Value() == fbk,
+                "can't get fallback value");
         }
     }
 }

@@ -78,7 +78,7 @@ namespace Yaapii.Atoms.Enumerator
         public StickyEnumerator(IScalar<IEnumerator<X>> src)
         {
             this._gate =
-                new StickyScalar<IEnumerator<X>>(
+                new Scalar.Sticky<IEnumerator<X>>(
                     () =>
                     {
                         var temp = new LinkedList<X>();

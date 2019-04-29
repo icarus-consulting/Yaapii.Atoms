@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Enumerator
         public SortedEnumerator(Comparer<T> cmp, IEnumerator<T> src)
         {
             this._sorted =
-                new StickyScalar<IEnumerator<T>>(
+                new Sticky<IEnumerator<T>>(
                     () =>
                     {
                         var items = new List<T>();

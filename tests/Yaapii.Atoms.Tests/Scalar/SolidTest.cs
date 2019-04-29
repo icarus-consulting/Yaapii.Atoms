@@ -22,49 +22,36 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 using Xunit;
+using Yaapii.Atoms.List;
+using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Scalar.Tests
+namespace Yaapii.Atoms.Tests.Scalar
 {
-    public class ScalarWithFallbackTest
+    public sealed class SolidTest
     {
         [Fact]
-        public void GivesFallback()
+        public void CachesResult()
         {
-            var fbk = "strong string";
+            var check = 0;
+            var sc = new Solid<int>(() => check += 1);
+            var max = Environment.ProcessorCount << 8;
+            Parallel.For(0, max, (nr) => sc.Value());
 
-            Assert.True(
-                new ScalarWithFallback<string>(
-                    new ScalarOf<string>(
-                        () => throw new Exception("NO STRINGS ATTACHED HAHAHA")),
-                    fbk
-                    ).Value() == fbk);
+            Assert.Equal(sc.Value(), sc.Value());
         }
 
         [Fact]
-        public void GivesFallbackByFunc()
+        public void WorksInMultipleThreads()
         {
-            var fbk = "strong string";
+            var sc = new Solid<IList<int>>(() => new ListOf<int>(1, 2));
+            var max = Environment.ProcessorCount << 8;
+            Parallel.For(0, max, (nr) => sc.Value());
 
-            Assert.True(
-                new ScalarWithFallback<string>(
-                    new ScalarOf<string>(
-                        () => throw new Exception("NO STRINGS ATTACHED HAHAHA")),
-                    () => fbk
-                    ).Value() == fbk);
-        }
-
-        [Fact]
-        public void InjectsException()
-        {
-            var notAmused = new Exception("All is broken :(");
-
-            Assert.True(
-                new ScalarWithFallback<string>(
-                    new ScalarOf<string>(
-                        () => throw notAmused),
-                    (ex) => ex.Message).Value() == notAmused.Message);
+            Assert.Equal(
+                sc.Value(), sc.Value()
+            );
         }
     }
 }

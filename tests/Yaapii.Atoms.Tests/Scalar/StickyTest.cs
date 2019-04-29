@@ -21,26 +21,45 @@
 // SOFTWARE.
 
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Text;
 using Xunit;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Tests.Scalar
+namespace Yaapii.Atoms.Scalar.Tests
 {
-    public sealed class SyncScalarTest
+    public sealed class StickyTest
     {
         [Fact]
-        public void WorksInMultipleThreads()
+        public void CachesScalarResults()
         {
-            var check = 0;
-            var sc = new SyncScalar<int>(() => check += 1);
+            IScalar<int> scalar =
+                new Sticky<int>(
+                    () => new Random().Next());
 
-            var max = Environment.ProcessorCount << 8;
-            Parallel.For(0, max, (nr) => sc.Value());
+            var val1 = scalar.Value();
+            System.Threading.Thread.Sleep(2);
 
-            Assert.Equal(
-                max, check
+            Assert.True(val1 == scalar.Value(),
+                "cannot return value from cache"
             );
+        }
+
+        [Fact]
+        public void ReloadCachedScalarResults()
+        {
+            IScalar<List<int>> scalar =
+                new Sticky<List<int>>(
+                    () => new List<int>() { new Random().Next() },
+                    lst => lst.Count > 1);
+
+            var lst1 = scalar.Value();
+            System.Threading.Thread.Sleep(2);
+
+            Assert.True(lst1.GetHashCode() == scalar.Value().GetHashCode(), "cannot return value from cache");
+            lst1.Add(42);
+
+            Assert.False(lst1.GetHashCode() == scalar.Value().GetHashCode(), "reload doesn't work");
         }
     }
 }

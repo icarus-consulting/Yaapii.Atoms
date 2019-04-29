@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Scalar
     /// Scalar which calls a fallback function if Value() fails.
     /// </summary>
     /// <typeparam name="Out">Type of output value</typeparam>
-    public class ScalarWithFallback<Out> : IScalar<Out>
+    public class Fallback<Out> : IScalar<Out>
     {
         private readonly IScalar<Out> origin;
         private readonly Func<Exception, Out> fbk;
@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="origin">Scalar which can fail</param>
         /// <param name="fallback">Fallback if scalar fails</param>
-        public ScalarWithFallback(IScalar<Out> origin, Out fallback) : this(
+        public Fallback(IScalar<Out> origin, Out fallback) : this(
             origin, 
             (ex) => fallback)
         { }
@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="origin">Scalar which can fail</param>
         /// <param name="fallback">Fallback if scalar fails</param>
-        public ScalarWithFallback(IScalar<Out> origin, Func<Out> fallback) : this(
+        public Fallback(IScalar<Out> origin, Func<Out> fallback) : this(
             origin, 
             (ex) => fallback.Invoke())
         { }
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="origin">scalar which can fail</param>
         /// <param name="fbk">fallback to apply when fails</param>
-        public ScalarWithFallback(IScalar<Out> origin, Func<Exception, Out> fbk)
+        public Fallback(IScalar<Out> origin, Func<Exception, Out> fbk)
         {
             this.origin = origin;
             this.fbk = fbk;

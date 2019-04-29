@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.IO
         /// Ctor
         /// </summary>
         public TempFile() :
-            this(new StickyScalar<string>(()=>Path.GetTempFileName()))
+            this(new Sticky<string>(()=>Path.GetTempFileName()))
         { }
 
         private TempFile(IScalar<string> path)

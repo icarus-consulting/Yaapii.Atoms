@@ -27,61 +27,57 @@ using System.Text;
 namespace Yaapii.Atoms.Scalar
 {
     /// <summary>
-    /// A Scalar that is both threadsafe and sticky.
+    /// A <see cref="IScalar{T}"/> that is threadsafe.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public sealed class SolidScalar<T> : IScalar<T>
+    /// <typeparam name="T">type of value</typeparam>
+    public sealed class Sync<T> : IScalar<T>
     {
         private readonly IScalar<T> src;
-        private readonly object lck;
-        private volatile object cache;
+        private readonly Object lck;
 
         /// <summary>
         /// A <see cref="IScalar{T}"/> that is threadsafe.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
-        public SolidScalar(Func<T> src) : this(src, src)
+        public Sync(Func<T> src) : this(src, src)
         { }
 
         /// <summary>
-        /// A <see cref="IScalar{T}"/> that is threadsafe and sticky.
+        /// A <see cref="IScalar{T}"/> that is threadsafe.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         /// <param name="lck">the object to lock</param>
-        public SolidScalar(Func<T> src, object lck) : this(new ScalarOf<T>(src), lck)
+        public Sync(Func<T> src, object lck) : this(new ScalarOf<T>(src), lck)
         { }
 
         /// <summary>
-        /// A <see cref="IScalar{T}"/> that is threadsafe and sticky.
+        /// A <see cref="IScalar{T}"/> that is threadsafe.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
-        public SolidScalar(IScalar<T> src) : this(src, src)
+        public Sync(IScalar<T> src) : this(src, src)
         { }
 
         /// <summary>
-        /// A <see cref="IScalar{T}"/> that is threadsafe and sticky.
+        /// A <see cref="IScalar{T}"/> that is threadsafe.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         /// <param name="lck">object to lock while using scalar</param>
-        public SolidScalar(IScalar<T> src, Object lck)
+        public Sync(IScalar<T> src, Object lck)
         {
             this.src = src;
             this.lck = lck;
         }
 
+        /// <summary>
+        /// Get the value.
+        /// </summary>
+        /// <returns>the value</returns>
         public T Value()
         {
-            if(this.cache == null)
+            lock (this.src)
             {
-                lock (this.lck)
-                {
-                    if (this.cache == null)
-                    {
-                        this.cache = this.src.Value();
-                    }
-                }
+                return this.src.Value();
             }
-            return (T)this.cache;
         }
     }
 }

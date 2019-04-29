@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="list">list to cache</param>
         public StickyList(IList<X> list) : base(
-                new StickyScalar<IList<X>>(
+                new Sticky<IList<X>>(
                     () =>
                         {
                             var temp = new List<X>();

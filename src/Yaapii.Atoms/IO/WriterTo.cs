@@ -93,7 +93,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="tgt">the target streamwriter</param>
         private WriterTo(IScalar<StreamWriter> tgt) : base(new DeadStream())
         {
-            this._target = new StickyScalar<StreamWriter>(tgt, writer => !writer.BaseStream.CanWrite);
+            this._target = new Sticky<StreamWriter>(tgt, writer => !writer.BaseStream.CanWrite);
         }
 
 #pragma warning disable CS1591

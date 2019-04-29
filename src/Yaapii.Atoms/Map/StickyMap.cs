@@ -99,7 +99,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="map">the map</param>
         public StickyMap(IDictionary<Key, Value> map) : base(
-            new StickyScalar<IDictionary<Key, Value>>(
+            new Scalar.Sticky<IDictionary<Key, Value>>(
                 () =>
                 {
                     Dictionary<Key, Value> temp = new Dictionary<Key, Value>();
@@ -179,7 +179,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="map"></param>
         private StickyMap(IDictionary<Key, Value> map) : base(
-            new StickyScalar<IDictionary<Key, Value>>(
+            new Scalar.Sticky<IDictionary<Key, Value>>(
             () =>
             {
                 var temp = new Dictionary<Key, Value>();

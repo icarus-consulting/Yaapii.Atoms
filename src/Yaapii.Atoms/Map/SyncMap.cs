@@ -82,7 +82,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="map">Map to make threadsafe</param>
         public SyncMap(IDictionary<Key, Value> map) : base(
-                new SyncScalar<IDictionary<Key, Value>>(
+                new Sync<IDictionary<Key, Value>>(
                     new ScalarOf<IDictionary<Key, Value>>(
                     () => new ConcurrentDictionary<Key, Value>(map))))
         { }
@@ -162,7 +162,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="map">Map to make threadsafe</param>
         public SyncMap(IDictionary<Key, Value> map) : base(
-                new SyncScalar<IDictionary<Key, Value>>(
+                new Sync<IDictionary<Key, Value>>(
                     new ScalarOf<IDictionary<Key, Value>>(
                     () => new ConcurrentDictionary<Key, Value>(map))))
         { }

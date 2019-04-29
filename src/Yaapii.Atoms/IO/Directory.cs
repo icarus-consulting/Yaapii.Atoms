@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="path"></param>
         public DirectoryOf(IScalar<string> path)
         {
-            this._dir = new StickyScalar<string>(() =>
+            this._dir = new Scalar.Sticky<string>(() =>
             {
             var val = Path.GetFullPath(path.Value());
                 try

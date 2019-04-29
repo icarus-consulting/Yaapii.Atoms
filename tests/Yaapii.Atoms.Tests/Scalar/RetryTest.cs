@@ -22,31 +22,38 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Scalar.Tests
 {
-    public class NoNullScalarTest
+    /**
+     * Test case for {@link RetryScalar}.
+     *
+     * @author Yegor Bugayenko (yegor256@gmail.com)
+     * @version $Id$
+     * @since 0.9
+     * @checkstyle JavadocMethodCheck (500 lines)
+     */
+    public sealed class RetryTest
     {
         [Fact]
-        public void RaisesError()
+        public void RunsScalarMultipleTimes()
         {
-            Assert.Throws<IOException>(
-                () =>
-                new NoNullScalar<string>(null).Value());
+            Assert.True(
+                new Retry<int>(
+                    () =>
+                    {
+                        if (new Random().NextDouble() > 0.3d)
+                        {
+                            throw new ArgumentException("May happen");
+                        }
+                        return 0;
+                    },
+                int.MaxValue
+            ).Value() == 0);
         }
 
-        [Fact]
-        public void GivesFallback()
-        {
-            var fbk = "Here, take this instead";
-            string val = null;
-            Assert.True(
-                new NoNullScalar<string>(val, fbk).Value() == fbk,
-                "can't get fallback value");
-        }
     }
 }

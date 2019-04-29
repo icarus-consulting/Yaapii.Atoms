@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Yaapii.Atoms.Func;
 
 namespace Yaapii.Atoms.Scalar
@@ -31,7 +29,7 @@ namespace Yaapii.Atoms.Scalar
     /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class StickyScalar<T> : IScalar<T>
+    public sealed class Sticky<T> : IScalar<T>
     {
         private readonly IFunc<bool, T> _func;
 
@@ -39,14 +37,14 @@ namespace Yaapii.Atoms.Scalar
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
         /// </summary>
         /// <param name="src">func to cache result from</param>
-        public StickyScalar(Func<T> src) : this(new ScalarOf<T>(src))
+        public Sticky(Func<T> src) : this(new ScalarOf<T>(src))
         { }
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
         /// </summary>
         /// <param name="src">scalar to cache result from</param>
-        public StickyScalar(IScalar<T> src) : this(src, input=>false)
+        public Sticky(IScalar<T> src) : this(src, input=>false)
         { }
 
         /// <summary>
@@ -54,7 +52,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="srcFunc">func to cache result from</param>
         /// <param name="reloadConditionFunc">reload condition func</param>
-        public StickyScalar(Func<T> srcFunc, Func<T, bool> reloadConditionFunc) : this(new ScalarOf<T>(srcFunc), new FuncOf<T, bool>(reloadConditionFunc))
+        public Sticky(Func<T> srcFunc, Func<T, bool> reloadConditionFunc) : this(new ScalarOf<T>(srcFunc), new FuncOf<T, bool>(reloadConditionFunc))
         { }
 
         /// <summary>
@@ -62,7 +60,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="srcFunc">func to cache result from</param>
         /// <param name="reloadConditionFunc">reload condition func</param>
-        public StickyScalar(IFunc<T> srcFunc, IFunc<T, bool> reloadConditionFunc) : this(new ScalarOf<T>(srcFunc), reloadConditionFunc)
+        public Sticky(IFunc<T> srcFunc, IFunc<T, bool> reloadConditionFunc) : this(new ScalarOf<T>(srcFunc), reloadConditionFunc)
         { }
 
         /// <summary>
@@ -70,7 +68,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="src">scalar to cache result from</param>
         /// <param name="reloadConditionFunc">reload condition func</param>
-        public StickyScalar(IScalar<T> src, Func<T, bool> reloadConditionFunc) : this(src, new FuncOf<T,bool>(reloadConditionFunc))
+        public Sticky(IScalar<T> src, Func<T, bool> reloadConditionFunc) : this(src, new FuncOf<T,bool>(reloadConditionFunc))
         { }
 
         /// <summary>
@@ -78,7 +76,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="src">scalar to cache result from</param>
         /// <param name="reloadConditionFunc">reload condition func</param>
-        public StickyScalar(IScalar<T> src, IFunc<T, bool> reloadConditionFunc)
+        public Sticky(IScalar<T> src, IFunc<T, bool> reloadConditionFunc)
         {
             this._func = new StickyFunc<Boolean, T>(input => src.Value(), reloadConditionFunc);
         }
