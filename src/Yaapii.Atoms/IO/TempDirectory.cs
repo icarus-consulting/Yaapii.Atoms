@@ -27,12 +27,15 @@ using Yaapii.Atoms.Scalar;
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
-    /// A directory that cleans up on dispose.
+    /// A directory that cleans up when disposed.
     /// </summary>
     public sealed class TempDirectory : IScalar<DirectoryInfo>, IDisposable
     {
         private readonly IScalar<string> path;
 
+        /// <summary>
+        /// A directory that cleans up when disposed.
+        /// </summary>
         public TempDirectory() : this(
             new StickyScalar<string>(() =>
                 Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())
@@ -40,11 +43,17 @@ namespace Yaapii.Atoms.IO
         )
         { }
 
+        /// <summary>
+        /// A directory that cleans up when disposed.
+        /// </summary>
         public TempDirectory(string path) : this(
             new ScalarOf<string>(path)
         )
         { }
 
+        /// <summary>
+        /// A directory that cleans up when disposed.
+        /// </summary>
         private TempDirectory(IScalar<string> path)
         {
             this.path = path;
@@ -72,6 +81,15 @@ namespace Yaapii.Atoms.IO
             foreach (string subDir in Directory.GetDirectories(path))
             {
                 DeleteDirectory(subDir);
+            }
+
+            foreach (string fileName in Directory.EnumerateFiles(path))
+            {
+                var fileInfo = new FileInfo(fileName)
+                {
+                    Attributes = FileAttributes.Normal
+                };
+                fileInfo.Delete();
             }
             Directory.Delete(path, true);
         }
