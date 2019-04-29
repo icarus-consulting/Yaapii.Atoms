@@ -110,6 +110,16 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
+        public ItemAt(IEnumerable<T> source, Func<IEnumerable<T>, T> fallback) : this(
+            source, 0, new FuncOf<IEnumerable<T>, T>(fallback)
+        )
+        { }
+
+        /// <summary>
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">soruce enum</param>
+        /// <param name="fallback">fallback value</param>
         public ItemAt(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback) : this(
             source, 0, fallback)
         { }
