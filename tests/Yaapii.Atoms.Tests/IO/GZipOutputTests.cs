@@ -21,12 +21,10 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Tests;
+using Yaapii.Atoms.Bytes;
 
 namespace Yaapii.Atoms.IO.Tests
 {

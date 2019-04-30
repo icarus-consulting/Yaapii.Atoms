@@ -21,11 +21,10 @@
 // SOFTWARE.
 
 using Xunit;
-using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Misc;
 using Yaapii.Atoms.Number;
 
-namespace Yaapii.Atoms.Scalar.Tests
+namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class HeadOfTest
     {
@@ -34,10 +33,11 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.True(
                 new SumOf(
-                new HeadOf<int>(
-                    new EnumerableOf<int>(0, 1, 2, 3, 4),
-                    3
-                )).AsInt() == 3,
+                    new HeadOf<int>(
+                        new EnumerableOf<int>(0, 1, 2, 3, 4),
+                        3
+                    )
+                ).AsInt() == 3,
             "Can't limit an enumerable with more items");
         }
 
@@ -46,11 +46,13 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.True(
                 new SumOf(
-                new HeadOf<int>(
-                    new EnumerableOf<int>(0, 1, 2, 3, 4, 5),
-                    10
-                )).AsInt() == 15,
-            "Can't limit an enumerable with less items");
+                    new HeadOf<int>(
+                        new EnumerableOf<int>(0, 1, 2, 3, 4, 5),
+                        10
+                    )
+                ).AsInt() == 15,
+                "Can't limit an enumerable with less items"
+            );
         }
 
         [Fact]
@@ -60,9 +62,11 @@ namespace Yaapii.Atoms.Scalar.Tests
                 new LengthOf(
                     new HeadOf<int>(
                         new EnumerableOf<int>(0, 1, 2, 3, 4),
-                    0
-                )).Value() == 0,
-            "Can't limit an iterable to zero items");
+                        0
+                    )
+                ).Value() == 0,
+                "Can't limit an iterable to zero items"
+            );
         }
 
         [Fact]
@@ -73,8 +77,10 @@ namespace Yaapii.Atoms.Scalar.Tests
                     new HeadOf<int>(
                         new EnumerableOf<int>(0, 1, 2, 3, 4),
                         -1
-                    )).Value() == 0,
-                "Can't limit an iterable to negative number of items");
+                    )
+                ).Value() == 0,
+                "Can't limit an iterable to negative number of items"
+            );
         }
 
         [Fact]
@@ -85,8 +91,10 @@ namespace Yaapii.Atoms.Scalar.Tests
                     new HeadOf<Nothing>(
                         new EnumerableOf<Nothing>(),
                         10
-                    )).Value() == 0,
-            "Can't limit an empty enumerable");
+                    )
+                ).Value() == 0,
+                "Can't limit an empty enumerable"
+            );
         }
     }
 }

@@ -24,6 +24,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Scalar;
 

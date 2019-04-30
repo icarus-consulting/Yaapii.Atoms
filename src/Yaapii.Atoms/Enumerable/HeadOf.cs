@@ -27,7 +27,7 @@ using Yaapii.Atoms.Scalar;
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
 
-namespace Yaapii.Atoms.Scalar
+namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
     /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
