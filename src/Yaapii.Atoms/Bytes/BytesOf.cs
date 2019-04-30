@@ -29,7 +29,8 @@ using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable MaxClassLength // Class length max
-namespace Yaapii.Atoms.IO
+
+namespace Yaapii.Atoms.Bytes
 {
     /// <summary>
     /// Bytes out of other objects.
@@ -39,7 +40,7 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// original
         /// </summary>
-        private readonly IScalar<byte[]> _origin;
+        private readonly IScalar<byte[]> origin;
 
         /// <summary>
         /// Bytes out of a input.
@@ -194,7 +195,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="bytes">scalar of bytes</param>
         private BytesOf(IScalar<Byte[]> bytes)
         {
-            this._origin = bytes;
+            this.origin = bytes;
         }
 
         /// <summary>
@@ -203,7 +204,7 @@ namespace Yaapii.Atoms.IO
         /// <returns>content as byte array</returns>
         public byte[] AsBytes()
         {
-            return this._origin.Value();
+            return this.origin.Value();
         }
     }
 }
