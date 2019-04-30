@@ -35,17 +35,5 @@ namespace Yaapii.Atoms.Enumerable
                 new Strings("one", "two", "eight")
             );
         }
-
-        [Fact]
-        public void Converts()
-        {
-            var number = 2.3f;
-            var enumerator = new Strings(number).GetEnumerator();
-            enumerator.MoveNext();
-            Assert.Equal(
-                number.ToString(),
-                enumerator.Current                
-            );
-        }
     }
 }
