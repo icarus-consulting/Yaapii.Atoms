@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             int size = 2;
             var list =
-                new Sticky<int>(
+                new StickyEnumerable<int>(
                     new HeadOf<int>(
                         new Endless<int>(1),
                         new ScalarOf<int>(() => Interlocked.Increment(ref size))

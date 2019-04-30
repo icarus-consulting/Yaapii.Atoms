@@ -21,38 +21,21 @@
 // SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Text.Tests
 {
-    public sealed class MappedTest
+    public sealed class NormalizedTest
     {
         [Fact]
-        public void TransformsList()
+        public void NormalizesText()
         {
             Assert.True(
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>("hello", "world", "damn")
-                        ),
-                    0
-                ).Value().AsString() == "HELLO",
-            "Can't transform an enumerable");
-        }
-
-        [Fact]
-        public void TransformsEmptyList()
-        {
-            Assert.True(
-                new Enumerable.LengthOf(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>()
-                    )).Value() == 0,
-                "Can't transform an empty iterable");
+            new Normalized(" \t hello  \t\tworld   \t").AsString() == "hello world",
+            "Can't normalize a text");
         }
     }
 }

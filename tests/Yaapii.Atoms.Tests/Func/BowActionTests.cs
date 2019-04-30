@@ -21,7 +21,7 @@ namespace Yaapii.Atoms.Tests.Func
 
             Assert.Equal(
                 "ask trigger, ask trigger, shoot",
-                new JoinedText(", ", actions).AsString()
+                new Joined(", ", actions).AsString()
             );
         }
 
@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Tests.Func
 
             Assert.Equal(
                 "prepare, ask trigger, ask trigger, shoot",
-                new JoinedText(", ", actions).AsString()
+                new Joined(", ", actions).AsString()
             );
         }
 

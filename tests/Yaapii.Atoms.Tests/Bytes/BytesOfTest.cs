@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.IO.Tests
             Assert.True(
                 new BytesOf(
                     new InputOf(
-                        new JoinedText(
+                        new Joined(
                             "",
                             new HeadOf<string>(
                                 new Endless<string>(body),

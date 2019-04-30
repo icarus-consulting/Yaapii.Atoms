@@ -20,39 +20,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Text.Tests
 {
-    public sealed class MappedTest
+    public sealed class RepeatedTest
     {
         [Fact]
-        public void TransformsList()
+        public void RepeatsWordsText()
         {
             Assert.True(
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>("hello", "world", "damn")
-                        ),
-                    0
-                ).Value().AsString() == "HELLO",
-            "Can't transform an enumerable");
+                new Repeated("hello", 2).AsString() == "hellohello",
+                "Can't repeat a text");
         }
 
         [Fact]
-        public void TransformsEmptyList()
+        public void RepeatsCharText()
         {
             Assert.True(
-                new Enumerable.LengthOf(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>()
-                    )).Value() == 0,
-                "Can't transform an empty iterable");
+                new Repeated("A", 5).AsString() == "AAAAA",
+                "Can't repeat a char");
         }
     }
 }

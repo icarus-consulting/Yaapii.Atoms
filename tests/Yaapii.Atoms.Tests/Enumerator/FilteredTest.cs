@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void Filters()
         {
             Assert.True(
-                new JoinedText(" ",
+                new Joined(" ",
                     new EnumerableOf<string>(
                         new Filtered<string>(
                             new EnumerableOf<string>("Hello", "cruel", "World").GetEnumerator(),

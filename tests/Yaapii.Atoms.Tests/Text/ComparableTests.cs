@@ -20,39 +20,49 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Xunit;
+
+namespace Yaapii.Atoms.Text.Tests
 {
-    public sealed class MappedTest
+    public sealed class ComparableTests
     {
         [Fact]
-        public void TransformsList()
+        public void Compares()
         {
             Assert.True(
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>("hello", "world", "damn")
-                        ),
-                    0
-                ).Value().AsString() == "HELLO",
-            "Can't transform an enumerable");
+                new Comparable(
+                    new TextOf("Hallo Welt")
+                ).CompareTo(
+                    new TextOf("Tschüss Welt")
+                ) <= -1
+            );
         }
 
         [Fact]
-        public void TransformsEmptyList()
+        public void SeesDIfferences()
         {
             Assert.True(
-                new Enumerable.LengthOf(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>()
-                    )).Value() == 0,
-                "Can't transform an empty iterable");
+                new Comparable(
+                    new TextOf("Timm")
+                ).Equals(
+                    new TextOf("Jan-Peter")
+                ) == false
+            );
+        }
+
+        [Fact]
+        public void MatchesString()
+        {
+            Assert.True(
+                new Comparable(
+                    new TextOf("Timm")
+                ).AsString()
+                == "Timm"
+            );
         }
     }
 }

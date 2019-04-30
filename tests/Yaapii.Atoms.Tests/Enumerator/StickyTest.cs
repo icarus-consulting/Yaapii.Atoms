@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             int count = 10;
             Assert.True(
-                new JoinedText(
+                new Joined(
                     ", ",
                     new EnumerableOf<IText>(
                         new Mapped<int, IText>(

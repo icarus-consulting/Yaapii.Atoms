@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Enumerator
                     {
                         throw 
                             new NoSuchElementException(
-                                new FormattedText("Cannot get item: {0}", ex.Message).AsString());
+                                new Formatted("Cannot get item: {0}", ex.Message).AsString());
                     })
                 )
         { }
@@ -122,7 +122,7 @@ namespace Yaapii.Atoms.Enumerator
                     {
                         throw 
                             new NoSuchElementException(
-                                new FormattedText(
+                                new Formatted(
                                     "Cannot get item: {0}",
                                     ex.Message
                                 ).AsString());
@@ -156,7 +156,7 @@ namespace Yaapii.Atoms.Enumerator
             new FailPrecise(
                 new FailWhen(this._pos < 0),
                 new UnsupportedOperationException(
-                    new FormattedText("The position must be non-negative but is {0}",
+                    new Formatted("The position must be non-negative but is {0}",
                         this._pos).AsString())).Go();
             T ret;
             try

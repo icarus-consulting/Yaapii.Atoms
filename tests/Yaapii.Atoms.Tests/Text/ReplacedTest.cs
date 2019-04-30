@@ -22,37 +22,44 @@
 
 using System;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Text.Tests
 {
-    public sealed class MappedTest
+    public sealed class ReplacedTest
     {
         [Fact]
-        public void TransformsList()
+        public void ReplaceText()
         {
             Assert.True(
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>("hello", "world", "damn")
-                        ),
-                    0
-                ).Value().AsString() == "HELLO",
-            "Can't transform an enumerable");
+                new Replaced(
+                    new TextOf("Hello!"),
+                    "ello", "i"
+                ).AsString() == "Hi!",
+                "Can't replace a text");
         }
 
         [Fact]
-        public void TransformsEmptyList()
+        public void NotReplaceTextWhenSubstringNotFound()
+        {
+            String text = "HelloAgain!";
+            Assert.True(
+                new Replaced(
+                    new TextOf(text),
+                    "xyz", "i"
+                ).AsString() == text,
+                "Replace a text abnormally");
+        }
+
+        [Fact]
+        public void ReplacesAllOccurrences()
         {
             Assert.True(
-                new Enumerable.LengthOf(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>()
-                    )).Value() == 0,
-                "Can't transform an empty iterable");
+                new Replaced(
+                    new TextOf("one cat, two cats, three cats"),
+                    "cat",
+                    "dog"
+                ).AsString() == "one dog, two dogs, three dogs",
+                "Can't replace a text with multiple needle occurrences");
         }
     }
 }

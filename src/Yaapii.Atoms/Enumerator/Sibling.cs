@@ -102,7 +102,7 @@ namespace Yaapii.Atoms.Enumerator
                     (itr) =>
                     {
                         throw new IOException(
-                            new FormattedText(
+                            new Formatted(
                                 "Enumerator doesn't have a neighbour at position {0}",
                                 pos
                             ).AsString()

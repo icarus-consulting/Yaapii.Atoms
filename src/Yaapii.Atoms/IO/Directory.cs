@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.IO
                 {
                     throw
                      new ArgumentException(
-                         new FormattedText("'{0}' is not a directory.", file.ToString()).AsString()
+                         new Formatted("'{0}' is not a directory.", file.ToString()).AsString()
                      );
                 }
                 return file.AbsolutePath;
@@ -82,7 +82,7 @@ namespace Yaapii.Atoms.IO
                 {
                     throw
                         new ArgumentException(
-                            new FormattedText("'{0}' is not a directory.", path.Value()
+                            new Formatted("'{0}' is not a directory.", path.Value()
                         ).AsString()
                     );
                 }

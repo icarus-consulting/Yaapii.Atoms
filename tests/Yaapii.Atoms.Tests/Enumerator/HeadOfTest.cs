@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void LimitsContent()
         {
             Assert.True(
-                new JoinedText(", ",
+                new Joined(", ",
                 new EnumerableOf<IText>(
                     new Mapped<int, IText>(
                         new HeadOf<int>(

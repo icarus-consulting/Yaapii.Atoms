@@ -103,7 +103,7 @@ namespace Yaapii.Atoms.Number
                     }
                     catch (FormatException)
                     {
-                        throw new ArgumentException(new FormattedText("'{0}' is not a number.", str).AsString());
+                        throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
                     }
                 }),
             new ScalarOf<int>(
@@ -115,7 +115,7 @@ namespace Yaapii.Atoms.Number
                     }
                     catch (FormatException)
                     {
-                        throw new ArgumentException(new FormattedText("'{0}' is not a number.", str).AsString());
+                        throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
                     }
                 }),
             new ScalarOf<float>(
@@ -127,7 +127,7 @@ namespace Yaapii.Atoms.Number
                     }
                     catch (FormatException)
                     {
-                        throw new ArgumentException(new FormattedText("'{0}' is not a number.", str).AsString());
+                        throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
                     }
                 }),
             new ScalarOf<double>(
@@ -139,7 +139,7 @@ namespace Yaapii.Atoms.Number
                     }
                     catch (FormatException)
                     {
-                        throw new ArgumentException(new FormattedText("'{0}' is not a number.", str).AsString());
+                        throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
                     }
                 })
             )
@@ -252,7 +252,7 @@ namespace Yaapii.Atoms.Number
         {
             return
                 new ArgumentException(
-                    new FormattedText("'{0}' is not a number.", txt.AsString()
+                    new Formatted("'{0}' is not a number.", txt.AsString()
                 ).AsString()
             );
         }

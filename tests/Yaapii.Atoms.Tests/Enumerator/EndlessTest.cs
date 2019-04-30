@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
             var expected = "AAAAAAAAAAAAAAAAAAAA";
 
             Assert.True(
-                new JoinedText(
+                new Joined(
                     "",
                     new EnumerableOf<IText>(
                             new Mapped<string, IText>(

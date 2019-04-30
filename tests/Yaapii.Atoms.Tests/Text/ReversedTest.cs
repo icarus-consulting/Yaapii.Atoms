@@ -21,38 +21,33 @@
 // SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Text.Tests
 {
-    public sealed class MappedTest
+    public sealed class ReversedTest
     {
         [Fact]
-        public void TransformsList()
+        public void ReverseText()
         {
             Assert.True(
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>("hello", "world", "damn")
-                        ),
-                    0
-                ).Value().AsString() == "HELLO",
-            "Can't transform an enumerable");
+                new Reversed(
+                    new TextOf("Hello!")
+                ).AsString() == "!olleH",
+                "Can't reverse a text");
         }
 
         [Fact]
-        public void TransformsEmptyList()
+        public void ReversedEmptyTextIsEmptyText()
         {
             Assert.True(
-                new Enumerable.LengthOf(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>()
-                    )).Value() == 0,
-                "Can't transform an empty iterable");
+                new Reversed(
+                    new TextOf("")
+                ).AsString() == "",
+                "Can't reverse empty text");
         }
     }
 }

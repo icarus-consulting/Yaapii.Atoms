@@ -71,7 +71,7 @@ namespace Yaapii.Atoms.Enumerable
         public ItemAt(IEnumerable<T> source) : this(
                 source,
                 new BiFuncOf<Exception, IEnumerable<T>, T>(
-                    (ex, itr) => throw new NoSuchElementException(new FormattedText("Cannot get first element: {0}", ex.Message).AsString())))
+                    (ex, itr) => throw new NoSuchElementException(new Formatted("Cannot get first element: {0}", ex.Message).AsString())))
         { }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Yaapii.Atoms.Enumerable
                 {
                     throw
                         new NoSuchElementException(
-                            new FormattedText(
+                            new Formatted(
                                 "Cannot get element at position {0}: {1}",
                                 position,
                                 ex.Message

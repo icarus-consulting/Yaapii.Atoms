@@ -18,41 +18,46 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
+// SOFTWARE
+
 
 using System;
-using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Error;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Text
 {
-    public sealed class MappedTest
+    /// <summary>
+    /// A Text that can be compared using the Equals method.
+    /// </summary>
+    public sealed class Comparable : IText, IComparable
     {
-        [Fact]
-        public void TransformsList()
+        private readonly IText text;
+
+        /// <summary>
+        /// A Text that can be compared using the Equals method.
+        /// </summary>
+        public Comparable(IText text)
         {
-            Assert.True(
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>("hello", "world", "damn")
-                        ),
-                    0
-                ).Value().AsString() == "HELLO",
-            "Can't transform an enumerable");
+            this.text = text;
         }
 
-        [Fact]
-        public void TransformsEmptyList()
+        public string AsString()
         {
-            Assert.True(
-                new Enumerable.LengthOf(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>()
-                    )).Value() == 0,
-                "Can't transform an empty iterable");
+            return this.text.AsString();
+        }
+
+        public bool Equals(IText other)
+        {
+            return this.text.Equals(other);
+        }
+
+        public int CompareTo(object obj)
+        {
+            new FailNull(
+                obj as IText,
+                "Cannot compare, because given object is not of type IText"
+            ).Go();
+            return this.text.AsString().CompareTo(((IText)obj).AsString());
         }
     }
 }

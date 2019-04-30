@@ -21,38 +21,37 @@
 // SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Text.Tests
 {
-    public sealed class MappedTest
+    public sealed class JoinedTest
     {
         [Fact]
-        public void TransformsList()
+        public void JoinsStrings()
         {
             Assert.True(
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>("hello", "world", "damn")
-                        ),
-                    0
-                ).Value().AsString() == "HELLO",
-            "Can't transform an enumerable");
+                new Joined(
+                    " ", 
+                    "hello", 
+                    "world"
+                ).AsString() == "hello world",
+            "Can't join strings");
         }
 
         [Fact]
-        public void TransformsEmptyList()
+        public void JoinsTexts()
         {
             Assert.True(
-                new Enumerable.LengthOf(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>()
-                    )).Value() == 0,
-                "Can't transform an empty iterable");
+                new Joined(
+                    new TextOf(" "),
+                    new TextOf("foo"),
+                    new TextOf("bar")
+                ).AsString() == "foo bar",
+                "Can't join texts");
         }
     }
 }

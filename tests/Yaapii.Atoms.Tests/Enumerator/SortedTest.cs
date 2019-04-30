@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void Sorts()
         {
             Assert.True(
-                new JoinedText(
+                new Joined(
                     " ",
                     new EnumerableOf<string>(
                         new Sorted<string>(

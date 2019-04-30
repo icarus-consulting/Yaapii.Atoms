@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new TeeInputStream(
                             new MemoryStream(
                                 new BytesOf(
-                                    new JoinedText("\r\n",
+                                    new Joined("\r\n",
                                     new HeadOf<string>(
                                         new Endless<string>(content),
                                         10))
@@ -106,7 +106,7 @@ namespace Yaapii.Atoms.IO.Tests
                     new TeeInputStream(
                         new MemoryStream(
                             new BytesOf(
-                                new JoinedText("\r\n",
+                                new Joined("\r\n",
                                 new HeadOf<string>(
                                     new Endless<string>("Hello World"),
                                     10))
@@ -149,7 +149,7 @@ namespace Yaapii.Atoms.IO.Tests
                     new TeeInputStream(
                         new MemoryStream(
                             new BytesOf(
-                                new JoinedText("\r\n",
+                                new Joined("\r\n",
                                 new HeadOf<string>(
                                     new Endless<string>("Hello World"),
                                     1000))
@@ -160,7 +160,7 @@ namespace Yaapii.Atoms.IO.Tests
 
             Assert.True(
                 new Enumerable.LengthOf(
-                    new SplitText(
+                    new Split(
                         new TextOf(
                             new BytesOf(
                                 new InputOf(

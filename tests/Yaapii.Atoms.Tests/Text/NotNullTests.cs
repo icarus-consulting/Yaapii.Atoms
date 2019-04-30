@@ -20,39 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
+using System.IO;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Text.Tests
 {
-    public sealed class MappedTest
+    public sealed class NotNullTests
     {
-        [Fact]
-        public void TransformsList()
-        {
-            Assert.True(
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>("hello", "world", "damn")
-                        ),
-                    0
-                ).Value().AsString() == "HELLO",
-            "Can't transform an enumerable");
-        }
-
-        [Fact]
-        public void TransformsEmptyList()
-        {
-            Assert.True(
-                new Enumerable.LengthOf(
-                    new Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new ListOf<string>()
-                    )).Value() == 0,
-                "Can't transform an empty iterable");
-        }
+		[Fact]
+		public void NotNull()
+		{
+			IText s = null;
+			Assert.Throws<IOException>(
+				()=>new NotNull(s).AsString()
+			);
+		}
     }
 }
