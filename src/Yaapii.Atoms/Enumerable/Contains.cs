@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <returns>true if item is in the enumerable</returns>
         public bool Value()
         {
-            return new ContainsEnumerator<T>(_items.GetEnumerator(), _match).Value();
+            return new Enumerator.Contains<T>(_items.GetEnumerator(), _match).Value();
         }
     }
 }

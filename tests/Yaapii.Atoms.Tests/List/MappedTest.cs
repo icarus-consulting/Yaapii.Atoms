@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.List.Tests
             Assert.True(
                 new ItemAt<IText>(
                     new Mapped<String, IText>(
-                        input => new UpperText(new TextOf(input)),
+                        input => new Upper(new TextOf(input)),
                         new ListOf<string>("hello", "world", "damn")
                         ),
                     0
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.List.Tests
             Assert.True(
                 new Enumerable.LengthOf(
                     new Mapped<String, IText>(
-                        input => new UpperText(new TextOf(input)),
+                        input => new Upper(new TextOf(input)),
                         new ListOf<string>()
                     )).Value() == 0,
                 "Can't transform an empty iterable");

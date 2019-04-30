@@ -22,14 +22,13 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Text;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 namespace Yaapii.Atoms.IO.Tests
@@ -44,9 +43,9 @@ namespace Yaapii.Atoms.IO.Tests
             Assert.True(
                 new BytesOf(
                     new InputOf(
-                        new JoinedText(
+                        new Joined(
                             "",
-                            new Limited<string>(
+                            new HeadOf<string>(
                                 new Endless<string>(body),
                                 multiplier
                             )

@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Collection
     /// with the collection. Every time you touch it, it will fetch the
     /// entire collection from the encapsulated object and reverse it. If you
     /// want to avoid that "side-effect", decorate it with
-    /// <see cref="StickyCollection{T}"/></para>
+    /// <see cref="Sticky{T}"/></para>
     ///
     /// <para>There is no thread-safety guarantee.</para>
     ///

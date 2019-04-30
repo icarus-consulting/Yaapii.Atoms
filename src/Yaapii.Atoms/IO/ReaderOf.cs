@@ -166,7 +166,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="src">scalar of a reader</param>
         private ReaderOf(IScalar<StreamReader> src) : base(new DeadInput().Stream())
         {
-            this._source = new StickyScalar<StreamReader>(src, stream => !stream.BaseStream.CanRead);
+            this._source = new Sticky<StreamReader>(src, stream => !stream.BaseStream.CanRead);
         }
 
         public override int Read()

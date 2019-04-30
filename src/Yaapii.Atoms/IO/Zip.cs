@@ -71,7 +71,7 @@ public sealed class Zip : IInput
         new FailPrecise(
             new FailWhen(() => !Directory.Exists(path)),
             new DirectoryNotFoundException(
-                new FormattedText(
+                new Formatted(
                     "Path is not a directory or does not exist: {0}",
                     path
                 ).AsString()

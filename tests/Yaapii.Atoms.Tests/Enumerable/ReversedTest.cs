@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         public void ReversesIterable()
         {
             Assert.True(
-                new JoinedText(
+                new Joined(
                     " ",
                     new Reversed<string>(
                         new EnumerableOf<string>(

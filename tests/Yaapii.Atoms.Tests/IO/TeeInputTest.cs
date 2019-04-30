@@ -21,11 +21,10 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.IO;
+using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.IO.Tests
@@ -50,17 +49,22 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void CopiesToFile()
         {
-            var dir = "artifacts/TeeInputTest"; var file = "txt.txt"; var path = Path.GetFullPath(Path.Combine(dir, file));
+            var dir = "artifacts/TeeInputTest";
+            var file = "txt.txt";
+            var path = Path.GetFullPath(Path.Combine(dir, file));
+
             Directory.CreateDirectory(dir);
             if (File.Exists(path)) File.Delete(path);
 
 
-            var str = "";
-                str = new TextOf(
+            var str = 
+                new TextOf(
                     new BytesOf(
                         new TeeInput(
                             "Hello, друг!", 
-                            new OutputTo(new Uri(path))))
+                            new OutputTo(new Uri(path))
+                        )
+                    )
                 ).AsString();
 
             Assert.True(

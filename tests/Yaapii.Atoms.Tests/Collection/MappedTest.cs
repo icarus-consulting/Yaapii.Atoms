@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Contains(
                 new TextOf("HELLO"),
                 new Mapped<String, IText>(
-                    input => new UpperText(new TextOf(input)),
+                    input => new Upper(new TextOf(input)),
                     new Enumerable.EnumerableOf<string>("hello", "world", "друг")
                 ));
         }
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Empty(
                 new Mapped<String, IText>(
-                    input => new UpperText(new TextOf(input)),
+                    input => new Upper(new TextOf(input)),
                     new List<string>()
                 ));
         }

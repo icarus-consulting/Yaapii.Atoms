@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Enumerable
         public Endless(T elm) : base(
             new ScalarOf<IEnumerable<T>>(
                 () => new EnumerableOf<T>(
-                    new EndlessEnumerator<T>(elm))))
+                    new Enumerator.Endless<T>(elm))))
         { }
     }
 }

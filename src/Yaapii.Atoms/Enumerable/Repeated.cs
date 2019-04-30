@@ -74,7 +74,7 @@ namespace Yaapii.Atoms.Enumerable
             new ScalarOf<IEnumerable<T>>(
                 () => 
                 new EnumerableOf<T>(
-                    new RepeatedEnumerator<T>(elm, cnt.Value()))))
+                    new Enumerator.Repeated<T>(elm, cnt.Value()))))
         { }
     }
 }

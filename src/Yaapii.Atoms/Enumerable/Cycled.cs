@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Enumerable
         public Cycled(IEnumerable<T> enumerable) : base(
             new ScalarOf<IEnumerable<T>>(
                 new EnumerableOf<T>(
-                    new CycledEnumerator<T>(enumerable))))
+                    new Enumerator.Cycled<T>(enumerable))))
         { }
     }
 }

@@ -37,11 +37,11 @@ namespace Yaapii.Atoms.IO.Error
         /// <param name="missing">the missing one</param>
         /// <param name="container">the searched container</param>
         public ResourceNotFoundException(string missing, Assembly container) : base(
-            new FormattedText(
+            new Formatted(
                 "Resource '{0}' not found.\r\n{1} resources are available\r\n{2}",
                 missing,
                 container.GetManifestResourceNames().Length,
-                new JoinedText("\r\n", container.GetManifestResourceNames()).AsString()
+                new Joined("\r\n", container.GetManifestResourceNames()).AsString()
             ).AsString()
         )
         { }

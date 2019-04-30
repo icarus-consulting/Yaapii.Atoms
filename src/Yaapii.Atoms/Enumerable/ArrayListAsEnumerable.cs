@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Enumerable
         /// A ArrayList converted to IEnumerable&lt;object&gt;
         /// </summary>
         /// <param name="src">source ArrayList</param>
-        public ArrayListAsEnumerable(ArrayList src) : base(new StickyScalar<IEnumerable<object>>(() =>
+        public ArrayListAsEnumerable(ArrayList src) : base(new Scalar.Sticky<IEnumerable<object>>(() =>
         {
             var blocking = new BlockingCollection<object>();
             foreach (var lst in src)

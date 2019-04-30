@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Collection
         /// A ArrayList converted to IList&lt;object&gt;
         /// </summary>
         /// <param name="src">source ArrayList</param>
-        public ArrayListAsCollection(ArrayList src) : base(new StickyScalar<ICollection<object>>(() =>
+        public ArrayListAsCollection(ArrayList src) : base(new Scalar.Sticky<ICollection<object>>(() =>
         {
             var blocking = new BlockingCollection<object>();
             foreach (var lst in src)

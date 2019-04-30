@@ -61,7 +61,7 @@ namespace Yaapii.Atoms.Enumerable
                 {
                     throw
                         new NoSuchElementException(
-                            new FormattedText(
+                            new Formatted(
                                 "Cannot get last element: {0}",
                                 ex.Message
                             ).AsString()

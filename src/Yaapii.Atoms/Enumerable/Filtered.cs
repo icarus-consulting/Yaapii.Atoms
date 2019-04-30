@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Enumerable
         public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src) : base(
             new ScalarOf<IEnumerable<T>>(() =>
                  new EnumerableOf<T>(
-                    new FilteredEnumerator<T>(
+                    new Enumerator.Filtered<T>(
                         src.GetEnumerator(),
                         fnc))))
         {

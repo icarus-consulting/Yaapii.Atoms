@@ -24,6 +24,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Scalar;
 
@@ -49,7 +50,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="input">a <see cref="double"/></param>
         public TextOf(double input) : this(
-            new StickyScalar<string>(
+            new Sticky<string>(
                 () => input.ToString(CultureInfo.InvariantCulture)
             )
         )
@@ -61,7 +62,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="input">a <see cref="double"/></param>
         /// <param name="cultureInfo">The </param>
         public TextOf(double input, CultureInfo cultureInfo) : this(
-            new StickyScalar<string>(
+            new Sticky<string>(
                 () => input.ToString(cultureInfo)
             )
         )
@@ -72,7 +73,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="input">a <see cref="float"/></param>
         public TextOf(float input) : this(
-            new StickyScalar<string>(
+            new Sticky<string>(
                 () => input.ToString(CultureInfo.InvariantCulture)
             )
         )
@@ -84,7 +85,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="input">a <see cref="float"/></param>
         /// <param name="cultureInfo">The </param>
         public TextOf(float input, CultureInfo cultureInfo) : this(
-            new StickyScalar<string>(
+            new Sticky<string>(
                 () => input.ToString(cultureInfo)
             )
         )

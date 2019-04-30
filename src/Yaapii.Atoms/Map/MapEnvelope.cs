@@ -145,7 +145,7 @@ namespace Yaapii.Atoms.Map
             {
                 throw
                     new ArgumentOutOfRangeException(
-                        new FormattedText(
+                        new Formatted(
                             "arrayIndex {0} is higher than the item count in the map {1}.",
                             arrayIndex,
                             this._map.Value().Count

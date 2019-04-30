@@ -71,7 +71,7 @@ namespace Yaapii.Atoms.Enumerable
         public ItemAt(IEnumerable<T> source) : this(
                 source,
                 new BiFuncOf<Exception, IEnumerable<T>, T>(
-                    (ex, itr) => throw new NoSuchElementException(new FormattedText("Cannot get first element: {0}", ex.Message).AsString())))
+                    (ex, itr) => throw new NoSuchElementException(new Formatted("Cannot get first element: {0}", ex.Message).AsString())))
         { }
 
         /// <summary>
@@ -110,6 +110,16 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
+        public ItemAt(IEnumerable<T> source, Func<IEnumerable<T>, T> fallback) : this(
+            source, 0, new FuncOf<IEnumerable<T>, T>(fallback)
+        )
+        { }
+
+        /// <summary>
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">soruce enum</param>
+        /// <param name="fallback">fallback value</param>
         public ItemAt(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback) : this(
             source, 0, fallback)
         { }
@@ -126,7 +136,7 @@ namespace Yaapii.Atoms.Enumerable
                 {
                     throw
                         new NoSuchElementException(
-                            new FormattedText(
+                            new Formatted(
                                 "Cannot get element at position {0}: {1}",
                                 position,
                                 ex.Message
@@ -181,7 +191,7 @@ namespace Yaapii.Atoms.Enumerable
             new ScalarOf<T>(
                 () =>
                     {
-                        return new ItemAtEnumerator<T>(
+                        return new Enumerator.ItemAt<T>(
                            source.GetEnumerator(), position, fallback
                        ).Value();
                     }
@@ -191,7 +201,7 @@ namespace Yaapii.Atoms.Enumerable
 
         internal ItemAt(IScalar<T> saved)
         {
-            this.saved = new StickyScalar<T>(saved);
+            this.saved = new Scalar.Sticky<T>(saved);
         }
 
         /// <summary>

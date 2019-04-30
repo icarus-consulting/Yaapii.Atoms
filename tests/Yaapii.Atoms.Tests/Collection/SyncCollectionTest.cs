@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Contains(
                 -1,
-                new SyncCollection<int>(1, 2, 0, -1)
+                new Sync<int>(1, 2, 0, -1)
             );
         }
 

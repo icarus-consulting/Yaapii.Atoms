@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         public void SkipIterable()
         {
             Assert.True(
-                new JoinedText(
+                new Joined(
                     ", ",
                     new Skipped<string>(
                         new EnumerableOf<string>("one", "two", "three", "four"),

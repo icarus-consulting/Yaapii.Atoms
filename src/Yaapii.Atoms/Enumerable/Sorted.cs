@@ -61,7 +61,7 @@ namespace Yaapii.Atoms.Enumerable
             new ScalarOf<IEnumerable<T>>(
                 () =>
                 new EnumerableOf<T>(
-                    new SortedEnumerator<T>(cmp, src.GetEnumerator()))))
+                    new Enumerator.Sorted<T>(cmp, src.GetEnumerator()))))
         { }
     }
 }

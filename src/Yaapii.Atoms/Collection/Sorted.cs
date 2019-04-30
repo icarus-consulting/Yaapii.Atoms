@@ -82,7 +82,7 @@ namespace Yaapii.Atoms.Collection
         public Sorted(Comparer<T> cmp, ICollection<T> src) : base(
             () =>
                 new CollectionOf<T>(
-                    new SortedEnumerator<T>(cmp, src.GetEnumerator())))
+                    new Enumerator.Sorted<T>(cmp, src.GetEnumerator())))
         { }
     }
 }

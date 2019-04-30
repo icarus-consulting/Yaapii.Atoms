@@ -26,6 +26,7 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Scalar;
 
@@ -239,7 +240,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="stream">the input <see cref="Stream"/></param>
         private InputOf(IScalar<Stream> stream)
         {
-            this._origin = new StickyScalar<Stream>(stream, streamObj => !streamObj.CanRead);
+            this._origin = new Sticky<Stream>(stream, streamObj => !streamObj.CanRead);
         }
 
         /// <summary>

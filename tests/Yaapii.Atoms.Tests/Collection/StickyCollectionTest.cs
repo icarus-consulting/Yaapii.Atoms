@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Contains(
                 -1,
-                new StickyCollection<int>(
+                new Sticky<int>(
                     new ListOf<int>(1, 2, 0, -1)));
         }
 
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             int size = 2;
             var list =
-                new StickyCollection<int>(
+                new Sticky<int>(
                     new ListOf<int>(
                         new Enumerable.Repeated<int>(
                             new ScalarOf<int>(() => 0),
@@ -61,14 +61,14 @@ namespace Yaapii.Atoms.Collection.Tests
         public void DecoratesArray()
         {
             Assert.True(
-                new StickyCollection<int>(-1, 0).Count == 2);
+                new Sticky<int>(-1, 0).Count == 2);
         }
 
         [Fact]
         public void Empty()
         {
             Assert.Empty(
-                new StickyCollection<int>());
+                new Sticky<int>());
         }
 
         [Fact]
@@ -76,21 +76,21 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Contains(
                 2,
-                new StickyCollection<int>(1, 2));
+                new Sticky<int>(1, 2));
         }
 
         [Fact]
         public void RejectsAdd()
         {
             Assert.Throws<UnsupportedOperationException>(() =>
-                new StickyCollection<int>(1, 2).Add(1));
+                new Sticky<int>(1, 2).Add(1));
         }
 
         [Fact]
         public void RejectsRemove()
         {
             Assert.Throws<UnsupportedOperationException>(() =>
-                new StickyCollection<int>(1, 2).Remove(1));
+                new Sticky<int>(1, 2).Remove(1));
         }
 
 
@@ -98,7 +98,7 @@ namespace Yaapii.Atoms.Collection.Tests
         public void RejectsClear()
         {
             Assert.Throws<UnsupportedOperationException>(() =>
-                new StickyCollection<int>(1, 2).Clear());
+                new Sticky<int>(1, 2).Clear());
         }
 
     }

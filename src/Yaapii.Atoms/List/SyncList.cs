@@ -59,10 +59,10 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="list">A threadsafe list</param>
         public SyncList(ICollection<T> list) : base(
-                new SyncScalar<IList<T>>(
+                new Scalar.Sync<IList<T>>(
                     new ScalarOf<IList<T>>(() =>
                         new ListOf<T>(
-                            new SyncCollection<T>(list)))))
+                            new Collection.Sync<T>(list)))))
         { }
     }
 }

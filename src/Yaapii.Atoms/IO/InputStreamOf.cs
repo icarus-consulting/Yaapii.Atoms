@@ -148,7 +148,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="src">the source</param>
         private InputStreamOf(IScalar<Stream> src) : base()
         {
-            this._source = new StickyScalar<Stream>(src, stream => !stream.CanRead);
+            this._source = new Sticky<Stream>(src, stream => !stream.CanRead);
         }
 
         public override int Read(byte[] buf, int offset, int len)

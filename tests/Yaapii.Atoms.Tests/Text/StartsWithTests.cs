@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void MatchesText()
         {
             var x =
-                new StartsWithText(
+                new StartsWith(
                     new TextOf("Im an text with a really good end!"),
                     new TextOf("Im a")
                 );
@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void MatchesString()
         {
             var x =
-                new StartsWithText(
+                new StartsWith(
                     new TextOf("Im a text with a really good end!"),
                     "Im a"
                 );
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void DoesntMatch()
         {
             var x =
-                new StartsWithText(
+                new StartsWith(
                     new TextOf("Im a text with a really good end!"),
                     new TextOf("m an")
                 );
