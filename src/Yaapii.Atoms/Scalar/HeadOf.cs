@@ -21,12 +21,13 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
 
-namespace Yaapii.Atoms.Enumerable
+namespace Yaapii.Atoms.Scalar
 {
     /// <summary>
     /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
@@ -34,6 +35,13 @@ namespace Yaapii.Atoms.Enumerable
     /// <typeparam name="T">type of elements</typeparam>
     public sealed class HeadOf<T> : EnumerableEnvelope<T>
     {
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="enumerable">enumerable to limit</param>
+        public HeadOf(IEnumerable<T> enumerable) : this(enumerable, 1)
+        { }
+
         /// <summary>
         /// ctor
         /// </summary>
