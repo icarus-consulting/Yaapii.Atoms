@@ -14,15 +14,6 @@ namespace Yaapii.Atoms.Map
         /// A map from string to string.
         /// </summary>
         /// <param name="pairs">Pairs of mappings</param>
-        public StringMap(Tuple<string, string>[] pairs) : this(
-            new EnumerableOf<Tuple<string,string>>(pairs)
-        )
-        { }
-
-        /// <summary>
-        /// A map from string to string.
-        /// </summary>
-        /// <param name="pairs">Pairs of mappings</param>
         public StringMap(IEnumerable<Tuple<string, string>> pairs) : this(
             new Mapped<Tuple<string, string>, KeyValuePair<string, string>>(
                 tpl => new KeyValuePair<string,string>(tpl.Item1, tpl.Item2),
