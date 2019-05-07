@@ -50,6 +50,17 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
+        public void ReturnsFirstMatch()
+        {
+            var list = new EnumerableOf<string>("hallo", "ich", "heisse", "Max");
+
+            Assert.Equal(
+                "Max",
+                new FirstOf<string>(item => item.StartsWith("M"), list).Value()
+            );
+        }
+
+        [Fact]
         public void ReturnsFirstValue()
         {
             var list = new EnumerableOf<string>("hallo", "ich", "heisse", "Max");
