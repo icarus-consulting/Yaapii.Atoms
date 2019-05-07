@@ -61,6 +61,17 @@ namespace Yaapii.Atoms.Scalar
         /// Element from position in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
+        public FirstOf(Func<T, bool> condition, IEnumerable<T> source) : this(
+            condition,
+            source,
+            new NoSuchElementException("Cannot get first element - no match.")
+        )
+        { }
+
+        /// <summary>
+        /// Element from position in a <see cref="IEnumerable{T}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
         public FirstOf(Func<T, bool> condition, IEnumerable<T> source, Exception ex) : this(
             condition,
             source,
@@ -130,11 +141,18 @@ namespace Yaapii.Atoms.Scalar
 
         public T Value()
         {
-            return 
-                new ItemAt<T>(
-                    new HeadOf<T>(this.src, 1),
-                    this.fallBack
-                ).Value();
+            var filtered = new Filtered<T>(this.condition, this.src).GetEnumerator();
+
+            T result;
+            if (filtered.MoveNext())
+            {
+                result = filtered.Current;
+            }
+            else
+            {
+                result = this.fallBack(this.src);
+            }
+            return result;
         }
     }
 }
