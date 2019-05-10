@@ -56,8 +56,15 @@ namespace Yaapii.Atoms.IO
         /// Input out of a file Uri.
         /// </summary>
         /// <param name="file">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
-        public InputOf(FileInfo file) : this(
-            () => new FileStream(Uri.UnescapeDataString(file.FullName), FileMode.Open, FileAccess.Read))
+        public InputOf(FileInfo file) : this(new ScalarOf<FileInfo>(file))
+        { }
+
+        /// <summary>
+        /// Input out of a scalar of a file Uri.
+        /// </summary>
+        /// <param name="file">scalar of a uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
+        public InputOf(IScalar<FileInfo> file) : this(
+            () => new FileStream(Uri.UnescapeDataString(file.Value().FullName), FileMode.Open, FileAccess.Read))
         { }
 
         /// <summary>
