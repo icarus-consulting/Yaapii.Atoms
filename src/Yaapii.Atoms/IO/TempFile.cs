@@ -25,6 +25,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Error;
 
 namespace Yaapii.Atoms.IO
 {
@@ -35,6 +36,28 @@ namespace Yaapii.Atoms.IO
     public sealed class TempFile : IScalar<String>, IDisposable
     {
         private readonly IScalar<string> _path;
+
+        /// <summary>
+        /// Temporary file with given extension.
+        /// The temporary file is deleted when the object is disposed.
+        /// </summary>
+        /// <param name="extension">The file extension for the temprary file</param>
+        public TempFile(string extension) : this(new Sticky<string>(() =>
+        {
+            var file = Path.GetTempFileName();
+            extension = extension.TrimStart('.');
+            var renamed = $"{file.Substring(0, file.LastIndexOf('.'))}.{extension}";
+            File.Move(file, renamed);
+            return renamed;
+        }))
+        { }
+
+        /// <summary>
+        /// The temporary file is deleted when the object is disposed.
+        /// </summary>
+        /// <param name="file">The file</param>
+        public TempFile(FileInfo file) : this(new Sticky<string>(() => file.FullName))
+        { }
 
         /// <summary>
         /// Ctor
