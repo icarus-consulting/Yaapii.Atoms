@@ -93,17 +93,32 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="str">The string</param>
         /// <param name="provider">a number format provider</param>
-        public NumberOf(string str, IScalar<IFormatProvider> provider) : this(
+        public NumberOf(string str, IScalar<IFormatProvider> provider) : this(new TextOf(str), provider)
+        { }
+
+        /// <summary>
+        /// A <see cref="int"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="text">The text</param>
+        public NumberOf(IText text) : this(text, new ScalarOf<IFormatProvider>(() => CultureInfo.InvariantCulture))
+        { }
+
+        /// <summary>
+        /// A <see cref="IText"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="text">The text</param>
+        /// <param name="provider">a number format provider</param>
+        public NumberOf(IText text, IScalar<IFormatProvider> provider) : this(
             new ScalarOf<long>(
                 () =>
                 {
                     try
                     {
-                        return Convert.ToInt64(str, provider.Value());
+                        return Convert.ToInt64(text, provider.Value());
                     }
                     catch (FormatException)
                     {
-                        throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
+                        throw new ArgumentException(new Formatted("'{0}' is not a number.", text).AsString());
                     }
                 }),
             new ScalarOf<int>(
@@ -111,11 +126,11 @@ namespace Yaapii.Atoms.Number
                 {
                     try
                     {
-                        return Convert.ToInt32(str, provider.Value());
+                        return Convert.ToInt32(text, provider.Value());
                     }
                     catch (FormatException)
                     {
-                        throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
+                        throw new ArgumentException(new Formatted("'{0}' is not a number.", text).AsString());
                     }
                 }),
             new ScalarOf<float>(
@@ -123,11 +138,11 @@ namespace Yaapii.Atoms.Number
                 {
                     try
                     {
-                        return Convert.ToSingle(str, provider.Value());
+                        return Convert.ToSingle(text, provider.Value());
                     }
                     catch (FormatException)
                     {
-                        throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
+                        throw new ArgumentException(new Formatted("'{0}' is not a number.", text).AsString());
                     }
                 }),
             new ScalarOf<double>(
@@ -135,11 +150,11 @@ namespace Yaapii.Atoms.Number
                 {
                     try
                     {
-                        return Convert.ToDouble(str, provider.Value());
+                        return Convert.ToDouble(text, provider.Value());
                     }
                     catch (FormatException)
                     {
-                        throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
+                        throw new ArgumentException(new Formatted("'{0}' is not a number.", text).AsString());
                     }
                 })
             )
