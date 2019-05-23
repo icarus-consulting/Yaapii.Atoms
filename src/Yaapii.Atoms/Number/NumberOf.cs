@@ -114,7 +114,7 @@ namespace Yaapii.Atoms.Number
                 {
                     try
                     {
-                        return Convert.ToInt64(text, provider.Value());
+                        return Convert.ToInt64(text.AsString(), provider.Value());
                     }
                     catch (FormatException)
                     {
@@ -126,7 +126,7 @@ namespace Yaapii.Atoms.Number
                 {
                     try
                     {
-                        return Convert.ToInt32(text, provider.Value());
+                        return Convert.ToInt32(text.AsString(), provider.Value());
                     }
                     catch (FormatException)
                     {
@@ -138,7 +138,7 @@ namespace Yaapii.Atoms.Number
                 {
                     try
                     {
-                        return Convert.ToSingle(text, provider.Value());
+                        return Convert.ToSingle(text.AsString(), provider.Value());
                     }
                     catch (FormatException)
                     {
@@ -150,7 +150,7 @@ namespace Yaapii.Atoms.Number
                 {
                     try
                     {
-                        return Convert.ToDouble(text, provider.Value());
+                        return Convert.ToDouble(text.AsString(), provider.Value());
                     }
                     catch (FormatException)
                     {

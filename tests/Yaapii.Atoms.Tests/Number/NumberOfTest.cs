@@ -22,11 +22,21 @@
 
 using System;
 using Xunit;
+using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Number.Tests
 {
     public sealed class NumberOfTest
     {
+        [Fact]
+        public void ParsesText()
+        {
+            Assert.Equal(
+                4673.453,
+                new NumberOf(new TextOf("4673.453")).AsDouble()
+            );
+        }
+
         [Fact]
         public void ParsesFloat()
         {
