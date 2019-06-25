@@ -36,6 +36,66 @@ namespace Yaapii.Atoms.IO.Tests
     public sealed class BytesOfTest
     {
         [Fact]
+        public void ReadsIntIntoBytes()
+        {
+            int value = 123;
+            Assert.True(
+                BitConverter.ToInt32(
+                    new BytesOf(
+                        value
+                    ).AsBytes(),
+                    0
+                ) == value,
+                "Can't read int into bytes"
+            );
+        }
+
+        [Fact]
+        public void ReadsLongIntoBytes()
+        {
+            long value = 123456789123456789;
+            Assert.True(
+                BitConverter.ToInt64(
+                    new BytesOf(
+                        value
+                    ).AsBytes(),
+                    0
+                ) == value,
+                "Can't read long into bytes"
+            );
+        }
+
+        [Fact]
+        public void ReadsDoubleIntoBytes()
+        {
+            double value = 1.23;
+            Assert.True(
+                BitConverter.ToDouble(
+                    new BytesOf(
+                        value
+                    ).AsBytes(),
+                    0
+                ) == value,
+                "Can't read double into bytes"
+            );
+        }
+
+        [Fact]
+        public void ReadsFloatIntoBytes()
+        {
+            float value = 1.23f;
+            Assert.True(
+                BitConverter.ToSingle(
+                    new BytesOf(
+                        value
+                    ).AsBytes(),
+                    0
+                ) == value,
+                "Can't read float into bytes"
+            );
+        }
+
+        [Fact]
         public void ReadsLargeInMemoryContent()
         {
             int multiplier = 5_000;
