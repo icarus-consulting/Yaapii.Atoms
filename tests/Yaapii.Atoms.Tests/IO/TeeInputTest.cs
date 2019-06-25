@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void CopiesFromUrlToFile()
         {
-            var directoryPath = Path.GetTempPath() + @"Yaapii.Atoms.Tests.Temp-Files";
+            var directoryPath = Path.GetTempPath() + "Yaapii.Atoms.Tests.Temp-Files";
             System.IO.Directory.CreateDirectory(directoryPath);
 
             new LengthOf(
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void CopiesFromFileToFile()
         {
-            var directoryPath = Path.GetTempPath() + @"Yaapii.Atoms.Tests.Temp-Files";
+            var directoryPath = Path.GetTempPath() + "Yaapii.Atoms.Tests.Temp-Files";
             System.IO.Directory.CreateDirectory(directoryPath);
 
             File.WriteAllText(
