@@ -26,15 +26,6 @@ namespace Yaapii.Atoms.Map
         /// A map from string to string.
         /// </summary>
         /// <param name="pairs">Pairs of mappings</param>
-        public StringMap(params KeyValuePair<string, string>[] pairs) : this(
-            new EnumerableOf<KeyValuePair<string, string>>(pairs)
-        )
-        { }
-
-        /// <summary>
-        /// A map from string to string.
-        /// </summary>
-        /// <param name="pairs">Pairs of mappings</param>
         public StringMap(IEnumerable<KeyValuePair<string, string>> pairs) : base(() =>
              new MapOf<string, string>(pairs)
         )
