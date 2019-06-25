@@ -322,6 +322,19 @@ namespace Yaapii.Atoms.Text.Tests
                 ).AsString().Contains("It doesn't work at all"),
                 "Can't print exception stacktrace");
         }
+
+        [Fact]
+        public void ReadsLongIntoText()
+        {
+            long value = 68574581791096912;
+            var text = "68574581791096912";
+            Assert.True(
+                new TextOf(
+                    value
+                ).AsString() == text,
+                "Can't read long into text"
+            );
+        }
     }
 }
 #pragma warning restore MaxPublicMethodCount // a public methods count maximum
