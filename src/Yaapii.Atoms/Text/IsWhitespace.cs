@@ -35,6 +35,15 @@ namespace Yaapii.Atoms.Text
         private readonly IText _origin;
 
         /// <summary>
+        /// Checks if a A <see cref="string"/> is whitespace.
+        /// </summary>
+        /// <param name="text">text to check</param>
+        public IsWhitespace(string text) : this(
+            new TextOf(text)
+        )
+        { }
+
+        /// <summary>
         /// Checks if a A <see cref="IText"/> is whitespace.
         /// </summary>
         /// <param name="text">text to check</param>
