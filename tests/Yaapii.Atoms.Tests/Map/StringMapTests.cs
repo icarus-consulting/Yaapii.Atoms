@@ -74,5 +74,22 @@ namespace Yaapii.Atoms.Tests.Map
                 )["A"]
             );
         }
+
+        [Fact]
+        public void MakesMapFromExistingMapAndArraySequence()
+        {
+            var map =
+                new StringMap(
+                    new StringMap(
+                        "A", "B",
+                        "C", "D"
+                    ),
+                    "E", "F",
+                    "G", "H"
+                );
+            Assert.True(
+                map.ContainsKey("A") && map.ContainsKey("E")
+            );
+        }
     }
 }

@@ -52,6 +52,26 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// A map from string to string.
         /// </summary>
+        /// <param name="src">StringMap to merge into</param>
+        /// <param name="pairSequence">key-value-pairs to merge into existing StringMap, ordered like this: key-1, value-1, ... key-n, value-n</param>
+        public StringMap(IDictionary<string, string> src, params string[] pairSequence) : this(
+            new ScalarOf<IList<string>>(() =>
+                new List.Joined<string>(
+                    new List.Joined<string>(
+                        new Mapped<KeyValuePair<string,string>, IList<string>>(
+                            pair => new List<string> { pair.Key, pair.Value},
+                            src
+                        )
+                    ),
+                    pairSequence
+                )
+            )
+        )
+        { }
+
+        /// <summary>
+        /// A map from string to string.
+        /// </summary>
         /// <param name="pairSequence">Pairs as a sequence, ordered like this: key-1, value-1, ... key-n, value-n</param>
         public StringMap(IScalar<IList<string>> pairSequence) : base(() =>
             {
