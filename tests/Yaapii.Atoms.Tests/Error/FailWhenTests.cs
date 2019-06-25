@@ -45,5 +45,16 @@ namespace Yaapii.Atoms.Error.Tests
                 ).Go()
             );
         }
+
+        [Fact]
+        public void ThrowsSpecificExceptionWhenConditionTrue()
+        {
+            Assert.Throws<IndexOutOfRangeException>(() =>
+                new FailWhen(
+                    true,
+                    new IndexOutOfRangeException()
+                ).Go()
+            );
+        }
     }
 }
