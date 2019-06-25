@@ -138,6 +138,18 @@ namespace Yaapii.Atoms.IO.Tests
         }
 
         [Fact]
+        public void ReadsRealUrlFromUri()
+        {
+            Assert.True(
+                    new TextOf(
+                        new InputOf(
+                            new Uri("http://www.google.de"))
+                    ).AsString().Contains("<html"),
+                    "Can't fetch bytes from the URL"
+            );
+        }
+
+        [Fact]
         public void ReadsFile()
         {
             var dir = "artifacts/InputOfTest"; var file = "large-text.txt"; var path = Path.GetFullPath(Path.Combine(dir, file));

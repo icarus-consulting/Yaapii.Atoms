@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +50,17 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="file">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
         public InputOf(Uri file) : this(
-            () => new FileStream(Uri.UnescapeDataString(file.LocalPath), FileMode.Open, FileAccess.Read))
+            () =>
+            {
+                if (file.HostNameType == UriHostNameType.Dns)
+                {
+                    return WebRequest.Create(file).GetResponse().GetResponseStream();
+                }
+                else
+                {
+                    return new FileStream(Uri.UnescapeDataString(file.LocalPath), FileMode.Open, FileAccess.Read);
+                }
+            })
         { }
 
         /// <summary>
