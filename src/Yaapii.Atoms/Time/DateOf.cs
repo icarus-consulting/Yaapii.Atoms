@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Time
         /// A date parsed using a using <see cref="CultureInfo.InvariantCulture"/>
         /// </summary>
         /// <param name="date">the date as text</param>
-        public DateOf(string date) : this(date, CultureInfo.InvariantCulture, "yyyy-MM-ddTHH:mm:ss.fffffffZ", "yyyy-MM-ddTHH:mm:ss.fffffffzzz")
+        public DateOf(string date) : this(date, CultureInfo.InvariantCulture, "yyyy-MM-ddTHH:mm:ss.fffffffZ", "yyyy-MM-ddTHH:mm:ss.fffffffzzz", "ddd, dd MMM yyyy HH:mm:ss Z")
         { }
 
         /// <summary>
