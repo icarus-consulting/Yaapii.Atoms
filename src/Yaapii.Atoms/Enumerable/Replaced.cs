@@ -48,6 +48,22 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
+        /// A <see cref="IEnumerable"/> where an item at a given index is replaced.
+        /// </summary>
+        /// <param name="origin">enumerable</param>
+        /// <param name="index">index at which to replace the item</param>
+        /// <param name="replacement">item to insert instead</param>
+        public Replaced(IEnumerable<T> origin, int index, T replacement) : this(
+            new Mapped<T, T>(
+                (item, itemIndex) => itemIndex == index ? replacement : item,
+                origin
+            ),
+            item => false,
+            replacement
+        )
+        { }
+
+        /// <summary>
         /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
         /// </summary>
         /// <param name="origin">enumerable</param>
