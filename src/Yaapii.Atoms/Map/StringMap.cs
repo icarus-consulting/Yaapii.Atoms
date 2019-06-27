@@ -26,15 +26,6 @@ namespace Yaapii.Atoms.Map
         /// A map from string to string.
         /// </summary>
         /// <param name="pairs">Pairs of mappings</param>
-        public StringMap(params KeyValuePair<string, string>[] pairs) : this(
-            new EnumerableOf<KeyValuePair<string, string>>(pairs)
-        )
-        { }
-
-        /// <summary>
-        /// A map from string to string.
-        /// </summary>
-        /// <param name="pairs">Pairs of mappings</param>
         public StringMap(IEnumerable<KeyValuePair<string, string>> pairs) : base(() =>
              new MapOf<string, string>(pairs)
         )
@@ -54,6 +45,26 @@ namespace Yaapii.Atoms.Map
         public StringMap(IEnumerable<string> pairSequence) : this(
             new ScalarOf<IList<string>>(
                 new Atoms.List.ListOf<string>(pairSequence)
+            )
+        )
+        { }
+
+        /// <summary>
+        /// A map from string to string.
+        /// </summary>
+        /// <param name="src">StringMap to merge into</param>
+        /// <param name="pairSequence">key-value-pairs to merge into existing StringMap, ordered like this: key-1, value-1, ... key-n, value-n</param>
+        public StringMap(IDictionary<string, string> src, params string[] pairSequence) : this(
+            new ScalarOf<IList<string>>(() =>
+                new List.Joined<string>(
+                    new List.Joined<string>(
+                        new Mapped<KeyValuePair<string,string>, IList<string>>(
+                            pair => new List<string> { pair.Key, pair.Value},
+                            src
+                        )
+                    ),
+                    pairSequence
+                )
             )
         )
         { }

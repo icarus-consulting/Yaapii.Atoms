@@ -46,6 +46,13 @@ namespace Yaapii.Atoms.Text
         { }
 
         /// <summary>
+        /// A <see cref="IText"/> out of a long.
+        /// </summary>
+        /// <param name="input">number</param>
+        public TextOf(long input) : this(() => input + "")
+        { }
+
+        /// <summary>
         /// A <see cref="IText"/> out of a double
         /// </summary>
         /// <param name="input">a <see cref="double"/></param>

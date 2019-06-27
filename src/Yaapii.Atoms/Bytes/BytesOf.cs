@@ -190,6 +190,50 @@ namespace Yaapii.Atoms.Bytes
         { }
 
         /// <summary>
+        /// Bytes out of an int.
+        /// </summary>
+        /// <param name="number">an int</param>
+        public BytesOf(int number) : this(
+            new ScalarOf<Byte[]>(() =>
+                BitConverter.GetBytes(number)
+            )
+        )
+        { }
+
+        /// <summary>
+        /// Bytes out of a long.
+        /// </summary>
+        /// <param name="number">a long</param>
+        public BytesOf(long number) : this(
+            new ScalarOf<Byte[]>(() =>
+                BitConverter.GetBytes(number)
+            )
+        )
+        { }
+
+        /// <summary>
+        /// Bytes out of a float.
+        /// </summary>
+        /// <param name="number">a float</param>
+        public BytesOf(float number) : this(
+            new ScalarOf<Byte[]>(() =>
+                BitConverter.GetBytes(number)
+            )
+        )
+        { }
+
+        /// <summary>
+        /// Bytes out of a double.
+        /// </summary>
+        /// <param name="number">a double</param>
+        public BytesOf(double number) : this(
+            new ScalarOf<Byte[]>(() =>
+                BitConverter.GetBytes(number)
+            )
+        )
+        { }
+
+        /// <summary>
         /// Bytes out of other objects.
         /// </summary>
         /// <param name="bytes">scalar of bytes</param>
