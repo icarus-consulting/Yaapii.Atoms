@@ -20,7 +20,7 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// include all files from sub directories
         /// </summary>
-        public readonly IScalar<bool> _recursive;
+        private readonly IScalar<bool> _recursive;
 
         /// <summary>
         /// Ctor.
