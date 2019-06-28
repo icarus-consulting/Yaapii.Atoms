@@ -98,5 +98,30 @@ namespace Yaapii.Atoms.IO.Tests
                 new Uri(Path.GetFullPath(file))
             ).Invoke();
         }
+
+        [Fact]
+        public void EnumeratesFilesInSubDirectories()
+        {
+            var dir = Path.GetFullPath("assets/directoryof/dir");
+            var subdir = Path.GetFullPath("assets/directoryof/dir/subdir/subdir2/subdir3/");
+            var file = Path.GetFullPath("assets/directoryof/dir/subdir/subdir2/subdir3/test.txt");
+
+            new Tidy(() =>
+                {
+                    Directory.CreateDirectory(subdir);
+                    File.Create(file).Close();
+
+                    var test = new DirectoryOf(dir, true);
+
+                    Assert.True(
+                        new Contains<string>(
+                            new DirectoryOf(dir, true),
+                            file
+                        ).Value()
+                    );
+                },
+                new Uri(file)
+            ).Invoke();
+        }
     }
 }
