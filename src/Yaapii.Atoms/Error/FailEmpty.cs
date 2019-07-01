@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Error
         private readonly Exception _ex;
 
         /// <summary>
-        /// Fail if enum is empty.
+        /// Fail with <see cref="System.Exception"/> if enum is empty.
         /// </summary>
         /// <param name="enumerable">enum to check</param>
         public FailEmpty(IEnumerable<T> enumerable) : this(
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Error
         { }
 
         /// <summary>
-        /// Fail if enum is empty.
+        /// Fail with <see cref="System.Exception"/> if enum is empty.
         /// </summary>
         /// <param name="enumerable">enum to check</param>
         /// <param name="hint">msg to display in exception</param>
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Error
         { }
 
         /// <summary>
-        /// Fail if enum is empty.
+        /// Fail with specified exception if enum is empty.
         /// </summary>
         /// <param name="enumerable">enum to check</param>
         /// <param name="ex">specific exception which will be thrown</param>

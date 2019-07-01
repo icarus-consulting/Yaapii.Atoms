@@ -33,13 +33,13 @@ namespace Yaapii.Atoms.Error
         private readonly Exception _ex;
 
         /// <summary>
-        /// Fail if object is null.
+        /// Fail with <see cref="System.ArgumentNullException"/> if object is null.
         /// </summary>
         /// <param name="obj">object to check</param>
         public FailNull(object obj) : this(obj, "Parameter is null") { }
 
         /// <summary>
-        /// Fail if object is null.
+        /// Fail with <see cref="System.ArgumentNullException"/> if object is null.
         /// </summary>
         /// <param name="obj">object to check</param>
         /// <param name="hint">msg to put in exception</param>
@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Error
         { }
 
         /// <summary>
-        /// Fail if object is null.
+        /// Fail with specified exception if object is null.
         /// </summary>
         /// <param name="obj">object to check</param>
         /// <param name="ex">specific exception which will be thrown</param>

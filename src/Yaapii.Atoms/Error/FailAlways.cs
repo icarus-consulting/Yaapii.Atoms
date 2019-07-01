@@ -35,21 +35,21 @@ namespace Yaapii.Atoms.Error
         private readonly Exception _error;
 
         /// <summary>
-        /// Fail always with the given message.
+        /// Fail always with <see cref="System.Exception"/> with the given message.
         /// </summary>
         /// <param name="msg">message to wrap in exception</param>
         public FailAlways(string msg) : this(new TextOf(msg))
         { }
 
         /// <summary>
-        /// Fail always with the given message.
+        /// Fail always with <see cref="System.Exception"/> with the given message.
         /// </summary>
         /// <param name="msg">message to wrap in exception</param>
         public FailAlways(IText msg) : this(new Exception(msg.AsString()))
         { }
 
         /// <summary>
-        /// Fail always with the given message.
+        /// Fail always with specified exception with the given message.
         /// </summary>
         /// <param name="error">ex to throw</param>
         public FailAlways(Exception error)
