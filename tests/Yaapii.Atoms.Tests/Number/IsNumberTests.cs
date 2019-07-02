@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Number.Tests
         }
 
         [Fact]
-        public void DetectsNumberWithSpecifiedFormatProvider()
+        public void DetectsCustomCultureNumber()
         {
             Assert.True(
                 new IsNumber(
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Number.Tests
         }
 
         [Fact]
-        public void DetectsNumberFromTextWithSpecifiedFormatProvider()
+        public void DetectsCustomCultureNumberFromText()
         {
             Assert.True(
                 new IsNumber(
