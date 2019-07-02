@@ -34,56 +34,54 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void CopiesFromUrlToFile()
         {
-            var directoryPath = Path.GetTempPath() + "Yaapii.Atoms.Tests.Temp-Files";
-            System.IO.Directory.CreateDirectory(directoryPath);
+            using(var directory = new TempDirectory())
+            {
+                var directoryPath = directory.Value().FullName;
+                new LengthOf(
+                    new TeeInput(
+                        new Uri("http://www.google.de"),
+                        new Uri($@"file://{directoryPath}\output.txt")
+                    )
+                ).Value();
 
-            new LengthOf(
-                new TeeInput(
-                    new Uri("http://www.google.de"),
-                    new Uri($@"file://{directoryPath}\output.txt")
-                )
-            ).Value();
-
-            Assert.True(
-                File.ReadAllText(
-                    $@"{directoryPath}\output.txt"
-                ).Contains(
-                    "<html"
-                ),
-                "Can't copy website to file"
-            );
-
-            Directory.Delete(directoryPath, true);
+                Assert.True(
+                    File.ReadAllText(
+                        $@"{directoryPath}\output.txt"
+                    ).Contains(
+                        "<html"
+                    ),
+                    "Can't copy website to file"
+                );
+            }
         }
 
         [Fact]
         public void CopiesFromFileToFile()
         {
-            var directoryPath = Path.GetTempPath() + "Yaapii.Atoms.Tests.Temp-Files";
-            System.IO.Directory.CreateDirectory(directoryPath);
-
-            File.WriteAllText(
-                $@"{directoryPath}\input.txt",
-                "this is a test"
-            );
-
-            new LengthOf(
-                new TeeInput(
-                    new Uri($@"{directoryPath}\input.txt"),
-                    new Uri($@"{directoryPath}\output.txt")
-                )
-            ).Value();
-
-            Assert.True(
-                File.ReadAllText(
-                    $@"{directoryPath}\output.txt"
-                ).Contains(
+            using (var directory = new TempDirectory())
+            {
+                var directoryPath = directory.Value().FullName;
+                File.WriteAllText(
+                    $@"{directoryPath}\input.txt",
                     "this is a test"
-                ),
-                "Can't copy file to another file"
-            );
+                );
 
-            Directory.Delete(directoryPath, true);
+                new LengthOf(
+                    new TeeInput(
+                        new Uri($@"{directoryPath}\input.txt"),
+                        new Uri($@"{directoryPath}\output.txt")
+                    )
+                ).Value();
+
+                Assert.True(
+                    File.ReadAllText(
+                        $@"{directoryPath}\output.txt"
+                    ).Contains(
+                        "this is a test"
+                    ),
+                    "Can't copy file to another file"
+                );
+            }
         }
 
         [Fact]
