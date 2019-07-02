@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
@@ -147,15 +146,8 @@ namespace Yaapii.Atoms.IO
             return new Ternary<bool, IEnumerator<string>>(
                 this._recursive,
                 new Sorted<string>(
-                    new Joined<string>(
-                        Directory.EnumerateFiles(_dir.Value()),
-                        new Joined<string>(
-                            new Mapped<string, IEnumerable<string>>(
-                                (subDirectory) => new DirectoryOf(subDirectory, true),
-                                Directory.EnumerateDirectories(_dir.Value())
-                            )
-                        )
-                    )
+                    Directory.EnumerateFiles(_dir.Value(), "*", SearchOption.AllDirectories)
+                    
                 ).GetEnumerator(),
                 new Sorted<string>(
                     new Joined<string>(
