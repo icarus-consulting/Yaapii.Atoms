@@ -28,7 +28,7 @@ namespace Yaapii.Atoms.Number.Tests
     public sealed class IsNumberTests
     {
         [Fact]
-        public void ReadsString()
+        public void DetectsNumber()
         {
             Assert.True(
                 new IsNumber(
@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Number.Tests
         }
 
         [Fact]
-        public void ReadsStringWithSpecifiedFormatProvider()
+        public void DetectsNumberWithSpecifiedFormatProvider()
         {
             Assert.True(
                 new IsNumber(
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Number.Tests
         }
 
         [Fact]
-        public void ReadsText()
+        public void DetectsNumberFromText()
         {
             Assert.True(
                 new IsNumber(
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Number.Tests
         }
 
         [Fact]
-        public void ReadsTextWithSpecifiedFormatProvider()
+        public void DetectsNumberFromTextWithSpecifiedFormatProvider()
         {
             Assert.True(
                 new IsNumber(
@@ -84,7 +84,7 @@ namespace Yaapii.Atoms.Number.Tests
         }
 
         [Fact]
-        public void ReturnsFalseIfStringIsNoNumber()
+        public void DetectsNoNumber()
         {
             Assert.False(
                 new IsNumber(
@@ -95,7 +95,7 @@ namespace Yaapii.Atoms.Number.Tests
         }
 
         [Fact]
-        public void ReturnsFalseIfTextIsNoNumber()
+        public void DetectsNoNumberFromText()
         {
             Assert.False(
                 new IsNumber(
