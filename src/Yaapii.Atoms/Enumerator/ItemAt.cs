@@ -153,14 +153,16 @@ namespace Yaapii.Atoms.Enumerator
         /// <returns>the item</returns>
         public T Value()
         {
-            new FailPrecise(
-                new FailWhen(this._pos < 0),
-                new UnsupportedOperationException(
-                    new Formatted("The position must be non-negative but is {0}",
-                        this._pos).AsString())).Go();
             T ret;
             try
             {
+                new FailPrecise(
+                    new FailWhen(this._pos < 0),
+                    new UnsupportedOperationException(
+                        "The position must be non-negative"
+                    )
+                ).Go();
+
                 new FailPrecise(
                     new FailWhen(!this._src.MoveNext()),
                     new NoSuchElementException(
