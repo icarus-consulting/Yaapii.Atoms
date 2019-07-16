@@ -7,7 +7,7 @@ using Yaapii.Atoms.Map;
 namespace Yaapii.Atoms.Func
 {
     /// <summary>
-    /// An action which waits for a trigger to return true before executing.
+    /// An Function which waits for a trigger to return true before executing.
     /// </summary>
     public sealed class BowFunc<T> : IAction<T>
     {
