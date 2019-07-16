@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Tests.Func
                 () => { actions.Add("ask trigger"); return count++ > 0; },
                 () => actions.Add("prepare"),
                 (str) => actions.Add("shoot"),
-                new TimeSpan(0,0,5)
+                new TimeSpan(0,0,10)
             ).Invoke("test");
 
             Assert.Equal(
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Tests.Func
                 () => { actions.Add("ask trigger"); return count++ > 0; },
                 () => actions.Add("prepare"),
                 (str) => actions.Add(str),
-                new TimeSpan(0, 0, 5)
+                new TimeSpan(0, 0, 10)
             ).Invoke("test");
 
             Assert.Equal(
