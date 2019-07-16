@@ -21,7 +21,7 @@ namespace Yaapii.Atoms.Func
         public BowAction(Func<bool> trigger, Action shoot) : this(
             trigger, () => { },
             shoot,
-            new TimeSpan(0, 0, 5),
+            new TimeSpan(0, 0, 10),
             new TimeSpan(0, 0, 0, 0, 250)
         )
         { }
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Func
             trigger,
             prepare,
             shoot,
-            new TimeSpan(0, 0, 5),
+            new TimeSpan(0, 0, 10),
             new TimeSpan(0, 0, 0, 0, 250)
         )
         { }

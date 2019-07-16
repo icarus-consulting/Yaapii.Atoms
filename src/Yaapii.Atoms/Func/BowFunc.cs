@@ -23,7 +23,7 @@ namespace Yaapii.Atoms.Func
             trigger,
             () => { },
             shoot,
-            new TimeSpan(0,0,5)
+            new TimeSpan(0,0,10)
         )
         { }
 
