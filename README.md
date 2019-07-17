@@ -301,7 +301,7 @@ new LengthOf(
 ### Limit lists
 ```csharp
 new SumOfInts(
-    new Limited<int>(
+    new HeadOf<int>(
         new EnumerableOf<int>(0, 1, 2, 3, 4),
         3
     )).Value(); //will be 3 (0 + 1 + 2)
@@ -313,7 +313,7 @@ new SumOfInts(
  int size = 2;
  var list =
     new StickyEnumerable<int>(
-        new Limited<int>(
+        new HeadOf<int>(
             new Endless<int>(1),
             new ScalarOf<int>(() => Interlocked.Increment(ref size))
             ));
@@ -567,7 +567,7 @@ LinQ                  | Yaapii.Atoms
 **Skip**              |<pre>var skipped = new Skipped&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("one", "two", "three", "four"),<br>&nbsp;&nbsp;2<br>) // skipped = {three, four}</pre>
 **SkipWhile**         |*Not available yet*
 **Sum**               |<pre>var sum = new SumOf(<br>&nbsp;&nbsp;1.5F, 2.5F, 3.5F<br>).AsFloat() //sum = 7.5</pre>
-**Take**              |<pre>var lmt = new Limited&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(0, 1, 2, 3, 4),<br>&nbsp;&nbsp;3<br>)//lmt = {0, 1, 2}</pre>
+**Take**              |<pre>var lmt = new HeadOf&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(0, 1, 2, 3, 4),<br>&nbsp;&nbsp;3<br>)//lmt = {0, 1, 2}</pre>
 **TakeWhile**         |*Not available yet*
 **ThenBy**            |*Not available yet*
 **ThenByDescending**  |*Not available yet*
