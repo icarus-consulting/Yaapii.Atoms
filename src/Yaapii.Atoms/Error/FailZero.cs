@@ -33,13 +33,13 @@ namespace Yaapii.Atoms.Error
         private readonly Exception _ex;
 
         /// <summary>
-        /// Fail if number is 0.
+        /// Fail with <see cref="System.Exception"/> if number is 0.
         /// </summary>
         /// <param name="number">number to check</param>
         public FailZero(long number) : this(number, "Number is zero") { }
 
         /// <summary>
-        /// Fail if number is 0.
+        /// Fail with <see cref="System.Exception"/> if number is 0.
         /// </summary>
         /// <param name="number">number to check</param>
         /// <param name="hint">msg to put in exception</param>
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Error
         { }
 
         /// <summary>
-        /// Fail if number is 0.
+        /// Fail with specified exception if number is 0.
         /// </summary>
         /// <param name="number">number to check</param>
         /// <param name="ex">specific exception which will be thrown</param>

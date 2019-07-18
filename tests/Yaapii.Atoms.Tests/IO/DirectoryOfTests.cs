@@ -21,9 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Tests;
@@ -97,6 +95,27 @@ namespace Yaapii.Atoms.IO.Tests
                 },
                 new Uri(Path.GetFullPath(file))
             ).Invoke();
+        }
+
+        [Fact]
+        public void EnumeratesFilesInSubDirectories()
+        {
+            using (var directory = new TempDirectory())
+            {
+                var dir = directory.Value().FullName;
+                var subdir = directory.Value().FullName + "\\subdir\\subdir2\\subdir3\\";
+                var file = directory.Value().FullName + "\\subdir\\subdir2\\subdir3\\test.txt";
+
+                Directory.CreateDirectory(subdir);
+                File.Create(file).Close();
+
+                Assert.True(
+                    new Contains<string>(
+                        new DirectoryOf(dir, true),
+                        file
+                    ).Value()
+                );
+            }
         }
     }
 }

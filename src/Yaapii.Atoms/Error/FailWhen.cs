@@ -33,14 +33,14 @@ namespace Yaapii.Atoms.Error
         private readonly Exception _ex;
 
         /// <summary>
-        /// Fail if condition is matched.
+        /// Fail with <see cref="System.ArgumentException"/> if condition is matched.
         /// </summary>
         /// <param name="condition">condition to apply</param>
         public FailWhen(bool condition) : this(condition, "Failed because the given function failed.")
         { }
 
         /// <summary>
-        /// Fail if condition is matched.
+        /// Fail with <see cref="System.ArgumentException"/> if condition is matched.
         /// </summary>
         /// <param name="condition">condition to apply</param>
         /// <param name="hint">msg to put in exception</param>
@@ -48,14 +48,14 @@ namespace Yaapii.Atoms.Error
         { }
 
         /// <summary>
-        /// Fail if condition is matched.
+        /// Fail with <see cref="System.ArgumentException"/> if condition is matched.
         /// </summary>
         /// <param name="condition">condition to apply</param>
         public FailWhen(Func<bool> condition) : this(condition, "Failed because the given function failed.")
         { }
 
         /// <summary>
-        /// Fail if condition is matched.
+        /// Fail with <see cref="System.ArgumentException"/> if condition is matched.
         /// </summary>
         /// <param name="condition">condition to apply</param>
         /// <param name="hint">msg to put in exception</param>
@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Error
         { }
 
         /// <summary>
-        /// Fail if condition is matched.
+        /// Fail with specified exception if condition is matched.
         /// </summary>
         /// <param name="condition">condition to apply</param>
         /// <param name="ex">specific exception which will be thrown</param>
