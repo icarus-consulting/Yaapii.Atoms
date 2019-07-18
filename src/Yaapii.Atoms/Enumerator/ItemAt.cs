@@ -159,7 +159,10 @@ namespace Yaapii.Atoms.Enumerator
                 new FailPrecise(
                     new FailWhen(this._pos < 0),
                     new UnsupportedOperationException(
-                        "The position must be non-negative"
+                        new Formatted(
+                            "The position must be non-negative but is {0}",
+                            this._pos
+                        ).AsString()
                     )
                 ).Go();
 
