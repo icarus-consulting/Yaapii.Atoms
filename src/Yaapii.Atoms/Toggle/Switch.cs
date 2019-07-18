@@ -7,7 +7,7 @@ namespace Yaapii.Atoms.Toggle
     /// </summary>
     public sealed class Switch : IToggle
     {
-        private readonly List<bool> state;
+        private readonly IList<bool> state;
 
         /// <summary>
         /// A toggable switch.
@@ -18,7 +18,7 @@ namespace Yaapii.Atoms.Toggle
         )
         { }
 
-        private Switch(List<bool> state)
+        private Switch(IList<bool> state)
         {
             this.state = state;
         }
