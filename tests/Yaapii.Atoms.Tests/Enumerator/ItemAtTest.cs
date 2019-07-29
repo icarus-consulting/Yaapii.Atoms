@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         [Fact]
         public void FailForNegativePositionTest()
         {
-            Assert.Throws<UnsupportedOperationException>(
+            Assert.Throws<NoSuchElementException>(
                     () => new ItemAt<int>(
                         new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
                         -1
