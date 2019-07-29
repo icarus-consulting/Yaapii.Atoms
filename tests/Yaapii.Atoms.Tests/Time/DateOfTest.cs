@@ -36,6 +36,15 @@ namespace Yaapii.Atoms.Time.Tests
         }
 
         [Fact]
+        public void CanParseUtcDate()
+        {
+            Assert.True(
+                new DateOf("Fri, 29 Mar 2019 12:50:36 GMT").Value().ToUniversalTime() ==
+                new DateTime(2019, 03, 29, 12, 50, 36, DateTimeKind.Utc).ToUniversalTime()
+            );
+        }
+
+        [Fact]
         public void CanParseCustomFormat()
         {
             Assert.True(
