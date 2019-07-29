@@ -32,6 +32,59 @@ namespace Yaapii.Atoms.IO.Tests
     public sealed class TeeInputTest
     {
         [Fact]
+        public void CopiesFromUrlToFile()
+        {
+            using(var directory = new TempDirectory())
+            {
+                var directoryPath = directory.Value().FullName;
+                new LengthOf(
+                    new TeeInput(
+                        new Uri("http://www.google.de"),
+                        new Uri($@"file://{directoryPath}\output.txt")
+                    )
+                ).Value();
+
+                Assert.True(
+                    File.ReadAllText(
+                        $@"{directoryPath}\output.txt"
+                    ).Contains(
+                        "<html"
+                    ),
+                    "Can't copy website to file"
+                );
+            }
+        }
+
+        [Fact]
+        public void CopiesFromFileToFile()
+        {
+            using (var directory = new TempDirectory())
+            {
+                var directoryPath = directory.Value().FullName;
+                File.WriteAllText(
+                    $@"{directoryPath}\input.txt",
+                    "this is a test"
+                );
+
+                new LengthOf(
+                    new TeeInput(
+                        new Uri($@"{directoryPath}\input.txt"),
+                        new Uri($@"{directoryPath}\output.txt")
+                    )
+                ).Value();
+
+                Assert.True(
+                    File.ReadAllText(
+                        $@"{directoryPath}\output.txt"
+                    ).Contains(
+                        "this is a test"
+                    ),
+                    "Can't copy file to another file"
+                );
+            }
+        }
+
+        [Fact]
         public void CopiesContent()
         {
             var baos = new MemoryStream();
