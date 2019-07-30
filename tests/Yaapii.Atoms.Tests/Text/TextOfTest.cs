@@ -124,6 +124,19 @@ namespace Yaapii.Atoms.Text.Tests
         }
 
         [Fact]
+        public void ReadsStreamIntoText()
+        {
+            var content = "hello girl";
+
+            Assert.Equal(
+                content,
+                new TextOf(
+                    new MemoryStream(new BytesOf(content).AsBytes())
+                ).AsString()
+            );
+        }
+
+        [Fact]
         public void ReadsInputIntoText()
         {
             var content = "привет, друг!";
