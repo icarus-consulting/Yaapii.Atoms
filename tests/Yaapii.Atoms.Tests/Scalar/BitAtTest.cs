@@ -47,18 +47,6 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
-        public void FallbackShowsError()
-        {
-            Assert.Throws<ArgumentException>(() =>
-                new BitAt(
-                    new BytesOf(""),
-                    1,
-                    (ex, bytes) => throw ex
-                ).Value()
-            );
-        }
-
-        [Fact]
         public void UsesInjectedExcption()
         {
             Assert.Throws<ApplicationException>(() =>
