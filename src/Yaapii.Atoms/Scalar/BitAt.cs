@@ -33,9 +33,7 @@ namespace Yaapii.Atoms.Scalar
         public BitAt(IBytes bytes, int position, Exception exception) : this(
             bytes,
             position,
-            new FuncOf<IBytes, bool>(itr =>
-                throw exception
-            )
+            itr => throw exception
         )
         { }
 
@@ -45,9 +43,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="bytes">Bytes from where the bit is taken</param>
         public BitAt(IBytes bytes) : this(
             bytes,
-            new FuncOf<IBytes, bool>(itr =>
-                throw new ArgumentException($"Cannot get first bit because there are only {bytes.AsBytes().Length} bytes.")
-            )
+            itr => throw new ArgumentException($"Cannot get first bit because there are only {bytes.AsBytes().Length} bytes.")
         )
         { }
 
@@ -58,9 +54,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="fallback">Result in case of an error</param>
         public BitAt(IBytes bytes, bool fallback) : this(
             bytes,
-            new FuncOf<IBytes, bool>(itr =>
-                fallback
-            )
+            itr => fallback
         )
         { }
 
@@ -72,9 +66,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="fallback">Result in case of an error</param>
         public BitAt(IBytes bytes, int position, bool fallback) : this(
             bytes,
-            new FuncOf<IBytes, bool>(itr =>
-                fallback
-            )
+            itr => fallback
         )
         { }
 
@@ -86,7 +78,7 @@ namespace Yaapii.Atoms.Scalar
         public BitAt(IBytes bytes, Func<IBytes, bool> fallback) : this(
             bytes,
             0,
-            new FuncOf<IBytes, bool>(fallback)
+            fallback
         )
         { }
 
@@ -110,10 +102,7 @@ namespace Yaapii.Atoms.Scalar
         public BitAt(IBytes bytes, int position) : this(
             bytes,
             position,
-            new FuncOf<IBytes, bool>(itr =>
-            {
-                throw new ArgumentException($"Cannot get bit at position {position} because there are only {bytes.AsBytes().Length} bytes.");
-            })
+            itr => throw new ArgumentException($"Cannot get bit at position {position} because there are only {bytes.AsBytes().Length} bytes.")
         )
         { }
 
