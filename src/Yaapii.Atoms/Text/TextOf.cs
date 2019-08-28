@@ -130,6 +130,13 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="IInput"/>.
         /// </summary>
+        /// <param name="stream">a <see cref="Stream"/></param>
+        public TextOf(Stream stream) : this(new InputOf(stream))
+        { }
+
+        /// <summary>
+        /// A <see cref="IText"/> out of a <see cref="IInput"/>.
+        /// </summary>
         /// <param name="input">a <see cref="IInput"/></param>
         public TextOf(IInput input) : this(new BytesOf(input))
         { }

@@ -27,6 +27,17 @@ namespace Yaapii.Atoms.Text.Tests
     public sealed class IsWhitespaceTest
     {
         [Fact]
+        public void ConvertsString()
+        {
+            Assert.True(
+                new IsWhitespace(
+                    " "
+                ).Value(),
+                "Can't convert string"
+            );
+        }
+
+        [Fact]
         public void DoesntMatchEmpty()
         {
             Assert.True(

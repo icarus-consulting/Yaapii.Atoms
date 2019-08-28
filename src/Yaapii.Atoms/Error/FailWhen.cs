@@ -51,6 +51,14 @@ namespace Yaapii.Atoms.Error
         /// Fail with <see cref="System.ArgumentException"/> if condition is matched.
         /// </summary>
         /// <param name="condition">condition to apply</param>
+        /// <param name="ex">specific exception which will be thrown</param>
+        public FailWhen(bool condition, Exception ex) : this(() => condition, ex)
+        { }
+
+        /// <summary>
+        /// Fail if condition is matched.
+        /// </summary>
+        /// <param name="condition">condition to apply</param>
         public FailWhen(Func<bool> condition) : this(condition, "Failed because the given function failed.")
         { }
 

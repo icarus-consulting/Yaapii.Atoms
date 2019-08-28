@@ -7,55 +7,45 @@ using Yaapii.Atoms.Map;
 namespace Yaapii.Atoms.Func
 {
     /// <summary>
-    /// An action which waits for a trigger to return true before executing.
+    /// An Function which waits for a trigger to return true before executing.
     /// </summary>
-    public sealed class BowAction : IAction
+    public sealed class BowFunc<T> : IAction<T>
     {
         private readonly Func<bool> trigger;
-        private readonly IDictionary<string, Action> actions;
+        private readonly Action prepare;
+        private readonly Action<T> shoot;
         private readonly IDictionary<string, TimeSpan> timespans;
 
         /// <summary>
-        /// An action which waits for a trigger to return true before executing.
+        /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        public BowAction(Func<bool> trigger, Action shoot) : this(
-            trigger, () => { },
-            shoot,
-            new TimeSpan(0, 0, 10),
-            new TimeSpan(0, 0, 0, 0, 250)
-        )
-        { }
-
-        /// <summary>
-        /// An action which waits for a trigger to return true before executing.
-        /// </summary>
-        public BowAction(Func<bool> trigger, Action shoot, TimeSpan timeout) : this(
+        public BowFunc(Func<bool> trigger, Action<T> shoot) : this(
             trigger,
             () => { },
             shoot,
-            timeout,
-            new TimeSpan(0, 0, 0, 0, 250)
+            new TimeSpan(0,0,10)
         )
         { }
 
         /// <summary>
-        /// An action which waits for a trigger to return true before executing.
+        /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        public BowAction(Func<bool> trigger, Action prepare, Action shoot) : this(
+        public BowFunc(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout) : this(
             trigger,
             prepare,
             shoot,
-            new TimeSpan(0, 0, 10),
-            new TimeSpan(0, 0, 0, 0, 250)
+            timeout,
+            new TimeSpan(0,0,0,0,250)
         )
         { }
 
-        public BowAction(Func<bool> trigger, Action prepare, Action shoot, TimeSpan timeout, TimeSpan interval) : this(
+        /// <summary>
+        /// A Function which waits for a trigger to return true before executing.
+        /// </summary>
+        public BowFunc(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout, TimeSpan interval) : this(
             trigger,
-            new MapOf<string, Action>(
-                new KeyValuePair<string, Action>("prepare", prepare),
-                new KeyValuePair<string, Action>("shoot", shoot)
-            ),
+            prepare,
+            shoot,
             new MapOf<string, TimeSpan>(
                 new KeyValuePair<string, TimeSpan>("timeout", timeout),
                 new KeyValuePair<string, TimeSpan>("interval", interval)
@@ -63,18 +53,19 @@ namespace Yaapii.Atoms.Func
         { }
 
         /// <summary>
-        /// An action which waits for a trigger to return true before executing.
+        /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        private BowAction(Func<bool> trigger, IDictionary<string, Action> actions, IDictionary<string, TimeSpan> timespans)
+        private BowFunc(Func<bool> trigger, Action prepare, Action<T> shoot, IDictionary<string, TimeSpan> timespans)
         {
             this.trigger = trigger;
-            this.actions = actions;
+            this.prepare = prepare;
+            this.shoot = shoot;
             this.timespans = timespans;
         }
 
-        public void Invoke()
+        public void Invoke(T parameter)
         {
-            this.actions["prepare"]();
+            this.prepare();
             var timeout = DateTime.Now + this.timespans["timeout"];
             var completed = false;
 
@@ -85,7 +76,7 @@ namespace Yaapii.Atoms.Func
                     {
                         if (this.trigger.Invoke())
                         {
-                            this.actions["shoot"]();
+                            this.shoot(parameter);
                             completed = true;
                             break;
                         }
@@ -97,7 +88,7 @@ namespace Yaapii.Atoms.Func
 
             while (DateTime.Now < timeout)
             {
-                if (parallel.Status == TaskStatus.Faulted)
+                if(parallel.Status == TaskStatus.Faulted)
                 {
                     throw parallel.Exception.InnerException;
                 }

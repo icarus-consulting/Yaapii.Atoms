@@ -99,6 +99,18 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
+        public void FallbackShowsGivenErrorForNegativePosition()
+        {
+            Assert.Throws<NotFiniteNumberException>(() =>
+                new ItemAt<string>(
+                    new EnumerableOf<string>(),
+                    -12,
+                    new NotFiniteNumberException("Cannot do this!")
+                ).Value()
+            );
+        }
+
+        [Fact]
         public void StickyTest()
         {
             var list = new List<string>();

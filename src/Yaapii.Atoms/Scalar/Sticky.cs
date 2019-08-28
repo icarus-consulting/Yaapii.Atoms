@@ -21,7 +21,6 @@
 // SOFTWARE.
 
 using System;
-using Yaapii.Atoms.Func;
 
 namespace Yaapii.Atoms.Scalar
 {
@@ -31,7 +30,17 @@ namespace Yaapii.Atoms.Scalar
     /// <typeparam name="T"></typeparam>
     public sealed class Sticky<T> : IScalar<T>
     {
-        private readonly IFunc<bool, T> _func;
+        private readonly IScalar<T> origin;
+        private readonly Func<T, bool> shouldReload;
+        private readonly T[] cache;
+        private readonly bool[] filled; //this not-readonly flag is a compromise due to performance issues when using StickyFunc.
+
+        /// <summary>
+        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
+        /// </summary>
+        /// <param name="src">func to cache result from</param>
+        public Sticky(T src) : this(new ScalarOf<T>(src))
+        { }
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
@@ -44,41 +53,36 @@ namespace Yaapii.Atoms.Scalar
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
         /// </summary>
         /// <param name="src">scalar to cache result from</param>
-        public Sticky(IScalar<T> src) : this(src, input=>false)
+        public Sticky(IScalar<T> src) : this(src, input => false)
         { }
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
         /// </summary>
         /// <param name="srcFunc">func to cache result from</param>
-        /// <param name="reloadConditionFunc">reload condition func</param>
-        public Sticky(Func<T> srcFunc, Func<T, bool> reloadConditionFunc) : this(new ScalarOf<T>(srcFunc), new FuncOf<T, bool>(reloadConditionFunc))
+        /// <param name="shouldReload">reload condition func</param>
+        public Sticky(Func<T> srcFunc, Func<T, bool> shouldReload) : this(new ScalarOf<T>(srcFunc), shouldReload)
         { }
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
         /// </summary>
         /// <param name="srcFunc">func to cache result from</param>
-        /// <param name="reloadConditionFunc">reload condition func</param>
-        public Sticky(IFunc<T> srcFunc, IFunc<T, bool> reloadConditionFunc) : this(new ScalarOf<T>(srcFunc), reloadConditionFunc)
+        /// <param name="shouldReload">reload condition func</param>
+        public Sticky(IFunc<T> srcFunc, Func<T, bool> shouldReload) : this(new ScalarOf<T>(srcFunc), shouldReload)
         { }
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
         /// </summary>
         /// <param name="src">scalar to cache result from</param>
-        /// <param name="reloadConditionFunc">reload condition func</param>
-        public Sticky(IScalar<T> src, Func<T, bool> reloadConditionFunc) : this(src, new FuncOf<T,bool>(reloadConditionFunc))
-        { }
-
-        /// <summary>
-        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
-        /// </summary>
-        /// <param name="src">scalar to cache result from</param>
-        /// <param name="reloadConditionFunc">reload condition func</param>
-        public Sticky(IScalar<T> src, IFunc<T, bool> reloadConditionFunc)
+        /// <param name="shouldReload">reload condition func</param>
+        public Sticky(IScalar<T> src, Func<T, bool> shouldReload)
         {
-            this._func = new StickyFunc<Boolean, T>(input => src.Value(), reloadConditionFunc);
+            this.origin = src;
+            this.shouldReload = shouldReload;
+            this.cache = new T[1];
+            this.filled = new bool[1];
         }
 
         /// <summary>
@@ -87,7 +91,16 @@ namespace Yaapii.Atoms.Scalar
         /// <returns>the value</returns>
         public T Value()
         {
-            return this._func.Invoke(true);
+            if (this.filled[0] != true)
+            {
+                this.cache.SetValue(this.origin.Value(), 0);
+                this.filled[0] = true;
+            }
+            else if (this.shouldReload(this.cache[0]))
+            {
+                this.cache[0] = this.origin.Value();
+            }
+            return this.cache[0];
         }
     }
 }
