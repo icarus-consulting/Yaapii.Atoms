@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Map
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="Key"></typeparam>
     /// <typeparam name="Value"></typeparam>
-    public sealed class Grouped<T, Key, Value> : MapEnvelope<Key, IList<Value>>
+    public sealed class GroupedMap<T, Key, Value> : MapEnvelope<Key, IList<Value>>
     {
         /// <summary>
         /// ctor
@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="src">Source Enumerable</param>
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
-        public Grouped(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : this(
+        public GroupedMap(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : this(
             new ListOf<T>(src),
             key,
             value
@@ -52,11 +52,11 @@ namespace Yaapii.Atoms.Map
         /// <param name="src">Source Enumerable</param>
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
-        public Grouped(IList<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : base(
+        public GroupedMap(IList<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : base(
             () =>
             {
                 Dictionary<Key, IList<Value>> temp = new Dictionary<Key, IList<Value>>();
-                foreach(var entry in src)
+                foreach (var entry in src)
                 {
                     temp[key.Invoke(entry)] = new Mapped<T, Value>(value, src);
                 }

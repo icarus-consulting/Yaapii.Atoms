@@ -28,13 +28,15 @@ namespace Yaapii.Atoms.Map
 {
     /// <summary>
     /// A map from string to string.
+    /// You must understand, that this map will build every time when any method is called.
+    /// If you do not want this, use <see cref="MapOf"/>
     /// </summary>
-    public sealed class MapOf : MapEnvelope
+    public sealed class LiveMap : LiveMapEnvelope
     {
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public MapOf(KeyValuePair<string,string> entry, params KeyValuePair<string, string>[] more) : this(
+        public LiveMap(KeyValuePair<string,string> entry, params KeyValuePair<string, string>[] more) : this(
             new Joined<KeyValuePair<string,string>>(
                 new EnumerableOf<KeyValuePair<string, string>>(more),
                 entry
@@ -47,7 +49,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="src">source dictionary</param>
         /// <param name="list">KeyValuePairs to append</param>
-        public MapOf(IDictionary<string, string> src, params KeyValuePair<string, string>[] list) : this(
+        public LiveMap(IDictionary<string, string> src, params KeyValuePair<string, string>[] list) : this(
             src,
             new EnumerableOf<KeyValuePair<string, string>>(list))
         { }
@@ -57,7 +59,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="src"></param>
         /// <param name="list"></param>
-        public MapOf(IDictionary<string, string> src, IEnumerable<KeyValuePair<string, string>> list) : this(
+        public LiveMap(IDictionary<string, string> src, IEnumerable<KeyValuePair<string, string>> list) : this(
             new Joined<KeyValuePair<string, string>>(
                 src,
                 list
@@ -68,7 +70,7 @@ namespace Yaapii.Atoms.Map
         /// A map by taking the given entries.
         /// </summary>
         /// <param name="entries">enumerator of KeyValuePairs</param>
-        public MapOf(IEnumerator<KeyValuePair<string, string>> entries) : this(
+        public LiveMap(IEnumerator<KeyValuePair<string, string>> entries) : this(
             new EnumerableOf<KeyValuePair<string, string>>(entries))
         { }
 
@@ -76,14 +78,14 @@ namespace Yaapii.Atoms.Map
         /// A map from the given function result
         /// </summary>
         /// <param name="fnc"></param>
-        public MapOf(Func<IEnumerable<KeyValuePair<string, string>>> fnc) : this(
+        public LiveMap(Func<IEnumerable<KeyValuePair<string, string>>> fnc) : this(
             new EnumerableOf<KeyValuePair<string, string>>(fnc))
         { }
 
         /// <summary>
         /// A map from the given key value pairs.
         /// </summary>
-        public MapOf(IKvp entry, params IKvp[] more) : this(
+        public LiveMap(IKvp entry, params IKvp[] more) : this(
             new EnumerableOf<IMapInput>(
                 new MapInputOf(entry),
                 new MapInputOf(more)
@@ -95,7 +97,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given key value pairs.
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
-        public MapOf(IEnumerable<IKvp> entries) : this(
+        public LiveMap(IEnumerable<IKvp> entries) : this(
             new EnumerableOf<IMapInput>(
                 new MapInputOf(entries)
             )
@@ -106,7 +108,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given entries.
         /// </summary>
         /// <param name="entries">enumerable of entries</param>
-        public MapOf(IEnumerable<KeyValuePair<string, string>> entries) : base(() =>
+        public LiveMap(IEnumerable<KeyValuePair<string, string>> entries) : base(() =>
         {
             var temp = new Dictionary<string, string>();
             foreach (var entry in entries)
@@ -121,14 +123,14 @@ namespace Yaapii.Atoms.Map
         /// A map from string to string.
         /// </summary>
         /// <param name="pairSequence">Pairs as a sequence, ordered like this: key-1, value-1, ... key-n, value-n</param>
-        public MapOf(params string[] pairSequence) : this(new EnumerableOf<string>(pairSequence))
+        public LiveMap(params string[] pairSequence) : this(new EnumerableOf<string>(pairSequence))
         { }
 
         /// <summary>
         /// A map from string to string.
         /// </summary>
         /// <param name="pairSequence">Pairs as a sequence, ordered like this: key-1, value-1, ... key-n, value-n</param>
-        public MapOf(IEnumerable<string> pairSequence) : base(() =>
+        public LiveMap(IEnumerable<string> pairSequence) : base(() =>
             {
                 var idx = -1;
                 var enumerator = pairSequence.GetEnumerator();
@@ -160,14 +162,14 @@ namespace Yaapii.Atoms.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">inputs</param>
-        public MapOf(params IMapInput[] inputs) : this(new EnumerableOf<IMapInput>(inputs))
+        public LiveMap(params IMapInput[] inputs) : this(new EnumerableOf<IMapInput>(inputs))
         { }
 
         /// <summary>
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">enumerable of map inputs</param>
-        public MapOf(IEnumerable<IMapInput> inputs) : base(
+        public LiveMap(IEnumerable<IMapInput> inputs) : base(
             () =>
             {
                 IDictionary<string, string> dict = new LazyDict();
@@ -183,13 +185,15 @@ namespace Yaapii.Atoms.Map
 
     /// <summary>
     /// A map from string to typed value.
+    /// You must understand, that this map will build every time when any method is called.
+    /// If you do not want this, use <see cref="MapOf"/>
     /// </summary>
-    public sealed class MapOf<Value> : MapEnvelope<Value>
+    public sealed class LiveMap<Value> : LiveMapEnvelope<Value>
     {
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public MapOf(KeyValuePair<string,Value> entry, params KeyValuePair<string, Value>[] more) : this(
+        public LiveMap(KeyValuePair<string,Value> entry, params KeyValuePair<string, Value>[] more) : this(
             new Joined<KeyValuePair<string,Value>>(
                 new EnumerableOf<KeyValuePair<string, Value>>(more),
                 entry
@@ -202,7 +206,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="src">source dictionary</param>
         /// <param name="list">KeyValuePairs to append</param>
-        public MapOf(IDictionary<string, Value> src, params KeyValuePair<string, Value>[] list) : this(
+        public LiveMap(IDictionary<string, Value> src, params KeyValuePair<string, Value>[] list) : this(
             src,
             new EnumerableOf<KeyValuePair<string, Value>>(list))
         { }
@@ -212,7 +216,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="src"></param>
         /// <param name="list"></param>
-        public MapOf(IDictionary<string, Value> src, IEnumerable<KeyValuePair<string, Value>> list) : this(
+        public LiveMap(IDictionary<string, Value> src, IEnumerable<KeyValuePair<string, Value>> list) : this(
             new Joined<KeyValuePair<string, Value>>(
                 src,
                 list
@@ -223,7 +227,7 @@ namespace Yaapii.Atoms.Map
         /// A map by taking the given entries.
         /// </summary>
         /// <param name="entries">enumerator of KeyValuePairs</param>
-        public MapOf(IEnumerator<KeyValuePair<string, Value>> entries) : this(
+        public LiveMap(IEnumerator<KeyValuePair<string, Value>> entries) : this(
             new EnumerableOf<KeyValuePair<string, Value>>(entries))
         { }
 
@@ -231,7 +235,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given function result
         /// </summary>
         /// <param name="fnc"></param>
-        public MapOf(Func<IEnumerable<KeyValuePair<string, Value>>> fnc) : this(
+        public LiveMap(Func<IEnumerable<KeyValuePair<string, Value>>> fnc) : this(
             new EnumerableOf<KeyValuePair<string, Value>>(fnc))
         { }
 
@@ -239,7 +243,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given key value pairs.
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
-        public MapOf(IKvp<Value> entry, params IKvp<Value>[] entries) : this(
+        public LiveMap(IKvp<Value> entry, params IKvp<Value>[] entries) : this(
             new EnumerableOf<IMapInput<Value>>(
                 new MapInputOf<Value>(entry),
                 new MapInputOf<Value>(entries)
@@ -251,7 +255,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given key value pairs.
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
-        public MapOf(IEnumerable<IKvp<Value>> entries) : this(
+        public LiveMap(IEnumerable<IKvp<Value>> entries) : this(
             new EnumerableOf<IMapInput<Value>>(
                 new MapInputOf<Value>(entries)
             )
@@ -262,7 +266,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given entries.
         /// </summary>
         /// <param name="entries">enumerable of entries</param>
-        public MapOf(IEnumerable<KeyValuePair<string, Value>> entries) : base(() =>
+        public LiveMap(IEnumerable<KeyValuePair<string, Value>> entries) : base(() =>
         {
             var temp = new Dictionary<string, Value>();
             foreach (var entry in entries)
@@ -277,14 +281,14 @@ namespace Yaapii.Atoms.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">inputs</param>
-        public MapOf(params IMapInput<Value>[] inputs) : this(new EnumerableOf<IMapInput<Value>>(inputs))
+        public LiveMap(params IMapInput<Value>[] inputs) : this(new EnumerableOf<IMapInput<Value>>(inputs))
         { }
 
         /// <summary>
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">enumerable of map inputs</param>
-        public MapOf(IEnumerable<IMapInput<Value>> inputs) : base(
+        public LiveMap(IEnumerable<IMapInput<Value>> inputs) : base(
             () =>
             {
                 IDictionary<string, Value> dict = new LazyDict<Value>();
@@ -300,13 +304,15 @@ namespace Yaapii.Atoms.Map
 
     /// <summary>
     /// A map from string to typed value.
+    /// You must understand, that this map will build every time when any method is called.
+    /// If you do not want this, use <see cref="MapOf"/>
     /// </summary>
-    public sealed class MapOf<Key, Value> : MapEnvelope<Key, Value>
+    public sealed class LiveMap<Key, Value> : LiveMapEnvelope<Key, Value>
     {
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public MapOf(KeyValuePair<Key, Value> item, params KeyValuePair<Key, Value>[] more) : this(
+        public LiveMap(KeyValuePair<Key, Value> item, params KeyValuePair<Key, Value>[] more) : this(
             new Joined<KeyValuePair<Key, Value>>(
                 new EnumerableOf<KeyValuePair<Key, Value>>(more),
                 item
@@ -319,7 +325,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="src">source dictionary</param>
         /// <param name="list">KeyValuePairs to append</param>
-        public MapOf(IDictionary<Key, Value> src, params KeyValuePair<Key, Value>[] list) : this(
+        public LiveMap(IDictionary<Key, Value> src, params KeyValuePair<Key, Value>[] list) : this(
             src,
             new EnumerableOf<KeyValuePair<Key, Value>>(list))
         { }
@@ -329,7 +335,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="src"></param>
         /// <param name="list"></param>
-        public MapOf(IDictionary<Key, Value> src, IEnumerable<KeyValuePair<Key, Value>> list) : this(
+        public LiveMap(IDictionary<Key, Value> src, IEnumerable<KeyValuePair<Key, Value>> list) : this(
             new Joined<KeyValuePair<Key, Value>>(
                 src,
                 list
@@ -340,7 +346,7 @@ namespace Yaapii.Atoms.Map
         /// A map by taking the given entries.
         /// </summary>
         /// <param name="entries">enumerator of KeyValuePairs</param>
-        public MapOf(IEnumerator<KeyValuePair<Key, Value>> entries) : this(
+        public LiveMap(IEnumerator<KeyValuePair<Key, Value>> entries) : this(
             new EnumerableOf<KeyValuePair<Key, Value>>(entries))
         { }
 
@@ -348,14 +354,14 @@ namespace Yaapii.Atoms.Map
         /// A map from the given function result
         /// </summary>
         /// <param name="fnc"></param>
-        public MapOf(Func<IEnumerable<KeyValuePair<Key, Value>>> fnc) : this(
+        public LiveMap(Func<IEnumerable<KeyValuePair<Key, Value>>> fnc) : this(
             new EnumerableOf<KeyValuePair<Key, Value>>(fnc))
         { }
 
         /// <summary>
         /// A map from the given key value pairs.
         /// </summary>
-        public MapOf(IKvp<Key, Value> entry, params IKvp<Key, Value>[] more) : this(
+        public LiveMap(IKvp<Key, Value> entry, params IKvp<Key, Value>[] more) : this(
             new EnumerableOf<IMapInput<Key, Value>>(
                 new MapInputOf<Key, Value>(entry),
                 new MapInputOf<Key, Value>(more)
@@ -367,7 +373,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given key value pairs.
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
-        public MapOf(IEnumerable<IKvp<Key, Value>> entries) : this(
+        public LiveMap(IEnumerable<IKvp<Key, Value>> entries) : this(
             new EnumerableOf<IMapInput<Key, Value>>(
                 new MapInputOf<Key, Value>(entries)
             )
@@ -378,7 +384,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given entries.
         /// </summary>
         /// <param name="entries">enumerable of entries</param>
-        public MapOf(IEnumerable<KeyValuePair<Key, Value>> entries) : base(() =>
+        public LiveMap(IEnumerable<KeyValuePair<Key, Value>> entries) : base(() =>
         {
             var temp = new Dictionary<Key, Value>();
             foreach (var entry in entries)
@@ -393,14 +399,14 @@ namespace Yaapii.Atoms.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">inputs</param>
-        public MapOf(params IMapInput<Key, Value>[] inputs) : this(new EnumerableOf<IMapInput<Key, Value>>(inputs))
+        public LiveMap(params IMapInput<Key, Value>[] inputs) : this(new EnumerableOf<IMapInput<Key, Value>>(inputs))
         { }
 
         /// <summary>
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">enumerable of map inputs</param>
-        public MapOf(IEnumerable<IMapInput<Key, Value>> inputs) : base(
+        public LiveMap(IEnumerable<IMapInput<Key, Value>> inputs) : base(
             () =>
             {
                 IDictionary<Key, Value> dict = new LazyDict<Key, Value>();

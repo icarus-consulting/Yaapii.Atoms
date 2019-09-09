@@ -21,13 +21,8 @@
 // SOFTWARE.
 
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Threading;
 using Xunit;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Map.Tests
 {

@@ -46,9 +46,9 @@ namespace Yaapii.Atoms.Func
             trigger,
             prepare,
             shoot,
-            new MapOf<string, TimeSpan>(
-                new KeyValuePair<string, TimeSpan>("timeout", timeout),
-                new KeyValuePair<string, TimeSpan>("interval", interval)
+            new MapOf<TimeSpan>(
+                new KvpOf<TimeSpan>("timeout", timeout),
+                new KvpOf<TimeSpan>("interval", interval)
             ))
         { }
 
