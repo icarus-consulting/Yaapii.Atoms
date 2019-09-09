@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Enumerable
     /// </summary>
     public sealed class LengthOf : IScalar<Int32>
     {
-        private readonly IEnumerable _enumerable;
+        private readonly IEnumerable items;
 
         /// <summary>
         /// Length of an <see cref="IEnumerable"/>
@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="items">the enumerable</param>
         public LengthOf(IEnumerable items)
         {
-            this._enumerable = items;
+            this.items = items;
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <returns>the length</returns>
         public Int32 Value()
         {
-            return new Enumerator.LengthOf(this._enumerable.GetEnumerator()).Value();
+            return new Enumerator.LengthOf(this.items.GetEnumerator()).Value();
         }
 
     }
