@@ -20,12 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerable.Tests
@@ -54,6 +50,24 @@ namespace Yaapii.Atoms.Enumerable.Tests
                     )
                 ).Value() == 3,
             "Can't convert objects to enumerable");
+        }
+
+        [Fact]
+        public void IsSticky()
+        {
+            var lst = new List<string>();
+            var length =
+                new LengthOf(
+                    new EnumerableOf<string>(() =>
+                    {
+                        lst.Add("something");
+                        return lst;
+                    })
+                );
+
+            var a = length.Value();
+            var b = length.Value();
+            Assert.Equal(a, b);
         }
     }
 

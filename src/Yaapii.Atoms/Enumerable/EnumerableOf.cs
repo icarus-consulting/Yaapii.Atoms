@@ -57,47 +57,32 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
-        /// <param name="fnc">function which retrieves enumerator</param>
-        public EnumerableOf(Func<IEnumerator<T>> fnc) : this(new ScalarOf<IEnumerator<T>>(fnc))
+        public EnumerableOf(IScalar<IEnumerator<T>> sc) : this(() => sc.Value())
         { }
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
-        public EnumerableOf(Func<IEnumerable<T>> fnc) : this(new ScalarOf<IEnumerator<T>>(() => fnc.Invoke().GetEnumerator()))
+        public EnumerableOf(Func<IEnumerable<T>> fnc) : this(() => fnc().GetEnumerator())
         { }
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
-        public EnumerableOf(IScalar<IEnumerator<T>> origin) : base(
-            new ScalarOf<IEnumerable<T>>(() => new EnumeratorAsEnumerable<T>(origin.Value())))
+        public EnumerableOf(Func<IEnumerator<T>> origin) : base(
+            () => 
+            {
+                var enm = origin();
+                var lst = new List<T>();
+                while (enm.MoveNext())
+                {
+                    lst.Add(enm.Current);
+                };
+                return lst;
+            }
+        )
         { }
-
-        /// <summary>
-        /// Makes enumerable from an enumerator
-        /// </summary>
-        /// <typeparam name="X"></typeparam>
-        private class EnumeratorAsEnumerable<X> : IEnumerable<X>
-        {
-            private readonly IEnumerator<X> _origin;
-
-            public EnumeratorAsEnumerable(IEnumerator<X> enumerator)
-            {
-                _origin = enumerator;
-            }
-
-            public IEnumerator<X> GetEnumerator()
-            {
-                return _origin;
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return this.GetEnumerator();
-            }
-        }
     }
 }
