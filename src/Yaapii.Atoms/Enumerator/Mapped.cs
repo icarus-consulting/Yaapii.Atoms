@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Enumerator
         private readonly List<int> _index;
 
         /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="BiFunc{In, Index, Out}"/> function with index.
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fnc">mapping function</param>
@@ -60,11 +60,11 @@ namespace Yaapii.Atoms.Enumerator
         { }
 
         /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="BiFunc{In, Index, Out}"/> function with index.
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fnc">mapping function</param>
-        public Mapped(IEnumerator<In> src, BiFunc<In, int, Out> fnc) : this(src,
+        public Mapped(IEnumerator<In> src, IBiFunc<In, int, Out> fnc) : this(src,
         (input, index) => fnc.Invoke(input, index))
         { }
 

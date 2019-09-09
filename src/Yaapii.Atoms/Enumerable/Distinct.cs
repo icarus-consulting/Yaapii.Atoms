@@ -36,7 +36,9 @@ namespace Yaapii.Atoms.Enumerable
         /// The distinct elements of one or multiple Enumerables.
         /// </summary>
         /// <param name="enumerables">enumerables to get distinct elements from</param>
-        public Distinct(params IEnumerable<T>[] enumerables) : this(new EnumerableOf<IEnumerable<T>>(enumerables))
+        public Distinct(params IEnumerable<T>[] enumerables) : this(
+            new LiveEnumerable<IEnumerable<T>>(enumerables)
+        )
         { }
 
         /// <summary>

@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(params IKvp[] kvps) : this(
-            new EnumerableOf<IKvp>(kvps)
+            new LiveEnumerable<IKvp>(kvps)
         )
         { }
 
@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(IDictionary<string, string> dict) : this(
-            input =>new JoinedMap(input, dict)
+            input => new JoinedMap(input, dict)
         )
         { }
 
@@ -106,7 +106,7 @@ namespace Yaapii.Atoms.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(params IKvp<Value>[] kvps) : this(
-            new EnumerableOf<IKvp<Value>>(kvps)
+            new LiveEnumerable<IKvp<Value>>(kvps)
         )
         { }
 
@@ -180,7 +180,7 @@ namespace Yaapii.Atoms.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(params IKvp<Key, Value>[] kvps) : this(
-            new EnumerableOf<IKvp<Key, Value>>(kvps)
+            new LiveEnumerable<IKvp<Key, Value>>(kvps)
         )
         { }
 

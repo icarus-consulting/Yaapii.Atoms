@@ -43,14 +43,17 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
-        public Joined(IEnumerable<T> lst, params T[] items) : this(new EnumerableOf<IEnumerable<T>>(lst, new EnumerableOf<T>(items)))
+        public Joined(IEnumerable<T> lst, params T[] items) : this(
+            new LiveEnumerable<IEnumerable<T>>(lst, new LiveEnumerable<T>(items)))
         { }
 
         /// <summary>
         /// Multiple <see cref="IEnumerable{T}"/> joined together.
         /// </summary>
         /// <param name="items">enumerables to join</param>
-        public Joined(params IEnumerable<T>[] items) : this(new EnumerableOf<IEnumerable<T>>(items))
+        public Joined(params IEnumerable<T>[] items) : this(
+            new LiveEnumerable<IEnumerable<T>>(items)
+        )
         { }
 
         /// <summary>

@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Enumerable
     {
         private readonly IEnumerable<Element> enumerable;
         private readonly InAndOut input;
-        private readonly BiFunc<InAndOut , Element, InAndOut> func;
+        private readonly IBiFunc<InAndOut , Element, InAndOut> func;
 
         /// <summary>
         /// <see cref="IEnumerable{Element}"/> whose items are reduced to one item using the given function.
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="toReduce">enumerable to reduce</param>
         /// <param name="input">input for the reducing function</param>
         /// <param name="fnc">reducing function</param>
-        public Reduced(IEnumerable<Element> toReduce, InAndOut input, BiFunc<InAndOut, Element, InAndOut> fnc)
+        public Reduced(IEnumerable<Element> toReduce, InAndOut input, IBiFunc<InAndOut, Element, InAndOut> fnc)
         {
             this.enumerable = toReduce;
             this.input = input;

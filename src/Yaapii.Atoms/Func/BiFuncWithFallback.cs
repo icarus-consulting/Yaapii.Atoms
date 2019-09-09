@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Func
     /// <typeparam name="In1">First argument type</typeparam>
     /// <typeparam name="In2">Second argument type</typeparam>
     /// <typeparam name="Out">Return type</typeparam>
-    public sealed class BiFuncWithFallback<In1, In2, Out> : BiFunc<In1, In2, Out>
+    public sealed class BiFuncWithFallback<In1, In2, Out> : IBiFunc<In1, In2, Out>
     {
         /// <summary>
         /// Func to call

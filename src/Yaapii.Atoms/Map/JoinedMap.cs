@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.Map
         /// Joined map.
         /// </summary>
         public JoinedMap(params IDictionary<string, string>[] dicts) : this(
-            new EnumerableOf<IDictionary<string, string>>(dicts)
+            new LiveEnumerable<IDictionary<string, string>>(dicts)
         )
         { }
 
@@ -79,7 +79,7 @@ namespace Yaapii.Atoms.Map
         /// Joined map.
         /// </summary>
         public JoinedMap(params IDictionary<string, Value>[] dicts) : this(
-            new EnumerableOf<IDictionary<string, Value>>(dicts)
+            new LiveEnumerable<IDictionary<string, Value>>(dicts)
         )
         { }
 
@@ -129,7 +129,7 @@ namespace Yaapii.Atoms.Map
         /// Joined map.
         /// </summary>
         public JoinedMap(params IDictionary<Key, Value>[] dicts) : this(
-            new EnumerableOf<IDictionary<Key, Value>>(dicts)
+            new LiveEnumerable<IDictionary<Key, Value>>(dicts)
         )
         { }
 

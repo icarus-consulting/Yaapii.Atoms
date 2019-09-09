@@ -101,7 +101,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
-        public ItemAt(IEnumerable<T> source, BiFunc<Exception, IEnumerable<T>, T> fallback) : this(
+        public ItemAt(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback) : this(
             source, 0, fallback)
         { }
 
@@ -187,14 +187,14 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(IEnumerable<T> source, int position, BiFunc<Exception, IEnumerable<T>, T> fallback) : this(
+        public ItemAt(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback) : this(
             new ScalarOf<T>(
                 () =>
-                    {
-                        return new Enumerator.ItemAt<T>(
-                           source.GetEnumerator(), position, fallback
-                       ).Value();
-                    }
+                {
+                    return new Enumerator.ItemAt<T>(
+                       source.GetEnumerator(), position, fallback
+                   ).Value();
+                }
                 )
             )
         { }

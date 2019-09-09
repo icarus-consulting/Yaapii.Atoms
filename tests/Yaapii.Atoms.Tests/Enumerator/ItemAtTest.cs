@@ -90,9 +90,10 @@ namespace Yaapii.Atoms.Enumerator.Tests
             Assert.Throws<NoSuchElementException>(
                 () =>
                 new ItemAt<int>(
-                    new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
-                3
-            ).Value());
+                    new LiveEnumerable<int>(1, 2, 3).GetEnumerator(),
+                    3
+                ).Value()
+            );
         }
     }
 }

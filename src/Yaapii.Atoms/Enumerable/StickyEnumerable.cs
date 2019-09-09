@@ -38,14 +38,14 @@ namespace Yaapii.Atoms.Enumerable
         /// Makes a sticky enumerable
         /// </summary>
         /// <param name="items">The items</param>
-        public StickyEnumerable(params T[] items) : this(new EnumerableOf<T>(items))
+        public StickyEnumerable(params T[] items) : this(new LiveEnumerable<T>(items))
         { }
        
         /// <summary>
         /// Makes a sticky enumerable
         /// </summary>
         /// <param name="item">The enumerator</param>
-        public StickyEnumerable(IEnumerator<T> item) : this(new EnumerableOf<T>(item))
+        public StickyEnumerable(IEnumerator<T> item) : this(new LiveEnumerable<T>(() => item))
         { }
        
         /// <summary>

@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Func
     /// <typeparam name="In1">type of first input</typeparam>
     /// <typeparam name="In2">type of second input</typeparam>
     /// <typeparam name="Out">type of output</typeparam>
-    public sealed class BiFuncOf<In1, In2, Out> : BiFunc<In1, In2, Out>
+    public sealed class BiFuncOf<In1, In2, Out> : IBiFunc<In1, In2, Out>
     {
         private readonly System.Func<In1, In2, Out> _func;
 

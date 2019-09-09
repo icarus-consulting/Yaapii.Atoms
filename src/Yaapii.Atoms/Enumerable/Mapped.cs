@@ -41,15 +41,21 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IFunc<In, Out> fnc, params In[] src) : this(fnc, new EnumerableOf<In>(src))
+        public Mapped(IFunc<In, Out> fnc, params In[] src) : this(
+            fnc, 
+            new LiveEnumerable<In>(src)
+        )
         { }
 
         /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="BiFunc{In, Index, Out}"/> function with index.
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(BiFunc<In, int, Out> fnc, params In[] src) : this(fnc, new EnumerableOf<In>(src))
+        public Mapped(IBiFunc<In, int, Out> fnc, params In[] src) : this(
+            fnc, 
+            new LiveEnumerable<In>(src)
+        )
         { }
 
         /// <summary>
@@ -81,11 +87,11 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="BiFunc{In, Index, Out}"/> function with index.
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(BiFunc<In, int, Out> fnc, IEnumerable<In> src) : base(() =>
+        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src) : base(() =>
             new LiveEnumerable<Out>(() =>
                 new Enumerator.Mapped<In, Out>(
                     src.GetEnumerator(), fnc)
