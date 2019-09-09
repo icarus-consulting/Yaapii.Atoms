@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <summary>
     /// A <see cref="ArrayList"/> converted to IEnumerable&lt;object&gt;
     /// </summary>
-    public sealed class ArrayListAsEnumerable : EnumerableEnvelope<object>
+    public sealed class ArrayListAsEnumerable : LiveEnumerableEnvelope<object>
     {
         /// <summary>
         /// A ArrayList converted to IEnumerable&lt;object&gt;

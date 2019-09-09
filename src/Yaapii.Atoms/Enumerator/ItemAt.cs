@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Enumerator
                 new BiFuncOf<Exception, IEnumerable<T>, T>(
                     (ex, item) =>
                     {
-                        throw 
+                        throw
                             new NoSuchElementException(
                                 new Formatted("Cannot get item: {0}", ex.Message).AsString());
                     })
@@ -120,7 +120,7 @@ namespace Yaapii.Atoms.Enumerator
                 new BiFuncOf<Exception, IEnumerable<T>, T>(
                     (ex, itr) =>
                     {
-                        throw 
+                        throw
                             new NoSuchElementException(
                                 new Formatted(
                                     "Cannot get item: {0}",
@@ -171,7 +171,13 @@ namespace Yaapii.Atoms.Enumerator
                     new NoSuchElementException(
                 "The enumerable is empty")).Go(); //will never get out
 
-                for (int cur = 1; cur <= this._pos && this._src.MoveNext(); ++cur) { }
+                for (int cur = 1; cur <= this._pos; ++cur)
+                {
+                    if(!this._src.MoveNext())
+                    {
+                        throw new InvalidOperationException($"Cannot get item {this._pos} - The enumerable has only {cur} items.");
+                    }
+                }
 
                 ret = this._src.Current;
             }

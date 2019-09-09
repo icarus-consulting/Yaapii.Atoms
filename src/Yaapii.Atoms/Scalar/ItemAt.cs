@@ -190,11 +190,11 @@ namespace Yaapii.Atoms.Enumerable
         public ItemAt(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback) : this(
             new ScalarOf<T>(
                 () =>
-                    {
-                        return new Enumerator.ItemAt<T>(
-                           source.GetEnumerator(), position, fallback
-                       ).Value();
-                    }
+                {
+                    return new Enumerator.ItemAt<T>(
+                       source.GetEnumerator(), position, fallback
+                   ).Value();
+                }
                 )
             )
         { }

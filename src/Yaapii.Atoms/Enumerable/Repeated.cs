@@ -36,9 +36,9 @@ namespace Yaapii.Atoms.Enumerable
     /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
     /// </summary>
     /// <typeparam name="T">type of element to repeat</typeparam>
-    public sealed class Repeated<T> : EnumerableEnvelope<T>
+    public sealed class Repeated<T> : LiveEnumerableEnvelope<T>
     {
-/// <summary>
+        /// <summary>
         /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
         /// </summary>
         /// <param name="elm">function to get element to repeat</param>
@@ -70,11 +70,11 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
-        public Repeated(IScalar<T> elm, IScalar<int> cnt) : base(
-            new ScalarOf<IEnumerable<T>>(
-                () => 
-                new EnumerableOf<T>(
-                    new Enumerator.Repeated<T>(elm, cnt.Value()))))
+        public Repeated(IScalar<T> elm, IScalar<int> cnt) : base(() => 
+            new LiveEnumerable<T>(() =>
+                new Enumerator.Repeated<T>(elm, cnt.Value())
+            )
+        )
         { }
     }
 }

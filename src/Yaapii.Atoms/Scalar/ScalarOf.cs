@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Scalar
     /// <typeparam name="T">type of the value</typeparam>
     public sealed class ScalarOf<T> : IScalar<T>
     {
-        private readonly IFunc<T> _func;
+        private readonly Func<T> func;
 
         /// <summary>
         /// A <see cref="IScalar{T}"/> out of an object.
@@ -47,30 +47,30 @@ namespace Yaapii.Atoms.Scalar
         /// A <see cref="IScalar{T}"/> out of the return value from a <see cref="Func{T, TResult}"/>.
         /// </summary>
         /// <param name="func"></param>
-        public ScalarOf(Func<T> func) : this(new FuncOf<T>(() => func.Invoke()))
+        public ScalarOf(IFunc<T> func) : this(() => func.Invoke())
         { }
 
         /// <summary>
         /// A <see cref="IScalar{T}"/> out of the return value from a <see cref="Func{T, TResult}"/>.
         /// </summary>
         /// <param name="func"></param>
-        public ScalarOf(Func<bool, T> func) : this(new FuncOf<T>(() => func.Invoke(true)))
+        public ScalarOf(IFunc<bool, T> func) : this(() => func.Invoke(true))
         { }
 
         /// <summary>
         /// A <see cref="IScalar{T}"/> out of the return value from an <see cref="IFunc{In, Out}"/>
         /// </summary>
         /// <param name="func"></param>
-        public ScalarOf(IFunc<bool, T> func) : this(new FuncOf<T>(() => func.Invoke(true)))
+        public ScalarOf(Func<bool, T> func) : this(() => func.Invoke(true))
         { }
 
         /// <summary>
         /// Primary ctor
         /// </summary>
         /// <param name="func"></param>
-        public ScalarOf(IFunc<T> func)
+        public ScalarOf(Func<T> func)
         {
-            _func = func;
+            this.func = func;
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Yaapii.Atoms.Scalar
         /// <returns></returns>
         public T Value()
         {
-            return _func.Invoke();
+            return func.Invoke();
         }
     }
 }

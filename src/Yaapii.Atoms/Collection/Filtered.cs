@@ -43,13 +43,18 @@ namespace Yaapii.Atoms.Collection
         public Filtered(Func<T, Boolean> func, T item1, T item2, params T[] items) :
             this(
                 func,
-                new EnumerableOf<T>(
+                new LiveEnumerable<T>(
                     new ScalarOf<IEnumerator<T>>(
                         () => new Joined<T>(
-                            new EnumerableOf<T>(
+                            new LiveEnumerable<T>(
                                 item1,
-                                item2),
-                            items).GetEnumerator())))
+                                item2
+                            ),
+                            items
+                        ).GetEnumerator()
+                    )
+                )
+            )
         { }
 
         /// <summary>
@@ -65,10 +70,15 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="func">filter func</param>
         /// <param name="src">items to filter</param>
-        public Filtered(Func<T, Boolean> func, IEnumerable<T> src) : base(new ScalarOf<ICollection<T>>(() => new CollectionOf<T>(
-                 new Enumerable.Filtered<T>(
-                     func, src
-                 ))))
+        public Filtered(Func<T, Boolean> func, IEnumerable<T> src) : base(
+            new ScalarOf<ICollection<T>>(() => 
+                new CollectionOf<T>(
+                    new Enumerable.Filtered<T>(
+                        func, src
+                    )
+                )
+            )
+        )
         { }
 
     }

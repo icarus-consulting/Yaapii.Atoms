@@ -36,16 +36,17 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> that starts from the beginning when ended.
     /// </summary>
     /// <typeparam name="T">type of the contents</typeparam>
-    public sealed class Cycled<T> : EnumerableEnvelope<T>
+    public sealed class Cycled<T> : LiveEnumerableEnvelope<T>
     {
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> that starts from the beginning when ended.
         /// </summary>
         /// <param name="enumerable">an enum to cycle</param>
-        public Cycled(IEnumerable<T> enumerable) : base(
-            new ScalarOf<IEnumerable<T>>(
-                new EnumerableOf<T>(
-                    new Enumerator.Cycled<T>(enumerable))))
+        public Cycled(IEnumerable<T> enumerable) : base(() =>
+            new LiveEnumerable<T>(() =>
+                new Enumerator.Cycled<T>(enumerable)
+            )
+        )
         { }
     }
 }

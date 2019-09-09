@@ -23,38 +23,55 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// The sticky represantation of an <see cref="IEnumerable{T}"/>
+    /// Envelope for Enumerable.
+    /// You must understand that this enumerable is built live
+    /// every time when a enumerator is requested.
+    /// If you do not want this, use <see cref="EnumerableOf{T}"/>
     /// </summary>
-    /// <typeparam name="T">The type of the enumerable</typeparam>
-    public class StickyEnumerable<T> : EnumerableEnvelope<T>
+    /// <typeparam name="T"></typeparam>
+    public abstract class LiveEnumerableEnvelope<T> : IEnumerable<T>
     {
         /// <summary>
-        /// Makes a sticky enumerable
+        /// The source enumerable.
         /// </summary>
-        /// <param name="items">The items</param>
-        public StickyEnumerable(params T[] items) : this(new LiveEnumerable<T>(items))
-        { }
-       
+        private readonly IScalar<IEnumerable<T>> origin;
+
         /// <summary>
-        /// Makes a sticky enumerable
+        /// Envelope for Enumerables.
         /// </summary>
-        /// <param name="item">The enumerator</param>
-        public StickyEnumerable(IEnumerator<T> item) : this(new LiveEnumerable<T>(() => item))
+        public LiveEnumerableEnvelope(Func<IEnumerable<T>> fnc) : this(
+            new ScalarOf<IEnumerable<T>>(fnc))
         { }
-       
+
         /// <summary>
-        /// Makes a sticky enumerable
+        /// Envelope for Enumerables.
         /// </summary>
-        /// <param name="src"></param>
-        public StickyEnumerable(IEnumerable<T> src) : base(
-            new Scalar.Sticky<IEnumerable<T>>(new List<T>(src))
-        )
-        { }
+        public LiveEnumerableEnvelope(IScalar<IEnumerable<T>> sc)
+        {
+            this.origin = sc;
+        }
+
+        /// <summary>
+        /// Enumerator for this envelope.
+        /// </summary>
+        /// <returns>The enumerator</returns>
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this.origin.Value().GetEnumerator();
+        }
+
+        /// <summary>
+        /// Enumerator for this envelope.
+        /// </summary>
+        /// <returns>The enumerator</returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }

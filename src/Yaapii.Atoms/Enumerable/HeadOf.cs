@@ -55,10 +55,11 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public HeadOf(IEnumerable<T> enumerable, IScalar<int> limit) : base(
-             new ScalarOf<IEnumerable<T>>(() =>
-                new EnumerableOf<T>(
-                  new Enumerator.HeadOf<T>(enumerable.GetEnumerator(), limit.Value()))))
+        public HeadOf(IEnumerable<T> enumerable, IScalar<int> limit) : base(() =>
+            new LiveEnumerable<T>(() =>
+                new Enumerator.HeadOf<T>(enumerable.GetEnumerator(), limit.Value())
+            )
+        )
         { }
     }
 }

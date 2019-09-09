@@ -35,21 +35,22 @@ namespace Yaapii.Atoms.Enumerable
     public abstract class EnumerableEnvelope<T> : IEnumerable<T>
     {
         /// <summary>
-        /// The source enumerable.
+        /// Build enumerable.
         /// </summary>
-        private readonly IScalar<IEnumerable<T>> origin;
+        private readonly Lazy<IEnumerable<T>> origin;
 
-        public EnumerableEnvelope(Func<IEnumerable<T>> fnc) : this(
-            new ScalarOf<IEnumerable<T>>(fnc))
+        /// <summary>
+        /// Envelope for Enumerable.
+        /// </summary>
+        public EnumerableEnvelope(IScalar<IEnumerable<T>> fnc) : this(() => fnc.Value())
         { }
 
         /// <summary>
-        /// Makes envelope for IEnumerable scalars.
+        /// Envelope for Enumerable.
         /// </summary>
-        /// <param name="sc"></param>
-        public EnumerableEnvelope(IScalar<IEnumerable<T>> sc)
+        public EnumerableEnvelope(Func<IEnumerable<T>> origin)
         {
-            this.origin = sc;
+            this.origin = new Lazy<IEnumerable<T>>(() => origin());
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <returns>The enumerator</returns>
         public IEnumerator<T> GetEnumerator()
         {
-            return this.origin.Value().GetEnumerator();
+            return this.origin.Value.GetEnumerator();
         }
 
         /// <summary>

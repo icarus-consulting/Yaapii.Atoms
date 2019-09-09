@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Map.Tests
                 );
             Assert.Equal(
                 "icaABCD",
-                new Grouped<string,double, string>(srcList, keyFunc, valueFunc)[3.0][1]
+                new GroupedMap<string, double, string>(srcList, keyFunc, valueFunc)[3.0][1]
             );
         }
     }

@@ -20,16 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Map
 {
@@ -38,17 +30,17 @@ namespace Yaapii.Atoms.Map
     /// </summary>
     /// <typeparam name="Key">type of key</typeparam>
     /// <typeparam name="Value">type of value</typeparam>
-    public sealed class MapNoNulls<Key, Value> : IDictionary<Key, Value>
+    public sealed class NoNullsMap<Key, Value> : IDictionary<Key, Value>
     {
-        private readonly IDictionary<Key, Value> _map;
+        private readonly IDictionary<Key, Value> map;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="map">IDictionary</param>
-        public MapNoNulls(IDictionary<Key, Value> map)
+        public NoNullsMap(IDictionary<Key, Value> map)
         {
-            this._map = map;
+            this.map = map;
         }
 
         /// <summary>
@@ -56,42 +48,42 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public Value this[Key key] 
-        { 
-            get 
+        public Value this[Key key]
+        {
+            get
             {
                 new Error.FailNull(key, "key can't be null.").Go();
-                var value = _map[key];
+                var value = map[key];
                 new Error.FailNull(value, $"Value returned by [{key}] is null.").Go();
-                return _map[key];
-            } 
+                return map[key];
+            }
             set
             {
                 new Error.FailNull(key, "key can't be null.").Go();
                 new Error.FailNull(value, "value can't be null.").Go();
-                _map[key] = value;
+                map[key] = value;
             }
         }
 
         /// <summary>
         /// Access all keys
         /// </summary>
-        public ICollection<Key> Keys => _map.Keys;
+        public ICollection<Key> Keys => map.Keys;
 
         /// <summary>
         /// Access all values
         /// </summary>
-        public ICollection<Value> Values => _map.Values;
+        public ICollection<Value> Values => map.Values;
 
         /// <summary>
         /// Count entries
         /// </summary>
-        public int Count => _map.Count;
+        public int Count => map.Count;
 
         /// <summary>
         /// Gets a value indicating whether the map is read-only.
         /// </summary>
-        public bool IsReadOnly => _map.IsReadOnly;
+        public bool IsReadOnly => map.IsReadOnly;
 
         /// <summary>
         /// Adds an element with the provided key and value to the map
@@ -102,7 +94,7 @@ namespace Yaapii.Atoms.Map
         {
             new Error.FailNull(key, "key can't be null.").Go();
             new Error.FailNull(value, "value can't be null.").Go();
-            _map.Add(key, value);
+            map.Add(key, value);
         }
 
         /// <summary>
@@ -113,7 +105,7 @@ namespace Yaapii.Atoms.Map
         {
             new Error.FailNull(item.Key, "key can't be null.").Go();
             new Error.FailNull(item.Value, "value can't be null.").Go();
-            _map.Add(item);
+            map.Add(item);
         }
 
         /// <summary>
@@ -121,7 +113,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         public void Clear()
         {
-            _map.Clear();
+            map.Clear();
         }
 
         /// <summary>
@@ -133,7 +125,7 @@ namespace Yaapii.Atoms.Map
         {
             new Error.FailNull(item.Key, "key can't be null.").Go();
             new Error.FailNull(item.Value, "value can't be null.").Go();
-            return _map.Contains(item);
+            return map.Contains(item);
         }
 
         /// <summary>
@@ -144,7 +136,7 @@ namespace Yaapii.Atoms.Map
         public bool ContainsKey(Key key)
         {
             new Error.FailNull(key, "key can't be null.").Go();
-            return _map.ContainsKey(key);
+            return map.ContainsKey(key);
         }
 
         /// <summary>
@@ -154,7 +146,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="arrayIndex">index to start</param>
         public void CopyTo(KeyValuePair<Key, Value>[] array, int arrayIndex)
         {
-            _map.CopyTo(array, arrayIndex);
+            map.CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -163,7 +155,7 @@ namespace Yaapii.Atoms.Map
         /// <returns>The enumerator</returns>
         public IEnumerator<KeyValuePair<Key, Value>> GetEnumerator()
         {
-            return _map.GetEnumerator();
+            return map.GetEnumerator();
         }
 
         /// <summary>
@@ -171,7 +163,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         public bool Remove(Key key)
         {
-            return _map.Remove(key);
+            return map.Remove(key);
         }
 
         /// <summary>
@@ -179,7 +171,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         public bool Remove(KeyValuePair<Key, Value> item)
         {
-            return _map.Remove(item);
+            return map.Remove(item);
         }
 
         /// <summary>
@@ -191,14 +183,14 @@ namespace Yaapii.Atoms.Map
         public bool TryGetValue(Key key, out Value value)
         {
             new Error.FailNull(key, "key can't be null.").Go();
-            var result = _map.TryGetValue(key, out value);
+            var result = map.TryGetValue(key, out value);
             new Error.FailNull(value, $"Value returned by [{key}] is null.").Go();
             return result;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _map.GetEnumerator();
+            return map.GetEnumerator();
         }
     }
 }

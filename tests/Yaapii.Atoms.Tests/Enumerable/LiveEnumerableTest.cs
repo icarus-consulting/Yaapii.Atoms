@@ -20,20 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using System.Collections.Generic;
+using System.Text;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
-    public sealed class EnumerableOfTest
+    public sealed class LiveEnumerableTest
     {
         [Fact]
         public void ConvertsScalarsToEnumerable()
         {
             Assert.True(
                 new LengthOf(
-                    new EnumerableOf<string>(
+                    new LiveEnumerable<string>(
                         "a", "b", "c"
                     )
                 ).Value() == 3,
@@ -45,7 +49,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new EnumerableOf<IText>(
+                    new LiveEnumerable<IText>(
                         new TextOf("a"), new TextOf("b"), new TextOf("c")
                     )
                 ).Value() == 3,
@@ -53,21 +57,18 @@ namespace Yaapii.Atoms.Enumerable.Tests
         }
 
         [Fact]
-        public void IsSticky()
+        public void SensesChanges()
         {
             var lst = new List<string>();
             var length =
                 new LengthOf(
-                    new EnumerableOf<string>(() =>
+                    new LiveEnumerable<string>(() =>
                     {
                         lst.Add("something");
                         return lst;
                     })
                 );
-
-            var a = length.Value();
-            var b = length.Value();
-            Assert.Equal(a, b);
+            Assert.NotEqual(length.Value(), length.Value());
         }
     }
 

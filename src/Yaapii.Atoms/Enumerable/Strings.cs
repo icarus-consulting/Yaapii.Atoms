@@ -34,7 +34,9 @@ namespace Yaapii.Atoms.Enumerable
         /// Enumerable of strings.
         /// </summary>
         /// <param name="strings"></param>
-        public Strings(params string[] strings) : base(new ScalarOf<IEnumerable<string>>(new EnumerableOf<string>(strings)))
+        public Strings(params string[] strings) : base(() =>
+            new LiveEnumerable<string>(strings)
+        )
         { }
     }
 }

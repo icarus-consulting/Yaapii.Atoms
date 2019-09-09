@@ -52,13 +52,13 @@ namespace Yaapii.Atoms.Func
 
         public BowAction(Func<bool> trigger, Action prepare, Action shoot, TimeSpan timeout, TimeSpan interval) : this(
             trigger,
-            new MapOf<string, Action>(
-                new KeyValuePair<string, Action>("prepare", prepare),
-                new KeyValuePair<string, Action>("shoot", shoot)
+            new MapOf<Action>(
+                new KvpOf<Action>("prepare", prepare),
+                new KvpOf<Action>("shoot", shoot)
             ),
-            new MapOf<string, TimeSpan>(
-                new KeyValuePair<string, TimeSpan>("timeout", timeout),
-                new KeyValuePair<string, TimeSpan>("interval", interval)
+            new MapOf<TimeSpan>(
+                new KvpOf<TimeSpan>("timeout", timeout),
+                new KvpOf<TimeSpan>("interval", interval)
             ))
         { }
 
