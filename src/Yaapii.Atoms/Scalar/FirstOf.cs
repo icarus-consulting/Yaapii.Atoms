@@ -119,7 +119,7 @@ namespace Yaapii.Atoms.Scalar
         { }
 
         /// <summary>
-        /// First element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IBiFunc{X, Y, Z}"/>
+        /// First element in a <see cref="IEnumerable{T}"/> fallback function <see cref="BiFunc{X, Y, Z}"/>
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fallback">fallback if no match</param>
@@ -127,7 +127,7 @@ namespace Yaapii.Atoms.Scalar
         { }
 
         /// <summary>
-        /// First element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IBiFunc{X, Y, Z}"/>
+        /// First element in a <see cref="IEnumerable{T}"/> fallback function <see cref="BiFunc{X, Y, Z}"/>
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fallback">fallback if no match</param>

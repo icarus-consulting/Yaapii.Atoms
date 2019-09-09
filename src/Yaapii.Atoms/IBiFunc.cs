@@ -32,7 +32,7 @@ namespace Yaapii.Atoms
     /// <typeparam name="X">Type of Input</typeparam>
     /// <typeparam name="Y">Type of Input</typeparam>
     /// <typeparam name="Z">Type of Output</typeparam>
-    public interface IBiFunc<X, Y, Z>
+    public interface BiFunc<X, Y, Z>
     {
         /// <summary>
         /// Apply it

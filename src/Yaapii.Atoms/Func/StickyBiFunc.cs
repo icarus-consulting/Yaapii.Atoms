@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// original func
         /// </summary>
-        private readonly IBiFunc<In1, In2, Out> _func;
+        private readonly BiFunc<In1, In2, Out> _func;
 
         /// <summary>
         /// cache
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Func
         /// Function with two inputs which returns the output from cache.
         /// </summary>
         /// <param name="fnc">func to cache result from</param>
-        public StickyBiFunc(IBiFunc<In1, In2, Out> fnc)
+        public StickyBiFunc(BiFunc<In1, In2, Out> fnc)
         {
             this._func = fnc;
             this._comparer = new KeyMapComparer();

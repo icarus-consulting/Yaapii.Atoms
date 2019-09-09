@@ -47,12 +47,12 @@ namespace Yaapii.Atoms.Enumerator
         /// <summary>
         /// fallback function for alternative value
         /// </summary>
-        private readonly IBiFunc<Exception, IEnumerable<T>, T> _fallback;
+        private readonly Func<Exception, IEnumerable<T>, T> fallback;
 
         /// <summary>
         /// position of the item
         /// </summary>
-        private readonly int _pos;
+        private readonly int pos;
 
         /// <summary>
         /// First element in a <see cref="IEnumerable{T}"/>.
@@ -62,14 +62,12 @@ namespace Yaapii.Atoms.Enumerator
         :
             this(
                 src,
-                new BiFuncOf<Exception, IEnumerable<T>, T>(
-                    (ex, item) =>
-                    {
-                        throw 
-                            new NoSuchElementException(
-                                new Formatted("Cannot get item: {0}", ex.Message).AsString());
-                    })
-                )
+                (ex, item) =>
+                {
+                    throw 
+                        new NoSuchElementException(
+                            new Formatted("Cannot get item: {0}", ex.Message).AsString());
+                })
         { }
 
         /// <summary>
@@ -77,7 +75,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="fallback">fallback value</param>
-        public ItemAt(IEnumerator<T> src, T fallback) : this(src, new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback))
+        public ItemAt(IEnumerator<T> src, T fallback) : this(src, (ex, enumerable) => fallback)
         { }
 
         /// <summary>
@@ -85,8 +83,9 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="fallback">fallback function</param>
-        public ItemAt(IEnumerator<T> src, Func<IEnumerable<T>, T> fallback)
-            : this(src, 0, new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback.Invoke(enumerable)))
+        public ItemAt(IEnumerator<T> src, Func<IEnumerable<T>, T> fallback) : this(
+            src, 0, (ex, enumerable) => fallback.Invoke(enumerable)
+        )
         { }
 
         /// <summary>
@@ -94,8 +93,8 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="fallback">fallback function</param>
-        public ItemAt(IEnumerator<T> src, Func<Exception, IEnumerable<T>, T> fallback)
-            : this(src, 0, new BiFuncOf<Exception, IEnumerable<T>, T>(fallback))
+        public ItemAt(IEnumerator<T> src, BiFunc<Exception, IEnumerable<T>, T> fallback)
+            : this(src, 0, (ipt1, ipt2) => fallback.Invoke(ipt1, ipt2))
         { }
 
         /// <summary>
@@ -103,7 +102,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="fallback">fallback function</param>
-        public ItemAt(IEnumerator<T> src, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+        public ItemAt(IEnumerator<T> src, Func<Exception, IEnumerable<T>, T> fallback)
             : this(src, 0, fallback)
         { }
 
@@ -117,17 +116,16 @@ namespace Yaapii.Atoms.Enumerator
             this(
                 src,
                 pos,
-                new BiFuncOf<Exception, IEnumerable<T>, T>(
-                    (ex, itr) =>
-                    {
-                        throw 
-                            new NoSuchElementException(
-                                new Formatted(
-                                    "Cannot get item: {0}",
-                                    ex.Message
-                                ).AsString());
-                    }
-            ))
+                (ex, itr) =>
+                {
+                    throw 
+                        new NoSuchElementException(
+                            new Formatted(
+                                "Cannot get item: {0}",
+                                ex.Message
+                            ).AsString());
+                }
+            )
         { }
 
         /// <summary>
@@ -139,12 +137,12 @@ namespace Yaapii.Atoms.Enumerator
         public ItemAt(
             IEnumerator<T> src,
             int pos,
-            IBiFunc<Exception, IEnumerable<T>, T> fbk
+            Func<Exception, IEnumerable<T>, T> fbk
         )
         {
-            this._pos = pos;
+            this.pos = pos;
             this._src = src;
-            this._fallback = fbk;
+            this.fallback = fbk;
         }
 
         /// <summary>
@@ -157,11 +155,11 @@ namespace Yaapii.Atoms.Enumerator
             try
             {
                 new FailPrecise(
-                    new FailWhen(this._pos < 0),
+                    new FailWhen(this.pos < 0),
                     new UnsupportedOperationException(
                         new Formatted(
                             "The position must be non-negative but is {0}",
-                            this._pos
+                            this.pos
                         ).AsString()
                     )
                 ).Go();
@@ -171,13 +169,13 @@ namespace Yaapii.Atoms.Enumerator
                     new NoSuchElementException(
                 "The enumerable is empty")).Go(); //will never get out
 
-                for (int cur = 1; cur <= this._pos && this._src.MoveNext(); ++cur) { }
+                for (int cur = 1; cur <= this.pos && this._src.MoveNext(); ++cur) { }
 
                 ret = this._src.Current;
             }
             catch (Exception ex)
             {
-                ret = this._fallback.Invoke(ex, new EnumerableOf<T>(this._src));
+                ret = this.fallback.Invoke(ex, new EnumerableOf<T>(this._src));
             }
             return ret;
 

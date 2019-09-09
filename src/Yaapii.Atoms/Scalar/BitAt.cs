@@ -10,7 +10,7 @@ namespace Yaapii.Atoms.Scalar
     {
         private readonly IBytes bytes;
         private readonly int position;
-        private readonly IFunc<IBytes, bool> fallback;
+        private readonly Func<IBytes, bool> fallback;
 
         /// <summary>
         /// The value of the first bit.
@@ -112,10 +112,10 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="bytes">Bytes from where the bit is taken</param>
         /// <param name="position">Zero based bit index in the bytes</param>
         /// <param name="fallback">Result in case of an error</param>
-        public BitAt(IBytes bytes, int position, Func<IBytes, bool> fallback) : this(
+        public BitAt(IBytes bytes, int position, IFunc<IBytes, bool> fallback) : this(
             bytes,
             position,
-            new FuncOf<IBytes, bool>(bts => fallback.Invoke(bts))
+            (bts) => fallback.Invoke(bts)
         )
         { }
 
@@ -125,7 +125,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="bytes">Bytes from where the bit is taken</param>
         /// <param name="position">Zero based bit index in the bytes</param>
         /// <param name="fallback">Result in case of an error</param>
-        public BitAt(IBytes bytes, int position, IFunc<IBytes, bool> fallback)
+        public BitAt(IBytes bytes, int position, Func<IBytes, bool> fallback)
         {
             this.bytes = bytes;
             this.position = position;

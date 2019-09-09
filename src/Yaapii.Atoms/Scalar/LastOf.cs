@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class LastOf<T> : IScalar<T>
     {
         private readonly IEnumerable<T> src;
-        private readonly IBiFunc<Exception, IEnumerable<T>, T> fbk;
+        private readonly Func<Exception, IEnumerable<T>, T> fbk;
 
         /// <summary>
         /// Last element in <see cref="IEnumerable{T}"/> with given Exception thrown on fallback
@@ -45,9 +45,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="ex"></param>
         public LastOf(IEnumerable<T> source, Exception ex) : this(
             source,
-            new FuncOf<IEnumerable<T>, T>(
-                (itr) => throw ex
-            )
+            (itr) => throw ex
         )
         { }
 
@@ -57,7 +55,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         public LastOf(IEnumerable<T> source) : this(
                 source,
-                new BiFuncOf<Exception, IEnumerable<T>, T>((ex, itr) =>
+                (ex, itr) =>
                 {
                     throw
                         new NoSuchElementException(
@@ -66,7 +64,7 @@ namespace Yaapii.Atoms.Enumerable
                                 ex.Message
                             ).AsString()
                     );
-                }))
+                })
         { }
 
         /// <summary>
@@ -76,7 +74,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="fallback">fallback func</param>
         public LastOf(IEnumerable<T> source, T fallback) : this(
             source,
-            new FuncOf<IEnumerable<T>, T>(b => fallback)
+            b => fallback
         )
         { }
 
@@ -85,7 +83,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public LastOf(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback) : this(
+        public LastOf(IEnumerable<T> source, Func<IEnumerable<T>, T> fallback) : this(
             source,
             (ex, enumerable) => fallback.Invoke(enumerable)
         )
@@ -96,10 +94,9 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public LastOf(IEnumerable<T> source, Func<Exception, IEnumerable<T>, T> fallback) : this(
+        public LastOf(IEnumerable<T> source, BiFunc<Exception, IEnumerable<T>, T> fallback) : this(
             source,
-            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback.Invoke(ex, enumerable)
-            )
+            (ex, enumerable) => fallback.Invoke(ex, enumerable)
         )
         { }
 
@@ -108,7 +105,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public LastOf(IEnumerable<T> src, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+        public LastOf(IEnumerable<T> src, Func<Exception, IEnumerable<T>, T> fallback)
         {
             this.src = src;
             this.fbk = fallback;
