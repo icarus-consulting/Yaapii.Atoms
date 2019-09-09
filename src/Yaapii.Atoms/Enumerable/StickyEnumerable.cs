@@ -53,16 +53,8 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src"></param>
         public StickyEnumerable(IEnumerable<T> src) : base(
-            new Scalar.Sticky<IEnumerable<T>>(() =>
-            {
-                List<T> lst = new List<T>();
-                foreach (T item in src)
-                {
-                    lst.Add(item);
-                }
-                return lst;
-            }
-        ))
+            new Scalar.Sticky<IEnumerable<T>>(new List<T>(src))
+        )
         { }
     }
 }
