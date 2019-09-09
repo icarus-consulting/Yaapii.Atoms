@@ -38,17 +38,17 @@ namespace Yaapii.Atoms.Enumerable
     /// Pass a filter function which will applied to all items, similar to List{T}.Where(...) in LinQ
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Filtered<T> : EnumerableEnvelope<T>
+    public sealed class Filtered<T> : LiveEnumerableEnvelope<T>
     {
         /// <summary>
         /// the enumerable to filter
         /// </summary>
-        private readonly IEnumerable<T> _enumerable;
+        private readonly IEnumerable<T> enumerable;
 
         /// <summary>
         /// filter function
         /// </summary>
-        private readonly Func<T, Boolean> _func;
+        private readonly Func<T, Boolean> func;
 
         /// <summary>
         /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
@@ -57,16 +57,18 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="item1">first item to filter</param>
         /// <param name="item2">secound item to filter</param>
         /// <param name="items">other items to filter</param>
-        public Filtered(Func<T, Boolean> fnc, T item1, T item2, params T[] items) :
-            this(
-                fnc,
-                new EnumerableOf<T>(
-                    new ScalarOf<IEnumerator<T>>(
-                        () => new Joined<T>(
-                            new EnumerableOf<T>(
-                                item1,
-                                item2),
-                            items).GetEnumerator())))
+        public Filtered(Func<T, Boolean> fnc, T item1, T item2, params T[] items) : this(
+            fnc,
+            new LiveEnumerable<T>(() => 
+                new Joined<T>(
+                    new LiveEnumerable<T>(
+                        item1,
+                        item2
+                    ),
+                    items
+                ).GetEnumerator()
+            )
+        )
         { }
 
         /// <summary>
@@ -74,15 +76,17 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src) : base(
-            new ScalarOf<IEnumerable<T>>(() =>
-                 new EnumerableOf<T>(
-                    new Enumerator.Filtered<T>(
-                        src.GetEnumerator(),
-                        fnc))))
+        public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src) : base(() =>
+            new LiveEnumerable<T>(() =>
+                new Enumerator.Filtered<T>(
+                    src.GetEnumerator(),
+                    fnc
+                )
+            )
+        )
         {
-            this._enumerable = src;
-            this._func = fnc;
+            this.enumerable = src;
+            this.func = fnc;
         }
     }
 }

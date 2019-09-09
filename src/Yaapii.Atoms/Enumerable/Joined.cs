@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Enumerable
     /// Multiple <see cref="IEnumerable{T}"/> joined together.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Joined<T> : EnumerableEnvelope<T>
+    public sealed class Joined<T> : LiveEnumerableEnvelope<T>
     {
         /// <summary>
         /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
@@ -57,18 +57,16 @@ namespace Yaapii.Atoms.Enumerable
         /// Multiple <see cref="IEnumerable{T}"/> joined together.
         /// </summary>
         /// <param name="items">enumerables to join</param>
-        public Joined(IEnumerable<IEnumerable<T>> items) : base(
-            new ScalarOf<IEnumerable<T>>(() => 
-                new EnumerableOf<T>(
-                    new Enumerator.Joined<T>(
-                        new Mapped<IEnumerable<T>, IEnumerator<T>>(//Map the content of list: Get every enumerator out of it and build one whole enumerator from it
-                            new StickyFunc<IEnumerable<T>, IEnumerator<T>>( //Sticky Gate
-                                new FuncOf<IEnumerable<T>, IEnumerator<T>>(
-                                    e => e.GetEnumerator() //Get the Enumerator
-                                )
-                            ),
-                            items //List with enumerators
-                        )
+        public Joined(IEnumerable<IEnumerable<T>> items) : base(() => 
+            new LiveEnumerable<T>(() =>
+                new Enumerator.Joined<T>(
+                    new Mapped<IEnumerable<T>, IEnumerator<T>>(//Map the content of list: Get every enumerator out of it and build one whole enumerator from it
+                        new StickyFunc<IEnumerable<T>, IEnumerator<T>>( //Sticky Gate
+                            new FuncOf<IEnumerable<T>, IEnumerator<T>>(
+                                e => e.GetEnumerator() //Get the Enumerator
+                            )
+                        ),
+                        items //List with enumerators
                     )
                 )
             )

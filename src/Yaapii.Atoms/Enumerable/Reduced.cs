@@ -34,9 +34,9 @@ namespace Yaapii.Atoms.Enumerable
     /// <typeparam name="Element">type of elements in a list to reduce</typeparam>
     public sealed class Reduced<InAndOut, Element> : IScalar<InAndOut>
     {
-        private readonly IEnumerable<Element> _enumerable;
-        private readonly InAndOut _input;
-        private readonly BiFunc<InAndOut , Element, InAndOut> _func;
+        private readonly IEnumerable<Element> enumerable;
+        private readonly InAndOut input;
+        private readonly BiFunc<InAndOut , Element, InAndOut> func;
 
         /// <summary>
         /// <see cref="IEnumerable{Element}"/> whose items are reduced to one item using the given function.
@@ -56,9 +56,9 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="fnc">reducing function</param>
         public Reduced(IEnumerable<Element> toReduce, InAndOut input, BiFunc<InAndOut, Element, InAndOut> fnc)
         {
-            this._enumerable = toReduce;
-            this._input = input;
-            this._func = fnc;
+            this.enumerable = toReduce;
+            this.input = input;
+            this.func = fnc;
         }
 
         /// <summary>
@@ -67,10 +67,10 @@ namespace Yaapii.Atoms.Enumerable
         /// <returns>the value</returns>
         public InAndOut Value()
         {
-            InAndOut memo = this._input;
-            foreach (Element item in this._enumerable)
+            InAndOut memo = this.input;
+            foreach (Element item in this.enumerable)
             {
-                memo = this._func.Invoke(memo, item);
+                memo = this.func.Invoke(memo, item);
             }
             return memo;
         }

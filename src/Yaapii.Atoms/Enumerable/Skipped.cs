@@ -36,17 +36,18 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Skipped<T> : EnumerableEnvelope<T>
+    public sealed class Skipped<T> : LiveEnumerableEnvelope<T>
     {
         /// <summary>
         /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
         /// </summary>
         /// <param name="enumerable">enumerable to skip items in</param>
         /// <param name="skip">how many to skip</param>
-        public Skipped(IEnumerable<T> enumerable, int skip) : base(new ScalarOf<IEnumerable<T>>(
-            () =>
-            new EnumerableOf<T>(
-                new Enumerator.Skipped<T>(enumerable.GetEnumerator(), skip))))
+        public Skipped(IEnumerable<T> enumerable, int skip) : base(() =>
+            new LiveEnumerable<T>(() =>
+                new Enumerator.Skipped<T>(enumerable.GetEnumerator(), skip)
+            )
+        )
         { }
     }
 }

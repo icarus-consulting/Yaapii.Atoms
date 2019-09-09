@@ -23,8 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Func;
 
 namespace Yaapii.Atoms.Enumerable

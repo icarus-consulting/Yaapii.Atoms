@@ -21,12 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -38,7 +34,7 @@ namespace Yaapii.Atoms.Enumerable
     /// </summary>
     /// <typeparam name="In">type of input elements</typeparam>
     /// <typeparam name="Out">type of mapped elements</typeparam>
-    public sealed class Mapped<In, Out> : EnumerableEnvelope<Out>
+    public sealed class Mapped<In, Out> : LiveEnumerableEnvelope<Out>
     {
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
