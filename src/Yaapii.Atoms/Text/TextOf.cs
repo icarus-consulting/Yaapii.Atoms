@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Text
     /// </summary>
     public sealed class TextOf : IText
     {
-        private readonly IScalar<String> _origin;
+        private readonly Lazy<String> origin;
 
         /// <summary>
         /// A <see cref="IText"/> out of a int.
@@ -57,9 +57,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="input">a <see cref="double"/></param>
         public TextOf(double input) : this(
-            new Sticky<string>(
-                () => input.ToString(CultureInfo.InvariantCulture)
-            )
+            () => input.ToString(CultureInfo.InvariantCulture)
         )
         { }
 
@@ -69,9 +67,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="input">a <see cref="double"/></param>
         /// <param name="cultureInfo">The </param>
         public TextOf(double input, CultureInfo cultureInfo) : this(
-            new Sticky<string>(
-                () => input.ToString(cultureInfo)
-            )
+            () => input.ToString(cultureInfo)
         )
         { }
 
@@ -80,9 +76,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="input">a <see cref="float"/></param>
         public TextOf(float input) : this(
-            new Sticky<string>(
-                () => input.ToString(CultureInfo.InvariantCulture)
-            )
+            () => input.ToString(CultureInfo.InvariantCulture)
         )
         { }
 
@@ -92,9 +86,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="input">a <see cref="float"/></param>
         /// <param name="cultureInfo">The </param>
         public TextOf(float input, CultureInfo cultureInfo) : this(
-            new Sticky<string>(
-                () => input.ToString(cultureInfo)
-            )
+            () => input.ToString(cultureInfo)
         )
         { }
 
@@ -286,26 +278,26 @@ namespace Yaapii.Atoms.Text
         { }
 
         /// <summary>
-        /// A <see cref="IText"/> out of the return value of a <see cref="Func{Out}"/>.
-        /// </summary>
-        /// <param name="fnc">function returning a string </param>
-        public TextOf(Func<string> fnc) : this(new ScalarOf<string>(fnc))
-        { }
-
-        /// <summary>
         /// A <see cref="IText"/> out of the return value of a <see cref="IFunc{T}"/>.
         /// </summary>
         /// <param name="fnc">func returning a string</param>
-        public TextOf(IFunc<string> fnc) : this(new ScalarOf<string>(fnc))
+        public TextOf(IFunc<string> fnc) : this(() => fnc.Invoke())
         { }
 
         /// <summary>
         /// A <see cref="IText"/> out of encapsulating <see cref="IScalar{T}"/>.
         /// </summary>
         /// <param name="scalar">scalar of a string</param>
-        public TextOf(IScalar<String> scalar)
+        public TextOf(IScalar<String> scalar) : this(() => scalar.Value())
+        { }
+
+        /// <summary>
+        /// A <see cref="IText"/> out of encapsulating <see cref="IScalar{T}"/>.
+        /// </summary>
+        /// <param name="scalar">scalar of a string</param>
+        public TextOf(Func<String> scalar)
         {
-            this._origin = scalar;
+            this.origin = new Lazy<string>(scalar);
         }
 
         /// <summary>
@@ -314,7 +306,7 @@ namespace Yaapii.Atoms.Text
         /// <returns></returns>
         public String AsString()
         {
-            return this._origin.Value();
+            return this.origin.Value;
         }
 
         /// <summary>
