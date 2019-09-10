@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Yaapii.Atoms.Map;
+using Yaapii.Atoms.Lookup;
 
 namespace Yaapii.Atoms.Func
 {
@@ -46,9 +46,9 @@ namespace Yaapii.Atoms.Func
             trigger,
             prepare,
             shoot,
-            new MapOf<TimeSpan>(
-                new KvpOf<TimeSpan>("timeout", timeout),
-                new KvpOf<TimeSpan>("interval", interval)
+            new Map.Of<TimeSpan>(
+                new Kvp.Of<TimeSpan>("timeout", timeout),
+                new Kvp.Of<TimeSpan>("interval", interval)
             ))
         { }
 

@@ -28,7 +28,7 @@ using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Map
+namespace Yaapii.Atoms.Lookup
 {
     /// <summary>
     /// A dictionary whose values are retrieved only when accessing them.

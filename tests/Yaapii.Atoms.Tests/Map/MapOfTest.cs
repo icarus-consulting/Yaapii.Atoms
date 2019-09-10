@@ -27,7 +27,7 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Map.Tests
+namespace Yaapii.Atoms.Lookup.Tests
 {
     public class MapOfTest
     {
@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Map.Tests
             var one = new KeyValuePair<string, string>("hello", "map");
             var two = new KeyValuePair<string, string>("goodbye", "dictionary");
 
-            var m = new MapOf(one, two);
+            var m = new Map.Of(one, two);
 
             Assert.True(m.Contains(one) && m.Contains(two));
         }
@@ -49,9 +49,9 @@ namespace Yaapii.Atoms.Map.Tests
         {
             Assert.Equal(
                 value,
-                new MapOf(
-                    new MapInputOf(new KvpOf("A", "V")),
-                    new MapInputOf(new KvpOf("B", "Y"))
+                new Map.Of(
+                    new MapInput.Of(new Kvp.Of("A", "V")),
+                    new MapInput.Of(new Kvp.Of("B", "Y"))
                 )[key]
             );
         }
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Map.Tests
         public void ConvertsEnumerableToMap()
         {
             var m =
-                new MapOf(
+                new Map.Of(
                     new KeyValuePair<string, string>("0", "hello, "),
                     new KeyValuePair<string, string>("1", "world!")
                 );
@@ -75,7 +75,7 @@ namespace Yaapii.Atoms.Map.Tests
         {
             Assert.Equal(
                 "B",
-                new MapOf(
+                new Map.Of(
                     "A", "B",
                     "C", "D"
                 )["A"]
@@ -87,7 +87,7 @@ namespace Yaapii.Atoms.Map.Tests
         {
             Assert.Equal(
                 "B",
-                new MapOf(
+                new Map.Of(
                     new EnumerableOf<string>(
                         "A", "B",
                         "C", "D"
@@ -100,7 +100,7 @@ namespace Yaapii.Atoms.Map.Tests
         public void RejectsOddValueCount()
         {
             Assert.Throws<ArgumentException>(() =>
-                new MapOf(
+                new Map.Of(
                     new EnumerableOf<string>(
                         "A", "B",
                         "C"
@@ -116,7 +116,7 @@ namespace Yaapii.Atoms.Map.Tests
             var random = new Random();
 
             var map =
-                new MapOf(() =>
+                new Map.Of(() =>
                     new Repeated<KeyValuePair<string, string>>(
                         new ScalarOf<KeyValuePair<string, string>>(
                             () => new KeyValuePair<string, string>(random.Next() + "", "1")),
@@ -140,7 +140,7 @@ namespace Yaapii.Atoms.Map.Tests
             var one = new KeyValuePair<string, int>("hello", 10);
             var two = new KeyValuePair<string, int>("goodbye", 20);
 
-            var m = new MapOf<int>(one, two);
+            var m = new Map.Of<int>(one, two);
 
             Assert.True(m.Contains(one) && m.Contains(two));
         }
@@ -152,9 +152,9 @@ namespace Yaapii.Atoms.Map.Tests
         {
             Assert.Equal(
                 value,
-                new MapOf<int>(
-                    new MapInputOf<int>(new KvpOf<int>("A", 39478624)),
-                    new MapInputOf<int>(new KvpOf<int>("B", 60208801))
+                new Map.Of<int>(
+                    new MapInput.Of<int>(new Kvp.Of<int>("A", 39478624)),
+                    new MapInput.Of<int>(new Kvp.Of<int>("B", 60208801))
                 )[key]
             );
         }
@@ -165,7 +165,7 @@ namespace Yaapii.Atoms.Map.Tests
         public void ConvertsEnumerableToMapTypedValue(string key, int value)
         {
             var m =
-                new MapOf<int>(
+                new Map.Of<int>(
                     new KeyValuePair<string, int>("hello", 0),
                     new KeyValuePair<string, int>("world", 1)
                 );
@@ -181,10 +181,10 @@ namespace Yaapii.Atoms.Map.Tests
             var random = new Random();
 
             var map =
-                new MapOf<int>(
+                new Map.Of<int>(
                     new Repeated<IKvp<int>>(
                         new ScalarOf<IKvp<int>>(
-                            () => new KvpOf<int>(random.Next() + "", 1)),
+                            () => new Kvp.Of<int>(random.Next() + "", 1)),
                             new ScalarOf<int>(() =>
                             {
                                 Interlocked.Increment(ref size);
@@ -206,7 +206,7 @@ namespace Yaapii.Atoms.Map.Tests
             var one = new KeyValuePair<int, int>(45, 10);
             var two = new KeyValuePair<int, int>(33, 20);
 
-            var m = new MapOf<int, int>(one, two);
+            var m = new Map.Of<int, int>(one, two);
 
             Assert.True(m.Contains(one) && m.Contains(two));
         }
@@ -218,9 +218,9 @@ namespace Yaapii.Atoms.Map.Tests
         {
             Assert.Equal(
                 value,
-                new MapOf<int, int>(
-                    new MapInputOf<int, int>(new KvpOf<int, int>(12, 39478624)),
-                    new MapInputOf<int, int>(new KvpOf<int, int>(24, 60208801))
+                new Map.Of<int, int>(
+                    new MapInput.Of<int, int>(new Kvp.Of<int, int>(12, 39478624)),
+                    new MapInput.Of<int, int>(new Kvp.Of<int, int>(24, 60208801))
                 )[key]
             );
         }
@@ -231,7 +231,7 @@ namespace Yaapii.Atoms.Map.Tests
         public void ConvertsEnumerableToMapTypedKeyValue(int key, int value)
         {
             var m =
-                new MapOf<int, int>(
+                new Map.Of<int, int>(
                     new KeyValuePair<int, int>(9, 0),
                     new KeyValuePair<int, int>(10, 1)
                 );
@@ -247,10 +247,10 @@ namespace Yaapii.Atoms.Map.Tests
             var random = new Random();
 
             var map =
-                new MapOf<int, int>(
+                new Map.Of<int, int>(
                     new Repeated<IKvp<int, int>>(
                         new ScalarOf<IKvp<int, int>>(
-                            () => new KvpOf<int, int>(random.Next(), 1)),
+                            () => new Kvp.Of<int, int>(random.Next(), 1)),
                             new ScalarOf<int>(() =>
                             {
                                 Interlocked.Increment(ref size);

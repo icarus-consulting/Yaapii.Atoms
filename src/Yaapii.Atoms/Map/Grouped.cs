@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using Yaapii.Atoms.List;
 
-namespace Yaapii.Atoms.Map
+namespace Yaapii.Atoms.Lookup
 {
     /// <summary>
     /// Groups a list to Keys and Lists of Values according to the given Functions
@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Map
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="Key"></typeparam>
     /// <typeparam name="Value"></typeparam>
-    public sealed class GroupedMap<T, Key, Value> : MapEnvelope<Key, IList<Value>>
+    public sealed class Grouped<T, Key, Value> : Map.Envelope<Key, IList<Value>>
     {
         /// <summary>
         /// ctor
@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="src">Source Enumerable</param>
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
-        public GroupedMap(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : this(
+        public Grouped(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : this(
             new ListOf<T>(src),
             key,
             value
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="src">Source Enumerable</param>
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
-        public GroupedMap(IList<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : base(
+        public Grouped(IList<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : base(
             () =>
             {
                 Dictionary<Key, IList<Value>> temp = new Dictionary<Key, IList<Value>>();

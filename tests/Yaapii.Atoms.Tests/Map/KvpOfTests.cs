@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.Map;
+using Yaapii.Atoms.Lookup;
 
 namespace Yaapii.Atoms.Dict.Tests
 {
@@ -13,7 +13,7 @@ namespace Yaapii.Atoms.Dict.Tests
         {
             Assert.Equal(
                 "value",
-                new KvpOf("key", () => "value").Value()
+                new Kvp.Of("key", () => "value").Value()
             );
         }
 
@@ -22,7 +22,7 @@ namespace Yaapii.Atoms.Dict.Tests
         {
             Assert.Equal(
                 "key",
-                new KvpOf("key", () => throw new ApplicationException()).Key()
+                new Kvp.Of("key", () => throw new ApplicationException()).Key()
             );
         }
 
@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Dict.Tests
         {
             Assert.Equal(
                 1,
-                new KvpOf<int>("key", () => 1).Value()
+                new Kvp.Of<int>("key", () => 1).Value()
             );
         }
 
@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Dict.Tests
         {
             Assert.Equal(
                 "key",
-                new KvpOf<int>("key", () => throw new ApplicationException()).Key()
+                new Kvp.Of<int>("key", () => throw new ApplicationException()).Key()
             );
         }
 
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Dict.Tests
         {
             Assert.Equal(
                 1,
-                new KvpOf<int, int>(8, () => 1).Value()
+                new Kvp.Of<int, int>(8, () => 1).Value()
             );
         }
 
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Dict.Tests
         {
             Assert.Equal(
                 8,
-                new KvpOf<int, int>(8, () => throw new ApplicationException()).Key()
+                new Kvp.Of<int, int>(8, () => throw new ApplicationException()).Key()
             );
         }
     }

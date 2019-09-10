@@ -24,7 +24,7 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace Yaapii.Atoms.Map.Tests
+namespace Yaapii.Atoms.Lookup.Tests
 {
     public class MapEnvelopeTest
     {
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Map.Tests
             Assert.False(map.TryGetValue(0, out outValue));
         }
 
-        private class NonAbstractEnvelope : MapEnvelope<int, int>
+        private class NonAbstractEnvelope : Map.Envelope<int, int>
         {
             public NonAbstractEnvelope(IDictionary<int, int> map) : base(() => map)
             { }

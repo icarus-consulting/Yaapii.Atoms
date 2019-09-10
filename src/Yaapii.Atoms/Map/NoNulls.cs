@@ -23,14 +23,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Yaapii.Atoms.Map
+namespace Yaapii.Atoms.Lookup
 {
     /// <summary>
     /// A decorator of map that tolerates no NULLs.
     /// </summary>
     /// <typeparam name="Key">type of key</typeparam>
     /// <typeparam name="Value">type of value</typeparam>
-    public sealed class NoNullsMap<Key, Value> : IDictionary<Key, Value>
+    public sealed class NoNulls<Key, Value> : IDictionary<Key, Value>
     {
         private readonly IDictionary<Key, Value> map;
 
@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Map
         /// ctor
         /// </summary>
         /// <param name="map">IDictionary</param>
-        public NoNullsMap(IDictionary<Key, Value> map)
+        public NoNulls(IDictionary<Key, Value> map)
         {
             this.map = map;
         }
