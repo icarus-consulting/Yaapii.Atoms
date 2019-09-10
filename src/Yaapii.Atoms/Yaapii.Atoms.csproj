@@ -19,12 +19,4 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>TRACE;RELEASE;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Enumerable\Many.OfArrayList.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Enumerable\Many.OfArrayList.cs" />
-  </ItemGroup>
 </Project>

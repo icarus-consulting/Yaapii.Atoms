@@ -25,7 +25,7 @@ using Xunit;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
-    public class ArrayListAsEnumerableTest
+    public class ManyOfArrayListTests
     {
         [Fact]
         public void BuildsFromStrings()
@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
 
             Assert.True(
                 new ItemAt<object>(
-                    new ArrayListAsEnumerable(arr)
+                    new Many.OfArrayList(arr)
                 ).Value().ToString() == "A");
         }
     }

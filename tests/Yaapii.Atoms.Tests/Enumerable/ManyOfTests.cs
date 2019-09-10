@@ -33,6 +33,36 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
+                    new Many.Of(
+                        "a", "b", "c"
+                    )
+                ).Value() == 3,
+                "Can't convert scalars to iterable");
+        }
+
+        [Fact]
+        public void IsSticky()
+        {
+            var lst = new List<string>();
+            var length =
+                new LengthOf(
+                    new Many.Of(() =>
+                    {
+                        lst.Add("something");
+                        return lst;
+                    })
+                );
+
+            var a = length.Value();
+            var b = length.Value();
+            Assert.Equal(a, b);
+        }
+
+        [Fact]
+        public void ConvertsScalarsToEnumerableTyped()
+        {
+            Assert.True(
+                new LengthOf(
                     new Many.Of<string>(
                         "a", "b", "c"
                     )
@@ -41,7 +71,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         }
 
         [Fact]
-        public void ConvertsObjectsToEnumerable()
+        public void ConvertsObjectsToEnumerableTyped()
         {
             Assert.True(
                 new LengthOf(
@@ -53,7 +83,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         }
 
         [Fact]
-        public void IsSticky()
+        public void IsStickyTyped()
         {
             var lst = new List<string>();
             var length =

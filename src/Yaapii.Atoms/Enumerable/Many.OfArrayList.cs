@@ -27,6 +27,9 @@ using System.Collections.Generic;
 using System.Text;
 using Yaapii.Atoms.Scalar;
 
+#pragma warning disable NoGetOrSet // No Statics
+#pragma warning disable CS1591
+
 namespace Yaapii.Atoms.Enumerable
 {
     public partial class Many
@@ -34,7 +37,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// A <see cref="ArrayList"/> converted to IEnumerable&lt;object&gt;
         /// </summary>
-        public sealed class OfArrayList : Many.Envelope<object>
+        public sealed class OfArrayList : Envelope<object>
         {
             /// <summary>
             /// A ArrayList converted to IEnumerable&lt;object&gt;
@@ -43,11 +46,10 @@ namespace Yaapii.Atoms.Enumerable
             public OfArrayList(ArrayList src) : base(() =>
                 {
                     var blocking = new BlockingCollection<object>();
-                    foreach (var lst in src)
+                    foreach (var item in src)
                     {
-                        new Each<object>(item => blocking.Add(item), lst).Invoke();
+                        blocking.Add(item);
                     }
-
                     return blocking;
                 }
             )
@@ -57,22 +59,22 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// A <see cref="ArrayList"/> converted to IEnumerable&lt;T&gt;
         /// </summary>
-        public sealed class OfArrayList<T> : Many.Envelope<T>
+        public sealed class OfArrayList<T> : Envelope<T>
         {
             /// <summary>
             /// A ArrayList converted to IEnumerable&lt;object&gt;
             /// </summary>
             /// <param name="src">source ArrayList</param>
             public OfArrayList(ArrayList src) : base(() =>
-            {
-                var blocking = new BlockingCollection<object>();
-                foreach (var lst in src)
                 {
-                    new Each<object>(item => blocking.Add(item), lst).Invoke();
-                }
+                    var blocking = new BlockingCollection<T>();
+                    foreach (var item in src)
+                    {
+                        blocking.Add((T)item);
+                    }
 
-                return blocking;
-            }
+                    return blocking;
+                }
             )
             { }
         }
