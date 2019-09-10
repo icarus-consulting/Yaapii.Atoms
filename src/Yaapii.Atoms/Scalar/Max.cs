@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Enumerable
         public Max(params Func<T>[] items) : this(
             new Enumerable.Mapped<Func<T>, IScalar<T>>(
                 item => new ScalarOf<T>(() => item.Invoke()),
-                new EnumerableOf<Func<T>>(items)
+                new Many.Of<Func<T>>(items)
             )
         )
         { }
@@ -69,7 +69,7 @@ namespace Yaapii.Atoms.Enumerable
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public Max(params IScalar<T>[] items) : this(new EnumerableOf<IScalar<T>>(items))
+        public Max(params IScalar<T>[] items) : this(new Many.Of<IScalar<T>>(items))
         { }
 
         /// <summary>

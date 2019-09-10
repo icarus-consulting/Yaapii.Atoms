@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Number.Tests
         {
             Assert.True(
                 new AvgOf(
-                    new EnumerableOf<long>()
+                    new Many.Of<long>()
                 ).AsLong() == 0L);
         }
 

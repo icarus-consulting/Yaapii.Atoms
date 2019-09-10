@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Text
         public Joined(String delimit, params String[] strs) :
             this(
                 delimit,
-                new EnumerableOf<string>(strs)
+                new Many.Of<string>(strs)
             )
         { }
 
@@ -72,7 +72,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
-        public Joined(IText delimit, params IText[] txts) : this(delimit, new EnumerableOf<IText>(txts))
+        public Joined(IText delimit, params IText[] txts) : this(delimit, new Many.Of<IText>(txts))
         { }
 
         /// <summary>

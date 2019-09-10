@@ -36,14 +36,14 @@ namespace Yaapii.Atoms.Collection
         /// ctor
         /// </summary>
         /// <param name="array">source items</param>
-        public Solid(params T[] array) : this(new EnumerableOf<T>(array))
+        public Solid(params T[] array) : this(new Many.Of<T>(array))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">source enumerator</param>
-        public Solid(IEnumerator<T> src) : this(new EnumerableOf<T>(src))
+        public Solid(IEnumerator<T> src) : this(new Many.Of<T>(src))
         { }
 
         /// <summary>

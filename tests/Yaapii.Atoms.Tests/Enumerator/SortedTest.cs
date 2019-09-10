@@ -39,10 +39,10 @@ namespace Yaapii.Atoms.Enumerator.Tests
             Assert.True(
                 new Joined(
                     " ",
-                    new EnumerableOf<string>(
+                    new Many.Of<string>(
                         new Sorted<string>(
                             Comparer<string>.Default,
-                                new EnumerableOf<string>("B", "A", "C", "F", "E", "D").GetEnumerator()
+                                new Many.Of<string>("B", "A", "C", "F", "E", "D").GetEnumerator()
                         ))).AsString() == "A B C D E F",
                 "cannot sort contents of iterator");
         }

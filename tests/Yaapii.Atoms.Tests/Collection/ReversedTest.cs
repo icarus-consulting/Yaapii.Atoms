@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.True(
                 new ItemAt<int>(
                     new Reversed<int>(
-                        new Enumerable.EnumerableOf<int>(0, -1, 2))
+                        new Many.Of<int>(0, -1, 2))
                 ).Value() == 2,
             "cannot behave as a collection");
         }
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.True(
                 new ItemAt<string>(
                     new Reversed<string>(
-                        new Enumerable.EnumerableOf<string>(
+                        new Many.Of<string>(
                             "item", last)
                     )).Value() == last);
         }
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.True(
                 new Reversed<string>(
-                    new Enumerable.EnumerableOf<string>(
+                    new Many.Of<string>(
                         "0", "1", "2")
                 ).Count == 3);
         }
@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.NotEmpty(
                 new Reversed<int>(
-                    new Enumerable.EnumerableOf<int>(
+                    new Many.Of<int>(
                         6, 16
                     )
                 ));
@@ -91,7 +91,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Contains(
                 word,
                 new Reversed<string>(
-                    new Enumerable.EnumerableOf<string>(
+                    new Many.Of<string>(
                         "hello", "elegant", word)
                 ));
         }
@@ -101,7 +101,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Throws<UnsupportedOperationException>(() =>
               new Reversed<int>(
-                  new Enumerable.EnumerableOf<int>(
+                  new Many.Of<int>(
                       1, 2, 3, 4)
               ).Add(6));
         }
@@ -111,7 +111,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Throws<UnsupportedOperationException>(() =>
                 new Reversed<int>(
-                    new Enumerable.EnumerableOf<int>(
+                    new Many.Of<int>(
                         1, 2, 3, 4
                     )
                 ).Remove(1));
@@ -124,7 +124,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Throws<UnsupportedOperationException>(() =>
                 new Reversed<int>(
-                    new Enumerable.EnumerableOf<int>(
+                    new Many.Of<int>(
                         1, 2, 3, 4)
                 ).Clear());
         }

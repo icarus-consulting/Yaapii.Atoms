@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
             Assert.True(
                 new ItemAt<string>(
                     new Mapped<int, string>(
-                        new EnumerableOf<int>(1).GetEnumerator(),
+                        new Many.Of<int>(1).GetEnumerator(),
                         i => new TextOf(i).AsString()),
                 0).Value() == "1",
             "cannot map contents of enumerator");

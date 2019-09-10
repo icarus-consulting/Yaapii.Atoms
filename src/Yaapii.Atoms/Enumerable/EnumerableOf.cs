@@ -21,11 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
@@ -37,7 +34,9 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> out of other objects.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class EnumerableOf<T> : EnumerableEnvelope<T>
+
+    [Obsolete("This is being replaced by Many.Live<T> and will be removed in following versions.")]
+    public sealed class EnumerableOf<T> : Many.Envelope<T>
     {
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of an array.
@@ -71,8 +70,7 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
-        public EnumerableOf(Func<IEnumerator<T>> origin) : base(
-            () => 
+        public EnumerableOf(Func<IEnumerator<T>> origin) : base(() => 
             {
                 var enm = origin();
                 var lst = new List<T>();

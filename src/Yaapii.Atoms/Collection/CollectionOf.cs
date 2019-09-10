@@ -36,14 +36,14 @@ namespace Yaapii.Atoms.Collection
         /// Makes a collection from an array
         /// </summary>
         /// <param name="array"></param>
-        public CollectionOf(params T[] array) : this(new EnumerableOf<T>(array))
+        public CollectionOf(params T[] array) : this(new Many.Of<T>(array))
         { }
 
         /// <summary>
         /// Makes a collection from an <see cref="IEnumerator{T}"/>
         /// </summary>
         /// <param name="src"></param>
-        public CollectionOf(IEnumerator<T> src) : this(new EnumerableOf<T>(src))
+        public CollectionOf(IEnumerator<T> src) : this(new Many.Of<T>(src))
         { }
 
         /// <summary>

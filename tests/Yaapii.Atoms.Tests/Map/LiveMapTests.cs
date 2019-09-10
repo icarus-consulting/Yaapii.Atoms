@@ -27,9 +27,9 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Map.Tests
+namespace Yaapii.Atoms.Lookup.Tests
 {
-    public class LiveMapTest
+    public class MapLiveTests
     {
         [Fact]
         public void BehavesAsMap()
@@ -37,10 +37,7 @@ namespace Yaapii.Atoms.Map.Tests
             var one = new KeyValuePair<string, string>("hello", "map");
             var two = new KeyValuePair<string, string>("goodbye", "dictionary");
 
-            var m =
-                new LiveMap<string, string>(
-                    one, two
-                    );
+            var m = new Map.Live(one, two);
 
             Assert.True(m.Contains(one) && m.Contains(two));
         }
@@ -49,14 +46,16 @@ namespace Yaapii.Atoms.Map.Tests
         public void ConvertsEnumerableToMap()
         {
             var m =
-                new LiveMap<int, String>(
-                    new KeyValuePair<int, string>(0, "hello, "),
-                    new KeyValuePair<int, string>(1, "world!")
+                new Map.Live(
+                    new Many.Live<KeyValuePair<string, string>>(
+                        new KeyValuePair<string, string>("0", "hello, "),
+                        new KeyValuePair<string, string>("1", "world!")
+                    )
                 );
 
 
-            Assert.True(m[0] == "hello, ");
-            Assert.True(m[1] == "world!");
+            Assert.True(m["0"] == "hello, ");
+            Assert.True(m["1"] == "world!");
         }
 
         [Fact]
@@ -64,7 +63,7 @@ namespace Yaapii.Atoms.Map.Tests
         {
             Assert.Equal(
                 "B",
-                new LiveMap(
+                new Map.Live(
                     "A", "B",
                     "C", "D"
                 )["A"]
@@ -76,8 +75,8 @@ namespace Yaapii.Atoms.Map.Tests
         {
             Assert.Equal(
                 "B",
-                new LiveMap(
-                    new EnumerableOf<string>(
+                new Map.Live(
+                    new Many.Of<string>(
                         "A", "B",
                         "C", "D"
                     )
@@ -89,8 +88,8 @@ namespace Yaapii.Atoms.Map.Tests
         public void RejectsOddValueCount()
         {
             Assert.Throws<ArgumentException>(() =>
-                new LiveMap(
-                    new EnumerableOf<string>(
+                new Map.Live(
+                    new Many.Of<string>(
                         "A", "B",
                         "C"
                     )
@@ -105,9 +104,153 @@ namespace Yaapii.Atoms.Map.Tests
             var random = new Random();
 
             var map =
-                new LiveMap<int, int>(() =>
+                new Map.Live<int, int>(() =>
                     new Repeated<KeyValuePair<int, int>>(
-                        new ScalarOf<KeyValuePair<int, int>>(() => 
+                        new ScalarOf<KeyValuePair<int, int>>(() =>
+                            new KeyValuePair<int, int>(random.Next(), 1)),
+                            new ScalarOf<int>(() =>
+                            {
+                                Interlocked.Increment(ref size);
+                                return size;
+                            })
+                        )
+                    );
+
+            var a = map.Count;
+            var b = map.Count;
+
+            Assert.NotEqual(a, b);
+        }
+
+        [Fact]
+        public void BehavesAsMapTypedValue()
+        {
+            var one = new KeyValuePair<string, int>("hello", 0);
+            var two = new KeyValuePair<string, int>("goodbye", 1);
+
+            var m = new Map.Live<int>(one, two);
+
+            Assert.True(m.Contains(one) && m.Contains(two));
+        }
+
+        [Fact]
+        public void ConvertsEnumerableToMapTypedValue()
+        {
+            var m =
+                new Map.Live<int>(
+                    new Many.Of<KeyValuePair<string, int>>(
+                        new KeyValuePair<string, int>("hello", 0),
+                        new KeyValuePair<string, int>("world", 1)
+                    )
+                );
+
+
+            Assert.True(m["hello"] == 0);
+            Assert.True(m["world"] == 1);
+        }
+
+        [Fact]
+        public void SensesChangesInMapTypedValue()
+        {
+            int size = 1;
+            var random = new Random();
+
+            var map =
+                new Map.Live<int>(() =>
+                    new Repeated<KeyValuePair<string, int>>(
+                        new ScalarOf<KeyValuePair<string, int>>(() =>
+                            new KeyValuePair<string, int>(random.Next() + "", 1)),
+                            new ScalarOf<int>(() =>
+                            {
+                                Interlocked.Increment(ref size);
+                                return size;
+                            })
+                        )
+                    );
+
+            var a = map.Count;
+            var b = map.Count;
+
+            Assert.NotEqual(a, b);
+        }
+
+        [Fact]
+        public void BehavesAsMapTypedKeyValue()
+        {
+            var one = new KeyValuePair<string, string>("hello", "map");
+            var two = new KeyValuePair<string, string>("goodbye", "dictionary");
+
+            var m =
+                new Map.Live<string, string>(
+                    one, two
+                    );
+
+            Assert.True(m.Contains(one) && m.Contains(two));
+        }
+
+        [Fact]
+        public void ConvertsEnumerableToMapTypedKeyValue()
+        {
+            var m =
+                new Map.Live<int, String>(
+                    new KeyValuePair<int, string>(0, "hello, "),
+                    new KeyValuePair<int, string>(1, "world!")
+                );
+
+
+            Assert.True(m[0] == "hello, ");
+            Assert.True(m[1] == "world!");
+        }
+
+        [Fact]
+        public void MakesMapFromArraySequenceTypedKeyValue()
+        {
+            Assert.Equal(
+                "B",
+                new Map.Live(
+                    "A", "B",
+                    "C", "D"
+                )["A"]
+            );
+        }
+
+        [Fact]
+        public void MakesMapFromEnumerableSequenceTypedKeyValue()
+        {
+            Assert.Equal(
+                "B",
+                new Map.Live(
+                    new Many.Of<string>(
+                        "A", "B",
+                        "C", "D"
+                    )
+                )["A"]
+            );
+        }
+
+        [Fact]
+        public void RejectsOddValueCountTypedKeyValue()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                new Map.Live(
+                    new Many.Of<string>(
+                        "A", "B",
+                        "C"
+                    )
+                )["A"]
+            );
+        }
+
+        [Fact]
+        public void SensesChangesInMapTypedKeyValue()
+        {
+            int size = 1;
+            var random = new Random();
+
+            var map =
+                new Map.Live<int, int>(() =>
+                    new Repeated<KeyValuePair<int, int>>(
+                        new ScalarOf<KeyValuePair<int, int>>(() =>
                             new KeyValuePair<int, int>(random.Next(), 1)),
                             new ScalarOf<int>(() =>
                             {

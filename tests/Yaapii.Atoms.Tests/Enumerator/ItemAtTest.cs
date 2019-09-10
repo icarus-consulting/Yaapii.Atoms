@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
             new ItemAt<int>(
-                new EnumerableOf<int>(1, 2, 3).GetEnumerator()
+                new Many.Of<int>(1, 2, 3).GetEnumerator()
             ).Value() == 1,
             "Can't take the first item from the enumerator");
         }
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
                 new ItemAt<int>(
-                    new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
+                    new Many.Of<int>(1, 2, 3).GetEnumerator(),
                     1
                 ).Value() == 2,
                 "Can't take the item by position from the enumerator");
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.Throws<NoSuchElementException>(
                 () => new ItemAt<int>(
-                        new EnumerableOf<int>(new int[0]).GetEnumerator(),
+                        new Many.Of<int>(new int[0]).GetEnumerator(),
                         0
                         ).Value());
         }
@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.Throws<NoSuchElementException>(
                     () => new ItemAt<int>(
-                        new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
+                        new Many.Of<int>(1, 2, 3).GetEnumerator(),
                         -1
             ).Value());
         }
@@ -78,7 +78,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
 
             Assert.True(
             new ItemAt<string>(
-                new EnumerableOf<string>().GetEnumerator(),
+                new Many.Of<string>().GetEnumerator(),
                 fallback
             ).Value() == fallback,
             "Can't fallback to default value");
@@ -90,7 +90,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
             Assert.Throws<NoSuchElementException>(
                 () =>
                 new ItemAt<int>(
-                    new LiveEnumerable<int>(1, 2, 3).GetEnumerator(),
+                    new Many.Live<int>(1, 2, 3).GetEnumerator(),
                     3
                 ).Value()
             );

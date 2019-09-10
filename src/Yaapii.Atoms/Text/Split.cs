@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Text
         public IEnumerator<String> GetEnumerator()
         {
             var splitted =
-                new EnumerableOf<String>(
+                new Many.Of<String>(
                     new Regex(this._regex.AsString()).Split(this._origin.AsString()));
 
             return 

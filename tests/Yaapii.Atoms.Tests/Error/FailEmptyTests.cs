@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Error.Tests
         public void FailsWhenEmpty()
         {
             Assert.Throws<Exception>(() =>
-                new FailEmpty<int>(new EnumerableOf<int>()).Go()
+                new FailEmpty<int>(new Many.Of<int>()).Go()
             );
         }
 
@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Error.Tests
         {
             Assert.Throws<IndexOutOfRangeException>(() =>
                 new FailEmpty<int>(
-                    new EnumerableOf<int>(),
+                    new Many.Of<int>(),
                     new IndexOutOfRangeException()
                 ).Go()
             );

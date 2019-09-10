@@ -20,12 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -36,7 +32,7 @@ namespace Yaapii.Atoms.Enumerable
     /// Multiple <see cref="IEnumerable{T}"/> joined together.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Joined<T> : LiveEnumerableEnvelope<T>
+    public sealed class Joined<T> : Many.Envelope<T>
     {
         /// <summary>
         /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
@@ -44,7 +40,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
         public Joined(IEnumerable<T> lst, params T[] items) : this(
-            new LiveEnumerable<IEnumerable<T>>(lst, new LiveEnumerable<T>(items)))
+            new Many.Live<IEnumerable<T>>(lst, new Many.Live<T>(items)))
         { }
 
         /// <summary>
@@ -52,7 +48,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="items">enumerables to join</param>
         public Joined(params IEnumerable<T>[] items) : this(
-            new LiveEnumerable<IEnumerable<T>>(items)
+            new Many.Live<IEnumerable<T>>(items)
         )
         { }
 
@@ -61,7 +57,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="items">enumerables to join</param>
         public Joined(IEnumerable<IEnumerable<T>> items) : base(() => 
-            new LiveEnumerable<T>(() =>
+            new Many.Live<T>(() =>
                 new Enumerator.Joined<T>(
                     new Mapped<IEnumerable<T>, IEnumerator<T>>(//Map the content of list: Get every enumerator out of it and build one whole enumerator from it
                         new StickyFunc<IEnumerable<T>, IEnumerator<T>>( //Sticky Gate

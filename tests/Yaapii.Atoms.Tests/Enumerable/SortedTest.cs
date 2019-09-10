@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                     new Enumerable.Mapped<int, string>(
                         i => i.ToString(),
                         new Sorted<int>(
-                            new EnumerableOf<int>(3, 2, 10, 44, -6, 0)
+                            new Many.Of<int>(3, 2, 10, 44, -6, 0)
                         )
                     )
                 ).AsString() == "-6, 0, 2, 3, 10, 44",
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new Joined(", ",
                     new Sorted<string>(
                         IReverseCompare<string>.Default,
-                        new EnumerableOf<string>(
+                        new Many.Of<string>(
                             "a", "c", "hello", "dude", "Friend"
                         )
                     )).AsString() == "hello, Friend, dude, c, a",
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.Empty(
                 new Sorted<int>(
-                    new EnumerableOf<int>()
+                    new Many.Of<int>()
                 ));
         }
     }

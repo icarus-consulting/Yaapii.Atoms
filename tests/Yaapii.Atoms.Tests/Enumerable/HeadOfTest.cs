@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new SumOf(
                     new HeadOf<int>(
-                        new EnumerableOf<int>(0, 1, 2, 3, 4),
+                        new Many.Of<int>(0, 1, 2, 3, 4),
                         3
                     )
                 ).AsInt() == 3,
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new SumOf(
                     new HeadOf<int>(
-                        new EnumerableOf<int>(0, 1, 2, 3, 4, 5),
+                        new Many.Of<int>(0, 1, 2, 3, 4, 5),
                         10
                     )
                 ).AsInt() == 15,
@@ -61,7 +61,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new HeadOf<int>(
-                        new EnumerableOf<int>(0, 1, 2, 3, 4),
+                        new Many.Of<int>(0, 1, 2, 3, 4),
                         0
                     )
                 ).Value() == 0,
@@ -75,7 +75,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new HeadOf<int>(
-                        new EnumerableOf<int>(0, 1, 2, 3, 4),
+                        new Many.Of<int>(0, 1, 2, 3, 4),
                         -1
                     )
                 ).Value() == 0,
@@ -89,7 +89,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new HeadOf<Nothing>(
-                        new EnumerableOf<Nothing>(),
+                        new Many.Of<Nothing>(),
                         10
                     )
                 ).Value() == 0,

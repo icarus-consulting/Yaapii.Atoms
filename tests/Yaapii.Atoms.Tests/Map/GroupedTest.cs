@@ -26,7 +26,7 @@ using Yaapii.Atoms.IO;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Number;
 
-namespace Yaapii.Atoms.Map.Tests
+namespace Yaapii.Atoms.Lookup.Tests
 {
     public sealed class GroupedTest
     {
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Map.Tests
                 );
             Assert.Equal(
                 "icaABCD",
-                new GroupedMap<string, double, string>(srcList, keyFunc, valueFunc)[3.0][1]
+                new Grouped<string, double, string>(srcList, keyFunc, valueFunc)[3.0][1]
             );
         }
     }

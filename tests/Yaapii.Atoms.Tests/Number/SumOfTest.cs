@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Number.Tests
         {
             Assert.True(
                 new SumOf(
-                    new EnumerableOf<float>(
+                    new Many.Of<float>(
                         1.5F, 2.5F, 3.5F
                     )
                 ).AsFloat() == 7.5F);

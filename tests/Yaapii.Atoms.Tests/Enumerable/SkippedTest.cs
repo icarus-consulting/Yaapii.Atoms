@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new Joined(
                     ", ",
                     new Skipped<string>(
-                        new EnumerableOf<string>("one", "two", "three", "four"),
+                        new Many.Of<string>("one", "two", "three", "four"),
                         2)
                     ).AsString() == "three, four");
         }

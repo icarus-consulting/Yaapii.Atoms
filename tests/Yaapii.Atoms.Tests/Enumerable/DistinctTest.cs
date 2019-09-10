@@ -36,8 +36,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new Distinct<int>(
-                        new EnumerableOf<int>(1, 2, 3),
-                        new EnumerableOf<int>(10, 2, 30)
+                        new Many.Of<int>(1, 2, 3),
+                        new Many.Of<int>(10, 2, 30)
                     )
                 ).Value() == 5);
         }
@@ -48,9 +48,9 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new Distinct<int>(
-                        new EnumerableOf<IEnumerable<int>>(
-                            new EnumerableOf<int>(1, 2, 3),
-                            new EnumerableOf<int>(10, 2, 30)
+                        new Many.Of<IEnumerable<int>>(
+                            new Many.Of<int>(1, 2, 3),
+                            new Many.Of<int>(10, 2, 30)
                         )
                     )
                 ).Value() == 5);
@@ -62,8 +62,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new Distinct<string>(
-                        new EnumerableOf<string>(),
-                        new EnumerableOf<string>()
+                        new Many.Of<string>(),
+                        new Many.Of<string>()
                     )
                 ).Value() == 0);
         }
@@ -73,7 +73,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             var dst =
                 new Distinct<string>(
-                    new EnumerableOf<string>("test", "test")
+                    new Many.Of<string>("test", "test")
                 );
             Assert.True(
                 new LengthOf(dst).Value() == new LengthOf(dst).Value());

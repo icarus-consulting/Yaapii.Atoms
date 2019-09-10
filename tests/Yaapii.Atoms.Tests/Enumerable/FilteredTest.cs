@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                     new Filtered<string>(
 
                         input => input.Length > 1,
-                        new EnumerableOf<String>())
+                        new Many.Of<String>())
                     ).Value() == 0,
                 "cannot filter empty enumerable");
         }

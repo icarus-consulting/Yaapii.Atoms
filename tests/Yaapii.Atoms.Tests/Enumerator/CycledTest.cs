@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
             Assert.True(
                 new ItemAt<string>(
                     new Cycled<string>(
-                        new EnumerableOf<string>(
+                        new Many.Of<string>(
                             "one", expected, "three"
                             )
                         ),
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.False(
                     new Cycled<string>(
-                        new EnumerableOf<string>(
+                        new Many.Of<string>(
                             new string[0]
                             )
                         ).MoveNext(),

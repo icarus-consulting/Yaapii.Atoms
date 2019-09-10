@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Enumerable
         public Min(params Func<T>[] items) : this(
             new Enumerable.Mapped<Func<T>, IScalar<T>>(
                 item => new ScalarOf<T>(() => item.Invoke()),
-                new EnumerableOf<Func<T>>(items)))
+                new Many.Of<Func<T>>(items)))
         { }
 
         /// <summary>

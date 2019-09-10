@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">items</param>
         public Sticky(params X[] src) : this(
-            () => new EnumerableOf<X>(src).GetEnumerator())
+            () => new Many.Of<X>(src).GetEnumerator())
         { }
 
         /// <summary>

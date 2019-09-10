@@ -26,30 +26,18 @@ using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
-    public sealed class EnumerableOfTest
+    public sealed class ManyOfTest
     {
         [Fact]
         public void ConvertsScalarsToEnumerable()
         {
             Assert.True(
                 new LengthOf(
-                    new EnumerableOf<string>(
+                    new Many.Of(
                         "a", "b", "c"
                     )
                 ).Value() == 3,
                 "Can't convert scalars to iterable");
-        }
-
-        [Fact]
-        public void ConvertsObjectsToEnumerable()
-        {
-            Assert.True(
-                new LengthOf(
-                    new EnumerableOf<IText>(
-                        new TextOf("a"), new TextOf("b"), new TextOf("c")
-                    )
-                ).Value() == 3,
-            "Can't convert objects to enumerable");
         }
 
         [Fact]
@@ -58,7 +46,49 @@ namespace Yaapii.Atoms.Enumerable.Tests
             var lst = new List<string>();
             var length =
                 new LengthOf(
-                    new EnumerableOf<string>(() =>
+                    new Many.Of(() =>
+                    {
+                        lst.Add("something");
+                        return lst;
+                    })
+                );
+
+            var a = length.Value();
+            var b = length.Value();
+            Assert.Equal(a, b);
+        }
+
+        [Fact]
+        public void ConvertsScalarsToEnumerableTyped()
+        {
+            Assert.True(
+                new LengthOf(
+                    new Many.Of<string>(
+                        "a", "b", "c"
+                    )
+                ).Value() == 3,
+                "Can't convert scalars to iterable");
+        }
+
+        [Fact]
+        public void ConvertsObjectsToEnumerableTyped()
+        {
+            Assert.True(
+                new LengthOf(
+                    new Many.Of<IText>(
+                        new TextOf("a"), new TextOf("b"), new TextOf("c")
+                    )
+                ).Value() == 3,
+            "Can't convert objects to enumerable");
+        }
+
+        [Fact]
+        public void IsStickyTyped()
+        {
+            var lst = new List<string>();
+            var length =
+                new LengthOf(
+                    new Many.Of<string>(() =>
                     {
                         lst.Add("something");
                         return lst;

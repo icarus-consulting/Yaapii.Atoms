@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Func.Tests
                             input => input += "X",
                             input => input += "Y"
                         ),
-                        new EnumerableOf<string>("public", "final", "class")
+                        new Many.Of<string>("public", "final", "class")
                     ))
             ).Value() == 3,
             "cannot chain functions");
@@ -56,13 +56,13 @@ namespace Yaapii.Atoms.Func.Tests
                      new Enumerable.Mapped<string, string>(
                         new ChainedFunc<string, string, string>(
                             input => input += "1",
-                            new EnumerableOf<IFunc<string, string>>(
+                            new Many.Of<IFunc<string, string>>(
                                 new FuncOf<string, string>(input => input += ("2")),
                                 new FuncOf<string, string>(input => input.Replace("a", "b"))
                             ),
                             input => input.Trim()
                         ),
-                        new EnumerableOf<string>("private", "static", "String")))
+                        new Many.Of<string>("private", "static", "String")))
                  ).Value() == 2);
         }
     }

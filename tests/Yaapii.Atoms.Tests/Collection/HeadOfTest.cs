@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
 
 namespace Yaapii.Atoms.Collection.Tests
@@ -36,7 +37,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Contains(
                 new HeadOf<int>(
                     2,
-                    new Enumerable.EnumerableOf<int>(1, -1, 2, 0)
+                    new Many.Of<int>(1, -1, 2, 0)
                 ),
                 predicate => predicate.Equals(-1));
         }
@@ -47,7 +48,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.True(
                 new HeadOf<string>(
                     2,
-                    new Enumerable.EnumerableOf<string>(
+                    new Many.Of<string>(
                         "hello", "world", "друг")
                 ).Count == 2);
         }
@@ -68,7 +69,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.True(
                 new HeadOf<string>(
                     0,
-                    new Enumerable.EnumerableOf<string>("1", "2", "3")
+                    new Many.Of<string>("1", "2", "3")
                 ).Count == 0);
         }
 
@@ -78,7 +79,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.NotEmpty(
                 new HeadOf<String>(
                     2,
-                    new Enumerable.EnumerableOf<string>("first", "second")
+                    new Many.Of<string>("first", "second")
                 ));
         }
 
@@ -87,7 +88,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Empty(
                 new HeadOf<String>(
-                    0, new Enumerable.EnumerableOf<string>("third", "fourth")
+                    0, new Many.Of<string>("third", "fourth")
                 ));
         }
 
@@ -97,7 +98,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Throws<UnsupportedOperationException>(() =>
             new HeadOf<int>(
                 2,
-                new Enumerable.EnumerableOf<int>(1, 2, 3, 4)
+                new Many.Of<int>(1, 2, 3, 4)
             ).Add(6));
         }
 
@@ -107,7 +108,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Throws<UnsupportedOperationException>(() =>
                new HeadOf<int>(
                    2,
-                   new Enumerable.EnumerableOf<int>(1, 2, 3, 4)
+                   new Many.Of<int>(1, 2, 3, 4)
                ).Remove(1));
         }
 
@@ -116,7 +117,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Throws<UnsupportedOperationException>(() =>
                 new HeadOf<int>(
-                    2, new Enumerable.EnumerableOf<int>(1, 2, 3, 4)
+                    2, new Many.Of<int>(1, 2, 3, 4)
                 ).Clear());
         }
     }

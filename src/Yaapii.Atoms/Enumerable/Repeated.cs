@@ -20,12 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
@@ -36,7 +31,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
     /// </summary>
     /// <typeparam name="T">type of element to repeat</typeparam>
-    public sealed class Repeated<T> : LiveEnumerableEnvelope<T>
+    public sealed class Repeated<T> : Many.Envelope<T>
     {
         /// <summary>
         /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
@@ -71,7 +66,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
         public Repeated(IScalar<T> elm, IScalar<int> cnt) : base(() => 
-            new LiveEnumerable<T>(() =>
+            new Many.Live<T>(() =>
                 new Enumerator.Repeated<T>(elm, cnt.Value())
             )
         )

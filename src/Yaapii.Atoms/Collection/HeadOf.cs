@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="lmt">max number of items to limit to</param>
         /// <param name="src">items to limit</param>
-        public HeadOf(int lmt, params T[] src) : this(lmt, new EnumerableOf<T>(src))
+        public HeadOf(int lmt, params T[] src) : this(lmt, new Many.Of<T>(src))
         { }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="lmt">max number of items to limit to</param>
         /// <param name="src">Enumerator to limit</param>
-        public HeadOf(int lmt, IEnumerator<T> src) : this(lmt, new EnumerableOf<T>(src))
+        public HeadOf(int lmt, IEnumerator<T> src) : this(lmt, new Many.Of<T>(src))
         { }
 
         /// <summary>

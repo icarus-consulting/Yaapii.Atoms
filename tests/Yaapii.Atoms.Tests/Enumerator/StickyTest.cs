@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
             Assert.True(
                 new Joined(
                     ", ",
-                    new EnumerableOf<IText>(
+                    new Many.Of<IText>(
                         new Mapped<int, IText>(
                             new Sticky<int>(
                                 new HeadOf<int>(

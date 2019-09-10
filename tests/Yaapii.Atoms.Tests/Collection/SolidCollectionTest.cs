@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Collection.Tests
 {
@@ -41,7 +42,7 @@ namespace Yaapii.Atoms.Collection.Tests
             var list = new Solid<int>(
                 new List.Mapped<int, int>(
                     i => i + 1,
-                    new Enumerable.EnumerableOf<int>(1, -1, 0, 1)));
+                    new Many.Of<int>(1, -1, 0, 1)));
 
             Assert.True(list.Count == 4, "Can't turn a mapped iterable into a list");
             Assert.True(list.Count == 4, "Can't turn a mapped iterable into a list, again");

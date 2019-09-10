@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Or(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), new EnumerableOf<In>(src))
+        public Or(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), new Many.Of<In>(src))
         { }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Or(IFunc<In, Boolean> func, params In[] src) : this(func, new EnumerableOf<In>(src))
+        public Or(IFunc<In, Boolean> func, params In[] src) : this(func, new Many.Of<In>(src))
         { }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Yaapii.Atoms.Scalar
         /// were true.
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>
-        public Or(params Func<bool>[] funcs) : this(new EnumerableOf<Func<bool>>(funcs))
+        public Or(params Func<bool>[] funcs) : this(new Many.Of<Func<bool>>(funcs))
         { }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Yaapii.Atoms.Scalar
         /// true.
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>
-        public Or(EnumerableOf<Func<bool>> funcs) : this(
+        public Or(Many.Of<Func<bool>> funcs) : this(
             new Mapped<Func<bool>, IScalar<bool>>(
                 func => new ScalarOf<bool>(func),
                 funcs))
@@ -154,7 +154,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="src">list of items</param>
         public Or(params IScalar<Boolean>[] src) : this(
-            new EnumerableOf<IScalar<Boolean>>(src))
+            new Many.Of<IScalar<Boolean>>(src))
         { }
 
         /// <summary>

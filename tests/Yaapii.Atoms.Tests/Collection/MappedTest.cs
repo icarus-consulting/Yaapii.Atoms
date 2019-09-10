@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Collection.Tests
@@ -37,7 +38,7 @@ namespace Yaapii.Atoms.Collection.Tests
                 0,
                 new Mapped<int, int>(
                     i => i + 1,
-                    new Enumerable.EnumerableOf<int>(-1, 1, 2)
+                    new Many.Of<int>(-1, 1, 2)
                 ));
         }
 
@@ -49,7 +50,7 @@ namespace Yaapii.Atoms.Collection.Tests
                 new TextOf("HELLO"),
                 new Mapped<String, IText>(
                     input => new Upper(new TextOf(input)),
-                    new Enumerable.EnumerableOf<string>("hello", "world", "друг")
+                    new Many.Of<string>("hello", "world", "друг")
                 ));
         }
 

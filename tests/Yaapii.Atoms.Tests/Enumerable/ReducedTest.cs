@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new Reduced<int, int>(
-                    new EnumerableOf<int>(1, 1, 2, 2, 3, 4, 5, 6),
+                    new Many.Of<int>(1, 1, 2, 2, 3, 4, 5, 6),
                     0,
                     (first, second) => first + second
                 ).Value() == 24,

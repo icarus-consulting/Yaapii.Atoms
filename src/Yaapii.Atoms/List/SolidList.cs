@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="items">items to decorate</param>
-        public SolidList(params T[] items) : this(new EnumerableOf<T>(items))
+        public SolidList(params T[] items) : this(new Many.Of<T>(items))
         { }
 
         /// <summary>

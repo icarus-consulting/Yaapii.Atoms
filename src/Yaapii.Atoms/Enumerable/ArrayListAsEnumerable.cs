@@ -23,8 +23,6 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable
@@ -32,22 +30,24 @@ namespace Yaapii.Atoms.Enumerable
     /// <summary>
     /// A <see cref="ArrayList"/> converted to IEnumerable&lt;object&gt;
     /// </summary>
-    public sealed class ArrayListAsEnumerable : LiveEnumerableEnvelope<object>
+    [Obsolete("This class is obsolete and will be removed in future versions. Use Many.OfArrayList")]
+    public sealed class ArrayListAsEnumerable : Many.Envelope<object>
     {
         /// <summary>
         /// A ArrayList converted to IEnumerable&lt;object&gt;
         /// </summary>
         /// <param name="src">source ArrayList</param>
-        public ArrayListAsEnumerable(ArrayList src) : base(new Scalar.Sticky<IEnumerable<object>>(() =>
-        {
-            var blocking = new BlockingCollection<object>();
-            foreach (var lst in src)
+        public ArrayListAsEnumerable(ArrayList src) : base(() =>
             {
-                new Each<object>(item => blocking.Add(item), lst).Invoke();
-            }
+                var blocking = new BlockingCollection<object>();
+                foreach (var lst in src)
+                {
+                    new Each<object>(item => blocking.Add(item), lst).Invoke();
+                }
 
-            return blocking;
-        }))
+                return blocking;
+            }
+        )
         { }
     }
 }

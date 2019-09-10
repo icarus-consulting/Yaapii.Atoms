@@ -20,22 +20,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.Collections.Generic;
-using Yaapii.Atoms.Scalar;
+using System;
 
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
     /// Enumerable of strings
     /// </summary>
-    public sealed class Strings : EnumerableEnvelope<string>
+    [Obsolete("This is being replaces by Many.Of which is the non generic version to work with strings.")]
+    public sealed class Strings : Many.Envelope<string>
     {
         /// <summary>
         /// Enumerable of strings.
         /// </summary>
         /// <param name="strings"></param>
         public Strings(params string[] strings) : base(() =>
-            new LiveEnumerable<string>(strings)
+            new Many.Live<string>(strings)
         )
         { }
     }

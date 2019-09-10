@@ -36,14 +36,14 @@ namespace Yaapii.Atoms.Collection
         /// Makes a collection of given items.
         /// </summary>
         /// <param name="items">source items</param>
-        public Sticky(params T[] items) : this(new EnumerableOf<T>(items))
+        public Sticky(params T[] items) : this(new Many.Of<T>(items))
         { }
 
         /// <summary>
         /// Makes a collection of given items.
         /// </summary>
         /// <param name="items">source items</param>
-        public Sticky(IEnumerator<T> items) : this(new EnumerableOf<T>(items))
+        public Sticky(IEnumerator<T> items) : this(new Many.Of<T>(items))
         { }
 
         /// <summary>

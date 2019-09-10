@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.Throws<Exception>(() =>
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new EnumerableOf<bool>()
+                        new Many.Of<bool>()
                     )).Value());
         }
 
@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new EnumerableOf<bool>(false)
+                        new Many.Of<bool>(false)
                     )).Value() == 1);
         }
 
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.Throws<OperationCanceledException>(() =>
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new EnumerableOf<bool>(),
+                        new Many.Of<bool>(),
                         new OperationCanceledException()
                     )).Value());
         }

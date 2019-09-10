@@ -23,10 +23,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms;
 using Yaapii.Atoms.Func;
-using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet
@@ -36,7 +33,7 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
     /// </summary>
     /// <typeparam name="T">type of items in enumerable</typeparam>
-    public sealed class Replaced<T> : LiveEnumerableEnvelope<T>
+    public sealed class Replaced<T> : Many.Envelope<T>
     {
         /// <summary>
         /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.

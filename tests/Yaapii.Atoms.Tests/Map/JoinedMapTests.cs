@@ -1,7 +1,7 @@
 ﻿using Xunit;
 using Yaapii.Atoms.Dict;
 
-namespace Yaapii.Atoms.Map.Tests
+namespace Yaapii.Atoms.Lookup.Tests
 {
     public sealed class JoinedMapTests
     {
@@ -9,10 +9,10 @@ namespace Yaapii.Atoms.Map.Tests
         public void JoinsInputs()
         {
             var dict =
-                new JoinedMap (
-                    new LazyDict(new KvpOf("A", "I am")),
-                    new LazyDict(new KvpOf("B", "trapped in")),
-                    new LazyDict(new KvpOf("C", "a dictionary"))
+                new Joined (
+                    new LazyDict(new Kvp.Of("A", "I am")),
+                    new LazyDict(new Kvp.Of("B", "trapped in")),
+                    new LazyDict(new Kvp.Of("C", "a dictionary"))
                 );
 
             Assert.Equal(
@@ -25,10 +25,10 @@ namespace Yaapii.Atoms.Map.Tests
         public void ReplacesExisting()
         {
             var dict =
-                new JoinedMap(
-                    new LazyDict(new KvpOf("A", "Hakuna")),
-                    new LazyDict(new KvpOf("B", "Matata")),
-                    new LazyDict(new KvpOf("B", "Banana"))
+                new Joined(
+                    new LazyDict(new Kvp.Of("A", "Hakuna")),
+                    new LazyDict(new Kvp.Of("B", "Matata")),
+                    new LazyDict(new Kvp.Of("B", "Banana"))
                 );
 
             Assert.Equal(
@@ -41,10 +41,10 @@ namespace Yaapii.Atoms.Map.Tests
         public void JoinsInputsTypedValue()
         {
             var dict =
-                new JoinedMap<int>(
-                    new LazyDict<int>(new KvpOf<int>("A", 89)),
-                    new LazyDict<int>(new KvpOf<int>("B", 17)),
-                    new LazyDict<int>(new KvpOf<int>("C", 8))
+                new Joined<int>(
+                    new LazyDict<int>(new Kvp.Of<int>("A", 89)),
+                    new LazyDict<int>(new Kvp.Of<int>("B", 17)),
+                    new LazyDict<int>(new Kvp.Of<int>("C", 8))
                 );
 
             Assert.Equal(
@@ -57,10 +57,10 @@ namespace Yaapii.Atoms.Map.Tests
         public void ReplacesExistingTypedValue()
         {
             var dict =
-                new JoinedMap<int>(
-                    new LazyDict<int>(new KvpOf<int>("A", 1)),
-                    new LazyDict<int>(new KvpOf<int>("B", 4)),
-                    new LazyDict<int>(new KvpOf<int>("B", 19))
+                new Joined<int>(
+                    new LazyDict<int>(new Kvp.Of<int>("A", 1)),
+                    new LazyDict<int>(new Kvp.Of<int>("B", 4)),
+                    new LazyDict<int>(new Kvp.Of<int>("B", 19))
                 );
 
             Assert.Equal(
@@ -73,10 +73,10 @@ namespace Yaapii.Atoms.Map.Tests
         public void JoinsInputsTypedKeyValue()
         {
             var dict =
-                new JoinedMap<int, int>(
-                    new LazyDict<int, int>(new KvpOf<int, int>(0, 1)),
-                    new LazyDict<int, int>(new KvpOf<int, int>(1, 3)),
-                    new LazyDict<int, int>(new KvpOf<int, int>(2, 37))
+                new Joined<int, int>(
+                    new LazyDict<int, int>(new Kvp.Of<int, int>(0, 1)),
+                    new LazyDict<int, int>(new Kvp.Of<int, int>(1, 3)),
+                    new LazyDict<int, int>(new Kvp.Of<int, int>(2, 37))
                 );
 
             Assert.Equal(
@@ -89,10 +89,10 @@ namespace Yaapii.Atoms.Map.Tests
         public void ReplacesExistingTypedKeyValue()
         {
             var dict =
-                new JoinedMap<int, int>(
-                    new LazyDict<int, int>(new KvpOf<int, int>(0, 1)),
-                    new LazyDict<int, int>(new KvpOf<int, int>(0, 4)),
-                    new LazyDict<int, int>(new KvpOf<int, int>(0, 19))
+                new Joined<int, int>(
+                    new LazyDict<int, int>(new Kvp.Of<int, int>(0, 1)),
+                    new LazyDict<int, int>(new Kvp.Of<int, int>(0, 4)),
+                    new LazyDict<int, int>(new Kvp.Of<int, int>(0, 19))
                 );
 
             Assert.Equal(

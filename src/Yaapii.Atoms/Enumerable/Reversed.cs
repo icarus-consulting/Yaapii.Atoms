@@ -20,13 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Scalar;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -37,14 +32,14 @@ namespace Yaapii.Atoms.Enumerable
     /// A reversed <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="X">type of items in enumerable</typeparam>
-    public sealed class Reversed<X> : LiveEnumerableEnvelope<X>
+    public sealed class Reversed<X> : Many.Envelope<X>
     {
         /// <summary>
         /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
         public Reversed(IEnumerable<X> src) : base(() =>
-            new LiveEnumerable<X>(() =>
+            new Many.Live<X>(() =>
                 {
                     var lst = src.ToList<X>();
                     lst.Reverse();

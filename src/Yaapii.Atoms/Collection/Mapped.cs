@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source items</param>
-        public Mapped(Func<In, Out> fnc, params In[] src) : this(fnc, new EnumerableOf<In>(src))
+        public Mapped(Func<In, Out> fnc, params In[] src) : this(fnc, new Many.Of<In>(src))
         { }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source enumerator</param>
         public Mapped(Func<In, Out> fnc, IEnumerator<In> src) : this(
-            fnc, new EnumerableOf<In>(src))
+            fnc, new Many.Of<In>(src))
         { }
 
         /// <summary>

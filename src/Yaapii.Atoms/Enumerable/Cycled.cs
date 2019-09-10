@@ -20,12 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -36,14 +31,14 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> that starts from the beginning when ended.
     /// </summary>
     /// <typeparam name="T">type of the contents</typeparam>
-    public sealed class Cycled<T> : LiveEnumerableEnvelope<T>
+    public sealed class Cycled<T> : Many.Envelope<T>
     {
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> that starts from the beginning when ended.
         /// </summary>
         /// <param name="enumerable">an enum to cycle</param>
         public Cycled(IEnumerable<T> enumerable) : base(() =>
-            new LiveEnumerable<T>(() =>
+            new Many.Live<T>(() =>
                 new Enumerator.Cycled<T>(enumerable)
             )
         )

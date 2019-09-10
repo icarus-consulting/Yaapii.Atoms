@@ -40,8 +40,8 @@ namespace Yaapii.Atoms.Enumerator.Tests
             new LengthOf(
                 new Joined<IEnumerator<String>>(
                     new Mapped<string, IEnumerator<string>>(
-                        new EnumerableOf<string>("x", "y", "z").GetEnumerator(),
-                        (input) => new EnumerableOf<string>(input).GetEnumerator()))
+                        new Many.Of<string>("x", "y", "z").GetEnumerator(),
+                        (input) => new Many.Of<string>(input).GetEnumerator()))
                     ).Value() == 3,
             "Can't concatenate mapped iterators together");
         }

@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="items">source items</param>
-        public SyncList(params T[] items) : this(new EnumerableOf<T>(items))
+        public SyncList(params T[] items) : this(new Many.Of<T>(items))
         { }
 
         /// <summary>
