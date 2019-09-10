@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Scalar.Tests
 
             Assert.True(
             new ItemAt<int>(
-                new EnumerableOf<int>(1, 2, 3)
+                new Many.Of<int>(1, 2, 3)
             ).Value() == 1,
             "Can't take the first item from the enumerable"
         );
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.True(
                 new ItemAt<int>(
-                    new EnumerableOf<int>(1, 2, 3),
+                    new Many.Of<int>(1, 2, 3),
                     1
                 ).Value() == 2,
             "Can't take the item by position from the enumerable");
@@ -68,7 +68,7 @@ namespace Yaapii.Atoms.Scalar.Tests
             String fallback = "fallback";
             Assert.True(
                 new ItemAt<string>(
-                    new EnumerableOf<string>(),
+                    new Many.Of<string>(),
                     12,
                     fallback
                 ).Value() == fallback,
@@ -80,7 +80,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.Throws<NoSuchElementException>(() =>
                 new ItemAt<string>(
-                    new EnumerableOf<string>(),
+                    new Many.Of<string>(),
                     12,
                     (ex, enumerable) => throw ex
                 ).Value());
@@ -91,7 +91,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.Throws<NotFiniteNumberException>(() =>
                 new ItemAt<string>(
-                    new EnumerableOf<string>(),
+                    new Many.Of<string>(),
                     12,
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value()
@@ -103,7 +103,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.Throws<NotFiniteNumberException>(() =>
                 new ItemAt<string>(
-                    new EnumerableOf<string>(),
+                    new Many.Of<string>(),
                     -12,
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value()

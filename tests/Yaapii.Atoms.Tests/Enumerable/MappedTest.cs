@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new ItemAt<IText>(
                     new Enumerable.Mapped<String, IText>(
                         input => new Upper(new TextOf(input)),
-                        new EnumerableOf<string>("hello", "world", "damn")
+                        new Many.Of<string>("hello", "world", "damn")
                         ),
                     0
                 ).Value().AsString() == "HELLO",
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new LengthOf(
                     new Enumerable.Mapped<String, IText>(
                         input => new Upper(new TextOf(input)),
-                        new EnumerableOf<string>()
+                        new Many.Of<string>()
                     )).Value() == 0,
                 "Can't transform an empty iterable");
         }
@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new ItemAt<IText>(
                     new Enumerable.Mapped<String, IText>(
                         (input, index) => new Upper(new TextOf(input+index)),
-                        new EnumerableOf<string>("hello", "world", "damn")
+                        new Many.Of<string>("hello", "world", "damn")
                         ),
                     1
                 ).Value().AsString() == "WORLD1",

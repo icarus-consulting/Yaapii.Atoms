@@ -88,7 +88,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             Assert.Equal(
                 "B",
                 new Map.Of(
-                    new EnumerableOf<string>(
+                    new Many.Of<string>(
                         "A", "B",
                         "C", "D"
                     )
@@ -101,7 +101,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         {
             Assert.Throws<ArgumentException>(() =>
                 new Map.Of(
-                    new EnumerableOf<string>(
+                    new Many.Of<string>(
                         "A", "B",
                         "C"
                     )

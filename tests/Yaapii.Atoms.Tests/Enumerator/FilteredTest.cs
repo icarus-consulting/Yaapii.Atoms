@@ -38,9 +38,9 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
                 new Joined(" ",
-                    new EnumerableOf<string>(
+                    new Many.Of<string>(
                         new Filtered<string>(
-                            new EnumerableOf<string>("Hello", "cruel", "World").GetEnumerator(),
+                            new Many.Of<string>("Hello", "cruel", "World").GetEnumerator(),
                                 (str) => str != "cruel"))).AsString() == "Hello World",
                 "cannot filter enumerator contents");
         }

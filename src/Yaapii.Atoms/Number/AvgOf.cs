@@ -47,12 +47,12 @@ namespace Yaapii.Atoms.Number
         /// <para>Here is how you can use it to fine mathematical average of numbers:</para>
         ///
         /// <code>
-        /// int sum = new AvgOf(new EnumerableOf&lt;double&gt;(1D, 2D, 3D, 4D)).AsInt();
+        /// int sum = new AvgOf(new Many.Of&lt;double&gt;(1D, 2D, 3D, 4D)).AsInt();
         /// </code>
         /// </summary>
         /// <param name="src">doubles</param>
         public AvgOf(params double[] src) : this(
-            new EnumerableOf<double>(src))
+            new Many.Of<double>(src))
         { }
 
         /// <summary>
@@ -61,12 +61,12 @@ namespace Yaapii.Atoms.Number
         /// <para>Here is how you can use it to fine mathematical average of numbers:</para>
         ///
         /// <code>
-        /// int sum = new AvgOf(new EnumerableOf&lt;int&gt;(1, 2, 3, 4)).AsInt();
+        /// int sum = new AvgOf(new Many.Of&lt;int&gt;(1, 2, 3, 4)).AsInt();
         /// </code>
         /// </summary>
         /// <param name="src">integers</param>
         public AvgOf(params int[] src) : this(
-            new EnumerableOf<int>(src))
+            new Many.Of<int>(src))
         { }
 
         /// <summary>
@@ -75,12 +75,12 @@ namespace Yaapii.Atoms.Number
         /// <para>Here is how you can use it to fine mathematical average of numbers:</para>
         ///
         /// <code>
-        /// int sum = new AvgOf(new EnumerableOf&lt;long&gt;(1, 2, 3, 4)).AsInt();
+        /// int sum = new AvgOf(new Many.Of&lt;long&gt;(1, 2, 3, 4)).AsInt();
         /// </code>
         /// </summary>
         /// <param name="src"></param>
         public AvgOf(params long[] src) : this(
-            new EnumerableOf<long>(src))
+            new Many.Of<long>(src))
         { }
 
         /// <summary>
@@ -89,12 +89,12 @@ namespace Yaapii.Atoms.Number
         /// <para>Here is how you can use it to fine mathematical average of numbers:</para>
         ///
         /// <code>
-        /// int sum = new AvgOf(new EnumerableOf&lt;float&gt;(1F, 2F, 3F, 4F)).AsInt();
+        /// int sum = new AvgOf(new Many.Of&lt;float&gt;(1F, 2F, 3F, 4F)).AsInt();
         /// </code>
         /// </summary>
         /// <param name="src">floats</param>
         public AvgOf(params float[] src) : this(
-            new EnumerableOf<float>(src))
+            new Many.Of<float>(src))
         { }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Yaapii.Atoms.Number
         /// <para>Here is how you can use it to fine mathematical average of numbers:</para>
         ///
         /// <code>
-        /// int sum = new AvgOf(new EnumerableOf&lt;double&gt;(1D, 2D, 3D, 4D)).AsInt();
+        /// int sum = new AvgOf(new Many.Of&lt;double&gt;(1D, 2D, 3D, 4D)).AsInt();
         /// </code>
         /// </summary>
         /// <param name="src"></param>
@@ -177,7 +177,7 @@ namespace Yaapii.Atoms.Number
         /// <para>Here is how you can use it to fine mathematical average of numbers:</para>
         ///
         /// <code>
-        /// int sum = new AvgOf(new EnumerableOf&lt;int&gt;(1, 2, 3, 4)).AsInt();
+        /// int sum = new AvgOf(new Many.Of&lt;int&gt;(1, 2, 3, 4)).AsInt();
         /// </code>
         /// </summary>
         /// <param name="src"></param>
@@ -251,7 +251,7 @@ namespace Yaapii.Atoms.Number
         /// <para>Here is how you can use it to fine mathematical average of numbers:</para>
         ///
         /// <code>
-        /// int sum = new AvgOf(new EnumerableOf&lt;long&gt;(1L, 2L, 3L, 4L)).AsInt();
+        /// int sum = new AvgOf(new Many.Of&lt;long&gt;(1L, 2L, 3L, 4L)).AsInt();
         /// </code>
         /// </summary>
         /// <param name="src"></param>
@@ -325,7 +325,7 @@ namespace Yaapii.Atoms.Number
         /// <para>Here is how you can use it to fine mathematical average of numbers:</para>
         ///
         /// <code>
-        /// long sum = new AvgOf(new EnumerableOf&lt;float&gt;(1F, 2F, 3F, 4F)).AsLong();
+        /// long sum = new AvgOf(new Many.Of&lt;float&gt;(1F, 2F, 3F, 4F)).AsLong();
         /// </code>
         /// </summary>
         /// <param name="src"></param>

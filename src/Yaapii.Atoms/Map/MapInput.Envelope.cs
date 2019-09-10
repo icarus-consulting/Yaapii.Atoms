@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Lookup
             /// Simplified DictInput building.
             /// </summary>
             public Envelope(params IKvp[] kvps) : this(
-                new LiveEnumerable<IKvp>(kvps)
+                new Many.Live<IKvp>(kvps)
             )
             { }
 
@@ -130,7 +130,7 @@ namespace Yaapii.Atoms.Lookup
             /// Simplified DictInput building.
             /// </summary>
             public Envelope(params IKvp<Value>[] kvps) : this(
-                new LiveEnumerable<IKvp<Value>>(kvps)
+                new Many.Live<IKvp<Value>>(kvps)
             )
             { }
 
@@ -204,7 +204,7 @@ namespace Yaapii.Atoms.Lookup
             /// Simplified DictInput building.
             /// </summary>
             public Envelope(params IKvp<Key, Value>[] kvps) : this(
-                new LiveEnumerable<IKvp<Key, Value>>(kvps)
+                new Many.Live<IKvp<Key, Value>>(kvps)
             )
             { }
 

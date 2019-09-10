@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
             new Sibling<int>(
-                new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
+                new Many.Of<int>(1, 2, 3).GetEnumerator(),
                 2,
                 1
             ).Value() == 3,
@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
             new Sibling<int>(
-                new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
+                new Many.Of<int>(1, 2, 3).GetEnumerator(),
                 2,
                 -1
             ).Value() == 1,
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
             new Sibling<int>(
-                new EnumerableOf<int>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).GetEnumerator(),
+                new Many.Of<int>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).GetEnumerator(),
                 5,
                 4
             ).Value() == 9,
@@ -74,7 +74,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         //{
         //    Assert.True(
         //        new ItemAtEnumerator<int>(
-        //            new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
+        //            new Many.Of<int>(1, 2, 3).GetEnumerator(),
         //            1
         //        ).Value() == 2,
         //        "Can't take the item by position from the enumerator");
@@ -85,7 +85,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.Throws<IOException>(
                 () => new Sibling<int>(
-                        new EnumerableOf<int>(new int[0]).GetEnumerator(),
+                        new Many.Of<int>(new int[0]).GetEnumerator(),
                         1,
                         1
                         ).Value());
@@ -96,7 +96,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.Throws<IOException>(
                     () => new Sibling<int>(
-                        new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
+                        new Many.Of<int>(1, 2, 3).GetEnumerator(),
                         2,
                         -100
             ).Value());
@@ -107,7 +107,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.Throws<IOException>(
                     () => new Sibling<int>(
-                        new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
+                        new Many.Of<int>(1, 2, 3).GetEnumerator(),
                         2,
                         100
             ).Value());
@@ -118,7 +118,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.Throws<IOException>(
                     () => new Sibling<int>(
-                        new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
+                        new Many.Of<int>(1, 2, 3).GetEnumerator(),
                         4,
                         1
             ).Value());
@@ -131,7 +131,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
 
             Assert.True(
             new Sibling<string>(
-                new EnumerableOf<string>().GetEnumerator(),
+                new Many.Of<string>().GetEnumerator(),
                 "searchthis",
                 fallback
             ).Value() == fallback,

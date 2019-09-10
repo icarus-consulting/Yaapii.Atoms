@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class HeadOf<T> : EnumerableEnvelope<T>
+    public sealed class HeadOf<T> : Many.Envelope<T>
     {
         /// <summary>
         /// ctor
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
         public HeadOf(IEnumerable<T> enumerable, IScalar<int> limit) : base(() =>
-            new LiveEnumerable<T>(() =>
+            new Many.Live<T>(() =>
                 new Enumerator.HeadOf<T>(enumerable.GetEnumerator(), limit.Value())
             )
         )

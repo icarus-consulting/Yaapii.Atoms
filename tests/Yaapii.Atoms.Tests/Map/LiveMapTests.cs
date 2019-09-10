@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         {
             var m =
                 new Map.Live(
-                    new EnumerableOf<KeyValuePair<string, string>>(
+                    new Many.Live<KeyValuePair<string, string>>(
                         new KeyValuePair<string, string>("0", "hello, "),
                         new KeyValuePair<string, string>("1", "world!")
                     )
@@ -76,7 +76,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             Assert.Equal(
                 "B",
                 new Map.Live(
-                    new EnumerableOf<string>(
+                    new Many.Of<string>(
                         "A", "B",
                         "C", "D"
                     )
@@ -89,7 +89,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         {
             Assert.Throws<ArgumentException>(() =>
                 new Map.Live(
-                    new EnumerableOf<string>(
+                    new Many.Of<string>(
                         "A", "B",
                         "C"
                     )
@@ -138,7 +138,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         {
             var m =
                 new Map.Live<int>(
-                    new EnumerableOf<KeyValuePair<string, int>>(
+                    new Many.Of<KeyValuePair<string, int>>(
                         new KeyValuePair<string, int>("hello", 0),
                         new KeyValuePair<string, int>("world", 1)
                     )
@@ -220,7 +220,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             Assert.Equal(
                 "B",
                 new Map.Live(
-                    new EnumerableOf<string>(
+                    new Many.Of<string>(
                         "A", "B",
                         "C", "D"
                     )
@@ -233,7 +233,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         {
             Assert.Throws<ArgumentException>(() =>
                 new Map.Live(
-                    new EnumerableOf<string>(
+                    new Many.Of<string>(
                         "A", "B",
                         "C"
                     )

@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             public Live(KeyValuePair<string, string> entry, params KeyValuePair<string, string>[] more) : this(
                 new Enumerable.Joined<KeyValuePair<string, string>>(
-                    new LiveEnumerable<KeyValuePair<string, string>>(more),
+                    new Many.Live<KeyValuePair<string, string>>(more),
                     entry
                 )
             )
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Lookup
             /// <param name="list">KeyValuePairs to append</param>
             public Live(IDictionary<string, string> src, params KeyValuePair<string, string>[] list) : this(
                 src,
-                new LiveEnumerable<KeyValuePair<string, string>>(list))
+                new Many.Live<KeyValuePair<string, string>>(list))
             { }
 
             /// <summary>
@@ -73,7 +73,7 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             /// <param name="entries">enumerator of KeyValuePairs</param>
             public Live(IEnumerator<KeyValuePair<string, string>> entries) : this(
-                new LiveEnumerable<KeyValuePair<string, string>>(() => entries))
+                new Many.Live<KeyValuePair<string, string>>(() => entries))
             { }
 
             /// <summary>
@@ -81,14 +81,14 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             /// <param name="fnc"></param>
             public Live(Func<IEnumerable<KeyValuePair<string, string>>> fnc) : this(
-                new LiveEnumerable<KeyValuePair<string, string>>(fnc))
+                new Many.Live<KeyValuePair<string, string>>(fnc))
             { }
 
             /// <summary>
             /// A map from the given key value pairs.
             /// </summary>
             public Live(IKvp entry, params IKvp[] more) : this(
-                new LiveEnumerable<IMapInput>(
+                new Many.Live<IMapInput>(
                     new MapInput.Of(entry),
                     new MapInput.Of(more)
                 )
@@ -100,7 +100,7 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             /// <param name="entries">enumerable of kvps</param>
             public Live(IEnumerable<IKvp> entries) : this(
-                new LiveEnumerable<IMapInput>(
+                new Many.Live<IMapInput>(
                     new MapInput.Of(entries)
                 )
             )
@@ -126,7 +126,7 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             /// <param name="pairSequence">Pairs as a sequence, ordered like this: key-1, value-1, ... key-n, value-n</param>
             public Live(params string[] pairSequence) : this(
-                new LiveEnumerable<string>(pairSequence)
+                new Many.Live<string>(pairSequence)
             )
             { }
 
@@ -166,7 +166,7 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given inputs.
             /// </summary>
             /// <param name="inputs">inputs</param>
-            public Live(params IMapInput[] inputs) : this(new EnumerableOf<IMapInput>(inputs))
+            public Live(params IMapInput[] inputs) : this(new Many.Of<IMapInput>(inputs))
             { }
 
             /// <summary>
@@ -199,7 +199,7 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             public Live(KeyValuePair<string, Value> entry, params KeyValuePair<string, Value>[] more) : this(
                 new Enumerable.Joined<KeyValuePair<string, Value>>(
-                    new LiveEnumerable<KeyValuePair<string, Value>>(more),
+                    new Many.Live<KeyValuePair<string, Value>>(more),
                     entry
                 )
             )
@@ -212,7 +212,7 @@ namespace Yaapii.Atoms.Lookup
             /// <param name="list">KeyValuePairs to append</param>
             public Live(IDictionary<string, Value> src, params KeyValuePair<string, Value>[] list) : this(
                 src,
-                new LiveEnumerable<KeyValuePair<string, Value>>(list))
+                new Many.Live<KeyValuePair<string, Value>>(list))
             { }
 
             /// <summary>
@@ -232,7 +232,7 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             /// <param name="entries">enumerator of KeyValuePairs</param>
             public Live(IEnumerator<KeyValuePair<string, Value>> entries) : this(
-                new LiveEnumerable<KeyValuePair<string, Value>>(() => entries))
+                new Many.Live<KeyValuePair<string, Value>>(() => entries))
             { }
 
             /// <summary>
@@ -240,7 +240,7 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             /// <param name="fnc"></param>
             public Live(Func<IEnumerable<KeyValuePair<string, Value>>> fnc) : this(
-                new LiveEnumerable<KeyValuePair<string, Value>>(fnc))
+                new Many.Live<KeyValuePair<string, Value>>(fnc))
             { }
 
             /// <summary>
@@ -248,7 +248,7 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             /// <param name="entries">enumerable of kvps</param>
             public Live(IKvp<Value> entry, params IKvp<Value>[] entries) : this(
-                new LiveEnumerable<IMapInput<Value>>(
+                new Many.Live<IMapInput<Value>>(
                     new MapInput.Of<Value>(entry),
                     new MapInput.Of<Value>(entries)
                 )
@@ -260,7 +260,7 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             /// <param name="entries">enumerable of kvps</param>
             public Live(IEnumerable<IKvp<Value>> entries) : this(
-                new LiveEnumerable<IMapInput<Value>>(
+                new Many.Live<IMapInput<Value>>(
                     new MapInput.Of<Value>(entries)
                 )
             )
@@ -286,7 +286,7 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             /// <param name="inputs">inputs</param>
             public Live(params IMapInput<Value>[] inputs) : this(
-                new LiveEnumerable<IMapInput<Value>>(inputs)
+                new Many.Live<IMapInput<Value>>(inputs)
             )
             { }
 
@@ -320,7 +320,7 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             public Live(KeyValuePair<Key, Value> item, params KeyValuePair<Key, Value>[] more) : this(
                 new Enumerable.Joined<KeyValuePair<Key, Value>>(
-                    new LiveEnumerable<KeyValuePair<Key, Value>>(more),
+                    new Many.Live<KeyValuePair<Key, Value>>(more),
                     item
                 )
             )
@@ -333,7 +333,7 @@ namespace Yaapii.Atoms.Lookup
             /// <param name="list">KeyValuePairs to append</param>
             public Live(IDictionary<Key, Value> src, params KeyValuePair<Key, Value>[] list) : this(
                 src,
-                new LiveEnumerable<KeyValuePair<Key, Value>>(list))
+                new Many.Live<KeyValuePair<Key, Value>>(list))
             { }
 
             /// <summary>
@@ -353,7 +353,7 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             /// <param name="entries">enumerator of KeyValuePairs</param>
             public Live(IEnumerator<KeyValuePair<Key, Value>> entries) : this(
-                new LiveEnumerable<KeyValuePair<Key, Value>>(() => entries))
+                new Many.Live<KeyValuePair<Key, Value>>(() => entries))
             { }
 
             /// <summary>
@@ -361,14 +361,14 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             /// <param name="fnc"></param>
             public Live(Func<IEnumerable<KeyValuePair<Key, Value>>> fnc) : this(
-                new LiveEnumerable<KeyValuePair<Key, Value>>(fnc))
+                new Many.Live<KeyValuePair<Key, Value>>(fnc))
             { }
 
             /// <summary>
             /// A map from the given key value pairs.
             /// </summary>
             public Live(IKvp<Key, Value> entry, params IKvp<Key, Value>[] more) : this(
-                new LiveEnumerable<IMapInput<Key, Value>>(
+                new Many.Live<IMapInput<Key, Value>>(
                     new MapInput.Of<Key, Value>(entry),
                     new MapInput.Of<Key, Value>(more)
                 )
@@ -380,7 +380,7 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             /// <param name="entries">enumerable of kvps</param>
             public Live(IEnumerable<IKvp<Key, Value>> entries) : this(
-                new LiveEnumerable<IMapInput<Key, Value>>(
+                new Many.Live<IMapInput<Key, Value>>(
                     new MapInput.Of<Key, Value>(entries)
                 )
             )
@@ -406,7 +406,7 @@ namespace Yaapii.Atoms.Lookup
             /// </summary>
             /// <param name="inputs">inputs</param>
             public Live(params IMapInput<Key, Value>[] inputs) : this(
-                new LiveEnumerable<IMapInput<Key, Value>>(inputs)
+                new Many.Live<IMapInput<Key, Value>>(inputs)
             )
             { }
 

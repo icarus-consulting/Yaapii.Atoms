@@ -21,13 +21,10 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Text.Tests
 {
@@ -39,8 +36,7 @@ namespace Yaapii.Atoms.Text.Tests
         [InlineData("A fancy text with € special character")]
         public void DecodeFromFile(string text)
         {
-            var file = Path.Combine(Directory.GetCurrentDirectory(), "test.txt");
-            try
+            using (var tempFile = new TempFile("test.txt"))
             {
                 new LengthOf(
                     new TeeInput(
@@ -51,22 +47,19 @@ namespace Yaapii.Atoms.Text.Tests
                                 )
                             )
                         ).AsString(),
-                        new OutputTo(new Uri(file))
+                        new OutputTo(new Uri(tempFile.Value()))
                     )
                 ).Value();
 
                 Assert.True(
                     new Base64Text(
                         new TextOf(
-                            new Uri(file)
+                            new Uri(tempFile.Value())
                         )
                     ).Equals(
-                    new TextOf(text)));
-            }
-            finally
-            {
-                // Cleanup
-                if (File.Exists(file)) File.Delete(file);
+                        new TextOf(text)
+                    )
+                );
             }
         }
     }

@@ -37,11 +37,11 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
                 new Enumerable.LengthOf(
-                    new EnumerableOf<string>(
+                    new Many.Of<string>(
                         new Distinct<string>(
-                            new EnumerableOf<IEnumerator<string>>(
-                                new EnumerableOf<string>("A", "B", "F").GetEnumerator(),
-                                new EnumerableOf<string>("A", "E", "F").GetEnumerator()
+                            new Many.Of<IEnumerator<string>>(
+                                new Many.Of<string>("A", "B", "F").GetEnumerator(),
+                                new Many.Of<string>("A", "E", "F").GetEnumerator()
                             )
                         )
                     )
@@ -53,9 +53,9 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             var e =
                 new Distinct<string>(
-                    new EnumerableOf<IEnumerator<string>>(
-                        new EnumerableOf<string>("A").GetEnumerator(),
-                        new EnumerableOf<string>("A").GetEnumerator()
+                    new Many.Of<IEnumerator<string>>(
+                        new Many.Of<string>("A").GetEnumerator(),
+                        new Many.Of<string>("A").GetEnumerator()
                     )
                 );
 
@@ -70,11 +70,11 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
                 new Enumerable.LengthOf(
-                    new EnumerableOf<string>(
+                    new Many.Of<string>(
                         new Distinct<string>(
-                            new EnumerableOf<IEnumerator<string>>(
-                                new EnumerableOf<string>().GetEnumerator(),
-                                new EnumerableOf<string>().GetEnumerator()
+                            new Many.Of<IEnumerator<string>>(
+                                new Many.Of<string>().GetEnumerator(),
+                                new Many.Of<string>().GetEnumerator()
                             )
                         )
                     )

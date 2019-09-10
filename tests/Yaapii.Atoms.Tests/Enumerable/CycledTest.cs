@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new ItemAt<string>(
                     new Cycled<string>(
-                        new EnumerableOf<string>(
+                        new Many.Of<string>(
                             "one", expected, "three"
                             )), 
                     7

@@ -163,7 +163,7 @@ namespace Yaapii.Atoms.Enumerator
             }
             catch (Exception)
             {
-                ret = this._fallback.Invoke(new EnumerableOf<T>(this._src));
+                ret = this._fallback.Invoke(new Many.Of<T>(this._src));
             }
             return ret;
 

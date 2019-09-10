@@ -20,12 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoProperties // No Properties
 #pragma warning disable Immutability // Fields are readonly or constant
@@ -38,14 +34,14 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> that repeats one element infinitely.
     /// </summary>
     /// <typeparam name="T">type of the elements</typeparam>
-    public sealed class Endless<T> : LiveEnumerableEnvelope<T>
+    public sealed class Endless<T> : Many.Envelope<T>
     {
         /// <summary>
         /// A <see cref="IEnumerable"/> that repeats one element infinitely.
         /// </summary>
         /// <param name="elm">element to repeat</param>
         public Endless(T elm) : base(() => 
-            new LiveEnumerable<T>(() =>
+            new Many.Live<T>(() =>
                 new Enumerator.Endless<T>(elm)
             )
         )

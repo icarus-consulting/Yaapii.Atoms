@@ -28,13 +28,13 @@ namespace Yaapii.Atoms.Enumerable
     /// Enumerable partitioned by a given size.
     /// <para>Is a IEnumerable</para>
     /// </summary>
-    public sealed class Partitioned<T> : LiveEnumerableEnvelope<IEnumerable<T>>
+    public sealed class Partitioned<T> : Many.Envelope<IEnumerable<T>>
     {
         /// <summary>
         /// Enumerable partitioned by a given size.
         /// </summary>
         public Partitioned(int size, IEnumerable<T> list) : base(() =>
-            new LiveEnumerable<IEnumerable<T>>(() =>
+            new Many.Live<IEnumerable<T>>(() =>
                 new Enumerator.Partitioned<T>(
                     size, list.GetEnumerator()
                 )

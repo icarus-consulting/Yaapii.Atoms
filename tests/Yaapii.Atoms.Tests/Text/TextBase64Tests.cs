@@ -36,8 +36,7 @@ namespace Yaapii.Atoms.Text.Tests
         [InlineData("A fancy text with € special character")]
         public void EncodesText(string text)
         {
-            var file = Path.Combine(Directory.GetCurrentDirectory(), "test.txt");
-            try
+            using (var tempFile = new TempFile("test.txt"))
             {
                 new LengthOf(
                     new TeeInput(
@@ -48,22 +47,17 @@ namespace Yaapii.Atoms.Text.Tests
                                 )
                             )
                         ).AsString(),
-                        new OutputTo(new Uri(file))
+                        new OutputTo(new Uri(tempFile.Value()))
                     )
                 ).Value();
 
                 Assert.True(
                     new TextOf(
-                        new Uri(file)
+                        new Uri(tempFile.Value())
                     ).Equals(
                     new TextBase64(
                         new TextOf(text)
                     )));
-            }
-            finally
-            {
-                // Cleanup
-                if (File.Exists(file)) File.Delete(file);
             }
         }
     }

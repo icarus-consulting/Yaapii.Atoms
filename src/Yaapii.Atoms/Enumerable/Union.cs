@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.Enumerable
     /// Union objects in two enumerables.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Union<T> : LiveEnumerableEnvelope<T>
+    public class Union<T> : Many.Envelope<T>
     {
         /// <summary>
         /// Union objects in two enumerables.

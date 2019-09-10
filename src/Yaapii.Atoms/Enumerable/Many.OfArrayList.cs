@@ -23,21 +23,47 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Text;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable
 {
-    /// <summary>
-    /// A <see cref="ArrayList"/> converted to IEnumerable&lt;object&gt;
-    /// </summary>
-    [Obsolete("This class is obsolete and will be removed in future versions. Use Many.OfArrayList")]
-    public sealed class ArrayListAsEnumerable : Many.Envelope<object>
+    public partial class Many
     {
         /// <summary>
-        /// A ArrayList converted to IEnumerable&lt;object&gt;
+        /// A <see cref="ArrayList"/> converted to IEnumerable&lt;object&gt;
         /// </summary>
-        /// <param name="src">source ArrayList</param>
-        public ArrayListAsEnumerable(ArrayList src) : base(() =>
+        public sealed class OfArrayList : Many.Envelope<object>
+        {
+            /// <summary>
+            /// A ArrayList converted to IEnumerable&lt;object&gt;
+            /// </summary>
+            /// <param name="src">source ArrayList</param>
+            public OfArrayList(ArrayList src) : base(() =>
+                {
+                    var blocking = new BlockingCollection<object>();
+                    foreach (var lst in src)
+                    {
+                        new Each<object>(item => blocking.Add(item), lst).Invoke();
+                    }
+
+                    return blocking;
+                }
+            )
+            { }
+        }
+
+        /// <summary>
+        /// A <see cref="ArrayList"/> converted to IEnumerable&lt;T&gt;
+        /// </summary>
+        public sealed class OfArrayList<T> : Many.Envelope<T>
+        {
+            /// <summary>
+            /// A ArrayList converted to IEnumerable&lt;object&gt;
+            /// </summary>
+            /// <param name="src">source ArrayList</param>
+            public OfArrayList(ArrayList src) : base(() =>
             {
                 var blocking = new BlockingCollection<object>();
                 foreach (var lst in src)
@@ -47,7 +73,8 @@ namespace Yaapii.Atoms.Enumerable
 
                 return blocking;
             }
-        )
-        { }
+            )
+            { }
+        }
     }
 }

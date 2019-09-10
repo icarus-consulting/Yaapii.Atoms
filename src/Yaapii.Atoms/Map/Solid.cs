@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="pairs">Pairs of mappings</param>
         public Solid(Tuple<Key, Value>[] pairs) : this(
-            new LiveEnumerable<Tuple<Key, Value>>(pairs)
+            new Many.Live<Tuple<Key, Value>>(pairs)
         )
         { }
 
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="list"></param>
         public Solid(params KeyValuePair<Key, Value>[] list) : this(
-            new LiveEnumerable<KeyValuePair<Key, Value>>(list))
+            new Many.Live<KeyValuePair<Key, Value>>(list))
         { }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="list">list of values to merge</param>
         public Solid(IDictionary<Key, Value> map, params KeyValuePair<Key, Value>[] list) : this(
             map, 
-            new LiveEnumerable<KeyValuePair<Key, Value>>(list)
+            new Many.Live<KeyValuePair<Key, Value>>(list)
         )
         { }
 
@@ -88,7 +88,7 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="list">List of values</param>
         public Solid(IEnumerator<KeyValuePair<Key, Value>> list) : this(
-            new LiveEnumerable<KeyValuePair<Key, Value>>(() => list)
+            new Many.Live<KeyValuePair<Key, Value>>(() => list)
         )
         { }
 

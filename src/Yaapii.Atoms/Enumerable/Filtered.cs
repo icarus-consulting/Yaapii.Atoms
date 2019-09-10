@@ -21,12 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -38,7 +33,7 @@ namespace Yaapii.Atoms.Enumerable
     /// Pass a filter function which will applied to all items, similar to List{T}.Where(...) in LinQ
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Filtered<T> : LiveEnumerableEnvelope<T>
+    public sealed class Filtered<T> : Many.Envelope<T>
     {
         /// <summary>
         /// the enumerable to filter
@@ -59,9 +54,9 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="items">other items to filter</param>
         public Filtered(Func<T, Boolean> fnc, T item1, T item2, params T[] items) : this(
             fnc,
-            new LiveEnumerable<T>(() => 
+            new Many.Live<T>(() => 
                 new Joined<T>(
-                    new LiveEnumerable<T>(
+                    new Many.Live<T>(
                         item1,
                         item2
                     ),
@@ -77,7 +72,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
         public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src) : base(() =>
-            new LiveEnumerable<T>(() =>
+            new Many.Live<T>(() =>
                 new Enumerator.Filtered<T>(
                     src.GetEnumerator(),
                     fnc

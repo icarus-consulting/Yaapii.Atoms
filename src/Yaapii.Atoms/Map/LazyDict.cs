@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Lookup
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp[] kvps) : this(new LiveEnumerable<IKvp>(kvps))
+        public LazyDict(params IKvp[] kvps) : this(new Many.Live<IKvp>(kvps))
         { }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Yaapii.Atoms.Lookup
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp<Value>[] kvps) : this(new LiveEnumerable<IKvp<Value>>(kvps))
+        public LazyDict(params IKvp<Value>[] kvps) : this(new Many.Live<IKvp<Value>>(kvps))
         { }
 
         /// <summary>
@@ -429,7 +429,7 @@ namespace Yaapii.Atoms.Lookup
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp<Key, Value>[] kvps) : this(new LiveEnumerable<IKvp<Key, Value>>(kvps))
+        public LazyDict(params IKvp<Key, Value>[] kvps) : this(new Many.Live<IKvp<Key, Value>>(kvps))
         { }
 
         /// <summary>

@@ -21,10 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable
 {
@@ -32,28 +29,29 @@ namespace Yaapii.Atoms.Enumerable
     /// The sticky represantation of an <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T">The type of the enumerable</typeparam>
-    public class StickyEnumerable<T> : EnumerableEnvelope<T>
+    [Obsolete("This is obsolete and replaced by Many.Of (while Many.Live is not sticky, .Of is sticky)")]
+    public class StickyEnumerable<T> : Many.Envelope<T>
     {
         /// <summary>
         /// Makes a sticky enumerable
         /// </summary>
         /// <param name="items">The items</param>
-        public StickyEnumerable(params T[] items) : this(new LiveEnumerable<T>(items))
+        public StickyEnumerable(params T[] items) : this(new Many.Live<T>(items))
         { }
        
         /// <summary>
         /// Makes a sticky enumerable
         /// </summary>
         /// <param name="item">The enumerator</param>
-        public StickyEnumerable(IEnumerator<T> item) : this(new LiveEnumerable<T>(() => item))
+        public StickyEnumerable(IEnumerator<T> item) : this(new Many.Live<T>(() => item))
         { }
        
         /// <summary>
         /// Makes a sticky enumerable
         /// </summary>
         /// <param name="src"></param>
-        public StickyEnumerable(IEnumerable<T> src) : base(
-            new Scalar.Sticky<IEnumerable<T>>(new List<T>(src))
+        public StickyEnumerable(IEnumerable<T> src) : base(() =>
+            new List<T>(src)
         )
         { }
     }

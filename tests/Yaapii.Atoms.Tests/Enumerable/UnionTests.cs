@@ -32,8 +32,8 @@ namespace Yaapii.Atoms.Enumerable.Test
         {
             Assert.Empty(
                 new Union<string>(
-                    new EnumerableOf<string>("a", "b"),
-                    new EnumerableOf<string>("c")
+                    new Many.Of<string>("a", "b"),
+                    new Many.Of<string>("c")
                 )
             );
         }

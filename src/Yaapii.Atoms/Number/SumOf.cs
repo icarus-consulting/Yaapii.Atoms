@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">source floats</param>
         public SumOf(params float[] src) : this(
-            new EnumerableOf<float>(src))
+            new Many.Of<float>(src))
         { }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">source longs</param>
         public SumOf(params long[] src) : this(
-            new EnumerableOf<long>(src))
+            new Many.Of<long>(src))
         { }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">source ints</param>
         public SumOf(params int[] src) : this(
-            new EnumerableOf<int>(src))
+            new Many.Of<int>(src))
         { }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">source doubles</param>
         public SumOf(params double[] src) : this(
-            new EnumerableOf<double>(src))
+            new Many.Of<double>(src))
         { }
 
         /// <summary>

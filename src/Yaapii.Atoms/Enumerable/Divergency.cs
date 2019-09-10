@@ -7,7 +7,7 @@ namespace Yaapii.Atoms.Enumerable
     /// Union objects in two enumerables.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Divergency<T> : LiveEnumerableEnvelope<T>
+    public class Divergency<T> : Many.Envelope<T>
     {
         /// <summary>
         /// Union objects in two enumerables.

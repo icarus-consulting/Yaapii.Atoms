@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="list"></param>
         public Synced(KeyValuePair<Key, Value>[] list) : this(
-            new EnumerableOf<KeyValuePair<Key, Value>>(list))
+            new Many.Of<KeyValuePair<Key, Value>>(list))
         { }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="list">list of entries to merge</param>
         public Synced(Dictionary<Key, Value> map, KeyValuePair<Key, Value>[] list) : this(
             map,
-            new EnumerableOf<KeyValuePair<Key, Value>>(list))
+            new Many.Of<KeyValuePair<Key, Value>>(list))
         { }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="list">list of entries</param>
         public Synced(IEnumerator<KeyValuePair<Key, Value>> list) : this(
-            new EnumerableOf<KeyValuePair<Key, Value>>(
+            new Many.Of<KeyValuePair<Key, Value>>(
                 () => list
             )
         )

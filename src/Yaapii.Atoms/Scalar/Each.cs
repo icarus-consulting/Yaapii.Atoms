@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
         public Each(IAction<In> proc, params In[] src) : this(
-            proc, new EnumerableOf<In>(src))
+            proc, new Many.Of<In>(src))
         { }
 
 

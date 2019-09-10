@@ -20,24 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
-    public sealed class LiveEnumerableTest
+    public sealed class ManyLiveTest
     {
         [Fact]
         public void ConvertsScalarsToEnumerable()
         {
             Assert.True(
                 new LengthOf(
-                    new LiveEnumerable<string>(
+                    new Many.Live<string>(
                         "a", "b", "c"
                     )
                 ).Value() == 3,
@@ -49,7 +45,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new LiveEnumerable<IText>(
+                    new Many.Live<IText>(
                         new TextOf("a"), new TextOf("b"), new TextOf("c")
                     )
                 ).Value() == 3,
@@ -62,7 +58,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             var lst = new List<string>();
             var length =
                 new LengthOf(
-                    new LiveEnumerable<string>(() =>
+                    new Many.Live<string>(() =>
                     {
                         lst.Add("something");
                         return lst;

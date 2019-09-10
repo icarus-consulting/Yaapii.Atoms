@@ -26,14 +26,14 @@ using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
-    public sealed class EnumerableOfTest
+    public sealed class ManyOfTest
     {
         [Fact]
         public void ConvertsScalarsToEnumerable()
         {
             Assert.True(
                 new LengthOf(
-                    new EnumerableOf<string>(
+                    new Many.Of<string>(
                         "a", "b", "c"
                     )
                 ).Value() == 3,
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new EnumerableOf<IText>(
+                    new Many.Of<IText>(
                         new TextOf("a"), new TextOf("b"), new TextOf("c")
                     )
                 ).Value() == 3,
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             var lst = new List<string>();
             var length =
                 new LengthOf(
-                    new EnumerableOf<string>(() =>
+                    new Many.Of<string>(() =>
                     {
                         lst.Add("something");
                         return lst;

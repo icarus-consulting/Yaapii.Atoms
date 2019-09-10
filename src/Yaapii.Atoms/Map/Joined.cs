@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Lookup
         /// Joined map.
         /// </summary>
         public Joined(params IDictionary<string, string>[] dicts) : this(
-            new LiveEnumerable<IDictionary<string, string>>(dicts)
+            new Many.Live<IDictionary<string, string>>(dicts)
         )
         { }
 
@@ -99,7 +99,7 @@ namespace Yaapii.Atoms.Lookup
             /// Joined map.
             /// </summary>
             public Live(params IDictionary<string, string>[] dicts) : this(
-                new LiveEnumerable<IDictionary<string, string>>(dicts)
+                new Many.Live<IDictionary<string, string>>(dicts)
             )
             { }
 
@@ -149,7 +149,7 @@ namespace Yaapii.Atoms.Lookup
         /// Joined map.
         /// </summary>
         public Joined(params IDictionary<string, Value>[] dicts) : this(
-            new LiveEnumerable<IDictionary<string, Value>>(dicts)
+            new Many.Live<IDictionary<string, Value>>(dicts)
         )
         { }
 
@@ -199,7 +199,7 @@ namespace Yaapii.Atoms.Lookup
         /// Joined map.
         /// </summary>
         public Joined(params IDictionary<Key, Value>[] dicts) : this(
-            new LiveEnumerable<IDictionary<Key, Value>>(dicts)
+            new Many.Live<IDictionary<Key, Value>>(dicts)
         )
         { }
 

@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Collection
         /// ctor
         /// </summary>
         /// <param name="src"></param>
-        public Reversed(params T[] src) : this(new EnumerableOf<T>(src))
+        public Reversed(params T[] src) : this(new Many.Of<T>(src))
         { }
 
         /// <summary>

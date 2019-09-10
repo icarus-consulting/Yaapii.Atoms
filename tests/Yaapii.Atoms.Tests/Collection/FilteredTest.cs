@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Collection.Tests
                 new LengthOf(
                     new Filtered<string>(
                         input => input.Length > 4,
-                        new EnumerableOf<string>("hello", "world", "друг"))
+                        new Many.Of<string>("hello", "world", "друг"))
                 ).Value() == 2,
                 "cannot filter list"
             );
@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.True(
                 new Filtered<string>(
                     input => input.Length >= 4,
-                    new EnumerableOf<string>("some", "text", "yes")
+                    new Many.Of<string>("some", "text", "yes")
                 ).Count == 2
             );
         }
@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.NotEmpty(
                 new Filtered<string>(
                     input => input.Length > 4,
-                    new EnumerableOf<string>("first", "second")
+                    new Many.Of<string>("first", "second")
                 )
             );
         }
@@ -88,7 +88,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Empty(
                 new Filtered<string>(
                     input => input.Length > 16,
-                    new EnumerableOf<string>("third", "fourth")
+                    new Many.Of<string>("third", "fourth")
                 )
             );
         }

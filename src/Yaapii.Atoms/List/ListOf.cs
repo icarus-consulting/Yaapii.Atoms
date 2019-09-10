@@ -42,14 +42,14 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="array">source array</param>
-        public ListOf(params T[] array) : this(new EnumerableOf<T>(array))
+        public ListOf(params T[] array) : this(new Many.Of<T>(array))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">source enumerator</param>
-        public ListOf(IEnumerator<T> src) : this(new EnumerableOf<T>(() => src))
+        public ListOf(IEnumerator<T> src) : this(new Many.Of<T>(() => src))
         { }
 
         /// <summary>
