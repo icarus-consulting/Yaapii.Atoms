@@ -21,10 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Yaapii.Atoms.Bytes;
-using Yaapii.Atoms.IO;
 
 namespace Yaapii.Atoms.Text
 {
@@ -59,12 +56,6 @@ namespace Yaapii.Atoms.Text
         public string AsString()
         {
             return origin.AsString();
-                
-        }
-
-        public bool Equals(IText other)
-        {
-            return origin.Equals(other);
         }
     }
 }

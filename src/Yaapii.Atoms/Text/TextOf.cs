@@ -26,7 +26,6 @@ using System.IO;
 using System.Text;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable MaxClassLength // Class length max
 namespace Yaapii.Atoms.Text
@@ -307,46 +306,6 @@ namespace Yaapii.Atoms.Text
         public String AsString()
         {
             return this.origin.Value;
-        }
-
-        /// <summary>
-        /// Compares to another text.
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public int CompareTo(IText text)
-        {
-            return this.AsString().CompareTo(text.AsString());
-        }
-
-        /// <summary>
-        /// Checks for equality
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            if (obj as IText == null) return false;
-            return this.AsString().CompareTo((obj as IText).AsString()) == 0;
-        }
-
-        /// <summary>
-        /// Checks for equality
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public bool Equals(IText text)
-        {
-            return Equals(text as object);
-        }
-
-        /// <summary>
-        /// Hashcode for this text
-        /// </summary>
-        /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

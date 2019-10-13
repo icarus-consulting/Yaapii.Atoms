@@ -46,11 +46,6 @@ namespace Yaapii.Atoms.Text
             return this.text.AsString();
         }
 
-        public bool Equals(IText other)
-        {
-            return this.text.Equals(other);
-        }
-
         public int CompareTo(object obj)
         {
             new FailNull(

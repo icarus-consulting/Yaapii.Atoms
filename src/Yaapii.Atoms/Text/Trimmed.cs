@@ -163,25 +163,5 @@ namespace Yaapii.Atoms.Text
         {
             return this.trimmedText.Value().AsString();
         }
-
-        /// <summary>
-        /// Compare to other text.
-        /// </summary>
-        /// <param name="text">text to compare to</param>
-        /// <returns>-1 if this is lower, 0 if equal, 1 if this is higher</returns>
-        public int CompareTo(IText text)
-        {
-            return this.AsString().CompareTo(text.AsString());
-        }
-
-        /// <summary>
-        /// Check for equality.
-        /// </summary>
-        /// <param name="other">other object to compare to</param>
-        /// <returns>true if equal.</returns>
-        public bool Equals(IText other)
-        {
-            return this.AsString().Equals(other.AsString());
-        }
     }
 }

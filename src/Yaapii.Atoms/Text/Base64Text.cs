@@ -62,15 +62,5 @@ namespace Yaapii.Atoms.Text
         {
             return this._origin.AsString();
         }
-
-        /// <summary>
-        /// Check for equality.
-        /// </summary>
-        /// <param name="text">other object to compare to</param>
-        /// <returns>true if equal.</returns>
-        public bool Equals(IText text)
-        {
-            return _origin.Equals(text);
-        }
     }
 }
