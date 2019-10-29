@@ -52,12 +52,16 @@ namespace Yaapii.Atoms.Text.Tests
                 ).Value();
 
                 Assert.True(
-                    new TextOf(
-                        new Uri(tempFile.Value())
-                    ).Equals(
-                    new TextBase64(
-                        new TextOf(text)
-                    )));
+                    new Comparable(
+                        new TextOf(
+                            new Uri(tempFile.Value())
+                        )
+                    ).CompareTo(
+                        new TextBase64(
+                            new TextOf(text)
+                        )
+                    ) == 0
+                );
             }
         }
     }

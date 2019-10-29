@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Yaapii.Atoms.Text
 {
@@ -56,26 +54,5 @@ namespace Yaapii.Atoms.Text
         {
             return this._origin.AsString().Replace(this._needle, this._replacement);
         }
-
-        /// <summary>
-        /// Compare to other text.
-        /// </summary>
-        /// <param name="text">text to compare to</param>
-        /// <returns>-1 if this is lower, 0 if equal, 1 if this is higher</returns>
-        public int CompareTo(IText text)
-        {
-            return this.AsString().CompareTo(text.AsString());
-        }
-
-        /// <summary>
-        /// Check for equality.
-        /// </summary>
-        /// <param name="text">other object to compare to</param>
-        /// <returns>true if equal.</returns>
-        public bool Equals(IText text)
-        {
-            return this.CompareTo(text) == 0;
-        }
-
     }
 }

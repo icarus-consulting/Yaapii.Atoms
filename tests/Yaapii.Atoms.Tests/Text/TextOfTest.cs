@@ -306,7 +306,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void ComparesWithASubtext()
         {
             Assert.True(
-            new TextOf("here to there").CompareTo(
+            new Comparable(new TextOf("here to there")).CompareTo(
                 new SubText("from here to there", 5)
             ) == 0,
             "Can't compare sub texts");

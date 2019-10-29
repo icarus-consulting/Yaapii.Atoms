@@ -153,15 +153,5 @@ namespace Yaapii.Atoms.Text
         {
             return this.trimmedText.Value().AsString();
         }
-
-        /// <summary>
-        /// Check for equality.
-        /// </summary>
-        /// <param name="other">other object to compare to</param>
-        /// <returns>true if equal.</returns>
-        public bool Equals(IText other)
-        {
-            return this.AsString().Equals(other.AsString());
-        }
     }
 }

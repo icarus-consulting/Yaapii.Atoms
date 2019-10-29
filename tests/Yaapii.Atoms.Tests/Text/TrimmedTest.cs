@@ -117,21 +117,5 @@ namespace Yaapii.Atoms.Text.Tests
                 new Trimmed(new TextOf(" \b   \t      Hello! \t \b   \t      H"), new ScalarOf<IText>(() => new TextOf(" \b   \t      H"))).AsString() == "ello! \t"
             );
         }
-
-        [Fact]
-        public void CanCompareTexts()
-        {
-            Assert.True(
-                new Trimmed(new TextOf(" \b   \t      Hello! \t \b   \t      ")).CompareTo(new TextOf("Hello!")) == 0
-            );
-        }
-
-        [Fact]
-        public void CanCheckTextEquality()
-        {
-            Assert.True(
-                new Trimmed(new TextOf(" \b   \t      Hello! \t \b   \t      ")).Equals(new TextOf("Hello!"))
-            );
-        }
     }
 }

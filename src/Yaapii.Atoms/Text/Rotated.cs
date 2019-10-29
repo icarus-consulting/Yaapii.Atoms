@@ -21,7 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Yaapii.Atoms.Text
@@ -69,16 +68,5 @@ namespace Yaapii.Atoms.Text
             }
             return text;
         }
-
-        /// <summary>
-        /// Check for equality.
-        /// </summary>
-        /// <param name="text">other object to compare to</param>
-        /// <returns>true if equal.</returns>
-        public bool Equals(IText text)
-        {
-            return this.AsString().CompareTo(text.AsString()) == 0;
-        }
-
     }
 }
