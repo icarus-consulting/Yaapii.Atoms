@@ -47,9 +47,16 @@ namespace Yaapii.Atoms.Collection.Tests
         {
 
             Assert.Contains(
-                new TextOf("HELLO"),
+                new Comparable(
+                    new TextOf("HELLO")
+                ),
                 new Mapped<String, IText>(
-                    input => new Upper(new TextOf(input)),
+                    input => 
+                    new Comparable(
+                        new Upper(
+                            new TextOf(input)
+                        )
+                    ),
                     new Many.Of<string>("hello", "world", "друг")
                 ));
         }
