@@ -28,22 +28,26 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// An <see cref="IText"/> without whitespaces / control characters or defined letters or a defined text on both sides.
     /// </summary>
-    public sealed class Trimmed : IText
+    public sealed class Trimmed : Text.Envelope
     {
-        private readonly IScalar<IText> trimmedText;
-
         /// <summary>
         /// A <see cref="string"/> trimmed (removed whitespaces) on both sides.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public Trimmed(string text) : this(new TextOf(text))
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Trimmed(string text, bool live = false) : base(() => text, live)
         { }
 
         /// <summary>
         /// An <see cref="IText"/> trimmed (removed whitespaces) on both sides.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public Trimmed(IText text) : this(text, new ScalarOf<char[]>(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' }))
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Trimmed(IText text, bool live = false) : this(
+            text, 
+            new ScalarOf<char[]>(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' }),
+            live
+        )
         { }
 
         /// <summary>
@@ -51,7 +55,8 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        public Trimmed(string text, char[] trimText) : this(new TextOf(text), trimText)
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Trimmed(string text, char[] trimText, bool live = false) : this(new Text.Live(text), trimText, live)
         { }
 
         /// <summary>
@@ -59,7 +64,8 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        public Trimmed(IText text, char[] trimText) : this(text, new ScalarOf<char[]>(trimText))
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Trimmed(IText text, char[] trimText, bool live = false) : this(text, new ScalarOf<char[]>(trimText), live)
         { }
 
         /// <summary>
@@ -67,13 +73,10 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        public Trimmed(IText text, IScalar<char[]> trimText) : this(
-            new ScalarOf<IText>(
-                () =>
-                {
-                    return new TextOf(text.AsString().Trim(trimText.Value()));
-                }
-            )
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Trimmed(IText text, IScalar<char[]> trimText, bool live = false) : base(
+            () => text.AsString().Trim(trimText.Value()), 
+            live
         )
         { }
 
@@ -82,7 +85,8 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public Trimmed(string text, string removeText) : this(new TextOf(text), new TextOf(removeText))
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Trimmed(string text, string removeText, bool live = false) : this(new Text.Live(text), new Text.Live(removeText), live)
         { }
 
         /// <summary>
@@ -90,7 +94,8 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public Trimmed(string text, IText removeText) : this(new TextOf(text), removeText)
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Trimmed(string text, IText removeText, bool live = false) : this(new Text.Live(text), removeText, live)
         { }
 
         /// <summary>
@@ -98,15 +103,8 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public Trimmed(IText text, string removeText) : this(text, new TextOf(removeText))
-        { }
-
-        /// <summary>
-        /// An <see cref="IText"/> from which an <see cref="IText"/> is removed on both sides.
-        /// </summary>
-        /// <param name="text">text to trim</param>
-        /// <param name="removeText">text that is removed from the text</param>
-        public Trimmed(IText text, IText removeText) : this(text, new ScalarOf<IText>(removeText))
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Trimmed(IText text, string removeText, bool live = false) : this(text, new Text.Live(removeText), live)
         { }
 
         /// <summary>
@@ -114,54 +112,58 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public Trimmed(IText text, IScalar<IText> removeText) : this(
-            new ScalarOf<IText>(
-                () =>
-                {
-                    IText returnValue = text;
-                    var startsWith =
-                        text.AsString()
-                        .StartsWith(
-                            removeText.Value().AsString()
-                        );
-                    if (startsWith)
-                    {
-                        text = new TextOf(text.AsString().Remove(0, removeText.Value().AsString().Length));
-                        returnValue = text;
-                    }
-                    var endsWith =
-                        text.AsString()
-                        .EndsWith(
-                            removeText.Value().AsString()
-                        );
-                    if (endsWith)
-                    {
-                        int startIndex = text.AsString().Length - removeText.Value().AsString().Length;
-                        text = new TextOf(text.AsString().Remove(startIndex, removeText.Value().AsString().Length));
-                        returnValue = text;
-                    }
-                    return returnValue;
-                }
-            )
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Trimmed(IText text, IText removeText, bool live = false) : this(
+            text, 
+            removeText,
+            false,
+            live
         )
         { }
 
         /// <summary>
-        /// 
+        /// An <see cref="IText"/> from which an IScalar&lt;<see cref="IText"/>&gt; is removed on both sides.
         /// </summary>
-        /// <param name="text"></param>
-        private Trimmed(IScalar<IText> text)
-        {
-            this.trimmedText = text;
-        }
+        /// <param name="text">text to trim</param>
+        /// <param name="ignoreCase">Trim by disregarding case.</param>
+        /// <param name="removeText">text that is removed from the text</param>
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Trimmed(IText text, IText removeText, bool ignoreCase, bool live = false) : base(
+            () =>
+            {
+                string str = text.AsString();
+                string remove = removeText.AsString();
 
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            return this.trimmedText.Value().AsString();
-        }
+                if (ignoreCase)
+                {
+                    var lower = str.ToLower();
+                    var remLower = remove.ToLower();
+                    if (lower.StartsWith(remLower))
+                    {
+                        str = str.Remove(0, remove.Length);
+                    }
+                    if (str.ToLower().EndsWith(remLower))
+                    {
+                        int startIndex = str.Length - remove.Length;
+                        str = str.Remove(startIndex, remove.Length);
+                    }
+                }
+                else
+                {
+                    if (str.StartsWith(remove))
+                    {
+                        str = str.Remove(0, remove.Length);
+                    }
+                    if (str.EndsWith(remove))
+                    {
+                        int startIndex = str.Length - remove.Length;
+                        str = str.Remove(startIndex, remove.Length);
+                    }
+                }
+                return str;
+            },
+            live
+        )
+        { }
     }
 }

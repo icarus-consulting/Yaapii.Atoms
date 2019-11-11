@@ -20,33 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 
 namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> as uppercase.
     /// </summary>
-    public sealed class Upper : IText
+    public sealed class Upper : Text.Envelope
     {
-        private readonly IText _origin;
-
         /// <summary>
         /// A <see cref="IText"/> as uppercase.
         /// </summary>
         /// <param name="text">text to uppercase</param>
-        public Upper(IText text)
-        {
-            this._origin = text;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            return this._origin.AsString().ToUpperInvariant();
-        }
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Upper(IText text, bool live = false) : base(() => text, live)
+        { }
     }
 }

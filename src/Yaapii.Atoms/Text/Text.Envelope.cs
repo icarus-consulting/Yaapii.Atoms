@@ -46,6 +46,15 @@ namespace Yaapii.Atoms.Texts
             /// </summary>
             /// <param name="origin">How to create the value</param>
             /// <param name="live">should the value be created every time the object is used?</param>
+            public Envelope(Func<IText> origin, bool live = false) : this(() => origin().AsString(), live)
+            { }
+
+            /// <summary>
+            /// A <see cref="IText"/> envelope.
+            /// The envelope can work in live or in sticky mode.
+            /// </summary>
+            /// <param name="origin">How to create the value</param>
+            /// <param name="live">should the value be created every time the object is used?</param>
             public Envelope(Func<string> origin, bool live = false)
             {
                 this.origin = origin;
@@ -60,7 +69,7 @@ namespace Yaapii.Atoms.Texts
             public String AsString()
             {
                 var result = string.Empty;
-                if(this.live)
+                if (this.live)
                 {
                     result = this.fixedOrigin.Value;
                 }

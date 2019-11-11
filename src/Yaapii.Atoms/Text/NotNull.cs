@@ -20,40 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> that can't accept null.
     /// </summary>
-    public sealed class NotNull : IText
+    public sealed class NotNull : Text.Envelope
     {
-        private readonly IText _origin;
-
         /// <summary>
         /// A <see cref="IText"/>  that can't accept null.
         /// </summary>
         /// <param name="text"></param>
-        public NotNull(IText text)
-        {
-            this._origin = text;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            if (this._origin == null)
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public NotNull(IText text, bool live = false) : base(() =>
             {
-                throw new IOException("invalid text (null)");
-            }
-            return this._origin.AsString();
-        }
+                if (text == null)
+                {
+                    throw new IOException("invalid text (null)");
+                }
+                return text.AsString();
+            },
+            live
+        )
+        { }
     }
 }

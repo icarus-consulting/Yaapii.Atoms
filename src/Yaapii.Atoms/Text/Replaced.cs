@@ -27,32 +27,19 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A <see cref="IText"/> whose contents have been replaced by another text.
     /// </summary>
-    public sealed class Replaced : IText
+    public sealed class Replaced : Text.Envelope
     {
-        private readonly IText _origin;
-        private readonly String _needle;
-        private readonly String _replacement;
-
         /// <summary>
         /// A <see cref="IText"/>  whose contents have been replaced by another text.
         /// </summary>
         /// <param name="text">text to replace contents in</param>
         /// <param name="find">part to replace</param>
         /// <param name="replace">replacement to insert</param>
-        public Replaced(IText text, String find, String replace)
-        {
-            this._origin = text;
-            this._needle = find;
-            this._replacement = replace;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            return this._origin.AsString().Replace(this._needle, this._replacement);
-        }
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Replaced(IText text, String find, String replace, bool live) : base(() =>
+            text.AsString().Replace(find, replace),
+            live
+        )
+        { }
     }
 }

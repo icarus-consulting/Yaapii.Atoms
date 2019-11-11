@@ -35,6 +35,7 @@ namespace Yaapii.Atoms.Texts
 
         /// <summary>
         /// A Text that can be compared using the Equals method.
+        /// The text is always sticky (non live)
         /// </summary>
         public Comparable(IText text)
         {

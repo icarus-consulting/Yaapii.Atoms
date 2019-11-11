@@ -20,36 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-
 namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> as lowercase.
     /// </summary>
-    public sealed class Lower : IText
+    public sealed class Lower : Text.Envelope
     {
-        private readonly IText _origin;
-
         /// <summary>
         /// A <see cref="IText"/>  as lowercase.
         /// </summary>
         /// <param name="text">text to lower</param>
-        public Lower(IText text)
-        {
-            _origin = text;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            return this._origin.AsString().ToLower();
-        }
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Lower(IText text, bool live = false) : base(() => text.AsString().ToLower(), live)
+        { }
     }
 }

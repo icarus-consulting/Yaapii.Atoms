@@ -29,17 +29,19 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A <see cref="IText"/> repeated multiple times.
     /// </summary>
-    public sealed class Repeated : IText
+    public sealed class Repeated : Text.Envelope
     {
-        private readonly IText _origin;
-        private readonly int _count;
-
         /// <summary>
         /// A <see cref="IText"/>  repeated multiple times.
         /// </summary>
         /// <param name="text">text to repeat</param>
         /// <param name="count">how often to repeat</param>
-        public Repeated(String text, int count) : this(new TextOf(text), count)
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Repeated(String text, int count, bool live = false) : this(
+            new Text.Live(text), 
+            count, 
+            live
+        )
         { }
 
         /// <summary>
@@ -47,24 +49,17 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to repeat</param>
         /// <param name="count">how often to repeat</param>
-        public Repeated(IText text, int count)
-        {
-            this._origin = text;
-            this._count = count;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            StringBuilder output = new StringBuilder();
-            for (int cnt = 0; cnt < this._count; ++cnt)
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Repeated(IText text, int count, bool live = false) : base(() =>
             {
-                output.Append(this._origin.AsString());
-            }
-            return output.ToString();
-        }
+                StringBuilder output = new StringBuilder();
+                for (int cnt = 0; cnt < count; ++cnt)
+                {
+                    output.Append(text.AsString());
+                }
+                return output.ToString();
+            },
+            live)
+        { }
     }
 }

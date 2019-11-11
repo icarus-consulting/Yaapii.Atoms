@@ -61,6 +61,7 @@ namespace Yaapii.Atoms.Texts
             () => inputValue.Value(),
             () => pattern.Value(),
             () => stringComparison.Value()
+        )
         { }
 
         /// <summary> Checks if a text contains a pattern using IScalar </summary>
@@ -70,14 +71,14 @@ namespace Yaapii.Atoms.Texts
         public Contains(Func<string> inputValue, Func<string> pattern, Func<StringComparison> stringComparison)
         {
             this.result = 
-                new Lazy<bool>(() => inputValue().IndexOf(pattern(), stringComparison()) >= 0);
+                new Func<bool>(() => inputValue().IndexOf(pattern(), stringComparison()) >= 0);
         }
 
         /// <summary> Returns if the inputValue contains the pattern </summary>
         /// <returns> bool </returns>
         public bool Value()
         {
-            return this.result.Value;
+            return this.result();
         }
     }
 }

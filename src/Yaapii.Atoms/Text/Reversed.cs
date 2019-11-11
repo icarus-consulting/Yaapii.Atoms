@@ -27,33 +27,26 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A <see cref="IText"/> which has been reversed.
     /// </summary>
-    public sealed class Reversed : IText
+    public sealed class Reversed : Text.Envelope
     {
-        private readonly IText _origin;
-
         /// <summary>
         /// A <see cref="IText"/> which has been reversed.
         /// </summary>
         /// <param name="text">text to reverse</param>
-        public Reversed(IText text)
-        {
-            this._origin = text;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            char[] chararray = _origin.AsString().ToCharArray();
-            Array.Reverse(chararray);
-            string reverseTxt = "";
-            for (int i = 0; i <= chararray.Length - 1; i++)
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Reversed(IText text, bool live = false) : base (() => 
             {
-                reverseTxt += chararray.GetValue(i);
-            }
-            return reverseTxt;
-        }
+                char[] chararray = text.AsString().ToCharArray();
+                Array.Reverse(chararray);
+                string reverseTxt = "";
+                for (int i = 0; i <= chararray.Length - 1; i++)
+                {
+                    reverseTxt += chararray.GetValue(i);
+                }
+                return reverseTxt;
+            },
+            live
+        )
+        { }
     }
 }

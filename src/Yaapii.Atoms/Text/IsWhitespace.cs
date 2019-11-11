@@ -32,14 +32,14 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class IsWhitespace : IScalar<Boolean>
     {
-        private readonly IText _origin;
+        private readonly Func<Boolean> result;
 
         /// <summary>
         /// Checks if a A <see cref="string"/> is whitespace.
         /// </summary>
         /// <param name="text">text to check</param>
         public IsWhitespace(string text) : this(
-            new TextOf(text)
+            new Text.Of(text)
         )
         { }
 
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to check</param>
         public IsWhitespace(IText text)
         {
-            this._origin = text;
+            this.result = new Func<Boolean>(() => !text.AsString().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + "")));
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Texts
         /// <returns>the result</returns>
         public Boolean Value()
         {
-            return !this._origin.AsString().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + ""));
+            return this.result();
         }
     }
 }
