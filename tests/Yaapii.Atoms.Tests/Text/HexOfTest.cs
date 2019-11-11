@@ -29,7 +29,7 @@ using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class HexOfTest
     {

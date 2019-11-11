@@ -23,7 +23,7 @@
 using System;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// An <see cref="IText"/> without whitespaces / control characters or defined letters or a defined text on the left side.

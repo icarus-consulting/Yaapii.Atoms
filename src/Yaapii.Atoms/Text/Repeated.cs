@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> repeated multiple times.

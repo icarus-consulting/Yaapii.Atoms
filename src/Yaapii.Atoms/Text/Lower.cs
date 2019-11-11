@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> as lowercase.

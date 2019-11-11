@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// Hexadecimal representation of Bytes.

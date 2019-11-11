@@ -23,23 +23,19 @@
 using System;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// Extracted subtext from a <see cref="IText"/>.
     /// </summary>
-    public sealed class SubText : IText
+    public sealed class SubText : Text.Envelope
     {
-        private readonly IText _origin;
-        private readonly IScalar<Int32> _start;
-        private readonly IScalar<Int32> _length;
-
         /// <summary>
         /// Extracted subtext from a <see cref="string"/>.
         /// </summary>
         /// <param name="text">text to extreact from</param>
         /// <param name="strt">where to start</param>
-        public SubText(String text, int strt) : this(new TextOf(text), strt)
+        public SubText(String text, int strt) : this(new Text.Of(text), strt)
         { }
 
         /// <summary>
@@ -48,7 +44,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start</param>
         /// <param name="end">where to end</param>
-        public SubText(String text, int strt, int end) : this(new TextOf(text), strt, end)
+        public SubText(String text, int strt, int end) : this(new Text.Of(text), strt, end)
         { }
 
         /// <summary>
@@ -68,14 +64,22 @@ namespace Yaapii.Atoms.Text
         public SubText(IText text, int strt, int end) : this(text, new ScalarOf<Int32>(strt), new ScalarOf<Int32>(end))
         { }
 
-        ///// <summary>
-        ///// Extracted subtext from a <see cref="IText"/>.
-        ///// </summary>
-        ///// <param name="text">text to extract from</param>
-        ///// <param name="strt">where to start encapsulated in a scalar</param>
-        ///// <param name="end">where to end encapsulated in a scalar</param>
-        //public SubText(IText text, IScalar<Int32> strt, IScalar<Int32> end) : this(text, strt, end)
-        //{ }
+        /// <summary>
+        /// Extracted subtext from a <see cref="IText"/>.
+        /// </summary>
+        /// <param name="text">text to extract from</param>
+        /// <param name="strt">where to start encapsulated in a scalar</param>
+        /// <param name="len">where to end encapsulated in a scalar</param>
+        public SubText(
+            IText text,
+            ScalarOf<Int32> strt,
+            ScalarOf<Int32> len
+        ) : this(
+            text,
+            () => strt.Value(),
+            () => len.Value()
+        )
+        { }
 
         /// <summary>
         /// Extracted subtext from a <see cref="IText"/>.
@@ -83,24 +87,16 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start encapsulated in a scalar</param>
         /// <param name="len">where to end encapsulated in a scalar</param>
-        public SubText(IText text, ScalarOf<Int32> strt,
-            ScalarOf<Int32> len)
-        {
-            this._origin = text;
-            this._start = strt;
-            this._length = len;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            return this._origin.AsString().Substring(
-                this._start.Value(),
-                this._length.Value()
-            );
-        }
+        public SubText(IText text, Func<Int32> strt, Func<Int32> len) : base(() =>
+            {
+                return 
+                    text.AsString().Substring(
+                        strt(),
+                        len()
+                    );
+            },
+            true
+        )
+        { }
     }
 }

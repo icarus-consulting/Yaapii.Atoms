@@ -28,7 +28,7 @@ using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> of texts joined together.

@@ -28,11 +28,12 @@ using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 
 #pragma warning disable MaxClassLength // Class length max
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> out of other objects.
     /// </summary>
+    [Obsolete("TextOf is replaced by Text.Of. Please note that if you need a lie object, you should use Text.Live")]
     public sealed class TextOf : IText
     {
         private readonly Lazy<String> origin;

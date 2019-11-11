@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// Normalized A <see cref="IText"/> (whitespaces replaced with one single space)

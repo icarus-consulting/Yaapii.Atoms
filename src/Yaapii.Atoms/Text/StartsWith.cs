@@ -22,7 +22,7 @@
 
 using System.Text.RegularExpressions;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// Checks if a text starts with a given content.

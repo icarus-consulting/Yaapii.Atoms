@@ -23,7 +23,7 @@
 using System;
 using Xunit;
 
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class ReplacedTest
     {

@@ -24,7 +24,7 @@ using System;
 using Xunit;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class ContainsTest
     {

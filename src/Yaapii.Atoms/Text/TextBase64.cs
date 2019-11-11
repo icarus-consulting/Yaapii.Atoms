@@ -23,7 +23,7 @@
 using System;
 using Yaapii.Atoms.Bytes;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> as Base64 encoded <see cref="IText"/>

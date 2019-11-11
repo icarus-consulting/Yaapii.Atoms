@@ -25,7 +25,7 @@ using System.Globalization;
 using Xunit;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class FormattedTest
     {

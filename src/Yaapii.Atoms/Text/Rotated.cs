@@ -23,7 +23,7 @@
 using System;
 using System.Text;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> whose characters have been rotated.

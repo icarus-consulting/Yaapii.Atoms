@@ -26,7 +26,7 @@ using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class Base64DecodedTextTest
     {

@@ -22,7 +22,7 @@
 
 using System;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> as uppercase.

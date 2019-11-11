@@ -31,7 +31,7 @@ using Yaapii.Atoms.Enumerable;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> which has been splitted at the given string.
