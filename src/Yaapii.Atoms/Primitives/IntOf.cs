@@ -26,7 +26,7 @@ using System.Globalization;
 using System.Text;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="int"/> of a text.

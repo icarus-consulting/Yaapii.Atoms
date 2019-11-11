@@ -20,13 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class LowerTest
     {
@@ -35,8 +31,9 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Lower(
-                    new TextOf("HelLo!")).AsString() == "hello!",
-                "Can't lower case a text");
+                    new Text.Live("HelLo!")
+                ).AsString() == "hello!"
+            );
         }
     }
 }

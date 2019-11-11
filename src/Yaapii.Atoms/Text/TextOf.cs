@@ -28,11 +28,12 @@ using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 
 #pragma warning disable MaxClassLength // Class length max
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> out of other objects.
     /// </summary>
+    [Obsolete("TextOf is replaced by Text.Of. Please note that if you need a live object, you should use Text.Live")]
     public sealed class TextOf : IText
     {
         private readonly Lazy<String> origin;
@@ -100,6 +101,7 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of a <see cref="Uri"/>.
         /// </summary>
         /// <param name="uri">a file <see cref="Uri"/></param>
+        /// <param name="encoding">encoding of the data at the uri</param>
         public TextOf(Uri uri, Encoding encoding) : this(new InputOf(uri), encoding)
         { }
 

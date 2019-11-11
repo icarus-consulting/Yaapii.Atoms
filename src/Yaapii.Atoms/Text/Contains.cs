@@ -23,14 +23,12 @@
 using System;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary> Check if a text contains a pattern </summary>
     public sealed class Contains : IScalar<bool>
     {
-        private readonly IScalar<string> _inputValue;
-        private readonly IScalar<string> _pattern;
-        private readonly IScalar<StringComparison> _stringComparison;
+        private readonly Func<bool> result;
 
         /// <summary> Checks if a text contains a pattern using strings </summary>
         /// <param name="inputStr"> text as string </param>
@@ -59,18 +57,28 @@ namespace Yaapii.Atoms.Text
         /// <param name="inputValue"> text as IScalar of string </param>
         /// <param name="pattern"> pattern as IScalar of string </param>
         /// <param name="stringComparison"> Enables case sensitivity (as IScalar of bool) </param>
-        public Contains(IScalar<string> inputValue, IScalar<string> pattern, IScalar<StringComparison> stringComparison)
+        public Contains(IScalar<string> inputValue, IScalar<string> pattern, IScalar<StringComparison> stringComparison) : this(
+            () => inputValue.Value(),
+            () => pattern.Value(),
+            () => stringComparison.Value()
+        )
+        { }
+
+        /// <summary> Checks if a text contains a pattern using IScalar </summary>
+        /// <param name="inputValue"> text as IScalar of string </param>
+        /// <param name="pattern"> pattern as IScalar of string </param>
+        /// <param name="stringComparison"> Enables case sensitivity (as IScalar of bool) </param>
+        public Contains(Func<string> inputValue, Func<string> pattern, Func<StringComparison> stringComparison)
         {
-            _inputValue = inputValue;
-            _pattern = pattern;
-            _stringComparison = stringComparison;
+            this.result = 
+                new Func<bool>(() => inputValue().IndexOf(pattern(), stringComparison()) >= 0);
         }
 
         /// <summary> Returns if the inputValue contains the pattern </summary>
         /// <returns> bool </returns>
         public bool Value()
         {
-            return _inputValue.Value().IndexOf(_pattern.Value(), _stringComparison.Value()) >= 0;
+            return this.result();
         }
     }
 }

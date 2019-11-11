@@ -21,13 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
@@ -36,15 +31,15 @@ namespace Yaapii.Atoms.Enumerable.Tests
         [Fact]
         public void TransformsList()
         {
-            Assert.True(
+            Assert.Equal(
+                "HELLO",
                 new ItemAt<IText>(
                     new Enumerable.Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
-                        new Many.Of<string>("hello", "world", "damn")
-                        ),
+                        input => new Upper(new Text.Live(input)),
+                        new Many.Of<string>("hello", "world", "damn")),
                     0
-                ).Value().AsString() == "HELLO",
-            "Can't transform an enumerable");
+                ).Value().AsString()
+            );
         }
 
         [Fact]
@@ -53,10 +48,11 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new Enumerable.Mapped<String, IText>(
-                        input => new Upper(new TextOf(input)),
+                        input => new Upper(new Text.Live(input)),
                         new Many.Of<string>()
-                    )).Value() == 0,
-                "Can't transform an empty iterable");
+                    )
+                ).Value() == 0
+            );
         }
 
         [Fact]
@@ -65,7 +61,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new ItemAt<IText>(
                     new Enumerable.Mapped<String, IText>(
-                        (input, index) => new Upper(new TextOf(input+index)),
+                        (input, index) => new Upper(new Text.Live(input+index)),
                         new Many.Of<string>("hello", "world", "damn")
                         ),
                     1

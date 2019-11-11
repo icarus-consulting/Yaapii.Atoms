@@ -28,7 +28,7 @@ using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 namespace Yaapii.Atoms.IO.Tests
@@ -130,17 +130,16 @@ namespace Yaapii.Atoms.IO.Tests
         {
             String source = "hello, друг!";
             Assert.True(
-                    new TextOf(
-                        new BytesOf(
-                            new StreamReader(
-                                new MemoryStream(
-                                    Encoding.UTF8.GetBytes(source))),
-                            Encoding.UTF8,
-                            16 << 10
-                        )
-                    ).AsString() == source,
-                    "Can't read string through a reader"
-                );
+                new Text.Live(
+                    new BytesOf(
+                        new StreamReader(
+                            new MemoryStream(
+                                Encoding.UTF8.GetBytes(source))),
+                        Encoding.UTF8,
+                        16 << 10
+                    )
+                ).AsString() == source
+            );
         }
 
         [Fact]
@@ -151,11 +150,10 @@ namespace Yaapii.Atoms.IO.Tests
                 Encoding.UTF8.GetString(
                     new BytesOf(
                         new InputOf(
-                            new TextOf(source)
+                            new Text.Live(source)
                         ),
                         2
-                    ).AsBytes()) == source,
-                "Can't read bytes from Input with a small reading buffer"
+                    ).AsBytes()) == source
                 );
         }
 
@@ -166,9 +164,10 @@ namespace Yaapii.Atoms.IO.Tests
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes("how are you?")))
             {
                 t =
-                    new TextOf(
+                    new Text.Live(
                         new InputOf(stream),
-                        Encoding.UTF8);
+                        Encoding.UTF8
+                    );
             }
 
             Assert.Throws<ObjectDisposedException>(() => t.AsString());
@@ -178,13 +177,15 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void AsBytes()
         {
-            IText text = new TextOf("Hello!");
+            IText text = new Text.Live("Hello!");
             Assert.True(
                 StructuralComparisons.StructuralEqualityComparer.Equals(
                     new BytesOf(
                         new InputOf(text)
                         ).AsBytes(),
-                    new BytesOf(text.AsString()).AsBytes()));
+                    new BytesOf(text.AsString()).AsBytes()
+                )
+            );
         }
 
         [Fact]
@@ -196,7 +197,7 @@ namespace Yaapii.Atoms.IO.Tests
             catch (IOException ex)
             {
                 stackTrace =
-                    new TextOf(
+                    new Text.Live(
                         new BytesOf(
                             ex
                         )
@@ -207,7 +208,7 @@ namespace Yaapii.Atoms.IO.Tests
                 stackTrace.Contains("IOException") &&
                 stackTrace.Contains("doesn't work at all"),
                 "Can't print exception stacktrace"
-                );
+            );
         }
     }
 }

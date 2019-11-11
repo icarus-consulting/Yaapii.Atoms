@@ -23,50 +23,41 @@
 using System;
 using System.Text;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> whose characters have been rotated.
     /// </summary>
-    public sealed class Rotated : IText
+    public sealed class Rotated : Text.Envelope
     {
-        private readonly IText _origin;
-        private readonly int _move;
-
         /// <summary>
         /// A <see cref="IText"/> whose characters have been rotated.
         /// </summary>
         /// <param name="text">text to rotate</param>
         /// <param name="shift">direction and amount of chars to rotate (minus means rotate left, plus means rotate right)</param>
-        public Rotated(IText text, int shift)
-        {
-            this._origin = text;
-            this._move = shift;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            var text = this._origin.AsString();
-            int length = text.Length;
-            if (length != 0 && this._move != 0 && this._move % length != 0)
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Rotated(IText text, int shift, bool live = false) : base(() =>
             {
-                var builder = new StringBuilder(length);
-                int offset = -(this._move % length);
-                if (offset < 0)
+                var str = text.AsString();
+                int length = str.Length;
+                if (length != 0 && shift != 0 && shift % length != 0)
                 {
-                    offset = text.Length + offset;
+                    var builder = new StringBuilder(length);
+                    int offset = -(shift % length);
+                    if (offset < 0)
+                    {
+                        offset = str.Length + offset;
+                    }
+                    str = builder.Append(
+                        str.Substring(offset)
+                    ).Append(
+                        str.Substring(0, offset)
+                    ).ToString();
                 }
-                text = builder.Append(
-                    text.Substring(offset)
-                ).Append(
-                    text.Substring(0, offset)
-                ).ToString();
-            }
-            return text;
-        }
+                return str;
+            },
+            live
+        )
+        { }
     }
 }

@@ -21,42 +21,32 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// Normalized A <see cref="IText"/> (whitespaces replaced with one single space)
     /// </summary>
-    public sealed class Normalized : IText
+    public sealed class Normalized : Text.Envelope
     {
-        private readonly IText _origin;
-
         /// <summary>
         /// Normalized A <see cref="IText"/>  (whitespaces replaced with one single space)
         /// </summary>
         /// <param name="text">text to normalize</param>
-        public Normalized(String text) : this(new TextOf(text))
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Normalized(String text, bool live = false) : this(new Text.Live(text), live)
         { }
 
         /// <summary>
         /// Normalized A <see cref="IText"/>  (whitespaces replaced with one single space)
         /// </summary>
         /// <param name="text">text to normalize</param>
-        public Normalized(IText text)
-        {
-            this._origin = text;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            return Regex.Replace(new Trimmed(this._origin).AsString(), "\\s+", " ");
-        }
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Normalized(IText text, bool live = false) : base(() =>
+            Regex.Replace(new Trimmed(text).AsString(), "\\s+", " "),
+            live
+        )
+        { }
     }
 }

@@ -20,14 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
@@ -36,15 +32,18 @@ namespace Yaapii.Atoms.Enumerator.Tests
         [Fact]
         public void Sorts()
         {
-            Assert.True(
+            Assert.Equal(
+                "A B C D E F",
                 new Joined(
                     " ",
                     new Many.Of<string>(
                         new Sorted<string>(
                             Comparer<string>.Default,
-                                new Many.Of<string>("B", "A", "C", "F", "E", "D").GetEnumerator()
-                        ))).AsString() == "A B C D E F",
-                "cannot sort contents of iterator");
+                                new Many.Live<string>("B", "A", "C", "F", "E", "D").GetEnumerator()
+                        )
+                    )
+                ).AsString()
+            );
         }
     }
 }

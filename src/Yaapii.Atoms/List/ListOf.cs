@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="array">source array</param>
-        public ListOf(params T[] array) : this(new Many.Of<T>(array))
+        public ListOf(params T[] array) : this(new Many.Live<T>(array))
         { }
 
         /// <summary>

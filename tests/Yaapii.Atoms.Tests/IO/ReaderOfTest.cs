@@ -24,7 +24,7 @@ using System;
 using System.IO;
 using Xunit;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.IO.Tests
             ).Value();
 
             Assert.True(
-                new TextOf(
+                new Text.Live(
                     new InputOf(
                         new ReaderOf(
                             new Uri(path)))

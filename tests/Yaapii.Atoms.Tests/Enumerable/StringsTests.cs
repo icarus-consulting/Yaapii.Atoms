@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Enumerable
         {
             Assert.Equal(
                 new List<string>() { "one", "two", "eight" },
-                new Strings("one", "two", "eight")
+                new Many.Of("one", "two", "eight")
             );
         }
     }

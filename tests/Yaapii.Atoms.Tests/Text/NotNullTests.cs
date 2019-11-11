@@ -23,7 +23,7 @@
 using System.IO;
 using Xunit;
 
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class NotNullTests
     {

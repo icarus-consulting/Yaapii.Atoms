@@ -23,7 +23,7 @@
 using Xunit;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class TrimmedRightTest
     {
@@ -31,7 +31,9 @@ namespace Yaapii.Atoms.Text.Tests
         public void TrimsWhitespaceEscapeSequences()
         {
             Assert.True(
-                new TrimmedRight(new TextOf("   \b \f \n \r \t \v   ")).AsString() == string.Empty
+                new TrimmedRight(
+                    new Text.Live("   \b \f \n \r \t \v   ")
+                ).AsString() == string.Empty
             );
         }
 
@@ -47,7 +49,9 @@ namespace Yaapii.Atoms.Text.Tests
         public void TrimsText()
         {
             Assert.True(
-                new TrimmedRight(new TextOf(" \b   \t      Hello! \t \b  ")).AsString() == " \b   \t      Hello!"
+                new TrimmedRight(
+                    new Text.Live(" \b   \t      Hello! \t \b  ")
+                ).AsString() == " \b   \t      Hello!"
             );
         }
 
@@ -55,7 +59,10 @@ namespace Yaapii.Atoms.Text.Tests
         public void TrimsStringWithCharArray()
         {
             Assert.True(
-                new TrimmedRight(" \b   \t      Hello! \t \b  ", new char[] { '\b', '\t', ' ', 'H', '!', 'o' }).AsString() == " \b   \t      Hell"
+                new TrimmedRight(
+                    " \b   \t      Hello! \t \b  ", 
+                    new char[] { '\b', '\t', ' ', 'H', '!', 'o' }
+                ).AsString() == " \b   \t      Hell"
             );
         }
 
@@ -63,7 +70,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void TrimsTextWithCharArray()
         {
             Assert.True(
-                new TrimmedRight(new TextOf(" \b   \t      Hello! \t \b  "), new char[] { '\b', '\t', ' ', 'H', '!', 'o' }).AsString() == " \b   \t      Hell"
+                new TrimmedRight(new Text.Live(" \b   \t      Hello! \t \b  "), new char[] { '\b', '\t', ' ', 'H', '!', 'o' }).AsString() == " \b   \t      Hell"
             );
         }
 
@@ -71,7 +78,10 @@ namespace Yaapii.Atoms.Text.Tests
         public void TrimsTextWithScalar()
         {
             Assert.True(
-                new TrimmedRight(new TextOf(" \b   \t      Hello! \t \b  "), new ScalarOf<char[]>(() => new char[] { '\b', '\t', ' ', 'H', '!', 'o' })).AsString() == " \b   \t      Hell"
+                new TrimmedRight(
+                    new Text.Live(" \b   \t      Hello! \t \b  "), 
+                    new ScalarOf<char[]>(() => new char[] { '\b', '\t', ' ', 'H', '!', 'o' })
+                ).AsString() == " \b   \t      Hell"
             );
         }
 
@@ -87,7 +97,8 @@ namespace Yaapii.Atoms.Text.Tests
         public void RemovesTextFromString()
         {
             Assert.True(
-                new TrimmedRight(new TextOf(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").AsString() == " \b   \t      Hello! \t"
+                new TrimmedRight(
+                    new Text.Live(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").AsString() == " \b   \t      Hello! \t"
             );
         }
 
@@ -95,7 +106,9 @@ namespace Yaapii.Atoms.Text.Tests
         public void RemovesStringFromText()
         {
             Assert.True(
-                new TrimmedRight(" \b   \t      Hello! \t \b   \t      H", new TextOf(" \b   \t      H")).AsString() == " \b   \t      Hello! \t"
+                new TrimmedRight(" \b   \t      Hello! \t \b   \t      H", 
+                    new Text.Live(" \b   \t      H")
+                ).AsString() == " \b   \t      Hello! \t"
             );
         }
 
@@ -103,15 +116,10 @@ namespace Yaapii.Atoms.Text.Tests
         public void RemovesTextFromText()
         {
             Assert.True(
-                new TrimmedRight(new TextOf(" \b   \t      Hello! \t \b   \t      H"), new TextOf(" \b   \t      H")).AsString() == " \b   \t      Hello! \t"
-            );
-        }
-
-        [Fact]
-        public void RemovesTextFromScalar()
-        {
-            Assert.True(
-                new TrimmedRight(new TextOf(" \b   \t      Hello! \t \b   \t      H"), new ScalarOf<IText>(() => new TextOf(" \b   \t      H"))).AsString() == " \b   \t      Hello! \t"
+                new TrimmedRight(
+                    new Text.Live(" \b   \t      Hello! \t \b   \t      H"), 
+                    new Text.Live(" \b   \t      H")
+                ).AsString() == " \b   \t      Hello! \t"
             );
         }
     }

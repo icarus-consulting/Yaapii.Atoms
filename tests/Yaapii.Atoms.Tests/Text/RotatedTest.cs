@@ -22,7 +22,7 @@
 
 using Xunit;
 
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class RotatedTest
     {
@@ -31,9 +31,9 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Rotated(
-                    new TextOf("Hello!"), 2
-                ).AsString() == "o!Hell",
-                "Can't rotate text to right");
+                    new Text.Live("Hello!"), 2
+                ).AsString() == "o!Hell"
+            );
         }
 
         [Fact]
@@ -41,9 +41,9 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Rotated(
-                    new TextOf("Hi!"), -1
-                ).AsString() == "i!H",
-                "Can't rotate text to left");
+                    new Text.Live("Hi!"), -1
+                ).AsString() == "i!H"
+            );
         }
 
         [Fact]
@@ -52,9 +52,8 @@ namespace Yaapii.Atoms.Text.Tests
             var nonrotate = "Atoms!";
             Assert.True(
                 new Rotated(
-                    new TextOf(nonrotate), 0
-                ).AsString() == nonrotate,
-                "Can't rotate text shift zero"
+                    new Text.Live(nonrotate), 0
+                ).AsString() == nonrotate
             );
         }
 
@@ -64,7 +63,7 @@ namespace Yaapii.Atoms.Text.Tests
             var nonrotate = "Rotate";
             Assert.True(
                 new Rotated(
-                    new TextOf(nonrotate), nonrotate.Length
+                    new Text.Live(nonrotate), nonrotate.Length
                 ).AsString() == nonrotate,
                 "Can't rotate text shift mod zero");
         }
@@ -74,9 +73,9 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Rotated(
-                    new TextOf(""), 2
-                ).AsString() == "",
-            "Can't rotate text when empty");
+                    new Text.Live(""), 2
+                ).AsString() == ""
+            );
         }
     }
 }

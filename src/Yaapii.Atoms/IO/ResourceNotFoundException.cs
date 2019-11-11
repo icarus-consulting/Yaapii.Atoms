@@ -22,7 +22,7 @@
 
 using System;
 using System.Reflection;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Error
 {

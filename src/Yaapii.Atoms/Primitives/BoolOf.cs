@@ -24,9 +24,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A bool out of text objects.

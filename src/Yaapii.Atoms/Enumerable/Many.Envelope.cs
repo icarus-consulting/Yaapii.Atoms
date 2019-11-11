@@ -29,29 +29,35 @@ namespace Yaapii.Atoms.Enumerable
     public partial class Many
     {
         /// <summary>
-        /// Envelope for Enumerable.
+        /// Envelope for Enumerable of strings.
         /// It bundles the methods offered by IEnumerable and enables scalar based ctors.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         public abstract class Envelope : IEnumerable<string>
         {
-            /// <summary>
-            /// Build enumerable.
-            /// </summary>
-            private readonly Lazy<IEnumerable<string>> origin;
+            private readonly bool live;
+            private readonly Func<IEnumerator<string>> originLive;
+            private readonly Lazy<IEnumerator<string>> origin;
 
             /// <summary>
             /// Envelope for Enumerable.
             /// </summary>
-            public Envelope(IScalar<IEnumerable<string>> fnc) : this(() => fnc.Value())
+            public Envelope(IScalar<IEnumerable<string>> fnc) : this(() => fnc.Value().GetEnumerator())
             { }
 
             /// <summary>
             /// Envelope for Enumerable.
             /// </summary>
-            public Envelope(Func<IEnumerable<string>> origin)
+            public Envelope(Func<IEnumerable<string>> origin) : this(() => origin().GetEnumerator())
+            { }
+
+            /// <summary>
+            /// Envelope for Enumerable.
+            /// </summary>
+            public Envelope(Func<IEnumerator<string>> origin, bool live = false)
             {
-                this.origin = new Lazy<IEnumerable<string>>(() => origin());
+                this.live = live;
+                this.originLive = origin;
+                this.origin = new Lazy<IEnumerator<string>>(() => origin());
             }
 
             /// <summary>
@@ -60,7 +66,16 @@ namespace Yaapii.Atoms.Enumerable
             /// <returns>The enumerator</returns>
             public IEnumerator<string> GetEnumerator()
             {
-                return this.origin.Value.GetEnumerator();
+                IEnumerator<string> result;
+                if (this.live)
+                {
+                    result = this.originLive();
+                }
+                else
+                {
+                    result = this.origin.Value;
+                }
+                return result;
             }
 
             /// <summary>
@@ -80,23 +95,43 @@ namespace Yaapii.Atoms.Enumerable
         /// <typeparam name="T"></typeparam>
         public abstract class Envelope<T> : IEnumerable<T>
         {
-            /// <summary>
-            /// Build enumerable.
-            /// </summary>
+            private readonly bool live;
             private readonly Lazy<IEnumerable<T>> origin;
+            private readonly Func<IEnumerable<T>> originLive;
 
             /// <summary>
             /// Envelope for Enumerable.
             /// </summary>
-            public Envelope(IScalar<IEnumerable<T>> fnc) : this(() => fnc.Value())
+            public Envelope(IScalar<IEnumerable<T>> fnc, bool live = false) : this(() => fnc.Value(), live)
             { }
 
             /// <summary>
             /// Envelope for Enumerable.
             /// </summary>
-            public Envelope(Func<IEnumerable<T>> origin)
+            public Envelope(Func<IEnumerator<T>> origin, bool live = false) : this(
+                () =>
+                {
+                    var lst = new List<T>();
+                    var enm = origin();
+                    while(enm.MoveNext())
+                    {
+                        lst.Add(enm.Current);
+                    }
+                    return lst;
+                }
+            )
+            { }
+
+            /// <summary>
+            /// Envelope for Enumerable
+            /// </summary>
+            /// <param name="origin">How to get the enumerator</param>
+            /// <param name="live">Should the object build the enumerator live, every time it is used?</param>
+            public Envelope(Func<IEnumerable<T>> origin, bool live = false)
             {
-                this.origin = new Lazy<IEnumerable<T>>(() => origin());
+                this.live = live;
+                this.origin = new Lazy<IEnumerable<T>>(origin);
+                this.originLive = origin;
             }
 
             /// <summary>

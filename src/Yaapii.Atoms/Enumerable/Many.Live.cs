@@ -44,7 +44,8 @@ namespace Yaapii.Atoms.Enumerable
             /// </summary>
             /// <param name="items"></param>
             public Live(params T[] items) : this(
-                () => items.AsEnumerable<T>().GetEnumerator())
+                () => items.AsEnumerable<T>().GetEnumerator()
+            )
             { }
 
             /// <summary>

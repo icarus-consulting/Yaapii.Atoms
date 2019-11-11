@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Collection
         /// ctor
         /// </summary>
         /// <param name="array">source items</param>
-        public Solid(params T[] array) : this(new Many.Of<T>(array))
+        public Solid(params T[] array) : this(new Many.Live<T>(array))
         { }
 
         /// <summary>

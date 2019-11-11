@@ -22,31 +22,36 @@
 
 using System;
 using System.Collections.Generic;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
-using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> of texts joined together.
     /// </summary>
-    public sealed class Joined : IText
+    public sealed class Joined : Text.Envelope
     {
-        private readonly IScalar<IEnumerable<IText>> _texts;
-        private readonly IText _delimiter;
+        /// <summary>
+        /// Joins A <see cref="IText"/>s together with the delimiter between them.
+        /// </summary>
+        /// <param name="delimit">delimiter</param>
+        /// <param name="strs">texts to join</param>
+        public Joined(String delimit, params String[] strs) : this(delimit, false, strs)
+        { }
 
         /// <summary>
         /// Joins A <see cref="IText"/>s together with the delimiter between them.
         /// </summary>
         /// <param name="delimit">delimiter</param>
         /// <param name="strs">texts to join</param>
-        public Joined(String delimit, params String[] strs) :
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Joined(String delimit, bool live, params String[] strs) :
             this(
                 delimit,
-                new Many.Of<string>(strs)
+                new Many.Of<string>(strs),
+                live
             )
         { }
 
@@ -55,15 +60,15 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="delimit">delimiter</param>
         /// <param name="strs">texts to join</param>
-        public Joined(String delimit, IEnumerable<String> strs) :
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Joined(String delimit, IEnumerable<String> strs, bool live = false) :
             this(
-                new TextOf(delimit),
-                    new Enumerable.Mapped<string, IText>(
-                        new FuncOf<string, IText>(
-                            (text) => new TextOf(text)
-                        ),
-                        strs
-                    )
+                new Text.Live(delimit),
+                new Mapped<string, IText>(
+                    (text) => new Text.Live(text),
+                    strs
+                ),
+                live
             )
         { }
 
@@ -72,7 +77,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
-        public Joined(IText delimit, params IText[] txts) : this(delimit, new Many.Of<IText>(txts))
+        public Joined(IText delimit, params IText[] txts) : this(delimit, false, txts)
         { }
 
         /// <summary>
@@ -80,7 +85,8 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
-        public Joined(String delimit, params IText[] txts) : this(new TextOf(delimit), txts)
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Joined(IText delimit, bool live, params IText[] txts) : this(delimit, new Many.Of<IText>(txts), live)
         { }
 
         /// <summary>
@@ -88,7 +94,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
-        public Joined(String delimit, IEnumerable<IText> txts) : this(new TextOf(delimit), new ScalarOf<IEnumerable<IText>>(txts))
+        public Joined(String delimit, params IText[] txts) : this(delimit, false, txts)
         { }
 
         /// <summary>
@@ -96,7 +102,12 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
-        public Joined(String delimit, System.Func<IEnumerable<IText>> txts) : this(new TextOf(delimit), new ScalarOf<IEnumerable<IText>>(txts))
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Joined(String delimit, bool live, params IText[] txts) : this(
+            new Text.Live(delimit),
+            () => new Many.Live<IText>(txts),
+            live
+        )
         { }
 
         /// <summary>
@@ -104,7 +115,12 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
-        public Joined(IText delimit, System.Func<IEnumerable<IText>> txts) : this(delimit, new ScalarOf<IEnumerable<IText>>(txts))
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Joined(String delimit, IEnumerable<IText> txts, bool live = false) : this(
+            new Text.Live(delimit),
+            () => txts,
+            live
+        )
         { }
 
         /// <summary>
@@ -112,7 +128,38 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
-        public Joined(IText delimit, IEnumerable<IText> txts) : this(delimit, new ScalarOf<IEnumerable<IText>>(txts))
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Joined(String delimit, System.Func<IEnumerable<IText>> txts, bool live = false) : this(
+            new Text.Live(delimit),
+            txts,
+            live
+        )
+        { }
+
+        /// <summary>
+        /// Joins texts together with the delimiter between them.
+        /// </summary>
+        /// <param name="delimit">delimiter</param>
+        /// <param name="txts">texts to join</param>
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Joined(IText delimit, IScalar<IEnumerable<IText>> txts, bool live = false) : this(
+            delimit,
+            () => txts.Value(),
+            live
+        )
+        { }
+
+        /// <summary>
+        /// Joins texts together with the delimiter between them.
+        /// </summary>
+        /// <param name="delimit">delimiter</param>
+        /// <param name="txts">texts to join</param>
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Joined(IText delimit, IEnumerable<IText> txts, bool live = false) : this(
+            delimit,
+            () => txts,
+            live
+        )
         { }
 
         /// <summary>
@@ -120,24 +167,17 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">scalars of texts to join</param>
-        private Joined(IText delimit, IScalar<IEnumerable<IText>> txts)
-        {
-            this._delimiter = delimit;
-            this._texts = txts;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            return String.Join(
-                this._delimiter.AsString(), 
-                new Enumerable.Mapped<IText, string>(
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        private Joined(IText delimit, Func<IEnumerable<IText>> txts, bool live = false) : base(() =>
+            String.Join(
+                delimit.AsString(),
+                new Mapped<IText, string>(
                     text => text.AsString(),
-                    this._texts.Value()
-                    ));
-        }
+                    txts()
+                )
+            ),
+            live
+        )
+        { }
     }
 }

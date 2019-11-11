@@ -24,7 +24,7 @@
 using System;
 using Yaapii.Atoms.Error;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A Text that can be compared using the Equals method.
@@ -35,10 +35,11 @@ namespace Yaapii.Atoms.Text
 
         /// <summary>
         /// A Text that can be compared using the Equals method.
+        /// The text is always sticky (non live)
         /// </summary>
         public Comparable(IText text)
         {
-            this.text = text;
+            this.text = new Text.Of(() => text.AsString());
         }
 
         public string AsString()

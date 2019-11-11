@@ -24,43 +24,34 @@ using System;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> as Base64 decoded <see cref="IText"/>
     /// </summary>
-    public sealed class Base64Text : IText
+    public sealed class Base64Text : Text.Envelope
     {
-        private readonly IText _origin;
-
         /// <summary>
         /// A <see cref="string"/> as Base64 decoded <see cref="IText"/>
         /// </summary>
         /// <param name="str">string to decode</param>
-        public Base64Text(String str) : this(new TextOf(str))
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Base64Text(String str, bool live = false) : this(new Text.Live(str), live)
         { }
 
         /// <summary>
         /// A <see cref="IText"/> as Base64 decoded <see cref="IText"/>
         /// </summary>
         /// <param name="text">text to decode</param>
-        public Base64Text(IText text)
-        {
-            this._origin =
-                new TextOf(
-                    new Base64Bytes(
-                        new BytesOf(text)
-                    )
-                );
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            return this._origin.AsString();
-        }
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public Base64Text(IText text, bool live = false) : base(() =>
+            new Text.Live(
+                new Base64Bytes(
+                    new BytesOf(text)
+                )
+            ).AsString(),
+            live
+        )
+        { }
     }
 }

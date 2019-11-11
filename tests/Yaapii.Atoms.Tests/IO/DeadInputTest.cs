@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void ReadsEmptyContent()
         {
             Assert.True(
-                new TextOf(
+                new Text.Live(
                     new DeadInput())
                 .AsString() == "",
                 "Can't read empty content");

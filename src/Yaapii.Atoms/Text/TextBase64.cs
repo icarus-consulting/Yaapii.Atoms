@@ -23,39 +23,33 @@
 using System;
 using Yaapii.Atoms.Bytes;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> as Base64 encoded <see cref="IText"/>
     /// </summary>
-    public sealed class TextBase64 : IText
+    public sealed class TextBase64 : Text.Envelope
     {
-        private readonly IText origin;
-
         /// <summary>
         /// A <see cref="string"/> as Base64-Encoded <see cref="IText"/>
         /// </summary>
         /// <param name="str">string to encode</param>
-        public TextBase64(String str) : this(new TextOf(str))
+        public TextBase64(String str) : base(() => str, false)
         { }
 
         /// <summary>
         /// A <see cref="IText"/> as Base64-Encoded <see cref="IText"/>
         /// </summary>
         /// <param name="text">text to encode</param>
-        public TextBase64(IText text)
-        {
-            this.origin =
-                new TextOf(
-                    new BytesBase64(
-                        new BytesOf(text)
-                    )
-                );
-        }
-
-        public string AsString()
-        {
-            return origin.AsString();
-        }
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public TextBase64(IText text, bool live = false) : base(() =>
+            new Text.Live(
+                new BytesBase64(
+                    new BytesOf(text)
+                )
+            ),
+            live
+        )
+        { }
     }
 }

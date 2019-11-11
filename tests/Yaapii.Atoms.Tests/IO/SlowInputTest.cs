@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.IO.Tests
                 new LengthOf(
                     new SlowInput(
                         new InputOf(
-                            new TextOf(text)))
+                            new Text.Live(text)))
                 ).Value() == Encoding.UTF8.GetBytes(text).Length,
                 "Can't calculate the length of Input");
         }

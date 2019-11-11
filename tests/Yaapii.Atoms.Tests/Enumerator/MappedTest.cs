@@ -20,15 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
@@ -41,7 +35,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
                 new ItemAt<string>(
                     new Mapped<int, string>(
                         new Many.Of<int>(1).GetEnumerator(),
-                        i => new TextOf(i).AsString()),
+                        i => new Text.Live(i).AsString()),
                 0).Value() == "1",
             "cannot map contents of enumerator");
         }

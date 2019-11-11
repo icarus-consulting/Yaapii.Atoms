@@ -26,7 +26,7 @@ using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class Base64DecodedTextTest
     {
@@ -40,10 +40,10 @@ namespace Yaapii.Atoms.Text.Tests
             {
                 new LengthOf(
                     new TeeInput(
-                        new TextOf(
+                        new Text.Live(
                             new BytesBase64(
                                 new BytesOf(
-                                    new TextOf(text)
+                                    new Text.Live(text)
                                 )
                             )
                         ).AsString(),
@@ -54,12 +54,12 @@ namespace Yaapii.Atoms.Text.Tests
                 Assert.True(
                     new Comparable(
                         new Base64Text(
-                            new TextOf(
+                            new Text.Live(
                                 new Uri(tempFile.Value())
                             )
                         )
                     ).CompareTo(
-                        new TextOf(text)
+                        new Text.Live(text)
                     ) == 0
                 );
             }

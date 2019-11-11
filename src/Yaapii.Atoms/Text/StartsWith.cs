@@ -20,17 +20,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using System.Text.RegularExpressions;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// Checks if a text starts with a given content.
     /// </summary>
     public sealed class StartsWith : IScalar<bool>
     {
-        private readonly IText _text;
-        private readonly IText _start;
+        private readonly Func<bool> result;
 
         /// <summary>
         /// Checks if a <see cref="IText"/> starts with a given <see cref="string"/>
@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="start">Starting content to use in the test</param>
         public StartsWith(IText text, string start) : this(
             text,
-            new TextOf(start)
+            new Text.Live(start)
         )
         { }
 
@@ -50,8 +50,11 @@ namespace Yaapii.Atoms.Text
         /// <param name="start">Starting content to use in the test</param>
         public StartsWith(IText text, IText start)
         {
-            this._text = text;
-            this._start = start;
+            this.result = () =>
+            {
+                var regex = new Regex("^" + Regex.Escape(start.AsString()));
+                return regex.IsMatch(text.AsString());
+            };
         }
 
         /// <summary>
@@ -60,8 +63,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>The result</returns>
         public bool Value()
         {
-            var regex = new Regex("^" + Regex.Escape(this._start.AsString()));
-            return regex.IsMatch(this._text.AsString());
+            return this.result();
         }
     }
 }

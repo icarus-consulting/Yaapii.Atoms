@@ -105,7 +105,8 @@ namespace Yaapii.Atoms.Enumerable
             /// </summary>
             /// <param name="items"></param>
             public Of(params T[] items) : this(
-                () => items.AsEnumerable<T>().GetEnumerator())
+                () => items.AsEnumerable<T>().GetEnumerator()
+            )
             { }
 
             /// <summary>
@@ -142,7 +143,8 @@ namespace Yaapii.Atoms.Enumerable
                         lst.Add(enm.Current);
                     };
                     return lst;
-                }
+                },
+                false
             )
             { }
         }

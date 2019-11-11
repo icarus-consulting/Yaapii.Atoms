@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.IO.Compression;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.IO.Tests
 
             Assert.Equal(
                 "Hello!",
-                new TextOf(
+                new Text.Live(
                     new GZipInput(new InputOf(bytes))
                 ).AsString()
             );

@@ -26,7 +26,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.IO.Tests
             using (var output = new WriterTo(uri))
             {
                 s =
-                    new TextOf(
+                    new Text.Live(
                         new TeeInput(
                             new InputOf(content),
                                 new WriterAsOutput(
@@ -55,12 +55,12 @@ namespace Yaapii.Atoms.IO.Tests
             }
 
             Assert.True(
-                new TextOf(
+                new Text.Live(
                     new InputAsBytes(
                         new InputOf(uri)
                     )
-                ).AsString().CompareTo(s) == 0, //.CompareTo is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
-            "Can't copy Input to Output and return Input");
+                ).AsString().CompareTo(s) == 0 //.CompareTo is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
+            );
         }
     }
 }
