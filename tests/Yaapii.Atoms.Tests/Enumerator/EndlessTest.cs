@@ -22,7 +22,7 @@
 
 using Xunit;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
@@ -37,13 +37,15 @@ namespace Yaapii.Atoms.Enumerator.Tests
                 new Joined(
                     "",
                     new Many.Of<IText>(
-                            new Mapped<string, IText>(
-                                new HeadOf<string>(
-                                    new Endless<string>("A"),
-                                    20),
-                                str => new TextOf(str)))).AsString() == expected,
-                
-                "cannot repeat endlessly");
+                        new Mapped<string, IText>(
+                            new HeadOf<string>(
+                                new Endless<string>("A"),
+                                20),
+                            str => new Text.Live(str)
+                        )
+                    )
+                ).AsString() == expected
+            );
 
         }
     }

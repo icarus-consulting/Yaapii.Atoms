@@ -20,11 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Texts.Tests
 {
@@ -38,8 +34,8 @@ namespace Yaapii.Atoms.Texts.Tests
                     " ", 
                     "hello", 
                     "world"
-                ).AsString() == "hello world",
-            "Can't join strings");
+                ).AsString() == "hello world"
+            );
         }
 
         [Fact]
@@ -47,11 +43,11 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Joined(
-                    new TextOf(" "),
-                    new TextOf("foo"),
-                    new TextOf("bar")
-                ).AsString() == "foo bar",
-                "Can't join texts");
+                    new Text.Live(" "),
+                    new Text.Live("foo"),
+                    new Text.Live("bar")
+                ).AsString() == "foo bar"
+            );
         }
     }
 }

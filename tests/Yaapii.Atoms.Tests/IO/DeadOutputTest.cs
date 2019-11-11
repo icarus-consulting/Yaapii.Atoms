@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             Assert.EndsWith(
                 "друг?",
-                new TextOf(
+                new Text.Live(
                 new TeeInput(
                     new InputOf("How are you, мой друг?"),
                     new DeadOutput()

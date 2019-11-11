@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to uppercase</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Upper(IText text, bool live = false) : base(() => text, live)
+        public Upper(IText text, bool live = false) : base(() => text.AsString().ToUpper(), live)
         { }
     }
 }

@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public TrimmedLeft(string text, bool live = false) : base(() => text, live)
+        public TrimmedLeft(string text, bool live = false) : this(new Text.Live(text), live)
         { }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public TrimmedLeft(string text, char[] trimText, bool live) : this(new Text.Live(text), trimText, live)
+        public TrimmedLeft(string text, char[] trimText, bool live = false) : this(new Text.Live(text), trimText, live)
         { }
 
         /// <summary>

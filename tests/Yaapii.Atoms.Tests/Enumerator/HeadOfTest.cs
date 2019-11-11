@@ -27,7 +27,7 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.List;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
                         new HeadOf<int>(
                             new Many.Of<int>(1, 2, 3, 4).GetEnumerator(),
                             2), 
-                        str => new TextOf(str + "")))).AsString() == "1, 2",
+                        str => new Text.Of(str + "")))).AsString() == "1, 2",
             "cannot limit enumertor contents");
                 
         }

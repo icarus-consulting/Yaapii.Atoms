@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new IsWhitespace(
-                    new TextOf("")
+                    new Text.Live("")
                 ).Value(),
                 "Can't determine an empty text");
         }
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new IsWhitespace(
-                    new TextOf("  ")
+                    new Text.Live("  ")
                 ).Value(),
                 "Can't determine an empty text with spaces");
         }
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.False(
                 new IsWhitespace(
-                    new TextOf("not empty")
+                    new Text.Live("not empty")
                 ).Value(),
                 "Can't detect a nonempty text");
         }

@@ -76,7 +76,8 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Contains(
                 2,
-                new Sticky<int>(1, 2));
+                new Sticky<int>(1, 2)
+            );
         }
 
         [Fact]

@@ -22,7 +22,7 @@
 
 using System.Reflection;
 using Xunit;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             Assert.Equal(
                 "Hello from Embedded!",
-                new TextOf(
+                new Text.Live(
                     new ResourceOf("IO/Resources/test.txt", Assembly.GetExecutingAssembly())
                 ).AsString()
             );
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             Assert.Equal(
                 "Hello from Embedded!",
-                new TextOf(
+                new Text.Live(
                     new ResourceOf("IO/Resources/test.txt", this.GetType())
                 ).AsString()
             );
@@ -57,7 +57,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             Assert.Equal(
                 "Hello from Embedded!",
-                new TextOf(
+                new Text.Live(
                     new ResourceOf(
                         name,
                         this.GetType())

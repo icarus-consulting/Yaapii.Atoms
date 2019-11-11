@@ -20,11 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Texts.Tests
 {
@@ -35,7 +31,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Reversed(
-                    new TextOf("Hello!")
+                    new Text.Live("Hello!")
                 ).AsString() == "!olleH",
                 "Can't reverse a text");
         }
@@ -45,7 +41,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Reversed(
-                    new TextOf("")
+                    new Text.Live("")
                 ).AsString() == "",
                 "Can't reverse empty text");
         }

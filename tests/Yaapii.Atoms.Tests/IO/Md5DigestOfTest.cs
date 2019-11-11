@@ -26,7 +26,7 @@ using System.IO;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
 {

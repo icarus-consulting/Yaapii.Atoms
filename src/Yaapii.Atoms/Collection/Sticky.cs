@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Collection
         /// Makes a collection of given items.
         /// </summary>
         /// <param name="items">source items</param>
-        public Sticky(params T[] items) : this(new Many.Of<T>(items))
+        public Sticky(params T[] items) : this(new Many.Live<T>(items))
         { }
 
         /// <summary>

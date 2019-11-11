@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Bytes
         /// Bytes from Hex String
         /// </summary>
         /// <param name="origin">The string in Hex format</param>
-        public HexBytes(string origin) : this(new TextOf(origin))
+        public HexBytes(string origin) : this(new Text.Live(origin))
         { }
         /// <summary>
         /// Bytes from Hex String

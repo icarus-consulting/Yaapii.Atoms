@@ -302,7 +302,7 @@ namespace Yaapii.Atoms.Texts
             /// <param name="txt">scalar of a string</param>
             public Live(Func<String> txt)
             {
-                this.origin = new Lazy<string>(txt);
+                this.origin = txt;
             }
 
             /// <summary>
@@ -311,7 +311,7 @@ namespace Yaapii.Atoms.Texts
             /// <returns></returns>
             public String AsString()
             {
-                return this.origin.Value;
+                return this.origin();
             }
         }
     }

@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 using Xunit;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
@@ -76,7 +76,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new Many.Of<IText>(
-                        new TextOf("a"), new TextOf("b"), new TextOf("c")
+                        new Text.Live("a"), new Text.Live("b"), new Text.Live("c")
                     )
                 ).Value() == 3,
             "Can't convert objects to enumerable");

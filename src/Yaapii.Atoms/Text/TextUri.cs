@@ -27,7 +27,7 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A text as a <see cref="Uri"/>
     /// </summary>
-    public sealed class TextUri : IScalar<Uri>
+    public sealed class UriOf : IScalar<Uri>
     {
         private readonly IText source;
 
@@ -35,14 +35,14 @@ namespace Yaapii.Atoms.Texts
         /// A <see cref="string"/> as a <see cref="Uri"/>
         /// </summary>
         /// <param name="url">url as a string</param>
-        public TextUri(String url) : this(new TextOf(url))
+        public UriOf(String url) : this(new Text.Live(url))
         { }
 
         /// <summary>
         /// A <see cref="IText"/> as a <see cref="Uri"/>
         /// </summary>
         /// <param name="url">uri as text</param>
-        public TextUri(IText url)
+        public UriOf(IText url)
         {
             this.source = url;
         }

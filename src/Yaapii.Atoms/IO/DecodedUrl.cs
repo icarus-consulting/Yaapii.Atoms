@@ -26,7 +26,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Yaapii.Atoms.Error;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO
 {

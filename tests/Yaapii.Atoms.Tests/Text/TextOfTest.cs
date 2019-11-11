@@ -29,7 +29,7 @@ using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Tests;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 namespace Yaapii.Atoms.Texts.Tests
@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Texts.Tests
                     File.WriteAllText(path.AbsolutePath, content, Encoding.BigEndianUnicode);
 
                     Assert.True(
-                        new TextOf(
+                        new Text.Of(
                             path,
                             Encoding.BigEndianUnicode
                         ).AsString() == content,
@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Texts.Tests
                     File.WriteAllText(path.AbsolutePath, content);
 
                     Assert.True(
-                        new TextOf(
+                        new Text.Of(
                             path
                         ).AsString() == content,
                         "Can't read text from Input");
@@ -91,7 +91,7 @@ namespace Yaapii.Atoms.Texts.Tests
                     File.WriteAllText(path.AbsolutePath, content, Encoding.BigEndianUnicode);
 
                     Assert.True(
-                        new TextOf(
+                        new Text.Of(
                             new FileInfo(path.AbsolutePath),
                             Encoding.BigEndianUnicode
                         ).AsString() == content,
@@ -113,7 +113,7 @@ namespace Yaapii.Atoms.Texts.Tests
                     File.WriteAllText(path.AbsolutePath, content);
 
                     Assert.True(
-                        new TextOf(
+                        new Text.Of(
                             new FileInfo(path.AbsolutePath),
                             Encoding.UTF8
                         ).AsString() == content,
@@ -130,7 +130,7 @@ namespace Yaapii.Atoms.Texts.Tests
 
             Assert.Equal(
                 content,
-                new TextOf(
+                new Text.Of(
                     new MemoryStream(new BytesOf(content).AsBytes())
                 ).AsString()
             );
@@ -142,7 +142,7 @@ namespace Yaapii.Atoms.Texts.Tests
             var content = "привет, друг!";
 
             Assert.True(
-            new TextOf(
+            new Text.Of(
                 new InputOf(content),
                 Encoding.UTF8
             ).AsString() == content,
@@ -154,7 +154,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             var content = "Hello, друг! with default charset";
             Assert.True(
-                new TextOf(
+                new Text.Of(
                     new InputOf(content)
                 ).AsString() == content,
                 "Can't read text from Input with default charset");
@@ -163,16 +163,12 @@ namespace Yaapii.Atoms.Texts.Tests
         [Fact]
         public void ReadsDoubleIntoText()
         {
-            //  var content = "0,2545";
-
             double doub = 0.2545;
-
             var content = doub.ToString(CultureInfo.InvariantCulture);
 
             Assert.True(
-                    new TextOf(doub
-                    ).AsString() == content,
-                    "Can't read text from double");
+                new Text.Live(doub).AsString() == content
+            );
         }
 
         [Fact]
@@ -183,7 +179,7 @@ namespace Yaapii.Atoms.Texts.Tests
             CultureInfo inf = new CultureInfo("en-US");
 
             Assert.True(
-                    new TextOf(doub,
+                    new Text.Of(doub,
                    inf
                     ).AsString() == content,
                     "Can't read text from double with format");
@@ -192,13 +188,11 @@ namespace Yaapii.Atoms.Texts.Tests
         [Fact]
         public void ReadsFloatIntoText()
         {
-            //var content = "0,2545";
-
             float doub = 0.2545f;
             var content = doub.ToString(CultureInfo.InvariantCulture);
 
             Assert.True(
-                    new TextOf(doub
+                    new Text.Of(doub
                     ).AsString() == content,
                     "Can't read text from float");
         }
@@ -212,7 +206,7 @@ namespace Yaapii.Atoms.Texts.Tests
             CultureInfo inf = new CultureInfo("en-US");
 
             Assert.True(
-                    new TextOf(doub,
+                    new Text.Of(doub,
                    inf
                     ).AsString() == content,
                     "Can't read text with format from float");
@@ -224,7 +218,7 @@ namespace Yaapii.Atoms.Texts.Tests
             var content = "Hi, товарищ! with small buffer";
 
             Assert.True(
-                    new TextOf(
+                    new Text.Of(
                         new InputOf(content),
                         2,
                         Encoding.UTF8
@@ -238,7 +232,7 @@ namespace Yaapii.Atoms.Texts.Tests
             var content = "Hello, товарищ! with default charset";
 
             Assert.True(
-                    new TextOf(
+                    new Text.Of(
                         new InputOf(content),
                         2
                     ).AsString() == content,
@@ -250,7 +244,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             String source = "hello, друг!";
             Assert.True(
-            new TextOf(
+            new Text.Of(
                 new StringReader(source),
                 Encoding.UTF8
             ).AsString() == Encoding.UTF8.GetString(new BytesOf(source).AsBytes()),
@@ -263,7 +257,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             String source = "hello, друг! with default encoding";
             Assert.True(
-                new TextOf(new StringReader(source)).AsString() ==
+                new Text.Of(new StringReader(source)).AsString() ==
                     Encoding.UTF8.GetString(new BytesOf(source).AsBytes()),
                 "Can't read string with default encoding through a reader");
         }
@@ -272,7 +266,7 @@ namespace Yaapii.Atoms.Texts.Tests
         public void readsEncodedArrayOfCharsIntoText()
         {
             Assert.True(
-                    new TextOf(
+                    new Text.Of(
                         'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
                         ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a'
                     ).AsString().CompareTo("O que sera que sera") == 0,
@@ -284,7 +278,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             byte[] bytes = new byte[] { (byte)0xCA, (byte)0xFE };
             Assert.True(
-                new TextOf(
+                new Text.Of(
                     bytes
                 ).AsString().CompareTo(Encoding.UTF8.GetString(bytes)) == 0,
                 "Can't read array of bytes");
@@ -295,7 +289,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             byte[] bytes = new byte[] { (byte)0xCA, (byte)0xFE };
             Assert.True(
-                new TextOf(
+                new Text.Of(
                     new BytesOf(bytes),
                     Encoding.ASCII
                 ).AsString().CompareTo(Encoding.ASCII.GetString(bytes)) == 0,
@@ -306,7 +300,7 @@ namespace Yaapii.Atoms.Texts.Tests
         public void ComparesWithASubtext()
         {
             Assert.True(
-            new Comparable(new TextOf("here to there")).CompareTo(
+            new Comparable(new Text.Of("here to there")).CompareTo(
                 new SubText("from here to there", 5)
             ) == 0,
             "Can't compare sub texts");
@@ -318,7 +312,7 @@ namespace Yaapii.Atoms.Texts.Tests
             String starts = "Name it, ";
             String ends = "then it exists!";
             Assert.True(
-                    new TextOf(
+                    new Text.Of(
                         new StringBuilder(starts).Append(ends)
                     ).AsString() == starts + ends,
                     "Can't process a string builder");
@@ -328,7 +322,7 @@ namespace Yaapii.Atoms.Texts.Tests
         public void PrintsStackTrace()
         {
             Assert.True(
-                new TextOf(
+                new Text.Of(
                     new IOException(
                         "It doesn't work at all"
                     )
@@ -342,7 +336,7 @@ namespace Yaapii.Atoms.Texts.Tests
             long value = 68574581791096912;
             var text = "68574581791096912";
             Assert.True(
-                new TextOf(
+                new Text.Of(
                     value
                 ).AsString() == text,
                 "Can't read long into text"

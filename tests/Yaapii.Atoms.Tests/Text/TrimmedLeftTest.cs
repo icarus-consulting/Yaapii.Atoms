@@ -31,87 +31,106 @@ namespace Yaapii.Atoms.Texts.Tests
         public void TrimsWhitespaceEscapeSequences()
         {
             Assert.True(
-                new TrimmedLeft(new TextOf("   \b \f \n \r \t \v   ")).AsString() == string.Empty
+                new TrimmedLeft(new Text.Live("   \b \f \n \r \t \v   ")).AsString() == string.Empty
             );
         }
 
         [Fact]
         public void TrimsString()
         {
-            Assert.True(
-                new TrimmedLeft(" \b   \t      Hello! \t \b  ").AsString() == "Hello! \t \b  "
+            Assert.Equal(
+                "Hello! \t \b  ",
+                new TrimmedLeft(
+                    " \b   \t      Hello! \t \b  "
+                ).AsString()
             );
         }
 
         [Fact]
         public void TrimsText()
         {
-            Assert.True(
-                new TrimmedLeft(new TextOf(" \b   \t      Hello! \t \b  ")).AsString() == "Hello! \t \b  "
+            Assert.Equal(
+                "Hello! \t \b  ",
+                new TrimmedLeft(
+                    new Text.Live(" \b   \t      Hello! \t \b  ")
+                ).AsString()
             );
         }
 
         [Fact]
         public void TrimsStringWithCharArray()
         {
-            Assert.True(
-                new TrimmedLeft(" \b   \t      Hello! \t \b  ", new char[] { '\b', '\t', ' ', 'H', 'o' }).AsString() == "ello! \t \b  "
+            Assert.Equal(
+                "ello! \t \b  ",
+                new TrimmedLeft(
+                    " \b   \t      Hello! \t \b  ", 
+                    new char[] { '\b', '\t', ' ', 'H', 'o' }
+                ).AsString()
             );
         }
 
         [Fact]
         public void TrimsTextWithCharArray()
         {
-            Assert.True(
-                new TrimmedLeft(new TextOf(" \b   \t      Hello! \t \b  "), new char[] { '\b', '\t', ' ', 'H', 'o' }).AsString() == "ello! \t \b  "
+            Assert.Equal(
+                "ello! \t \b  ",
+                new TrimmedLeft(
+                    new Text.Live(" \b   \t      Hello! \t \b  "), 
+                    new char[] { '\b', '\t', ' ', 'H', 'o' }
+                ).AsString()
             );
         }
 
         [Fact]
         public void TrimsTextWithScalar()
         {
-            Assert.True(
-                new TrimmedLeft(new TextOf(" \b   \t      Hello! \t \b  "), new ScalarOf<char[]>(() => new char[] { '\b', '\t', ' ', 'H', 'o' })).AsString() == "ello! \t \b  "
+            Assert.Equal(
+                "ello! \t \b  ",
+                new TrimmedLeft(
+                    new Text.Live(" \b   \t      Hello! \t \b  "), 
+                    new ScalarOf<char[]>(() => new char[] { '\b', '\t', ' ', 'H', 'o' })
+                ).AsString()
             );
         }
 
         [Fact]
         public void RemovesStringFromString()
         {
-            Assert.True(
-                new TrimmedLeft(" \b   \t      Hello! \t \b   \t      H", " \b   \t      H").AsString() == "ello! \t \b   \t      H"
+            Assert.Equal(
+                "ello! \t \b   \t      H",
+                new TrimmedLeft(
+                    " \b   \t      Hello! \t \b   \t      H", " \b   \t      H"
+                ).AsString()
             );
         }
 
         [Fact]
         public void RemovesTextFromString()
         {
-            Assert.True(
-                new TrimmedLeft(new TextOf(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").AsString() == "ello! \t \b   \t      H"
+            Assert.Equal(
+                "ello! \t \b   \t      H",
+                new TrimmedLeft(new Text.Live(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").AsString()
             );
         }
 
         [Fact]
         public void RemovesStringFromText()
         {
-            Assert.True(
-                new TrimmedLeft(" \b   \t      Hello! \t \b   \t      H", new TextOf(" \b   \t      H")).AsString() == "ello! \t \b   \t      H"
+            Assert.Equal(
+                "ello! \t \b   \t      H",
+                new TrimmedLeft(" \b   \t      Hello! \t \b   \t      H", new Text.Live(" \b   \t      H")).AsString()
             );
         }
 
         [Fact]
         public void RemovesTextFromText()
         {
-            Assert.True(
-                new TrimmedLeft(new TextOf(" \b   \t      Hello! \t \b   \t      H"), new TextOf(" \b   \t      H")).AsString() == "ello! \t \b   \t      H"
-            );
-        }
-
-        [Fact]
-        public void RemovesTextFromScalar()
-        {
-            Assert.True(
-                new TrimmedLeft(new TextOf(" \b   \t      Hello! \t \b   \t      H"), new ScalarOf<IText>(() => new TextOf(" \b   \t      H"))).AsString() == "ello! \t \b   \t      H"
+            Assert.Equal(
+                "ello! \t \b   \t      H",
+                new TrimmedLeft(
+                    new Text.Live(" \b   \t      Hello! \t \b   \t      H"),
+                    new Text.Live(" \b   \t      H")
+                ).AsString()
             );
         }
     }

@@ -20,11 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Texts.Tests
 {
@@ -35,8 +31,9 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Lower(
-                    new TextOf("HelLo!")).AsString() == "hello!",
-                "Can't lower case a text");
+                    new Text.Live("HelLo!")
+                ).AsString() == "hello!"
+            );
         }
     }
 }

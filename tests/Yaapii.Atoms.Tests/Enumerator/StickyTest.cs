@@ -30,7 +30,7 @@ using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
                                     20
                                 )
                             ),
-                            (number) => new TextOf(number + ""))))
+                            (number) => new Text.Live(number + ""))))
                             .AsString() == "11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11",
                 "cannot cache iterator");
 

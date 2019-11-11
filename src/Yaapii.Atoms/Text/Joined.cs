@@ -102,6 +102,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
+        /// <param name="live">should the object build its value live, every time it is used?</param>
         public Joined(String delimit, bool live, params IText[] txts) : this(
             new Text.Live(delimit),
             () => new Many.Live<IText>(txts),

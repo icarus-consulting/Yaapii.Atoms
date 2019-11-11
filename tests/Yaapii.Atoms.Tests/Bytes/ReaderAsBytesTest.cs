@@ -24,7 +24,7 @@ using System;
 using System.IO;
 using Xunit;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Bytes.Tests
 {
@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Bytes.Tests
         {
             String source = "hello, друг!";
             Assert.True(
-            new TextOf(
+            new Text.Live(
                 new ReaderAsBytes(
                     new StreamReader(
                         new InputOf(source).Stream())

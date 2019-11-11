@@ -29,9 +29,10 @@ namespace Yaapii.Atoms.Texts.Tests
         [Fact]
         public void ConvertsText()
         {
-            Assert.True(
-                new Upper(new TextOf("Hello!")).AsString() == "HELLO!",
-                "Can't upper case a text");
+            Assert.Equal(
+                "HELLO!",
+                new Upper(new Text.Live("Hello!")).AsString()
+            );
         }
 
     }

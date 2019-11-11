@@ -35,21 +35,21 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Comparable(
-                    new TextOf("Hallo Welt")
+                    new Text.Live("Hallo Welt")
                 ).CompareTo(
-                    new TextOf("Tschüss Welt")
+                    new Text.Live("Tschüss Welt")
                 ) <= -1
             );
         }
 
         [Fact]
-        public void SeesDIfferences()
+        public void SeesDifferences()
         {
             Assert.True(
                 new Comparable(
-                    new TextOf("Timm")
+                    new Text.Live("Timm")
                 ).Equals(
-                    new TextOf("Jan-Peter")
+                    new Text.Live("Jan-Peter")
                 ) == false
             );
         }
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Comparable(
-                    new TextOf("Timm")
+                    new Text.Live("Timm")
                 ).AsString()
                 == "Timm"
             );

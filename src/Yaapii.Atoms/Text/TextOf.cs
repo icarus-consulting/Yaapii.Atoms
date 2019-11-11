@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A <see cref="IText"/> out of other objects.
     /// </summary>
-    [Obsolete("TextOf is replaced by Text.Of. Please note that if you need a lie object, you should use Text.Live")]
+    [Obsolete("TextOf is replaced by Text.Of. Please note that if you need a live object, you should use Text.Live")]
     public sealed class TextOf : IText
     {
         private readonly Lazy<String> origin;
@@ -101,6 +101,7 @@ namespace Yaapii.Atoms.Texts
         /// A <see cref="IText"/> out of a <see cref="Uri"/>.
         /// </summary>
         /// <param name="uri">a file <see cref="Uri"/></param>
+        /// <param name="encoding">encoding of the data at the uri</param>
         public TextOf(Uri uri, Encoding encoding) : this(new InputOf(uri), encoding)
         { }
 

@@ -23,7 +23,7 @@
 using System;
 using System.Globalization;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Number
 {

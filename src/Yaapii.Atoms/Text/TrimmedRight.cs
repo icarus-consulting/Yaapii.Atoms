@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public TrimmedRight(string text, char[] trimText, bool live) : this(new Text.Live(text), trimText, live)
+        public TrimmedRight(string text, char[] trimText, bool live = false) : this(new Text.Live(text), trimText, live)
         { }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public TrimmedRight(IText text, char[] trimText, bool live) : this(text, new ScalarOf<char[]>(trimText), live)
+        public TrimmedRight(IText text, char[] trimText, bool live = false) : this(text, new ScalarOf<char[]>(trimText), live)
         { }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public TrimmedRight(IText text, IScalar<char[]> trimText, bool live) : base(
+        public TrimmedRight(IText text, IScalar<char[]> trimText, bool live = false) : base(
             () =>
             {
                 return text.AsString().TrimEnd(trimText.Value());
@@ -116,7 +116,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public TrimmedRight(IText text, IText removeText, bool live = false) : base(text, removeText, false, live)
+        public TrimmedRight(IText text, IText removeText, bool live = false) : this(text, removeText, false, live)
         { }
 
         /// <summary>

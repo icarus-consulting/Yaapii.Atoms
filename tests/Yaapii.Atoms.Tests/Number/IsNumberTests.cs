@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 using Xunit;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Number.Tests
 {
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Number.Tests
         {
             Assert.True(
                 new IsNumber(
-                    new TextOf(
+                    new Text.Live(
                         "1,234.56"
                     )
                 ).Value(),
@@ -71,7 +71,7 @@ namespace Yaapii.Atoms.Number.Tests
         {
             Assert.True(
                 new IsNumber(
-                    new TextOf(
+                    new Text.Live(
                         "1234,56"
                     ),
                     new System.Globalization.NumberFormatInfo
@@ -99,7 +99,7 @@ namespace Yaapii.Atoms.Number.Tests
         {
             Assert.False(
                 new IsNumber(
-                    new TextOf(
+                    new Text.Live(
                         "not a number"
                     )
                 ).Value(),

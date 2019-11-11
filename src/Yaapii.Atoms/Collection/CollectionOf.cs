@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Collection
         /// Makes a collection from an array
         /// </summary>
         /// <param name="array"></param>
-        public CollectionOf(params T[] array) : this(new Many.Of<T>(array))
+        public CollectionOf(params T[] array) : this(new Many.Live<T>(array))
         { }
 
         /// <summary>

@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 using Xunit;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Bytes.Tests
 {
@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Bytes.Tests
         {
             Assert.Equal(
                     expected,
-                    new TextOf(new HexBytes(new TextOf(hex))).AsString()
+                    new Text.Live(new HexBytes(new Text.Live(hex))).AsString()
                 );
         }
     }

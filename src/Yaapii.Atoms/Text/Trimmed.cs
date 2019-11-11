@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Trimmed(string text, bool live = false) : base(() => text, live)
+        public Trimmed(string text, bool live = false) : this(new Text.Live(text), live)
         { }
 
         /// <summary>
