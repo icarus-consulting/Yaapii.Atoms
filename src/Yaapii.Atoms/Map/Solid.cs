@@ -38,8 +38,9 @@ namespace Yaapii.Atoms.Lookup
         /// A map from the given Tuple pairs.
         /// </summary>
         /// <param name="pairs">Pairs of mappings</param>
-        public Solid(Tuple<Key, Value>[] pairs) : this(
-            new Many.Live<Tuple<Key, Value>>(pairs)
+        public Solid(Tuple<Key, Value>[] pairs, bool live = false) : this(
+            new Many.Live<Tuple<Key, Value>>(pairs),
+            live
         )
         { }
 
@@ -47,11 +48,12 @@ namespace Yaapii.Atoms.Lookup
         /// A map from the given Tuple pairs.
         /// </summary>
         /// <param name="pairs">Pairs of mappings</param>
-        public Solid(IEnumerable<Tuple<Key, Value>> pairs) : this(
+        public Solid(IEnumerable<Tuple<Key, Value>> pairs, bool live = false) : this(
             new Mapped<Tuple<Key, Value>, KeyValuePair<Key, Value>>(
                 tpl => new KeyValuePair<Key, Value>(tpl.Item1, tpl.Item2),
                 pairs
-            )
+            ),
+            live
         )
         { }
 
@@ -60,7 +62,18 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="list"></param>
         public Solid(params KeyValuePair<Key, Value>[] list) : this(
-            new Many.Live<KeyValuePair<Key, Value>>(list))
+            false, list
+        )
+        { }
+
+        /// <summary>
+        /// Makes a map from the given values.
+        /// </summary>
+        /// <param name="list"></param>
+        public Solid(bool live, params KeyValuePair<Key, Value>[] list) : this(
+            new Many.Live<KeyValuePair<Key, Value>>(list),
+            live
+        )
         { }
 
         /// <summary>
@@ -69,8 +82,19 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="map">map to merge to</param>
         /// <param name="list">list of values to merge</param>
         public Solid(IDictionary<Key, Value> map, params KeyValuePair<Key, Value>[] list) : this(
+            false, map, list
+        )
+        { }
+
+        /// <summary>
+        /// Makes a map by merging the given values into the given dictionary.
+        /// </summary>
+        /// <param name="map">map to merge to</param>
+        /// <param name="list">list of values to merge</param>
+        public Solid(bool live, IDictionary<Key, Value> map, params KeyValuePair<Key, Value>[] list) : this(
             map, 
-            new Many.Live<KeyValuePair<Key, Value>>(list)
+            new Many.Live<KeyValuePair<Key, Value>>(list),
+            live
         )
         { }
 
@@ -78,7 +102,8 @@ namespace Yaapii.Atoms.Lookup
         /// ctor
         /// </summary>
         /// <param name="list">List of values</param>        
-        public Solid(IEnumerable<KeyValuePair<Key, Value>> list) : this(
+        public Solid(IEnumerable<KeyValuePair<Key, Value>> list, bool live = false) : this(
+            live,
             new Map.Live<Key, Value>(list)
         )
         { }
@@ -87,8 +112,9 @@ namespace Yaapii.Atoms.Lookup
         /// ctor
         /// </summary>
         /// <param name="list">List of values</param>
-        public Solid(IEnumerator<KeyValuePair<Key, Value>> list) : this(
-            new Many.Live<KeyValuePair<Key, Value>>(() => list)
+        public Solid(IEnumerator<KeyValuePair<Key, Value>> list, bool live = false) : this(
+            new Many.Live<KeyValuePair<Key, Value>>(() => list),
+            live
         )
         { }
 
@@ -97,18 +123,22 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="map">map to merge to</param>
         /// <param name="list">list of values to merge</param>
-        public Solid(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
-            new Map.Live<Key, Value>(map, list))
+        public Solid(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list, bool live = false) : this(
+            new Map.Live<Key, Value>(map, list),
+            live
+        )
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="map"></param>
-        public Solid(IDictionary<Key, Value> map) : base(() =>
-            new Synced<Key, Value>(
-                new Map.Of<Key, Value>(map)
-            )
+        public Solid(IDictionary<Key, Value> map, bool live = false) : base(
+            () =>
+                new Synced<Key, Value>(
+                    new Map.Of<Key, Value>(map)
+                ),
+            live
         )
         { }
     }

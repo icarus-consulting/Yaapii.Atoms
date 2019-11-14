@@ -108,15 +108,18 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given entries.
             /// </summary>
             /// <param name="entries">enumerable of entries</param>
-            public Of(IEnumerable<KeyValuePair<string, string>> entries) : base(() =>
-            {
-                var temp = new Dictionary<string, string>();
-                foreach (var entry in entries)
+            public Of(IEnumerable<KeyValuePair<string, string>> entries) : base(
+                () =>
                 {
-                    temp[entry.Key] = entry.Value;
-                }
-                return temp;
-            })
+                    var temp = new Dictionary<string, string>();
+                    foreach (var entry in entries)
+                    {
+                        temp[entry.Key] = entry.Value;
+                    }
+                    return temp;
+                },
+                false
+            )
             { }
 
             /// <summary>
@@ -130,7 +133,8 @@ namespace Yaapii.Atoms.Lookup
             /// A map from string to string.
             /// </summary>
             /// <param name="pairSequence">Pairs as a sequence, ordered like this: key-1, value-1, ... key-n, value-n</param>
-            public Of(IEnumerable<string> pairSequence) : base(() =>
+            public Of(IEnumerable<string> pairSequence) : base(
+                () =>
                 {
                     var idx = -1;
                     var enumerator = pairSequence.GetEnumerator();
@@ -154,7 +158,8 @@ namespace Yaapii.Atoms.Lookup
                         throw new ArgumentException($"Cannot build a map because an even number of strings is needed, and the provided ones count {idx}");
                     }
                     return result;
-                }
+                },
+                false
             )
             { }
 
@@ -178,7 +183,8 @@ namespace Yaapii.Atoms.Lookup
                         dict = input.Apply(dict);
                     }
                     return dict;
-                }
+                },
+                false
             )
             { }
         }
@@ -264,15 +270,18 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given entries.
             /// </summary>
             /// <param name="entries">enumerable of entries</param>
-            public Of(IEnumerable<KeyValuePair<string, Value>> entries) : base(() =>
-            {
-                var temp = new Dictionary<string, Value>();
-                foreach (var entry in entries)
+            public Of(IEnumerable<KeyValuePair<string, Value>> entries) : base(
+                () =>
                 {
-                    temp[entry.Key] = entry.Value;
-                }
-                return temp;
-            })
+                    var temp = new Dictionary<string, Value>();
+                    foreach (var entry in entries)
+                    {
+                        temp[entry.Key] = entry.Value;
+                    }
+                    return temp;
+                },
+                false
+            )
             { }
 
             /// <summary>
@@ -297,7 +306,8 @@ namespace Yaapii.Atoms.Lookup
                         dict = input.Apply(dict);
                     }
                     return dict;
-                }
+                },
+                false
             )
             { }
         }
@@ -382,15 +392,18 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given entries.
             /// </summary>
             /// <param name="entries">enumerable of entries</param>
-            public Of(IEnumerable<KeyValuePair<Key, Value>> entries) : base(() =>
-            {
-                var temp = new Dictionary<Key, Value>();
-                foreach (var entry in entries)
+            public Of(IEnumerable<KeyValuePair<Key, Value>> entries) : base(
+                () =>
                 {
-                    temp[entry.Key] = entry.Value;
-                }
-                return temp;
-            })
+                    var temp = new Dictionary<Key, Value>();
+                    foreach (var entry in entries)
+                    {
+                        temp[entry.Key] = entry.Value;
+                    }
+                    return temp;
+                },
+                false
+            )
             { }
 
             /// <summary>
@@ -413,7 +426,8 @@ namespace Yaapii.Atoms.Lookup
                         dict = input.Apply(dict);
                     }
                     return dict;
-                }
+                },
+                false
             )
             { }
         }
