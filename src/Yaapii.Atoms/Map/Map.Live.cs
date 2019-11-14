@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Lookup
         /// You must understand, that this map will build every time when any method is called.
         /// If you do not want this, use <see cref="Map.Of"/>
         /// </summary>
-        public sealed class Live : LiveEnvelope
+        public sealed class Live : Map.Envelope
         {
             /// <summary>
             /// A map from the given KeyValuePairs
@@ -110,15 +110,18 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given entries.
             /// </summary>
             /// <param name="entries">enumerable of entries</param>
-            public Live(IEnumerable<KeyValuePair<string, string>> entries) : base(() =>
-            {
-                var temp = new Dictionary<string, string>();
-                foreach (var entry in entries)
+            public Live(IEnumerable<KeyValuePair<string, string>> entries) : base(
+                () =>
                 {
-                    temp[entry.Key] = entry.Value;
-                }
-                return temp;
-            })
+                    var temp = new Dictionary<string, string>();
+                    foreach (var entry in entries)
+                    {
+                        temp[entry.Key] = entry.Value;
+                    }
+                    return temp;
+                },
+                true
+            )
             { }
 
             /// <summary>
@@ -134,7 +137,8 @@ namespace Yaapii.Atoms.Lookup
             /// A map from string to string.
             /// </summary>
             /// <param name="pairSequence">Pairs as a sequence, ordered like this: key-1, value-1, ... key-n, value-n</param>
-            public Live(IEnumerable<string> pairSequence) : base(() =>
+            public Live(IEnumerable<string> pairSequence) : base(
+                () =>
                 {
                     var idx = -1;
                     var enumerator = pairSequence.GetEnumerator();
@@ -158,7 +162,8 @@ namespace Yaapii.Atoms.Lookup
                         throw new ArgumentException($"Cannot build a map because an even number of strings is needed, and the provided ones count {idx}");
                     }
                     return result;
-                }
+                },
+                true
             )
             { }
 
@@ -182,7 +187,8 @@ namespace Yaapii.Atoms.Lookup
                         dict = input.Apply(dict);
                     }
                     return dict;
-                }
+                },
+                true
             )
             { }
         }
@@ -192,7 +198,7 @@ namespace Yaapii.Atoms.Lookup
         /// You must understand, that this map will build every time when any method is called.
         /// If you do not want this, use <see cref="Map.Of"/>
         /// </summary>
-        public sealed class Live<Value> : LiveEnvelope<Value>
+        public sealed class Live<Value> : Map.Envelope<Value>
         {
             /// <summary>
             /// A map from the given KeyValuePairs
@@ -270,15 +276,18 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given entries.
             /// </summary>
             /// <param name="entries">enumerable of entries</param>
-            public Live(IEnumerable<KeyValuePair<string, Value>> entries) : base(() =>
-            {
-                var temp = new Dictionary<string, Value>();
-                foreach (var entry in entries)
+            public Live(IEnumerable<KeyValuePair<string, Value>> entries) : base(
+                () =>
                 {
-                    temp[entry.Key] = entry.Value;
-                }
-                return temp;
-            })
+                    var temp = new Dictionary<string, Value>();
+                    foreach (var entry in entries)
+                    {
+                        temp[entry.Key] = entry.Value;
+                    }
+                    return temp;
+                },
+                true
+            )
             { }
 
             /// <summary>
@@ -303,7 +312,8 @@ namespace Yaapii.Atoms.Lookup
                         dict = input.Apply(dict);
                     }
                     return dict;
-                }
+                },
+                true
             )
             { }
         }
@@ -313,7 +323,7 @@ namespace Yaapii.Atoms.Lookup
         /// You must understand, that this map will build every time when any method is called.
         /// If you do not want this, use <see cref="Map.Of"/>
         /// </summary>
-        public sealed class Live<Key, Value> : LiveMapEnvelope<Key, Value>
+        public sealed class Live<Key, Value> : Map.Envelope<Key, Value>
         {
             /// <summary>
             /// A map from the given KeyValuePairs
@@ -390,15 +400,18 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given entries.
             /// </summary>
             /// <param name="entries">enumerable of entries</param>
-            public Live(IEnumerable<KeyValuePair<Key, Value>> entries) : base(() =>
-            {
-                var temp = new Dictionary<Key, Value>();
-                foreach (var entry in entries)
+            public Live(IEnumerable<KeyValuePair<Key, Value>> entries) : base(
+                () =>
                 {
-                    temp[entry.Key] = entry.Value;
-                }
-                return temp;
-            })
+                    var temp = new Dictionary<Key, Value>();
+                    foreach (var entry in entries)
+                    {
+                        temp[entry.Key] = entry.Value;
+                    }
+                    return temp;
+                },
+                true
+            )
             { }
 
             /// <summary>
@@ -423,7 +436,8 @@ namespace Yaapii.Atoms.Lookup
                         dict = input.Apply(dict);
                     }
                     return dict;
-                }
+                },
+                true
             )
             { }
         }

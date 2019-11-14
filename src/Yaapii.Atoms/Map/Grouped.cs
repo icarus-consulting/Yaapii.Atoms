@@ -39,10 +39,11 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="src">Source Enumerable</param>
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
-        public Grouped(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : this(
+        public Grouped(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value, bool live = false) : this(
             new ListOf<T>(src),
             key,
-            value
+            value,
+            live
         )
         { }
 
@@ -52,7 +53,7 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="src">Source Enumerable</param>
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
-        public Grouped(IList<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : base(
+        public Grouped(IList<T> src, IFunc<T, Key> key, IFunc<T, Value> value, bool live = false) : base(
             () =>
             {
                 Dictionary<Key, IList<Value>> temp = new Dictionary<Key, IList<Value>>();
@@ -61,7 +62,8 @@ namespace Yaapii.Atoms.Lookup
                     temp[key.Invoke(entry)] = new Mapped<T, Value>(value, src);
                 }
                 return temp;
-            }
+            },
+            live
         )
         { }
     }
