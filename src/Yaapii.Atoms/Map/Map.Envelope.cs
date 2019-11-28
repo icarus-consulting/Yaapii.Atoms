@@ -108,9 +108,7 @@ namespace Yaapii.Atoms.Lookup
 
             public bool TryGetValue(string key, out string value)
             {
-                value = default(string);
-                var result = Val().TryGetValue(key, out value);
-                return result;
+                return Val().TryGetValue(key, out value);
             }
 
             IEnumerator IEnumerable.GetEnumerator()
@@ -120,7 +118,7 @@ namespace Yaapii.Atoms.Lookup
 
             private IDictionary<string, string> Val()
             {
-                var result = default(IDictionary<string, string>);
+                IDictionary<string, string> result;
                 if (this.live)
                 {
                     result = this.origin();
@@ -212,9 +210,7 @@ namespace Yaapii.Atoms.Lookup
 
             public bool TryGetValue(string key, out Value value)
             {
-                value = default(Value);
-                var result = Val().TryGetValue(key, out value);
-                return result;
+                return Val().TryGetValue(key, out value);
             }
 
             IEnumerator IEnumerable.GetEnumerator()
@@ -316,9 +312,7 @@ namespace Yaapii.Atoms.Lookup
 
             public bool TryGetValue(Key key, out Value value)
             {
-                value = default(Value);
-                var result = Val().TryGetValue(key, out value);
-                return result;
+                return Val().TryGetValue(key, out value);
             }
 
             IEnumerator IEnumerable.GetEnumerator()
