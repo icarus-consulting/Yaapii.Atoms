@@ -86,67 +86,6 @@ namespace Yaapii.Atoms.Lookup
             live
         )
         { }
-
-        /// <summary>
-        /// A live joined map.
-        /// </summary>
-        public sealed class Live : Map.Envelope
-        {
-            /// <summary>
-            /// Joined map.
-            /// </summary>
-            public Live(IKvp kvp, IDictionary<string, string> origin, bool live = false) : this(
-                live,
-                new Map.Live(kvp), origin
-            )
-            { }
-
-            /// <summary>
-            /// Joined map.
-            /// </summary>
-            public Live(IMapInput input, IDictionary<string, string> origin, bool live = false) : this(
-                live,
-                new Map.Live(input), origin
-            )
-            { }
-
-            /// <summary>
-            /// Joined map.
-            /// </summary>
-            public Live(params IDictionary<string, string>[] dicts) : this(
-                false,
-                dicts
-            )
-            { }
-
-            /// <summary>
-            /// Joined map.
-            /// </summary>
-            public Live(bool live, params IDictionary<string, string>[] dicts) : this(
-                new Many.Live<IDictionary<string, string>>(dicts),
-                live
-            )
-            { }
-
-            /// <summary>
-            /// Joined map.
-            /// </summary>
-            public Live(IEnumerable<IDictionary<string, string>> dicts, bool live = false) : base(() =>
-                new Map.Live(
-                    new Enumerable.Joined<IKvp>(
-                        new Mapped<IDictionary<string, string>, IEnumerable<IKvp>>(dict =>
-                            new Mapped<KeyValuePair<string, string>, IKvp>(entry =>
-                                new Kvp.Of(entry.Key, entry.Value),
-                                    dict
-                                ),
-                                dicts
-                        )
-                    )
-                ),
-                live
-            )
-            { }
-        }
     }
 
     /// <summary>
