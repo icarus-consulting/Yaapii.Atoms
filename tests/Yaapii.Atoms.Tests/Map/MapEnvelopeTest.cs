@@ -58,8 +58,16 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void GetValueWithMissingKey()
         {
             var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
-            var outValue = map[7];
-            Assert.Equal(42, outValue);
+
+            try
+            {
+                var outValue = map[0];
+                Assert.True(false, "This has to fail");
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.Equal("The key '0' is not present in the map.", ex.Message);
+            }
         }
 
         [Fact]
