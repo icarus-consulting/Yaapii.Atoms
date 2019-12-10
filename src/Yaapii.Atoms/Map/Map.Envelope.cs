@@ -207,16 +207,38 @@ namespace Yaapii.Atoms.Lookup
         {
             private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
             private readonly Lazy<IDictionary<Key, Value>> origin;
+            private readonly Func<Key, Value> fallback;
 
             /// <summary>
             /// Simplified map building.
             /// </summary>
-            public Envelope(Func<IDictionary<Key, Value>> origin)
+            public Envelope(Func<IDictionary<Key, Value>> origin) : this(
+                origin,
+                key => throw new ArgumentException($"The key '{key}' is not present in the map.")
+            )
+            { }
+
+            /// <summary>
+            /// Simplified map building.
+            /// </summary>
+            public Envelope(Func<IDictionary<Key, Value>> origin, Func<Key, Value> fallback)
             {
                 this.origin = new Lazy<IDictionary<Key, Value>>(origin);
+                this.fallback = fallback;
             }
 
-            public Value this[Key key] { get => this.origin.Value[key]; set => throw this.rejectWriteExc; }
+            public Value this[Key key] {
+                get {
+                    Value result;
+                    if (!this.origin.Value.TryGetValue(key, out result))
+                    {
+                        result = this.fallback(key);
+                    }
+
+                    return result;
+                }
+                set => throw this.rejectWriteExc;
+            }
 
             public ICollection<Key> Keys => this.origin.Value.Keys;
 

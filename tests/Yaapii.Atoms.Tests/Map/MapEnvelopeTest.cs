@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -41,15 +41,49 @@ namespace Yaapii.Atoms.Lookup.Tests
         [Fact]
         public void TryGetValueWithMissingKey()
         {
-
             var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
             int outValue;
             Assert.False(map.TryGetValue(0, out outValue));
         }
 
+        [Fact]
+        public void GetValueWithExistingKey()
+        {
+            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
+            var outValue = map[7];
+            Assert.Equal(42, outValue);
+        }
+
+        [Fact]
+        public void GetValueWithMissingKey()
+        {
+            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
+            var outValue = map[7];
+            Assert.Equal(42, outValue);
+        }
+
+        [Fact]
+        public void GetValueWithFallbackAndExistingKey()
+        {
+            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } }, key => key * 2);
+            var outValue = map[7];
+            Assert.Equal(42, outValue);
+        }
+
+        [Fact]
+        public void GetValueWithFallbackAndMissingKey()
+        {
+            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } }, key => key * 2);
+            var outValue = map[2];
+            Assert.Equal(4, outValue);
+        }
+
         private class NonAbstractEnvelope : Map.Envelope<int, int>
         {
             public NonAbstractEnvelope(IDictionary<int, int> map) : base(() => map)
+            { }
+
+            public NonAbstractEnvelope(IDictionary<int, int> map, Func<int, int> fallback) : base(() => map, fallback)
             { }
         }
     }
