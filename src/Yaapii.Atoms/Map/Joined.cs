@@ -34,8 +34,7 @@ namespace Yaapii.Atoms.Lookup
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(IKvp kvp, IDictionary<string, string> origin, bool live = false) : this(
-            live,
+        public Joined(IKvp kvp, IDictionary<string, string> origin) : this(
             new Map.Live(kvp), origin
         )
         { }
@@ -43,8 +42,7 @@ namespace Yaapii.Atoms.Lookup
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(IMapInput input, IDictionary<string, string> origin, bool live = false) : this(
-            live,
+        public Joined(IMapInput input, IDictionary<string, string> origin) : this(
             new Map.Live(input), origin
         )
         { }
@@ -53,26 +51,16 @@ namespace Yaapii.Atoms.Lookup
         /// Joined map.
         /// </summary>
         public Joined(params IDictionary<string, string>[] dicts) : this(
-            false,
-            dicts
+            new Many.Live<IDictionary<string, string>>(dicts)
         )
         { }
 
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(bool live, params IDictionary<string, string>[] dicts) : this(
-            new Many.Live<IDictionary<string, string>>(dicts),
-            live
-        )
-        { }
-
-        /// <summary>
-        /// Joined map.
-        /// </summary>
-        public Joined(IEnumerable<IDictionary<string, string>> dicts, bool live = false) : base(
+        public Joined(IEnumerable<IDictionary<string, string>> dicts) : base(
             () =>
-            new Map.Live(
+            new LazyDict(
                 new Enumerable.Joined<IKvp>(
                     new Mapped<IDictionary<string, string>, IEnumerable<IKvp>>(dict =>
                         new Mapped<KeyValuePair<string, string>, IKvp>(entry =>
@@ -83,7 +71,7 @@ namespace Yaapii.Atoms.Lookup
                     )
                 )
             ),
-            live
+            false
         )
         { }
     }
@@ -135,7 +123,7 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         public Joined(IEnumerable<IDictionary<string, Value>> dicts, bool live = false) : base(
             () =>
-                new Map.Live<Value>(
+                new LazyDict<Value>(
                     new Enumerable.Joined<IKvp<Value>>(
                         new Mapped<IDictionary<string, Value>, IEnumerable<IKvp<Value>>>(
                             dict => new Mapped<KeyValuePair<string, Value>, IKvp<Value>>(
@@ -198,7 +186,7 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         public Joined(IEnumerable<IDictionary<Key, Value>> dicts, bool live = false) : base(
             () =>
-                new Map.Live<Key, Value>(
+                new LazyDict<Key, Value>(
                 new Enumerable.Joined<IKvp<Key, Value>>(
                     new Mapped<IDictionary<Key, Value>, IEnumerable<IKvp<Key, Value>>>(
                         dict => new Mapped<KeyValuePair<Key, Value>, IKvp<Key, Value>>(
