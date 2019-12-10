@@ -116,7 +116,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             var random = new Random();
 
             var map =
-                new Map.Of(() =>
+                new Map.Of(
                     new Repeated<KeyValuePair<string, string>>(
                         new ScalarOf<KeyValuePair<string, string>>(
                             () => new KeyValuePair<string, string>(random.Next() + "", "1")),

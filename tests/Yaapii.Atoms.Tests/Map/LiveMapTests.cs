@@ -104,7 +104,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             var random = new Random();
 
             var map =
-                new Map.Live<int, int>(() =>
+                new Map.Live<int, int>(
                     new Repeated<KeyValuePair<int, int>>(
                         new ScalarOf<KeyValuePair<int, int>>(() =>
                             new KeyValuePair<int, int>(random.Next(), 1)),
@@ -156,7 +156,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             var random = new Random();
 
             var map =
-                new Map.Live<int>(() =>
+                new Map.Live<int>(
                     new Repeated<KeyValuePair<string, int>>(
                         new ScalarOf<KeyValuePair<string, int>>(() =>
                             new KeyValuePair<string, int>(random.Next() + "", 1)),
@@ -248,7 +248,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             var random = new Random();
 
             var map =
-                new Map.Live<int, int>(() =>
+                new Map.Live<int, int>(
                     new Repeated<KeyValuePair<int, int>>(
                         new ScalarOf<KeyValuePair<int, int>>(() =>
                             new KeyValuePair<int, int>(random.Next(), 1)),

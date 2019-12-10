@@ -77,14 +77,6 @@ namespace Yaapii.Atoms.Lookup
             { }
 
             /// <summary>
-            /// A map from the given function result
-            /// </summary>
-            /// <param name="fnc"></param>
-            public Live(Func<IEnumerable<KeyValuePair<string, string>>> fnc) : this(
-                new Many.Live<KeyValuePair<string, string>>(fnc))
-            { }
-
-            /// <summary>
             /// A map from the given key value pairs.
             /// </summary>
             public Live(IKvp entry, params IKvp[] more) : this(
@@ -248,14 +240,6 @@ namespace Yaapii.Atoms.Lookup
             { }
 
             /// <summary>
-            /// A map from the given function result
-            /// </summary>
-            /// <param name="fnc"></param>
-            public Live(Func<IEnumerable<KeyValuePair<string, Value>>> fnc) : this(
-                new Many.Live<KeyValuePair<string, Value>>(fnc))
-            { }
-
-            /// <summary>
             /// A map from the given key value pairs.
             /// </summary>
             /// <param name="entries">enumerable of kvps</param>
@@ -377,14 +361,6 @@ namespace Yaapii.Atoms.Lookup
             /// <param name="entries">enumerator of KeyValuePairs</param>
             public Live(IEnumerator<KeyValuePair<Key, Value>> entries) : this(
                 new Many.Live<KeyValuePair<Key, Value>>(() => entries))
-            { }
-
-            /// <summary>
-            /// A map from the given function result
-            /// </summary>
-            /// <param name="fnc"></param>
-            public Live(Func<IEnumerable<KeyValuePair<Key, Value>>> fnc) : this(
-                new Many.Live<KeyValuePair<Key, Value>>(fnc))
             { }
 
             /// <summary>
