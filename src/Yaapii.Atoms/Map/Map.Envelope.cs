@@ -24,6 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Fail;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Lookup
 {
@@ -38,7 +39,7 @@ namespace Yaapii.Atoms.Lookup
             private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
 
             private readonly Func<IDictionary<string, string>> origin;
-            private readonly Lazy<IDictionary<string, string>> fixedOrigin;
+            private readonly Sticky<IDictionary<string, string>> fixedOrigin;
             private readonly bool live;
 
             /// <summary>
@@ -48,7 +49,7 @@ namespace Yaapii.Atoms.Lookup
             {
                 this.origin = origin;
                 this.live = live;
-                this.fixedOrigin = new Lazy<IDictionary<string, string>>(origin);
+                this.fixedOrigin = new Sticky<IDictionary<string, string>>(origin);
             }
 
             public string this[string key] { get => Val()[key]; set => throw this.rejectWriteExc; }
@@ -125,7 +126,7 @@ namespace Yaapii.Atoms.Lookup
                 }
                 else
                 {
-                    result = this.fixedOrigin.Value;
+                    result = this.fixedOrigin.Value();
                 }
                 return result;
             }
@@ -140,7 +141,7 @@ namespace Yaapii.Atoms.Lookup
             private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
 
             private readonly Func<IDictionary<string, Value>> origin;
-            private readonly Lazy<IDictionary<string, Value>> fixedOrigin;
+            private readonly Sticky<IDictionary<string, Value>> fixedOrigin;
             private readonly bool live;
 
             /// <summary>
@@ -150,7 +151,7 @@ namespace Yaapii.Atoms.Lookup
             {
                 this.origin = origin;
                 this.live = live;
-                this.fixedOrigin = new Lazy<IDictionary<string, Value>>(origin);
+                this.fixedOrigin = new Sticky<IDictionary<string, Value>>(origin);
             }
 
             public Value this[string key] { get => Val()[key]; set => throw this.rejectWriteExc; }
@@ -227,7 +228,7 @@ namespace Yaapii.Atoms.Lookup
                 }
                 else
                 {
-                    result = this.fixedOrigin.Value;
+                    result = this.fixedOrigin.Value();
                 }
                 return result;
             }
@@ -242,7 +243,7 @@ namespace Yaapii.Atoms.Lookup
             private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
 
             private readonly Func<IDictionary<Key, Value>> origin;
-            private readonly Lazy<IDictionary<Key, Value>> fixedOrigin;
+            private readonly Sticky<IDictionary<Key, Value>> fixedOrigin;
             private readonly bool live;
 
             /// <summary>
@@ -252,7 +253,7 @@ namespace Yaapii.Atoms.Lookup
             {
                 this.origin = origin;
                 this.live = live;
-                this.fixedOrigin = new Lazy<IDictionary<Key, Value>>(origin);
+                this.fixedOrigin = new Sticky<IDictionary<Key, Value>>(origin);
             }
 
             public Value this[Key key] { get => Val()[key]; set => throw this.rejectWriteExc; }
@@ -329,7 +330,7 @@ namespace Yaapii.Atoms.Lookup
                 }
                 else
                 {
-                    result = this.fixedOrigin.Value;
+                    result = this.fixedOrigin.Value();
                 }
                 return result;
             }
