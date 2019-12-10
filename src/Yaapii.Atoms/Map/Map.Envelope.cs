@@ -37,16 +37,38 @@ namespace Yaapii.Atoms.Lookup
         {
             private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
             private readonly Lazy<IDictionary<string, string>> origin;
+            private readonly Func<string, string> fallback;
 
             /// <summary>
             /// Simplified map building.
             /// </summary>
-            public Envelope(Func<IDictionary<string, string>> origin)
+            public Envelope(Func<IDictionary<string, string>> origin) : this(
+                origin,
+                key => throw new ArgumentException($"The key '{key}' is not present in the map.")
+            )
+            { }
+
+            /// <summary>
+            /// Simplified map building.
+            /// </summary>
+            public Envelope(Func<IDictionary<string, string>> origin, Func<string, string> fallback)
             {
                 this.origin = new Lazy<IDictionary<string, string>>(origin);
+                this.fallback = fallback;
             }
 
-            public string this[string key] { get => this.origin.Value[key]; set => throw this.rejectWriteExc; }
+            public string this[string key] {
+                get {
+                    string result;
+                    if (!this.origin.Value.TryGetValue(key, out result))
+                    {
+                        result = this.fallback(key);
+                    }
+
+                    return result;
+                }
+                set => throw this.rejectWriteExc;
+            }
 
             public ICollection<string> Keys => this.origin.Value.Keys;
 
@@ -122,16 +144,38 @@ namespace Yaapii.Atoms.Lookup
         {
             private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
             private readonly Lazy<IDictionary<string, Value>> origin;
+            private readonly Func<string, Value> fallback;
 
             /// <summary>
             /// Simplified map building.
             /// </summary>
-            public Envelope(Func<IDictionary<string, Value>> origin)
+            public Envelope(Func<IDictionary<string, Value>> origin) : this(
+                origin,
+                key => throw new ArgumentException($"The key '{key}' is not present in the map.")
+            )
+            { }
+
+            /// <summary>
+            /// Simplified map building.
+            /// </summary>
+            public Envelope(Func<IDictionary<string, Value>> origin, Func<string, Value> fallback)
             {
                 this.origin = new Lazy<IDictionary<string, Value>>(origin);
+                this.fallback = fallback;
             }
 
-            public Value this[string key] { get => this.origin.Value[key]; set => throw this.rejectWriteExc; }
+            public Value this[string key] {
+                get {
+                    Value result;
+                    if (!this.origin.Value.TryGetValue(key, out result))
+                    {
+                        result = this.fallback(key);
+                    }
+
+                    return result;
+                }
+                set => throw this.rejectWriteExc;
+            }
 
             public ICollection<string> Keys => this.origin.Value.Keys;
 
