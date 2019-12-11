@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.Lookup;
 
-namespace Yaapii.Atoms.Dict.Tests
+namespace Yaapii.Atoms.Lookup.Tests
 {
     public sealed class KvpOfTests
     {
