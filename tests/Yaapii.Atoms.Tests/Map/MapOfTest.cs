@@ -110,6 +110,27 @@ namespace Yaapii.Atoms.Lookup.Tests
         }
 
         [Fact]
+        public void IsContentStickyTypedValue()
+        {
+            int size = 1;
+
+            var map = new Map.Of<int>(
+                () =>
+                    new Dictionary<string, int>()
+                    {
+                        { "a", 1 },
+                        { "b", Interlocked.Increment(ref size) }
+                    }
+            );
+
+            Assert.Equal(2, map.Count);
+            Assert.Equal(2, map.Count);
+
+            Assert.Equal(2, map["b"]);
+            Assert.Equal(2, map["b"]);
+        }
+
+        [Fact]
         public void IsSticky()
         {
             int size = 1;
