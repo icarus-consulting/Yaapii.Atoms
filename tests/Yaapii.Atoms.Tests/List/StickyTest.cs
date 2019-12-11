@@ -35,14 +35,13 @@ namespace Yaapii.Atoms.List.Tests
             var list =
                 new StickyList<int>(
                     new ListOf<int>(
-                    new Yaapii.Atoms.Enumerable.HeadOf<int>(
-                        new Yaapii.Atoms.Enumerable.Endless<int>(1),
-                        new ScalarOf<int>(() => Interlocked.Increment(ref size))
-                        )));
+                        new Yaapii.Atoms.Enumerable.HeadOf<int>(
+                            new Yaapii.Atoms.Enumerable.Endless<int>(1),
+                            new ScalarOf<int>(() => Interlocked.Increment(ref size))
+                )));
 
-            Assert.True(
-                new Yaapii.Atoms.Enumerable.LengthOf(list).Value() == new Yaapii.Atoms.Enumerable.LengthOf(list).Value(),
-                "can't ignore changes of underlying list");
+            Assert.Equal(3, new Enumerable.LengthOf(list).Value());
+            Assert.Equal(3, new Enumerable.LengthOf(list).Value());
         }
     }
 }

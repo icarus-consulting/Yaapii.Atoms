@@ -20,39 +20,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
+using System.Threading;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Texts;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.List.Tests
 {
-    public sealed class MappedTest
+    public sealed class OfTest
     {
         [Fact]
-        public void TransformsList()
+        public void IgnoresChangesInList()
         {
-            Assert.True(
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
-                        input => new Upper(new Text.Live(input)),
-                        new List.Of<string>("hello", "world", "damn")
-                        ),
-                    0
-                ).Value().AsString() == "HELLO",
-            "Can't transform an enumerable");
-        }
+            int size = 2;
+            var list =
+                new List.Of<int>(
+                    new Yaapii.Atoms.Enumerable.HeadOf<int>(
+                        new Yaapii.Atoms.Enumerable.Endless<int>(1),
+                        new ScalarOf<int>(() => Interlocked.Increment(ref size))
+                ));
 
-        [Fact]
-        public void TransformsEmptyList()
-        {
-            Assert.True(
-                new Enumerable.LengthOf(
-                    new Mapped<String, IText>(
-                        input => new Upper(new Text.Live(input)),
-                        new List.Of<string>()
-                    )).Value() == 0,
-                "Can't transform an empty iterable");
+            Assert.Equal(3, new Enumerable.LengthOf(list).Value());
+            Assert.Equal(3, new Enumerable.LengthOf(list).Value());
         }
     }
 }

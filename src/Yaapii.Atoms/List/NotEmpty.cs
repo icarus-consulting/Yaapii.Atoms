@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.List
     /// Ensures that <see cref="IList{T}" /> is not empty/>
     /// </summary>
     /// <typeparam name="T">Type of the list</typeparam>
-    public sealed class NotEmpty<T> : ListEnvelope<T>
+    public sealed class NotEmpty<T> : List.Envelope<T>
     {
         /// <summary>
         /// Ensures that <see cref="IList{T}" /> is not empty/>
@@ -47,17 +47,22 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="origin">List</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(IList<T> origin, Exception ex) : base(new ScalarOf<IList<T>>(
-            () =>
-            {
-                new FailPrecise(
-                    new FailEmpty<T>(
-                        origin),
-                    ex).Go();
+        public NotEmpty(IList<T> origin, Exception ex) : base(
+            new ScalarOf<IList<T>>(
+                () =>
+                {
+                    new FailPrecise(
+                        new FailEmpty<T>(
+                            origin
+                        ),
+                        ex
+                    ).Go();
 
-                return origin;
-            }
-            ))
+                    return origin;
+                }
+            ),
+            false
+        )
         { }
-           }
+    }
 }

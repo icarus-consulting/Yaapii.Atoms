@@ -30,22 +30,24 @@ namespace Yaapii.Atoms.List
     /// <summary>
     /// An ArrayList converted to a IList&lt;object&gt;
     /// </summary>
-    public sealed class ArrayListAsList : ListEnvelope<object>
+    public sealed class ArrayListAsList : List.Envelope<object>
     {
         /// <summary>
         /// A ArrayList converted to IList&lt;object&gt;
         /// </summary>
         /// <param name="src">source ArrayList</param>
-        public ArrayListAsList(ArrayList src) : base(new Sticky<IList<object>>(() =>
-        {
-            var blocking = new BlockingCollection<object>();
-            foreach (var lst in src)
+        public ArrayListAsList(ArrayList src) : base(() =>
             {
-                new Each<object>(item => blocking.Add(item), lst).Invoke();
-            }
+                var blocking = new BlockingCollection<object>();
+                foreach (var lst in src)
+                {
+                    new Each<object>(item => blocking.Add(item), lst).Invoke();
+                }
 
-            return new ListOf<object>(blocking.ToArray());
-        }))
+                return new List.Live<object>(blocking.ToArray());
+            },
+            false
+        )
         { }
     }
 }

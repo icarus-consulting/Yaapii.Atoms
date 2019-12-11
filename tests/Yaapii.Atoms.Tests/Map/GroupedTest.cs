@@ -23,17 +23,16 @@
 using Xunit;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.List;
 using Yaapii.Atoms.Number;
 
-namespace Yaapii.Atoms.Lookup.Tests
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class GroupedTest
     {
         [Fact]
         public void GroupsList()
         {
-            var srcList = new ListOf<string>("ABC", "ABCD", "ABCDE");
+            var srcList = new List.Of<string>("ABC", "ABCD", "ABCDE");
             var keyFunc =
                 new FuncOf<string, double>((str) =>
                     new NumberOf(

@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.List
     /// Multiple lists joined together as one.
     /// </summary>
     /// <typeparam name="T">type of items in list</typeparam>
-    public sealed class Joined<T> : ListEnvelope<T>
+    public sealed class Joined<T> : List.Envelope<T>
     {
         /// <summary>
         /// Multiple <see cref="IList{T}"/> joined together
@@ -75,8 +75,10 @@ namespace Yaapii.Atoms.List
                     new Each<T>(item => blocking.Add(item), lst).Invoke();
                 }
 
-                return new ListOf<T>(blocking);
-            })
+                return new List.Live<T>(blocking);
+            },
+            false
+        )
         { }
     }
 }

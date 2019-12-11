@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.List.Tests
             Assert.Throws<Exception>(() =>
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new ListOf<bool>()
+                        new List.Of<bool>()
                     )).Value());
         }
 
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.List.Tests
             Assert.True(
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new ListOf<bool>(false)
+                        new List.Of<bool>(false)
                     )).Value() == 1);
         }
 
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.List.Tests
             Assert.Throws<OperationCanceledException>(() =>
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new ListOf<bool>(),
+                        new List.Of<bool>(),
                         new OperationCanceledException()
                     )).Value());
         }

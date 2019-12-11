@@ -33,9 +33,9 @@ namespace Yaapii.Atoms.List.Tests
             Assert.True(
                 new Enumerable.LengthOf(
                     new Joined<string>(
-                        new ListOf<string>("hello", "world", "друг"),
-                        new ListOf<string>("how", "are", "you"),
-                        new ListOf<string>("what's", "up")
+                        new List.Of<string>("hello", "world", "друг"),
+                        new List.Of<string>("how", "are", "you"),
+                        new List.Of<string>("what's", "up")
                     )
                 ).Value() == 8,
             "Can't concatenate enumerables together");
@@ -48,8 +48,8 @@ namespace Yaapii.Atoms.List.Tests
                 new Enumerable.LengthOf(
                     new Joined<string>(
                         new Mapped<string, IList<string>>(
-                           str => new ListOf<string>(str),
-                           new ListOf<string>("x")
+                           str => new List.Of<string>(str),
+                           new List.Of<string>("x")
                         )
                     )
                 ).Value() == 1,
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.List.Tests
             Assert.True(
                 new Enumerable.LengthOf(
                     new Joined<string>(
-                        new ListOf<string>("hello", "world", "друг"),
+                        new List.Of<string>("hello", "world", "друг"),
                         "how",
                         "are",
                         "you",

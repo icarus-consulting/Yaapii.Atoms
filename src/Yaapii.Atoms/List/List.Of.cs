@@ -21,42 +21,57 @@
 // SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using Yaapii.Atoms.List;
 using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
-
-#pragma warning disable CS1591
-#pragma warning disable MaxPublicMethodCount // a public methods count maximum
-#pragma warning disable NoGetOrSet // No Statics
-#pragma warning disable NoProperties // No Properties
-#pragma warning disable MaxClassLength // Class length max
-
+using Yaapii.Atoms.Enumerable;
+using System.Collections.ObjectModel;
 
 namespace Yaapii.Atoms.List
 {
-    /// <summary>
-    /// A <see cref="List{X}"/> which returns the same items from a cache, always.
-    /// </summary>
-    /// <typeparam name="X"></typeparam>
-    [Obsolete("This class is obsolete and will be removed in future versions. Use List.Of")]
-    public sealed class StickyList<X> : List.Envelope<X>
+    public partial class List
     {
         /// <summary>
-        /// A <see cref="List{X}"/> which returns the same items from a cache, always.
+        /// Makes a readonly list.
         /// </summary>
-        /// <param name="items">items to cache</param>
-        public StickyList(params X[] items) :
-            this(new List<X>(items))
-        { }
+        /// <typeparam name="T">type of items</typeparam>
+        public sealed class Of<T> : Envelope<T>
+        {
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="array">source array</param>
+            public Of(params T[] array) : this(new Many.Live<T>(array))
+            { }
 
-        /// <summary>
-        /// A <see cref="List{X}"/> which returns the same items from a cache, always.
-        /// </summary>
-        /// <param name="list">list to cache</param>
-        public StickyList(IList<X> list) : base(
-            () => list, false
-        )
-        { }
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="src">source enumerator</param>
+            public Of(IEnumerator<T> src) : this(new Many.Of<T>(() => src))
+            { }
+
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="src">source enumerable</param>
+            public Of(IEnumerable<T> src) : base(
+                () =>
+                {
+                    var temp = new List<T>();
+                    foreach (T item in src)
+                    {
+                        temp.Add(item);
+                    }
+
+                    return temp;
+                },
+                false
+            )
+            { }
+        }
     }
 }

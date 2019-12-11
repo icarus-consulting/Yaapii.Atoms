@@ -36,7 +36,8 @@ namespace Yaapii.Atoms.List
     /// Makes a readonly list.
     /// </summary>
     /// <typeparam name="T">type of items</typeparam>
-    public sealed class ListOf<T> : ListEnvelope<T>
+    [Obsolete("This class is obsolete and will be removed in future versions. Use List.Of or List.Live")]
+    public sealed class ListOf<T> : List.Envelope<T>
     {
         /// <summary>
         /// ctor
@@ -57,15 +58,17 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="src">source enumerable</param>
         public ListOf(IEnumerable<T> src) : base(() =>
-             {
-                 var temp = new List<T>();
-                 foreach (T item in src)
-                 {
-                     temp.Add(item);
-                 }
+            {
+                var temp = new List<T>();
+                foreach (T item in src)
+                {
+                    temp.Add(item);
+                }
 
-                 return temp;
-             })
+                return temp;
+            },
+            true
+        )
         { }
 
     }

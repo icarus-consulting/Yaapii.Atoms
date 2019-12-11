@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.List
     /// A list which is threadsafe.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class SyncList<T> : ListEnvelope<T>
+    public sealed class SyncList<T> : List.Envelope<T>
     {
         /// <summary>
         /// ctor
@@ -44,14 +44,14 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="items">source items</param>
-        public SyncList(IEnumerable<T> items) : this(new ListOf<T>(items))
+        public SyncList(IEnumerable<T> items) : this(new List.Live<T>(items))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="items">source item enumerator</param>
-        public SyncList(IEnumerator<T> items) : this(new ListOf<T>(items))
+        public SyncList(IEnumerator<T> items) : this(new List.Live<T>(items))
         { }
 
         /// <summary>
@@ -59,10 +59,15 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="list">A threadsafe list</param>
         public SyncList(ICollection<T> list) : base(
-                new Scalar.Sync<IList<T>>(
-                    new ScalarOf<IList<T>>(() =>
-                        new ListOf<T>(
-                            new Collection.Sync<T>(list)))))
+            new Scalar.Sync<IList<T>>(
+                new ScalarOf<IList<T>>(() =>
+                    new List.Live<T>(
+                        new Collection.Sync<T>(list)
+                    )
+                )
+            ),
+            false
+        )
         { }
     }
 }
