@@ -60,7 +60,17 @@ namespace Yaapii.Atoms.Collection
             {
                 this.origin = slr;
                 this.live = live;
-                this.fixedOrigin = new Scalar.Sticky<ICollection<T>>(slr);
+                this.fixedOrigin = new Scalar.Sticky<ICollection<T>>(
+                    () =>
+                    {
+                        var temp = new List<T>();
+                        foreach (var item in slr.Value())
+                        {
+                            temp.Add(item);
+                        }
+                        return temp;
+                    }
+                );
             }
 
             /// <summary>

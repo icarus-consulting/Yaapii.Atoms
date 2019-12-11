@@ -22,6 +22,7 @@
 
 using System.Threading;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
@@ -46,15 +47,13 @@ namespace Yaapii.Atoms.Collection.Tests
             var list =
                 new Sticky<int>(
                     new ListOf<int>(
-                        new Enumerable.Repeated<int>(
-                            new ScalarOf<int>(() => 0),
-                            new ScalarOf<int>(() =>
-                            {
-                                Interlocked.Increment(ref size);
-                                return size;
-                            })
-                        )));
+                        new Yaapii.Atoms.Enumerable.HeadOf<int>(
+                            new Yaapii.Atoms.Enumerable.Endless<int>(1),
+                            new ScalarOf<int>(() => Interlocked.Increment(ref size))
+                )));
 
+            Assert.Equal(3, new LengthOf(list).Value());
+            Assert.Equal(3, new LengthOf(list).Value());
         }
 
         [Fact]
