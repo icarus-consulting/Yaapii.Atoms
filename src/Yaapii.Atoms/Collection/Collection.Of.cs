@@ -20,48 +20,51 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Collection
 {
-    /// <summary>
-    /// Makes a collection that iterates only once.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    [Obsolete("This class is obsolete and will be removed in future versions. Use Collection.Of")]
-    public sealed class Sticky<T> : Collection.Envelope<T>
+    public partial class Collection
     {
         /// <summary>
-        /// Makes a collection of given items.
+        /// Envelope for collections. 
+        /// It accepts a scalar and makes readonly Collection from it.
         /// </summary>
-        /// <param name="items">source items</param>
-        public Sticky(params T[] items) : this(new Many.Live<T>(items))
-        { }
+        /// <typeparam name="T"></typeparam>
+        public sealed class Of<T> : Envelope<T>
+        {
+            /// <summary>
+            /// Makes a collection from an array
+            /// </summary>
+            /// <param name="array"></param>
+            public Of(params T[] array) : this(new Many.Live<T>(array))
+            { }
 
-        /// <summary>
-        /// Makes a collection of given items.
-        /// </summary>
-        /// <param name="items">source items</param>
-        public Sticky(IEnumerator<T> items) : this(new Many.Of<T>(items))
-        { }
+            /// <summary>
+            /// Makes a collection from an <see cref="IEnumerator{T}"/>
+            /// </summary>
+            /// <param name="src"></param>
+            public Of(IEnumerator<T> src) : this(new Many.Of<T>(src))
+            { }
 
-        /// <summary>
-        /// Makes a collection of given items.
-        /// </summary>
-        /// <param name="items">source items</param>
-        public Sticky(IEnumerable<T> items) : this(new Collection.Live<T>(items))
-        { }
-
-        /// <summary>
-        /// Makes a collection of given items.
-        /// </summary>
-        /// <param name="list">list of source items</param>
-        public Sticky(ICollection<T> list) : base(
-               () => list, false
-        )
-        { }
+            /// <summary>
+            /// Makes a collection from an <see cref="IEnumerable{T}"/>
+            /// </summary>
+            /// <param name="src"></param>
+            public Of(IEnumerable<T> src) : base(
+                () =>
+                {
+                    ICollection<T> list = new LinkedList<T>();
+                    foreach (T item in src)
+                    {
+                        list.Add(item);
+                    }
+                    return list;
+                },
+                false
+            )
+            { }
+        }
     }
 }

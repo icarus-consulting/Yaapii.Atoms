@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 
@@ -30,7 +31,8 @@ namespace Yaapii.Atoms.Collection
     /// It accepts a scalar and makes readonly Collection from it.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class CollectionOf<T> : CollectionEnvelope<T>
+    [Obsolete("This class is obsolete and will be removed in future versions. Use Collection.Live or Collection.Of")]
+    public sealed class CollectionOf<T> : Collection.Envelope<T>
     {
         /// <summary>
         /// Makes a collection from an array
@@ -59,7 +61,7 @@ namespace Yaapii.Atoms.Collection
                     list.Add(item);
                 }
                 return list;
-            })
+            }, true)
         { }
     }
 }

@@ -20,43 +20,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Collection.Tests
 {
-    public sealed class NotEmptyTest
+    public sealed class LiveTest
     {
         [Fact]
-        public void EmptyCollectionThrowsExeption()
+        public void BehavesAsCollection()
         {
-            Assert.Throws<Exception>(() =>
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new Collection.Live<bool>()
-                    )).Value());
+            var col = new Collection.Live<int>(1, 2, 0, -1);
+
+            Assert.True(col.Contains(1) && col.Contains(2) && col.Contains(0) && col.Contains(-1));
         }
 
         [Fact]
-        public void NotEmptyCollectionThrowsNoExeption()
+        public void BuildsCollection()
         {
             Assert.True(
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new Collection.Live<bool>(false)
-                    )).Value() == 1);
+                new Collection.Live<int>(1, 2, 0, -1).Contains(-1),
+                "cannot build a collection");
         }
 
         [Fact]
-        public void EmptyCollectionThrowsCustomExeption()
+        public void BuildsCollectionFromIterator()
         {
-            Assert.Throws<OperationCanceledException>(() =>
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new Collection.Live<bool>(),
-                        new OperationCanceledException()
-                    )).Value());
+            Assert.True(
+                new Collection.Live<int>(
+                    new ListOf<int>(1, 2, 0, -1).GetEnumerator()).Contains(-1),
+            "cannot build collection from enumerator");
         }
+
     }
 }

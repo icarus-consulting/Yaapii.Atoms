@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Collection
     ///
     /// <para>Objects of this class are thread-safe.</para>
     ///
-    public sealed class Solid<T> : CollectionEnvelope<T>
+    public sealed class Solid<T> : Collection.Envelope<T>
     {
         /// <summary>
         /// ctor
@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.Collection
         /// ctor
         /// </summary>
         /// <param name="src">source enumerable</param>
-        public Solid(IEnumerable<T> src) : this(new CollectionOf<T>(src))
+        public Solid(IEnumerable<T> src) : this(new Collection.Live<T>(src))
         { }
 
         /// <summary>
@@ -60,7 +60,10 @@ namespace Yaapii.Atoms.Collection
         public Solid(ICollection<T> src) : base(
             () => 
                 new Sync<T>(
-                    new Sticky<T>(src)))
+                    src
+                ),
+            false
+        )
         { }
 
     }

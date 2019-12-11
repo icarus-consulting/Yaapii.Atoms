@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Collection
     /// A filtered <see cref="ICollection{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Filtered<T> : CollectionEnvelope<T>
+    public sealed class Filtered<T> : Collection.Envelope<T>
     {
         /// <summary>
         /// A filtered <see cref="ICollection{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Collection
                 func,
                 new Many.Live<T>(
                     new ScalarOf<IEnumerator<T>>(
-                        () => new Joined<T>(
+                        () => new Enumerable.Joined<T>(
                             new Many.Live<T>(
                                 item1,
                                 item2
@@ -72,12 +72,13 @@ namespace Yaapii.Atoms.Collection
         /// <param name="src">items to filter</param>
         public Filtered(Func<T, Boolean> func, IEnumerable<T> src) : base(
             new ScalarOf<ICollection<T>>(() => 
-                new CollectionOf<T>(
+                new Collection.Live<T>(
                     new Enumerable.Filtered<T>(
                         func, src
                     )
                 )
-            )
+            ),
+            false
         )
         { }
 

@@ -28,16 +28,18 @@ namespace Yaapii.Atoms.Collection
     /// Joins collections together as one.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Joined<T> : CollectionEnvelope<T>
+    public sealed class Joined<T> : Collection.Envelope<T>
     {
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="list">List of collections to join together</param>
         public Joined(params IEnumerable<T>[] list) : base(
-            () => new CollectionOf<T>(
+            () => new Collection.Live<T>(
                     new Enumerable.Joined<T>(list)
-             ))
+            ),
+            false
+        )
         { }
 
     }
