@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> fnc, IEnumerator<In> src) : this(fnc, new ListOf<In>(src))
+        public Mapped(Func<In, Out> fnc, IEnumerator<In> src) : this(fnc, new List.Live<In>(src))
         { }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.List
         /// <param name="src">source enumerator</param>
         public Mapped(Func<In, Out> fnc, ICollection<In> src) : base(
             () =>
-            new ListOf<Out>(
+            new List.Live<Out>(
                   new Collection.Mapped<In, Out>(fnc, src)
             ),
             false

@@ -40,7 +40,6 @@ namespace Yaapii.Atoms.List
         /// <typeparam name="T"></typeparam>
         public abstract class Envelope<T> : IList<T>
         {
-            private readonly IScalar<IList<T>> lst;
             private readonly UnsupportedOperationException readOnlyError = new UnsupportedOperationException("The list is readonly.");
 
             private readonly IScalar<IList<T>> origin;
@@ -62,7 +61,6 @@ namespace Yaapii.Atoms.List
             /// <param name="live">value is handled live or sticky</param>
             public Envelope(IScalar<IList<T>> sc, bool live)
             {
-                lst = sc;
                 this.origin = sc;
                 this.live = live;
                 this.fixedOrigin = new Sticky<IList<T>>(
