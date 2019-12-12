@@ -1,5 +1,4 @@
 ﻿using Xunit;
-using Yaapii.Atoms.Dict;
 
 namespace Yaapii.Atoms.Lookup.Tests
 {

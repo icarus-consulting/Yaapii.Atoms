@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Lookup.Tests
 
         private class NonAbstractEnvelope : Map.Envelope<int, int>
         {
-            public NonAbstractEnvelope(IDictionary<int, int> map) : base(() => map)
+            public NonAbstractEnvelope(IDictionary<int, int> map, bool live = false) : base(() => map, live)
             { }
         }
     }

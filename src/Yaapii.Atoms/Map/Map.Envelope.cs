@@ -24,6 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Fail;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Lookup
 {
@@ -36,23 +37,28 @@ namespace Yaapii.Atoms.Lookup
         public abstract class Envelope : IDictionary<string, string>
         {
             private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
-            private readonly Lazy<IDictionary<string, string>> origin;
+
+            private readonly Func<IDictionary<string, string>> origin;
+            private readonly Sticky<IDictionary<string, string>> fixedOrigin;
+            private readonly bool live;
 
             /// <summary>
             /// Simplified map building.
             /// </summary>
-            public Envelope(Func<IDictionary<string, string>> origin)
+            public Envelope(Func<IDictionary<string, string>> origin, bool live)
             {
-                this.origin = new Lazy<IDictionary<string, string>>(origin);
+                this.origin = origin;
+                this.live = live;
+                this.fixedOrigin = new Sticky<IDictionary<string, string>>(origin);
             }
 
-            public string this[string key] { get => this.origin.Value[key]; set => throw this.rejectWriteExc; }
+            public string this[string key] { get => Val()[key]; set => throw this.rejectWriteExc; }
 
-            public ICollection<string> Keys => this.origin.Value.Keys;
+            public ICollection<string> Keys => Val().Keys;
 
-            public ICollection<string> Values => this.origin.Value.Values;
+            public ICollection<string> Values => Val().Values;
 
-            public int Count => this.origin.Value.Count;
+            public int Count => Val().Count;
 
             public bool IsReadOnly => true;
 
@@ -73,22 +79,22 @@ namespace Yaapii.Atoms.Lookup
 
             public bool Contains(KeyValuePair<string, string> item)
             {
-                return this.origin.Value.Contains(item);
+                return Val().Contains(item);
             }
 
             public bool ContainsKey(string key)
             {
-                return this.origin.Value.ContainsKey(key);
+                return Val().ContainsKey(key);
             }
 
             public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)
             {
-                this.origin.Value.CopyTo(array, arrayIndex);
+                Val().CopyTo(array, arrayIndex);
             }
 
             public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
             {
-                return this.origin.Value.GetEnumerator();
+                return Val().GetEnumerator();
             }
 
             public bool Remove(string key)
@@ -103,14 +109,26 @@ namespace Yaapii.Atoms.Lookup
 
             public bool TryGetValue(string key, out string value)
             {
-                value = default(string);
-                var result = this.origin.Value.TryGetValue(key, out value);
-                return result;
+                return Val().TryGetValue(key, out value);
             }
 
             IEnumerator IEnumerable.GetEnumerator()
             {
-                return this.origin.Value.GetEnumerator();
+                return Val().GetEnumerator();
+            }
+
+            private IDictionary<string, string> Val()
+            {
+                IDictionary<string, string> result;
+                if (this.live)
+                {
+                    result = this.origin();
+                }
+                else
+                {
+                    result = this.fixedOrigin.Value();
+                }
+                return result;
             }
         }
 
@@ -121,23 +139,28 @@ namespace Yaapii.Atoms.Lookup
         public abstract class Envelope<Value> : IDictionary<string, Value>
         {
             private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
-            private readonly Lazy<IDictionary<string, Value>> origin;
+
+            private readonly Func<IDictionary<string, Value>> origin;
+            private readonly Sticky<IDictionary<string, Value>> fixedOrigin;
+            private readonly bool live;
 
             /// <summary>
             /// Simplified map building.
             /// </summary>
-            public Envelope(Func<IDictionary<string, Value>> origin)
+            public Envelope(Func<IDictionary<string, Value>> origin, bool live)
             {
-                this.origin = new Lazy<IDictionary<string, Value>>(origin);
+                this.origin = origin;
+                this.live = live;
+                this.fixedOrigin = new Sticky<IDictionary<string, Value>>(origin);
             }
 
-            public Value this[string key] { get => this.origin.Value[key]; set => throw this.rejectWriteExc; }
+            public Value this[string key] { get => Val()[key]; set => throw this.rejectWriteExc; }
 
-            public ICollection<string> Keys => this.origin.Value.Keys;
+            public ICollection<string> Keys => Val().Keys;
 
-            public ICollection<Value> Values => this.origin.Value.Values;
+            public ICollection<Value> Values => Val().Values;
 
-            public int Count => this.origin.Value.Count;
+            public int Count => Val().Count;
 
             public bool IsReadOnly => true;
 
@@ -158,22 +181,22 @@ namespace Yaapii.Atoms.Lookup
 
             public bool Contains(KeyValuePair<string, Value> item)
             {
-                return this.origin.Value.Contains(item);
+                return Val().Contains(item);
             }
 
             public bool ContainsKey(string key)
             {
-                return this.origin.Value.ContainsKey(key);
+                return Val().ContainsKey(key);
             }
 
             public void CopyTo(KeyValuePair<string, Value>[] array, int arrayIndex)
             {
-                this.origin.Value.CopyTo(array, arrayIndex);
+                Val().CopyTo(array, arrayIndex);
             }
 
             public IEnumerator<KeyValuePair<string, Value>> GetEnumerator()
             {
-                return this.origin.Value.GetEnumerator();
+                return Val().GetEnumerator();
             }
 
             public bool Remove(string key)
@@ -188,14 +211,26 @@ namespace Yaapii.Atoms.Lookup
 
             public bool TryGetValue(string key, out Value value)
             {
-                value = default(Value);
-                var result = this.origin.Value.TryGetValue(key, out value);
-                return result;
+                return Val().TryGetValue(key, out value);
             }
 
             IEnumerator IEnumerable.GetEnumerator()
             {
-                return this.origin.Value.GetEnumerator();
+                return Val().GetEnumerator();
+            }
+
+            private IDictionary<string, Value> Val()
+            {
+                IDictionary<string, Value> result;
+                if (this.live)
+                {
+                    result = this.origin();
+                }
+                else
+                {
+                    result = this.fixedOrigin.Value();
+                }
+                return result;
             }
         }
 
@@ -206,23 +241,28 @@ namespace Yaapii.Atoms.Lookup
         public abstract class Envelope<Key, Value> : IDictionary<Key, Value>
         {
             private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
-            private readonly Lazy<IDictionary<Key, Value>> origin;
+
+            private readonly Func<IDictionary<Key, Value>> origin;
+            private readonly Sticky<IDictionary<Key, Value>> fixedOrigin;
+            private readonly bool live;
 
             /// <summary>
             /// Simplified map building.
             /// </summary>
-            public Envelope(Func<IDictionary<Key, Value>> origin)
+            public Envelope(Func<IDictionary<Key, Value>> origin, bool live)
             {
-                this.origin = new Lazy<IDictionary<Key, Value>>(origin);
+                this.origin = origin;
+                this.live = live;
+                this.fixedOrigin = new Sticky<IDictionary<Key, Value>>(origin);
             }
 
-            public Value this[Key key] { get => this.origin.Value[key]; set => throw this.rejectWriteExc; }
+            public Value this[Key key] { get => Val()[key]; set => throw this.rejectWriteExc; }
 
-            public ICollection<Key> Keys => this.origin.Value.Keys;
+            public ICollection<Key> Keys => Val().Keys;
 
-            public ICollection<Value> Values => this.origin.Value.Values;
+            public ICollection<Value> Values => Val().Values;
 
-            public int Count => this.origin.Value.Count;
+            public int Count => Val().Count;
 
             public bool IsReadOnly => true;
 
@@ -243,22 +283,22 @@ namespace Yaapii.Atoms.Lookup
 
             public bool Contains(KeyValuePair<Key, Value> item)
             {
-                return this.origin.Value.Contains(item);
+                return Val().Contains(item);
             }
 
             public bool ContainsKey(Key key)
             {
-                return this.origin.Value.ContainsKey(key);
+                return Val().ContainsKey(key);
             }
 
             public void CopyTo(KeyValuePair<Key, Value>[] array, int arrayIndex)
             {
-                this.origin.Value.CopyTo(array, arrayIndex);
+                Val().CopyTo(array, arrayIndex);
             }
 
             public IEnumerator<KeyValuePair<Key, Value>> GetEnumerator()
             {
-                return this.origin.Value.GetEnumerator();
+                return Val().GetEnumerator();
             }
 
             public bool Remove(Key key)
@@ -273,14 +313,26 @@ namespace Yaapii.Atoms.Lookup
 
             public bool TryGetValue(Key key, out Value value)
             {
-                value = default(Value);
-                var result = this.origin.Value.TryGetValue(key, out value);
-                return result;
+                return Val().TryGetValue(key, out value);
             }
 
             IEnumerator IEnumerable.GetEnumerator()
             {
-                return this.origin.Value.GetEnumerator();
+                return Val().GetEnumerator();
+            }
+
+            private IDictionary<Key, Value> Val()
+            {
+                IDictionary<Key, Value> result;
+                if (this.live)
+                {
+                    result = this.origin();
+                }
+                else
+                {
+                    result = this.fixedOrigin.Value();
+                }
+                return result;
             }
         }
     }
