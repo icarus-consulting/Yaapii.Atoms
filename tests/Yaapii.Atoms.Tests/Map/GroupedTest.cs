@@ -25,14 +25,14 @@ using Yaapii.Atoms.Func;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Number;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Lookup.Tests
 {
     public sealed class GroupedTest
     {
         [Fact]
         public void GroupsList()
         {
-            var srcList = new List.Of<string>("ABC", "ABCD", "ABCDE");
+            var srcList = new List.List.Of<string>("ABC", "ABCD", "ABCDE");
             var keyFunc =
                 new FuncOf<string, double>((str) =>
                     new NumberOf(

@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.True(
                 new CollectionOf<int>(
-                    new ListOf<int>(1, 2, 0, -1).GetEnumerator()).Contains(-1),
+                    new List.List.Live<int>(1, 2, 0, -1).GetEnumerator()).Contains(-1),
             "cannot build collection from enumerator");
         }
 

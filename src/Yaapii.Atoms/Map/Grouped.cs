@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
         public Grouped(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : this(
-            new ListOf<T>(src),
+            new List.List.Live<T>(src),
             key,
             value
         )

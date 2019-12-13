@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Collection
         /// A list with default sorting (ascending)
         /// </summary>
         /// <param name="src">the source enumerable</param>
-        public Sorted(params T[] src) : this(new ListOf<T>(src))
+        public Sorted(params T[] src) : this(new List.List.Live<T>(src))
         { }
 
         /// <summary>
