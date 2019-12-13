@@ -75,14 +75,6 @@ namespace Yaapii.Atoms.Lookup
             { }
 
             /// <summary>
-            /// A map from the given function result
-            /// </summary>
-            /// <param name="fnc"></param>
-            public Of(Func<IEnumerable<KeyValuePair<string, string>>> fnc) : this(
-                new Many.Live<KeyValuePair<string, string>>(fnc))
-            { }
-
-            /// <summary>
             /// A map from the given key value pairs.
             /// </summary>
             public Of(IKvp entry, params IKvp[] more) : this(
@@ -108,15 +100,17 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given entries.
             /// </summary>
             /// <param name="entries">enumerable of entries</param>
-            public Of(IEnumerable<KeyValuePair<string, string>> entries) : base(() =>
-            {
-                var temp = new Dictionary<string, string>();
-                foreach (var entry in entries)
+            public Of(IEnumerable<KeyValuePair<string, string>> entries) : this(
+                () =>
                 {
-                    temp[entry.Key] = entry.Value;
+                    var temp = new Dictionary<string, string>();
+                    foreach (var entry in entries)
+                    {
+                        temp[entry.Key] = entry.Value;
+                    }
+                    return temp;
                 }
-                return temp;
-            })
+            )
             { }
 
             /// <summary>
@@ -130,7 +124,8 @@ namespace Yaapii.Atoms.Lookup
             /// A map from string to string.
             /// </summary>
             /// <param name="pairSequence">Pairs as a sequence, ordered like this: key-1, value-1, ... key-n, value-n</param>
-            public Of(IEnumerable<string> pairSequence) : base(() =>
+            public Of(IEnumerable<string> pairSequence) : this(
+                () =>
                 {
                     var idx = -1;
                     var enumerator = pairSequence.GetEnumerator();
@@ -169,7 +164,7 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given inputs.
             /// </summary>
             /// <param name="inputs">enumerable of map inputs</param>
-            public Of(IEnumerable<IMapInput> inputs) : base(
+            public Of(IEnumerable<IMapInput> inputs) : this(
                 () =>
                 {
                     IDictionary<string, string> dict = new LazyDict();
@@ -179,6 +174,15 @@ namespace Yaapii.Atoms.Lookup
                     }
                     return dict;
                 }
+            )
+            { }
+
+            /// <summary>
+            /// A map from the given dictionary.
+            /// </summary>
+            /// <param name="input">input dictionary</param>
+            public Of(Func<IDictionary<string, string>> input) : base(
+                input, false
             )
             { }
         }
@@ -230,14 +234,6 @@ namespace Yaapii.Atoms.Lookup
             { }
 
             /// <summary>
-            /// A map from the given function result
-            /// </summary>
-            /// <param name="fnc"></param>
-            public Of(Func<IEnumerable<KeyValuePair<string, Value>>> fnc) : this(
-                new Many.Live<KeyValuePair<string, Value>>(fnc))
-            { }
-
-            /// <summary>
             /// A map from the given key value pairs.
             /// </summary>
             /// <param name="entries">enumerable of kvps</param>
@@ -264,15 +260,17 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given entries.
             /// </summary>
             /// <param name="entries">enumerable of entries</param>
-            public Of(IEnumerable<KeyValuePair<string, Value>> entries) : base(() =>
-            {
-                var temp = new Dictionary<string, Value>();
-                foreach (var entry in entries)
+            public Of(IEnumerable<KeyValuePair<string, Value>> entries) : this(
+                () =>
                 {
-                    temp[entry.Key] = entry.Value;
+                    var temp = new Dictionary<string, Value>();
+                    foreach (var entry in entries)
+                    {
+                        temp[entry.Key] = entry.Value;
+                    }
+                    return temp;
                 }
-                return temp;
-            })
+            )
             { }
 
             /// <summary>
@@ -288,7 +286,7 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given inputs.
             /// </summary>
             /// <param name="inputs">enumerable of map inputs</param>
-            public Of(IEnumerable<IMapInput<Value>> inputs) : base(
+            public Of(IEnumerable<IMapInput<Value>> inputs) : this(
                 () =>
                 {
                     IDictionary<string, Value> dict = new LazyDict<Value>();
@@ -298,6 +296,15 @@ namespace Yaapii.Atoms.Lookup
                     }
                     return dict;
                 }
+            )
+            { }
+
+            /// <summary>
+            /// A map from the given dictionary.
+            /// </summary>
+            /// <param name="input">input dictionary</param>
+            public Of(Func<IDictionary<string, Value>> input) : base(
+                input, false
             )
             { }
         }
@@ -349,14 +356,6 @@ namespace Yaapii.Atoms.Lookup
             { }
 
             /// <summary>
-            /// A map from the given function result
-            /// </summary>
-            /// <param name="fnc"></param>
-            public Of(Func<IEnumerable<KeyValuePair<Key, Value>>> fnc) : this(
-                new Many.Live<KeyValuePair<Key, Value>>(fnc))
-            { }
-
-            /// <summary>
             /// A map from the given key value pairs.
             /// </summary>
             public Of(IKvp<Key, Value> entry, params IKvp<Key, Value>[] more) : this(
@@ -382,15 +381,17 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given entries.
             /// </summary>
             /// <param name="entries">enumerable of entries</param>
-            public Of(IEnumerable<KeyValuePair<Key, Value>> entries) : base(() =>
-            {
-                var temp = new Dictionary<Key, Value>();
-                foreach (var entry in entries)
+            public Of(IEnumerable<KeyValuePair<Key, Value>> entries) : this(
+                () =>
                 {
-                    temp[entry.Key] = entry.Value;
+                    var temp = new Dictionary<Key, Value>();
+                    foreach (var entry in entries)
+                    {
+                        temp[entry.Key] = entry.Value;
+                    }
+                    return temp;
                 }
-                return temp;
-            })
+            )
             { }
 
             /// <summary>
@@ -404,7 +405,7 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given inputs.
             /// </summary>
             /// <param name="inputs">enumerable of map inputs</param>
-            public Of(IEnumerable<IMapInput<Key, Value>> inputs) : base(
+            public Of(IEnumerable<IMapInput<Key, Value>> inputs) : this(
                 () =>
                 {
                     IDictionary<Key, Value> dict = new LazyDict<Key, Value>();
@@ -414,6 +415,15 @@ namespace Yaapii.Atoms.Lookup
                     }
                     return dict;
                 }
+            )
+            { }
+
+            /// <summary>
+            /// A map from the given dictionary.
+            /// </summary>
+            /// <param name="input">input dictionary</param>
+            public Of(Func<IDictionary<Key, Value>> input) : base(
+                input, false
             )
             { }
         }
