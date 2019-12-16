@@ -41,11 +41,13 @@ namespace Yaapii.Atoms.Lists.Tests
         [Fact]
         public void NotEmptyCollectionThrowsNoExeption()
         {
-            Assert.True(
+            Assert.Equal(
+                1,
                 new LengthOf(
                     new NotEmpty<bool>(
                         new List.Of<bool>(false)
-                    )).Value() == 1);
+                    )).Value()
+            );
         }
 
         [Fact]

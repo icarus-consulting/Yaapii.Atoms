@@ -30,21 +30,23 @@ namespace Yaapii.Atoms.Lists.Tests
         [Fact]
         public void TransformsList()
         {
-            Assert.True(
+            Assert.Equal(
+                8,
                 new Enumerable.LengthOf(
                     new Joined<string>(
                         new List.Of<string>("hello", "world", "друг"),
                         new List.Of<string>("how", "are", "you"),
                         new List.Of<string>("what's", "up")
                     )
-                ).Value() == 8,
-            "Can't concatenate enumerables together");
+                ).Value()
+            );
         }
 
         [Fact]
         public void JoinsEnumerables()
         {
-            Assert.True(
+            Assert.Equal(
+                1,
                 new Enumerable.LengthOf(
                     new Joined<string>(
                         new Mapped<string, IList<string>>(
@@ -52,14 +54,15 @@ namespace Yaapii.Atoms.Lists.Tests
                            new List.Of<string>("x")
                         )
                     )
-                ).Value() == 1,
-            "cannot join mapped iterables together");
+                ).Value()
+            );
         }
 
         [Fact]
         public void JoinsSingleElemtns()
         {
-            Assert.True(
+            Assert.Equal(
+                8,
                 new Enumerable.LengthOf(
                     new Joined<string>(
                         new List.Of<string>("hello", "world", "друг"),
@@ -69,8 +72,8 @@ namespace Yaapii.Atoms.Lists.Tests
                         "what's",
                         "up"
                     )
-                ).Value() == 8,
-            "Can't concatenate enumerable with single values");
+                ).Value()
+            );
         }
     }
 }

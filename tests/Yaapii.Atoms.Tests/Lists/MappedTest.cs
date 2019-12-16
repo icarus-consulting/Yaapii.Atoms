@@ -32,27 +32,30 @@ namespace Yaapii.Atoms.Lists.Tests
         [Fact]
         public void TransformsList()
         {
-            Assert.True(
+            Assert.Equal(
+                "HELLO",
                 new ItemAt<IText>(
                     new Mapped<String, IText>(
                         input => new Upper(new Text.Live(input)),
                         new List.Of<string>("hello", "world", "damn")
-                        ),
+                    ),
                     0
-                ).Value().AsString() == "HELLO",
-            "Can't transform an enumerable");
+                ).Value().AsString()
+            );
         }
 
         [Fact]
         public void TransformsEmptyList()
         {
-            Assert.True(
-                new Enumerable.LengthOf(
+            Assert.Equal(
+                0,
+                new LengthOf(
                     new Mapped<String, IText>(
                         input => new Upper(new Text.Live(input)),
                         new List.Of<string>()
-                    )).Value() == 0,
-                "Can't transform an empty iterable");
+                    )
+                ).Value()
+            );
         }
     }
 }

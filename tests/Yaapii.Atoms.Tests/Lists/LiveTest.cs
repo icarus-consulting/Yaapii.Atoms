@@ -33,9 +33,10 @@ namespace Yaapii.Atoms.Lists.Tests
         [Fact]
         public void BehavesAsList()
         {
-            Assert.True(
-                new List.Live<int>(1, 2).Contains(2),
-                "Can't behave as a list");
+            Assert.Contains<int>(
+                2,
+                new List.Live<int>(1, 2)
+            );
         }
 
         [Fact]
@@ -43,18 +44,21 @@ namespace Yaapii.Atoms.Lists.Tests
         {
             int num = 345;
 
-            Assert.True(
-                new List.Live<int>(-1, num, 0, 1)[1] == num,
-                "Can't convert an iterable to a list");
+            Assert.Equal(
+                num,
+                new List.Live<int>(-1, num, 0, 1)[1]
+            );
         }
 
         [Fact]
         public void EmptyTest()
         {
-            Assert.True(
-            new List.Live<int>(
-                new List<int>()).Count == 0,
-            "Can't convert an empty iterable to an empty list");
+            Assert.Equal(
+                0,
+                new List.Live<int>(
+                    new List<int>()
+                ).Count
+            );
         }
 
         [Fact]
