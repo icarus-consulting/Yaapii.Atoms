@@ -45,32 +45,35 @@ namespace Yaapii.Atoms.Collection.Tests
         [Fact]
         public void Size()
         {
-            Assert.True(
+            Assert.Equal(
+                2,
                 new HeadOf<string>(
                     2,
                     new Many.Of<string>(
                         "hello", "world", "друг")
-                ).Count == 2);
+                ).Count);
         }
 
         [Fact]
         public void SizeEmptyReturnZero()
         {
-            Assert.True(
+            Assert.Empty(
                 new HeadOf<int>(
                     2,
                     new List<int>()
-                ).Count == 0);
+                )
+            );
         }
 
         [Fact]
         public void SizeLimitZeroReturnZero()
         {
-            Assert.True(
+            Assert.Empty(
                 new HeadOf<string>(
                     0,
                     new Many.Of<string>("1", "2", "3")
-                ).Count == 0);
+                )
+            );
         }
 
         [Fact]

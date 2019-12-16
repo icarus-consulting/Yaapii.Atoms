@@ -34,24 +34,26 @@ namespace Yaapii.Atoms.Collection.Tests
         [Fact]
         public void BehavesAsCollection()
         {
-            Assert.True(
+            Assert.Equal(
+                2,
                 new ItemAt<int>(
                     new Reversed<int>(
                         new Many.Of<int>(0, -1, 2))
-                ).Value() == 2,
-            "cannot behave as a collection");
+                ).Value()
+            );
         }
 
         [Fact]
         public void ReversesList()
         {
             String last = "last";
-            Assert.True(
+            Assert.Equal(
+                last,
                 new ItemAt<string>(
                     new Reversed<string>(
                         new Many.Of<string>(
                             "item", last)
-                    )).Value() == last);
+                    )).Value());
         }
 
         [Fact]
@@ -65,11 +67,12 @@ namespace Yaapii.Atoms.Collection.Tests
         [Fact]
         public void Size()
         {
-            Assert.True(
+            Assert.Equal(
+                3,
                 new Reversed<string>(
                     new Many.Of<string>(
                         "0", "1", "2")
-                ).Count == 3);
+                ).Count);
         }
 
         [Fact]

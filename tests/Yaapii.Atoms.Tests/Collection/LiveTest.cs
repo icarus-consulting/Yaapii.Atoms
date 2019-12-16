@@ -38,18 +38,20 @@ namespace Yaapii.Atoms.Collection.Tests
         [Fact]
         public void BuildsCollection()
         {
-            Assert.True(
-                new Collection.Live<int>(1, 2, 0, -1).Contains(-1),
-                "cannot build a collection");
+            Assert.Contains(
+                -1,
+                new Collection.Live<int>(1, 2, 0, -1)
+            );
         }
 
         [Fact]
         public void BuildsCollectionFromIterator()
         {
-            Assert.True(
+            Assert.Contains(
+                -1,
                 new Collection.Live<int>(
-                    new ListOf<int>(1, 2, 0, -1).GetEnumerator()).Contains(-1),
-            "cannot build collection from enumerator");
+                    new ListOf<int>(1, 2, 0, -1).GetEnumerator())
+            );
         }
 
     }

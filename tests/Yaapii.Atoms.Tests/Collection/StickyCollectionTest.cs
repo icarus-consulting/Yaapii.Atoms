@@ -59,8 +59,9 @@ namespace Yaapii.Atoms.Collection.Tests
         [Fact]
         public void DecoratesArray()
         {
-            Assert.True(
-                new Sticky<int>(-1, 0).Count == 2);
+            Assert.Equal(
+                2,
+                new Sticky<int>(-1, 0).Count);
         }
 
         [Fact]
