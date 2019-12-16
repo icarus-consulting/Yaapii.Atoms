@@ -21,16 +21,10 @@
 // SOFTWARE.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Enumerable;
-using System.Collections.ObjectModel;
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists
 {
     /// <summary>
     /// Makes a readonly list.

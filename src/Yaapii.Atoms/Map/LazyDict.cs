@@ -25,7 +25,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Texts;
 
@@ -79,7 +79,7 @@ namespace Yaapii.Atoms.Lookup
         /// Access all values
         /// </summary>
         public ICollection<string> Values =>
-            new List.List.Live<string>(
+            new List.Live<string>(
                 new Enumerable.Mapped<Sticky<string>, string>(
                     v => v.Value(),
                     map.Value().Values
@@ -162,7 +162,7 @@ namespace Yaapii.Atoms.Lookup
                         ).AsString());
             }
 
-            new List.List.Live<KeyValuePair<string, string>>(this).CopyTo(array, arrayIndex);
+            new List.Live<KeyValuePair<string, string>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace Yaapii.Atoms.Lookup
         /// Access all values
         /// </summary>
         public ICollection<Value> Values =>
-            new List.List.Of<Value>(
+            new List.Of<Value>(
                 new Enumerable.Mapped<Sticky<Value>, Value>(
                     v => v.Value(),
                     map.Value().Values
@@ -356,7 +356,7 @@ namespace Yaapii.Atoms.Lookup
                         ).AsString());
             }
 
-            new List.List.Live<KeyValuePair<string, Value>>(this).CopyTo(array, arrayIndex);
+            new List.Live<KeyValuePair<string, Value>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -466,7 +466,7 @@ namespace Yaapii.Atoms.Lookup
         /// Access all values
         /// </summary>
         public ICollection<Value> Values =>
-            new List.List.Of<Value>(
+            new List.Of<Value>(
                 new Enumerable.Mapped<Sticky<Value>, Value>(
                     v => v.Value(),
                     map.Value().Values
@@ -549,7 +549,7 @@ namespace Yaapii.Atoms.Lookup
                         ).AsString());
             }
 
-            new List.List.Live<KeyValuePair<Key, Value>>(this).CopyTo(array, arrayIndex);
+            new List.Live<KeyValuePair<Key, Value>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>

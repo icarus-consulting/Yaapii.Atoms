@@ -23,14 +23,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists
 {
     public partial class List
     {

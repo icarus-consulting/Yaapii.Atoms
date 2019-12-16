@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using Yaapii.Atoms.Error;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists
 {
     /// <summary>
     /// Ensures that <see cref="IList{T}" /> is not empty/>

@@ -24,7 +24,7 @@ using System.Threading;
 using Xunit;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Lists.Tests
 {
     public sealed class StickyTest
     {

@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Lists.Tests
 {
     public sealed class JoinedTest
     {

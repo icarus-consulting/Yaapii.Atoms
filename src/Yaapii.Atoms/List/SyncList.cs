@@ -21,11 +21,10 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
-using Yaapii.Atoms.Collection;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists
 {
     /// <summary>
     /// A list which is threadsafe.

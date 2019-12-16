@@ -22,10 +22,9 @@
 
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists
 {
     /// <summary>
     /// An ArrayList converted to a IList&lt;object&gt;

@@ -22,9 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable CS1591
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
@@ -33,7 +30,7 @@ using Yaapii.Atoms.Scalar;
 #pragma warning disable MaxClassLength // Class length max
 
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists
 {
     /// <summary>
     /// A <see cref="List{X}"/> which returns the same items from a cache, always.

@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists
 {
     /// <summary>
     /// Mapped list

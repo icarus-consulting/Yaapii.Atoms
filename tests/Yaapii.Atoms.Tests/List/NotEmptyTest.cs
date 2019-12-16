@@ -24,7 +24,7 @@ using System;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Lists.Tests
 {
     public sealed class NotEmptyTest
     {
