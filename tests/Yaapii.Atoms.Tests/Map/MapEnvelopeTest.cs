@@ -73,7 +73,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         [Fact]
         public void GetValueWithFallbackAndExistingKey()
         {
-            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } }, key => key * 2);
+            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } }, false, key => key * 2);
             var outValue = map[7];
             Assert.Equal(42, outValue);
         }
@@ -81,17 +81,17 @@ namespace Yaapii.Atoms.Lookup.Tests
         [Fact]
         public void GetValueWithFallbackAndMissingKey()
         {
-            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } }, key => key * 2);
+            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } }, false, key => key * 2);
             var outValue = map[2];
             Assert.Equal(4, outValue);
         }
 
         private class NonAbstractEnvelope : Map.Envelope<int, int>
         {
-            public NonAbstractEnvelope(IDictionary<int, int> map) : base(() => map)
+            public NonAbstractEnvelope(IDictionary<int, int> map, bool live = false) : base(() => map, live)
             { }
 
-            public NonAbstractEnvelope(IDictionary<int, int> map, Func<int, int> fallback) : base(() => map, fallback)
+            public NonAbstractEnvelope(IDictionary<int, int> map, bool live, Func<int, int> fallback) : base(() => map, live, fallback)
             { }
         }
     }

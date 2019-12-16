@@ -61,7 +61,8 @@ namespace Yaapii.Atoms.Lookup
                     temp[key.Invoke(entry)] = new Mapped<T, Value>(value, src);
                 }
                 return temp;
-            }
+            },
+            false
         )
         { }
     }

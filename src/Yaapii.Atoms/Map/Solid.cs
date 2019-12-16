@@ -60,7 +60,8 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="list"></param>
         public Solid(params KeyValuePair<Key, Value>[] list) : this(
-            new Many.Live<KeyValuePair<Key, Value>>(list))
+            new Many.Live<KeyValuePair<Key, Value>>(list)
+        )
         { }
 
         /// <summary>
@@ -98,17 +99,20 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="map">map to merge to</param>
         /// <param name="list">list of values to merge</param>
         public Solid(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
-            new Map.Live<Key, Value>(map, list))
+            new Map.Live<Key, Value>(map, list)
+        )
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="map"></param>
-        public Solid(IDictionary<Key, Value> map) : base(() =>
-            new Synced<Key, Value>(
-                new Map.Of<Key, Value>(map)
-            )
+        public Solid(IDictionary<Key, Value> map) : base(
+            () =>
+                new Synced<Key, Value>(
+                    new Map.Of<Key, Value>(map)
+                ),
+            false
         )
         { }
     }
