@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.Collection
     /// A collection which is limited to a number of elements.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class HeadOf<T> : CollectionEnvelope<T>
+    public sealed class HeadOf<T> : Collection.Envelope<T>
     {
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="lmt">requested number of items</param>
         /// <param name="src">enumerable of items</param>
-        public HeadOf(int lmt, IEnumerable<T> src) : this(lmt, new CollectionOf<T>(src))
+        public HeadOf(int lmt, IEnumerable<T> src) : this(lmt, new Collection.Live<T>(src))
         { }
 
         /// <summary>
@@ -62,9 +62,11 @@ namespace Yaapii.Atoms.Collection
         /// <param name="src">source collection</param>
         /// <param name="lmt">requested number of elements</param>
         public HeadOf(int lmt, ICollection<T> src) : base(
-            () => new CollectionOf<T>(
+            () => new Collection.Live<T>(
                 new Enumerable.HeadOf<T>(src, lmt)
-            ))
+            ),
+            false
+        )
         { }
 
     }

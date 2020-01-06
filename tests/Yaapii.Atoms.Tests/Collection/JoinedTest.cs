@@ -43,21 +43,22 @@ namespace Yaapii.Atoms.Collection.Tests
         [Fact]
         public void Size()
         {
-            Assert.True(
+            Assert.Equal(
+                8,
                 new Joined<String>(
                     new Many.Of<string>("hello", "world", "друг"),
                     new Many.Of<string>("how", "are", "you"),
                     new Many.Of<string>("what's", "up")
-                ).Count == 8);
+                ).Count);
         }
 
         [Fact]
         public void SizeEmptyReturnZero()
         {
-            Assert.True(
+            Assert.Empty(
                 new Joined<String>(
                     new List<string>()
-                ).Count == 0);
+                ));
         }
 
         [Fact]

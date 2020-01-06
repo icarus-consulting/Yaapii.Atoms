@@ -81,7 +81,7 @@ namespace Yaapii.Atoms.Lists.Tests
         }
 
         [Fact]
-        public void SensesChangesInIterable()
+        public void SensesChanges()
         {
             int size = 2;
             var list =
@@ -91,8 +91,7 @@ namespace Yaapii.Atoms.Lists.Tests
                         new ScalarOf<int>(() => Interlocked.Increment(ref size))
                 ));
 
-            Assert.Equal(3, new Enumerable.LengthOf(list).Value());
-            Assert.Equal(4, new Enumerable.LengthOf(list).Value());
+            Assert.NotEqual(list.Count, list.Count);
         }
 
     }

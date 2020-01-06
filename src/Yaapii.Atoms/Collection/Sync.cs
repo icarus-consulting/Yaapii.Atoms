@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.Collection
     /// A collection which is threadsafe.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Sync<T> : CollectionEnvelope<T>
+    public class Sync<T> : Collection.Envelope<T>
     {
         /// <summary>
         /// ctor
@@ -41,14 +41,14 @@ namespace Yaapii.Atoms.Collection
         /// ctor
         /// </summary>
         /// <param name="syncRoot"></param>
-        public Sync(object syncRoot) : this(syncRoot, new CollectionOf<T>())
+        public Sync(object syncRoot) : this(syncRoot, new Collection.Live<T>())
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="items">items to make collection from</param>
-        public Sync(params T[] items) : this(new CollectionOf<T>(items))
+        public Sync(params T[] items) : this(new Collection.Live<T>(items))
         { }
 
         /// <summary>
@@ -77,7 +77,10 @@ namespace Yaapii.Atoms.Collection
                         return tmp;
                     }
                 }
-        )))
+                )
+            ),
+            false
+        )
         { }
     }
 }

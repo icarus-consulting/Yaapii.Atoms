@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Collection
     /// Ensures that <see cref="ICollection{T}" /> is not empty/>
     /// </summary>
     /// <typeparam name="T">Type of the collection</typeparam>
-    public sealed class NotEmpty<T> : CollectionEnvelope<T>
+    public sealed class NotEmpty<T> : Collection.Envelope<T>
     {
         /// <summary>
         /// Ensures that <see cref="ICollection{T}" /> is not empty/>
@@ -47,17 +47,19 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="origin">Collection</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(ICollection<T> origin, Exception ex) : base(new ScalarOf<ICollection<T>>(
-            () =>
-            {
-                new FailPrecise(
-                    new FailEmpty<T>(
-                        origin),
-                    ex).Go();
-
-                return origin;
-            }
-            ))
+        public NotEmpty(ICollection<T> origin, Exception ex) : base(
+            new ScalarOf<ICollection<T>>(
+                () =>
+                {
+                    new FailPrecise(
+                        new FailEmpty<T>(
+                            origin),
+                        ex).Go();
+                    return origin;
+                }
+            ),
+            false
+        )
         { }
     }
 }

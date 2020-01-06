@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Collection
     /// A sorted <see cref="ICollection{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Sorted<T> : CollectionEnvelope<T>
+    public sealed class Sorted<T> : Collection.Envelope<T>
         where T : IComparable<T>
     {
         /// <summary>
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="src">the source enumerable</param>
         public Sorted(IEnumerable<T> src) : this(
             Comparer<T>.Default,
-            new CollectionOf<T>(src))
+            new Collection.Live<T>(src))
         { }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="cmp">the comparer</param>
         /// <param name="src">the source enumerable</param>
-        public Sorted(Comparer<T> cmp, params T[] src) : this(cmp, new CollectionOf<T>(src))
+        public Sorted(Comparer<T> cmp, params T[] src) : this(cmp, new Collection.Live<T>(src))
         { }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="cmp">the comparer</param>
         /// <param name="src">the source enumerator</param>
-        public Sorted(Comparer<T> cmp, IEnumerator<T> src) : this(cmp, new CollectionOf<T>(src))
+        public Sorted(Comparer<T> cmp, IEnumerator<T> src) : this(cmp, new Collection.Live<T>(src))
         { }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="cmp">the comparer</param>
         /// <param name="src">the source enumerable</param>
-        public Sorted(Comparer<T> cmp, IEnumerable<T> src) : this(cmp, new CollectionOf<T>(src))
+        public Sorted(Comparer<T> cmp, IEnumerable<T> src) : this(cmp, new Collection.Live<T>(src))
         { }
 
         /// <summary>
@@ -81,8 +81,11 @@ namespace Yaapii.Atoms.Collection
         /// <param name="src">the source collection</param>
         public Sorted(Comparer<T> cmp, ICollection<T> src) : base(
             () =>
-                new CollectionOf<T>(
-                    new Enumerator.Sorted<T>(cmp, src.GetEnumerator())))
+                new Collection.Live<T>(
+                    new Enumerator.Sorted<T>(cmp, src.GetEnumerator())
+                ),
+            false
+        )
         { }
     }
 }

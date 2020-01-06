@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Collection
     /// </summary>
     /// <typeparam name="In">source type</typeparam>
     /// <typeparam name="Out">target type</typeparam>
-    public sealed class Mapped<In, Out> : CollectionEnvelope<Out>
+    public sealed class Mapped<In, Out> : Collection.Envelope<Out>
     {
         /// <summary>
         /// ctor
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source enumerable</param>
         public Mapped(Func<In, Out> fnc, IEnumerable<In> src) : this(
-            fnc, new CollectionOf<In>(src))
+            fnc, new Collection.Live<In>(src))
         { }
 
         /// <summary>
@@ -65,9 +65,11 @@ namespace Yaapii.Atoms.Collection
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source collection</param>
         public Mapped(Func<In, Out> fnc, ICollection<In> src) : base(
-            () => new CollectionOf<Out>(
+            () => new Collection.Live<Out>(
                 new Enumerable.Mapped<In, Out>(fnc, src)
-            ))
+            ),
+            false
+        )
         { }
     }
 }

@@ -39,13 +39,13 @@ namespace Yaapii.Atoms.Collection.Tests
         [Fact]
         public void FiltersList()
         {
-            Assert.True(
+            Assert.Equal(
+                2,
                 new LengthOf(
                     new Filtered<string>(
                         input => input.Length > 4,
                         new Many.Of<string>("hello", "world", "друг"))
-                ).Value() == 2,
-                "cannot filter list"
+                ).Value()
             );
         }
 
@@ -63,11 +63,12 @@ namespace Yaapii.Atoms.Collection.Tests
         [Fact]
         public void Size()
         {
-            Assert.True(
+            Assert.Equal(
+                2,
                 new Filtered<string>(
                     input => input.Length >= 4,
                     new Many.Of<string>("some", "text", "yes")
-                ).Count == 2
+                ).Count
             );
         }
 

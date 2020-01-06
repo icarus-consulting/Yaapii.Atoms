@@ -33,10 +33,12 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             var arr = new ArrayList() { "A", "B", "C" };
 
-            Assert.True(
+            Assert.Equal(
+                "A",
                 new ItemAt<object>(
                     new ArrayListAsCollection(arr)
-                ).Value().ToString() == "A");
+                ).Value().ToString()
+            );
         }
     }
 }

@@ -25,41 +25,46 @@ using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Collection
 {
-    /// <summary>
-    /// Envelope for collections. 
-    /// It accepts a scalar and makes readonly Collection from it.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public sealed class CollectionOf<T> : CollectionEnvelope<T>
+    public partial class Collection
     {
         /// <summary>
-        /// Makes a collection from an array
+        /// Envelope for collections. 
+        /// It accepts a scalar and makes readonly Collection from it.
         /// </summary>
-        /// <param name="array"></param>
-        public CollectionOf(params T[] array) : this(new Many.Live<T>(array))
-        { }
+        /// <typeparam name="T"></typeparam>
+        public sealed class Of<T> : Envelope<T>
+        {
+            /// <summary>
+            /// Makes a collection from an array
+            /// </summary>
+            /// <param name="array"></param>
+            public Of(params T[] array) : this(new Many.Live<T>(array))
+            { }
 
-        /// <summary>
-        /// Makes a collection from an <see cref="IEnumerator{T}"/>
-        /// </summary>
-        /// <param name="src"></param>
-        public CollectionOf(IEnumerator<T> src) : this(new Many.Of<T>(src))
-        { }
+            /// <summary>
+            /// Makes a collection from an <see cref="IEnumerator{T}"/>
+            /// </summary>
+            /// <param name="src"></param>
+            public Of(IEnumerator<T> src) : this(new Many.Of<T>(src))
+            { }
 
-        /// <summary>
-        /// Makes a collection from an <see cref="IEnumerable{T}"/>
-        /// </summary>
-        /// <param name="src"></param>
-        public CollectionOf(IEnumerable<T> src) : base(
-            () =>
-            {
-                ICollection<T> list = new LinkedList<T>();
-                foreach (T item in src)
+            /// <summary>
+            /// Makes a collection from an <see cref="IEnumerable{T}"/>
+            /// </summary>
+            /// <param name="src"></param>
+            public Of(IEnumerable<T> src) : base(
+                () =>
                 {
-                    list.Add(item);
-                }
-                return list;
-            })
-        { }
+                    ICollection<T> list = new LinkedList<T>();
+                    foreach (T item in src)
+                    {
+                        list.Add(item);
+                    }
+                    return list;
+                },
+                false
+            )
+            { }
+        }
     }
 }
