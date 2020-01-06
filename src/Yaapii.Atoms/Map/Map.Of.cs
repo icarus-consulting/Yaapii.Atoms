@@ -237,6 +237,7 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given key value pairs.
             /// </summary>
             /// <param name="entries">enumerable of kvps</param>
+            /// <param name="entry">A single entry</param>
             public Of(IKvp<Value> entry, params IKvp<Value>[] entries) : this(
                 new Many.Live<IMapInput<Value>>(
                     new MapInput.Of<Value>(entry),

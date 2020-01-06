@@ -103,6 +103,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
+        /// <param name="condition">condition to match in order to find the desired item</param>
         public FirstOf(Func<T, bool> condition, IEnumerable<T> source, T fallback) : this(
             condition,
             source,
