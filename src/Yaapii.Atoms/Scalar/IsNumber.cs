@@ -24,14 +24,14 @@ using System;
 using System.Globalization;
 using Yaapii.Atoms.Texts;
 
-namespace Yaapii.Atoms.Number
+namespace Yaapii.Atoms.Scalar
 {
     /// <summary>
     /// Checks whether a given text is a number
     /// </summary>
     public sealed class IsNumber : IScalar<bool>
     {
-        private readonly IText text;
+        private readonly Sticky<bool> result;
         private readonly IFormatProvider provider;
 
         /// <summary>
@@ -72,8 +72,15 @@ namespace Yaapii.Atoms.Number
         /// <param name="provider">number format provider</param>
         public IsNumber(IText text, IFormatProvider provider)
         {
-            this.text = text;
-            this.provider = provider;
+            this.result =
+                new Sticky<bool>(() =>
+                    double.TryParse(
+                        text.AsString(),
+                        NumberStyles.Any,
+                        provider,
+                        out var unused
+                    )
+                );
         }
 
         /// <summary>
@@ -82,12 +89,7 @@ namespace Yaapii.Atoms.Number
         /// <returns>the result</returns>
         public bool Value()
         {
-            return double.TryParse(
-                this.text.AsString(), 
-                NumberStyles.Any, 
-                this.provider, 
-                out var unused
-            );
+            return this.result.Value();
         }
     }
 }
