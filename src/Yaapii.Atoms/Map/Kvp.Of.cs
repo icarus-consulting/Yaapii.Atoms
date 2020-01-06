@@ -42,8 +42,7 @@ namespace Yaapii.Atoms.Lookup
             /// Key-value pair matching a string to specified type value.
             /// </summary>
             public Of(string key, string value) : this(
-                new TextOf(key),
-                value
+                () => new KeyValuePair<string, Func<string>>(key, () => value)
             )
             { }
 
@@ -114,8 +113,7 @@ namespace Yaapii.Atoms.Lookup
             /// Key-value pair matching a string to specified type value.
             /// </summary>
             public Of(string key, TValue value) : this(
-                new TextOf(key),
-                value
+                key, () => value
             )
             { }
 
