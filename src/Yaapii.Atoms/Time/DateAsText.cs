@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Time
     /// </summary>
     public sealed class DateAsText : IText
     {
-        private readonly IScalar<string> formatted;
+        private readonly Sticky<string> formatted;
 
         /// <summary>
         /// Current Datetime as ISO
@@ -96,7 +96,8 @@ namespace Yaapii.Atoms.Time
         {
             this.formatted =
                 new Sticky<string>(
-                    () => date.Value().ToString(format.AsString(), provider));
+                    () => date.Value().ToString(format.AsString(), provider)
+                );
         }
 
         /// <summary>
