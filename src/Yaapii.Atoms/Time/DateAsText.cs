@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Time
         /// </summary>
         /// <param name="date">a date</param>
         /// <param name="format">a format pattern</param>
-        public DateAsText(IScalar<DateTime> date, string format) : this(date, new TextOf(format), CultureInfo.CurrentCulture)
+        public DateAsText(IScalar<DateTime> date, string format) : this(date, new Text.Live(format), CultureInfo.CurrentCulture)
         { }
 
         /// <summary>

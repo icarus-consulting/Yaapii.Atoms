@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Lists
             /// ctor
             /// </summary>
             /// <param name="src">source enumerator</param>
-            public Live(IEnumerator<T> src) : this(new Many.Of<T>(() => src))
+            public Live(IEnumerator<T> src) : this(new Many.Live<T>(() => src))
             { }
 
             /// <summary>
@@ -52,16 +52,7 @@ namespace Yaapii.Atoms.Lists
             /// </summary>
             /// <param name="src">source enumerable</param>
             public Live(IEnumerable<T> src) : base(
-                () =>
-                {
-                    var temp = new List<T>();
-                    foreach (T item in src)
-                    {
-                        temp.Add(item);
-                    }
-
-                    return temp;
-                },
+                () => new List<T>(src),
                 true
             )
             { }

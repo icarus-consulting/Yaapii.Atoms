@@ -39,33 +39,32 @@ namespace Yaapii.Atoms.Lists
         public abstract class Envelope<T> : IList<T>
         {
             private readonly UnsupportedOperationException readOnlyError = new UnsupportedOperationException("The list is readonly.");
-
-            private readonly IScalar<IList<T>> origin;
+            private readonly Func<IList<T>> origin;
             private readonly Sticky<IList<T>> fixedOrigin;
             private readonly bool live;
 
             /// <summary>
             /// ctor
             /// </summary>
-            /// <param name="fnc">Function delivering a <see cref="IList{T}"/></param>
+            /// <param name="lst">A scalar to a <see cref="IList{T}"/></param>
             /// <param name="live">value is handled live or sticky</param>
-            public Envelope(Func<IList<T>> fnc, bool live) : this(new ScalarOf<IList<T>>(fnc), live)
+            public Envelope(IScalar<IList<T>> lst, bool live) : this(() => lst.Value(), live)
             { }
 
             /// <summary>
             /// ctor
             /// </summary>
-            /// <param name="sc"></param>
+            /// <param name="lst">List generator</param>
             /// <param name="live">value is handled live or sticky</param>
-            public Envelope(IScalar<IList<T>> sc, bool live)
+            public Envelope(Func<IList<T>> lst, bool live)
             {
-                this.origin = sc;
+                this.origin = lst;
                 this.live = live;
                 this.fixedOrigin = new Sticky<IList<T>>(
                     () =>
                     {
                         var temp = new List<T>();
-                        foreach (var item in sc.Value())
+                        foreach (var item in lst())
                         {
                             temp.Add(item);
                         }
@@ -197,7 +196,7 @@ namespace Yaapii.Atoms.Lists
                 IList<T> result;
                 if (this.live)
                 {
-                    result = this.origin.Value();
+                    result = this.origin();
                 }
                 else
                 {

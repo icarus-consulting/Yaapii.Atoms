@@ -21,10 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
@@ -35,24 +33,28 @@ namespace Yaapii.Atoms.IO.Tests
         public void CalculatesLength()
         {
             String text = "What's up, друг?";
-            Assert.True(
+            Assert.Equal(
                 new LengthOf(
                     new SlowInput(
                         new InputOf(
-                            new Text.Live(text)))
-                ).Value() == Encoding.UTF8.GetBytes(text).Length,
-                "Can't calculate the length of Input");
+                            new Text.Live(text)
+                        )
+                    )
+                ).Value(),
+                Encoding.UTF8.GetBytes(text).Length
+            );
         }
 
         [Fact]
         public void ReadsFileContentSlowly()
         {
             long size = 100_000L;
-            Assert.True(
+            Assert.Equal(
+                size,
                 new LengthOf(
                     new SlowInput(size)
-                ).Value() == size,
-            "Can't calculate length if the input is slow");
+                ).Value()
+            );
         }
 
     }

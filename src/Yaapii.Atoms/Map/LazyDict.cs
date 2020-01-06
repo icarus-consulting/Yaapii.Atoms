@@ -36,7 +36,6 @@ namespace Yaapii.Atoms.Lookup
     /// </summary>
     public sealed class LazyDict : IDictionary<string, string>
     {
-        private readonly Sticky<IEnumerable<IKvp>> kvps;
         private readonly Sticky<IDictionary<string, Sticky<string>>> map;
         private readonly UnsupportedOperationException rejectReadException = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
 
@@ -230,7 +229,6 @@ namespace Yaapii.Atoms.Lookup
     /// </summary>
     public sealed class LazyDict<Value> : IDictionary<string, Value>
     {
-        private readonly Sticky<IEnumerable<IKvp<Value>>> kvps;
         private readonly Sticky<IDictionary<string, Sticky<Value>>> map;
         private readonly UnsupportedOperationException rejectReadException = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
 

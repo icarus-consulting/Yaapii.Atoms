@@ -37,14 +37,20 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void LimitsContent()
         {
             Assert.True(
-                new Joined(", ",
-                new Many.Of<IText>(
-                    new Mapped<int, IText>(
-                        new HeadOf<int>(
-                            new Many.Of<int>(1, 2, 3, 4).GetEnumerator(),
-                            2), 
-                        str => new Text.Of(str + "")))).AsString() == "1, 2",
-            "cannot limit enumertor contents");
+                new Joined(
+                    ", ",
+                    new Many.Of<IText>(
+                        new Mapped<int, IText>(
+                            new HeadOf<int>(
+                                new Many.Of<int>(1, 2, 3, 4).GetEnumerator(),
+                                2
+                            ), 
+                            str => new Text.Of(str + "")
+                        )
+                    )
+                ).AsString() == "1, 2",
+                "cannot limit enumertor contents"
+            );
                 
         }
     }

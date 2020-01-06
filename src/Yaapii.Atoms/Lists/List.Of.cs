@@ -59,7 +59,6 @@ namespace Yaapii.Atoms.Lists
                     {
                         temp.Add(item);
                     }
-
                     return temp;
                 },
                 false

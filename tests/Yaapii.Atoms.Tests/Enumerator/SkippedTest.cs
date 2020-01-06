@@ -43,7 +43,10 @@ namespace Yaapii.Atoms.Enumerator.Tests
                             new Many.Of<string>(
                                 "one", "two", "three", "four"
                             ).GetEnumerator(),
-                        2)));
+                            2
+                        )
+                    )
+                );
 
             Assert.True(new LengthOf(skipped.GetEnumerator()).Value() == 2, "cannot skip elements");
             Assert.False(skipped.Contains("one"), "cannot skip elements");
@@ -62,7 +65,8 @@ namespace Yaapii.Atoms.Enumerator.Tests
                     ).GetEnumerator(),
                     2
                 ).MoveNext(),
-                "enumerates more elements than exist");
+                "enumerates more elements than exist"
+            );
         }
     }
 }

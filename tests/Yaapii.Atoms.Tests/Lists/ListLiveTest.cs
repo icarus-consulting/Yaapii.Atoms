@@ -28,7 +28,7 @@ using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Lists.Tests
 {
-    public sealed class LiveTest
+    public sealed class ListLiveTest
     {
         [Fact]
         public void BehavesAsList()
@@ -51,13 +51,12 @@ namespace Yaapii.Atoms.Lists.Tests
         }
 
         [Fact]
-        public void EmptyTest()
+        public void KnowsIfEmpty()
         {
-            Assert.Equal(
-                0,
+            Assert.Empty(
                 new List.Live<int>(
                     new List<int>()
-                ).Count
+                )
             );
         }
 
