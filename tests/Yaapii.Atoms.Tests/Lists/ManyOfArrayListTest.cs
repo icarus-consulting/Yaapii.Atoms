@@ -20,34 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using System.Collections;
-using System.Collections.Concurrent;
-using Yaapii.Atoms.Scalar;
+using Xunit;
+using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Enumerable
+namespace Yaapii.Atoms.Lists.Tests
 {
-    /// <summary>
-    /// A <see cref="ArrayList"/> converted to IEnumerable&lt;object&gt;
-    /// </summary>
-    [Obsolete("This class is obsolete and will be removed in future versions. Use Many.OfArrayList")]
-    public sealed class ArrayListAsEnumerable : Many.Envelope<object>
+    public class ManyOfArrayListTest
     {
-        /// <summary>
-        /// A ArrayList converted to IEnumerable&lt;object&gt;
-        /// </summary>
-        /// <param name="src">source ArrayList</param>
-        public ArrayListAsEnumerable(ArrayList src) : base(() =>
-            {
-                var blocking = new BlockingCollection<object>();
-                foreach (var lst in src)
-                {
-                    new Each<object>(item => blocking.Add(item), lst).Invoke();
-                }
+        [Fact]
+        public void BuildsFromStrings()
+        {
+            var arr = new ArrayList() { "A", "B", "C" };
 
-                return blocking;
-            }
-        )
-        { }
+            Assert.Equal("A",
+                new ItemAt<object>(
+                    new Many.OfArrayList(arr)
+                ).Value().ToString()
+            );
+        }
     }
 }

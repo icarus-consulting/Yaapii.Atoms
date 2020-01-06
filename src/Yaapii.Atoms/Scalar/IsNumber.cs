@@ -32,7 +32,6 @@ namespace Yaapii.Atoms.Scalar
     public sealed class IsNumber : IScalar<bool>
     {
         private readonly Sticky<bool> result;
-        private readonly IFormatProvider provider;
 
         /// <summary>
         /// Checks whether the given text is a number
