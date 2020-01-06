@@ -20,8 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System.Threading;
 using Xunit;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Fail;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Collection.Tests
 {
@@ -30,26 +33,73 @@ namespace Yaapii.Atoms.Collection.Tests
         [Fact]
         public void BehavesAsCollection()
         {
-            var col = new CollectionOf<int>(1, 2, 0, -1);
-
-            Assert.True(col.Contains(1) && col.Contains(2) && col.Contains(0) && col.Contains(-1));
+            Assert.Contains(
+                -1,
+                new Collection.Of<int>(
+                    new Many.Of<int>(1, 2, 0, -1)));
         }
 
         [Fact]
-        public void BuildsCollection()
+        public void IgnoresChangesInIterable()
         {
-            Assert.True(
-                new CollectionOf<int>(1, 2, 0, -1).Contains(-1),
-                "cannot build a collection");
+            int size = 2;
+            var list =
+                new Collection.Of<int>(
+                    new Enumerable.Repeated<int>(
+                        new ScalarOf<int>(() => 0),
+                        new ScalarOf<int>(() =>
+                        {
+                            Interlocked.Increment(ref size);
+                            return size;
+                        })
+                    ));
+
         }
 
         [Fact]
-        public void BuildsCollectionFromIterator()
+        public void DecoratesArray()
         {
-            Assert.True(
-                new CollectionOf<int>(
-                    new ListOf<int>(1, 2, 0, -1).GetEnumerator()).Contains(-1),
-            "cannot build collection from enumerator");
+            Assert.Equal(
+                2,
+                new Collection.Of<int>(-1, 0).Count);
+        }
+
+        [Fact]
+        public void Empty()
+        {
+            Assert.Empty(
+                new Collection.Of<int>());
+        }
+
+        [Fact]
+        public void Contains()
+        {
+            Assert.Contains(
+                2,
+                new Collection.Of<int>(1, 2)
+            );
+        }
+
+        [Fact]
+        public void RejectsAdd()
+        {
+            Assert.Throws<UnsupportedOperationException>(() =>
+                new Collection.Of<int>(1, 2).Add(1));
+        }
+
+        [Fact]
+        public void RejectsRemove()
+        {
+            Assert.Throws<UnsupportedOperationException>(() =>
+                new Collection.Of<int>(1, 2).Remove(1));
+        }
+
+
+        [Fact]
+        public void RejectsClear()
+        {
+            Assert.Throws<UnsupportedOperationException>(() =>
+                new Collection.Of<int>(1, 2).Clear());
         }
 
     }

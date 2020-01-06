@@ -25,7 +25,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
+using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Lookup
@@ -35,8 +36,7 @@ namespace Yaapii.Atoms.Lookup
     /// </summary>
     public sealed class LazyDict : IDictionary<string, string>
     {
-        private readonly Lazy<IEnumerable<IKvp>> kvps;
-        private readonly Lazy<IDictionary<string, Lazy<string>>> map;
+        private readonly Sticky<IDictionary<string, Sticky<string>>> map;
         private readonly UnsupportedOperationException rejectReadException = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
 
         /// <summary>
@@ -51,12 +51,12 @@ namespace Yaapii.Atoms.Lookup
         public LazyDict(IEnumerable<IKvp> kvps)
         {
             this.map =
-                new Lazy<IDictionary<string, Lazy<string>>>(() =>
+                new Sticky<IDictionary<string, Sticky<string>>>(() =>
                 {
-                    var dict = new Dictionary<string, Lazy<string>>();
+                    var dict = new Dictionary<string, Sticky<string>>();
                     foreach (var kvp in kvps)
                     {
-                        dict[kvp.Key()] = new Lazy<string>(() => kvp.Value());
+                        dict[kvp.Key()] = new Sticky<string>(() => kvp.Value());
                     }
                     return dict;
                 });
@@ -67,21 +67,21 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public string this[string key] { get { return map.Value[key].Value; } set { throw this.rejectReadException; } }
+        public string this[string key] { get { return map.Value()[key].Value(); } set { throw this.rejectReadException; } }
 
         /// <summary>
         /// Access all keys
         /// </summary>
-        public ICollection<string> Keys => map.Value.Keys;
+        public ICollection<string> Keys => map.Value().Keys;
 
         /// <summary>
         /// Access all values
         /// </summary>
         public ICollection<string> Values =>
-            new ListOf<string>(
-                new Enumerable.Mapped<Lazy<string>, string>(
-                    v => v.Value,
-                    map.Value.Values
+            new List.Live<string>(
+                new Enumerable.Mapped<Sticky<string>, string>(
+                    v => v.Value(),
+                    map.Value().Values
                 )
             );
 
@@ -89,7 +89,7 @@ namespace Yaapii.Atoms.Lookup
         /// <summary>
         /// Count entries
         /// </summary>
-        public int Count => map.Value.Count;
+        public int Count => map.Value().Count;
 
         /// <summary>
         /// Yes its readonly
@@ -130,7 +130,7 @@ namespace Yaapii.Atoms.Lookup
         /// <returns>true if it contains</returns>
         public bool Contains(KeyValuePair<string, string> item)
         {
-            return this.map.Value.ContainsKey(item.Key) && this.map.Value[item.Key].Value.Equals(item.Value);
+            return this.map.Value().ContainsKey(item.Key) && this.map.Value()[item.Key].Value().Equals(item.Value);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Yaapii.Atoms.Lookup
         /// <returns></returns>
         public bool ContainsKey(string key)
         {
-            return this.map.Value.ContainsKey(key);
+            return this.map.Value().ContainsKey(key);
         }
 
         /// <summary>
@@ -150,18 +150,18 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="arrayIndex">index to start</param>
         public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)
         {
-            if (arrayIndex > this.map.Value.Count)
+            if (arrayIndex > this.map.Value().Count)
             {
                 throw
                     new ArgumentOutOfRangeException(
                         new Formatted(
                             "arrayIndex {0} is higher than the item count in the map {1}.",
                             arrayIndex,
-                            this.map.Value.Count
+                            this.map.Value().Count
                         ).AsString());
             }
 
-            new ListOf<KeyValuePair<string, string>>(this).CopyTo(array, arrayIndex);
+            new List.Live<KeyValuePair<string, string>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -171,9 +171,9 @@ namespace Yaapii.Atoms.Lookup
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
         {
             return
-                new Enumerable.Mapped<KeyValuePair<string, Lazy<string>>, KeyValuePair<string, string>>(
-                    kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.Value),
-                    this.map.Value
+                new Enumerable.Mapped<KeyValuePair<string, Sticky<string>>, KeyValuePair<string, string>>(
+                    kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.Value()),
+                    this.map.Value()
                 ).GetEnumerator();
         }
 
@@ -205,10 +205,10 @@ namespace Yaapii.Atoms.Lookup
         /// <returns>true if success</returns>
         public bool TryGetValue(string key, out string value)
         {
-            var result = this.map.Value.ContainsKey(key);
+            var result = this.map.Value().ContainsKey(key);
             if (result)
             {
-                value = this.map.Value[key].Value;
+                value = this.map.Value()[key].Value();
                 result = true;
             }
             else
@@ -229,8 +229,7 @@ namespace Yaapii.Atoms.Lookup
     /// </summary>
     public sealed class LazyDict<Value> : IDictionary<string, Value>
     {
-        private readonly Lazy<IEnumerable<IKvp<Value>>> kvps;
-        private readonly Lazy<IDictionary<string, Lazy<Value>>> map;
+        private readonly Sticky<IDictionary<string, Sticky<Value>>> map;
         private readonly UnsupportedOperationException rejectReadException = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
 
         /// <summary>
@@ -245,12 +244,12 @@ namespace Yaapii.Atoms.Lookup
         public LazyDict(IEnumerable<IKvp<Value>> kvps)
         {
             this.map =
-                new Lazy<IDictionary<string, Lazy<Value>>>(() =>
+                new Sticky<IDictionary<string, Sticky<Value>>>(() =>
                 {
-                    var dict = new Dictionary<string, Lazy<Value>>();
+                    var dict = new Dictionary<string, Sticky<Value>>();
                     foreach (var kvp in kvps)
                     {
-                        dict[kvp.Key()] = new Lazy<Value>(() => kvp.Value());
+                        dict[kvp.Key()] = new Sticky<Value>(() => kvp.Value());
                     }
                     return dict;
                 });
@@ -261,21 +260,21 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public Value this[string key] { get { return map.Value[key].Value; } set { throw this.rejectReadException; } }
+        public Value this[string key] { get { return map.Value()[key].Value(); } set { throw this.rejectReadException; } }
 
         /// <summary>
         /// Access all keys
         /// </summary>
-        public ICollection<string> Keys => map.Value.Keys;
+        public ICollection<string> Keys => map.Value().Keys;
 
         /// <summary>
         /// Access all values
         /// </summary>
         public ICollection<Value> Values =>
-            new ListOf<Value>(
-                new Enumerable.Mapped<Lazy<Value>, Value>(
-                    v => v.Value,
-                    map.Value.Values
+            new List.Of<Value>(
+                new Enumerable.Mapped<Sticky<Value>, Value>(
+                    v => v.Value(),
+                    map.Value().Values
                 )
             );
 
@@ -283,7 +282,7 @@ namespace Yaapii.Atoms.Lookup
         /// <summary>
         /// Count entries
         /// </summary>
-        public int Count => map.Value.Count;
+        public int Count => map.Value().Count;
 
         /// <summary>
         /// Yes its readonly
@@ -324,7 +323,7 @@ namespace Yaapii.Atoms.Lookup
         /// <returns>true if it contains</returns>
         public bool Contains(KeyValuePair<string, Value> item)
         {
-            return this.map.Value.ContainsKey(item.Key) && this.map.Value[item.Key].Value.Equals(item.Value);
+            return this.map.Value().ContainsKey(item.Key) && this.map.Value()[item.Key].Value().Equals(item.Value);
         }
 
         /// <summary>
@@ -334,7 +333,7 @@ namespace Yaapii.Atoms.Lookup
         /// <returns></returns>
         public bool ContainsKey(string key)
         {
-            return this.map.Value.ContainsKey(key);
+            return this.map.Value().ContainsKey(key);
         }
 
         /// <summary>
@@ -344,18 +343,18 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="arrayIndex">index to start</param>
         public void CopyTo(KeyValuePair<string, Value>[] array, int arrayIndex)
         {
-            if (arrayIndex > this.map.Value.Count)
+            if (arrayIndex > this.map.Value().Count)
             {
                 throw
                     new ArgumentOutOfRangeException(
                         new Formatted(
                             "arrayIndex {0} is higher than the item count in the map {1}.",
                             arrayIndex,
-                            this.map.Value.Count
+                            this.map.Value().Count
                         ).AsString());
             }
 
-            new ListOf<KeyValuePair<string, Value>>(this).CopyTo(array, arrayIndex);
+            new List.Live<KeyValuePair<string, Value>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -365,9 +364,9 @@ namespace Yaapii.Atoms.Lookup
         public IEnumerator<KeyValuePair<string, Value>> GetEnumerator()
         {
             return
-                new Enumerable.Mapped<KeyValuePair<string, Lazy<Value>>, KeyValuePair<string, Value>>(
-                    kvp => new KeyValuePair<string, Value>(kvp.Key, kvp.Value.Value),
-                    this.map.Value
+                new Enumerable.Mapped<KeyValuePair<string, Sticky<Value>>, KeyValuePair<string, Value>>(
+                    kvp => new KeyValuePair<string, Value>(kvp.Key, kvp.Value.Value()),
+                    this.map.Value()
                 ).GetEnumerator();
         }
 
@@ -399,10 +398,10 @@ namespace Yaapii.Atoms.Lookup
         /// <returns>true if success</returns>
         public bool TryGetValue(string key, out Value value)
         {
-            var result = this.map.Value.ContainsKey(key);
+            var result = this.map.Value().ContainsKey(key);
             if (result)
             {
-                value = this.map.Value[key].Value;
+                value = this.map.Value()[key].Value();
                 result = true;
             }
             else
@@ -423,7 +422,7 @@ namespace Yaapii.Atoms.Lookup
     /// </summary>
     public sealed class LazyDict<Key, Value> : IDictionary<Key, Value>
     {
-        private readonly Lazy<IDictionary<Key, Lazy<Value>>> map;
+        private readonly Sticky<IDictionary<Key, Sticky<Value>>> map;
         private readonly UnsupportedOperationException rejectReadException = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
 
         /// <summary>
@@ -438,12 +437,12 @@ namespace Yaapii.Atoms.Lookup
         public LazyDict(IEnumerable<IKvp<Key, Value>> kvps)
         {
             this.map =
-                new Lazy<IDictionary<Key, Lazy<Value>>>(() =>
+                new Sticky<IDictionary<Key, Sticky<Value>>>(() =>
                 {
-                    var dict = new Dictionary<Key, Lazy<Value>>();
+                    var dict = new Dictionary<Key, Sticky<Value>>();
                     foreach (var kvp in kvps)
                     {
-                        dict[kvp.Key()] = new Lazy<Value>(() => kvp.Value());
+                        dict[kvp.Key()] = new Sticky<Value>(() => kvp.Value());
                     }
                     return dict;
                 });
@@ -454,21 +453,21 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public Value this[Key key] { get { return map.Value[key].Value; } set { throw this.rejectReadException; } }
+        public Value this[Key key] { get { return map.Value()[key].Value(); } set { throw this.rejectReadException; } }
 
         /// <summary>
         /// Access all keys
         /// </summary>
-        public ICollection<Key> Keys => map.Value.Keys;
+        public ICollection<Key> Keys => map.Value().Keys;
 
         /// <summary>
         /// Access all values
         /// </summary>
         public ICollection<Value> Values =>
-            new ListOf<Value>(
-                new Enumerable.Mapped<Lazy<Value>, Value>(
-                    v => v.Value,
-                    map.Value.Values
+            new List.Of<Value>(
+                new Enumerable.Mapped<Sticky<Value>, Value>(
+                    v => v.Value(),
+                    map.Value().Values
                 )
             );
 
@@ -476,7 +475,7 @@ namespace Yaapii.Atoms.Lookup
         /// <summary>
         /// Count entries
         /// </summary>
-        public int Count => map.Value.Count;
+        public int Count => map.Value().Count;
 
         /// <summary>
         /// Yes its readonly
@@ -517,7 +516,7 @@ namespace Yaapii.Atoms.Lookup
         /// <returns>true if it contains</returns>
         public bool Contains(KeyValuePair<Key, Value> item)
         {
-            return this.map.Value.ContainsKey(item.Key) && this.map.Value[item.Key].Value.Equals(item.Value);
+            return this.map.Value().ContainsKey(item.Key) && this.map.Value()[item.Key].Value().Equals(item.Value);
         }
 
         /// <summary>
@@ -527,7 +526,7 @@ namespace Yaapii.Atoms.Lookup
         /// <returns></returns>
         public bool ContainsKey(Key key)
         {
-            return this.map.Value.ContainsKey(key);
+            return this.map.Value().ContainsKey(key);
         }
 
         /// <summary>
@@ -537,18 +536,18 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="arrayIndex">index to start</param>
         public void CopyTo(KeyValuePair<Key, Value>[] array, int arrayIndex)
         {
-            if (arrayIndex > this.map.Value.Count)
+            if (arrayIndex > this.map.Value().Count)
             {
                 throw
                     new ArgumentOutOfRangeException(
                         new Formatted(
                             "arrayIndex {0} is higher than the item count in the map {1}.",
                             arrayIndex,
-                            this.map.Value.Count
+                            this.map.Value().Count
                         ).AsString());
             }
 
-            new ListOf<KeyValuePair<Key, Value>>(this).CopyTo(array, arrayIndex);
+            new List.Live<KeyValuePair<Key, Value>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -558,9 +557,9 @@ namespace Yaapii.Atoms.Lookup
         public IEnumerator<KeyValuePair<Key, Value>> GetEnumerator()
         {
             return
-                new Enumerable.Mapped<KeyValuePair<Key, Lazy<Value>>, KeyValuePair<Key, Value>>(
-                    kvp => new KeyValuePair<Key, Value>(kvp.Key, kvp.Value.Value),
-                    this.map.Value
+                new Enumerable.Mapped<KeyValuePair<Key, Sticky<Value>>, KeyValuePair<Key, Value>>(
+                    kvp => new KeyValuePair<Key, Value>(kvp.Key, kvp.Value.Value()),
+                    this.map.Value()
                 ).GetEnumerator();
         }
 
@@ -592,10 +591,10 @@ namespace Yaapii.Atoms.Lookup
         /// <returns>true if success</returns>
         public bool TryGetValue(Key key, out Value value)
         {
-            var result = this.map.Value.ContainsKey(key);
+            var result = this.map.Value().ContainsKey(key);
             if (result)
             {
-                value = this.map.Value[key].Value;
+                value = this.map.Value()[key].Value();
                 result = true;
             }
             else

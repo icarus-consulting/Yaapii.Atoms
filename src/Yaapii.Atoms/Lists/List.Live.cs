@@ -20,39 +20,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using Xunit;
-using Yaapii.Atoms.List;
+using System.Collections.Generic;
+using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Collection.Tests
+namespace Yaapii.Atoms.Lists
 {
-    public sealed class LiveTest
+    public partial class List
     {
-        [Fact]
-        public void BehavesAsCollection()
+        /// <summary>
+        /// Makes a readonly list.
+        /// </summary>
+        /// <typeparam name="T">type of items</typeparam>
+        public sealed class Live<T> : Envelope<T>
         {
-            var col = new Collection.Live<int>(1, 2, 0, -1);
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="array">source array</param>
+            public Live(params T[] array) : this(new Many.Live<T>(array))
+            { }
 
-            Assert.True(col.Contains(1) && col.Contains(2) && col.Contains(0) && col.Contains(-1));
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="src">source enumerator</param>
+            public Live(IEnumerator<T> src) : this(new Many.Live<T>(() => src))
+            { }
+
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="src">source enumerable</param>
+            public Live(IEnumerable<T> src) : base(
+                () => new List<T>(src),
+                true
+            )
+            { }
         }
-
-        [Fact]
-        public void BuildsCollection()
-        {
-            Assert.Contains(
-                -1,
-                new Collection.Live<int>(1, 2, 0, -1)
-            );
-        }
-
-        [Fact]
-        public void BuildsCollectionFromIterator()
-        {
-            Assert.Contains(
-                -1,
-                new Collection.Live<int>(
-                    new ListOf<int>(1, 2, 0, -1).GetEnumerator())
-            );
-        }
-
     }
 }

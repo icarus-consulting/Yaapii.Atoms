@@ -20,34 +20,49 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
-using Yaapii.Atoms.Scalar;
+using System.Collections.Generic;
+using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Enumerable
+namespace Yaapii.Atoms.Lists
 {
     /// <summary>
-    /// A <see cref="ArrayList"/> converted to IEnumerable&lt;object&gt;
+    /// A list that is both sticky and threadsafe.
     /// </summary>
-    [Obsolete("This class is obsolete and will be removed in future versions. Use Many.OfArrayList")]
-    public sealed class ArrayListAsEnumerable : Many.Envelope<object>
+    /// <typeparam name="T"></typeparam>
+    public sealed class SolidList<T> : List.Envelope<T>
     {
         /// <summary>
-        /// A ArrayList converted to IEnumerable&lt;object&gt;
+        /// ctor
         /// </summary>
-        /// <param name="src">source ArrayList</param>
-        public ArrayListAsEnumerable(ArrayList src) : base(() =>
-            {
-                var blocking = new BlockingCollection<object>();
-                foreach (var lst in src)
-                {
-                    new Each<object>(item => blocking.Add(item), lst).Invoke();
-                }
+        /// <param name="items">items to decorate</param>
+        public SolidList(params T[] items) : this(new Many.Of<T>(items))
+        { }
 
-                return blocking;
-            }
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="items">items to decorate</param>
+        public SolidList(IEnumerable<T> items) : this(new List.Live<T>(items))
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="items">items to decorate</param>
+        public SolidList(IEnumerator<T> items) : this(new List.Live<T>(items))
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="list">list to decorate</param>
+        public SolidList(ICollection<T> list) : base(
+            () => new SyncList<T>(
+                new List.Live<T>(list)
+            ),
+            false
         )
         { }
+
     }
 }

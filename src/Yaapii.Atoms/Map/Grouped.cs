@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
 
 namespace Yaapii.Atoms.Lookup
 {
@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
         public Grouped(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : this(
-            new ListOf<T>(src),
+            new List.Live<T>(src),
             key,
             value
         )
@@ -61,7 +61,8 @@ namespace Yaapii.Atoms.Lookup
                     temp[key.Invoke(entry)] = new Mapped<T, Value>(value, src);
                 }
                 return temp;
-            }
+            },
+            false
         )
         { }
     }

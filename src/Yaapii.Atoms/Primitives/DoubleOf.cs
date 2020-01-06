@@ -21,11 +21,9 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Texts
 {
@@ -34,13 +32,13 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class DoubleOf : IScalar<Double>
     {
-        private readonly IScalar<Double> _val;
+        private readonly Sticky<Double> val;
 
         /// <summary>
         /// A double out of <see cref="string"/>.
         /// </summary>
         /// <param name="str">a double as a string</param>
-        public DoubleOf(String str) : this(new TextOf(str))
+        public DoubleOf(String str) : this(new Text.Of(str))
         { }
 
         /// <summary>
@@ -55,7 +53,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="str">a double as a string</param>
         /// <param name="culture">culture of the given string</param>
-        public DoubleOf(String str, CultureInfo culture) : this(new TextOf(str), culture)
+        public DoubleOf(String str, CultureInfo culture) : this(new Text.Of(str), culture)
         { }
 
         /// <summary>
@@ -72,7 +70,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="value">a scalar of the double to sum</param>
         public DoubleOf(IScalar<Double> value)
         {
-            _val = value;
+            val = new Sticky<Double>(value);
         }
 
         /// <summary>
@@ -81,7 +79,7 @@ namespace Yaapii.Atoms.Texts
         /// <returns>value as double</returns>
         public Double Value()
         {
-            return _val.Value();
+            return val.Value();
         }
     }
 }

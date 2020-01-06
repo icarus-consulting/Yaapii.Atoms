@@ -20,47 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.Collections.Generic;
+using System.Collections;
+using Xunit;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists.Tests
 {
-    /// <summary>
-    /// A list that is both sticky and threadsafe.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public sealed class SolidList<T> : ListEnvelope<T>
+    public class ManyOfArrayListTest
     {
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="items">items to decorate</param>
-        public SolidList(params T[] items) : this(new Many.Of<T>(items))
-        { }
+        [Fact]
+        public void BuildsFromStrings()
+        {
+            var arr = new ArrayList() { "A", "B", "C" };
 
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="items">items to decorate</param>
-        public SolidList(IEnumerable<T> items) : this(new ListOf<T>(items))
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="items">items to decorate</param>
-        public SolidList(IEnumerator<T> items) : this(new ListOf<T>(items))
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="list">list to decorate</param>
-        public SolidList(ICollection<T> list) : base(
-            () => new SyncList<T>(
-                    new StickyList<T>(
-                        new ListOf<T>(list))))
-        { }
-
+            Assert.Equal("A",
+                new ItemAt<object>(
+                    new Many.OfArrayList(arr)
+                ).Value().ToString()
+            );
+        }
     }
 }

@@ -20,48 +20,50 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Collection
+namespace Yaapii.Atoms.Lists
 {
-    /// <summary>
-    /// Envelope for collections. 
-    /// It accepts a scalar and makes readonly Collection from it.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    [Obsolete("This class is obsolete and will be removed in future versions. Use Collection.Live or Collection.Of")]
-    public sealed class CollectionOf<T> : Collection.Envelope<T>
+    public partial class List
     {
         /// <summary>
-        /// Makes a collection from an array
+        /// Makes a readonly list.
         /// </summary>
-        /// <param name="array"></param>
-        public CollectionOf(params T[] array) : this(new Many.Live<T>(array))
-        { }
+        /// <typeparam name="T">type of items</typeparam>
+        public sealed class Of<T> : Envelope<T>
+        {
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="array">source array</param>
+            public Of(params T[] array) : this(new Many.Live<T>(array))
+            { }
 
-        /// <summary>
-        /// Makes a collection from an <see cref="IEnumerator{T}"/>
-        /// </summary>
-        /// <param name="src"></param>
-        public CollectionOf(IEnumerator<T> src) : this(new Many.Of<T>(src))
-        { }
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="src">source enumerator</param>
+            public Of(IEnumerator<T> src) : this(new Many.Of<T>(() => src))
+            { }
 
-        /// <summary>
-        /// Makes a collection from an <see cref="IEnumerable{T}"/>
-        /// </summary>
-        /// <param name="src"></param>
-        public CollectionOf(IEnumerable<T> src) : base(
-            () =>
-            {
-                ICollection<T> list = new LinkedList<T>();
-                foreach (T item in src)
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="src">source enumerable</param>
+            public Of(IEnumerable<T> src) : base(
+                () =>
                 {
-                    list.Add(item);
-                }
-                return list;
-            }, true)
-        { }
+                    var temp = new List<T>();
+                    foreach (T item in src)
+                    {
+                        temp.Add(item);
+                    }
+                    return temp;
+                },
+                false
+            )
+            { }
+        }
     }
 }

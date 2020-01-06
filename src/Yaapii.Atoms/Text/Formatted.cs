@@ -34,8 +34,6 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class Formatted : Text.Envelope
     {
-        private IText result;
-
         /// <summary>
         /// A <see cref="IText"/> formatted with arguments.
         /// </summary>

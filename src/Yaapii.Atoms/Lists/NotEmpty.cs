@@ -22,48 +22,47 @@
 
 using System;
 using System.Collections.Generic;
+using Yaapii.Atoms.Error;
+using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists
 {
     /// <summary>
-    /// Mapped list
+    /// Ensures that <see cref="IList{T}" /> is not empty/>
     /// </summary>
-    /// <typeparam name="In">Type of source items</typeparam>
-    /// <typeparam name="Out">Type of target items</typeparam>
-    public sealed class Mapped<In, Out> : ListEnvelope<Out>
+    /// <typeparam name="T">Type of the list</typeparam>
+    public sealed class NotEmpty<T> : List.Envelope<T>
     {
         /// <summary>
-        /// ctor
+        /// Ensures that <see cref="IList{T}" /> is not empty/>
         /// </summary>
-        /// <param name="fnc">mapping function</param>
-        /// <param name="src">source enumerator</param>
-        public Mapped(IFunc<In, Out> fnc, IEnumerable<In> src) : this((input)=>fnc.Invoke(input), src)
+        /// <param name="origin">List</param>
+        public NotEmpty(IList<T> origin) : this(
+            origin,
+            new Exception("List is empty"))
         { }
 
         /// <summary>
-        /// ctor
+        /// Ensures that <see cref="IList{T}" /> is not empty/>
         /// </summary>
-        /// <param name="fnc">mapping function</param>
-        /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> fnc, IEnumerator<In> src) : this(fnc, new ListOf<In>(src))
-        { }
+        /// <param name="origin">List</param>
+        /// <param name="ex">Execption to be thrown if empty</param>
+        public NotEmpty(IList<T> origin, Exception ex) : base(
+            new ScalarOf<IList<T>>(
+                () =>
+                {
+                    new FailPrecise(
+                        new FailEmpty<T>(
+                            origin
+                        ),
+                        ex
+                    ).Go();
 
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="fnc">mapping function</param>
-        /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> fnc, IEnumerable<In> src) : this(fnc, new ListOf<In>(src))
+                    return origin;
+                }
+            ),
+            false
+        )
         { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="fnc">mapping function</param>
-        /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> fnc, ICollection<In> src) : base(() => new ListOf<Out>(
-                  new Collection.Mapped<In, Out>(fnc, src)))
-        { }
-
-}
+    }
 }

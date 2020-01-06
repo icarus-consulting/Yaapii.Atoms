@@ -23,7 +23,7 @@
 using Xunit;
 using Yaapii.Atoms.Texts;
 
-namespace Yaapii.Atoms.Number.Tests
+namespace Yaapii.Atoms.Scalar.Tests
 {
     public sealed class IsNumberTests
     {

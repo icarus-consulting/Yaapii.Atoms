@@ -23,36 +23,42 @@
 using System;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Texts;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Lists.Tests
 {
-    public sealed class MappedTest
+    public sealed class NotEmptyTest
     {
         [Fact]
-        public void TransformsList()
+        public void EmptyCollectionThrowsExeption()
         {
-            Assert.True(
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
-                        input => new Upper(new Text.Live(input)),
-                        new ListOf<string>("hello", "world", "damn")
-                        ),
-                    0
-                ).Value().AsString() == "HELLO",
-            "Can't transform an enumerable");
+            Assert.Throws<Exception>(() =>
+                new LengthOf(
+                    new NotEmpty<bool>(
+                        new List.Of<bool>()
+                    )).Value());
         }
 
         [Fact]
-        public void TransformsEmptyList()
+        public void NotEmptyCollectionThrowsNoExeption()
         {
-            Assert.True(
-                new Enumerable.LengthOf(
-                    new Mapped<String, IText>(
-                        input => new Upper(new Text.Live(input)),
-                        new ListOf<string>()
-                    )).Value() == 0,
-                "Can't transform an empty iterable");
+            Assert.Equal(
+                1,
+                new LengthOf(
+                    new NotEmpty<bool>(
+                        new List.Of<bool>(false)
+                    )).Value()
+            );
+        }
+
+        [Fact]
+        public void EmptyCollectionThrowsCustomExeption()
+        {
+            Assert.Throws<OperationCanceledException>(() =>
+                new LengthOf(
+                    new NotEmpty<bool>(
+                        new List.Of<bool>(),
+                        new OperationCanceledException()
+                    )).Value());
         }
     }
 }

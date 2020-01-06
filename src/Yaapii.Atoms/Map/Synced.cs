@@ -40,7 +40,8 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="list"></param>
         public Synced(KeyValuePair<Key, Value>[] list) : this(
-            new Many.Of<KeyValuePair<Key, Value>>(list))
+            new Many.Of<KeyValuePair<Key, Value>>(list)
+        )
         { }
 
         /// <summary>
@@ -50,7 +51,8 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="list">list of entries to merge</param>
         public Synced(Dictionary<Key, Value> map, KeyValuePair<Key, Value>[] list) : this(
             map,
-            new Many.Of<KeyValuePair<Key, Value>>(list))
+            new Many.Of<KeyValuePair<Key, Value>>(list)
+        )
         { }
 
         /// <summary>
@@ -87,10 +89,12 @@ namespace Yaapii.Atoms.Lookup
         /// A merged map that is threadsafe.
         /// </summary>
         /// <param name="map">Map to make threadsafe</param>
-        public Synced(IDictionary<Key, Value> map) : base(() =>
+        public Synced(IDictionary<Key, Value> map) : base(
+            () =>
             new Sync<IDictionary<Key, Value>>(() =>
                 new ConcurrentDictionary<Key, Value>(map)
-            ).Value()
+            ).Value(),
+            false
         )
         { }
     }
@@ -123,8 +127,10 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="list">list of values to merge</param>
         /// <param name="key">func to get the key</param>
         /// <param name="value">func to get the value</param>
-        public Sync(IEnumerable<Source> list, Func<Source, Key> key, Func<Source, Value> value) :
-            this(list, item => new KeyValuePair<Key, Value>(key.Invoke(item), value.Invoke(item)))
+        public Sync(IEnumerable<Source> list, Func<Source, Key> key, Func<Source, Value> value) : this(
+            list,
+            item => new KeyValuePair<Key, Value>(key.Invoke(item), value.Invoke(item))
+        )
         { }
 
         /// <summary>
@@ -133,7 +139,8 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="list">list of values to merge</param>
         /// <param name="entry">func to get the entry</param>
         public Sync(IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry) : this(
-            new Mapped<Source, KeyValuePair<Key, Value>>(entry, list))
+            new Mapped<Source, KeyValuePair<Key, Value>>(entry, list)
+        )
         { }
 
         /// <summary>
@@ -144,7 +151,8 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="entry"></param>
         public Sync(IDictionary<Key, Value> map, IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry) : this(
             map,
-            new Mapped<Source, KeyValuePair<Key, Value>>(entry, list))
+            new Mapped<Source, KeyValuePair<Key, Value>>(entry, list)
+        )
         { }
 
         /// <summary>
@@ -153,7 +161,8 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="map">map to merge to</param>
         /// <param name="list">items to merge</param>
         public Sync(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
-            new Map.Live<Key, Value>(map, list))
+            new Map.Live<Key, Value>(map, list)
+        )
         { }
 
         /// <summary>
@@ -161,17 +170,20 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="list">list of entries</param>
         public Sync(IEnumerable<KeyValuePair<Key, Value>> list) : this(
-            new Map.Live<Key, Value>(list))
+            new Map.Live<Key, Value>(list)
+        )
         { }
 
         /// <summary>
         /// A merged map that is threadsafe.
         /// </summary>
         /// <param name="map">Map to make threadsafe</param>
-        public Sync(IDictionary<Key, Value> map) : base(() =>
-            new Sync<IDictionary<Key, Value>>(() => 
-                new ConcurrentDictionary<Key, Value>(map)
-            ).Value()
+        public Sync(IDictionary<Key, Value> map) : base(
+            () =>
+                new Sync<IDictionary<Key, Value>>(() => 
+                    new ConcurrentDictionary<Key, Value>(map)
+                ).Value(),
+            false
         )
         { }
     }

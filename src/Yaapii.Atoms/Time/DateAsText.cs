@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Time
     /// </summary>
     public sealed class DateAsText : IText
     {
-        private readonly IScalar<string> _formatted;
+        private readonly Sticky<string> formatted;
 
         /// <summary>
         /// Current Datetime as ISO
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Time
         /// </summary>
         /// <param name="date">a date</param>
         /// <param name="format">a format pattern</param>
-        public DateAsText(DateTime date, string format) : this(new ScalarOf<DateTime>(date), new TextOf(format), CultureInfo.CurrentCulture)
+        public DateAsText(DateTime date, string format) : this(new ScalarOf<DateTime>(date), new Text.Of(format), CultureInfo.CurrentCulture)
         { }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Time
         /// </summary>
         /// <param name="date">a date</param>
         /// <param name="format">a format pattern</param>
-        public DateAsText(IScalar<DateTime> date, string format) : this(date, new TextOf(format), CultureInfo.CurrentCulture)
+        public DateAsText(IScalar<DateTime> date, string format) : this(date, new Text.Live(format), CultureInfo.CurrentCulture)
         { }
 
         /// <summary>
@@ -94,9 +94,10 @@ namespace Yaapii.Atoms.Time
         /// <param name="provider">a format provider</param>
         public DateAsText(IScalar<DateTime> date, IText format, IFormatProvider provider)
         {
-            this._formatted =
-                new ScalarOf<string>(
-                    () => date.Value().ToString(format.AsString(), provider));
+            this.formatted =
+                new Sticky<string>(
+                    () => date.Value().ToString(format.AsString(), provider)
+                );
         }
 
         /// <summary>
@@ -105,7 +106,7 @@ namespace Yaapii.Atoms.Time
         /// <returns></returns>
         public string AsString()
         {
-            return _formatted.Value();
+            return formatted.Value();
         }
 
         /// <summary>
@@ -115,7 +116,7 @@ namespace Yaapii.Atoms.Time
         /// <returns></returns>
         public bool Equals(IText other)
         {
-            return _formatted.Value().Equals(other.AsString());
+            return formatted.Value().Equals(other.AsString());
         }
     }
 }

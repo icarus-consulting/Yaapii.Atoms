@@ -20,23 +20,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.Collections;
+using System.Threading;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Lists.Tests
 {
-    public class ArrayListAsListTest
+    public sealed class ListOfTest
     {
         [Fact]
-        public void BuildsFromStrings()
+        public void IgnoresChangesInList()
         {
-            var arr = new ArrayList() { "A", "B", "C" };
+            int size = 2;
+            var list =
+                new List.Of<int>(
+                    new Yaapii.Atoms.Enumerable.HeadOf<int>(
+                        new Yaapii.Atoms.Enumerable.Endless<int>(1),
+                        new ScalarOf<int>(() => Interlocked.Increment(ref size))
+                ));
 
-            Assert.True(
-                new ItemAt<object>(
-                    new ArrayListAsList(arr)
-                ).Value().ToString() == "A");
+            Assert.Equal(3, new Enumerable.LengthOf(list).Value());
+            Assert.Equal(3, new Enumerable.LengthOf(list).Value());
         }
     }
 }

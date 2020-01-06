@@ -20,43 +20,58 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Collection.Tests
 {
-    public sealed class NotEmptyTest
+    public sealed class LiveTest
     {
         [Fact]
-        public void EmptyCollectionThrowsExeption()
+        public void BehavesAsCollection()
         {
-            Assert.Throws<Exception>(() =>
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new ListOf<bool>()
-                    )).Value());
+            var col = new Collection.Live<int>(1, 2, 0, -1);
+
+            Assert.True(col.Contains(1) && col.Contains(2) && col.Contains(0) && col.Contains(-1));
         }
 
         [Fact]
-        public void NotEmptyCollectionThrowsNoExeption()
+        public void BuildsCollection()
         {
-            Assert.True(
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new ListOf<bool>(false)
-                    )).Value() == 1);
+            Assert.Contains(
+                -1,
+                new Collection.Live<int>(1, 2, 0, -1)
+            );
         }
 
         [Fact]
-        public void EmptyCollectionThrowsCustomExeption()
+        public void BuildsCollectionFromIterator()
         {
-            Assert.Throws<OperationCanceledException>(() =>
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new ListOf<bool>(),
-                        new OperationCanceledException()
-                    )).Value());
+            Assert.Contains(
+                -1,
+                new Collection.Live<int>(
+                    new Many.Of<int>(1, 2, 0, -1).GetEnumerator())
+            );
+        }
+
+        [Fact]
+        public void SensesChanges()
+        {
+            var count = 1;
+            var col =
+                new Collection.Live<int>(
+                    new Many.Live<int>(() =>
+                        new Repeated<int>(
+                            () =>
+                            {
+                                count++;
+                                return 0;
+                            },
+                            count
+                        )
+                    )
+                );
+            Assert.NotEqual(col.Count, col.Count);
         }
     }
 }

@@ -20,50 +20,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using System.Collections.Generic;
-using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
-#pragma warning disable CS1591
-#pragma warning disable MaxPublicMethodCount // a public methods count maximum
-#pragma warning disable NoGetOrSet // No Statics
-#pragma warning disable NoProperties // No Properties
-#pragma warning disable MaxClassLength // Class length max
-
-
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists
 {
     /// <summary>
-    /// A <see cref="List{X}"/> which returns the same items from a cache, always.
+    /// A list which is threadsafe.
     /// </summary>
-    /// <typeparam name="X"></typeparam>
-    public sealed class StickyList<X> : ListEnvelope<X>
+    /// <typeparam name="T"></typeparam>
+    public sealed class SyncList<T> : List.Envelope<T>
     {
         /// <summary>
-        /// A <see cref="List{X}"/> which returns the same items from a cache, always.
+        /// ctor
         /// </summary>
-        /// <param name="items">items to cache</param>
-        public StickyList(params X[] items) :
-            this(new List<X>(new List<X>(items)))
+        /// <param name="items">source items</param>
+        public SyncList(params T[] items) : this(new Many.Of<T>(items))
         { }
 
         /// <summary>
-        /// A <see cref="List{X}"/> which returns the same items from a cache, always.
+        /// ctor
         /// </summary>
-        /// <param name="list">list to cache</param>
-        public StickyList(IList<X> list) : base(
-                new Sticky<IList<X>>(
-                    () =>
-                        {
-                            var temp = new List<X>();
-                            foreach (var item in list)
-                            {
-                                temp.Add(item);
-                            }
-                            return temp;
-                        }))
+        /// <param name="items">source items</param>
+        public SyncList(IEnumerable<T> items) : this(new List.Live<T>(items))
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="items">source item enumerator</param>
+        public SyncList(IEnumerator<T> items) : this(new List.Live<T>(items))
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="list">A threadsafe list</param>
+        public SyncList(ICollection<T> list) : base(
+            new Scalar.Sync<IList<T>>(
+                new ScalarOf<IList<T>>(() =>
+                    new List.Live<T>(
+                        new Collection.Sync<T>(list)
+                    )
+                )
+            ),
+            false
+        )
         { }
     }
 }

@@ -22,46 +22,53 @@
 
 using System;
 using System.Collections.Generic;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Collection
+namespace Yaapii.Atoms.Lists
 {
     /// <summary>
-    /// Makes a collection that iterates only once.
+    /// Mapped list
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    [Obsolete("This class is obsolete and will be removed in future versions. Use Collection.Of")]
-    public sealed class Sticky<T> : Collection.Envelope<T>
+    /// <typeparam name="In">Type of source items</typeparam>
+    /// <typeparam name="Out">Type of target items</typeparam>
+    public sealed class Mapped<In, Out> : List.Envelope<Out>
     {
         /// <summary>
-        /// Makes a collection of given items.
+        /// ctor
         /// </summary>
-        /// <param name="items">source items</param>
-        public Sticky(params T[] items) : this(new Many.Live<T>(items))
+        /// <param name="fnc">mapping function</param>
+        /// <param name="src">source enumerator</param>
+        public Mapped(IFunc<In, Out> fnc, IEnumerable<In> src) : this((input)=>fnc.Invoke(input), src)
         { }
 
         /// <summary>
-        /// Makes a collection of given items.
+        /// ctor
         /// </summary>
-        /// <param name="items">source items</param>
-        public Sticky(IEnumerator<T> items) : this(new Many.Of<T>(items))
+        /// <param name="fnc">mapping function</param>
+        /// <param name="src">source enumerator</param>
+        public Mapped(Func<In, Out> fnc, IEnumerator<In> src) : this(fnc, new List.Live<In>(src))
         { }
 
         /// <summary>
-        /// Makes a collection of given items.
+        /// ctor
         /// </summary>
-        /// <param name="items">source items</param>
-        public Sticky(IEnumerable<T> items) : this(new Collection.Live<T>(items))
+        /// <param name="fnc">mapping function</param>
+        /// <param name="src">source enumerator</param>
+        public Mapped(Func<In, Out> fnc, IEnumerable<In> src) : this(fnc, new List.Live<In>(src))
         { }
 
         /// <summary>
-        /// Makes a collection of given items.
+        /// ctor
         /// </summary>
-        /// <param name="list">list of source items</param>
-        public Sticky(ICollection<T> list) : base(
-               () => list, false
+        /// <param name="fnc">mapping function</param>
+        /// <param name="src">source enumerator</param>
+        public Mapped(Func<In, Out> fnc, ICollection<In> src) : base(
+            () =>
+            new List.Live<Out>(
+                  new Collection.Mapped<In, Out>(fnc, src)
+            ),
+            false
         )
         { }
-    }
+
+}
 }

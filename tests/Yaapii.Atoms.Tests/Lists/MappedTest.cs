@@ -20,32 +20,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.Collections;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using Yaapii.Atoms.Scalar;
+using System;
+using Xunit;
+using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Texts;
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists.Tests
 {
-    /// <summary>
-    /// An ArrayList converted to a IList&lt;object&gt;
-    /// </summary>
-    public sealed class ArrayListAsList : ListEnvelope<object>
+    public sealed class MappedTest
     {
-        /// <summary>
-        /// A ArrayList converted to IList&lt;object&gt;
-        /// </summary>
-        /// <param name="src">source ArrayList</param>
-        public ArrayListAsList(ArrayList src) : base(new Sticky<IList<object>>(() =>
+        [Fact]
+        public void TransformsList()
         {
-            var blocking = new BlockingCollection<object>();
-            foreach (var lst in src)
-            {
-                new Each<object>(item => blocking.Add(item), lst).Invoke();
-            }
+            Assert.Equal(
+                "HELLO",
+                new ItemAt<IText>(
+                    new Mapped<String, IText>(
+                        input => new Upper(new Text.Live(input)),
+                        new List.Of<string>("hello", "world", "damn")
+                    ),
+                    0
+                ).Value().AsString()
+            );
+        }
 
-            return new ListOf<object>(blocking.ToArray());
-        }))
-        { }
+        [Fact]
+        public void TransformsEmptyList()
+        {
+            Assert.Equal(
+                0,
+                new LengthOf(
+                    new Mapped<String, IText>(
+                        input => new Upper(new Text.Live(input)),
+                        new List.Of<string>()
+                    )
+                ).Value()
+            );
+        }
     }
 }

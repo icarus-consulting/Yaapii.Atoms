@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
 using Yaapii.Atoms.Func;
 using System.Linq;
 using Yaapii.Atoms.Tests;
