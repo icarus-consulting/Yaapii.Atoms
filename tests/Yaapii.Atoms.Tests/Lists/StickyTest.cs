@@ -34,14 +34,13 @@ namespace Yaapii.Atoms.Lists.Tests
             int size = 2;
             var list =
                 new StickyList<int>(
-                    new ListOf<int>(
+                    new List.Live<int>(
                         new Yaapii.Atoms.Enumerable.HeadOf<int>(
                             new Yaapii.Atoms.Enumerable.Endless<int>(1),
                             new ScalarOf<int>(() => Interlocked.Increment(ref size))
                 )));
 
-            Assert.Equal(3, new Enumerable.LengthOf(list).Value());
-            Assert.Equal(3, new Enumerable.LengthOf(list).Value());
+            Assert.Equal(new Enumerable.LengthOf(list).Value(), new Enumerable.LengthOf(list).Value());
         }
     }
 }
