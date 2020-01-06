@@ -20,32 +20,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.Collections;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using Yaapii.Atoms.Scalar;
+using System;
+using Xunit;
+using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists.Tests
 {
-    /// <summary>
-    /// An ArrayList converted to a IList&lt;object&gt;
-    /// </summary>
-    public sealed class ArrayListAsList : ListEnvelope<object>
+    public sealed class NotEmptyTest
     {
-        /// <summary>
-        /// A ArrayList converted to IList&lt;object&gt;
-        /// </summary>
-        /// <param name="src">source ArrayList</param>
-        public ArrayListAsList(ArrayList src) : base(new Sticky<IList<object>>(() =>
+        [Fact]
+        public void EmptyCollectionThrowsExeption()
         {
-            var blocking = new BlockingCollection<object>();
-            foreach (var lst in src)
-            {
-                new Each<object>(item => blocking.Add(item), lst).Invoke();
-            }
+            Assert.Throws<Exception>(() =>
+                new LengthOf(
+                    new NotEmpty<bool>(
+                        new List.Of<bool>()
+                    )).Value());
+        }
 
-            return new ListOf<object>(blocking.ToArray());
-        }))
-        { }
+        [Fact]
+        public void NotEmptyCollectionThrowsNoExeption()
+        {
+            Assert.Equal(
+                1,
+                new LengthOf(
+                    new NotEmpty<bool>(
+                        new List.Of<bool>(false)
+                    )).Value()
+            );
+        }
+
+        [Fact]
+        public void EmptyCollectionThrowsCustomExeption()
+        {
+            Assert.Throws<OperationCanceledException>(() =>
+                new LengthOf(
+                    new NotEmpty<bool>(
+                        new List.Of<bool>(),
+                        new OperationCanceledException()
+                    )).Value());
+        }
     }
 }

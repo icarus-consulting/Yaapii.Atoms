@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Lookup
             { }
 
             /// <summary>
-            /// A map from the given KeyValuePairs and appends them to the given Dictionary.
+            /// A map from the given Dictionary and the given kvps.
             /// </summary>
             /// <param name="src">source dictionary</param>
             /// <param name="list">KeyValuePairs to append</param>
@@ -242,7 +242,8 @@ namespace Yaapii.Atoms.Lookup
             /// <summary>
             /// A map from the given key value pairs.
             /// </summary>
-            /// <param name="entries">enumerable of kvps</param>
+            /// <param name="entries">more kvps</param>
+            /// <param name="entry">A single entry</param>
             public Live(IKvp<Value> entry, params IKvp<Value>[] entries) : this(
                 new Many.Live<IMapInput<Value>>(
                     new MapInput.Of<Value>(entry),

@@ -21,10 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using Yaapii.Atoms.Texts;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Texts
 {
@@ -33,13 +31,13 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class BoolOf : IScalar<Boolean>
     {
-        private readonly IText _text;
+        private readonly Sticky<bool> bl;
 
         /// <summary>
         /// <see cref="string"/> as bool
         /// </summary>
         /// <param name="str">source string</param>
-        public BoolOf(String str) : this(new TextOf(str))
+        public BoolOf(String str) : this(new Text.Of(str))
         { }
 
         /// <summary>
@@ -48,7 +46,18 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">source text "true" or "false"</param>
         public BoolOf(IText text)
         {
-            this._text = text;
+            this.bl =
+                new Sticky<bool>(() =>
+                {
+                    try
+                    {
+                        return Convert.ToBoolean(text.AsString());
+                    }
+                    catch (FormatException ex)
+                    {
+                        throw new IOException(ex.Message, ex);
+                    }
+                });
         }
 
         /// <summary>
@@ -57,13 +66,7 @@ namespace Yaapii.Atoms.Texts
         /// <returns>true or false</returns>
         public Boolean Value()
         {
-            try
-            {
-                return Convert.ToBoolean(this._text.AsString());
-            }catch(FormatException ex)
-            {
-                throw new IOException(ex.Message, ex);
-            }
+            return this.bl.Value();
         }
     }
 }

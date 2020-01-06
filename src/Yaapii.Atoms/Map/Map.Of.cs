@@ -97,6 +97,15 @@ namespace Yaapii.Atoms.Lookup
             { }
 
             /// <summary>
+            /// A map from another map.
+            /// </summary>
+            /// <param name="entries">enumerable of entries</param>
+            public Of(IDictionary<string, string> entries) : base(() => entries, false)
+            //caution: do not remove this ctor. It is a "proxy" ctor to prevent copying values. 
+            //Because a map is also a IEnumerable of KeyValuePairs, the ctor accepting the enumerable would copy the map.
+            { }
+
+            /// <summary>
             /// A map from the given entries.
             /// </summary>
             /// <param name="entries">enumerable of entries</param>
@@ -204,28 +213,6 @@ namespace Yaapii.Atoms.Lookup
             { }
 
             /// <summary>
-            /// A map from the given KeyValuePairs and appends them to the given Dictionary.
-            /// </summary>
-            /// <param name="src">source dictionary</param>
-            /// <param name="list">KeyValuePairs to append</param>
-            public Of(IDictionary<string, Value> src, params KeyValuePair<string, Value>[] list) : this(
-                src,
-                new Many.Live<KeyValuePair<string, Value>>(list))
-            { }
-
-            /// <summary>
-            /// A map by merging the given KeyValuePairs to the given Dictionary.
-            /// </summary>
-            /// <param name="src"></param>
-            /// <param name="list"></param>
-            public Of(IDictionary<string, Value> src, IEnumerable<KeyValuePair<string, Value>> list) : this(
-                new Enumerable.Joined<KeyValuePair<string, Value>>(
-                    src,
-                    list
-                ))
-            { }
-
-            /// <summary>
             /// A map by taking the given entries.
             /// </summary>
             /// <param name="entries">enumerator of KeyValuePairs</param>
@@ -237,6 +224,7 @@ namespace Yaapii.Atoms.Lookup
             /// A map from the given key value pairs.
             /// </summary>
             /// <param name="entries">enumerable of kvps</param>
+            /// <param name="entry">A single entry</param>
             public Of(IKvp<Value> entry, params IKvp<Value>[] entries) : this(
                 new Many.Live<IMapInput<Value>>(
                     new MapInput.Of<Value>(entry),
@@ -254,6 +242,15 @@ namespace Yaapii.Atoms.Lookup
                     new MapInput.Of<Value>(entries)
                 )
             )
+            { }
+
+            /// <summary>
+            /// A map from another map.
+            /// </summary>
+            /// <param name="entries">enumerable of entries</param>
+            public Of(IDictionary<string, Value> entries) : base(() => entries, false)
+            //caution: do not remove this ctor. It is a "proxy" ctor to prevent copying values. 
+            //Because a map is also a IEnumerable of KeyValuePairs, the ctor accepting the enumerable would copy the map.
             { }
 
             /// <summary>
@@ -375,6 +372,15 @@ namespace Yaapii.Atoms.Lookup
                     new MapInput.Of<Key, Value>(entries)
                 )
             )
+            { }
+
+            /// <summary>
+            /// A map from another map.
+            /// </summary>
+            /// <param name="entries">enumerable of entries</param>
+            public Of(IDictionary<Key, Value> entries) : base(() => entries, false)
+            //caution: do not remove this ctor. It is a "proxy" ctor to prevent copying values. 
+            //Because a map is also a IEnumerable of KeyValuePairs, the ctor accepting the enumerable would copy the map.
             { }
 
             /// <summary>

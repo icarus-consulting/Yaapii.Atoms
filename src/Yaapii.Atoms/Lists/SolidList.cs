@@ -20,39 +20,49 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using Xunit;
+using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Texts;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Lists
 {
-    public sealed class MappedTest
+    /// <summary>
+    /// A list that is both sticky and threadsafe.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public sealed class SolidList<T> : List.Envelope<T>
     {
-        [Fact]
-        public void TransformsList()
-        {
-            Assert.True(
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
-                        input => new Upper(new Text.Live(input)),
-                        new ListOf<string>("hello", "world", "damn")
-                        ),
-                    0
-                ).Value().AsString() == "HELLO",
-            "Can't transform an enumerable");
-        }
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="items">items to decorate</param>
+        public SolidList(params T[] items) : this(new Many.Of<T>(items))
+        { }
 
-        [Fact]
-        public void TransformsEmptyList()
-        {
-            Assert.True(
-                new Enumerable.LengthOf(
-                    new Mapped<String, IText>(
-                        input => new Upper(new Text.Live(input)),
-                        new ListOf<string>()
-                    )).Value() == 0,
-                "Can't transform an empty iterable");
-        }
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="items">items to decorate</param>
+        public SolidList(IEnumerable<T> items) : this(new List.Live<T>(items))
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="items">items to decorate</param>
+        public SolidList(IEnumerator<T> items) : this(new List.Live<T>(items))
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="list">list to decorate</param>
+        public SolidList(ICollection<T> list) : base(
+            () => new SyncList<T>(
+                new List.Live<T>(list)
+            ),
+            false
+        )
+        { }
+
     }
 }

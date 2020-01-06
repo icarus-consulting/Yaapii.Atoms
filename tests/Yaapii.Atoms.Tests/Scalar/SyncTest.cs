@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Tests.Scalar
+namespace Yaapii.Atoms.Scalar.Tests
 {
     public sealed class SyncTest
     {

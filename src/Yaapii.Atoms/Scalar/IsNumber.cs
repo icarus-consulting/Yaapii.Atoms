@@ -24,22 +24,21 @@ using System;
 using System.Globalization;
 using Yaapii.Atoms.Texts;
 
-namespace Yaapii.Atoms.Number
+namespace Yaapii.Atoms.Scalar
 {
     /// <summary>
     /// Checks whether a given text is a number
     /// </summary>
     public sealed class IsNumber : IScalar<bool>
     {
-        private readonly IText text;
-        private readonly IFormatProvider provider;
+        private readonly Sticky<bool> result;
 
         /// <summary>
         /// Checks whether the given text is a number
         /// </summary>
         /// <param name="text">the text</param>
         public IsNumber(string text) : this(
-            new TextOf(text),
+            new Text.Of(text),
             NumberFormatInfo.InvariantInfo
         )
         { }
@@ -50,7 +49,7 @@ namespace Yaapii.Atoms.Number
         /// <param name="text">the text</param>
         /// <param name="provider">number format provider</param>
         public IsNumber(string text, IFormatProvider provider) : this(
-            new TextOf(text),
+            new Text.Of(text),
             provider
         )
         { }
@@ -72,8 +71,15 @@ namespace Yaapii.Atoms.Number
         /// <param name="provider">number format provider</param>
         public IsNumber(IText text, IFormatProvider provider)
         {
-            this.text = text;
-            this.provider = provider;
+            this.result =
+                new Sticky<bool>(() =>
+                    double.TryParse(
+                        text.AsString(),
+                        NumberStyles.Any,
+                        provider,
+                        out var unused
+                    )
+                );
         }
 
         /// <summary>
@@ -82,12 +88,7 @@ namespace Yaapii.Atoms.Number
         /// <returns>the result</returns>
         public bool Value()
         {
-            return double.TryParse(
-                this.text.AsString(), 
-                NumberStyles.Any, 
-                this.provider, 
-                out var unused
-            );
+            return this.result.Value();
         }
     }
 }

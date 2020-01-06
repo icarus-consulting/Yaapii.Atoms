@@ -21,11 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Text;
-using Yaapii.Atoms.Error;
 using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO
@@ -38,7 +35,7 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// source text
         /// </summary>
-        private readonly IText _source;
+        private readonly IText source;
 
         /// <summary>
         /// ctor
@@ -52,7 +49,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="url">url as string</param>
         /// <param name="enc">encoding of the string</param>
-        public DecodedUrl(String url, Encoding enc) : this(new TextOf(url, enc))
+        public DecodedUrl(String url, Encoding enc) : this(new Text.Of(url, enc))
         { }
 
         /// <summary>
@@ -61,7 +58,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="url">url as text</param>
         public DecodedUrl(IText url)
         {
-            this._source = url;
+            this.source = url;
         }
 
         /// <summary>
@@ -71,7 +68,7 @@ namespace Yaapii.Atoms.IO
         public String Value()
         {
             return WebUtility.UrlDecode(
-                this._source.AsString()
+                this.source.AsString()
             );
         }
     }

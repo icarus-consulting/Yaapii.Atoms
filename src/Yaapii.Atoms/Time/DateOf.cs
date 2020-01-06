@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Time
     /// </summary>
     public sealed class DateOf : IScalar<DateTime>
     {
-        private readonly IScalar<DateTime> _date;
+        private readonly IScalar<DateTime> date;
 
         /// <summary>
         /// A date parsed using a using <see cref="CultureInfo.InvariantCulture"/>
@@ -90,7 +90,7 @@ namespace Yaapii.Atoms.Time
         /// <param name="date"></param>
         public DateOf(IScalar<DateTime> date)
         {
-            this._date = date;
+            this.date = new Sticky<DateTime>(date);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Yaapii.Atoms.Time
         /// <returns></returns>
         public DateTime Value()
         {
-            return this._date.Value();
+            return this.date.Value();
         }
     }
 }

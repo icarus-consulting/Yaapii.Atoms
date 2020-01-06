@@ -40,9 +40,9 @@ namespace Yaapii.Atoms.Collection.Tests
         [Fact]
         public void MakesListFromMappedIterable()
         {
-            var list = 
+            var list =
                 new Solid<int>(
-                    new List.Mapped<int, int>(
+                    new Mapped<int, int>(
                         i => i + 1,
                         new Many.Of<int>(1, -1, 0, 1)
                     )

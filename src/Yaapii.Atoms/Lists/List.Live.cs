@@ -20,34 +20,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
-using Yaapii.Atoms.Scalar;
+using System.Collections.Generic;
+using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Enumerable
+namespace Yaapii.Atoms.Lists
 {
-    /// <summary>
-    /// A <see cref="ArrayList"/> converted to IEnumerable&lt;object&gt;
-    /// </summary>
-    [Obsolete("This class is obsolete and will be removed in future versions. Use Many.OfArrayList")]
-    public sealed class ArrayListAsEnumerable : Many.Envelope<object>
+    public partial class List
     {
         /// <summary>
-        /// A ArrayList converted to IEnumerable&lt;object&gt;
+        /// Makes a readonly list.
         /// </summary>
-        /// <param name="src">source ArrayList</param>
-        public ArrayListAsEnumerable(ArrayList src) : base(() =>
-            {
-                var blocking = new BlockingCollection<object>();
-                foreach (var lst in src)
-                {
-                    new Each<object>(item => blocking.Add(item), lst).Invoke();
-                }
+        /// <typeparam name="T">type of items</typeparam>
+        public sealed class Live<T> : Envelope<T>
+        {
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="array">source array</param>
+            public Live(params T[] array) : this(new Many.Live<T>(array))
+            { }
 
-                return blocking;
-            }
-        )
-        { }
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="src">source enumerator</param>
+            public Live(IEnumerator<T> src) : this(new Many.Live<T>(() => src))
+            { }
+
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="src">source enumerable</param>
+            public Live(IEnumerable<T> src) : base(
+                () => new List<T>(src),
+                true
+            )
+            { }
+        }
     }
 }

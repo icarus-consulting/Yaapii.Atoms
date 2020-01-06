@@ -20,7 +20,6 @@ namespace Yaapii.Atoms.Enumerable
         /// This object is about to be used to ensure proper code design, preventing unnecessary waste of resources.
         /// Wrap it around live objects if you want to be sure that your code stays fast.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         public StrictOnce(Func<IEnumerable<T>> many)
         {
             this.many = new Lazy<IEnumerable<T>>(many);

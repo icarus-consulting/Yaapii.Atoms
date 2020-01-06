@@ -20,47 +20,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.Collections.Generic;
+using System;
+using Xunit;
 using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Texts;
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists.Tests
 {
-    /// <summary>
-    /// A list that is both sticky and threadsafe.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public sealed class SolidList<T> : ListEnvelope<T>
+    public sealed class MappedTest
     {
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="items">items to decorate</param>
-        public SolidList(params T[] items) : this(new Many.Of<T>(items))
-        { }
+        [Fact]
+        public void TransformsList()
+        {
+            Assert.Equal(
+                "HELLO",
+                new ItemAt<IText>(
+                    new Mapped<String, IText>(
+                        input => new Upper(new Text.Live(input)),
+                        new List.Of<string>("hello", "world", "damn")
+                    ),
+                    0
+                ).Value().AsString()
+            );
+        }
 
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="items">items to decorate</param>
-        public SolidList(IEnumerable<T> items) : this(new ListOf<T>(items))
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="items">items to decorate</param>
-        public SolidList(IEnumerator<T> items) : this(new ListOf<T>(items))
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="list">list to decorate</param>
-        public SolidList(ICollection<T> list) : base(
-            () => new SyncList<T>(
-                    new StickyList<T>(
-                        new ListOf<T>(list))))
-        { }
-
+        [Fact]
+        public void TransformsEmptyList()
+        {
+            Assert.Equal(
+                0,
+                new LengthOf(
+                    new Mapped<String, IText>(
+                        input => new Upper(new Text.Live(input)),
+                        new List.Of<string>()
+                    )
+                ).Value()
+            );
+        }
     }
 }

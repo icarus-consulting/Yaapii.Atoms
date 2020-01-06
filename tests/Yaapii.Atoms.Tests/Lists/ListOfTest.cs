@@ -20,43 +20,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
+using System.Threading;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Lists.Tests
 {
-    public sealed class NotEmptyTest
+    public sealed class ListOfTest
     {
         [Fact]
-        public void EmptyCollectionThrowsExeption()
+        public void IgnoresChangesInList()
         {
-            Assert.Throws<Exception>(() =>
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new ListOf<bool>()
-                    )).Value());
-        }
+            int size = 2;
+            var list =
+                new List.Of<int>(
+                    new Yaapii.Atoms.Enumerable.HeadOf<int>(
+                        new Yaapii.Atoms.Enumerable.Endless<int>(1),
+                        new ScalarOf<int>(() => Interlocked.Increment(ref size))
+                ));
 
-        [Fact]
-        public void NotEmptyCollectionThrowsNoExeption()
-        {
-            Assert.True(
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new ListOf<bool>(false)
-                    )).Value() == 1);
-        }
-
-        [Fact]
-        public void EmptyCollectionThrowsCustomExeption()
-        {
-            Assert.Throws<OperationCanceledException>(() =>
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new ListOf<bool>(),
-                        new OperationCanceledException()
-                    )).Value());
+            Assert.Equal(3, new Enumerable.LengthOf(list).Value());
+            Assert.Equal(3, new Enumerable.LengthOf(list).Value());
         }
     }
 }

@@ -24,10 +24,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Lists;
 
-namespace Yaapii.Atoms.Tests.Scalar
+namespace Yaapii.Atoms.Scalar.Tests
 {
     public sealed class SolidTest
     {
@@ -45,7 +44,7 @@ namespace Yaapii.Atoms.Tests.Scalar
         [Fact]
         public void WorksInMultipleThreads()
         {
-            var sc = new Solid<IList<int>>(() => new ListOf<int>(1, 2));
+            var sc = new Solid<IList<int>>(() => new List.Of<int>(1, 2));
             var max = Environment.ProcessorCount << 8;
             Parallel.For(0, max, (nr) => sc.Value());
 

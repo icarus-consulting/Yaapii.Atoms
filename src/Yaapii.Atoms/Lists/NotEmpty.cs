@@ -22,48 +22,47 @@
 
 using System;
 using System.Collections.Generic;
-using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Error;
 using Yaapii.Atoms.Scalar;
 
-#pragma warning disable CS1591
-#pragma warning disable MaxPublicMethodCount // a public methods count maximum
-#pragma warning disable NoGetOrSet // No Statics
-#pragma warning disable NoProperties // No Properties
-#pragma warning disable MaxClassLength // Class length max
-
-
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists
 {
     /// <summary>
-    /// A <see cref="List{X}"/> which returns the same items from a cache, always.
+    /// Ensures that <see cref="IList{T}" /> is not empty/>
     /// </summary>
-    /// <typeparam name="X"></typeparam>
-    public sealed class StickyList<X> : ListEnvelope<X>
+    /// <typeparam name="T">Type of the list</typeparam>
+    public sealed class NotEmpty<T> : List.Envelope<T>
     {
         /// <summary>
-        /// A <see cref="List{X}"/> which returns the same items from a cache, always.
+        /// Ensures that <see cref="IList{T}" /> is not empty/>
         /// </summary>
-        /// <param name="items">items to cache</param>
-        public StickyList(params X[] items) :
-            this(new List<X>(new List<X>(items)))
+        /// <param name="origin">List</param>
+        public NotEmpty(IList<T> origin) : this(
+            origin,
+            new Exception("List is empty"))
         { }
 
         /// <summary>
-        /// A <see cref="List{X}"/> which returns the same items from a cache, always.
+        /// Ensures that <see cref="IList{T}" /> is not empty/>
         /// </summary>
-        /// <param name="list">list to cache</param>
-        public StickyList(IList<X> list) : base(
-                new Sticky<IList<X>>(
-                    () =>
-                        {
-                            var temp = new List<X>();
-                            foreach (var item in list)
-                            {
-                                temp.Add(item);
-                            }
-                            return temp;
-                        }))
+        /// <param name="origin">List</param>
+        /// <param name="ex">Execption to be thrown if empty</param>
+        public NotEmpty(IList<T> origin, Exception ex) : base(
+            new ScalarOf<IList<T>>(
+                () =>
+                {
+                    new FailPrecise(
+                        new FailEmpty<T>(
+                            origin
+                        ),
+                        ex
+                    ).Go();
+
+                    return origin;
+                }
+            ),
+            false
+        )
         { }
     }
 }

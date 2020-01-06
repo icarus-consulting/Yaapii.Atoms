@@ -33,7 +33,6 @@ namespace Yaapii.Atoms.Enumerable
         /// Envelope for Enumerable.
         /// It bundles the methods offered by IEnumerable and enables scalar based ctors.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         public abstract class LiveEnvelope : IEnumerable<string>
         {
             /// <summary>

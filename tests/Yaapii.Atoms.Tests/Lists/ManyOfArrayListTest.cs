@@ -24,19 +24,20 @@ using System.Collections;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.List.Tests
+namespace Yaapii.Atoms.Lists.Tests
 {
-    public class ArrayListAsListTest
+    public class ManyOfArrayListTest
     {
         [Fact]
         public void BuildsFromStrings()
         {
             var arr = new ArrayList() { "A", "B", "C" };
 
-            Assert.True(
+            Assert.Equal("A",
                 new ItemAt<object>(
-                    new ArrayListAsList(arr)
-                ).Value().ToString() == "A");
+                    new Many.OfArrayList(arr)
+                ).Value().ToString()
+            );
         }
     }
 }

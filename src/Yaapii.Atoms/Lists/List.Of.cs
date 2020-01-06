@@ -20,44 +20,50 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using System.Collections.Generic;
-using Yaapii.Atoms.Error;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists
 {
-    /// <summary>
-    /// Ensures that <see cref="IList{T}" /> is not empty/>
-    /// </summary>
-    /// <typeparam name="T">Type of the list</typeparam>
-    public sealed class NotEmpty<T> : ListEnvelope<T>
+    public partial class List
     {
         /// <summary>
-        /// Ensures that <see cref="IList{T}" /> is not empty/>
+        /// Makes a readonly list.
         /// </summary>
-        /// <param name="origin">List</param>
-        public NotEmpty(IList<T> origin) : this(
-            origin,
-            new Exception("List is empty"))
-        { }
+        /// <typeparam name="T">type of items</typeparam>
+        public sealed class Of<T> : Envelope<T>
+        {
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="array">source array</param>
+            public Of(params T[] array) : this(new Many.Live<T>(array))
+            { }
 
-        /// <summary>
-        /// Ensures that <see cref="IList{T}" /> is not empty/>
-        /// </summary>
-        /// <param name="origin">List</param>
-        /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(IList<T> origin, Exception ex) : base(new ScalarOf<IList<T>>(
-            () =>
-            {
-                new FailPrecise(
-                    new FailEmpty<T>(
-                        origin),
-                    ex).Go();
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="src">source enumerator</param>
+            public Of(IEnumerator<T> src) : this(new Many.Of<T>(() => src))
+            { }
 
-                return origin;
-            }
-            ))
-        { }
-           }
+            /// <summary>
+            /// ctor
+            /// </summary>
+            /// <param name="src">source enumerable</param>
+            public Of(IEnumerable<T> src) : base(
+                () =>
+                {
+                    var temp = new List<T>();
+                    foreach (T item in src)
+                    {
+                        temp.Add(item);
+                    }
+                    return temp;
+                },
+                false
+            )
+            { }
+        }
+    }
 }

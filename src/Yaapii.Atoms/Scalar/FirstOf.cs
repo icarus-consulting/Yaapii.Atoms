@@ -43,6 +43,7 @@ namespace Yaapii.Atoms.Scalar
         /// Element from position in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
+        /// <param name="ex">Exception to throw if no value can be found.</param>
         public FirstOf(IEnumerable<T> source, Exception ex) : this(
             (enm) => true,
             source,
@@ -61,6 +62,7 @@ namespace Yaapii.Atoms.Scalar
         /// Element from position in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
+        /// <param name="condition">condition to find the desired item</param>
         public FirstOf(Func<T, bool> condition, IEnumerable<T> source) : this(
             condition,
             source,
@@ -72,6 +74,8 @@ namespace Yaapii.Atoms.Scalar
         /// Element from position in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
+        /// <param name="condition">condition to find the desired item</param>
+        /// <param name="ex">Exception to throw if no value can be found.</param>
         public FirstOf(Func<T, bool> condition, IEnumerable<T> source, Exception ex) : this(
             condition,
             source,
@@ -99,6 +103,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
+        /// <param name="condition">condition to match in order to find the desired item</param>
         public FirstOf(Func<T, bool> condition, IEnumerable<T> source, T fallback) : this(
             condition,
             source,

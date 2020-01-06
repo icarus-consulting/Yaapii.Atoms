@@ -28,7 +28,7 @@ using Xunit;
 using Yaapii.Atoms;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Texts;
 

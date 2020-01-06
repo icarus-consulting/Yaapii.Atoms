@@ -23,7 +23,7 @@
 using System.Threading;
 using Xunit;
 using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Collection.Tests
@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Contains(
                 -1,
                 new Sticky<int>(
-                    new ListOf<int>(1, 2, 0, -1)));
+                    new List.Live<int>(1, 2, 0, -1)));
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Collection.Tests
             int size = 2;
             var list =
                 new Sticky<int>(
-                    new ListOf<int>(
+                    new List.Live<int>(
                         new Enumerable.Repeated<int>(
                             new ScalarOf<int>(() => 0),
                             new ScalarOf<int>(() =>

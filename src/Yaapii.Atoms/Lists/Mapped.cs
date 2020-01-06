@@ -23,14 +23,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.Lists
 {
     /// <summary>
     /// Mapped list
     /// </summary>
     /// <typeparam name="In">Type of source items</typeparam>
     /// <typeparam name="Out">Type of target items</typeparam>
-    public sealed class Mapped<In, Out> : ListEnvelope<Out>
+    public sealed class Mapped<In, Out> : List.Envelope<Out>
     {
         /// <summary>
         /// ctor
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> fnc, IEnumerator<In> src) : this(fnc, new ListOf<In>(src))
+        public Mapped(Func<In, Out> fnc, IEnumerator<In> src) : this(fnc, new List.Live<In>(src))
         { }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> fnc, IEnumerable<In> src) : this(fnc, new ListOf<In>(src))
+        public Mapped(Func<In, Out> fnc, IEnumerable<In> src) : this(fnc, new List.Live<In>(src))
         { }
 
         /// <summary>
@@ -61,8 +61,13 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> fnc, ICollection<In> src) : base(() => new ListOf<Out>(
-                  new Collection.Mapped<In, Out>(fnc, src)))
+        public Mapped(Func<In, Out> fnc, ICollection<In> src) : base(
+            () =>
+            new List.Live<Out>(
+                  new Collection.Mapped<In, Out>(fnc, src)
+            ),
+            false
+        )
         { }
 
 }

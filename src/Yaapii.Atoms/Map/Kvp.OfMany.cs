@@ -55,13 +55,13 @@ namespace Yaapii.Atoms.Lookup
             /// The functions are executed only when the value is requested.
             /// The result is sticky.
             /// </summary>
-            public OfMany(string key, params string[] many) : this(key, () => new Strings(many))
+            public OfMany(string key, params string[] values) : this(key, () => new Many.Of(values))
             { }
 
             /// <summary>
             /// A key to many values.
             /// </summary>
-            public OfMany(string key, IEnumerable<string> many) : this(key, () => many)
+            public OfMany(string key, IEnumerable<string> values) : this(key, () => values)
             { }
 
             /// <summary>
@@ -69,8 +69,8 @@ namespace Yaapii.Atoms.Lookup
             /// The function is executed only when the value is requested.
             /// The result is sticky.
             /// </summary>
-            public OfMany(string key, Func<IEnumerable<string>> many) : base(
-                new Kvp.Of<IEnumerable<string>>(key, many)
+            public OfMany(string key, Func<IEnumerable<string>> values) : base(
+                new Kvp.Of<IEnumerable<string>>(key, values)
             )
             { }
         }
@@ -85,12 +85,12 @@ namespace Yaapii.Atoms.Lookup
             /// The functions are executed only when the value is requested.
             /// The result is sticky.
             /// </summary>
-            public OfMany(string key, params Func<TValue>[] many) : this(key, () =>
+            public OfMany(string key, params Func<TValue>[] values) : this(key, () =>
                 {
                     var lst = new List<TValue>();
-                    for (var i = 0; i < many.Length; i++)
+                    for (var i = 0; i < values.Length; i++)
                     {
-                        lst.Add(many[i]());
+                        lst.Add(values[i]());
                     }
                     return lst;
                 }
@@ -102,12 +102,12 @@ namespace Yaapii.Atoms.Lookup
             /// The functions are executed only when the value is requested.
             /// The result is sticky.
             /// </summary>
-            public OfMany(string key, params TValue[] many) : this(key, () =>
+            public OfMany(string key, params TValue[] values) : this(key, () =>
                 {
                     var lst = new List<TValue>();
-                    for (var i = 0; i < many.Length; i++)
+                    for (var i = 0; i < values.Length; i++)
                     {
-                        lst.Add(many[i]);
+                        lst.Add(values[i]);
                     }
                     return lst;
                 }
@@ -117,14 +117,14 @@ namespace Yaapii.Atoms.Lookup
             /// <summary>
             /// A key to many strings.
             /// </summary>
-            public OfMany(string key, IEnumerable<TValue> many) : this(key, () => many)
+            public OfMany(string key, IEnumerable<TValue> values) : this(key, () => values)
             { }
 
             /// <summary>
             /// A key to many values.
             /// </summary>
-            public OfMany(string key, Func<IEnumerable<TValue>> many) : base(
-                new Kvp.Of<IEnumerable<TValue>>(key, many)
+            public OfMany(string key, Func<IEnumerable<TValue>> values) : base(
+                new Kvp.Of<IEnumerable<TValue>>(key, values)
             )
             { }
         }
@@ -132,14 +132,14 @@ namespace Yaapii.Atoms.Lookup
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public sealed class Values<TKey, TValue> : Kvp.Envelope<TKey, IEnumerable<TValue>>
+        public sealed class KeyToValues<TKey, TValue> : Kvp.Envelope<TKey, IEnumerable<TValue>>
         {
             /// <summary>
             /// A key to many values.
             /// The functions are executed only when the value is requested.
             /// The result is sticky.
             /// </summary>
-            public Values(TKey key, params Func<TValue>[] many) : this(key, () =>
+            public KeyToValues(TKey key, params Func<TValue>[] many) : this(key, () =>
             {
                 var lst = new List<TValue>();
                 for (var i = 0; i < many.Length; i++)
@@ -156,7 +156,7 @@ namespace Yaapii.Atoms.Lookup
             /// The functions are executed only when the value is requested.
             /// The result is sticky.
             /// </summary>
-            public Values(TKey key, params TValue[] many) : this(key, () =>
+            public KeyToValues(TKey key, params TValue[] many) : this(key, () =>
             {
                 var lst = new List<TValue>();
                 for (var i = 0; i < many.Length; i++)
@@ -171,13 +171,13 @@ namespace Yaapii.Atoms.Lookup
             /// <summary>
             /// A key to many values.
             /// </summary>
-            public Values(TKey key, IEnumerable<TValue> many) : this(key, () => many)
+            public KeyToValues(TKey key, IEnumerable<TValue> many) : this(key, () => many)
             { }
 
             /// <summary>
             /// A key to many values.
             /// </summary>
-            public Values(TKey key, Func<IEnumerable<TValue>> many) : base(
+            public KeyToValues(TKey key, Func<IEnumerable<TValue>> many) : base(
                 new Kvp.Of<TKey, IEnumerable<TValue>>(key, many)
             )
             { }

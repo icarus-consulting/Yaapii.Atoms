@@ -39,9 +39,8 @@ namespace Yaapii.Atoms.Lookup
         /// Makes a map that is threadsafe.
         /// </summary>
         /// <param name="list"></param>
-        public Synced(KeyValuePair<Key, Value>[] list, bool live = false) : this(
-            new Many.Of<KeyValuePair<Key, Value>>(list),
-            live
+        public Synced(KeyValuePair<Key, Value>[] list) : this(
+            new Many.Of<KeyValuePair<Key, Value>>(list)
         )
         { }
 
@@ -50,10 +49,9 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="map">map to merge to</param>
         /// <param name="list">list of entries to merge</param>
-        public Synced(Dictionary<Key, Value> map, KeyValuePair<Key, Value>[] list, bool live = false) : this(
+        public Synced(Dictionary<Key, Value> map, KeyValuePair<Key, Value>[] list) : this(
             map,
-            new Many.Of<KeyValuePair<Key, Value>>(list),
-            live
+            new Many.Of<KeyValuePair<Key, Value>>(list)
         )
         { }
 
@@ -61,9 +59,8 @@ namespace Yaapii.Atoms.Lookup
         /// Makes a map that is threadsafe.
         /// </summary>
         /// <param name="list">list of entries</param>
-        public Synced(IEnumerable<KeyValuePair<Key, Value>> list, bool live = false) : this(
-            new Map.Live<Key, Value>(list),
-            live
+        public Synced(IEnumerable<KeyValuePair<Key, Value>> list) : this(
+            new Map.Live<Key, Value>(list)
         )
         { }
 
@@ -71,11 +68,10 @@ namespace Yaapii.Atoms.Lookup
         /// Makes a map that is threadsafe.
         /// </summary>
         /// <param name="list">list of entries</param>
-        public Synced(IEnumerator<KeyValuePair<Key, Value>> list, bool live = false) : this(
+        public Synced(IEnumerator<KeyValuePair<Key, Value>> list) : this(
             new Many.Of<KeyValuePair<Key, Value>>(
                 () => list
-            ),
-            live
+            )
         )
         { }
 
@@ -84,9 +80,8 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="map">map to merge to</param>
         /// <param name="list">items to merge</param>
-        public Synced(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list, bool live = false) : this(
-            new Map.Live<Key, Value>(map, list),
-            live
+        public Synced(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
+            new Map.Live<Key, Value>(map, list)
         )
         { }
 
@@ -94,12 +89,12 @@ namespace Yaapii.Atoms.Lookup
         /// A merged map that is threadsafe.
         /// </summary>
         /// <param name="map">Map to make threadsafe</param>
-        public Synced(IDictionary<Key, Value> map, bool live = false) : base(
+        public Synced(IDictionary<Key, Value> map) : base(
             () =>
-                new Sync<IDictionary<Key, Value>>(() =>
-                    new ConcurrentDictionary<Key, Value>(map)
-                ).Value(),
-            live
+            new Sync<IDictionary<Key, Value>>(() =>
+                new ConcurrentDictionary<Key, Value>(map)
+            ).Value(),
+            false
         )
         { }
     }
@@ -119,11 +114,10 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="list">list of values to merge</param>
         /// <param name="key">func to get the key</param>
         /// <param name="value">func to get the value</param>
-        public Sync(IDictionary<Key, Value> map, IEnumerable<Source> list, Func<Source, Key> key, Func<Source, Value> value, bool live = false) : this(
+        public Sync(IDictionary<Key, Value> map, IEnumerable<Source> list, Func<Source, Key> key, Func<Source, Value> value) : this(
                 map,
                 list,
-                item => new KeyValuePair<Key, Value>(key.Invoke(item), value.Invoke(item)),
-                live
+                item => new KeyValuePair<Key, Value>(key.Invoke(item), value.Invoke(item))
             )
         { }
 
@@ -133,10 +127,9 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="list">list of values to merge</param>
         /// <param name="key">func to get the key</param>
         /// <param name="value">func to get the value</param>
-        public Sync(IEnumerable<Source> list, Func<Source, Key> key, Func<Source, Value> value, bool live = false) : this(
+        public Sync(IEnumerable<Source> list, Func<Source, Key> key, Func<Source, Value> value) : this(
             list,
-            item => new KeyValuePair<Key, Value>(key.Invoke(item), value.Invoke(item)),
-            live
+            item => new KeyValuePair<Key, Value>(key.Invoke(item), value.Invoke(item))
         )
         { }
 
@@ -145,9 +138,8 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="list">list of values to merge</param>
         /// <param name="entry">func to get the entry</param>
-        public Sync(IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry, bool live = false) : this(
-            new Mapped<Source, KeyValuePair<Key, Value>>(entry, list),
-            live
+        public Sync(IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry) : this(
+            new Mapped<Source, KeyValuePair<Key, Value>>(entry, list)
         )
         { }
 
@@ -157,10 +149,9 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="map"></param>
         /// <param name="list"></param>
         /// <param name="entry"></param>
-        public Sync(IDictionary<Key, Value> map, IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry, bool live = false) : this(
+        public Sync(IDictionary<Key, Value> map, IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry) : this(
             map,
-            new Mapped<Source, KeyValuePair<Key, Value>>(entry, list),
-            live
+            new Mapped<Source, KeyValuePair<Key, Value>>(entry, list)
         )
         { }
 
@@ -169,9 +160,8 @@ namespace Yaapii.Atoms.Lookup
         /// </summary>
         /// <param name="map">map to merge to</param>
         /// <param name="list">items to merge</param>
-        public Sync(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list, bool live = false) : this(
-            new Map.Live<Key, Value>(map, list),
-            live
+        public Sync(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
+            new Map.Live<Key, Value>(map, list)
         )
         { }
 
@@ -179,9 +169,8 @@ namespace Yaapii.Atoms.Lookup
         /// Makes a map that is threadsafe.
         /// </summary>
         /// <param name="list">list of entries</param>
-        public Sync(IEnumerable<KeyValuePair<Key, Value>> list, bool live = false) : this(
-            new Map.Live<Key, Value>(list),
-            live
+        public Sync(IEnumerable<KeyValuePair<Key, Value>> list) : this(
+            new Map.Live<Key, Value>(list)
         )
         { }
 
@@ -189,12 +178,12 @@ namespace Yaapii.Atoms.Lookup
         /// A merged map that is threadsafe.
         /// </summary>
         /// <param name="map">Map to make threadsafe</param>
-        public Sync(IDictionary<Key, Value> map, bool live = false) : base(
+        public Sync(IDictionary<Key, Value> map) : base(
             () =>
                 new Sync<IDictionary<Key, Value>>(() => 
                     new ConcurrentDictionary<Key, Value>(map)
                 ).Value(),
-            live
+            false
         )
         { }
     }

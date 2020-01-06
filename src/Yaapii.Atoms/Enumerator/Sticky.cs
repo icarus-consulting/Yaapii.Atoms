@@ -24,7 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Enumerable;
