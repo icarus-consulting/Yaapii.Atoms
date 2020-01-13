@@ -33,8 +33,7 @@ namespace Yaapii.Atoms.Texts
         /// A <see cref="IText"/> which has been reversed.
         /// </summary>
         /// <param name="text">text to reverse</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Reversed(IText text, bool live = false) : base (() => 
+        public Reversed(IText text) : base (() => 
             {
                 char[] chararray = text.AsString().ToCharArray();
                 Array.Reverse(chararray);
@@ -45,7 +44,7 @@ namespace Yaapii.Atoms.Texts
                 }
                 return reverseTxt;
             },
-            live
+            false
         )
         { }
     }

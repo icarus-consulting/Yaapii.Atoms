@@ -35,8 +35,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to rotate</param>
         /// <param name="shift">direction and amount of chars to rotate (minus means rotate left, plus means rotate right)</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Rotated(IText text, int shift, bool live = false) : base(() =>
+        public Rotated(IText text, int shift) : base(() =>
             {
                 var str = text.AsString();
                 int length = str.Length;
@@ -56,7 +55,7 @@ namespace Yaapii.Atoms.Texts
                 }
                 return str;
             },
-            live
+            false
         )
         { }
     }

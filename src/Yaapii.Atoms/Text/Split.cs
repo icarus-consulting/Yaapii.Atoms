@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Yaapii.Atoms.Enumerable;
 
@@ -78,23 +79,22 @@ namespace Yaapii.Atoms.Texts
         /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
         public Split(IText text, IText rgx, bool remBlank = true) : base(() =>
             {
-                var splitted =
-                    new Many.Of<string>(
+                IEnumerable<string> split =
+                    new Many.Live<string>(
                         new Regex(rgx.AsString()).Split(text.AsString())
                     );
 
                 return
-                    remBlank ? 
+                    remBlank ?
                     new Filtered<String>(
                         (str) => !String.IsNullOrWhiteSpace(str),
-                        splitted
-                    ).GetEnumerator()
-                    : 
-                    splitted.GetEnumerator();
+                        split
+                    )
+                    :
+                    split;
             },
             false
         )
         { }
     }
 }
-#pragma warning restore NoGetOrSet // No Statics

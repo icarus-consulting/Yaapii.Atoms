@@ -35,10 +35,9 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to replace contents in</param>
         /// <param name="find">part to replace</param>
         /// <param name="replace">replacement to insert</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Replaced(IText text, String find, String replace, bool live = false) : base(() =>
-            text.AsString().Replace(find, replace),
-            live
+        public Replaced(IText text, String find, String replace) : base(() =>
+            text.AsString().Replace(find, replace), 
+            false
         )
         { }
     }

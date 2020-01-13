@@ -35,8 +35,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to extreact from</param>
         /// <param name="strt">where to start</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public SubText(String text, int strt, bool live = false) : this(new Text.Live(text), strt, live)
+        public SubText(String text, int strt) : this(new Text.Live(text), strt)
         { }
 
         /// <summary>
@@ -45,12 +44,10 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start</param>
         /// <param name="end">where to end</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public SubText(String text, int strt, int end, bool live = false) : this(
+        public SubText(String text, int strt, int end) : this(
             new Text.Live(text), 
             strt, 
-            end, 
-            live
+            end
         )
         { }
 
@@ -59,12 +56,10 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public SubText(IText text, int strt, bool live = false) : this(
+        public SubText(IText text, int strt) : this(
             text, 
             new ScalarOf<Int32>(strt), 
-            new ScalarOf<Int32>(() => text.AsString().Length - strt),
-            live
+            new ScalarOf<Int32>(() => text.AsString().Length - strt)
         )
         { }
 
@@ -74,12 +69,10 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start</param>
         /// <param name="end">where to end</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public SubText(IText text, int strt, int end, bool live = false) : this(
+        public SubText(IText text, int strt, int end) : this(
             text, 
             new ScalarOf<Int32>(strt), 
-            new ScalarOf<Int32>(end),
-            live
+            new ScalarOf<Int32>(end)
         )
         { }
 
@@ -98,8 +91,7 @@ namespace Yaapii.Atoms.Texts
         ) : this(
             text,
             () => strt.Value(),
-            () => len.Value(),
-            live
+            () => len.Value()
         )
         { }
 
@@ -109,8 +101,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start encapsulated in a scalar</param>
         /// <param name="len">where to end encapsulated in a scalar</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public SubText(IText text, Func<Int32> strt, Func<Int32> len, bool live = false) : base(() =>
+        public SubText(IText text, Func<Int32> strt, Func<Int32> len) : base(() =>
             {
                 return 
                     text.AsString().Substring(
@@ -118,7 +109,7 @@ namespace Yaapii.Atoms.Texts
                         len()
                     );
             },
-            live
+            false
         )
         { }
     }

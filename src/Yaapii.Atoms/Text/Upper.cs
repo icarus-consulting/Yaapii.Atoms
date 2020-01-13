@@ -32,8 +32,7 @@ namespace Yaapii.Atoms.Texts
         /// A <see cref="IText"/> as uppercase.
         /// </summary>
         /// <param name="text">text to uppercase</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Upper(IText text, bool live = false) : base(() => text.AsString().ToUpper(), live)
+        public Upper(IText text) : base(() => text.AsString().ToUpper(), false)
         { }
     }
 }

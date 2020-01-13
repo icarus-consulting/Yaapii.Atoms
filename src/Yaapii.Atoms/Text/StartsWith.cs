@@ -22,6 +22,7 @@
 
 using System;
 using System.Text.RegularExpressions;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Texts
 {
@@ -30,7 +31,7 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class StartsWith : IScalar<bool>
     {
-        private readonly Func<bool> result;
+        private readonly Sticky<bool> result;
 
         /// <summary>
         /// Checks if a <see cref="IText"/> starts with a given <see cref="string"/>
@@ -50,11 +51,12 @@ namespace Yaapii.Atoms.Texts
         /// <param name="start">Starting content to use in the test</param>
         public StartsWith(IText text, IText start)
         {
-            this.result = () =>
-            {
-                var regex = new Regex("^" + Regex.Escape(start.AsString()));
-                return regex.IsMatch(text.AsString());
-            };
+            this.result =
+                new Sticky<bool>(() =>
+                {
+                    var regex = new Regex("^" + Regex.Escape(start.AsString()));
+                    return regex.IsMatch(text.AsString());
+                });
         }
 
         /// <summary>
@@ -63,7 +65,7 @@ namespace Yaapii.Atoms.Texts
         /// <returns>The result</returns>
         public bool Value()
         {
-            return this.result();
+            return this.result.Value();
         }
     }
 }
