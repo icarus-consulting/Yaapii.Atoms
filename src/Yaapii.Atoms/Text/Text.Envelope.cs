@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System;
+using Yaapii.Atoms.Scalar;
 
 #pragma warning disable MaxClassLength // Class length max
 namespace Yaapii.Atoms.Texts
@@ -36,8 +37,8 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         public abstract class Envelope : IText
         {
-            private readonly Func<String> origin;
-            private readonly Lazy<String> fixedOrigin;
+            private readonly Func<string> origin;
+            private readonly Sticky<string> fixedOrigin;
             private readonly bool live;
 
             /// <summary>
@@ -46,7 +47,7 @@ namespace Yaapii.Atoms.Texts
             /// </summary>
             /// <param name="origin">How to create the value</param>
             /// <param name="live">should the value be created every time the object is used?</param>
-            public Envelope(Func<IText> origin, bool live = false) : this(() => origin().AsString(), live)
+            public Envelope(IText text, bool live) : this()
             { }
 
             /// <summary>
@@ -59,7 +60,7 @@ namespace Yaapii.Atoms.Texts
             {
                 this.origin = origin;
                 this.live = live;
-                this.fixedOrigin = new Lazy<string>(origin);
+                this.fixedOrigin = new Sticky<string>(() => origin());
             }
 
             /// <summary>
@@ -71,11 +72,11 @@ namespace Yaapii.Atoms.Texts
                 var result = string.Empty;
                 if (this.live)
                 {
-                    result = this.fixedOrigin.Value;
+                    result = this.origin();
                 }
                 else
                 {
-                    result = this.origin();
+                    result = this.fixedOrigin.Value();
                 }
                 return result;
             }
