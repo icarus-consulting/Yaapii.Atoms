@@ -36,11 +36,9 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to repeat</param>
         /// <param name="count">how often to repeat</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Repeated(String text, int count, bool live = false) : this(
+        public Repeated(String text, int count) : this(
             new Text.Live(text), 
-            count, 
-            live
+            count
         )
         { }
 
@@ -49,8 +47,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to repeat</param>
         /// <param name="count">how often to repeat</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Repeated(IText text, int count, bool live = false) : base(() =>
+        public Repeated(IText text, int count) : base(() =>
             {
                 StringBuilder output = new StringBuilder();
                 for (int cnt = 0; cnt < count; ++cnt)
@@ -59,7 +56,8 @@ namespace Yaapii.Atoms.Texts
                 }
                 return output.ToString();
             },
-            live)
+            false
+        )
         { }
     }
 }

@@ -58,7 +58,8 @@ namespace Yaapii.Atoms.Enumerable
         public HeadOf(IEnumerable<T> enumerable, IScalar<int> limit) : base(() =>
             new Many.Live<T>(() =>
                 new Enumerator.HeadOf<T>(enumerable.GetEnumerator(), limit.Value())
-            )
+            ),
+            false
         )
         { }
     }

@@ -41,14 +41,13 @@ namespace Yaapii.Atoms.Texts
         /// A <see cref="IText"/> as Base64-Encoded <see cref="IText"/>
         /// </summary>
         /// <param name="text">text to encode</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public TextBase64(IText text, bool live = false) : base(() =>
+        public TextBase64(IText text) : base(
             new Text.Live(
                 new BytesBase64(
                     new BytesOf(text)
                 )
             ),
-            live
+            false
         )
         { }
     }

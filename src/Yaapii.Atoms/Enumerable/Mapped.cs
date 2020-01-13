@@ -75,7 +75,8 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="fnc">function used to map</param>
         public Mapped(Func<In, int, Out> fnc, IEnumerable<In> src) : this(
             new BiFuncOf<In, int, Out>(fnc),
-            src)
+            src
+        )
         { }
 
         /// <summary>
@@ -95,7 +96,8 @@ namespace Yaapii.Atoms.Enumerable
             new Many.Live<Out>(() =>
                 new Enumerator.Mapped<In, Out>(
                     src.GetEnumerator(), fnc)
-            )
+            ),
+            false
         )
         { }
     }

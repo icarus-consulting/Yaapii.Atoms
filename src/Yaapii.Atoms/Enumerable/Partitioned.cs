@@ -38,7 +38,8 @@ namespace Yaapii.Atoms.Enumerable
                 new Enumerator.Partitioned<T>(
                     size, list.GetEnumerator()
                 )
-            )
+            ),
+            false
         )
         { }
     }

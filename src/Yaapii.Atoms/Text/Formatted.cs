@@ -40,8 +40,8 @@ namespace Yaapii.Atoms.Texts
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="arguments">arguments to apply</param>
         public Formatted(String ptn, params IText[] arguments) : this(
-            new Text.Live(ptn), 
-            CultureInfo.InvariantCulture, 
+            new Text.Live(ptn),
+            CultureInfo.InvariantCulture,
             () =>
             new Mapped<IText, string>(
                 txt => txt.AsString(),
@@ -230,12 +230,10 @@ namespace Yaapii.Atoms.Texts
             CultureInfo locale,
             Func<object[]> arguments,
             bool live = false
-        ) :
-        base(() =>
-            {
-                return String.Format(locale, ptn.AsString(), arguments());
-            },
-            live)
+        ) : base(
+            () => String.Format(locale, ptn.AsString(), arguments()),
+            live
+        )
         { }
     }
 }

@@ -68,7 +68,8 @@ namespace Yaapii.Atoms.Enumerable
         public Repeated(IScalar<T> elm, IScalar<int> cnt) : base(() => 
             new Many.Live<T>(() =>
                 new Enumerator.Repeated<T>(elm, cnt.Value())
-            )
+            ),
+            false
         )
         { }
     }

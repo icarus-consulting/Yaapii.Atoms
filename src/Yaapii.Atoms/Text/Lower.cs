@@ -31,8 +31,7 @@ namespace Yaapii.Atoms.Texts
         /// A <see cref="IText"/>  as lowercase.
         /// </summary>
         /// <param name="text">text to lower</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Lower(IText text, bool live = false) : base(() => text.AsString().ToLower(), live)
+        public Lower(IText text) : base(() => text.AsString().ToLower(), false)
         { }
     }
 }

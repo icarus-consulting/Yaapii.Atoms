@@ -34,18 +34,16 @@ namespace Yaapii.Atoms.Texts
         /// Normalized A <see cref="IText"/>  (whitespaces replaced with one single space)
         /// </summary>
         /// <param name="text">text to normalize</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Normalized(String text, bool live = false) : this(new Text.Live(text), live)
+        public Normalized(String text) : this(new Text.Live(text))
         { }
 
         /// <summary>
         /// Normalized A <see cref="IText"/>  (whitespaces replaced with one single space)
         /// </summary>
         /// <param name="text">text to normalize</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Normalized(IText text, bool live = false) : base(() =>
+        public Normalized(IText text) : base(() =>
             Regex.Replace(new Trimmed(text).AsString(), "\\s+", " "),
-            live
+            false
         )
         { }
     }

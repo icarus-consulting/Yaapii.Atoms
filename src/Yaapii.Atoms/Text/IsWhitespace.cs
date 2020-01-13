@@ -21,9 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Texts
 {
@@ -32,7 +31,7 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class IsWhitespace : IScalar<Boolean>
     {
-        private readonly Func<Boolean> result;
+        private readonly Sticky<bool> result;
 
         /// <summary>
         /// Checks if a A <see cref="string"/> is whitespace.
@@ -49,7 +48,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to check</param>
         public IsWhitespace(IText text)
         {
-            this.result = new Func<Boolean>(() => !text.AsString().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + "")));
+            this.result = new Sticky<bool>(() => !text.AsString().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + "")));
         }
 
         /// <summary>
@@ -58,7 +57,7 @@ namespace Yaapii.Atoms.Texts
         /// <returns>the result</returns>
         public Boolean Value()
         {
-            return this.result();
+            return this.result.Value();
         }
     }
 }

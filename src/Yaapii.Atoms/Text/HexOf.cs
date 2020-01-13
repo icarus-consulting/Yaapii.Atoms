@@ -36,8 +36,7 @@ namespace Yaapii.Atoms.Texts
         /// Hexadecimal representation of Bytes.
         /// </summary>
         /// <param name="bytes">bytes</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public HexOf(IBytes bytes, bool live = false) : base(() =>
+        public HexOf(IBytes bytes) : base(() =>
             {
                 var rawBytes = bytes.AsBytes();
                 var hex = new char[rawBytes.Length * 2];
@@ -50,7 +49,7 @@ namespace Yaapii.Atoms.Texts
                 }
                 return new string(hex);
             },
-            live
+            false
         )
         { }
     }

@@ -34,19 +34,16 @@ namespace Yaapii.Atoms.Texts
         /// A <see cref="string"/> trimmed (removed whitespaces) on both sides.
         /// </summary>
         /// <param name="text">text to trim</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Trimmed(string text, bool live = false) : this(new Text.Live(text), live)
+        public Trimmed(string text) : this(new Text.Live(text))
         { }
 
         /// <summary>
         /// An <see cref="IText"/> trimmed (removed whitespaces) on both sides.
         /// </summary>
         /// <param name="text">text to trim</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Trimmed(IText text, bool live = false) : this(
+        public Trimmed(IText text) : this(
             text, 
-            new ScalarOf<char[]>(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' }),
-            live
+            new ScalarOf<char[]>(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' })
         )
         { }
 
@@ -55,8 +52,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Trimmed(string text, char[] trimText, bool live = false) : this(new Text.Live(text), trimText, live)
+        public Trimmed(string text, char[] trimText) : this(new Text.Live(text), trimText)
         { }
 
         /// <summary>
@@ -64,8 +60,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Trimmed(IText text, char[] trimText, bool live = false) : this(text, new ScalarOf<char[]>(trimText), live)
+        public Trimmed(IText text, char[] trimText) : this(text, new ScalarOf<char[]>(trimText))
         { }
 
         /// <summary>
@@ -73,10 +68,9 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Trimmed(IText text, IScalar<char[]> trimText, bool live = false) : base(
-            () => text.AsString().Trim(trimText.Value()), 
-            live
+        public Trimmed(IText text, IScalar<char[]> trimText) : base(
+            () => text.AsString().Trim(trimText.Value()),
+            false
         )
         { }
 
@@ -85,8 +79,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Trimmed(string text, string removeText, bool live = false) : this(new Text.Live(text), new Text.Live(removeText), live)
+        public Trimmed(string text, string removeText) : this(new Text.Live(text), new Text.Live(removeText))
         { }
 
         /// <summary>
@@ -94,8 +87,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Trimmed(string text, IText removeText, bool live = false) : this(new Text.Live(text), removeText, live)
+        public Trimmed(string text, IText removeText) : this(new Text.Live(text), removeText)
         { }
 
         /// <summary>
@@ -103,8 +95,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Trimmed(IText text, string removeText, bool live = false) : this(text, new Text.Live(removeText), live)
+        public Trimmed(IText text, string removeText) : this(text, new Text.Live(removeText))
         { }
 
         /// <summary>
@@ -112,12 +103,10 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Trimmed(IText text, IText removeText, bool live = false) : this(
+        public Trimmed(IText text, IText removeText) : this(
             text, 
             removeText,
-            false,
-            live
+            false
         )
         { }
 
@@ -127,8 +116,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to trim</param>
         /// <param name="ignoreCase">Trim by disregarding case.</param>
         /// <param name="removeText">text that is removed from the text</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Trimmed(IText text, IText removeText, bool ignoreCase, bool live = false) : base(
+        public Trimmed(IText text, IText removeText, bool ignoreCase) : base(
             () =>
             {
                 string str = text.AsString();
@@ -162,7 +150,7 @@ namespace Yaapii.Atoms.Texts
                 }
                 return str;
             },
-            live
+            false
         )
         { }
     }

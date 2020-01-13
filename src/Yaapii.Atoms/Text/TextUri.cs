@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Texts
 {
@@ -29,7 +30,7 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class UriOf : IScalar<Uri>
     {
-        private readonly IText source;
+        private readonly Sticky<Uri> source;
 
         /// <summary>
         /// A <see cref="string"/> as a <see cref="Uri"/>
@@ -44,7 +45,10 @@ namespace Yaapii.Atoms.Texts
         /// <param name="url">uri as text</param>
         public UriOf(IText url)
         {
-            this.source = url;
+            this.source = 
+                new Sticky<Uri>(
+                    new UriBuilder(url.AsString()).Uri
+                );
         }
 
         /// <summary>
@@ -53,7 +57,7 @@ namespace Yaapii.Atoms.Texts
         /// <returns>the uri</returns>
         public Uri Value()
         {
-            return new UriBuilder(this.source.AsString()).Uri;
+            return this.source.Value();
         }
     }
 }

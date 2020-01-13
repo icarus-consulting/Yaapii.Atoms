@@ -33,8 +33,7 @@ namespace Yaapii.Atoms.Texts
         /// A <see cref="IText"/>  that can't accept null.
         /// </summary>
         /// <param name="text"></param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public NotNull(IText text, bool live = false) : base(() =>
+        public NotNull(IText text) : base(() =>
             {
                 if (text == null)
                 {
@@ -42,7 +41,7 @@ namespace Yaapii.Atoms.Texts
                 }
                 return text.AsString();
             },
-            live
+            false
         )
         { }
     }
