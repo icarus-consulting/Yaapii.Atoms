@@ -71,7 +71,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Union objects in two enumerables.
         /// </summary>
-        private Union(Func<IEnumerable<T>> unite) : base(unite)
+        private Union(Func<IEnumerable<T>> unite) : base(unite, false)
         { }
     }
 }

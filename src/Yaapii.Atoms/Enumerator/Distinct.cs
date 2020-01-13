@@ -20,12 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 #pragma warning disable NoProperties
 
@@ -37,9 +33,9 @@ namespace Yaapii.Atoms.Enumerator
     /// <typeparam name="T">type of elements</typeparam>
     public sealed class Distinct<T> : IEnumerator<T>
     {
-        private readonly IEnumerable<IEnumerator<T>> _originals;
-        private readonly Queue<IEnumerator<T>> _buffer = new Queue<IEnumerator<T>>();
-        private readonly List<T> _hits = new List<T>();
+        private readonly IEnumerable<IEnumerator<T>> originals;
+        private readonly Queue<IEnumerator<T>> buffer = new Queue<IEnumerator<T>>();
+        private readonly List<T> hits = new List<T>();
 
         /// <summary>
         /// Enumerator that only gives the distinct elements of multiple enumerators.
@@ -47,8 +43,8 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="enumerators"></param>
         public Distinct(IEnumerable<IEnumerator<T>> enumerators)
         {
-            _originals = enumerators;
-            _buffer = new Queue<IEnumerator<T>>(enumerators);
+            originals = enumerators;
+            buffer = new Queue<IEnumerator<T>>(enumerators);
         }
 
         /// <summary>
@@ -58,7 +54,7 @@ namespace Yaapii.Atoms.Enumerator
         {
             get
             {
-                return this._buffer.Peek().Current;
+                return this.buffer.Peek().Current;
             }
         }
 
@@ -72,7 +68,7 @@ namespace Yaapii.Atoms.Enumerator
         {
             //skip all entries that are already known
             SkipKnown();
-            bool cnt = _buffer.Count > 0;
+            bool cnt = buffer.Count > 0;
             if (!cnt)
             {
                 this.Reset();
@@ -85,26 +81,26 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         public void Reset()
         {
-            this._buffer.Clear();
-            foreach (var e in this._originals)
+            this.buffer.Clear();
+            foreach (var e in this.originals)
             {
-                this._buffer.Enqueue(e);
+                this.buffer.Enqueue(e);
             }
-            this._hits.Clear();
+            this.hits.Clear();
         }
 
         private void SkipKnown()
         {
-            while (this._buffer.Count > 0)
+            while (this.buffer.Count > 0)
             {
-                while (this._buffer.Count > 0 && !this._buffer.Peek().MoveNext())
+                while (this.buffer.Count > 0 && !this.buffer.Peek().MoveNext())
                 {
-                    this._buffer.Dequeue();
+                    this.buffer.Dequeue();
                 }
 
-                if (_buffer.Count > 0 && !this._hits.Contains(this._buffer.Peek().Current))
+                if (buffer.Count > 0 && !this.hits.Contains(this.buffer.Peek().Current))
                 {
-                    this._hits.Add(this._buffer.Peek().Current);
+                    this.hits.Add(this.buffer.Peek().Current);
                     break;
                 }
             }

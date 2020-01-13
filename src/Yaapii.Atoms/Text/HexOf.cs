@@ -36,7 +36,6 @@ namespace Yaapii.Atoms.Texts
         /// Hexadecimal representation of Bytes.
         /// </summary>
         /// <param name="bytes">bytes</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
         public HexOf(IBytes bytes) : base(() =>
             {
                 var rawBytes = bytes.AsBytes();

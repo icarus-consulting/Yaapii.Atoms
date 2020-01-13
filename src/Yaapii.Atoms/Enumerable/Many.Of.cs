@@ -88,7 +88,8 @@ namespace Yaapii.Atoms.Enumerable
                         lst.Add(enm.Current);
                     };
                     return lst;
-                }
+                },
+                false
             )
             { }
         }

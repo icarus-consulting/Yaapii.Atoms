@@ -23,7 +23,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 #pragma warning disable Immutability // Fields are readonly or constant
 #pragma warning disable NoProperties // No Properties
@@ -37,9 +36,9 @@ namespace Yaapii.Atoms.Enumerator
     /// <typeparam name="T">type of items in enumerable</typeparam>
     public sealed class Skipped<T> : IEnumerator<T>
     {
-        private readonly IEnumerator<T> _enumerator;
-        private readonly int _skip;
-        private int _left;
+        private readonly IEnumerator<T> enumerator;
+        private readonly int skip;
+        private int left;
 
         /// <summary>
         /// A <see cref="IEnumerator{Tests}"/> which skips a given count of items.
@@ -48,24 +47,24 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="skip">how many to skip</param>
         public Skipped(IEnumerator<T> enumerator, int skip)
         {
-            this._enumerator = enumerator;
-            this._skip = skip;
-            this._left = this._skip;
+            this.enumerator = enumerator;
+            this.skip = skip;
+            this.left = this.skip;
         }
 
         public Boolean MoveNext()
         {
-            while (this._left > 0 && this._enumerator.MoveNext())
+            while (this.left > 0 && this.enumerator.MoveNext())
             {
-                --this._left;
+                --this.left;
             }
-            return this._enumerator.MoveNext();
+            return this.enumerator.MoveNext();
         }
 
         public void Reset()
         {
-            this._left = this._skip;
-            this._enumerator.Reset();
+            this.left = this.skip;
+            this.enumerator.Reset();
         }
 
         public void Dispose()
@@ -75,7 +74,7 @@ namespace Yaapii.Atoms.Enumerator
         {
             get
             {
-                return this._enumerator.Current;
+                return this.enumerator.Current;
             }
         }
 

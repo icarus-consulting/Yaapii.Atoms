@@ -21,13 +21,9 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Lists;
-using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Enumerator;
 
 namespace Yaapii.Atoms.Func.Tests
 {
@@ -36,7 +32,7 @@ namespace Yaapii.Atoms.Func.Tests
         [Fact]
         public void RunsFuncMultipleTimes()
         {
-            var iter = new Enumerator.Sticky<int>(1, 2, 5, 6);
+            var iter = new Many.Of<int>(1, 2, 5, 6).GetEnumerator();
             var func = new RepeatedFunc<bool, IScalar<int>>(
                 input =>
                 {

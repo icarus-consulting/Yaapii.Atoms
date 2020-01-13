@@ -23,8 +23,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoProperties // No Properties
 #pragma warning disable CS1591
@@ -38,7 +36,7 @@ namespace Yaapii.Atoms.Enumerator
     public sealed class Sorted<T> : IEnumerator<T>
         where T : IComparable<T>
     {
-        private readonly IScalar<IEnumerator<T>> _sorted;
+        private readonly IScalar<IEnumerator<T>> sorted;
 
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> sorted by the given <see cref="Comparer{T}"/>.
@@ -47,19 +45,20 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="src">enumerator to sort</param>
         public Sorted(Comparer<T> cmp, IEnumerator<T> src)
         {
-            this._sorted =
+            this.sorted =
                 new Scalar.Sticky<IEnumerator<T>>(
-                    () =>
+                () =>
+                {
+                    var items = new List<T>();
+                    while (src.MoveNext())
                     {
-                        var items = new List<T>();
-                        while (src.MoveNext())
-                        {
-                            items.Add(src.Current);
-                        }
-                        items.Sort(cmp);
+                        items.Add(src.Current);
+                    }
+                    items.Sort(cmp);
 
-                        return items.GetEnumerator();
-                    });
+                    return items.GetEnumerator();
+                }
+                );
         }
 
         public void Dispose()
@@ -67,14 +66,14 @@ namespace Yaapii.Atoms.Enumerator
 
         public Boolean MoveNext()
         {
-            return this._sorted.Value().MoveNext();
+            return this.sorted.Value().MoveNext();
         }
 
         public T Current
         {
             get
             {
-                return this._sorted.Value().Current;
+                return this.sorted.Value().Current;
             }
         }
 
@@ -82,7 +81,7 @@ namespace Yaapii.Atoms.Enumerator
         {
             get
             {
-                return this._sorted.Value().Current;
+                return this.sorted.Value().Current;
             }
         }
 
