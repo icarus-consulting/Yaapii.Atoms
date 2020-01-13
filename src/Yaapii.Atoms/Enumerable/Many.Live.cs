@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of other objects.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public sealed class Live<T> : Many.LiveEnvelope<T>
+        public sealed class Live<T> : Many.Envelope<T>
         {
             /// <summary>
             /// A <see cref="IEnumerable{T}"/> out of an array.

@@ -85,7 +85,9 @@ namespace Yaapii.Atoms.Enumerable
                 }
 
                 return result;
-            }))
+            }),
+            false
+        )
         { }
     }
 }

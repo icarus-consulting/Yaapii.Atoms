@@ -43,7 +43,8 @@ namespace Yaapii.Atoms.Enumerable
         public Endless(T elm) : base(() => 
             new Many.Live<T>(() =>
                 new Enumerator.Endless<T>(elm)
-            )
+            ),
+            false
         )
         { }
     }

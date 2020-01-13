@@ -22,7 +22,7 @@
 
 using System;
 using System.Collections;
-using Yaapii.Atoms.Enumerator;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable
 {
@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Enumerable
     /// </summary>
     public sealed class LengthOf : IScalar<Int32>
     {
-        private readonly IEnumerable items;
+        private readonly Sticky<Int32> result;
 
         /// <summary>
         /// Length of an <see cref="IEnumerable"/>
@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="items">the enumerable</param>
         public LengthOf(IEnumerable items)
         {
-            this.items = items;
+            this.result = new Sticky<Int32>(() => new Enumerator.LengthOf(items.GetEnumerator()).Value());
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <returns>the length</returns>
         public Int32 Value()
         {
-            return new Enumerator.LengthOf(this.items.GetEnumerator()).Value();
+            return this.result.Value();
         }
 
     }

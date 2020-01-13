@@ -40,7 +40,8 @@ namespace Yaapii.Atoms.Enumerable
         public Cycled(IEnumerable<T> enumerable) : base(() =>
             new Many.Live<T>(() =>
                 new Enumerator.Cycled<T>(enumerable)
-            )
+            ),
+            false
         )
         { }
     }

@@ -49,9 +49,10 @@ namespace Yaapii.Atoms.Enumerable
                     new Mapped<IEnumerable<T>, IEnumerator<T>>(
                         (e) => e.GetEnumerator(),
                         enumerables
-                        )
                     )
                 )
+            ),
+            false
         )
         { }
     }

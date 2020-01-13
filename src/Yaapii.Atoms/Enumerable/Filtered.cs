@@ -36,16 +36,6 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class Filtered<T> : Many.Envelope<T>
     {
         /// <summary>
-        /// the enumerable to filter
-        /// </summary>
-        private readonly IEnumerable<T> enumerable;
-
-        /// <summary>
-        /// filter function
-        /// </summary>
-        private readonly Func<T, Boolean> func;
-
-        /// <summary>
         /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
         /// </summary>
         /// <param name="fnc">filter function</param>
@@ -77,12 +67,10 @@ namespace Yaapii.Atoms.Enumerable
                     src.GetEnumerator(),
                     fnc
                 )
-            )
+            ),
+            false
         )
-        {
-            this.enumerable = src;
-            this.func = fnc;
-        }
+        { }
     }
 }
 #pragma warning restore NoGetOrSet // No Statics

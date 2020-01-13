@@ -20,12 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -46,7 +41,8 @@ namespace Yaapii.Atoms.Enumerable
         public Skipped(IEnumerable<T> enumerable, int skip) : base(() =>
             new Many.Live<T>(() =>
                 new Enumerator.Skipped<T>(enumerable.GetEnumerator(), skip)
-            )
+            ),
+            false
         )
         { }
     }

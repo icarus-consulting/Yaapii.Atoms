@@ -106,19 +106,19 @@ namespace Yaapii.Atoms.Enumerable
         public abstract class Envelope<T> : IEnumerable<T>
         {
             private readonly bool live;
-            private readonly Sticky<IEnumerable<T>> origin;
-            private readonly Func<IEnumerable<T>> originLive;
+            private readonly Sticky<IEnumerable<T>> fixedOrigin;
+            private readonly Func<IEnumerable<T>> origin;
 
             /// <summary>
             /// Envelope for Enumerable.
             /// </summary>
-            public Envelope(IScalar<IEnumerable<T>> fnc, bool live = false) : this(() => fnc.Value(), live)
+            public Envelope(IScalar<IEnumerable<T>> fnc, bool live) : this(() => fnc.Value(), live)
             { }
 
             /// <summary>
             /// Envelope for Enumerable.
             /// </summary>
-            public Envelope(Func<IEnumerator<T>> origin, bool live = false) : this(
+            public Envelope(Func<IEnumerator<T>> origin, bool live) : this(
                 () =>
                 {
                     var lst = new List<T>();
@@ -128,7 +128,8 @@ namespace Yaapii.Atoms.Enumerable
                         lst.Add(enm.Current);
                     }
                     return lst;
-                }
+                },
+                live
             )
             { }
 
@@ -137,11 +138,11 @@ namespace Yaapii.Atoms.Enumerable
             /// </summary>
             /// <param name="origin">How to get the enumerator</param>
             /// <param name="live">Should the object build the enumerator live, every time it is used?</param>
-            public Envelope(Func<IEnumerable<T>> origin, bool live = false)
+            public Envelope(Func<IEnumerable<T>> origin, bool live)
             {
                 this.live = live;
-                this.origin = new Sticky<IEnumerable<T>>(origin);
-                this.originLive = origin;
+                this.fixedOrigin = new Sticky<IEnumerable<T>>(origin);
+                this.origin = origin;
             }
 
             /// <summary>
@@ -150,7 +151,16 @@ namespace Yaapii.Atoms.Enumerable
             /// <returns>The enumerator</returns>
             public IEnumerator<T> GetEnumerator()
             {
-                return this.origin.Value().GetEnumerator();
+                IEnumerator<T> result;
+                if (this.live)
+                {
+                    result = this.origin().GetEnumerator();
+                }
+                else
+                {
+                    result = this.fixedOrigin.Value().GetEnumerator();
+                }
+                return result;
             }
 
             /// <summary>

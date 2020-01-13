@@ -34,34 +34,38 @@ namespace Yaapii.Atoms.Enumerable
         /// Union objects in two enumerables.
         /// </summary>
         public Union(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> compare) : base(() =>
-        {
-            var result = new List<T>();
-            foreach (var item in b)
             {
-                if (new Contains<T>(a, compare).Value())
+                var result = new List<T>();
+                foreach (var item in b)
                 {
-                    result.Add(item);
+                    if (new Contains<T>(a, compare).Value())
+                    {
+                        result.Add(item);
+                    }
                 }
-            }
-            return result;
-        })
+                return result;
+            },
+            false
+        )
         { }
 
         /// <summary>
         /// Union objects in two enumerables.
         /// </summary>
         public Union(IEnumerable<T> a, IEnumerable<T> b) : base(() =>
-        {
-            var result = new List<T>();
-            foreach (var item in b)
             {
-                if (new Contains<T>(a, item).Value())
+                var result = new List<T>();
+                foreach (var item in b)
                 {
-                    result.Add(item);
+                    if (new Contains<T>(a, item).Value())
+                    {
+                        result.Add(item);
+                    }
                 }
-            }
-            return result;
-        })
+                return result;
+            },
+            false
+        )
         { }
 
         /// <summary>

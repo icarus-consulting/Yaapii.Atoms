@@ -40,12 +40,13 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to reverse</param>
         public Reversed(IEnumerable<X> src) : base(() =>
             new Many.Live<X>(() =>
-                {
-                    var lst = src.ToList<X>();
-                    lst.Reverse();
-                    return lst.GetEnumerator();
-                })
-            )
+            {
+                var lst = src.ToList<X>();
+                lst.Reverse();
+                return lst.GetEnumerator();
+            }),
+            false
+        )
         { }
     }
 }

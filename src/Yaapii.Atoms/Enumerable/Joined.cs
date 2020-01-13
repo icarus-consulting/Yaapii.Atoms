@@ -68,7 +68,8 @@ namespace Yaapii.Atoms.Enumerable
                         items //List with enumerators
                     )
                 )
-            )
+            ),
+            false
         )
         { }
     }

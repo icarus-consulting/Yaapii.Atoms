@@ -21,11 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -60,7 +56,8 @@ namespace Yaapii.Atoms.Enumerable
         public Sorted(Comparer<T> cmp, IEnumerable<T> src) : base(() =>
             new Many.Live<T>(() =>
                 new Enumerator.Sorted<T>(cmp, src.GetEnumerator())
-            )
+            ),
+            false
         )
         { }
     }

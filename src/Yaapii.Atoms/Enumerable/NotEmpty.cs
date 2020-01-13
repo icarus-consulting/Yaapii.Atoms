@@ -56,8 +56,9 @@ namespace Yaapii.Atoms.Enumerable
                     ex).Go();
                 
                 return origin;
-            }
-            ))
+            }),
+            false
+        )
         { }
     }
 }
