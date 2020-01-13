@@ -75,8 +75,10 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new Distinct<string>(
                     new Many.Of<string>("test", "test")
                 );
-            Assert.True(
-                new LengthOf(dst).Value() == new LengthOf(dst).Value());
+            Assert.Equal(
+                new LengthOf(dst).Value(),
+                new LengthOf(dst).Value()
+            );
         }
     }
 }

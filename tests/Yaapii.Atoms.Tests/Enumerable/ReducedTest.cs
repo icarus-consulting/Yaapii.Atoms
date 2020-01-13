@@ -27,7 +27,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
     public sealed class ReducedTest
     {
         [Fact]
-        public void SkipIterable()
+        public void Reduces()
         {
             Assert.Equal(
                 24,

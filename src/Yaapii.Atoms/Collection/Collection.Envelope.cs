@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Collection
             /// <summary>
             /// scalar of collection
             /// </summary>
-            private readonly UnsupportedOperationException _readonlyError = new UnsupportedOperationException("The collection is readonly");
+            private readonly UnsupportedOperationException readonlyError = new UnsupportedOperationException("The collection is readonly");
             private readonly IScalar<ICollection<T>> origin;
             private readonly Scalar.Sticky<ICollection<T>> fixedOrigin;
             private readonly bool live;
@@ -89,7 +89,7 @@ namespace Yaapii.Atoms.Collection
             /// <param name="item">Item to add</param>
             public void Add(T item)
             {
-                throw this._readonlyError;
+                throw this.readonlyError;
             }
 
             /// <summary>
@@ -97,7 +97,7 @@ namespace Yaapii.Atoms.Collection
             /// </summary>
             public void Clear()
             {
-                throw this._readonlyError;
+                throw this.readonlyError;
             }
 
             /// <summary>
@@ -136,7 +136,7 @@ namespace Yaapii.Atoms.Collection
             /// <returns>True if success</returns>
             public bool Remove(T item)
             {
-                throw this._readonlyError;
+                throw this.readonlyError;
             }
 
             /// <summary>

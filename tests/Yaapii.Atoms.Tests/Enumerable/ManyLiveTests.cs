@@ -46,25 +46,25 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new Many.Live<IText>(
-                        new Text.Live("a"), new Text.Live("b"), new Text.Live("c")
+                        new Text.Live("a"), 
+                        new Text.Live("b"), 
+                        new Text.Live("c")
                     )
-                ).Value() == 3,
-            "Can't convert objects to enumerable");
+                ).Value() == 3
+            );
         }
 
         [Fact]
         public void SensesChanges()
         {
             var lst = new List<string>();
-            var length =
-                new LengthOf(
-                    new Many.Live<string>(() =>
-                    {
-                        lst.Add("something");
-                        return lst;
-                    })
-                );
-            Assert.NotEqual(length.Value(), length.Value());
+            var live =
+                new Many.Live<string>(() =>
+                {
+                    lst.Add("something");
+                    return lst;
+                });
+            Assert.NotEqual(new LengthOf(live).Value(), new LengthOf(live).Value());
         }
     }
 

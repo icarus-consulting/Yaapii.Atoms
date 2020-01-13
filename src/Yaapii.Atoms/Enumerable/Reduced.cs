@@ -60,9 +60,8 @@ namespace Yaapii.Atoms.Enumerable
                     if (!enm.MoveNext()) throw new ArgumentException($"Cannot reduce, at least one element is needed but the enumerable is empty.");
                     T result = enm.Current;
                     while(enm.MoveNext())
-                    foreach (T element in elements)
                     {
-                        result = fnc.Invoke(result, element);
+                        result = fnc.Invoke(result, enm.Current);
                     }
                     return result;
                 });

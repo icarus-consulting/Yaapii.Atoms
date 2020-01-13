@@ -67,8 +67,10 @@ namespace Yaapii.Atoms.Enumerable
             /// </summary>
             /// <param name="origin">scalar to return the IEnumerator</param>
             public Live(IScalar<IEnumerator<T>> origin) : base(
-                new ScalarOf<IEnumerable<T>>(() => new LiveEnumeratorAsEnumerable<T>(origin.Value())),
-                false
+                new ScalarOf<IEnumerable<T>>(
+                    () => new LiveEnumeratorAsEnumerable<T>(origin.Value())
+                ),
+                true
             )
             { }
 

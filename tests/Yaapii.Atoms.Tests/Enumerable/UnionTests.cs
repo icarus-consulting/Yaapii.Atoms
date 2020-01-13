@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace Yaapii.Atoms.Enumerable.Test
+namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class UnionTests
     {

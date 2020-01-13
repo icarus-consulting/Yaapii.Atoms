@@ -46,7 +46,9 @@ namespace Yaapii.Atoms.Collection.Tests
                 new LengthOf(
                     new NotEmpty<bool>(
                         new Collection.Live<bool>(false)
-                    )).Value());
+                    )
+                ).Value()
+            );
         }
 
         [Fact]
@@ -57,7 +59,9 @@ namespace Yaapii.Atoms.Collection.Tests
                     new NotEmpty<bool>(
                         new Collection.Live<bool>(),
                         new OperationCanceledException()
-                    )).Value());
+                    )
+                ).Value()
+            );
         }
     }
 }
