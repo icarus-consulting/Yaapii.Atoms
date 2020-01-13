@@ -38,10 +38,8 @@ namespace Yaapii.Atoms.Texts
         /// <summary>
         /// A <see cref="IText"/> out of other objects.
         /// </summary>
-        public sealed class Of : IText
+        public sealed class Of : Text.Envelope
         {
-            private readonly Lazy<String> origin;
-
             /// <summary>
             /// A <see cref="IText"/> out of a int.
             /// </summary>
@@ -300,19 +298,8 @@ namespace Yaapii.Atoms.Texts
             /// A <see cref="IText"/> out of encapsulating <see cref="IScalar{T}"/>.
             /// </summary>
             /// <param name="txt">scalar of a string</param>
-            public Of(Func<String> txt)
-            {
-                this.origin = new Lazy<string>(txt);
-            }
-
-            /// <summary>
-            /// Gives the text as a string.
-            /// </summary>
-            /// <returns></returns>
-            public String AsString()
-            {
-                return this.origin.Value;
-            }
+            public Of(Func<String> txt) : base(txt, false)
+            { }
         }
     }
 }

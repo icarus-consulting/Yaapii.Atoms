@@ -38,10 +38,8 @@ namespace Yaapii.Atoms.Texts
         /// <summary>
         /// A <see cref="IText"/> out of other objects.
         /// </summary>
-        public sealed class Live : IText
+        public sealed class Live : Text.Envelope
         {
-            private readonly Func<String> origin;
-
             /// <summary>
             /// A <see cref="IText"/> out of a int.
             /// </summary>
@@ -299,20 +297,9 @@ namespace Yaapii.Atoms.Texts
             /// <summary>
             /// A <see cref="IText"/> out of encapsulating <see cref="IScalar{T}"/>.
             /// </summary>
-            /// <param name="txt">scalar of a string</param>
-            public Live(Func<String> txt)
-            {
-                this.origin = txt;
-            }
-
-            /// <summary>
-            /// Gives the text as a string.
-            /// </summary>
-            /// <returns></returns>
-            public String AsString()
-            {
-                return this.origin();
-            }
+            /// <param name="txt">func building a of a string</param>
+            public Live(Func<String> txt) : base(txt, true)
+            { }
         }
     }
 }
