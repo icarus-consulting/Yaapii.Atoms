@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Lookup
                     items.Sort(cmp);
                     return new Map.Of<Key, Value>(items);
                 },
-                true
+                false
             )
         { }
     }
@@ -95,7 +95,7 @@ namespace Yaapii.Atoms.Lookup
                     items.Sort(cmp);
                     return new Map.Of<string, Value>(items);
                 },
-                true
+                false
             )
         { }
     }
@@ -141,7 +141,7 @@ namespace Yaapii.Atoms.Lookup
                     items.Sort(cmp);
                     return new Map.Of<string, string>(items);
                 },
-                true
+                false
             )
         { }
     }
