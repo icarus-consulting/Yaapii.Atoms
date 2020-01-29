@@ -19,6 +19,15 @@ namespace Yaapii.Atoms.Lookup
         { }
 
         /// <summary>
+        /// Sorts the given map with the given key compare function
+        /// </summary>
+        /// <param name="pairs">Map elements to be sorted</param>
+        /// <param name="compare">Function to compare two keys</param>
+        public Sorted(IEnumerable<KeyValuePair<Key, Value>> pairs, Func<Key, Key, int> compare)
+            : this(pairs, new SimpleComparer<Key>(compare))
+        { }
+
+        /// <summary>
         /// Sorts the given map with the given compare function
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
@@ -65,6 +74,15 @@ namespace Yaapii.Atoms.Lookup
         { }
 
         /// <summary>
+        /// Sorts the given map with the given key compare function
+        /// </summary>
+        /// <param name="pairs">Map elements to be sorted</param>
+        /// <param name="compare">Function to compare two keys</param>
+        public Sorted(IEnumerable<KeyValuePair<string, Value>> pairs, Func<string, string, int> compare)
+            : this(pairs, new SimpleComparer<string>(compare))
+        { }
+
+        /// <summary>
         /// Sorts the given map with the given compare function
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
@@ -108,6 +126,15 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="pairs">Map elements to be sorted</param>
         public Sorted(IEnumerable<KeyValuePair<string, string>> pairs)
             : this(pairs, Comparer<string>.Default)
+        { }
+
+        /// <summary>
+        /// Sorts the given map with the given key compare function
+        /// </summary>
+        /// <param name="pairs">Map elements to be sorted</param>
+        /// <param name="compare">Function to compare two keys</param>
+        public Sorted(IEnumerable<KeyValuePair<string, string>> pairs, Func<string, string, int> compare)
+            : this(pairs, new SimpleComparer<string>(compare))
         { }
 
         /// <summary>
