@@ -6,6 +6,9 @@ using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Texts
 {
+    /// <summary>
+    /// A paragraph which seperates the given lines by a carriage return.
+    /// </summary>
     public sealed class Paragraph : Text.Envelope
     {
         #region string head, IEnumerable<string> lines, params string[] tail
