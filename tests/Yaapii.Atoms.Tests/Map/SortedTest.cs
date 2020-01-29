@@ -54,5 +54,28 @@ namespace Yaapii.Atoms.Lookup.Tests
             Assert.Equal(4, sortedArr[1].Value);
             Assert.Equal(3, sortedArr[2].Value);
         }
+
+        [Fact]
+        public void DoesNotBuildValueWhenNotNeeded()
+        {
+            var unsorted = new Dictionary<int, Func<int>>()
+            {
+                {1, () => { throw new Exception("i shall not be called"); } },
+                {6, () => { throw new Exception("i shall not be called"); } },
+                {-5, () => { throw new Exception("i shall not be called"); } }
+            };
+
+            var sorted = new Sorted<int, Func<int>>(unsorted);
+
+            var sortedArr = new KeyValuePair<int, Func<int>>[3];
+            sorted.CopyTo(sortedArr, 0);
+
+            Assert.Equal(-5, sortedArr[0].Key);
+            Assert.Equal(1, sortedArr[1].Key);
+            Assert.Equal(6, sortedArr[2].Key);
+
+            var ex = Assert.Throws<Exception>(() => sortedArr[0].Value());
+            Assert.Equal("i shall not be called", ex.Message);
+        }
     }
 }
