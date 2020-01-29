@@ -9,14 +9,14 @@ namespace Yaapii.Atoms.Texts.Tests
     public sealed class ParagraphTest
     {
         [Fact]
-        public void ParamsStringWorks()
+        public void BuildsWithParamsString()
         {
             var p = new Paragraph("a", "b", "c");
             Assert.Equal("a\nb\nc".Replace("\n", Environment.NewLine), p.AsString());
         }
 
         [Fact]
-        public void IEnumITextWorks()
+        public void BuildsWithITextEnumerable()
         {
             var p = new Paragraph(
                 new Many.Live<IText>(
