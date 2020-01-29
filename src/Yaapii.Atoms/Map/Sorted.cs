@@ -146,10 +146,18 @@ namespace Yaapii.Atoms.Lookup
         { }
     }
 
+    /// <summary>
+    /// Simple Comparer comparing two elements
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     internal sealed class SimpleComparer<T> : IComparer<T>
     {
         private readonly Func<T, T, int> compare;
 
+        /// <summary>
+        /// Comparer from a function comparing two elements
+        /// </summary>
+        /// <param name="compare">Function comparing two elements</param>
         public SimpleComparer(Func<T, T, int> compare)
         {
             this.compare = compare;
@@ -161,10 +169,18 @@ namespace Yaapii.Atoms.Lookup
         }
     }
 
+    /// <summary>
+    /// Comparer comparing two KeyValuePairs by key
+    /// </summary>
+    /// <param name="cmp">Comparer compairing the key type</param>
     internal sealed class KeyComparer<Key, Value> : IComparer<KeyValuePair<Key, Value>>
     {
         private readonly IComparer<Key> cmp;
 
+        /// <summary>
+        /// Comparer comparing two KeyValuePairs by key
+        /// </summary>
+        /// <param name="cmp">Comparer compairing the key type</param>
         public KeyComparer(IComparer<Key> cmp)
         {
             this.cmp = cmp;
