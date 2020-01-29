@@ -24,7 +24,7 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two elements</param>
         public Sorted(IEnumerable<KeyValuePair<Key, Value>> pairs, Func<KeyValuePair<Key, Value>, KeyValuePair<Key, Value>, int> compare)
-            : this(pairs, new ComparerFunc<KeyValuePair<Key, Value>>(compare))
+            : this(pairs, new SimpleComparer<KeyValuePair<Key, Value>>(compare))
         { }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two elements</param>
         public Sorted(IEnumerable<KeyValuePair<string, Value>> pairs, Func<KeyValuePair<string, Value>, KeyValuePair<string, Value>, int> compare)
-            : this(pairs, new ComparerFunc<KeyValuePair<string, Value>>(compare))
+            : this(pairs, new SimpleComparer<KeyValuePair<string, Value>>(compare))
         { }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two elements</param>
         public Sorted(IEnumerable<KeyValuePair<string, string>> pairs, Func<KeyValuePair<string, string>, KeyValuePair<string, string>, int> compare)
-            : this(pairs, new ComparerFunc<KeyValuePair<string, string>>(compare))
+            : this(pairs, new SimpleComparer<KeyValuePair<string, string>>(compare))
         { }
 
         /// <summary>
@@ -146,11 +146,11 @@ namespace Yaapii.Atoms.Lookup
         { }
     }
 
-    internal sealed class ComparerFunc<T> : IComparer<T>
+    internal sealed class SimpleComparer<T> : IComparer<T>
     {
         private readonly Func<T, T, int> compare;
 
-        public ComparerFunc(Func<T, T, int> compare)
+        public SimpleComparer(Func<T, T, int> compare)
         {
             this.compare = compare;
         }
