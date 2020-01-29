@@ -63,6 +63,10 @@ namespace Yaapii.Atoms.Lookup
         { }
     }
 
+    /// <summary>
+    /// Sorts the given map with the given comparer
+    /// </summary>
+    /// <typeparam name="Value">Value Type of the Map</typeparam>
     public sealed class Sorted<Value> : Map.Envelope<Value>
     {
         /// <summary>
@@ -118,6 +122,9 @@ namespace Yaapii.Atoms.Lookup
         { }
     }
 
+    /// <summary>
+    /// Sorts the given map with the given comparer
+    /// </summary>
     public sealed class Sorted : Map.Envelope
     {
         /// <summary>
@@ -176,7 +183,7 @@ namespace Yaapii.Atoms.Lookup
     /// <summary>
     /// Simple Comparer comparing two elements
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Type of the elements</typeparam>
     internal sealed class SimpleComparer<T> : IComparer<T>
     {
         private readonly Func<T, T, int> compare;
@@ -199,7 +206,8 @@ namespace Yaapii.Atoms.Lookup
     /// <summary>
     /// Comparer comparing two KeyValuePairs by key
     /// </summary>
-    /// <param name="cmp">Comparer compairing the key type</param>
+    /// <typeparam name="Key">Key Type</typeparam>
+    /// <typeparam name="Value">Value Type</typeparam>
     internal sealed class KeyComparer<Key, Value> : IComparer<KeyValuePair<Key, Value>>
     {
         private readonly IComparer<Key> cmp;
