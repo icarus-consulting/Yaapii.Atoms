@@ -6,10 +6,8 @@ using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Texts
 {
-    public sealed class Paragraph : IText
+    public sealed class Paragraph : Text.Envelope
     {
-        private readonly Sticky<string> result;
-
         #region string head, IEnumerable<string> lines, params string[] tail
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
@@ -866,19 +864,7 @@ namespace Yaapii.Atoms.Texts
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
         public Paragraph(IEnumerable<IText> lines)
-        {
-            this.result =
-                new Sticky<string>(() =>
-                    new Joined(Environment.NewLine, lines).AsString()
-                );
-        }
-        public string AsString()
-        {
-            return this.result.Value();
-        }
-        public bool Equals(IText other)
-        {
-            return other.AsString().Equals(this.AsString());
-        }
+            : base(new Joined(Environment.NewLine, lines), false)
+        { }
     }
 }
