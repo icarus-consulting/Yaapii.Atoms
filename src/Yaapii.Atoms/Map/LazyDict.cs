@@ -188,7 +188,7 @@ namespace Yaapii.Atoms.Lookup
                         ).AsString());
             }
 
-            new List.Live<KeyValuePair<string, string>>(this).CopyTo(array, arrayIndex);
+            new List.Of<KeyValuePair<string, string>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -414,7 +414,7 @@ namespace Yaapii.Atoms.Lookup
                         ).AsString());
             }
 
-            new List.Live<KeyValuePair<string, Value>>(this).CopyTo(array, arrayIndex);
+            new List.Of<KeyValuePair<string, Value>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -642,7 +642,7 @@ namespace Yaapii.Atoms.Lookup
                         ).AsString());
             }
 
-            new List.Live<KeyValuePair<Key, Value>>(this).CopyTo(array, arrayIndex);
+            new List.Of<KeyValuePair<Key, Value>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
