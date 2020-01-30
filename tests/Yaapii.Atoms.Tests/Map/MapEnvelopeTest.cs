@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -46,6 +47,24 @@ namespace Yaapii.Atoms.Lookup.Tests
             int outValue;
             Assert.False(map.TryGetValue(0, out outValue));
         }
+
+        [Fact]
+        public void GetValueWithExistingKey()
+        {
+            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
+            var outValue = map[7];
+            Assert.Equal(42, outValue);
+        }
+
+        [Fact]
+        public void GetValueWithMissingKey()
+        {
+            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
+
+            var ex = Assert.Throws<ArgumentException>(() => map[0]);
+            Assert.Equal("The key '0' is not present in the map.", ex.Message);
+        }
+
 
         private class NonAbstractEnvelope : Map.Envelope<int, int>
         {
