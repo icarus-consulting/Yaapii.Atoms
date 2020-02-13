@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Lookup
 {
@@ -10,6 +11,23 @@ namespace Yaapii.Atoms.Lookup
     /// <typeparam name="Value">Value Type of the Map</typeparam>
     public sealed class Sorted<Key, Value> : Map.Envelope<Key, Value>
     {
+        /// <summary>
+        /// Sorts the given map with the default comperator of the key
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        public Sorted(IDictionary<Key, Value> dict)
+            : this(dict, Comparer<Key>.Default)
+        { }
+
+        /// <summary>
+        /// Sorts the given map with the given compare function
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        /// <param name="compare">Function to compare two keys</param>
+        public Sorted(IDictionary<Key, Value> dict, Func<Key, Key, int> compare)
+            : this(dict, new SimpleComparer<Key>(compare))
+        { }
+
         /// <summary>
         /// Sorts the given map with the default comperator of the key
         /// </summary>
@@ -61,6 +79,29 @@ namespace Yaapii.Atoms.Lookup
                 false
             )
         { }
+
+        /// <summary>
+        /// Sorts the given map with the given comparer
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        /// <param name="cmp">Comparer comparing keys</param>
+        public Sorted(IDictionary<Key, Value> dict, IComparer<Key> cmp)
+            : base(
+                () =>
+                {
+                    var keys = new List<Key>(dict.Keys);
+                    keys.Sort(cmp);
+                    var result = new LazyDict<Key, Value>(
+                        new Mapped<Key, IKvp<Key, Value>>(
+                            key => new Kvp.Of<Key, Value>(key, () => dict[key]),
+                            keys
+                        )
+                    );
+                    return result;
+                },
+                false
+            )
+        { }
     }
 
     /// <summary>
@@ -69,6 +110,23 @@ namespace Yaapii.Atoms.Lookup
     /// <typeparam name="Value">Value Type of the Map</typeparam>
     public sealed class Sorted<Value> : Map.Envelope<Value>
     {
+        /// <summary>
+        /// Sorts the given map with the default comperator of the key
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        public Sorted(IDictionary<string, Value> dict)
+            : this(dict, Comparer<string>.Default)
+        { }
+
+        /// <summary>
+        /// Sorts the given map with the given compare function
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        /// <param name="compare">Function to compare two keys</param>
+        public Sorted(IDictionary<string, Value> dict, Func<string, string, int> compare)
+            : this(dict, new SimpleComparer<string>(compare))
+        { }
+
         /// <summary>
         /// Sorts the given map with the default comperator of the key
         /// </summary>
@@ -120,6 +178,29 @@ namespace Yaapii.Atoms.Lookup
                 false
             )
         { }
+
+        /// <summary>
+        /// Sorts the given map with the given comparer
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        /// <param name="cmp">Comparer comparing keys</param>
+        public Sorted(IDictionary<string, Value> dict, IComparer<string> cmp)
+            : base(
+                () =>
+                {
+                    var keys = new List<string>(dict.Keys);
+                    keys.Sort(cmp);
+                    var result = new LazyDict<string, Value>(
+                        new Mapped<string, IKvp<string, Value>>(
+                            key => new Kvp.Of<string, Value>(key, () => dict[key]),
+                            keys
+                        )
+                    );
+                    return result;
+                },
+                false
+            )
+        { }
     }
 
     /// <summary>
@@ -127,6 +208,23 @@ namespace Yaapii.Atoms.Lookup
     /// </summary>
     public sealed class Sorted : Map.Envelope
     {
+        /// <summary>
+        /// Sorts the given map with the default comperator of the key
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        public Sorted(IDictionary<string, string> dict)
+            : this(dict, Comparer<string>.Default)
+        { }
+
+        /// <summary>
+        /// Sorts the given map with the given compare function
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        /// <param name="compare">Function to compare two keys</param>
+        public Sorted(IDictionary<string, string> dict, Func<string, string, int> compare)
+            : this(dict, new SimpleComparer<string>(compare))
+        { }
+
         /// <summary>
         /// Sorts the given map with the default comperator of the key
         /// </summary>
@@ -174,6 +272,29 @@ namespace Yaapii.Atoms.Lookup
                     var items = new List<KeyValuePair<string, string>>(pairs);
                     items.Sort(cmp);
                     return new Map.Of<string, string>(items);
+                },
+                false
+            )
+        { }
+
+        /// <summary>
+        /// Sorts the given map with the given comparer
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        /// <param name="cmp">Comparer comparing keys</param>
+        public Sorted(IDictionary<string, string> dict, IComparer<string> cmp)
+            : base(
+                () =>
+                {
+                    var keys = new List<string>(dict.Keys);
+                    keys.Sort(cmp);
+                    var result = new LazyDict<string, string>(
+                        new Mapped<string, IKvp<string, string>>(
+                            key => new Kvp.Of<string, string>(key, () => dict[key]),
+                            keys
+                        )
+                    );
+                    return result;
                 },
                 false
             )
