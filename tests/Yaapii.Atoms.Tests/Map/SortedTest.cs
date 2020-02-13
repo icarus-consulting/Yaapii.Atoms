@@ -7,6 +7,41 @@ namespace Yaapii.Atoms.Lookup.Tests
 {
     public sealed class SortedTest
     {
+        [Theory]
+        [InlineData(1, 4)]
+        [InlineData(6, 3)]
+        [InlineData(-5, 2)]
+        public void ValueStillBehindCorrectKeyDict(int key, int expectedValue)
+        {
+            var unsorted = new Dictionary<int, int>()
+            {
+                {1, 4 },
+                {6, 3 },
+                {-5, 2}
+            };
+
+            Assert.Equal(expectedValue, unsorted[key]);
+            var sorted = new Sorted<int, int>(unsorted);
+            Assert.Equal(expectedValue, sorted[key]);
+        }
+
+        [Theory]
+        [InlineData(1, 4)]
+        [InlineData(6, 3)]
+        [InlineData(-5, 2)]
+        public void ValueStillBehindCorrectKeyIEnumerableKeyValuePairs(int key, int expectedValue)
+        {
+            var unsorted = new List<KeyValuePair<int, int>>()
+            {
+                new KeyValuePair<int, int>(1, 4),
+                new KeyValuePair<int, int>(6, 3),
+                new KeyValuePair<int, int>(-5, 2)
+            };
+
+            var sorted = new Sorted<int, int>(unsorted);
+            Assert.Equal(expectedValue, sorted[key]);
+        }
+
         [Fact]
         public void SortsByFunction()
         {
