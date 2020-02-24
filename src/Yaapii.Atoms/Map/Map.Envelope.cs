@@ -56,13 +56,15 @@ namespace Yaapii.Atoms.Lookup
             {
                 get
                 {
+                    var val = Val();
                     try
                     {
-                        return Val()[key];
+                        return val[key];
                     }
                     catch (KeyNotFoundException)
                     {
-                        throw new ArgumentException($"The key '{key}' is not present in the map.");
+                        var keysString = new Texts.Joined(", ", val.Keys).AsString();
+                        throw new ArgumentException($"The key '{key}' is not present in the map. The following keys are present in the map: {keysString}");
                     }
                 }
                 set => throw this.rejectWriteExc;
@@ -172,13 +174,15 @@ namespace Yaapii.Atoms.Lookup
             {
                 get
                 {
+                    var val = Val();
                     try
                     {
-                        return Val()[key];
+                        return val[key];
                     }
                     catch (KeyNotFoundException)
                     {
-                        throw new ArgumentException($"The key '{key}' is not present in the map.");
+                        var keysString = new Texts.Joined(", ", val.Keys).AsString();
+                        throw new ArgumentException($"The key '{key}' is not present in the map. The following keys are present in the map: {keysString}");
                     }
                 }
                 set => throw this.rejectWriteExc;
@@ -288,13 +292,18 @@ namespace Yaapii.Atoms.Lookup
             {
                 get
                 {
+                    var val = Val();
                     try
                     {
-                        return Val()[key];
+                        return val[key];
                     }
                     catch (KeyNotFoundException)
                     {
-                        throw new ArgumentException($"The key '{key}' is not present in the map.");
+                        var keysString = new Texts.Joined(
+                            ", ",
+                            new Enumerable.Mapped<Key, string>(k => k.ToString(), val.Keys)
+                        ).AsString();
+                        throw new ArgumentException($"The key '{key}' is not present in the map. The following keys are present in the map: {keysString}");
                     }
                 }
                 set => throw this.rejectWriteExc;

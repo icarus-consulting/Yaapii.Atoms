@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void TryGetValueWithExistingKey()
         {
 
-            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
+            var map = new NonAbstractIntEnvelope(new Dictionary<int, int> { { 7, 42 } });
             int outValue;
             Assert.True(map.TryGetValue(7, out outValue));
             Assert.Equal(42, outValue);
@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void TryGetValueWithMissingKey()
         {
 
-            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
+            var map = new NonAbstractIntEnvelope(new Dictionary<int, int> { { 7, 42 } });
             int outValue;
             Assert.False(map.TryGetValue(0, out outValue));
         }
@@ -51,24 +51,38 @@ namespace Yaapii.Atoms.Lookup.Tests
         [Fact]
         public void GetValueWithExistingKey()
         {
-            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
+            var map = new NonAbstractIntEnvelope(new Dictionary<int, int> { { 7, 42 } });
             var outValue = map[7];
             Assert.Equal(42, outValue);
         }
 
         [Fact]
-        public void GetValueWithMissingKey()
+        public void GetsValueWithMissingKeyOnIntKey()
         {
-            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
+            var map = new NonAbstractIntEnvelope(new Dictionary<int, int> { { 7, 42 } });
 
             var ex = Assert.Throws<ArgumentException>(() => map[0]);
-            Assert.Equal("The key '0' is not present in the map.", ex.Message);
+            Assert.Equal("The key '0' is not present in the map. The following keys are present in the map: 7", ex.Message);
         }
 
-
-        private class NonAbstractEnvelope : Map.Envelope<int, int>
+        [Fact]
+        public void GetsValueWithMissingKeyOnStringKey()
         {
-            public NonAbstractEnvelope(IDictionary<int, int> map, bool live = false) : base(() => map, live)
+            var map = new NonAbstractStringEnvelope(new Dictionary<string, string> { { "foo", "bar" } });
+
+            var ex = Assert.Throws<ArgumentException>(() => map["wisdom"]);
+            Assert.Equal("The key 'wisdom' is not present in the map. The following keys are present in the map: foo", ex.Message);
+        }
+
+        private class NonAbstractIntEnvelope : Map.Envelope<int, int>
+        {
+            public NonAbstractIntEnvelope(IDictionary<int, int> map, bool live = false) : base(() => map, live)
+            { }
+        }
+
+        private class NonAbstractStringEnvelope : Map.Envelope
+        {
+            public NonAbstractStringEnvelope(IDictionary<string, string> map, bool live = false) : base(() => map, live)
             { }
         }
     }
