@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         }
 
         [Fact]
-        public void GetValueWithExistingKey()
+        public void GetsValueWithExistingKey()
         {
             var map = new FallbackMap<int, int>(new Dictionary<int, int> { { 7, 42 } }, i => { throw new Exception("dont call fallback when value exists"); });
             var outValue = map[7];
@@ -54,11 +54,34 @@ namespace Yaapii.Atoms.Lookup.Tests
         }
 
         [Fact]
-        public void GetValueWithMissingKey()
+        public void GetsValueWithMissingKey()
         {
             var map = new FallbackMap<int, int>(new Dictionary<int, int> { { 7, 42 } }, key => key * 2);
             var outValue = map[2];
             Assert.Equal(4, outValue);
+        }
+
+        [Fact]
+        public void GetsValueFromFallbackMap()
+        {
+            var map = new FallbackMap<int, int>(
+                new Dictionary<int, int> { { 7, 42 } },
+                new Dictionary<int, int> { { 13, 37 } }
+            );
+
+            var outValue = map[13];
+            Assert.Equal(37, outValue);
+        }
+
+        [Fact]
+        public void DoesNotGetValueWhenAlsoMissingInFallbackMap()
+        {
+            var map = new FallbackMap<int, int>(
+                new Dictionary<int, int> { { 7, 42 } },
+                new Dictionary<int, int> { { 13, 37 } }
+            );
+
+            Assert.Throws<KeyNotFoundException>(() => map[666]);
         }
     }
 }
