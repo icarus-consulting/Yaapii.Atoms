@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             var map = new NonAbstractIntEnvelope(new Dictionary<int, int> { { 7, 42 } });
 
             var ex = Assert.Throws<ArgumentException>(() => map[0]);
-            Assert.Equal("The key '0' is not present in the map. The following keys are present in the map: 7", ex.Message);
+            Assert.Equal("The requested key is not present in the map.", ex.Message);
         }
 
         [Fact]

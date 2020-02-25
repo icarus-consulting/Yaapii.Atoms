@@ -292,18 +292,13 @@ namespace Yaapii.Atoms.Lookup
             {
                 get
                 {
-                    var val = Val();
                     try
                     {
-                        return val[key];
+                        return Val()[key];
                     }
                     catch (KeyNotFoundException)
                     {
-                        var keysString = new Texts.Joined(
-                            ", ",
-                            new Enumerable.Mapped<Key, string>(k => k.ToString(), val.Keys)
-                        ).AsString();
-                        throw new ArgumentException($"The key '{key}' is not present in the map. The following keys are present in the map: {keysString}");
+                        throw new ArgumentException("The requested key is not present in the map.");
                     }
                 }
                 set => throw this.rejectWriteExc;
