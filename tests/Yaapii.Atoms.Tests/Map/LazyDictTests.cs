@@ -53,6 +53,11 @@ namespace Yaapii.Atoms.Lookup.Tests
             {
                 return key;
             }
+
+            public bool IsLazy()
+            {
+                return true;
+            }
         }
     }
 }

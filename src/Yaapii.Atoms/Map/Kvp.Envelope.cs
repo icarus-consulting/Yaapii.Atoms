@@ -46,6 +46,11 @@ namespace Yaapii.Atoms.Lookup
             {
                 return this.origin.Value();
             }
+
+            public bool IsLazy()
+            {
+                return this.origin.IsLazy();
+            }
         }
 
         /// <summary>
@@ -73,6 +78,11 @@ namespace Yaapii.Atoms.Lookup
             {
                 return this.origin.Value();
             }
+
+            public bool IsLazy()
+            {
+                return this.origin.IsLazy();
+            }
         }
 
         /// <summary>
@@ -99,6 +109,11 @@ namespace Yaapii.Atoms.Lookup
             public TValue Value()
             {
                 return this.origin.Value();
+            }
+
+            public bool IsLazy()
+            {
+                return this.origin.IsLazy();
             }
         }
     }

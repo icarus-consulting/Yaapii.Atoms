@@ -37,57 +37,66 @@ namespace Yaapii.Atoms.Lookup
         {
             private readonly Sticky<KeyValuePair<string, Func<string>>> entry;
             private readonly Sticky<string> value;
+            private readonly bool isLazy;
 
             /// <summary>
-            /// Key-value pair matching a string to specified type value.
+            /// Key-value pair made of strings.
             /// </summary>
-            public Of(string key, string value) : this(
-                () => new KeyValuePair<string, Func<string>>(key, () => value)
-            )
+            public Of(IText key, Func<string> value)
+                : this(key.AsString(), value)
             { }
 
             /// <summary>
-            /// Key-value pair matching a string to specified type value.
+            /// Key-value pair made of strings.
+            /// </summary>
+            public Of(IText key, string value)
+                : this(key.AsString(), value)
+            { }
+
+            /// <summary>
+            /// Key-value pair made of strings.
             /// </summary>
             public Of(string key, Func<string> value) : this(
-                () => new KeyValuePair<string, Func<string>>(key, value)
+                () => new KeyValuePair<string, Func<string>>(key, value),
+                true
             )
             { }
 
             /// <summary>
-            /// Key-value pair matching a string to specified type value.
+            /// Key-value pair made of strings.
             /// </summary>
-            public Of(IText key, Func<string> value) : this(
-                () => new KeyValuePair<string, Func<string>>(
-                    key.AsString(), value
-                )
+            public Of(string key, string value) : this(
+                () => new KeyValuePair<string, Func<string>>(key, () => value),
+                false
             )
             { }
 
             /// <summary>
-            /// Key-value pair matching a string to specified type value.
-            /// </summary>
-            public Of(IText key, string value) : this(
-                () => new KeyValuePair<string, Func<string>>(
-                    key.AsString(),
-                    () => value
-                )
-            )
-            { }
-
-            /// <summary>
-            /// Key-value pair matching a string to specified type value.
+            /// Key-value pair made of strings.
             /// </summary>
             public Of(IScalar<KeyValuePair<string, string>> kvp)
+                : this(() => kvp.Value())
             { }
 
-            private Of(Func<KeyValuePair<string, Func<string>>> kvp)
+            /// <summary>
+            /// Key-value pair made of strings.
+            /// </summary>
+            public Of(Func<KeyValuePair<string, string>> kvp)
+                : this(() =>
+                {
+                    var simple = kvp.Invoke();
+                    return new KeyValuePair<string, Func<string>>(simple.Key, () => simple.Value);
+                }, true)
+            { }
+
+            private Of(Func<KeyValuePair<string, Func<string>>> kvp, bool isLazy)
             {
                 this.entry =
                     new Sticky<KeyValuePair<string, Func<string>>>(
                         () => kvp.Invoke()
                     );
                 this.value = new Sticky<string>(() => this.entry.Value().Value.Invoke());
+                this.isLazy = isLazy;
             }
 
             public string Key()
@@ -99,6 +108,11 @@ namespace Yaapii.Atoms.Lookup
             {
                 return this.value.Value();
             }
+
+            public bool IsLazy()
+            {
+                return this.isLazy;
+            }
         }
 
         /// <summary>
@@ -108,41 +122,37 @@ namespace Yaapii.Atoms.Lookup
         {
             private readonly Sticky<KeyValuePair<string, Func<TValue>>> entry;
             private readonly Sticky<TValue> value;
+            private readonly bool isLazy;
 
             /// <summary>
             /// Key-value pair matching a string to specified type value.
             /// </summary>
-            public Of(string key, TValue value) : this(
-                key, () => value
-            )
+            public Of(IText key, Func<TValue> value)
+                : this(key.AsString(), value)
+            { }
+
+            /// <summary>
+            /// Key-value pair matching a string to specified type value.
+            /// </summary>
+            public Of(IText key, TValue value)
+                : this(key.AsString(), value)
             { }
 
             /// <summary>
             /// Key-value pair matching a string to specified type value.
             /// </summary>
             public Of(string key, Func<TValue> value) : this(
-                () => new KeyValuePair<string, Func<TValue>>(key, value)
+                () => new KeyValuePair<string, Func<TValue>>(key, value),
+                true
             )
             { }
 
             /// <summary>
             /// Key-value pair matching a string to specified type value.
             /// </summary>
-            public Of(IText key, Func<TValue> value) : this(
-                () => new KeyValuePair<string, Func<TValue>>(
-                    key.AsString(), value
-                )
-            )
-            { }
-
-            /// <summary>
-            /// Key-value pair matching a string to specified type value.
-            /// </summary>
-            public Of(IText key, TValue value) : this(
-                () => new KeyValuePair<string, Func<TValue>>(
-                    key.AsString(),
-                    () => value
-                )
+            public Of(string key, TValue value) : this(
+                () => new KeyValuePair<string, Func<TValue>>(key, () => value),
+                false
             )
             { }
 
@@ -150,15 +160,28 @@ namespace Yaapii.Atoms.Lookup
             /// Key-value pair matching a string to specified type value.
             /// </summary>
             public Of(IScalar<KeyValuePair<string, TValue>> kvp)
+                : this(() => kvp.Value())
             { }
 
-            private Of(Func<KeyValuePair<string, Func<TValue>>> kvp)
+            /// <summary>
+            /// Key-value pair matching a string to specified type value.
+            /// </summary>
+            public Of(Func<KeyValuePair<string, TValue>> kvp)
+                : this(() =>
+                {
+                    var simple = kvp.Invoke();
+                    return new KeyValuePair<string, Func<TValue>>(simple.Key, () => simple.Value);
+                }, true)
+            { }
+
+            private Of(Func<KeyValuePair<string, Func<TValue>>> kvp, bool isLazy)
             {
                 this.entry =
                     new Sticky<KeyValuePair<string, Func<TValue>>>(
                         () => kvp.Invoke()
                     );
                 this.value = new Sticky<TValue>(() => this.entry.Value().Value.Invoke());
+                this.isLazy = isLazy;
             }
 
             public string Key()
@@ -170,6 +193,11 @@ namespace Yaapii.Atoms.Lookup
             {
                 return this.value.Value();
             }
+
+            public bool IsLazy()
+            {
+                return this.isLazy;
+            }
         }
 
         /// <summary>
@@ -179,36 +207,52 @@ namespace Yaapii.Atoms.Lookup
         {
             private readonly Sticky<KeyValuePair<TKey, Func<TValue>>> entry;
             private readonly Sticky<TValue> value;
+            private readonly bool isLazy;
 
             /// <summary>
-            /// Key-value pair matching a string to specified type value.
+            /// Key-value pair matching a key type to specified type value.
             /// </summary>
             public Of(TKey key, Func<TValue> value) : this(
-                () => new KeyValuePair<TKey, Func<TValue>>(key, value)
+                () => new KeyValuePair<TKey, Func<TValue>>(key, value),
+                true
             )
             { }
 
             /// <summary>
-            /// Key-value pair matching a string to specified type value.
+            /// Key-value pair matching a key type to specified type value.
             /// </summary>
             public Of(TKey key, TValue value) : this(
-                () => new KeyValuePair<TKey, Func<TValue>>(key, () => value)
+                () => new KeyValuePair<TKey, Func<TValue>>(key, () => value),
+                false
             )
             { }
 
             /// <summary>
-            /// Key-value pair matching a string to specified type value.
+            /// Key-value pair matching a key type to specified type value.
             /// </summary>
             public Of(IScalar<KeyValuePair<TKey, TValue>> kvp)
+                : this(() => kvp.Value())
             { }
 
-            private Of(Func<KeyValuePair<TKey, Func<TValue>>> kvp)
+            /// <summary>
+            /// Key-value pair matching a key type to specified type value.
+            /// </summary>
+            public Of(Func<KeyValuePair<TKey, TValue>> kvp)
+                : this(() =>
+                {
+                    var simple = kvp.Invoke();
+                    return new KeyValuePair<TKey, Func<TValue>>(simple.Key, () => simple.Value);
+                }, true)
+            { }
+
+            private Of(Func<KeyValuePair<TKey, Func<TValue>>> kvp, bool isLazy)
             {
                 this.entry =
                     new Sticky<KeyValuePair<TKey, Func<TValue>>>(
                         () => kvp.Invoke()
                     );
                 this.value = new Sticky<TValue>(() => this.entry.Value().Value.Invoke());
+                this.isLazy = isLazy;
             }
 
             public TKey Key()
@@ -219,6 +263,11 @@ namespace Yaapii.Atoms.Lookup
             public TValue Value()
             {
                 return this.value.Value();
+            }
+
+            public bool IsLazy()
+            {
+                return this.isLazy;
             }
         }
     }

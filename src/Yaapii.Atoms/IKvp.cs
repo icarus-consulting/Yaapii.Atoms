@@ -5,12 +5,13 @@ using System.Text;
 namespace Yaapii.Atoms
 {
     /// <summary>
-    /// A key-value pair string to strnig to add to a map.
+    /// A key-value pair string to string to add to a map.
     /// </summary>
     public interface IKvp
     {
         string Key();
         string Value();
+        bool IsLazy();
     }
 
     /// <summary>
@@ -20,6 +21,7 @@ namespace Yaapii.Atoms
     {
         string Key();
         TValue Value();
+        bool IsLazy();
     }
 
     /// <summary>
@@ -29,5 +31,6 @@ namespace Yaapii.Atoms
     {
         TKey Key();
         TValue Value();
+        bool IsLazy();
     }
 }
