@@ -39,6 +39,7 @@ namespace Yaapii.Atoms.Lookup
         private readonly IDictionary<string, Sticky<string>> map;
         private readonly UnsupportedOperationException rejectReadException = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
         private readonly bool rejectBuildingAllValues;
+        private readonly Sticky<bool> anyValueIsLazy;
 
         /// <summary>
         /// ctor
@@ -68,6 +69,17 @@ namespace Yaapii.Atoms.Lookup
                     }
                     return dict;
                 });
+            this.anyValueIsLazy = new Sticky<bool>(() =>
+            {
+                return new Ternary<IFail, bool>(
+                    new LengthOf(kvps).Value() == 0,
+                    false,
+                    new Reduced<bool>(
+                        new Enumerable.Mapped<IKvp, bool>(kvp => kvp.IsLazy(), kvps),
+                        (a, b) => a || b
+                    ).Value()
+                ).Value();
+            });
         }
 
         /// <summary>
@@ -89,7 +101,7 @@ namespace Yaapii.Atoms.Lookup
         {
             get
             {
-                if (this.rejectBuildingAllValues)
+                if (this.rejectBuildingAllValues && this.anyValueIsLazy.Value())
                 {
                     throw new InvalidOperationException(
                         "Cannot get values because this is a lazy dictionary."
@@ -171,7 +183,7 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="arrayIndex">index to start</param>
         public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)
         {
-            if (this.rejectBuildingAllValues)
+            if (this.rejectBuildingAllValues && this.anyValueIsLazy.Value())
             {
                 throw new InvalidOperationException("Cannot copy entries because this is a lazy dictionary."
                     + " Copying the entries would build all values."
@@ -197,7 +209,7 @@ namespace Yaapii.Atoms.Lookup
         /// <returns>The enumerator</returns>
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
         {
-            if (this.rejectBuildingAllValues)
+            if (this.rejectBuildingAllValues && this.anyValueIsLazy.Value())
             {
                 throw new InvalidOperationException(
                     "Cannot get the enumerator because this is a lazy dictionary."
@@ -266,6 +278,7 @@ namespace Yaapii.Atoms.Lookup
         private readonly IDictionary<string, Sticky<Value>> map;
         private readonly UnsupportedOperationException rejectReadException = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
         private readonly bool rejectBuildingAllValues;
+        private readonly Sticky<bool> anyValueIsLazy;
 
         /// <summary>
         /// ctor
@@ -295,6 +308,17 @@ namespace Yaapii.Atoms.Lookup
                     }
                     return dict;
                 });
+            this.anyValueIsLazy = new Sticky<bool>(() =>
+            {
+                return new Ternary<IFail, bool>(
+                    new LengthOf(kvps).Value() == 0,
+                    false,
+                    new Reduced<bool>(
+                        new Enumerable.Mapped<IKvp<Value>, bool>(kvp => kvp.IsLazy(), kvps),
+                        (a, b) => a || b
+                    ).Value()
+                ).Value();
+            });
         }
 
         /// <summary>
@@ -316,7 +340,7 @@ namespace Yaapii.Atoms.Lookup
         {
             get
             {
-                if (this.rejectBuildingAllValues)
+                if (this.rejectBuildingAllValues && this.anyValueIsLazy.Value())
                 {
                     throw new InvalidOperationException(
                         "Cannot get values because this is a lazy dictionary."
@@ -397,7 +421,7 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="arrayIndex">index to start</param>
         public void CopyTo(KeyValuePair<string, Value>[] array, int arrayIndex)
         {
-            if (this.rejectBuildingAllValues)
+            if (this.rejectBuildingAllValues && this.anyValueIsLazy.Value())
             {
                 throw new InvalidOperationException("Cannot copy entries because this is a lazy dictionary."
                     + " Copying the entries would build all values."
@@ -423,7 +447,7 @@ namespace Yaapii.Atoms.Lookup
         /// <returns>The enumerator</returns>
         public IEnumerator<KeyValuePair<string, Value>> GetEnumerator()
         {
-            if (this.rejectBuildingAllValues)
+            if (this.rejectBuildingAllValues && this.anyValueIsLazy.Value())
             {
                 throw new InvalidOperationException(
                     "Cannot get the enumerator because this is a lazy dictionary."
@@ -492,6 +516,7 @@ namespace Yaapii.Atoms.Lookup
         private readonly IDictionary<Key, Sticky<Value>> map;
         private readonly UnsupportedOperationException rejectReadException = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
         private readonly bool rejectBuildingAllValues;
+        private readonly Sticky<bool> anyValueIsLazy;
 
         /// <summary>
         /// ctor
@@ -521,6 +546,18 @@ namespace Yaapii.Atoms.Lookup
                     }
                     return dict;
                 });
+            this.anyValueIsLazy = new Sticky<bool>(() =>
+            {
+                return new Ternary<IFail, bool>(
+                    new LengthOf(kvps).Value() == 0,
+                    false,
+                    new Reduced<bool>(
+                        new Enumerable.Mapped<IKvp<Key, Value>, bool>(kvp => kvp.IsLazy(), kvps),
+                        (a, b) => a || b
+                    ).Value()
+                ).Value();
+            });
+
         }
 
         /// <summary>
@@ -542,7 +579,7 @@ namespace Yaapii.Atoms.Lookup
         {
             get
             {
-                if (this.rejectBuildingAllValues)
+                if (this.rejectBuildingAllValues && this.anyValueIsLazy.Value())
                 {
                     throw new InvalidOperationException(
                         "Cannot get all values because this is a lazy dictionary."
@@ -624,7 +661,7 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="arrayIndex">index to start</param>
         public void CopyTo(KeyValuePair<Key, Value>[] array, int arrayIndex)
         {
-            if (this.rejectBuildingAllValues)
+            if (this.rejectBuildingAllValues && this.anyValueIsLazy.Value())
             {
                 throw new InvalidOperationException(
                     "Cannot copy entries because this is a lazy dictionary."
@@ -651,7 +688,7 @@ namespace Yaapii.Atoms.Lookup
         /// <returns>The enumerator</returns>
         public IEnumerator<KeyValuePair<Key, Value>> GetEnumerator()
         {
-            if (this.rejectBuildingAllValues)
+            if (this.rejectBuildingAllValues && this.anyValueIsLazy.Value())
             {
                 throw new InvalidOperationException(
                     "Cannot get the enumerator because this is a lazy dictionary."
