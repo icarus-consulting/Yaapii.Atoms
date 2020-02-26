@@ -52,7 +52,23 @@ namespace Yaapii.Atoms.Lookup
                 this.fixedOrigin = new Sticky<IDictionary<string, string>>(origin);
             }
 
-            public string this[string key] { get => Val()[key]; set => throw this.rejectWriteExc; }
+            public string this[string key]
+            {
+                get
+                {
+                    var val = Val();
+                    try
+                    {
+                        return val[key];
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        var keysString = new Texts.Joined(", ", val.Keys).AsString();
+                        throw new ArgumentException($"The key '{key}' is not present in the map. The following keys are present in the map: {keysString}");
+                    }
+                }
+                set => throw this.rejectWriteExc;
+            }
 
             public ICollection<string> Keys => Val().Keys;
 
@@ -154,7 +170,23 @@ namespace Yaapii.Atoms.Lookup
                 this.fixedOrigin = new Sticky<IDictionary<string, Value>>(origin);
             }
 
-            public Value this[string key] { get => Val()[key]; set => throw this.rejectWriteExc; }
+            public Value this[string key]
+            {
+                get
+                {
+                    var val = Val();
+                    try
+                    {
+                        return val[key];
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        var keysString = new Texts.Joined(", ", val.Keys).AsString();
+                        throw new ArgumentException($"The key '{key}' is not present in the map. The following keys are present in the map: {keysString}");
+                    }
+                }
+                set => throw this.rejectWriteExc;
+            }
 
             public ICollection<string> Keys => Val().Keys;
 
@@ -256,7 +288,21 @@ namespace Yaapii.Atoms.Lookup
                 this.fixedOrigin = new Sticky<IDictionary<Key, Value>>(origin);
             }
 
-            public Value this[Key key] { get => Val()[key]; set => throw this.rejectWriteExc; }
+            public Value this[Key key]
+            {
+                get
+                {
+                    try
+                    {
+                        return Val()[key];
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        throw new ArgumentException("The requested key is not present in the map.");
+                    }
+                }
+                set => throw this.rejectWriteExc;
+            }
 
             public ICollection<Key> Keys => Val().Keys;
 
