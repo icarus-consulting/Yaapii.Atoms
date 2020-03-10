@@ -89,8 +89,8 @@ namespace Yaapii.Atoms.Lookup.Tests
         [Fact]
         public void DoesNotBuildValueWhenNotNeeded()
         {
-            var unsorted = new LazyDict<int, int>(
-                new Kvp.Of<int, int>(1, () => { throw new Exception("i shall not be called"); }),
+            var unsorted = new LazyDict<int, int>(false,
+                new Kvp.Of<int, int>(1, () => 4),
                 new Kvp.Of<int, int>(6, () => { throw new Exception("i shall not be called"); }),
                 new Kvp.Of<int, int>(-5, () => { throw new Exception("i shall not be called"); })
             );
@@ -104,8 +104,12 @@ namespace Yaapii.Atoms.Lookup.Tests
             Assert.Equal(1, keys[1]);
             Assert.Equal(6, keys[2]);
 
-            var ex = Assert.Throws<Exception>(() => sorted.Values.GetEnumerator());
-            Assert.Equal("i shall not be called", ex.Message);
+            // Sanety check: building one value isn't a problem
+            Assert.Equal(4, sorted[1]);
+
+            // Sanety check: but all of them is
+            var ex = Assert.Throws<InvalidOperationException>(() => sorted.Values.GetEnumerator());
+            Assert.Equal("Cannot get all values because this is a lazy dictionary. Getting the values would build all keys. If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.", ex.Message);
         }
     }
 }
