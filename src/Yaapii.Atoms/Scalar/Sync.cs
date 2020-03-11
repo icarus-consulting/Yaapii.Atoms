@@ -74,7 +74,7 @@ namespace Yaapii.Atoms.Scalar
         /// <returns>the value</returns>
         public T Value()
         {
-            lock (this.src)
+            lock (this.lck)
             {
                 return this.src.Value();
             }
