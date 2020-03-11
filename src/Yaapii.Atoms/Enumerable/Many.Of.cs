@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Enumerable
             /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/>.
             /// </summary>
             /// <param name="e">a enumerator</param>
-            public Of(IEnumerator<string> e) : this(new ScalarOf<IEnumerator<string>>(e))
+            public Of(IEnumerator<string> e) : this(new LiveScalar<IEnumerator<string>>(e))
             { }
 
             /// <summary>
@@ -114,7 +114,7 @@ namespace Yaapii.Atoms.Enumerable
             /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/>.
             /// </summary>
             /// <param name="e">a enumerator</param>
-            public Of(IEnumerator<T> e) : this(new ScalarOf<IEnumerator<T>>(e))
+            public Of(IEnumerator<T> e) : this(new LiveScalar<IEnumerator<T>>(e))
             { }
 
             /// <summary>

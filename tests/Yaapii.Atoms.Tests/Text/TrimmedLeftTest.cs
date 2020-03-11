@@ -88,7 +88,7 @@ namespace Yaapii.Atoms.Texts.Tests
                 "ello! \t \b  ",
                 new TrimmedLeft(
                     new Text.Live(" \b   \t      Hello! \t \b  "), 
-                    new ScalarOf<char[]>(() => new char[] { '\b', '\t', ' ', 'H', 'o' })
+                    new LiveScalar<char[]>(() => new char[] { '\b', '\t', ' ', 'H', 'o' })
                 ).AsString()
             );
         }

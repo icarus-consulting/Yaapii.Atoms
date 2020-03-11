@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="origin">Enumerable</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(IEnumerable<T> origin, Exception ex) : base(new ScalarOf<IEnumerable<T>>(
+        public NotEmpty(IEnumerable<T> origin, Exception ex) : base(new LiveScalar<IEnumerable<T>>(
             () =>
             {
                 new FailPrecise(

@@ -33,11 +33,11 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="dir">DirectoryInfo</param>
         /// <param name="recursive">include all files from sub directories</param>
-        public DirectoryOf(DirectoryInfo dir, bool recursive) : this(new ScalarOf<string>(() =>
+        public DirectoryOf(DirectoryInfo dir, bool recursive) : this(new LiveScalar<string>(() =>
             {
                 return dir.FullName;
             }),
-            new ScalarOf<bool>(recursive)
+            new LiveScalar<bool>(recursive)
         )
         { }
 
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="file">File as a uri</param>
         /// <param name="recursive">include all files from sub directories</param>
-        public DirectoryOf(Uri file, bool recursive) : this(new ScalarOf<string>(() =>
+        public DirectoryOf(Uri file, bool recursive) : this(new LiveScalar<string>(() =>
             {
                 if (file.Scheme != "file")
                 {
@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.IO
                 }
                 return file.AbsolutePath;
             }),
-            new ScalarOf<bool>(recursive)
+            new LiveScalar<bool>(recursive)
         )
         { }
 
@@ -80,7 +80,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="file">File as a path to directory.</param>
         /// <param name="recursive">include all files from sub directories</param>
-        public DirectoryOf(FileInfo file, bool recursive) : this(new ScalarOf<string>(file.Directory.FullName), new ScalarOf<bool>(recursive))
+        public DirectoryOf(FileInfo file, bool recursive) : this(new LiveScalar<string>(file.Directory.FullName), new LiveScalar<bool>(recursive))
         { }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="path"></param>
         /// <param name="recursive">include all files from sub directories</param>
-        public DirectoryOf(string path, bool recursive) : this(new ScalarOf<string>(path), new ScalarOf<bool>(recursive))
+        public DirectoryOf(string path, bool recursive) : this(new LiveScalar<string>(path), new LiveScalar<bool>(recursive))
         { }
 
         /// <summary>

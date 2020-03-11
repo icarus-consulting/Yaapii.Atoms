@@ -29,10 +29,8 @@ namespace Yaapii.Atoms.Scalar
     /// <summary>
     /// Checks whether a given text is a number
     /// </summary>
-    public sealed class IsNumber : IScalar<bool>
+    public sealed class IsNumber : ScalarEnvelope<bool>
     {
-        private readonly Sticky<bool> result;
-
         /// <summary>
         /// Checks whether the given text is a number
         /// </summary>
@@ -70,25 +68,14 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="text">the text</param>
         /// <param name="provider">number format provider</param>
         public IsNumber(IText text, IFormatProvider provider)
-        {
-            this.result =
-                new Sticky<bool>(() =>
-                    double.TryParse(
-                        text.AsString(),
-                        NumberStyles.Any,
-                        provider,
-                        out var unused
-                    )
-                );
-        }
-
-        /// <summary>
-        /// Gets the result
-        /// </summary>
-        /// <returns>the result</returns>
-        public bool Value()
-        {
-            return this.result.Value();
-        }
+            : base(() =>
+                double.TryParse(
+                    text.AsString(),
+                    NumberStyles.Any,
+                    provider,
+                    out var unused
+                )
+            )
+        { }
     }
 }

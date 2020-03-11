@@ -73,7 +73,7 @@ namespace Yaapii.Atoms.Texts.Tests
         public void TrimsTextWithScalar()
         {
             Assert.True(
-                new Trimmed(new Text.Live(" \b   \t      Hello! \t \b  "), new ScalarOf<char[]>(() => new char[] { '\b', '\t', ' ', 'H', 'o' })).AsString() == "ello!"
+                new Trimmed(new Text.Live(" \b   \t      Hello! \t \b  "), new LiveScalar<char[]>(() => new char[] { '\b', '\t', ' ', 'H', 'o' })).AsString() == "ello!"
             );
         }
 

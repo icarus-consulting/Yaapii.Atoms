@@ -29,26 +29,14 @@ namespace Yaapii.Atoms.Scalar
     /// <summary>
     /// Logical negative.
     /// </summary>
-    public sealed class Not : IScalar<Boolean>
+    public sealed class Not : ScalarEnvelope<Boolean>
     {
-        private readonly IScalar<Boolean> origin;
-
         /// <summary>
         /// Logical negative.
         /// </summary>
         /// <param name="scalar">scalar to negate</param>
         public Not(IScalar<Boolean> scalar)
-        {
-            this.origin = scalar;
-        }
-
-        /// <summary>
-        /// Get the result.
-        /// </summary>
-        /// <returns>the result</returns>
-        public Boolean Value()
-        {
-            return !this.origin.Value();
-        }
+            : base(() => !scalar.Value())
+        { }
     }
 }

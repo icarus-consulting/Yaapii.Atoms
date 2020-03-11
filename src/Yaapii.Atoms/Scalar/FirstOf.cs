@@ -33,12 +33,8 @@ namespace Yaapii.Atoms.Scalar
     /// First element in <see cref="IEnumerable{T}"/>.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class FirstOf<T> : IScalar<T>
+    public sealed class FirstOf<T> : ScalarEnvelope<T>
     {
-        private readonly IEnumerable<T> src;
-        private readonly Func<IEnumerable<T>, T> fallBack;
-        private readonly Func<T, bool> condition;
-
         /// <summary>
         /// Element from position in a <see cref="IEnumerable{T}"/>.
         /// </summary>
@@ -138,26 +134,21 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="fallback">fallback if no match</param>
         /// <param name="condition">condition to match</param>
         public FirstOf(Func<T, bool> condition, IEnumerable<T> src, Func<IEnumerable<T>, T> fallback)
-        {
-            this.src = src;
-            this.fallBack = fallback;
-            this.condition = condition;
-        }
-
-        public T Value()
-        {
-            var filtered = new Filtered<T>(this.condition, this.src).GetEnumerator();
-
-            T result;
-            if (filtered.MoveNext())
+            : base(() =>
             {
-                result = filtered.Current;
-            }
-            else
-            {
-                result = this.fallBack(this.src);
-            }
-            return result;
-        }
+                var filtered = new Filtered<T>(condition, src).GetEnumerator();
+
+                T result;
+                if (filtered.MoveNext())
+                {
+                    result = filtered.Current;
+                }
+                else
+                {
+                    result = fallback(src);
+                }
+                return result;
+            })
+        { }
     }
 }

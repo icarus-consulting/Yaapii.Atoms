@@ -39,14 +39,14 @@ namespace Yaapii.Atoms.Scalar
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
         /// </summary>
         /// <param name="src">func to cache result from</param>
-        public Sticky(T src) : this(new ScalarOf<T>(src))
+        public Sticky(T src) : this(new LiveScalar<T>(src))
         { }
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
         /// </summary>
         /// <param name="src">func to cache result from</param>
-        public Sticky(Func<T> src) : this(new ScalarOf<T>(src))
+        public Sticky(Func<T> src) : this(new LiveScalar<T>(src))
         { }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="srcFunc">func to cache result from</param>
         /// <param name="shouldReload">reload condition func</param>
-        public Sticky(Func<T> srcFunc, Func<T, bool> shouldReload) : this(new ScalarOf<T>(srcFunc), shouldReload)
+        public Sticky(Func<T> srcFunc, Func<T, bool> shouldReload) : this(new LiveScalar<T>(srcFunc), shouldReload)
         { }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="srcFunc">func to cache result from</param>
         /// <param name="shouldReload">reload condition func</param>
-        public Sticky(IFunc<T> srcFunc, Func<T, bool> shouldReload) : this(new ScalarOf<T>(srcFunc), shouldReload)
+        public Sticky(IFunc<T> srcFunc, Func<T, bool> shouldReload) : this(new LiveScalar<T>(srcFunc), shouldReload)
         { }
 
         /// <summary>

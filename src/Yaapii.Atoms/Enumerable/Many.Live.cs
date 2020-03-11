@@ -52,14 +52,14 @@ namespace Yaapii.Atoms.Enumerable
             /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
             /// </summary>
             /// <param name="fnc">function which retrieves enumerator</param>
-            public Live(Func<IEnumerator<T>> fnc) : this(new ScalarOf<IEnumerator<T>>(fnc))
+            public Live(Func<IEnumerator<T>> fnc) : this(new LiveScalar<IEnumerator<T>>(fnc))
             { }
 
             /// <summary>
             /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
             /// </summary>
             /// <param name="fnc">function which retrieves enumerator</param>
-            public Live(Func<IEnumerable<T>> fnc) : this(new ScalarOf<IEnumerator<T>>(() => fnc.Invoke().GetEnumerator()))
+            public Live(Func<IEnumerable<T>> fnc) : this(new LiveScalar<IEnumerator<T>>(() => fnc.Invoke().GetEnumerator()))
             { }
 
             /// <summary>
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Enumerable
             /// </summary>
             /// <param name="origin">scalar to return the IEnumerator</param>
             public Live(IScalar<IEnumerator<T>> origin) : base(
-                new ScalarOf<IEnumerable<T>>(
+                new LiveScalar<IEnumerable<T>>(
                     () => new LiveEnumeratorAsEnumerable<T>(origin.Value())
                 ),
                 true

@@ -32,18 +32,16 @@ namespace Yaapii.Atoms.Enumerable
     /// The greatest item in the given <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Max<T> : IScalar<T>
+    public sealed class Max<T> : ScalarEnvelope<T>
         where T : IComparable<T>
     {
-        private readonly IEnumerable<IScalar<T>> items;
-
         /// <summary>
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(params Func<T>[] items) : this(
             new Enumerable.Mapped<Func<T>, IScalar<T>>(
-                item => new ScalarOf<T>(() => item.Invoke()),
+                item => new LiveScalar<T>(() => item.Invoke()),
                 new Many.Of<Func<T>>(items)
             )
         )
@@ -54,7 +52,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(IEnumerable<T> items) : this(
-            new Enumerable.Mapped<T, IScalar<T>>(item => new ScalarOf<T>(item), items))
+            new Enumerable.Mapped<T, IScalar<T>>(item => new LiveScalar<T>(item), items))
         { }
 
         /// <summary>
@@ -62,7 +60,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(params T[] items) : this(
-            new Enumerable.Mapped<T, IScalar<T>>(item => new ScalarOf<T>(item), items))
+            new Enumerable.Mapped<T, IScalar<T>>(item => new LiveScalar<T>(item), items))
         { }
 
         /// <summary>
@@ -77,33 +75,25 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(IEnumerable<IScalar<T>> items)
-        {
-            this.items = items;
-        }
-
-        /// <summary>
-        /// Get the maximum.
-        /// </summary>
-        /// <returns>the maximum</returns>
-        public T Value()
-        {
-            IEnumerator<IScalar<T>> e = this.items.GetEnumerator();
-            if (!e.MoveNext())
+            : base(() =>
             {
-                throw new NoSuchElementException("Can't find greater element in an empty iterable");
-            }
-
-            T max = e.Current.Value();
-            while (e.MoveNext())
-            {
-                T next = e.Current.Value();
-                if (next.CompareTo(max) > 0)
+                var e = items.GetEnumerator();
+                if (!e.MoveNext())
                 {
-                    max = next;
+                    throw new NoSuchElementException("Can't find greater element in an empty iterable");
                 }
-            }
-            return max;
-        }
 
+                T max = e.Current.Value();
+                while (e.MoveNext())
+                {
+                    T next = e.Current.Value();
+                    if (next.CompareTo(max) > 0)
+                    {
+                        max = next;
+                    }
+                }
+                return max;
+            })
+        { }
     }
 }

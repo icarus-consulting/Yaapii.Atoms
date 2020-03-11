@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="elm">element to repeat</param>
         /// <param name="max">how often to repeat</param>
-        public Repeated(T elm, int max) : this(new ScalarOf<T>(elm), max)
+        public Repeated(T elm, int max) : this(new LiveScalar<T>(elm), max)
         { }
 
         /// <summary>

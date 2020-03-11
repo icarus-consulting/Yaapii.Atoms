@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         /// <param name="lck">the object to lock</param>
-        public Solid(Func<T> src, object lck) : this(new ScalarOf<T>(src), lck)
+        public Solid(Func<T> src, object lck) : this(new LiveScalar<T>(src), lck)
         { }
 
         /// <summary>

@@ -58,8 +58,8 @@ namespace Yaapii.Atoms.Texts
         /// <param name="strt">where to start</param>
         public SubText(IText text, int strt) : this(
             text, 
-            new ScalarOf<Int32>(strt), 
-            new ScalarOf<Int32>(() => text.AsString().Length - strt)
+            new LiveScalar<Int32>(strt), 
+            new LiveScalar<Int32>(() => text.AsString().Length - strt)
         )
         { }
 
@@ -71,8 +71,8 @@ namespace Yaapii.Atoms.Texts
         /// <param name="end">where to end</param>
         public SubText(IText text, int strt, int end) : this(
             text, 
-            new ScalarOf<Int32>(strt), 
-            new ScalarOf<Int32>(end)
+            new LiveScalar<Int32>(strt), 
+            new LiveScalar<Int32>(end)
         )
         { }
 
@@ -85,8 +85,8 @@ namespace Yaapii.Atoms.Texts
         /// <param name="live">should the object build its value live, every time it is used?</param>
         public SubText(
             IText text,
-            ScalarOf<Int32> strt,
-            ScalarOf<Int32> len,
+            LiveScalar<Int32> strt,
+            LiveScalar<Int32> len,
             bool live = false
         ) : this(
             text,

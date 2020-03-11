@@ -46,8 +46,8 @@ namespace Yaapii.Atoms.Collection.Tests
             var list =
                 new Collection.Of<int>(
                     new Enumerable.Repeated<int>(
-                        new ScalarOf<int>(() => 0),
-                        new ScalarOf<int>(() =>
+                        new LiveScalar<int>(() => 0),
+                        new LiveScalar<int>(() =>
                         {
                             Interlocked.Increment(ref size);
                             return size;
