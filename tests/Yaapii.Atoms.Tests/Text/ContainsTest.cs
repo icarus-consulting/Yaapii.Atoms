@@ -79,8 +79,8 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Contains(
-                    new ScalarOf<string>("Hallo Welt!"), 
-                    new ScalarOf<string>("Welt")
+                    new LiveScalar<string>("Hallo Welt!"), 
+                    new LiveScalar<string>("Welt")
                 ).Value()
             );
         }
@@ -90,9 +90,9 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Contains(
-                    new ScalarOf<string>("Hallo Welt!"), 
-                    new ScalarOf<string>("welt"), 
-                    new ScalarOf<StringComparison>(StringComparison.CurrentCultureIgnoreCase)
+                    new LiveScalar<string>("Hallo Welt!"), 
+                    new LiveScalar<string>("welt"), 
+                    new LiveScalar<StringComparison>(StringComparison.CurrentCultureIgnoreCase)
                 ).Value()
             );
         }
@@ -148,8 +148,8 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.False(
                 new Contains(
-                    new ScalarOf<string>("Hallo Welt!"), 
-                    new ScalarOf<string>("welt")
+                    new LiveScalar<string>("Hallo Welt!"), 
+                    new LiveScalar<string>("welt")
                 ).Value()
             );
         }
@@ -159,9 +159,9 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.False(
                 new Contains(
-                    new ScalarOf<string>("Hallo Welt!"), 
-                    new ScalarOf<string>("world"), 
-                    new ScalarOf<StringComparison>(
+                    new LiveScalar<string>("Hallo Welt!"), 
+                    new LiveScalar<string>("world"), 
+                    new LiveScalar<StringComparison>(
                         StringComparison.CurrentCultureIgnoreCase
                     )
                 ).Value()

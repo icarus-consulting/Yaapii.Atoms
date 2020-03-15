@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public HeadOf(IEnumerable<T> enumerable, int limit) : this(enumerable, new ScalarOf<int>(limit))
+        public HeadOf(IEnumerable<T> enumerable, int limit) : this(enumerable, new LiveScalar<int>(limit))
         { }
 
         /// <summary>

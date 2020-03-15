@@ -61,7 +61,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">a double as a text</param>
         /// <param name="culture">culture of the given text</param>
-        public DoubleOf(IText text, CultureInfo culture) : this(new ScalarOf<Double>(() => Convert.ToDouble(text.AsString(), culture.NumberFormat)))
+        public DoubleOf(IText text, CultureInfo culture) : this(new LiveScalar<Double>(() => Convert.ToDouble(text.AsString(), culture.NumberFormat)))
         { }
 
         /// <summary>

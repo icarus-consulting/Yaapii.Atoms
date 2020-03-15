@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>
         /// <param name="replacement">item to insert instead</param>
-        public Replaced(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement) : base(new ScalarOf<IEnumerable<T>>(
+        public Replaced(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement) : base(new LiveScalar<IEnumerable<T>>(
             () =>
             {
                 var result = new List<T>();

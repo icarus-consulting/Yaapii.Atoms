@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using Yaapii.Atoms.Collection;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Enumerable
@@ -33,11 +34,8 @@ namespace Yaapii.Atoms.Enumerable
     /// Last element in a <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class LastOf<T> : IScalar<T>
+    public sealed class LastOf<T> : ScalarEnvelope<T>
     {
-        private readonly IEnumerable<T> src;
-        private readonly IBiFunc<Exception, IEnumerable<T>, T> fbk;
-
         /// <summary>
         /// Last element in <see cref="IEnumerable{T}"/> with given Exception thrown on fallback
         /// </summary>
@@ -106,21 +104,15 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Last Element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
-        /// <param name="src">source enum</param>
+        /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public LastOf(IEnumerable<T> src, IBiFunc<Exception, IEnumerable<T>, T> fallback)
-        {
-            this.src = src;
-            this.fbk = fallback;
-        }
-
-        public T Value()
-        {
-            return
-                new ItemAt<T>(
-                    new Reversed<T>(this.src),
-                    this.fbk
-                ).Value();
-        }
+        public LastOf(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+            : base(
+                  new ItemAt<T>(
+                    new Reversed<T>(source),
+                    fallback
+                )
+            )
+        { }
     }
 }

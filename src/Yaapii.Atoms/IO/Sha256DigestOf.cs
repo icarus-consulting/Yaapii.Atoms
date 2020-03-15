@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="source">Input</param>
         public Sha256DigestOf(IInput source) :
-            base(source, new ScalarOf<HashAlgorithm>(() => new SHA256CryptoServiceProvider()))
+            base(source, new LiveScalar<HashAlgorithm>(() => new SHA256CryptoServiceProvider()))
         { }
     }
 }

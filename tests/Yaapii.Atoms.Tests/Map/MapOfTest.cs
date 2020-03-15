@@ -139,9 +139,9 @@ namespace Yaapii.Atoms.Lookup.Tests
             var map =
                 new Map.Of(
                     new Repeated<KeyValuePair<string, string>>(
-                        new ScalarOf<KeyValuePair<string, string>>(
+                        new LiveScalar<KeyValuePair<string, string>>(
                             () => new KeyValuePair<string, string>(random.Next() + "", "1")),
-                            new ScalarOf<int>(() =>
+                            new LiveScalar<int>(() =>
                             {
                                 Interlocked.Increment(ref size);
                                 return size;
@@ -204,9 +204,9 @@ namespace Yaapii.Atoms.Lookup.Tests
             var map =
                 new Map.Of<int>(
                     new Repeated<IKvp<int>>(
-                        new ScalarOf<IKvp<int>>(
+                        new LiveScalar<IKvp<int>>(
                             () => new Kvp.Of<int>(random.Next() + "", 1)),
-                            new ScalarOf<int>(() =>
+                            new LiveScalar<int>(() =>
                             {
                                 Interlocked.Increment(ref size);
                                 return size;
@@ -270,9 +270,9 @@ namespace Yaapii.Atoms.Lookup.Tests
             var map =
                 new Map.Of<int, int>(
                     new Repeated<IKvp<int, int>>(
-                        new ScalarOf<IKvp<int, int>>(
+                        new LiveScalar<IKvp<int, int>>(
                             () => new Kvp.Of<int, int>(random.Next(), 1)),
-                            new ScalarOf<int>(() =>
+                            new LiveScalar<int>(() =>
                             {
                                 Interlocked.Increment(ref size);
                                 return size;

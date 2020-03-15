@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Scalar
         public Or(IFunc<In, Boolean> func, IEnumerable<In> src) : this(
             new Enumerable.Mapped<In, IScalar<Boolean>>(
                 new FuncOf<In, IScalar<Boolean>>(
-                    (item) => new ScalarOf<Boolean>(func.Invoke(item))
+                    (item) => new LiveScalar<Boolean>(func.Invoke(item))
                 ),
                 src
             )
@@ -126,10 +126,8 @@ namespace Yaapii.Atoms.Scalar
     /// <summary>
     /// Logical or. Returns true if any contents return true.
     /// </summary>
-    public sealed class Or : IScalar<bool>
+    public sealed class Or : ScalarEnvelope<bool>
     {
-        private readonly IEnumerable<IScalar<bool>> _enumerable;
-
         /// <summary>
         /// Logical or. Returns true if any calls to <see cref="Func{In, Out}"/>
         /// were true.
@@ -145,7 +143,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="funcs">the conditions to apply</param>
         public Or(Many.Of<Func<bool>> funcs) : this(
             new Mapped<Func<bool>, IScalar<bool>>(
-                func => new ScalarOf<bool>(func),
+                func => new LiveScalar<bool>(func),
                 funcs))
         { }
 
@@ -163,7 +161,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="src">list of items</param>
         public Or(params bool[] src) : this(
             new Mapped<bool, IScalar<bool>>(
-                item => new ScalarOf<bool>(item),
+                item => new LiveScalar<bool>(item),
                 src))
         { }
 
@@ -173,7 +171,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="src">list of items</param>
         public Or(IEnumerable<bool> src) : this(
             new Mapped<bool, IScalar<bool>>(
-                item => new ScalarOf<bool>(item),
+                item => new LiveScalar<bool>(item),
                 src))
         { }
 
@@ -182,26 +180,19 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="src">list of items</param>
         public Or(IEnumerable<IScalar<Boolean>> src)
-        {
-            _enumerable = src;
-        }
-
-        /// <summary>
-        /// Get the result.
-        /// </summary>
-        /// <returns>the result</returns>
-        public Boolean Value()
-        {
-            bool result = false;
-            foreach (IScalar<Boolean> item in this._enumerable)
+            : base(() =>
             {
-                if (item.Value())
+                bool foundTrue = false;
+                foreach (var item in src)
                 {
-                    result = true;
-                    break;
+                    if (item.Value())
+                    {
+                        foundTrue = true;
+                        break;
+                    }
                 }
-            }
-            return result;
-        }
+                return foundTrue;
+            })
+        { }
     }
 }

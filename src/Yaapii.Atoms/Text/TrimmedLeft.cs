@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Texts
         /// An <see cref="IText"/> trimmed (removed whitespaces) on the left side.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public TrimmedLeft(IText text) : this(text, new ScalarOf<char[]>(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' }))
+        public TrimmedLeft(IText text) : this(text, new LiveScalar<char[]>(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' }))
         { }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        public TrimmedLeft(IText text, char[] trimText) : this(text, new ScalarOf<char[]>(trimText))
+        public TrimmedLeft(IText text, char[] trimText) : this(text, new LiveScalar<char[]>(trimText))
         { }
 
         /// <summary>
