@@ -71,14 +71,15 @@ namespace Yaapii.Atoms.Lookup
                 });
             this.anyValueIsLazy = new Sticky<bool>(() =>
             {
-                return new Ternary<IFail, bool>(
-                    new ScalarOf<Boolean>(() => new LengthOf(kvps).Value() == 0),
-                    new False(),
-                    new Reduced<bool>(
-                        new Enumerable.Mapped<IKvp, bool>(kvp => kvp.IsLazy(), kvps),
-                        (a, b) => a || b
-                    )
-                ).Value();
+                bool result = false;
+                foreach (var kvp in kvps)
+                {
+                    if (kvp.IsLazy()) {
+                        result = true;
+                        break;
+                    }
+                }
+                return result;
             });
         }
 
@@ -310,14 +311,15 @@ namespace Yaapii.Atoms.Lookup
                 });
             this.anyValueIsLazy = new Sticky<bool>(() =>
             {
-                return new Ternary<IFail, bool>(
-                    new ScalarOf<Boolean>(() => new LengthOf(kvps).Value() == 0),
-                    new False(),
-                    new Reduced<bool>(
-                        new Enumerable.Mapped<IKvp<Value>, bool>(kvp => kvp.IsLazy(), kvps),
-                        (a, b) => a || b
-                    )
-                ).Value();
+                bool result = false;
+                foreach (var kvp in kvps)
+                {
+                    if (kvp.IsLazy()) {
+                        result = true;
+                        break;
+                    }
+                }
+                return result;
             });
         }
 
@@ -548,14 +550,15 @@ namespace Yaapii.Atoms.Lookup
                 });
             this.anyValueIsLazy = new Sticky<bool>(() =>
             {
-                return new Ternary<IFail, bool>(
-                    new ScalarOf<Boolean>(() => new LengthOf(kvps).Value() == 0),
-                    new False(),
-                    new Reduced<bool>(
-                        new Enumerable.Mapped<IKvp<Key, Value>, bool>(kvp => kvp.IsLazy(), kvps),
-                        (a, b) => a || b
-                    )
-                ).Value();
+                bool result = false;
+                foreach (var kvp in kvps)
+                {
+                    if (kvp.IsLazy()) {
+                        result = true;
+                        break;
+                    }
+                }
+                return result;
             });
 
         }
