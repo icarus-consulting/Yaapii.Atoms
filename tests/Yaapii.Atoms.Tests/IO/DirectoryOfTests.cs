@@ -62,8 +62,8 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void EnumeratesDirectories()
         {
-            var dir = Path.GetFullPath("/assets/directoryof/dir");
-            var subdir = Path.GetFullPath("/assets/directoryof/dir/fancy-subdir");
+            var dir = Path.GetFullPath("assets/directoryof/dir");
+            var subdir = Path.GetFullPath("assets/directoryof/dir/fancy-subdir");
 
             Directory.CreateDirectory(dir);
             Directory.CreateDirectory(subdir);
@@ -103,8 +103,8 @@ namespace Yaapii.Atoms.IO.Tests
             using (var directory = new TempDirectory())
             {
                 var dir = directory.Value().FullName;
-                var subdir = directory.Value().FullName + "\\subdir\\subdir2\\subdir3\\";
-                var file = directory.Value().FullName + "\\subdir\\subdir2\\subdir3\\test.txt";
+                var subdir = Path.GetFullPath(directory.Value().FullName + "/subdir/subdir2/subdir3/");
+                var file = Path.GetFullPath(directory.Value().FullName + "/subdir/subdir2/subdir3/test.txt");
 
                 Directory.CreateDirectory(subdir);
                 File.Create(file).Close();
