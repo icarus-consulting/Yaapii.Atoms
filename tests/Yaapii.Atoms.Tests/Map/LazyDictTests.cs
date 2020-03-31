@@ -11,7 +11,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void AllValuesAreBuiltWhenPreventionIsDisabled()
         {
             var dict = new LazyDict<int, int>(false,
-                new FailingValueKvp(1, true)
+                new FkKvp<int, int>(() => 1, () => throw new Exception("i shall not be called"), () => true)
             );
 
             var ex = Assert.Throws<Exception>(() => new List<KeyValuePair<int, int>>(dict));
@@ -22,7 +22,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void ValuesAreNotBuiltWhenLazy()
         {
             var dict = new LazyDict<int, int>(true,
-                new FailingValueKvp(1, true)
+                new FkKvp<int, int>(() => 1, () => throw new Exception("i shall not be called"), () => true)
             );
 
             var ex = Assert.Throws<InvalidOperationException>(() => dict.GetEnumerator());
@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void ValuesAreBuiltWhenRejectionEnabledButValuesNotLazy()
         {
             var dict = new LazyDict<int, int>(true,
-               new FailingValueKvp(1, false)
+               new FkKvp<int, int>(() => 1, () => throw new Exception("i shall not be called"), () => false)
            );
 
             var ex = Assert.Throws<Exception>(() => new List<KeyValuePair<int, int>>(dict));
@@ -45,39 +45,6 @@ namespace Yaapii.Atoms.Lookup.Tests
         {
             var dict = new LazyDict<int, int>(true);
             dict.GetEnumerator();
-        }
-
-        /// <summary>
-        /// IKvp<int, int> with an always failing Value()
-        /// </summary>
-        private sealed class FailingValueKvp : IKvp<int, int>
-        {
-            private readonly int key;
-            private readonly bool isLazy;
-
-            /// <summary>
-            /// IKvp<int, int> with an always failing Value()
-            /// </summary>
-            public FailingValueKvp(int key, bool isLazy)
-            {
-                this.key = key;
-                this.isLazy = isLazy;
-            }
-
-            public int Value()
-            {
-                throw new Exception("i shall not be called");
-            }
-
-            public int Key()
-            {
-                return key;
-            }
-
-            public bool IsLazy()
-            {
-                return isLazy;
-            }
         }
     }
 }
