@@ -106,7 +106,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         }
 
         [Fact]
-        public void BuildingAllValuesThrowsWithEnabledBuildAllRejection()
+        public void RejectsBuildingAllValuesByDefault()
         {
             var unsorted = new LazyDict<int, int>(false,
                 new Kvp.Of<int, int>(1, () => 4),
