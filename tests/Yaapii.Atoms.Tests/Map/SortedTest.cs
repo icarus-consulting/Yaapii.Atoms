@@ -80,7 +80,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         [InlineData(0, -5)]
         [InlineData(1, 1)]
         [InlineData(2, 6)]
-        public void DoesNotBuildValueWhenNotNeeded(int index, int expectedKey)
+        public void EnumeratesKeysWhenLazy(int index, int expectedKey)
         {
             var unsorted = new LazyDict<int, int>(false,
                 new Kvp.Of<int, int>(1, () => { throw new Exception("i shall not be called"); }),
