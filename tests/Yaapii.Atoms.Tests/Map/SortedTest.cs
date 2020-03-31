@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         }
 
         [Fact]
-        public void BuildingSingleValueIsStillOkWithBuildAllRejection()
+        public void DeliversSingleValueWhenLazy()
         {
             var unsorted = new LazyDict<int, int>(false,
                 new Kvp.Of<int, int>(1, () => 4),
