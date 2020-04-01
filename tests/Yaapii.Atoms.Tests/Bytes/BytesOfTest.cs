@@ -130,7 +130,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             String source = "hello, друг!";
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new BytesOf(
                         new StreamReader(
                             new MemoryStream(
@@ -150,7 +150,7 @@ namespace Yaapii.Atoms.IO.Tests
                 Encoding.UTF8.GetString(
                     new BytesOf(
                         new InputOf(
-                            new Text.Live(source)
+                            new LiveText(source)
                         ),
                         2
                     ).AsBytes()) == source
@@ -164,7 +164,7 @@ namespace Yaapii.Atoms.IO.Tests
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes("how are you?")))
             {
                 t =
-                    new Text.Live(
+                    new LiveText(
                         new InputOf(stream),
                         Encoding.UTF8
                     );
@@ -177,7 +177,7 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void AsBytes()
         {
-            IText text = new Text.Live("Hello!");
+            IText text = new LiveText("Hello!");
             Assert.True(
                 StructuralComparisons.StructuralEqualityComparer.Equals(
                     new BytesOf(
@@ -197,7 +197,7 @@ namespace Yaapii.Atoms.IO.Tests
             catch (IOException ex)
             {
                 stackTrace =
-                    new Text.Live(
+                    new LiveText(
                         new BytesOf(
                             ex
                         )

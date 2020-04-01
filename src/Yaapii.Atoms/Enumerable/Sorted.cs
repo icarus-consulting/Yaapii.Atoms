@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class Sorted<T> : Many.Envelope<T>
+    public sealed class Sorted<T> : ManyEnvelope<T>
         where T : IComparable<T>
     {
         /// <summary>
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
         public Sorted(Comparer<T> cmp, IEnumerable<T> src) : base(() =>
-            new Many.Live<T>(() =>
+            new LiveMany<T>(() =>
                 new Enumerator.Sorted<T>(cmp, src.GetEnumerator())
             ),
             false

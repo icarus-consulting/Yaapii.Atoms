@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Texts.Tests
         public void TrimsWhitespaceEscapeSequences()
         {
             Assert.True(
-                new TrimmedLeft(new Text.Live("   \b \f \n \r \t \v   ")).AsString() == string.Empty
+                new TrimmedLeft(new LiveText("   \b \f \n \r \t \v   ")).AsString() == string.Empty
             );
         }
 
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Texts.Tests
             Assert.Equal(
                 "Hello! \t \b  ",
                 new TrimmedLeft(
-                    new Text.Live(" \b   \t      Hello! \t \b  ")
+                    new LiveText(" \b   \t      Hello! \t \b  ")
                 ).AsString()
             );
         }
@@ -75,7 +75,7 @@ namespace Yaapii.Atoms.Texts.Tests
             Assert.Equal(
                 "ello! \t \b  ",
                 new TrimmedLeft(
-                    new Text.Live(" \b   \t      Hello! \t \b  "), 
+                    new LiveText(" \b   \t      Hello! \t \b  "), 
                     new char[] { '\b', '\t', ' ', 'H', 'o' }
                 ).AsString()
             );
@@ -87,7 +87,7 @@ namespace Yaapii.Atoms.Texts.Tests
             Assert.Equal(
                 "ello! \t \b  ",
                 new TrimmedLeft(
-                    new Text.Live(" \b   \t      Hello! \t \b  "), 
+                    new LiveText(" \b   \t      Hello! \t \b  "), 
                     new LiveScalar<char[]>(() => new char[] { '\b', '\t', ' ', 'H', 'o' })
                 ).AsString()
             );
@@ -109,7 +109,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.Equal(
                 "ello! \t \b   \t      H",
-                new TrimmedLeft(new Text.Live(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").AsString()
+                new TrimmedLeft(new LiveText(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").AsString()
             );
         }
 
@@ -118,7 +118,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.Equal(
                 "ello! \t \b   \t      H",
-                new TrimmedLeft(" \b   \t      Hello! \t \b   \t      H", new Text.Live(" \b   \t      H")).AsString()
+                new TrimmedLeft(" \b   \t      Hello! \t \b   \t      H", new LiveText(" \b   \t      H")).AsString()
             );
         }
 
@@ -128,8 +128,8 @@ namespace Yaapii.Atoms.Texts.Tests
             Assert.Equal(
                 "ello! \t \b   \t      H",
                 new TrimmedLeft(
-                    new Text.Live(" \b   \t      Hello! \t \b   \t      H"),
-                    new Text.Live(" \b   \t      H")
+                    new LiveText(" \b   \t      Hello! \t \b   \t      H"),
+                    new LiveText(" \b   \t      H")
                 ).AsString()
             );
         }

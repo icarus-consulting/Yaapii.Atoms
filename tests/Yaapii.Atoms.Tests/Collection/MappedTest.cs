@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Collection.Tests
                 0,
                 new Mapped<int, int>(
                     i => i + 1,
-                    new Many.Of<int>(-1, 1, 2)
+                    new ManyOf<int>(-1, 1, 2)
                 ));
         }
 
@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.Collection.Tests
                 new Mapped<string, string>(
                     input => 
                     input.ToUpper(),
-                    new Many.Of<string>("hello", "world", "друг")
+                    new ManyOf<string>("hello", "world", "друг")
                 )
             );
         }
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Empty(
                 new Mapped<String, IText>(
-                    input => new Upper(new Text.Live(input)),
+                    input => new Upper(new LiveText(input)),
                     new List<string>()
                 ));
         }

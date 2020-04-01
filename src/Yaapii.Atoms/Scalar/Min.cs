@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Enumerable
         public Min(params Func<T>[] items) : this(
             new Enumerable.Mapped<Func<T>, IScalar<T>>(
                 item => new LiveScalar<T>(() => item.Invoke()),
-                new Many.Of<Func<T>>(items)))
+                new ManyOf<Func<T>>(items)))
         { }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Yaapii.Atoms.Enumerable
         /// Find the smallest item in the given scalars.
         /// </summary>
         /// <param name="items">items to compare</param>
-        public Min(params IScalar<T>[] items) : this(new Many.Of<IScalar<T>>(items))
+        public Min(params IScalar<T>[] items) : this(new ManyOf<IScalar<T>>(items))
         { }
 
         /// <summary>

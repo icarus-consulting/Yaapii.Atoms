@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             Assert.EndsWith(
                 "друг?",
-                new Text.Live(
+                new LiveText(
                 new TeeInput(
                     new InputOf("How are you, мой друг?"),
                     new DeadOutput()

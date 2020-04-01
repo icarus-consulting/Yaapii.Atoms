@@ -44,13 +44,13 @@ namespace Yaapii.Atoms.Lookup
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp[] kvps) : this(new Many.Live<IKvp>(kvps), true)
+        public LazyDict(params IKvp[] kvps) : this(new LiveMany<IKvp>(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllKeys, params IKvp[] kvps) : this(new Many.Live<IKvp>(kvps), rejectBuildingAllKeys)
+        public LazyDict(bool rejectBuildingAllKeys, params IKvp[] kvps) : this(new LiveMany<IKvp>(kvps), rejectBuildingAllKeys)
         { }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Lookup
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
-                new Map.Of<Sticky<string>>(() =>
+                new MapOf<Sticky<string>>(() =>
                 {
                     var dict = new Dictionary<string, Sticky<string>>();
                     foreach (var kvp in kvps)
@@ -110,7 +110,7 @@ namespace Yaapii.Atoms.Lookup
                         + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
                 }
                 return
-                    new List.Live<string>(
+                    new LiveList<string>(
                        new Enumerable.Mapped<Sticky<string>, string>(
                            v => v.Value(),
                            map.Values
@@ -201,7 +201,7 @@ namespace Yaapii.Atoms.Lookup
                         ).AsString());
             }
 
-            new List.Of<KeyValuePair<string, string>>(this).CopyTo(array, arrayIndex);
+            new ListOf<KeyValuePair<string, string>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -284,13 +284,13 @@ namespace Yaapii.Atoms.Lookup
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp<Value>[] kvps) : this(new Many.Live<IKvp<Value>>(kvps), true)
+        public LazyDict(params IKvp<Value>[] kvps) : this(new LiveMany<IKvp<Value>>(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllValues, params IKvp<Value>[] kvps) : this(new Many.Live<IKvp<Value>>(kvps), rejectBuildingAllValues)
+        public LazyDict(bool rejectBuildingAllValues, params IKvp<Value>[] kvps) : this(new LiveMany<IKvp<Value>>(kvps), rejectBuildingAllValues)
         { }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Yaapii.Atoms.Lookup
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
-                new Map.Of<Sticky<Value>>(() =>
+                new MapOf<Sticky<Value>>(() =>
                 {
                     var dict = new Dictionary<string, Sticky<Value>>();
                     foreach (var kvp in kvps)
@@ -350,7 +350,7 @@ namespace Yaapii.Atoms.Lookup
                         + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
                 }
                 return
-                    new List.Live<Value>(
+                    new LiveList<Value>(
                        new Enumerable.Mapped<Sticky<Value>, Value>(
                            v => v.Value(),
                            map.Values
@@ -440,7 +440,7 @@ namespace Yaapii.Atoms.Lookup
                         ).AsString());
             }
 
-            new List.Of<KeyValuePair<string, Value>>(this).CopyTo(array, arrayIndex);
+            new ListOf<KeyValuePair<string, Value>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -523,13 +523,13 @@ namespace Yaapii.Atoms.Lookup
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp<Key, Value>[] kvps) : this(new Many.Of<IKvp<Key, Value>>(kvps), true)
+        public LazyDict(params IKvp<Key, Value>[] kvps) : this(new ManyOf<IKvp<Key, Value>>(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllValues, params IKvp<Key, Value>[] kvps) : this(new Many.Live<IKvp<Key, Value>>(kvps), rejectBuildingAllValues)
+        public LazyDict(bool rejectBuildingAllValues, params IKvp<Key, Value>[] kvps) : this(new LiveMany<IKvp<Key, Value>>(kvps), rejectBuildingAllValues)
         { }
 
         /// <summary>
@@ -539,7 +539,7 @@ namespace Yaapii.Atoms.Lookup
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
-                new Map.Of<Key, Sticky<Value>>(() =>
+                new MapOf<Key, Sticky<Value>>(() =>
                 {
                     var dict = new Dictionary<Key, Sticky<Value>>();
                     foreach (var kvp in kvps)
@@ -590,7 +590,7 @@ namespace Yaapii.Atoms.Lookup
                         + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
                 }
                 return
-                    new List.Live<Value>(
+                    new LiveList<Value>(
                        new Enumerable.Mapped<Sticky<Value>, Value>(
                            v => v.Value(),
                            map.Values
@@ -682,7 +682,7 @@ namespace Yaapii.Atoms.Lookup
                         ).AsString());
             }
 
-            new List.Of<KeyValuePair<Key, Value>>(this).CopyTo(array, arrayIndex);
+            new ListOf<KeyValuePair<Key, Value>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>

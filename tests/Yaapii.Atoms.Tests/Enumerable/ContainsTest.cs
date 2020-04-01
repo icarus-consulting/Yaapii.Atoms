@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new Contains<string>(
-                    new Many.Of<string>("Hello", "my", "cat", "is", "missing"),
+                    new ManyOf<string>("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "cat"
                     ).Value());
         }
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.False(
                 new Contains<string>(
-                    new Many.Of<string>("Hello", "my", "cat", "is", "missing"),
+                    new ManyOf<string>("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "elephant"
                     ).Value());
         }
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         public void DoesntFindInEmtyList()
         {
             Assert.False(new Contains<string>(
-                new Many.Of<String>(),
+                new ManyOf<String>(),
                 (str) => str == "elephant"
                 ).Value());
         }

@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             Assert.Contains(
                 "<html",
-                new Text.Live(
+                new LiveText(
                     new StickyInput(
                         new InputOf(
                             new Url("http://www.google.de")

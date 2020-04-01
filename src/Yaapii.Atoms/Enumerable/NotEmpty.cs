@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Enumerable
     /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
     /// </summary>
     /// <typeparam name="T">Type of the enumerable</typeparam>
-    public sealed class NotEmpty<T> : Many.Envelope<T>
+    public sealed class NotEmpty<T> : ManyEnvelope<T>
     {
         /// <summary>
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>

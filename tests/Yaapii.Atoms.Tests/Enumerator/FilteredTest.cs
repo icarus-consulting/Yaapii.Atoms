@@ -34,9 +34,9 @@ namespace Yaapii.Atoms.Enumerator.Tests
             Assert.Equal(
                 "Hello World",
                 new Joined(" ",
-                    new Many.Of<string>(
+                    new ManyOf<string>(
                         new Filtered<string>(
-                            new Many.Of<string>("Hello", "cruel", "World").GetEnumerator(),
+                            new ManyOf<string>("Hello", "cruel", "World").GetEnumerator(),
                             (str) => str != "cruel"
                         )
                     )

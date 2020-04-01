@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Lists.Tests
         {
             int size = 2;
             var list =
-                new List.Of<int>(
+                new ListOf<int>(
                     new Yaapii.Atoms.Enumerable.HeadOf<int>(
                         new Yaapii.Atoms.Enumerable.Endless<int>(1),
                         new LiveScalar<int>(() => Interlocked.Increment(ref size))

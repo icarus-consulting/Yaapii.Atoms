@@ -25,45 +25,42 @@ using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Lists
 {
-    public partial class List
+    /// <summary>
+    /// Makes a readonly list.
+    /// </summary>
+    /// <typeparam name="T">type of items</typeparam>
+    public sealed class ListOf<T> : ListEnvelope<T>
     {
         /// <summary>
-        /// Makes a readonly list.
+        /// ctor
         /// </summary>
-        /// <typeparam name="T">type of items</typeparam>
-        public sealed class Of<T> : Envelope<T>
-        {
-            /// <summary>
-            /// ctor
-            /// </summary>
-            /// <param name="array">source array</param>
-            public Of(params T[] array) : this(new Many.Live<T>(array))
-            { }
+        /// <param name="array">source array</param>
+        public ListOf(params T[] array) : this(new LiveMany<T>(array))
+        { }
 
-            /// <summary>
-            /// ctor
-            /// </summary>
-            /// <param name="src">source enumerator</param>
-            public Of(IEnumerator<T> src) : this(new Many.Of<T>(() => src))
-            { }
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">source enumerator</param>
+        public ListOf(IEnumerator<T> src) : this(new ManyOf<T>(() => src))
+        { }
 
-            /// <summary>
-            /// ctor
-            /// </summary>
-            /// <param name="src">source enumerable</param>
-            public Of(IEnumerable<T> src) : base(
-                () =>
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">source enumerable</param>
+        public ListOf(IEnumerable<T> src) : base(
+            () =>
+            {
+                var temp = new List<T>();
+                foreach (T item in src)
                 {
-                    var temp = new List<T>();
-                    foreach (T item in src)
-                    {
-                        temp.Add(item);
-                    }
-                    return temp;
-                },
-                false
-            )
-            { }
-        }
+                    temp.Add(item);
+                }
+                return temp;
+            },
+            false
+        )
+        { }
     }
 }

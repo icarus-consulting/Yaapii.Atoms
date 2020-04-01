@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Texts
         /// A <see cref="string"/> as a <see cref="Uri"/>
         /// </summary>
         /// <param name="url">url as a string</param>
-        public UriOf(String url) : this(new Text.Live(url))
+        public UriOf(String url) : this(new LiveText(url))
         { }
 
         /// <summary>

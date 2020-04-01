@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Texts
         /// A int out of a <see cref="string"/> using invariant culture.
         /// </summary>
         /// <param name="str">a int as a string</param>
-        public IntOf(String str) : this(new Text.Of(str))
+        public IntOf(String str) : this(new TextOf(str))
         { }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="str">a int as a string</param>
         /// <param name="culture">culture of the string</param>
-        public IntOf(String str, CultureInfo culture) : this(new Text.Of(str), culture)
+        public IntOf(String str, CultureInfo culture) : this(new TextOf(str), culture)
         { }
 
         /// <summary>

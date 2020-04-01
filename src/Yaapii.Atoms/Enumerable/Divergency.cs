@@ -7,7 +7,7 @@ namespace Yaapii.Atoms.Enumerable
     /// Items which do only exist in one enumerable.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Divergency<T> : Many.Envelope<T>
+    public class Divergency<T> : ManyEnvelope<T>
     {
         /// <summary>
         /// Items which do only exist in one enumerable.

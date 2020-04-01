@@ -31,8 +31,8 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             var x =
                 new StartsWith(
-                    new Text.Live("Im an text with a really good end!"),
-                    new Text.Live("Im a")
+                    new LiveText("Im an text with a really good end!"),
+                    new LiveText("Im a")
                 );
             Assert.True(x.Value());
         }
@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             var x =
                 new StartsWith(
-                    new Text.Live("Im a text with a really good end!"),
+                    new LiveText("Im a text with a really good end!"),
                     "Im a"
                 );
             Assert.True(x.Value());
@@ -53,8 +53,8 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             var x =
                 new StartsWith(
-                    new Text.Live("Im a text with a really good end!"),
-                    new Text.Live("m an")
+                    new LiveText("Im a text with a really good end!"),
+                    new LiveText("m an")
                 );
             Assert.False(x.Value());
         }

@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.IO.Tests
             lengthOf.Value();
 
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputAsBytes(
                         new InputOf(new Uri(file))))
                 .AsString() == (txt + txt),
@@ -78,7 +78,7 @@ namespace Yaapii.Atoms.IO.Tests
             lengthOf.Value();
 
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputAsBytes(
                         new InputOf(file)))
                 .AsString() == txt + txt

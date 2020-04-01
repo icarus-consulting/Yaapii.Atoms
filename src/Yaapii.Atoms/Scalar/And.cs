@@ -28,7 +28,7 @@ namespace Yaapii.Atoms.Scalar
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), new Many.Of<In>(src))
+        public And(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), new ManyOf<In>(src))
         { }
 
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Scalar
         /// <summary> Logical and. Returns true if all calls to <see cref="IFunc{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(IFunc<In, Boolean> func, params In[] src) : this(func, new Many.Of<In>(src))
+        public And(IFunc<In, Boolean> func, params In[] src) : this(func, new ManyOf<In>(src))
         { }
 
         /// <summary> ctor </summary>
@@ -87,12 +87,12 @@ namespace Yaapii.Atoms.Scalar
     {
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="funcs"> the conditions to apply </param>
-        public And(params Func<bool>[] funcs) : this(new Many.Of<System.Func<bool>>(funcs))
+        public And(params Func<bool>[] funcs) : this(new ManyOf<System.Func<bool>>(funcs))
         { }
 
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{Out}"/> were true. </summary>
         /// <param name="funcs"> the conditions to apply </param>
-        public And(Many.Of<Func<bool>> funcs) : this(
+        public And(ManyOf<Func<bool>> funcs) : this(
             new Mapped<Func<bool>, IScalar<bool>>(
                 func => new LiveScalar<bool>(func),
                 funcs))
@@ -101,7 +101,7 @@ namespace Yaapii.Atoms.Scalar
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         public And(params IScalar<Boolean>[] src) : this(
-            new Many.Of<IScalar<Boolean>>(src))
+            new ManyOf<IScalar<Boolean>>(src))
         { }
 
         /// <summary> ctor </summary>

@@ -33,9 +33,9 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new Joined<string>(
-                        new Many.Of<string>("hello", "world", "друг"),
-                        new Many.Of<string>("how", "are", "you"),
-                        new Many.Of<string>("what's", "up")
+                        new ManyOf<string>("hello", "world", "друг"),
+                        new ManyOf<string>("how", "are", "you"),
+                        new ManyOf<string>("what's", "up")
                     )
                 ).Value() == 8,
             "Can't concatenate enumerables together");
@@ -48,8 +48,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new LengthOf(
                     new Joined<IEnumerable<string>>(
                         new Mapped<string, IEnumerable<string>>(
-                           str => new Many.Of<string>(str),
-                           new Many.Of<string>("x")
+                           str => new ManyOf<string>(str),
+                           new ManyOf<string>("x")
                         )
                 )).Value() == 1,
             "cannot join mapped iterables together");
@@ -61,7 +61,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new Joined<string>(
-                        new Many.Of<string>("hello", "world", "друг"),
+                        new ManyOf<string>("hello", "world", "друг"),
                         "how",
                         "are",
                         "you",

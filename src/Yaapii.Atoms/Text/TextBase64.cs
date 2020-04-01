@@ -28,7 +28,7 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A <see cref="IText"/> as Base64 encoded <see cref="IText"/>
     /// </summary>
-    public sealed class TextBase64 : Text.Envelope
+    public sealed class TextBase64 : TextEnvelope
     {
         /// <summary>
         /// A <see cref="string"/> as Base64-Encoded <see cref="IText"/>
@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to encode</param>
         public TextBase64(IText text) : base(
-            new Text.Live(
+            new LiveText(
                 new BytesBase64(
                     new BytesOf(text)
                 )

@@ -36,12 +36,12 @@ namespace Yaapii.Atoms.Enumerator.Tests
             Assert.True(
                 new Joined(
                     "",
-                    new Many.Of<IText>(
+                    new ManyOf<IText>(
                         new Mapped<string, IText>(
                             new HeadOf<string>(
                                 new Endless<string>("A"),
                                 20),
-                            str => new Text.Live(str)
+                            str => new LiveText(str)
                         )
                     )
                 ).AsString() == expected

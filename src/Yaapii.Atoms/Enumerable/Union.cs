@@ -28,7 +28,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <summary>
     /// Union objects in two enumerables.
     /// </summary>
-    public class Union<T> : Many.Envelope<T>
+    public class Union<T> : ManyEnvelope<T>
     {
         /// <summary>
         /// Union objects in two enumerables.

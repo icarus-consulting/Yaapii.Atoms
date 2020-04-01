@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.IO.Tests
                 new LengthOf(
                     new SlowInput(
                         new InputOf(
-                            new Text.Live(text)
+                            new LiveText(text)
                         )
                     )
                 ).Value(),

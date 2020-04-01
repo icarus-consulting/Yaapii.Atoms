@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Lookup
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="Key"></typeparam>
     /// <typeparam name="Value"></typeparam>
-    public sealed class Grouped<T, Key, Value> : Map.Envelope<Key, IList<Value>>
+    public sealed class Grouped<T, Key, Value> : MapEnvelope<Key, IList<Value>>
     {
         /// <summary>
         /// ctor
@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Lookup
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
         public Grouped(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : this(
-            new List.Live<T>(src),
+            new LiveList<T>(src),
             key,
             value
         )

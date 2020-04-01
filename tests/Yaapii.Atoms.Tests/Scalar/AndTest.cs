@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.True(
                     new And(
-                        new Many.Of<IScalar<Boolean>>(
+                        new ManyOf<IScalar<Boolean>>(
                             new False(),
                             new False(),
                             new False()
@@ -72,7 +72,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         public void EmptyIterator()
         {
             Assert.True(
-                    new And(new Many.Of<IScalar<Boolean>>())
+                    new And(new ManyOf<IScalar<Boolean>>())
                     .Value() == true);
         }
 
@@ -83,7 +83,7 @@ namespace Yaapii.Atoms.Scalar.Tests
             Assert.True(
                 new And<string>(
                         str => { list.AddLast(str); return true; },
-                        new Many.Of<string>("hello", "world")
+                        new ManyOf<string>("hello", "world")
 
                 ).Value() == true);
 
@@ -100,7 +100,7 @@ namespace Yaapii.Atoms.Scalar.Tests
             Assert.True(
                 new And<string>(
                         str => { list.AddLast(str); return true; },
-                        new Many.Of<string>()
+                        new ManyOf<string>()
                 ).Value() == true,
                 "Can't enumerate a list"
                 );

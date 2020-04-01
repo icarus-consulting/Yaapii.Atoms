@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Yaapii.Atoms.Lookup;
 
@@ -52,13 +51,13 @@ namespace Yaapii.Atoms.Func
 
         public BowAction(Func<bool> trigger, Action prepare, Action shoot, TimeSpan timeout, TimeSpan interval) : this(
             trigger,
-            new Map.Of<Action>(
-                new Kvp.Of<Action>("prepare", prepare),
-                new Kvp.Of<Action>("shoot", shoot)
+            new MapOf<Action>(
+                new KvpOf<Action>("prepare", prepare),
+                new KvpOf<Action>("shoot", shoot)
             ),
-            new Map.Of<TimeSpan>(
-                new Kvp.Of<TimeSpan>("timeout", timeout),
-                new Kvp.Of<TimeSpan>("interval", interval)
+            new MapOf<TimeSpan>(
+                new KvpOf<TimeSpan>("timeout", timeout),
+                new KvpOf<TimeSpan>("interval", interval)
             ))
         { }
 

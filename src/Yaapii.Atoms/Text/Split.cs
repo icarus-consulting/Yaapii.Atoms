@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A <see cref="IText"/> which has been splitted at the given string.
     /// </summary>
-    public sealed class Split : Many.Envelope
+    public sealed class Split : ManyEnvelope
     {
         /// <summary>
         /// A <see cref="IText"/> which has been splitted at the given string.
@@ -41,8 +41,8 @@ namespace Yaapii.Atoms.Texts
         /// <param name="rgx">regex to use for splitting</param>
         /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
         public Split(String text, String rgx, bool remBlank = true) : this(
-            new Text.Live(text),
-            new Text.Live(rgx),
+            new LiveText(text),
+            new LiveText(rgx),
             remBlank)
         { }
 
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="rgx">regex to use for splitting</param>
         /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
         public Split(String text, IText rgx, bool remBlank = true) : this(
-            new Text.Live(text),
+            new LiveText(text),
             rgx,
             remBlank)
         { }
@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
         public Split(IText text, String rgx, bool remBlank = true) : this(
             text,
-            new Text.Live(rgx),
+            new LiveText(rgx),
             remBlank
         )
         { }
@@ -80,7 +80,7 @@ namespace Yaapii.Atoms.Texts
         public Split(IText text, IText rgx, bool remBlank = true) : base(() =>
             {
                 IEnumerable<string> split =
-                    new Many.Live<string>(
+                    new LiveMany<string>(
                         new Regex(rgx.AsString()).Split(text.AsString())
                     );
 

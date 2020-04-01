@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             Assert.Contains(
                 fileName,
-                new Text.Live(
+                new LiveText(
                     new UnzippedFile(
                        new ResourceOf(
                            "Assets/Zip/ZipWithThreeFiles.zip",

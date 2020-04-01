@@ -38,9 +38,9 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             var skipped =
                 new List<string>(
-                    new Many.Of<string>(
+                    new ManyOf<string>(
                         new Skipped<string>(
-                            new Many.Of<string>(
+                            new ManyOf<string>(
                                 "one", "two", "three", "four"
                             ).GetEnumerator(),
                             2
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.False(
                 new Skipped<string>(
-                    new Many.Of<string>(
+                    new ManyOf<string>(
                         "one", "two"
                     ).GetEnumerator(),
                     2

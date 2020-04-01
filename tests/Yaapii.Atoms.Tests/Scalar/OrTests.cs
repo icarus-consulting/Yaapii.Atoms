@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.True(
                 new Or(
-                    new Many.Of<IScalar<bool>>(
+                    new ManyOf<IScalar<bool>>(
                         new LiveScalar<bool>(true),
                         new LiveScalar<bool>(false)
                     )

@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to check</param>
         public IsWhitespace(string text) : this(
-            new Text.Of(text)
+            new TextOf(text)
         )
         { }
 

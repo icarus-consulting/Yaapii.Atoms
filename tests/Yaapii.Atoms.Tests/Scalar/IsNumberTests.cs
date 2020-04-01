@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.True(
                 new IsNumber(
-                    new Text.Live(
+                    new LiveText(
                         "1,234.56"
                     )
                 ).Value(),
@@ -71,7 +71,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.True(
                 new IsNumber(
-                    new Text.Live(
+                    new LiveText(
                         "1234,56"
                     ),
                     new System.Globalization.NumberFormatInfo
@@ -99,7 +99,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.False(
                 new IsNumber(
-                    new Text.Live(
+                    new LiveText(
                         "not a number"
                     )
                 ).Value(),

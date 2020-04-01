@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Collection.Tests
         [Fact]
         public void BehavesAsCollection()
         {
-            var col = new Collection.Live<int>(1, 2, 0, -1);
+            var col = new LiveCollection<int>(1, 2, 0, -1);
 
             Assert.True(col.Contains(1) && col.Contains(2) && col.Contains(0) && col.Contains(-1));
         }
@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Contains(
                 -1,
-                new Collection.Live<int>(1, 2, 0, -1)
+                new LiveCollection<int>(1, 2, 0, -1)
             );
         }
 
@@ -49,8 +49,8 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Contains(
                 -1,
-                new Collection.Live<int>(
-                    new Many.Of<int>(1, 2, 0, -1).GetEnumerator())
+                new LiveCollection<int>(
+                    new ManyOf<int>(1, 2, 0, -1).GetEnumerator())
             );
         }
 
@@ -59,8 +59,8 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             var count = 1;
             var col =
-                new Collection.Live<int>(
-                    new Many.Live<int>(() =>
+                new LiveCollection<int>(
+                    new LiveMany<int>(() =>
                         new Repeated<int>(
                             () =>
                             {

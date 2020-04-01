@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.Equal(
                 "HELLO!",
-                new Upper(new Text.Live("Hello!")).AsString()
+                new Upper(new LiveText("Hello!")).AsString()
             );
         }
 

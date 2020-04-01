@@ -39,13 +39,13 @@ namespace Yaapii.Atoms.Enumerator.Tests
             Assert.True(
                 new Joined(
                     ", ",
-                    new Many.Of<IText>(
+                    new ManyOf<IText>(
                         new Mapped<int, IText>(
                             new HeadOf<int>(
-                                new Many.Of<int>(1, 2, 3, 4).GetEnumerator(),
+                                new ManyOf<int>(1, 2, 3, 4).GetEnumerator(),
                                 2
                             ), 
-                            str => new Text.Of(str + "")
+                            str => new TextOf(str + "")
                         )
                     )
                 ).AsString() == "1, 2",

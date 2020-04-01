@@ -27,7 +27,7 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A <see cref="IText"/> whose contents have been replaced by another text.
     /// </summary>
-    public sealed class Replaced : Text.Envelope
+    public sealed class Replaced : TextEnvelope
     {
         /// <summary>
         /// A <see cref="IText"/>  whose contents have been replaced by another text.

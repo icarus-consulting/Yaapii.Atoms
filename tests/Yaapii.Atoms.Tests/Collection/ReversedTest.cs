@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Collection.Tests
                 2,
                 new ItemAt<int>(
                     new Reversed<int>(
-                        new Many.Of<int>(0, -1, 2))
+                        new ManyOf<int>(0, -1, 2))
                 ).Value()
             );
         }
@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Collection.Tests
                 last,
                 new ItemAt<string>(
                     new Reversed<string>(
-                        new Many.Of<string>(
+                        new ManyOf<string>(
                             "item", last)
                     )).Value());
         }
@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Equal(
                 3,
                 new Reversed<string>(
-                    new Many.Of<string>(
+                    new ManyOf<string>(
                         "0", "1", "2")
                 ).Count);
         }
@@ -80,7 +80,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.NotEmpty(
                 new Reversed<int>(
-                    new Many.Of<int>(
+                    new ManyOf<int>(
                         6, 16
                     )
                 ));
@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Contains(
                 word,
                 new Reversed<string>(
-                    new Many.Of<string>(
+                    new ManyOf<string>(
                         "hello", "elegant", word)
                 ));
         }
@@ -104,7 +104,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Throws<UnsupportedOperationException>(() =>
               new Reversed<int>(
-                  new Many.Of<int>(
+                  new ManyOf<int>(
                       1, 2, 3, 4)
               ).Add(6));
         }
@@ -114,7 +114,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Throws<UnsupportedOperationException>(() =>
                 new Reversed<int>(
-                    new Many.Of<int>(
+                    new ManyOf<int>(
                         1, 2, 3, 4
                     )
                 ).Remove(1));
@@ -127,7 +127,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Throws<UnsupportedOperationException>(() =>
                 new Reversed<int>(
-                    new Many.Of<int>(
+                    new ManyOf<int>(
                         1, 2, 3, 4)
                 ).Clear());
         }

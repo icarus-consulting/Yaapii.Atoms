@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Lower(
-                    new Text.Live("HelLo!")
+                    new LiveText("HelLo!")
                 ).AsString() == "hello!"
             );
         }

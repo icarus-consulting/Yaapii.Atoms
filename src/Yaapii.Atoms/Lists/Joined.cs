@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Lists
     /// Multiple lists joined together as one.
     /// </summary>
     /// <typeparam name="T">type of items in list</typeparam>
-    public sealed class Joined<T> : List.Envelope<T>
+    public sealed class Joined<T> : ListEnvelope<T>
     {
         /// <summary>
         /// Multiple <see cref="IList{T}"/> joined together
@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Lists
         /// <param name="src">lists to join</param>
         public Joined(IList<T> origin, params IList<T>[] src) : this(
             new Enumerable.Joined<IList<T>>(
-                new Many.Of<IList<T>>(origin), src))
+                new ManyOf<IList<T>>(origin), src))
         { }
 
         /// <summary>
@@ -50,14 +50,14 @@ namespace Yaapii.Atoms.Lists
         /// <param name="origin">a list to join</param>
         public Joined(IList<T> origin, params T[] src) : this(
             new Enumerable.Joined<IList<T>>(
-                new Many.Of<IList<T>>(origin), src))
+                new ManyOf<IList<T>>(origin), src))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">The lists to join together</param>
-        public Joined(params IList<T>[] src) : this(new Many.Of<IList<T>>(src))
+        public Joined(params IList<T>[] src) : this(new ManyOf<IList<T>>(src))
         { }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Yaapii.Atoms.Lists
                     new Each<T>(item => blocking.Add(item), lst).Invoke();
                 }
 
-                return new List.Live<T>(blocking);
+                return new LiveList<T>(blocking);
             },
             false
         )

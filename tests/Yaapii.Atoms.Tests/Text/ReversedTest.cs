@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Reversed(
-                    new Text.Live("Hello!")
+                    new LiveText("Hello!")
                 ).AsString() == "!olleH",
                 "Can't reverse a text");
         }
@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Reversed(
-                    new Text.Live("")
+                    new LiveText("")
                 ).AsString() == "",
                 "Can't reverse empty text");
         }

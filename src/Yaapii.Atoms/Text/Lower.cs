@@ -25,7 +25,7 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A <see cref="IText"/> as lowercase.
     /// </summary>
-    public sealed class Lower : Text.Envelope
+    public sealed class Lower : TextEnvelope
     {
         /// <summary>
         /// A <see cref="IText"/>  as lowercase.

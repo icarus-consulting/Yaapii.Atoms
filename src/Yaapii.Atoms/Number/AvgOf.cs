@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">doubles</param>
         public AvgOf(params double[] src) : this(
-            new Many.Of<double>(src))
+            new ManyOf<double>(src))
         { }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">integers</param>
         public AvgOf(params int[] src) : this(
-            new Many.Of<int>(src))
+            new ManyOf<int>(src))
         { }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src"></param>
         public AvgOf(params long[] src) : this(
-            new Many.Of<long>(src))
+            new ManyOf<long>(src))
         { }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">floats</param>
         public AvgOf(params float[] src) : this(
-            new Many.Of<float>(src))
+            new ManyOf<float>(src))
         { }
 
         /// <summary>

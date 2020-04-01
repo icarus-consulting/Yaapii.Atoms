@@ -40,10 +40,10 @@ namespace Yaapii.Atoms.IO.Tests
             if (File.Exists(path)) File.Delete(path);
 
             String content = "Hello, товарищ!";
-            File.WriteAllBytes(path, new BytesOf(new Text.Live(content, Encoding.UTF8)).AsBytes());
+            File.WriteAllBytes(path, new BytesOf(new LiveText(content, Encoding.UTF8)).AsBytes());
 
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputAsBytes(
                         new InputOf(
                             new InputStreamOf(
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             String content = "Hello, дорогой товарищ!";
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputOf(
                         new InputStreamOf(
                             new StreamReader(
@@ -71,7 +71,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             String content = "Hello, صديق!";
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputOf(
                         new InputStreamOf(
                             new StreamReader(
@@ -105,10 +105,10 @@ namespace Yaapii.Atoms.IO.Tests
             if (File.Exists(path)) File.Delete(path);
 
             String content = "Hello, товарищ!";
-            File.WriteAllBytes(path, new BytesOf(new Text.Live(content, Encoding.UTF8)).AsBytes());
+            File.WriteAllBytes(path, new BytesOf(new LiveText(content, Encoding.UTF8)).AsBytes());
 
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputAsBytes(
                         new InputOf(
                             new InputStreamOf(

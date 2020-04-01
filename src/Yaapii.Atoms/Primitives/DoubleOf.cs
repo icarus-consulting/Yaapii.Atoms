@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Texts
         /// A double out of <see cref="string"/>.
         /// </summary>
         /// <param name="str">a double as a string</param>
-        public DoubleOf(String str) : this(new Text.Of(str))
+        public DoubleOf(String str) : this(new TextOf(str))
         { }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="str">a double as a string</param>
         /// <param name="culture">culture of the given string</param>
-        public DoubleOf(String str, CultureInfo culture) : this(new Text.Of(str), culture)
+        public DoubleOf(String str, CultureInfo culture) : this(new TextOf(str), culture)
         { }
 
         /// <summary>

@@ -43,9 +43,9 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Joined(
-                    new Text.Live(" "),
-                    new Text.Live("foo"),
-                    new Text.Live("bar")
+                    new LiveText(" "),
+                    new LiveText("foo"),
+                    new LiveText("bar")
                 ).AsString() == "foo bar"
             );
         }

@@ -27,7 +27,7 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A <see cref="IText"/> which has been reversed.
     /// </summary>
-    public sealed class Reversed : Text.Envelope
+    public sealed class Reversed : TextEnvelope
     {
         /// <summary>
         /// A <see cref="IText"/> which has been reversed.

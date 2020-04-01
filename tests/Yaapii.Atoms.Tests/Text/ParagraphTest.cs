@@ -19,10 +19,10 @@ namespace Yaapii.Atoms.Texts.Tests
         public void BuildsWithITextEnumerable()
         {
             var p = new Paragraph(
-                new Many.Live<IText>(
-                    new Text.Live("a"),
-                    new Text.Live("b"),
-                    new Text.Live("c")
+                new LiveMany<IText>(
+                    new LiveText("a"),
+                    new LiveText("b"),
+                    new LiveText("c")
                 ));
             Assert.Equal("a\nb\nc".Replace("\n", Environment.NewLine), p.AsString());
         }
@@ -42,9 +42,9 @@ namespace Yaapii.Atoms.Texts.Tests
         public void HeadsAndTailsMixedITextStrings()
         {
             var p = new Paragraph(
-                new Text.Live("Hello"), new Text.Live("World"),
+                new LiveText("Hello"), new LiveText("World"),
                 new string[] { "I", "was", "here" },
-                new Text.Live("foo"), new Text.Live("bar")
+                new LiveText("foo"), new LiveText("bar")
             );
             Assert.Equal("Hello\nWorld\nI\nwas\nhere\nfoo\nbar".Replace("\n", Environment.NewLine), p.AsString());
         }

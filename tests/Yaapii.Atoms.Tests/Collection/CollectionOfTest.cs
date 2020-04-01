@@ -35,8 +35,8 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Contains(
                 -1,
-                new Collection.Of<int>(
-                    new Many.Of<int>(1, 2, 0, -1)));
+                new CollectionOf<int>(
+                    new ManyOf<int>(1, 2, 0, -1)));
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             int size = 2;
             var list =
-                new Collection.Of<int>(
+                new CollectionOf<int>(
                     new Enumerable.Repeated<int>(
                         new LiveScalar<int>(() => 0),
                         new LiveScalar<int>(() =>
@@ -61,14 +61,14 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Equal(
                 2,
-                new Collection.Of<int>(-1, 0).Count);
+                new CollectionOf<int>(-1, 0).Count);
         }
 
         [Fact]
         public void Empty()
         {
             Assert.Empty(
-                new Collection.Of<int>());
+                new CollectionOf<int>());
         }
 
         [Fact]
@@ -76,7 +76,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Contains(
                 2,
-                new Collection.Of<int>(1, 2)
+                new CollectionOf<int>(1, 2)
             );
         }
 
@@ -84,14 +84,14 @@ namespace Yaapii.Atoms.Collection.Tests
         public void RejectsAdd()
         {
             Assert.Throws<UnsupportedOperationException>(() =>
-                new Collection.Of<int>(1, 2).Add(1));
+                new CollectionOf<int>(1, 2).Add(1));
         }
 
         [Fact]
         public void RejectsRemove()
         {
             Assert.Throws<UnsupportedOperationException>(() =>
-                new Collection.Of<int>(1, 2).Remove(1));
+                new CollectionOf<int>(1, 2).Remove(1));
         }
 
 
@@ -99,7 +99,7 @@ namespace Yaapii.Atoms.Collection.Tests
         public void RejectsClear()
         {
             Assert.Throws<UnsupportedOperationException>(() =>
-                new Collection.Of<int>(1, 2).Clear());
+                new CollectionOf<int>(1, 2).Clear());
         }
 
     }

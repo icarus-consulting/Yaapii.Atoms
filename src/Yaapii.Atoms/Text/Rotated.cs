@@ -28,7 +28,7 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A <see cref="IText"/> whose characters have been rotated.
     /// </summary>
-    public sealed class Rotated : Text.Envelope
+    public sealed class Rotated : TextEnvelope
     {
         /// <summary>
         /// A <see cref="IText"/> whose characters have been rotated.

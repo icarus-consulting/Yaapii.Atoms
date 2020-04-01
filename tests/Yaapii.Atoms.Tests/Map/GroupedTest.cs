@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         [Fact]
         public void GroupsList()
         {
-            var srcList = new List.Of<string>("ABC", "ABCD", "ABCDE");
+            var srcList = new ListOf<string>("ABC", "ABCD", "ABCDE");
             var keyFunc =
                 new FuncOf<string, double>((str) =>
                     new NumberOf(

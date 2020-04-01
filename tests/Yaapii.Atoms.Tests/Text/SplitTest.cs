@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Texts.Tests
             Assert.True(
                 new Split(
                     "Atoms OOP!",
-                    new Text.Live("\\s")
+                    new LiveText("\\s")
                 ).Select(s => s == "Atoms" || s == "OOP!").Count() == 2,
                 "Can't split an string with text regex");
         }
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
             new Split(
-                new Text.Live("Atoms4Primitives!"), "\\d+")
+                new LiveText("Atoms4Primitives!"), "\\d+")
                 .Select(s => s == "Atoms" || s == "Primitives!").Count() == 2,
             "Can't split an text with string regex");
         }
@@ -72,7 +72,7 @@ namespace Yaapii.Atoms.Texts.Tests
         public void SplitTextWithTextRegex()
         {
             Assert.True(
-                new Split(new Text.Live("Split#OOP!"), "\\W+")
+                new Split(new LiveText("Split#OOP!"), "\\W+")
                 .Select(s => s == "Split" || s == "OOP").Count() == 2,
                 "Can't split an text with text regex");
         }
@@ -83,7 +83,7 @@ namespace Yaapii.Atoms.Texts.Tests
             Assert.True(
                 new LengthOf(
                     new Split(
-                        new Text.Live("Split##OOP!"),
+                        new LiveText("Split##OOP!"),
                         "\\W+")).Value() == 2,
                 "Can't remove empty strings");
         }
@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Texts.Tests
             Assert.True(
                 new LengthOf(
                     new Split(
-                        new Text.Live("Split##OOP!"),
+                        new LiveText("Split##OOP!"),
                         "\\W+",
                         false
                     )

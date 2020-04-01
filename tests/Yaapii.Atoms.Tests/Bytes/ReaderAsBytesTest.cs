@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Bytes.Tests
         {
             String source = "hello, друг!";
             Assert.True(
-            new Text.Live(
+            new LiveText(
                 new ReaderAsBytes(
                     new StreamReader(
                         new InputOf(source).Stream())

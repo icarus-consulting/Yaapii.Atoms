@@ -9,7 +9,7 @@ namespace Yaapii.Atoms.Lookup
     /// </summary>
     /// <typeparam name="Key">Key Type of the Map</typeparam>
     /// <typeparam name="Value">Value Type of the Map</typeparam>
-    public sealed class Sorted<Key, Value> : Map.Envelope<Key, Value>
+    public sealed class Sorted<Key, Value> : MapEnvelope<Key, Value>
     {
         /// <summary>
         /// Sorts the given map with the default comperator of the key
@@ -74,7 +74,7 @@ namespace Yaapii.Atoms.Lookup
                 {
                     var items = new List<KeyValuePair<Key, Value>>(pairs);
                     items.Sort(cmp);
-                    return new Map.Of<Key, Value>(items);
+                    return new MapOf<Key, Value>(items);
                 },
                 false
             )
@@ -93,7 +93,7 @@ namespace Yaapii.Atoms.Lookup
                     keys.Sort(cmp);
                     var result = new LazyDict<Key, Value>(
                         new Mapped<Key, IKvp<Key, Value>>(
-                            key => new Kvp.Of<Key, Value>(key, () => dict[key]),
+                            key => new KvpOf<Key, Value>(key, () => dict[key]),
                             keys
                         )
                     );
@@ -108,7 +108,7 @@ namespace Yaapii.Atoms.Lookup
     /// Sorts the given map with the given comparer
     /// </summary>
     /// <typeparam name="Value">Value Type of the Map</typeparam>
-    public sealed class Sorted<Value> : Map.Envelope<Value>
+    public sealed class Sorted<Value> : MapEnvelope<Value>
     {
         /// <summary>
         /// Sorts the given map with the default comperator of the key
@@ -173,7 +173,7 @@ namespace Yaapii.Atoms.Lookup
                 {
                     var items = new List<KeyValuePair<string, Value>>(pairs);
                     items.Sort(cmp);
-                    return new Map.Of<string, Value>(items);
+                    return new MapOf<string, Value>(items);
                 },
                 false
             )
@@ -192,7 +192,7 @@ namespace Yaapii.Atoms.Lookup
                     keys.Sort(cmp);
                     var result = new LazyDict<string, Value>(
                         new Mapped<string, IKvp<string, Value>>(
-                            key => new Kvp.Of<string, Value>(key, () => dict[key]),
+                            key => new KvpOf<string, Value>(key, () => dict[key]),
                             keys
                         )
                     );
@@ -206,7 +206,7 @@ namespace Yaapii.Atoms.Lookup
     /// <summary>
     /// Sorts the given map with the given comparer
     /// </summary>
-    public sealed class Sorted : Map.Envelope
+    public sealed class Sorted : MapEnvelope
     {
         /// <summary>
         /// Sorts the given map with the default comperator of the key
@@ -271,7 +271,7 @@ namespace Yaapii.Atoms.Lookup
                 {
                     var items = new List<KeyValuePair<string, string>>(pairs);
                     items.Sort(cmp);
-                    return new Map.Of<string, string>(items);
+                    return new MapOf<string, string>(items);
                 },
                 false
             )
@@ -290,7 +290,7 @@ namespace Yaapii.Atoms.Lookup
                     keys.Sort(cmp);
                     var result = new LazyDict<string, string>(
                         new Mapped<string, IKvp<string, string>>(
-                            key => new Kvp.Of<string, string>(key, () => dict[key]),
+                            key => new KvpOf<string, string>(key, () => dict[key]),
                             keys
                         )
                     );

@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="start">Starting content to use in the test</param>
         public StartsWith(IText text, string start) : this(
             text,
-            new Text.Live(start)
+            new LiveText(start)
         )
         { }
 

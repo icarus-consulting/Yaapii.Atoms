@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Lists.Tests
 
             Assert.Equal("A",
                 new ItemAt<object>(
-                    new Many.OfArrayList(arr)
+                    new ManyOfArrayList(arr)
                 ).Value().ToString()
             );
         }

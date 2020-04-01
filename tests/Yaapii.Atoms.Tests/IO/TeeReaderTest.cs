@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.IO.Tests
             }
             reader.Dispose();
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputOf(
                         new ReaderOf(baos.ToArray()))
                 ).AsString().CompareTo(content) == 0,

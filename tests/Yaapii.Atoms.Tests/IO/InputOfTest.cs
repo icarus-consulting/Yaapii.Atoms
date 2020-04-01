@@ -40,12 +40,12 @@ namespace Yaapii.Atoms.IO.Tests
         public void ReadsAlternativeInputForFileCase()
         {
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputWithFallback(
                         new InputOf(
                             new Uri(Path.GetFullPath("/this-file-does-not-exist.txt"))
                         ),
-                        new InputOf(new Text.Live("Alternative text!"))
+                        new InputOf(new LiveText("Alternative text!"))
                     )
                 ).AsString().EndsWith("text!"),
                 "Can't read alternative source from file not found");
@@ -78,7 +78,7 @@ namespace Yaapii.Atoms.IO.Tests
             ).Value();
 
             Assert.True(
-                    new Text.Live(
+                    new LiveText(
                         new InputOf(
                             new Uri(path))
                     ).AsString().EndsWith(content),
@@ -91,7 +91,7 @@ namespace Yaapii.Atoms.IO.Tests
             Stream input;
             using (input = new MemoryStream(Encoding.UTF8.GetBytes("how are you?")))
             {
-                new Text.Live(
+                new LiveText(
                     new InputOf(
                         input)).AsString();
             }
@@ -130,7 +130,7 @@ namespace Yaapii.Atoms.IO.Tests
 
             Assert.StartsWith(
                 "Hello World",
-                new Text.Live(
+                new LiveText(
                     new BytesOf(
                         new InputOf(
                             new Uri(Path.GetFullPath(path))
@@ -144,7 +144,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void ReadsRealUrl()
         {
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputOf(
                         new Url("http://www.google.de"))
                 ).AsString().Contains("<html"),
@@ -156,7 +156,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void ReadsRealUrlFromUri()
         {
             Assert.True(
-                    new Text.Live(
+                    new LiveText(
                         new InputOf(
                             new Uri("http://www.google.de"))
                     ).AsString().Contains("<html"),
@@ -194,7 +194,7 @@ namespace Yaapii.Atoms.IO.Tests
             Assert.True(
                 new Enumerable.LengthOf(
                     new Split(
-                        new Text.Live(
+                        new LiveText(
                             new BytesOf(
                                 new InputOf(
                                     new Uri(path)
@@ -223,7 +223,7 @@ namespace Yaapii.Atoms.IO.Tests
             String starts = "Name it, ";
             String ends = "then it exists!";
             Assert.True(
-                    new Text.Live(
+                    new LiveText(
                         new BytesOf(
                             new InputOf(
                                 new StringBuilder(starts).Append(ends)
@@ -237,7 +237,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void ReadsArrayOfChars()
         {
             Assert.True(
-                    new Text.Live(
+                    new LiveText(
                         new BytesOf(
                             new InputOf(
                                 'H', 'o', 'l', 'd', ' ',
@@ -251,7 +251,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void ReadsEncodedArrayOfChars()
         {
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new BytesOf(
                         new InputOf(
                             new char[]{
@@ -270,7 +270,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             String source = "hello, source!";
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputOf(
                         new StreamReader(
                             new InputOf(source).Stream())
@@ -285,7 +285,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             String source = "hello, друг!";
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputOf(
                             new StreamReader(
                                 new InputOf(source).Stream()),

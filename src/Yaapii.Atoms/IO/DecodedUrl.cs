@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="url">url as string</param>
         /// <param name="enc">encoding of the string</param>
-        public DecodedUrl(String url, Encoding enc) : this(new Text.Of(url, enc))
+        public DecodedUrl(String url, Encoding enc) : this(new TextOf(url, enc))
         { }
 
         /// <summary>

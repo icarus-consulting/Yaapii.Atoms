@@ -40,10 +40,10 @@ namespace Yaapii.Atoms.Texts.Tests
             {
                 new LengthOf(
                     new TeeInput(
-                        new Text.Live(
+                        new LiveText(
                             new BytesBase64(
                                 new BytesOf(
-                                    new Text.Live(text)
+                                    new LiveText(text)
                                 )
                             )
                         ).AsString(),
@@ -53,12 +53,12 @@ namespace Yaapii.Atoms.Texts.Tests
 
                 Assert.True(
                     new Comparable(
-                        new Text.Live(
+                        new LiveText(
                             new Uri(tempFile.Value())
                         )
                     ).CompareTo(
                         new TextBase64(
-                            new Text.Live(text)
+                            new LiveText(text)
                         )
                     ) == 0
                 );

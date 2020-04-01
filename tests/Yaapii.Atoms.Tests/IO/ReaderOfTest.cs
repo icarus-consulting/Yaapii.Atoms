@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.IO.Tests
             ).Value();
 
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputOf(
                         new ReaderOf(
                             new Uri(path)))

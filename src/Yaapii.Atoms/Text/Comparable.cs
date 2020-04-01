@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A Text that can be compared using the Equals method.
     /// </summary>
-    public sealed class Comparable : Text.Envelope, IComparable
+    public sealed class Comparable : TextEnvelope, IComparable
     {
         private readonly IText text;
 
@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         public Comparable(IText text) : base(text, false)
         {
-            this.text = new Text.Of(() => text.AsString());
+            this.text = new TextOf(() => text.AsString());
         }
 
         public int CompareTo(object obj)

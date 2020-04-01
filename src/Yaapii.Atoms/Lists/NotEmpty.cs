@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Lists
     /// Ensures that <see cref="IList{T}" /> is not empty/>
     /// </summary>
     /// <typeparam name="T">Type of the list</typeparam>
-    public sealed class NotEmpty<T> : List.Envelope<T>
+    public sealed class NotEmpty<T> : ListEnvelope<T>
     {
         /// <summary>
         /// Ensures that <see cref="IList{T}" /> is not empty/>

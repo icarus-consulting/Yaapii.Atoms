@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Contains(
                 new HeadOf<int>(
                     2,
-                    new Many.Of<int>(1, -1, 2, 0)
+                    new ManyOf<int>(1, -1, 2, 0)
                 ),
                 predicate => predicate.Equals(-1));
         }
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Collection.Tests
                 2,
                 new HeadOf<string>(
                     2,
-                    new Many.Of<string>(
+                    new ManyOf<string>(
                         "hello", "world", "друг")
                 ).Count);
         }
@@ -71,7 +71,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Empty(
                 new HeadOf<string>(
                     0,
-                    new Many.Of<string>("1", "2", "3")
+                    new ManyOf<string>("1", "2", "3")
                 )
             );
         }
@@ -82,7 +82,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.NotEmpty(
                 new HeadOf<String>(
                     2,
-                    new Many.Of<string>("first", "second")
+                    new ManyOf<string>("first", "second")
                 ));
         }
 
@@ -91,7 +91,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Empty(
                 new HeadOf<String>(
-                    0, new Many.Of<string>("third", "fourth")
+                    0, new ManyOf<string>("third", "fourth")
                 ));
         }
 
@@ -101,7 +101,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Throws<UnsupportedOperationException>(() =>
             new HeadOf<int>(
                 2,
-                new Many.Of<int>(1, 2, 3, 4)
+                new ManyOf<int>(1, 2, 3, 4)
             ).Add(6));
         }
 
@@ -111,7 +111,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Throws<UnsupportedOperationException>(() =>
                new HeadOf<int>(
                    2,
-                   new Many.Of<int>(1, 2, 3, 4)
+                   new ManyOf<int>(1, 2, 3, 4)
                ).Remove(1));
         }
 
@@ -120,7 +120,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Throws<UnsupportedOperationException>(() =>
                 new HeadOf<int>(
-                    2, new Many.Of<int>(1, 2, 3, 4)
+                    2, new ManyOf<int>(1, 2, 3, 4)
                 ).Clear());
         }
     }

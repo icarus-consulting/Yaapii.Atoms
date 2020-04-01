@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         public void MaxAmongEmptyTest()
         {
             Assert.Throws<NoSuchElementException>(
-                () => new Max<int>(new Many.Of<int>()).Value());
+                () => new Max<int>(new ManyOf<int>()).Value());
         }
 
         [Fact]
