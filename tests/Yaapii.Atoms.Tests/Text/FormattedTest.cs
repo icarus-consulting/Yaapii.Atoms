@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Formatted(
-                    new Text.Live("{0}. Number as {1}"),
+                    new LiveText("{0}. Number as {1}"),
                     1,
                     "string"
                 ).AsString().Contains("1. Number as string"),
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.Throws<FormatException>(
                 () => new Formatted(
-                    new Text.Live("Formatted { {0} }"),
+                    new LiveText("Formatted { {0} }"),
                     new string[] {"invalid" }
             ).AsString());
         }
@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Formatted(
-                    new Text.Of("{0}. Formatted as {1}"),
+                    new TextOf("{0}. Formatted as {1}"),
                     new String[] { "1", "txt" }
                 ).AsString() == "1. Formatted as txt"
             );
@@ -89,8 +89,8 @@ namespace Yaapii.Atoms.Texts.Tests
                 "This is a FormattedText test",
                 new Formatted(
                     "{0} is a {1} test",
-                    new Text.Live("This"),
-                    new Text.Live("FormattedText")
+                    new LiveText("This"),
+                    new LiveText("FormattedText")
                 ).AsString()
             );
                     

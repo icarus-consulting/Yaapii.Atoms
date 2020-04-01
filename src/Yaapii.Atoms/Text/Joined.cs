@@ -23,15 +23,13 @@
 using System;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> of texts joined together.
     /// </summary>
-    public sealed class Joined : Text.Envelope
+    public sealed class Joined : TextEnvelope
     {
         /// <summary>
         /// Joins A <see cref="IText"/>s together with the delimiter between them.
@@ -50,7 +48,7 @@ namespace Yaapii.Atoms.Texts
         public Joined(String delimit, bool live, params String[] strs) :
             this(
                 delimit,
-                new Many.Of<string>(strs),
+                new ManyOf<string>(strs),
                 live
             )
         { }
@@ -63,9 +61,9 @@ namespace Yaapii.Atoms.Texts
         /// <param name="live">should the object build its value live, every time it is used?</param>
         public Joined(String delimit, IEnumerable<String> strs, bool live = false) :
             this(
-                new Text.Live(delimit),
+                new LiveText(delimit),
                 new Mapped<string, IText>(
-                    (text) => new Text.Live(text),
+                    (text) => new LiveText(text),
                     strs
                 ),
                 live
@@ -86,7 +84,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Joined(IText delimit, bool live, params IText[] txts) : this(delimit, new Many.Of<IText>(txts), live)
+        public Joined(IText delimit, bool live, params IText[] txts) : this(delimit, new ManyOf<IText>(txts), live)
         { }
 
         /// <summary>
@@ -104,8 +102,8 @@ namespace Yaapii.Atoms.Texts
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
         public Joined(String delimit, bool live, params IText[] txts) : this(
-            new Text.Live(delimit),
-            () => new Many.Live<IText>(txts),
+            new LiveText(delimit),
+            () => new LiveMany<IText>(txts),
             live
         )
         { }
@@ -117,7 +115,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
         public Joined(String delimit, IEnumerable<IText> txts, bool live = false) : this(
-            new Text.Live(delimit),
+            new LiveText(delimit),
             () => txts,
             live
         )
@@ -130,7 +128,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
         public Joined(String delimit, System.Func<IEnumerable<IText>> txts, bool live = false) : this(
-            new Text.Live(delimit),
+            new LiveText(delimit),
             txts,
             live
         )

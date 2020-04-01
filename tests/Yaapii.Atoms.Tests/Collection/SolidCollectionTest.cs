@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Collection.Tests
                 new Solid<int>(
                     new Mapped<int, int>(
                         i => i + 1,
-                        new Many.Of<int>(1, -1, 0, 1)
+                        new ManyOf<int>(1, -1, 0, 1)
                     )
                 );
 

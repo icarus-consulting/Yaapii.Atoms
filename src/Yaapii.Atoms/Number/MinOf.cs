@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(params int[] src) : this(
-            new Many.Of<int>(src))
+            new ManyOf<int>(src))
         { }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(params double[] src) : this(
-            new Many.Of<double>(src))
+            new ManyOf<double>(src))
         { }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(params long[] src) : this(
-            new Many.Of<long>(src))
+            new ManyOf<long>(src))
         { }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(params float[] src) : this(
-            new Many.Of<float>(src))
+            new ManyOf<float>(src))
         { }
 
         /// <summary>

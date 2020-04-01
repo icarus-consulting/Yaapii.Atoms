@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Bytes.Tests
         {
             Assert.Equal(
                     expected,
-                    new Text.Live(new HexBytes(new Text.Live(hex))).AsString()
+                    new LiveText(new HexBytes(new LiveText(hex))).AsString()
                 );
         }
     }

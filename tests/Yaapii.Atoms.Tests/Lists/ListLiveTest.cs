@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Lists.Tests
         {
             Assert.Contains<int>(
                 2,
-                new List.Live<int>(1, 2)
+                new LiveList<int>(1, 2)
             );
         }
 
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Lists.Tests
 
             Assert.Equal(
                 num,
-                new List.Live<int>(-1, num, 0, 1)[1]
+                new LiveList<int>(-1, num, 0, 1)[1]
             );
         }
 
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Lists.Tests
         public void KnowsIfEmpty()
         {
             Assert.Empty(
-                new List.Live<int>(
+                new LiveList<int>(
                     new List<int>()
                 )
             );
@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Lists.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(
                 () => 
-                new List.Live<int>(
+                new LiveList<int>(
                     new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
                     [-1]);
         }
@@ -75,7 +75,7 @@ namespace Yaapii.Atoms.Lists.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(
                 () =>
-                new List.Live<int>(
+                new LiveList<int>(
                     new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
                         [11]);
         }
@@ -85,7 +85,7 @@ namespace Yaapii.Atoms.Lists.Tests
         {
             int size = 2;
             var list =
-                new List.Live<int>(
+                new LiveList<int>(
                     new Yaapii.Atoms.Enumerable.HeadOf<int>(
                         new Yaapii.Atoms.Enumerable.Endless<int>(1),
                         new LiveScalar<int>(() => Interlocked.Increment(ref size))

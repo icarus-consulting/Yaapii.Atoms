@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.IO.Tests
             using (var output = new WriterTo(uri))
             {
                 s =
-                    new Text.Live(
+                    new LiveText(
                         new TeeInput(
                             new InputOf(content),
                                 new WriterAsOutput(
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.IO.Tests
             }
 
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputAsBytes(
                         new InputOf(uri)
                     )

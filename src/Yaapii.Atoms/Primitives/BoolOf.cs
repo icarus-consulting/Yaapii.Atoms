@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Texts
         /// <see cref="string"/> as bool
         /// </summary>
         /// <param name="str">source string</param>
-        public BoolOf(String str) : this(new Text.Of(str))
+        public BoolOf(String str) : this(new TextOf(str))
         { }
 
         /// <summary>

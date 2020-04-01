@@ -31,20 +31,20 @@ namespace Yaapii.Atoms.Collection
     ///
     /// <para>There is no thread-safety guarantee.</para>
     ///
-    public class Reversed<T> : Collection.Envelope<T>
+    public class Reversed<T> : CollectionEnvelope<T>
     {
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src"></param>
-        public Reversed(params T[] src) : this(new Many.Of<T>(src))
+        public Reversed(params T[] src) : this(new ManyOf<T>(src))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">source collection</param>
-        public Reversed(IEnumerable<T> src) : this(new Collection.Live<T>(src))
+        public Reversed(IEnumerable<T> src) : this(new LiveCollection<T>(src))
         { }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="src">source collection</param>
         public Reversed(ICollection<T> src) : base(
-            () => new Collection.Live<T>(
+            () => new LiveCollection<T>(
                     new LinkedList<T>(src).Reverse()
             ),
             false

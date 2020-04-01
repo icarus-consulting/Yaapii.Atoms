@@ -34,9 +34,9 @@ namespace Yaapii.Atoms.Lists.Tests
                 8,
                 new Enumerable.LengthOf(
                     new Joined<string>(
-                        new List.Of<string>("hello", "world", "друг"),
-                        new List.Of<string>("how", "are", "you"),
-                        new List.Of<string>("what's", "up")
+                        new ListOf<string>("hello", "world", "друг"),
+                        new ListOf<string>("how", "are", "you"),
+                        new ListOf<string>("what's", "up")
                     )
                 ).Value()
             );
@@ -50,8 +50,8 @@ namespace Yaapii.Atoms.Lists.Tests
                 new Enumerable.LengthOf(
                     new Joined<string>(
                         new Mapped<string, IList<string>>(
-                           str => new List.Of<string>(str),
-                           new List.Of<string>("x")
+                           str => new ListOf<string>(str),
+                           new ListOf<string>("x")
                         )
                     )
                 ).Value()
@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Lists.Tests
                 8,
                 new Enumerable.LengthOf(
                     new Joined<string>(
-                        new List.Of<string>("hello", "world", "друг"),
+                        new ListOf<string>("hello", "world", "друг"),
                         "how",
                         "are",
                         "you",

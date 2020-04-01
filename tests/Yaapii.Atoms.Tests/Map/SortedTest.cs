@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Yaapii.Atoms.Lookup.Tests
+namespace Yaapii.Atoms.Map.Tests
 {
     public sealed class SortedTest
     {
@@ -83,9 +83,9 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void EnumeratesKeysWhenLazy(int index, int expectedKey)
         {
             var unsorted = new LazyDict<int, int>(false,
-                new Kvp.Of<int, int>(1, () => { throw new Exception("i shall not be called"); }),
-                new Kvp.Of<int, int>(6, () => { throw new Exception("i shall not be called"); }),
-                new Kvp.Of<int, int>(-5, () => { throw new Exception("i shall not be called"); })
+                new KvpOf<int, int>(1, () => { throw new Exception("i shall not be called"); }),
+                new KvpOf<int, int>(6, () => { throw new Exception("i shall not be called"); }),
+                new KvpOf<int, int>(-5, () => { throw new Exception("i shall not be called"); })
             );
             var sorted = new Sorted<int, int>(unsorted);
             var keys = new int[3];
@@ -97,9 +97,9 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void DeliversSingleValueWhenLazy()
         {
             var unsorted = new LazyDict<int, int>(false,
-                new Kvp.Of<int, int>(1, () => 4),
-                new Kvp.Of<int, int>(6, () => { throw new Exception("i shall not be called"); }),
-                new Kvp.Of<int, int>(-5, () => { throw new Exception("i shall not be called"); })
+                new KvpOf<int, int>(1, () => 4),
+                new KvpOf<int, int>(6, () => { throw new Exception("i shall not be called"); }),
+                new KvpOf<int, int>(-5, () => { throw new Exception("i shall not be called"); })
             );
             var sorted = new Sorted<int, int>(unsorted);
             Assert.Equal(4, sorted[1]);
@@ -109,9 +109,9 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void RejectsBuildingAllValuesByDefault()
         {
             var unsorted = new LazyDict<int, int>(false,
-                new Kvp.Of<int, int>(1, () => 4),
-                new Kvp.Of<int, int>(6, () => { throw new Exception("i shall not be called"); }),
-                new Kvp.Of<int, int>(-5, () => { throw new Exception("i shall not be called"); })
+                new KvpOf<int, int>(1, () => 4),
+                new KvpOf<int, int>(6, () => { throw new Exception("i shall not be called"); }),
+                new KvpOf<int, int>(-5, () => { throw new Exception("i shall not be called"); })
             );
             var sorted = new Sorted<int, int>(unsorted);
             var ex = Assert.Throws<InvalidOperationException>(() => sorted.Values.GetEnumerator());

@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Error
         /// Fail always with <see cref="System.Exception"/> with the given message.
         /// </summary>
         /// <param name="msg">message to wrap in exception</param>
-        public FailAlways(string msg) : this(new Text.Of(msg))
+        public FailAlways(string msg) : this(new TextOf(msg))
         { }
 
         /// <summary>

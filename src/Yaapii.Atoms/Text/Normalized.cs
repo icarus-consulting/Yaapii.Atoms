@@ -28,13 +28,13 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// Normalized A <see cref="IText"/> (whitespaces replaced with one single space)
     /// </summary>
-    public sealed class Normalized : Text.Envelope
+    public sealed class Normalized : TextEnvelope
     {
         /// <summary>
         /// Normalized A <see cref="IText"/>  (whitespaces replaced with one single space)
         /// </summary>
         /// <param name="text">text to normalize</param>
-        public Normalized(String text) : this(new Text.Live(text))
+        public Normalized(String text) : this(new LiveText(text))
         { }
 
         /// <summary>

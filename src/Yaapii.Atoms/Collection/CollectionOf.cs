@@ -23,39 +23,45 @@
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Lists
+namespace Yaapii.Atoms.Collection
 {
-    public partial class List
+    /// <summary>
+    /// Envelope for collections. 
+    /// It accepts a scalar and makes readonly Collection from it.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public sealed class CollectionOf<T> : CollectionEnvelope<T>
     {
         /// <summary>
-        /// Makes a readonly list.
+        /// Makes a collection from an array
         /// </summary>
-        /// <typeparam name="T">type of items</typeparam>
-        public sealed class Live<T> : Envelope<T>
-        {
-            /// <summary>
-            /// ctor
-            /// </summary>
-            /// <param name="array">source array</param>
-            public Live(params T[] array) : this(new Many.Live<T>(array))
-            { }
+        /// <param name="array"></param>
+        public CollectionOf(params T[] array) : this(new LiveMany<T>(array))
+        { }
 
-            /// <summary>
-            /// ctor
-            /// </summary>
-            /// <param name="src">source enumerator</param>
-            public Live(IEnumerator<T> src) : this(new Many.Live<T>(() => src))
-            { }
+        /// <summary>
+        /// Makes a collection from an <see cref="IEnumerator{T}"/>
+        /// </summary>
+        /// <param name="src"></param>
+        public CollectionOf(IEnumerator<T> src) : this(new ManyOf<T>(src))
+        { }
 
-            /// <summary>
-            /// ctor
-            /// </summary>
-            /// <param name="src">source enumerable</param>
-            public Live(IEnumerable<T> src) : base(
-                () => new List<T>(src),
-                true
-            )
-            { }
-        }
+        /// <summary>
+        /// Makes a collection from an <see cref="IEnumerable{T}"/>
+        /// </summary>
+        /// <param name="src"></param>
+        public CollectionOf(IEnumerable<T> src) : base(
+            () =>
+            {
+                ICollection<T> list = new LinkedList<T>();
+                foreach (T item in src)
+                {
+                    list.Add(item);
+                }
+                return list;
+            },
+            false
+        )
+        { }
     }
 }

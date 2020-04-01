@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Texts
     /// A <see cref="IText"/> formatted with arguments.
     /// Use C# formatting syntax: new FormattedText("{0} is {1}", "OOP", "great").AsString() will be "OOP is great"
     /// </summary>
-    public sealed class Formatted : Text.Envelope
+    public sealed class Formatted : TextEnvelope
     {
         /// <summary>
         /// A <see cref="IText"/> formatted with arguments.
@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="arguments">arguments to apply</param>
         public Formatted(String ptn, params IText[] arguments) : this(
-            new Text.Live(ptn),
+            new LiveText(ptn),
             CultureInfo.InvariantCulture,
             () =>
             new Mapped<IText, string>(
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="arguments">arguments to apply</param>
         public Formatted(String ptn, params object[] arguments) : this(
-            new Text.Live(ptn), CultureInfo.InvariantCulture, new LiveScalar<object[]>(arguments))
+            new LiveText(ptn), CultureInfo.InvariantCulture, new LiveScalar<object[]>(arguments))
         { }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="arguments">arguments to apply</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
         public Formatted(String ptn, bool live, params object[] arguments) : this(
-            new Text.Live(ptn), live, CultureInfo.InvariantCulture, arguments)
+            new LiveText(ptn), live, CultureInfo.InvariantCulture, arguments)
         { }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="locale">a specific culture</param>
         /// <param name="arguments">arguments to apply</param>
         public Formatted(String ptn, CultureInfo locale, params object[] arguments) : this(
-            new Text.Live(ptn), locale, false, arguments)
+            new LiveText(ptn), locale, false, arguments)
         { }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="arguments">arguments to apply</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
         public Formatted(String ptn, CultureInfo locale, bool live, params object[] arguments) : this(
-            new Text.Live(ptn), locale, live, arguments)
+            new LiveText(ptn), locale, live, arguments)
         { }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="arguments">arguments as <see cref="IText"/> to apply</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
         public Formatted(string ptn, bool live, params IText[] arguments) : this(
-            new Text.Live(ptn),
+            new LiveText(ptn),
             CultureInfo.InvariantCulture,
             () =>
             {
@@ -167,7 +167,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="arguments">arguments as <see cref="IText"/> to apply</param>
 
         public Formatted(string ptn, CultureInfo locale, params IText[] arguments) : this(
-            new Text.Live(ptn),
+            new LiveText(ptn),
             locale,
             false,
             arguments
@@ -183,7 +183,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="live">should the object build its value live, every time it is used?</param>
 
         public Formatted(string ptn, CultureInfo locale, bool live, params IText[] arguments) : this(
-            new Text.Live(ptn),
+            new LiveText(ptn),
             locale,
             () =>
             {

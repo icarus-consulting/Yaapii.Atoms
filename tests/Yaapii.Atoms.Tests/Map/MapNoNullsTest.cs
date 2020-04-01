@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Yaapii.Atoms.Lookup.Tests
+namespace Yaapii.Atoms.Map.Tests
 {
     public class MapNoNullTest
     {
@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             Assert.Contains(
                 new KeyValuePair<int, int>(0, 0),
                 new NoNulls<int, int>(
-                    new Map.Of<int, int>(
+                    new MapOf<int, int>(
                         new KeyValuePair<int, int>(0, 0)
                     )
                 )
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             Assert.DoesNotContain(
                 new KeyValuePair<int, int>(1, 0),
                 new NoNulls<int, int>(
-                    new Map.Of<int, int>(
+                    new MapOf<int, int>(
                         new KeyValuePair<int, int>(0, 0)
                     )
                 )
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             Assert.DoesNotContain(
                 new KeyValuePair<int, int>(0, 1),
                 new NoNulls<int, int>(
-                    new Map.Of<int, int>(
+                    new MapOf<int, int>(
                         new KeyValuePair<int, int>(0, 0)
                     )
                 )
@@ -73,7 +73,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             Assert.DoesNotContain(
                 new KeyValuePair<int, int>(1, 1),
                 new NoNulls<int, int>(
-                    new Map.Of<int, int>(
+                    new MapOf<int, int>(
                         new KeyValuePair<int, int>(0, 0)
                     )
                 )
@@ -84,7 +84,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void ContainsWithNullKey()
         {
             var map = new NoNulls<object, object>(
-                new Map.Of<object, object>(
+                new MapOf<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );
@@ -97,7 +97,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void ContainsWithNullValue()
         {
             var map = new NoNulls<object, object>(
-                new Map.Of<object, object>(
+                new MapOf<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );
@@ -110,7 +110,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void ContainsWithNullKeyAndNullValue()
         {
             var map = new NoNulls<object, object>(
-                new Map.Of<object, object>(
+                new MapOf<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );
@@ -123,7 +123,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void ContainsKeyWithExistingKey()
         {
             var map = new NoNulls<int, int>(
-                new Map.Of<int, int> (
+                new MapOf<int, int> (
                     new KeyValuePair<int, int>(0, 0)
                 )
             );
@@ -163,7 +163,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         [Fact]
         public void AddEntryWithNullKey()
         {
-            var map = new NoNulls<object, object>(new Map.Of<object, object>());
+            var map = new NoNulls<object, object>(new MapOf<object, object>());
             Assert.Throws<ArgumentNullException>(
                 () => map.Add(new KeyValuePair<object, object>(null, 0))
             );
@@ -172,7 +172,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         [Fact]
         public void AddEntryWithNullValue()
         {
-            var map = new NoNulls<object, object>(new Map.Of<object, object>());
+            var map = new NoNulls<object, object>(new MapOf<object, object>());
             Assert.Throws<ArgumentNullException>(
                 () => map.Add(new KeyValuePair<object, object>(0, null))
             );
@@ -181,7 +181,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         [Fact]
         public void AddEntryWithNullKeyAndNullValue()
         {
-            var map = new NoNulls<object, object>(new Map.Of<object, object>());
+            var map = new NoNulls<object, object>(new MapOf<object, object>());
             Assert.Throws<ArgumentNullException>(
                 () => map.Add(new KeyValuePair<object, object>(null, null))
             );
@@ -245,7 +245,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void TryGetValueWithNullKey()
         {
             var map = new NoNulls<object, object>(
-                new Map.Of<object, object>(
+                new MapOf<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );
@@ -269,7 +269,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void GetValue()
         {
             var map = new NoNulls<int, int>(
-                new Map.Of<int, int>(
+                new MapOf<int, int>(
                     new KeyValuePair<int, int>(0, 0)
                 )
             );
@@ -280,7 +280,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void GetValueWithNullKey()
         {
             var map = new NoNulls<object, object>(
-                new Map.Of<object, object>(
+                new MapOf<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );
@@ -291,7 +291,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void GetNullValue()
         {
             var map = new NoNulls<object, object>(
-                new Map.Of<object, object>(
+                new MapOf<object, object>(
                     new KeyValuePair<object, object>(0, null)
                 )
             );
@@ -314,7 +314,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void SetValueWithNullKey()
         {
             var map = new NoNulls<object, object>(
-                new Map.Of<object, object>(
+                new MapOf<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );
@@ -325,7 +325,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void SetValueWithNullValue()
         {
             var map = new NoNulls<object, object>(
-                new Map.Of<object, object>(
+                new MapOf<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );
@@ -336,7 +336,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void SetValueWithNullKeyAndNullValue()
         {
             var map = new NoNulls<object, object>(
-                new Map.Of<object, object>(
+                new MapOf<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );

@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Collection
     /// <summary>
     /// An ArrayList converted to a IList&lt;object&gt;
     /// </summary>
-    public sealed class ArrayListAsCollection : Collection.Envelope<object>
+    public sealed class ArrayListAsCollection : CollectionEnvelope<object>
     {
         /// <summary>
         /// A ArrayList converted to IList&lt;object&gt;
@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Collection
                 {
                     new Each<object>(item => blocking.Add(item), lst).Invoke();
                 }
-                return new Collection.Live<object>(blocking.ToArray());
+                return new LiveCollection<object>(blocking.ToArray());
             }),
             false
         )

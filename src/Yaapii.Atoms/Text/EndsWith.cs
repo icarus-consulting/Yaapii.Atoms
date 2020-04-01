@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="tail">Ending content to use in the test</param>
         public EndsWith(IText text, string tail) : this(
             text,
-            new Text.Live(tail)
+            new LiveText(tail)
         )
         { }
 

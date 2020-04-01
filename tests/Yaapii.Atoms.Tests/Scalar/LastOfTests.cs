@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
                 new LastOf<string>(
-                    new Many.Of(),
+                    new ManyOf(),
                     new InvalidOperationException()
                 ).Value()
             );
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Scalar.Tests
             Assert.Equal(
                 "gotcha",
                 new LastOf<string>(
-                    new Many.Of(),
+                    new ManyOf(),
                     "gotcha"
                 ).Value()
             );
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         [Fact]
         public void ReturnsLastValue()
         {
-            var list = new Many.Of("hallo", "ich", "heisse", "Max");
+            var list = new ManyOf("hallo", "ich", "heisse", "Max");
 
             Assert.Equal(
                 "Max",

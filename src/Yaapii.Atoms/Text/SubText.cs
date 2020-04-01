@@ -28,14 +28,14 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// Extracted subtext from a <see cref="IText"/>.
     /// </summary>
-    public sealed class SubText : Text.Envelope
+    public sealed class SubText : TextEnvelope
     {
         /// <summary>
         /// Extracted subtext from a <see cref="string"/>.
         /// </summary>
         /// <param name="text">text to extreact from</param>
         /// <param name="strt">where to start</param>
-        public SubText(String text, int strt) : this(new Text.Live(text), strt)
+        public SubText(String text, int strt) : this(new LiveText(text), strt)
         { }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="strt">where to start</param>
         /// <param name="end">where to end</param>
         public SubText(String text, int strt, int end) : this(
-            new Text.Live(text), 
+            new LiveText(text), 
             strt, 
             end
         )

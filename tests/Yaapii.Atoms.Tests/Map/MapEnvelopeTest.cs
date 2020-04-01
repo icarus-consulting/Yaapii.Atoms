@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Yaapii.Atoms.Lookup.Tests
+namespace Yaapii.Atoms.Map.Tests
 {
     public class MapEnvelopeTest
     {
@@ -74,13 +74,13 @@ namespace Yaapii.Atoms.Lookup.Tests
             Assert.Equal("The key 'wisdom' is not present in the map. The following keys are present in the map: foo", ex.Message);
         }
 
-        private class NonAbstractIntEnvelope : Map.Envelope<int, int>
+        private class NonAbstractIntEnvelope : MapEnvelope<int, int>
         {
             public NonAbstractIntEnvelope(IDictionary<int, int> map, bool live = false) : base(() => map, live)
             { }
         }
 
-        private class NonAbstractStringEnvelope : Map.Envelope
+        private class NonAbstractStringEnvelope : MapEnvelope
         {
             public NonAbstractStringEnvelope(IDictionary<string, string> map, bool live = false) : base(() => map, live)
             { }

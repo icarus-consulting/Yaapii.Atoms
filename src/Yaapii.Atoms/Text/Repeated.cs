@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A <see cref="IText"/> repeated multiple times.
     /// </summary>
-    public sealed class Repeated : Text.Envelope
+    public sealed class Repeated : TextEnvelope
     {
         /// <summary>
         /// A <see cref="IText"/>  repeated multiple times.
@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to repeat</param>
         /// <param name="count">how often to repeat</param>
         public Repeated(String text, int count) : this(
-            new Text.Live(text), 
+            new LiveText(text), 
             count
         )
         { }

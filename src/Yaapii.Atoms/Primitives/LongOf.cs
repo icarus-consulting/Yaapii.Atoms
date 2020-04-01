@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Texts
         /// A long out of a <see cref="string"/> using invariant culture.
         /// </summary>
         /// <param name="str">a long as a string</param>
-        public LongOf(String str) : this(new Text.Of(str))
+        public LongOf(String str) : this(new TextOf(str))
         { }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="str">a long as a string</param>
         /// <param name="culture">culture of the string</param>
-        public LongOf(String str, CultureInfo culture) : this(new Text.Of(str), culture)
+        public LongOf(String str, CultureInfo culture) : this(new TextOf(str), culture)
         { }
 
         /// <summary>

@@ -36,8 +36,8 @@ namespace Yaapii.Atoms.Lists.Tests
                 "HELLO",
                 new ItemAt<IText>(
                     new Mapped<String, IText>(
-                        input => new Upper(new Text.Live(input)),
-                        new List.Of<string>("hello", "world", "damn")
+                        input => new Upper(new LiveText(input)),
+                        new ListOf<string>("hello", "world", "damn")
                     ),
                     0
                 ).Value().AsString()
@@ -51,8 +51,8 @@ namespace Yaapii.Atoms.Lists.Tests
                 0,
                 new LengthOf(
                     new Mapped<String, IText>(
-                        input => new Upper(new Text.Live(input)),
-                        new List.Of<string>()
+                        input => new Upper(new LiveText(input)),
+                        new ListOf<string>()
                     )
                 ).Value()
             );

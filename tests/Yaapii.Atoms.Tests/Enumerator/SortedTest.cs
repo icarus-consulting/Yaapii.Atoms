@@ -36,10 +36,10 @@ namespace Yaapii.Atoms.Enumerator.Tests
                 "A B C D E F",
                 new Joined(
                     " ",
-                    new Many.Of<string>(
+                    new ManyOf<string>(
                         new Sorted<string>(
                             Comparer<string>.Default,
-                                new Many.Live<string>("B", "A", "C", "F", "E", "D").GetEnumerator()
+                                new LiveMany<string>("B", "A", "C", "F", "E", "D").GetEnumerator()
                         )
                     )
                 ).AsString()

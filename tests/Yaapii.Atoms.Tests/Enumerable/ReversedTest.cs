@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new Joined(
                     " ",
                     new Reversed<string>(
-                        new Many.Of<string>(
+                        new ManyOf<string>(
                             "hello", "world", "dude"
                         )
                     )

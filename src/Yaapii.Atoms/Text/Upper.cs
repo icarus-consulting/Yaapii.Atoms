@@ -26,7 +26,7 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A <see cref="IText"/> as uppercase.
     /// </summary>
-    public sealed class Upper : Text.Envelope
+    public sealed class Upper : TextEnvelope
     {
         /// <summary>
         /// A <see cref="IText"/> as uppercase.

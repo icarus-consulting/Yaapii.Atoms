@@ -28,13 +28,13 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// An <see cref="IText"/> without whitespaces / control characters or defined letters or a defined text on both sides.
     /// </summary>
-    public sealed class Trimmed : Text.Envelope
+    public sealed class Trimmed : TextEnvelope
     {
         /// <summary>
         /// A <see cref="string"/> trimmed (removed whitespaces) on both sides.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public Trimmed(string text) : this(new Text.Live(text))
+        public Trimmed(string text) : this(new LiveText(text))
         { }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        public Trimmed(string text, char[] trimText) : this(new Text.Live(text), trimText)
+        public Trimmed(string text, char[] trimText) : this(new LiveText(text), trimText)
         { }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public Trimmed(string text, string removeText) : this(new Text.Live(text), new Text.Live(removeText))
+        public Trimmed(string text, string removeText) : this(new LiveText(text), new LiveText(removeText))
         { }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public Trimmed(string text, IText removeText) : this(new Text.Live(text), removeText)
+        public Trimmed(string text, IText removeText) : this(new LiveText(text), removeText)
         { }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public Trimmed(IText text, string removeText) : this(text, new Text.Live(removeText))
+        public Trimmed(IText text, string removeText) : this(text, new LiveText(removeText))
         { }
 
         /// <summary>

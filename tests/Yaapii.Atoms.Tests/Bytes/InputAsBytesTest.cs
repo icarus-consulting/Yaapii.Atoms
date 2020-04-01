@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Bytes.Tests
                         new InputAsBytes(
                             new InputOf(
                                 new BytesOf(
-                                    new Text.Live(content)
+                                    new LiveText(content)
                                 )
                             )
                         ).AsBytes()) == content,
@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Bytes.Tests
                         new InputAsBytes(
                             new InputOf(
                                 new BytesOf(
-                                    new Text.Live(content)
+                                    new LiveText(content)
                                 )
                             ),
                             2

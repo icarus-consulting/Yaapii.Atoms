@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.IO.Tests
                 ).Value();
 
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputAsBytes(
                         new InputOf(new Uri(file))))
                 .AsString() == content,
@@ -73,7 +73,7 @@ namespace Yaapii.Atoms.IO.Tests
             ).Value();
 
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new InputAsBytes(
                         new InputOf(file)
                     )

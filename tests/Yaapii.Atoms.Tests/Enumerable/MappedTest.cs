@@ -35,8 +35,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 "HELLO",
                 new ItemAt<IText>(
                     new Enumerable.Mapped<String, IText>(
-                        input => new Upper(new Text.Live(input)),
-                        new Many.Of<string>("hello", "world", "damn")),
+                        input => new Upper(new LiveText(input)),
+                        new ManyOf<string>("hello", "world", "damn")),
                     0
                 ).Value().AsString()
             );
@@ -48,8 +48,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new Enumerable.Mapped<String, IText>(
-                        input => new Upper(new Text.Live(input)),
-                        new Many.Of<string>()
+                        input => new Upper(new LiveText(input)),
+                        new ManyOf<string>()
                     )
                 ).Value() == 0
             );
@@ -61,8 +61,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new ItemAt<IText>(
                     new Enumerable.Mapped<String, IText>(
-                        (input, index) => new Upper(new Text.Live(input+index)),
-                        new Many.Of<string>("hello", "world", "damn")
+                        (input, index) => new Upper(new LiveText(input+index)),
+                        new ManyOf<string>("hello", "world", "damn")
                         ),
                     1
                 ).Value().AsString() == "WORLD1",

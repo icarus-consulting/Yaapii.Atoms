@@ -26,7 +26,7 @@ namespace Yaapii.Atoms.Texts
     /// Hexadecimal representation of Bytes.
     /// This object is sticky by default.
     /// </summary>
-    public sealed class HexOf : Text.Envelope
+    public sealed class HexOf : TextEnvelope
     {
         private static readonly char[] HEX_CHARS = new char[] {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'

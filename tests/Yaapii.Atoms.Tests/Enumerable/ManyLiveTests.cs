@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Many.Live<string>(
+                    new LiveMany<string>(
                         "a", "b", "c"
                     )
                 ).Value() == 3,
@@ -45,10 +45,10 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Many.Live<IText>(
-                        new Text.Live("a"), 
-                        new Text.Live("b"), 
-                        new Text.Live("c")
+                    new LiveMany<IText>(
+                        new LiveText("a"), 
+                        new LiveText("b"), 
+                        new LiveText("c")
                     )
                 ).Value() == 3
             );
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             var lst = new List<string>();
             var live =
-                new Many.Live<string>(() =>
+                new LiveMany<string>(() =>
                 {
                     lst.Add("something");
                     return lst;

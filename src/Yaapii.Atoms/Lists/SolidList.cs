@@ -29,27 +29,27 @@ namespace Yaapii.Atoms.Lists
     /// A list that is both sticky and threadsafe.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class SolidList<T> : List.Envelope<T>
+    public sealed class SolidList<T> : ListEnvelope<T>
     {
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="items">items to decorate</param>
-        public SolidList(params T[] items) : this(new Many.Of<T>(items))
+        public SolidList(params T[] items) : this(new ManyOf<T>(items))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="items">items to decorate</param>
-        public SolidList(IEnumerable<T> items) : this(new List.Live<T>(items))
+        public SolidList(IEnumerable<T> items) : this(new LiveList<T>(items))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="items">items to decorate</param>
-        public SolidList(IEnumerator<T> items) : this(new List.Live<T>(items))
+        public SolidList(IEnumerator<T> items) : this(new LiveList<T>(items))
         { }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Lists
         /// <param name="list">list to decorate</param>
         public SolidList(ICollection<T> list) : base(
             () => new SyncList<T>(
-                new List.Live<T>(list)
+                new LiveList<T>(list)
             ),
             false
         )

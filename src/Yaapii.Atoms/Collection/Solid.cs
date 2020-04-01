@@ -30,27 +30,27 @@ namespace Yaapii.Atoms.Collection
     ///
     /// <para>Objects of this class are thread-safe.</para>
     ///
-    public sealed class Solid<T> : Collection.Envelope<T>
+    public sealed class Solid<T> : CollectionEnvelope<T>
     {
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="array">source items</param>
-        public Solid(params T[] array) : this(new Many.Live<T>(array))
+        public Solid(params T[] array) : this(new LiveMany<T>(array))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">source enumerator</param>
-        public Solid(IEnumerator<T> src) : this(new Many.Of<T>(src))
+        public Solid(IEnumerator<T> src) : this(new ManyOf<T>(src))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">source enumerable</param>
-        public Solid(IEnumerable<T> src) : this(new Collection.Live<T>(src))
+        public Solid(IEnumerable<T> src) : this(new LiveCollection<T>(src))
         { }
 
         /// <summary>

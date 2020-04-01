@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="text">the text</param>
         public IsNumber(string text) : this(
-            new Text.Of(text),
+            new TextOf(text),
             NumberFormatInfo.InvariantInfo
         )
         { }
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="text">the text</param>
         /// <param name="provider">number format provider</param>
         public IsNumber(string text, IFormatProvider provider) : this(
-            new Text.Of(text),
+            new TextOf(text),
             provider
         )
         { }

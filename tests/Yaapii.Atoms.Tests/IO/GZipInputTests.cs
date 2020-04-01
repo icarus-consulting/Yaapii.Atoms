@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.IO.Tests
 
             Assert.Equal(
                 "Hello!",
-                new Text.Live(
+                new LiveText(
                     new GZipInput(new InputOf(bytes))
                 ).AsString()
             );

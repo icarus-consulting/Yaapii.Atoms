@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
     /// </summary>
     /// <typeparam name="T">type of items in enumerable</typeparam>
-    public sealed class Replaced<T> : Many.Envelope<T>
+    public sealed class Replaced<T> : ManyEnvelope<T>
     {
         /// <summary>
         /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.

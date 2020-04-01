@@ -56,8 +56,8 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Contains(
-                    new Text.Live("Hallo Welt!"), 
-                    new Text.Live("Welt")
+                    new LiveText("Hallo Welt!"), 
+                    new LiveText("Welt")
                 ).Value()
             );
         }
@@ -67,8 +67,8 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.True(
                 new Contains(
-                    new Text.Live("Hallo Welt!"), 
-                    new Text.Live("welt"), 
+                    new LiveText("Hallo Welt!"), 
+                    new LiveText("welt"), 
                     true
                 ).Value()
             );
@@ -125,8 +125,8 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.False(
                 new Contains(
-                    new Text.Live("Hallo Welt!"), 
-                    new Text.Live("welt")
+                    new LiveText("Hallo Welt!"), 
+                    new LiveText("welt")
                 ).Value()
             );
         }
@@ -136,8 +136,8 @@ namespace Yaapii.Atoms.Texts.Tests
         {
             Assert.False(
                 new Contains(
-                    new Text.Live("Hallo Welt!"), 
-                    new Text.Live("world"), 
+                    new LiveText("Hallo Welt!"), 
+                    new LiveText("world"), 
                     true
                 ).Value()
             );

@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Throws<Exception>(() =>
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new Collection.Live<bool>()
+                        new LiveCollection<bool>()
                     )).Value());
         }
 
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Collection.Tests
                 1,
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new Collection.Live<bool>(false)
+                        new LiveCollection<bool>(false)
                     )
                 ).Value()
             );
@@ -57,7 +57,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Throws<OperationCanceledException>(() =>
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new Collection.Live<bool>(),
+                        new LiveCollection<bool>(),
                         new OperationCanceledException()
                     )
                 ).Value()

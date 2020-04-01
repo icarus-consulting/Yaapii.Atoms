@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Collection
     /// Ensures that <see cref="ICollection{T}" /> is not empty/>
     /// </summary>
     /// <typeparam name="T">Type of the collection</typeparam>
-    public sealed class NotEmpty<T> : Collection.Envelope<T>
+    public sealed class NotEmpty<T> : CollectionEnvelope<T>
     {
         /// <summary>
         /// Ensures that <see cref="ICollection{T}" /> is not empty/>

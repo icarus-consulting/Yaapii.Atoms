@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.IO.Tests
             String content = "Hello, товарищ!";
 
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new TeeInput(
                         new InputOf(content),
                         new TeeOutput(

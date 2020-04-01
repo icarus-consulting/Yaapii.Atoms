@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Many.Of(
+                    new ManyOf(
                         "a", "b", "c"
                     )
                 ).Value() == 3,
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             var lst = new List<string>();
             var length =
                 new LengthOf(
-                    new Many.Of(() =>
+                    new ManyOf(() =>
                     {
                         lst.Add("something");
                         return lst;
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Many.Of<string>(
+                    new ManyOf<string>(
                         "a", "b", "c"
                     )
                 ).Value() == 3,
@@ -75,8 +75,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Many.Of<IText>(
-                        new Text.Live("a"), new Text.Live("b"), new Text.Live("c")
+                    new ManyOf<IText>(
+                        new LiveText("a"), new LiveText("b"), new LiveText("c")
                     )
                 ).Value() == 3,
             "Can't convert objects to enumerable");
@@ -88,7 +88,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             var lst = new List<string>();
             var length =
                 new LengthOf(
-                    new Many.Of<string>(() =>
+                    new ManyOf<string>(() =>
                     {
                         lst.Add("something");
                         return lst;

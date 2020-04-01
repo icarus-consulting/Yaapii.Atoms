@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Func.Tests
         [Fact]
         public void RunsFuncMultipleTimes()
         {
-            var iter = new Many.Of<int>(1, 2, 5, 6).GetEnumerator();
+            var iter = new ManyOf<int>(1, 2, 5, 6).GetEnumerator();
             var func = new RepeatedFunc<bool, IScalar<int>>(
                 input =>
                 {

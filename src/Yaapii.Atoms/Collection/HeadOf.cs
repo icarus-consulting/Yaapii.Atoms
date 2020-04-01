@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.Collection
     /// A collection which is limited to a number of elements.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class HeadOf<T> : Collection.Envelope<T>
+    public sealed class HeadOf<T> : CollectionEnvelope<T>
     {
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="lmt">max number of items to limit to</param>
         /// <param name="src">items to limit</param>
-        public HeadOf(int lmt, params T[] src) : this(lmt, new Many.Of<T>(src))
+        public HeadOf(int lmt, params T[] src) : this(lmt, new ManyOf<T>(src))
         { }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="lmt">max number of items to limit to</param>
         /// <param name="src">Enumerator to limit</param>
-        public HeadOf(int lmt, IEnumerator<T> src) : this(lmt, new Many.Of<T>(src))
+        public HeadOf(int lmt, IEnumerator<T> src) : this(lmt, new ManyOf<T>(src))
         { }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="lmt">requested number of items</param>
         /// <param name="src">enumerable of items</param>
-        public HeadOf(int lmt, IEnumerable<T> src) : this(lmt, new Collection.Live<T>(src))
+        public HeadOf(int lmt, IEnumerable<T> src) : this(lmt, new LiveCollection<T>(src))
         { }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="src">source collection</param>
         /// <param name="lmt">requested number of elements</param>
         public HeadOf(int lmt, ICollection<T> src) : base(
-            () => new Collection.Live<T>(
+            () => new LiveCollection<T>(
                 new Enumerable.HeadOf<T>(src, lmt)
             ),
             false

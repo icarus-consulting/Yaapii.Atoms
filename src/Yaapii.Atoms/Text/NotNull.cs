@@ -27,7 +27,7 @@ namespace Yaapii.Atoms.Texts
     /// <summary>
     /// A <see cref="IText"/> that can't accept null.
     /// </summary>
-    public sealed class NotNull : Text.Envelope
+    public sealed class NotNull : TextEnvelope
     {
         /// <summary>
         /// A <see cref="IText"/>  that can't accept null.

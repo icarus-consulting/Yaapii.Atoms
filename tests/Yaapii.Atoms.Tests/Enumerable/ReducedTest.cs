@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.Equal(
                 24,
                 new Reduced<int>(
-                    new Many.Of<int>(0, 1, 1, 2, 2, 3, 4, 5, 6),
+                    new ManyOf<int>(0, 1, 1, 2, 2, 3, 4, 5, 6),
                     (first, second) => first + second
                 ).Value()
             );

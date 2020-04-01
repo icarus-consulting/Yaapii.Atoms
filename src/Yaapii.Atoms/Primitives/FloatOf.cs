@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Texts
         /// A float out of a <see cref="string"/> using invariant culture.
         /// </summary>
         /// <param name="str">a float as a string</param>
-        public FloatOf(String str) : this(new Text.Of(str))
+        public FloatOf(String str) : this(new TextOf(str))
         { }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="str">a float as a string</param>
         /// <param name="culture">culture of the string</param>
-        public FloatOf(String str, CultureInfo culture) : this(new Text.Of(str), culture)
+        public FloatOf(String str, CultureInfo culture) : this(new TextOf(str), culture)
         { }
 
         /// <summary>

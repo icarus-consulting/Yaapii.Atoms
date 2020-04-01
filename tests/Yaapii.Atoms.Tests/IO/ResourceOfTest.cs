@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             Assert.Equal(
                 "Hello from Embedded!",
-                new Text.Live(
+                new LiveText(
                     new ResourceOf("IO/Resources/test.txt", Assembly.GetExecutingAssembly())
                 ).AsString()
             );
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             Assert.Equal(
                 "Hello from Embedded!",
-                new Text.Live(
+                new LiveText(
                     new ResourceOf("IO/Resources/test.txt", this.GetType())
                 ).AsString()
             );
@@ -57,7 +57,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             Assert.Equal(
                 "Hello from Embedded!",
-                new Text.Live(
+                new LiveText(
                     new ResourceOf(
                         name,
                         this.GetType())

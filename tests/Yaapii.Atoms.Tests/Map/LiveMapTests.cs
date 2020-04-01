@@ -27,7 +27,7 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Lookup.Tests
+namespace Yaapii.Atoms.Map.Tests
 {
     public class MapLiveTests
     {
@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             var one = new KeyValuePair<string, string>("hello", "map");
             var two = new KeyValuePair<string, string>("goodbye", "dictionary");
 
-            var m = new Map.Live(one, two);
+            var m = new LiveMap(one, two);
 
             Assert.True(m.Contains(one) && m.Contains(two));
         }
@@ -46,8 +46,8 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void ConvertsEnumerableToMap()
         {
             var m =
-                new Map.Live(
-                    new Many.Live<KeyValuePair<string, string>>(
+                new LiveMap(
+                    new LiveMany<KeyValuePair<string, string>>(
                         new KeyValuePair<string, string>("0", "hello, "),
                         new KeyValuePair<string, string>("1", "world!")
                     )
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         {
             Assert.Equal(
                 "B",
-                new Map.Live(
+                new LiveMap(
                     "A", "B",
                     "C", "D"
                 )["A"]
@@ -75,8 +75,8 @@ namespace Yaapii.Atoms.Lookup.Tests
         {
             Assert.Equal(
                 "B",
-                new Map.Live(
-                    new Many.Of<string>(
+                new LiveMap(
+                    new ManyOf<string>(
                         "A", "B",
                         "C", "D"
                     )
@@ -88,8 +88,8 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void RejectsOddValueCount()
         {
             Assert.Throws<ArgumentException>(() =>
-                new Map.Live(
-                    new Many.Of<string>(
+                new LiveMap(
+                    new ManyOf<string>(
                         "A", "B",
                         "C"
                     )
@@ -104,7 +104,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             var random = new Random();
 
             var map =
-                new Map.Live<int, int>(
+                new LiveMap<int, int>(
                     new Repeated<KeyValuePair<int, int>>(
                         new LiveScalar<KeyValuePair<int, int>>(() =>
                             new KeyValuePair<int, int>(random.Next(), 1)),
@@ -128,7 +128,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             var one = new KeyValuePair<string, int>("hello", 0);
             var two = new KeyValuePair<string, int>("goodbye", 1);
 
-            var m = new Map.Live<int>(one, two);
+            var m = new LiveMap<int>(one, two);
 
             Assert.True(m.Contains(one) && m.Contains(two));
         }
@@ -137,8 +137,8 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void ConvertsEnumerableToMapTypedValue()
         {
             var m =
-                new Map.Live<int>(
-                    new Many.Of<KeyValuePair<string, int>>(
+                new LiveMap<int>(
+                    new ManyOf<KeyValuePair<string, int>>(
                         new KeyValuePair<string, int>("hello", 0),
                         new KeyValuePair<string, int>("world", 1)
                     )
@@ -156,7 +156,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             var random = new Random();
 
             var map =
-                new Map.Live<int>(
+                new LiveMap<int>(
                     new Repeated<KeyValuePair<string, int>>(
                         new LiveScalar<KeyValuePair<string, int>>(() =>
                             new KeyValuePair<string, int>(random.Next() + "", 1)),
@@ -181,7 +181,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             var two = new KeyValuePair<string, string>("goodbye", "dictionary");
 
             var m =
-                new Map.Live<string, string>(
+                new LiveMap<string, string>(
                     one, two
                     );
 
@@ -192,7 +192,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void ConvertsEnumerableToMapTypedKeyValue()
         {
             var m =
-                new Map.Live<int, String>(
+                new LiveMap<int, String>(
                     new KeyValuePair<int, string>(0, "hello, "),
                     new KeyValuePair<int, string>(1, "world!")
                 );
@@ -207,7 +207,7 @@ namespace Yaapii.Atoms.Lookup.Tests
         {
             Assert.Equal(
                 "B",
-                new Map.Live(
+                new LiveMap(
                     "A", "B",
                     "C", "D"
                 )["A"]
@@ -219,8 +219,8 @@ namespace Yaapii.Atoms.Lookup.Tests
         {
             Assert.Equal(
                 "B",
-                new Map.Live(
-                    new Many.Of<string>(
+                new LiveMap(
+                    new ManyOf<string>(
                         "A", "B",
                         "C", "D"
                     )
@@ -232,8 +232,8 @@ namespace Yaapii.Atoms.Lookup.Tests
         public void RejectsOddValueCountTypedKeyValue()
         {
             Assert.Throws<ArgumentException>(() =>
-                new Map.Live(
-                    new Many.Of<string>(
+                new LiveMap(
+                    new ManyOf<string>(
                         "A", "B",
                         "C"
                     )
@@ -248,7 +248,7 @@ namespace Yaapii.Atoms.Lookup.Tests
             var random = new Random();
 
             var map =
-                new Map.Live<int, int>(
+                new LiveMap<int, int>(
                     new Repeated<KeyValuePair<int, int>>(
                         new LiveScalar<KeyValuePair<int, int>>(() =>
                             new KeyValuePair<int, int>(random.Next(), 1)),

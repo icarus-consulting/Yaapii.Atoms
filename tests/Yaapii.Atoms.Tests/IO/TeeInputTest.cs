@@ -90,7 +90,7 @@ namespace Yaapii.Atoms.IO.Tests
             var baos = new MemoryStream();
             String content = "Hello, товарищ!";
             Assert.True(
-                new Text.Live(
+                new LiveText(
                     new TeeInput(
                         new InputOf(content),
                         new OutputTo(baos)
@@ -111,7 +111,7 @@ namespace Yaapii.Atoms.IO.Tests
 
 
             var str = 
-                new Text.Live(
+                new LiveText(
                     new BytesOf(
                         new TeeInput(
                             "Hello, друг!", 
@@ -121,7 +121,7 @@ namespace Yaapii.Atoms.IO.Tests
                 ).AsString();
 
             Assert.True(
-                str == new Text.Live(new InputOf(new Uri(path))).AsString(),
+                str == new LiveText(new InputOf(new Uri(path))).AsString(),
                 "Can't copy Input to File and return content");
         }
     }
