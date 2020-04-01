@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Lookup
+namespace Yaapii.Atoms.Map
 {
     /// <summary>
     /// Key-value pair made of strings.

@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Yaapii.Atoms.Lookup.Tests
+namespace Yaapii.Atoms.Map.Tests
 {
     public sealed class JoinedMapTests
     {

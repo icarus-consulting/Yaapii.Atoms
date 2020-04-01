@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Yaapii.Atoms.Lookup;
+using Yaapii.Atoms.Map;
 
 namespace Yaapii.Atoms.Func
 {

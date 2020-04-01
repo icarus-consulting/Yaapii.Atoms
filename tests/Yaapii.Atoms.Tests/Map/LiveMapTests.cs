@@ -27,7 +27,7 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Lookup.Tests
+namespace Yaapii.Atoms.Map.Tests
 {
     public class MapLiveTests
     {

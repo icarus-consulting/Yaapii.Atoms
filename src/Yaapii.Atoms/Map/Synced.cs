@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Lookup
+namespace Yaapii.Atoms.Map
 {
     /// <summary>
     /// A map that is threadsafe.

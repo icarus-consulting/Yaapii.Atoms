@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Yaapii.Atoms.Lookup.Tests
+namespace Yaapii.Atoms.Map.Tests
 {
     public class MapNoNullTest
     {

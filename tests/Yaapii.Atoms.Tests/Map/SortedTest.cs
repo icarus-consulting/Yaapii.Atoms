@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Yaapii.Atoms.Lookup.Tests
+namespace Yaapii.Atoms.Map.Tests
 {
     public sealed class SortedTest
     {

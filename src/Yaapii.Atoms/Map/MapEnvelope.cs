@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Lookup
+namespace Yaapii.Atoms.Map
 {
     /// <summary>
     /// Simplified map building.

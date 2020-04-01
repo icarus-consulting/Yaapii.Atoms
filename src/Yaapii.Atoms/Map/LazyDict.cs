@@ -29,7 +29,7 @@ using Yaapii.Atoms.Lists;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Texts;
 
-namespace Yaapii.Atoms.Lookup
+namespace Yaapii.Atoms.Map
 {
     /// <summary>
     /// A dictionary whose values are retrieved only when accessing them.

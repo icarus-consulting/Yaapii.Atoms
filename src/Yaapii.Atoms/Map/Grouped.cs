@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using Yaapii.Atoms.Lists;
 
-namespace Yaapii.Atoms.Lookup
+namespace Yaapii.Atoms.Map
 {
     /// <summary>
     /// Groups a list to Keys and Lists of Values according to the given Functions

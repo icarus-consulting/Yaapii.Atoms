@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 
-namespace Yaapii.Atoms.Lookup
+namespace Yaapii.Atoms.Map
 {
     /// <summary>
     /// MapInput from key-value pairs.

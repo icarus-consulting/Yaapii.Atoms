@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Lookup
+namespace Yaapii.Atoms.Map
 {
     /// <summary>
     /// A map from string to string.

@@ -26,7 +26,7 @@ using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Lists;
 using Yaapii.Atoms.Number;
 
-namespace Yaapii.Atoms.Lookup.Tests
+namespace Yaapii.Atoms.Map.Tests
 {
     public sealed class GroupedTest
     {

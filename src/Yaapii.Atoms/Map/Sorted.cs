@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Lookup
+namespace Yaapii.Atoms.Map
 {
     /// <summary>
     /// Sorts the given map with the given comparer
