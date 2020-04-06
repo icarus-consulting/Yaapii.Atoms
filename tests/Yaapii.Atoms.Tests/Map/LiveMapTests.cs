@@ -47,6 +47,22 @@ namespace Yaapii.Atoms.Map.Tests
         }
 
         [Fact]
+        public void DoesNotEnumerateDictionary()
+        {
+            var failed = false;
+            var unused =
+                new LiveMap(
+                    new KvpOf("key a", "value a"),
+                    new KvpOf("key b", () =>
+                    {
+                        failed = true;
+                        return "value b";
+                    })
+                )["key a"];
+            Assert.False(failed);
+        }
+
+        [Fact]
         public void ConvertsEnumerableToMap()
         {
             var m =
@@ -132,6 +148,22 @@ namespace Yaapii.Atoms.Map.Tests
         }
 
         [Fact]
+        public void DoesNotEnumerateDictionaryTypedValue()
+        {
+            var failed = false;
+            var unused =
+                new LiveMap<int>(
+                    new KvpOf<int>("key a", 0),
+                    new KvpOf<int>("key b", () =>
+                    {
+                        failed = true;
+                        return 1;
+                    })
+                )["key a"];
+            Assert.False(failed);
+        }
+
+        [Fact]
         public void ConvertsEnumerableToMapTypedValue()
         {
             var m =
@@ -189,6 +221,22 @@ namespace Yaapii.Atoms.Map.Tests
                 );
 
             Assert.True(m[one.Key] == one.Value && m[two.Key] == two.Value);
+        }
+
+        [Fact]
+        public void DoesNotEnumerateDictionaryTypedKeyValue()
+        {
+            var failed = false;
+            var unused =
+                new LiveMap<int, int>(
+                    new KvpOf<int, int>(10, 0),
+                    new KvpOf<int, int>(11, () =>
+                    {
+                        failed = true;
+                        return 1;
+                    })
+                )[10];
+            Assert.False(failed);
         }
 
         [Fact]

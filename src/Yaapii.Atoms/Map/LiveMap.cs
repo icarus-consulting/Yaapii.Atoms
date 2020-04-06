@@ -21,8 +21,10 @@
 // SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Fail;
 
 namespace Yaapii.Atoms.Map
 {
@@ -31,8 +33,13 @@ namespace Yaapii.Atoms.Map
     /// You must understand, that this map will build every time when any method is called.
     /// If you do not want this, use <see cref="MapOf"/>
     /// </summary>
-    public sealed class LiveMap : MapEnvelope
+    public sealed class LiveMap : IDictionary<string, string>
     {
+        private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
+        private readonly UnsupportedOperationException rejectEnumerateExc = new UnsupportedOperationException("Enumerating the dictionary's values is not supported. Enumerating all values can have adverse side effects.");
+
+        private readonly Func<IDictionary<string, Func<string>>> input;
+
         /// <summary>
         /// A map from the given Dictionary and the given kvps.
         /// </summary>
@@ -48,11 +55,17 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="src"></param>
         /// <param name="list"></param>
-        public LiveMap(LiveMap src, LiveMany<KeyValuePair<string, string>> list) : this(
-            new LiveMany<KeyValuePair<string, string>>(() =>
-                new Enumerable.Joined<KeyValuePair<string, string>>(
-                    src,
-                    list
+        public LiveMap(LiveMap src, LiveMany<KeyValuePair<string, string>> list) : this(() =>
+            new MapOf<Func<string>>(
+                new Enumerable.Joined<IKvp<Func<string>>>(
+                    new Mapped<string, IKvp<Func<string>>>(key =>
+                        new KvpOf<Func<string>>(key, () => src[key]),
+                        src.Keys
+                    ),
+                    new Mapped<KeyValuePair<string, string>, IKvp<Func<string>>>(kvp =>
+                        new KvpOf<Func<string>>(kvp.Key, () => kvp.Value),
+                        list
+                    )
                 )
             )
         )
@@ -62,9 +75,11 @@ namespace Yaapii.Atoms.Map
         /// A map from the given key value pairs.
         /// </summary>
         public LiveMap(IKvp entry, params IKvp[] more) : this(
-            new LiveMany<IMapInput>(
-                new MapInputOf(entry),
-                new MapInputOf(more)
+            new LiveMany<IKvp>(() =>
+                new Enumerable.Joined<IKvp>(
+                    new ManyOf<IKvp>(entry),
+                    more
+                )
             )
         )
         { }
@@ -73,9 +88,12 @@ namespace Yaapii.Atoms.Map
         /// A map from the given key value pairs.
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
-        public LiveMap(LiveMany<IKvp> entries) : this(
-            new LiveMany<IMapInput>(
-                new MapInputOf(entries)
+        public LiveMap(LiveMany<IKvp> entries) : this(() =>
+            new MapOf<Func<string>>(
+                new Mapped<IKvp, IKvp<Func<string>>>(kvp =>
+                    new KvpOf<Func<string>>(kvp.Key(), () => kvp.Value()),
+                    entries
+                )
             )
         )
         { }
@@ -84,16 +102,13 @@ namespace Yaapii.Atoms.Map
         /// A map from the given entries.
         /// </summary>
         /// <param name="entries">enumerable of entries</param>
-        public LiveMap(LiveMany<KeyValuePair<string, string>> entries) : this(
-            () =>
-            {
-                var temp = new Dictionary<string, string>();
-                foreach (var entry in entries)
-                {
-                    temp[entry.Key] = entry.Value;
-                }
-                return temp;
-            }
+        public LiveMap(LiveMany<KeyValuePair<string, string>> entries) : this(() =>
+            new MapOf<Func<string>>(
+                new Mapped<KeyValuePair<string, string>, IKvp<Func<string>>>(kvp =>
+                    new KvpOf<Func<string>>(kvp.Key, () => kvp.Value),
+                    entries
+                )
+            )
         )
         { }
 
@@ -107,7 +122,7 @@ namespace Yaapii.Atoms.Map
                 var idx = -1;
                 var enumerator = pairSequence.GetEnumerator();
                 var key = string.Empty;
-                var result = new Dictionary<string, string>();
+                var result = new Dictionary<string, Func<string>>();
                 while (enumerator.MoveNext())
                 {
                     idx++;
@@ -117,7 +132,8 @@ namespace Yaapii.Atoms.Map
                     }
                     else
                     {
-                        result.Add(key, enumerator.Current);
+                        var copy = enumerator.Current;
+                        result.Add(key, () => copy);
                     }
                 }
 
@@ -131,37 +147,96 @@ namespace Yaapii.Atoms.Map
         { }
 
         /// <summary>
-        /// A map from the given inputs.
-        /// </summary>
-        /// <param name="inputs">inputs</param>
-        public LiveMap(params IMapInput[] inputs) : this(new LiveMany<IMapInput>(inputs))
-        { }
-
-        /// <summary>
-        /// A map from the given inputs.
-        /// </summary>
-        /// <param name="inputs">enumerable of map inputs</param>
-        public LiveMap(LiveMany<IMapInput> inputs) : this(
-            () =>
-            {
-                IDictionary<string, string> dict = new LazyDict();
-                foreach (IMapInput input in inputs)
-                {
-                    dict = input.Apply(dict);
-                }
-                return dict;
-            }
-        )
-        { }
-
-        /// <summary>
         /// A map from the given dictionary.
         /// </summary>
         /// <param name="input">input dictionary</param>
-        public LiveMap(Func<IDictionary<string, string>> input) : base(
-            input, true
-        )
-        { }
+        public LiveMap(Func<IDictionary<string, Func<string>>> input)
+        {
+            this.input = input;
+        }
+
+        public ICollection<string> Keys => this.input().Keys;
+
+        public ICollection<string> Values => throw this.rejectEnumerateExc;
+
+        public int Count => this.input().Count;
+
+        public bool IsReadOnly => true;
+
+        public string this[string key]
+        {
+            get
+            {
+                var val = this.input();
+                try
+                {
+                    return val[key].Invoke();
+                }
+                catch (KeyNotFoundException)
+                {
+                    var keysString = new Texts.Joined(", ", val.Keys).AsString();
+                    throw new ArgumentException($"The key '{key}' is not present in the map. The following keys are present in the map: {keysString}");
+                }
+            }
+            set => throw this.rejectWriteExc;
+        }
+
+        public void Add(string key, string value)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return this.input().ContainsKey(key);
+        }
+
+        public bool Remove(string key)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool TryGetValue(string key, out string value)
+        {
+            var success = this.input().TryGetValue(key, out var result);
+            value = result();
+            return success;
+        }
+
+        public void Add(KeyValuePair<string, string> item)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public void Clear()
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool Contains(KeyValuePair<string, string> item)
+        {
+            throw this.rejectEnumerateExc;
+        }
+
+        public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)
+        {
+            throw this.rejectEnumerateExc;
+        }
+
+        public bool Remove(KeyValuePair<string, string> item)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
+        {
+            throw this.rejectEnumerateExc;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw this.rejectEnumerateExc;
+        }
     }
 
     /// <summary>
@@ -169,8 +244,13 @@ namespace Yaapii.Atoms.Map
     /// You must understand, that this map will build every time when any method is called.
     /// If you do not want this, use <see cref="MapOf"/>
     /// </summary>
-    public sealed class LiveMap<Value> : MapEnvelope<Value>
+    public sealed class LiveMap<Value> : IDictionary<string, Value>
     {
+        private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
+        private readonly UnsupportedOperationException rejectEnumerateExc = new UnsupportedOperationException("Enumerating the dictionary's values is not supported. Enumerating all values can have adverse side effects.");
+
+        private readonly Func<IDictionary<string, Func<Value>>> input;
+        
         /// <summary>
         /// A map from the given KeyValuePairs and appends them to the given Dictionary.
         /// </summary>
@@ -186,11 +266,17 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="src"></param>
         /// <param name="list"></param>
-        public LiveMap(LiveMap<Value> src, LiveMany<KeyValuePair<string, Value>> list) : this(
-            new LiveMany<KeyValuePair<string, Value>>(() =>
-                new Enumerable.Joined<KeyValuePair<string, Value>>(
-                    src,
-                    list
+        public LiveMap(LiveMap<Value> src, LiveMany<KeyValuePair<string, Value>> list) : this(() =>
+            new MapOf<Func<Value>>(
+                new Enumerable.Joined<IKvp<Func<Value>>>(
+                    new Mapped<string, IKvp<Func<Value>>>(key =>
+                        new KvpOf<Func<Value>>(key, () => src[key]),
+                        src.Keys
+                    ),
+                    new Mapped<KeyValuePair<string, Value>, IKvp<Func<Value>>>(kvp =>
+                        new KvpOf<Func<Value>>(kvp.Key, () => kvp.Value),
+                        list
+                    )
                 )
             )
         )
@@ -202,9 +288,11 @@ namespace Yaapii.Atoms.Map
         /// <param name="entries">more kvps</param>
         /// <param name="entry">A single entry</param>
         public LiveMap(IKvp<Value> entry, params IKvp<Value>[] entries) : this(
-            new LiveMany<IMapInput<Value>>(
-                new MapInputOf<Value>(entry),
-                new MapInputOf<Value>(entries)
+            new LiveMany<IKvp<Value>>(() =>
+                new Enumerable.Joined<IKvp<Value>>(
+                    new ManyOf<IKvp<Value>>(entry),
+                    entries
+                )
             )
         )
         { }
@@ -213,9 +301,12 @@ namespace Yaapii.Atoms.Map
         /// A map from the given key value pairs.
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
-        public LiveMap(LiveMany<IKvp<Value>> entries) : this(
-            new LiveMany<IMapInput<Value>>(
-                new MapInputOf<Value>(entries)
+        public LiveMap(LiveMany<IKvp<Value>> entries) : this(() =>
+            new MapOf<Func<Value>>(
+                new Mapped<IKvp<Value>, IKvp<Func<Value>>>(kvp =>
+                    new KvpOf<Func<Value>>(kvp.Key(), () => kvp.Value()),
+                    entries
+                )
             )
         )
         { }
@@ -224,42 +315,13 @@ namespace Yaapii.Atoms.Map
         /// A map from the given entries.
         /// </summary>
         /// <param name="entries">enumerable of entries</param>
-        public LiveMap(LiveMany<KeyValuePair<string, Value>> entries) : this(
-            () =>
-            {
-                var temp = new Dictionary<string, Value>();
-                foreach (var entry in entries)
-                {
-                    temp[entry.Key] = entry.Value;
-                }
-                return temp;
-            }
-        )
-        { }
-
-        /// <summary>
-        /// A map from the given inputs.
-        /// </summary>
-        /// <param name="inputs">inputs</param>
-        public LiveMap(params IMapInput<Value>[] inputs) : this(
-            new LiveMany<IMapInput<Value>>(inputs)
-        )
-        { }
-
-        /// <summary>
-        /// A map from the given inputs.
-        /// </summary>
-        /// <param name="inputs">enumerable of map inputs</param>
-        public LiveMap(LiveMany<IMapInput<Value>> inputs) : this(
-            () =>
-            {
-                IDictionary<string, Value> dict = new LazyDict<Value>();
-                foreach (IMapInput<Value> input in inputs)
-                {
-                    dict = input.Apply(dict);
-                }
-                return dict;
-            }
+        public LiveMap(LiveMany<KeyValuePair<string, Value>> entries) : this(() =>
+            new MapOf<Func<Value>>(
+                new Mapped<KeyValuePair<string, Value>, IKvp<Func<Value>>>(kvp =>
+                    new KvpOf<Func<Value>>(kvp.Key, () => kvp.Value),
+                    entries
+                )
+            )
         )
         { }
 
@@ -267,10 +329,93 @@ namespace Yaapii.Atoms.Map
         /// A map from the given dictionary.
         /// </summary>
         /// <param name="input">input dictionary</param>
-        public LiveMap(Func<IDictionary<string, Value>> input) : base(
-            input, true
-        )
-        { }
+        public LiveMap(Func<IDictionary<string, Func<Value>>> input)
+        {
+            this.input = input;
+        }
+
+        public ICollection<string> Keys => this.input().Keys;
+
+        public ICollection<Value> Values => throw this.rejectEnumerateExc;
+
+        public int Count => this.input().Count;
+
+        public bool IsReadOnly => true;
+
+        public Value this[string key]
+        {
+            get
+            {
+                var val = this.input();
+                try
+                {
+                    return val[key].Invoke();
+                }
+                catch (KeyNotFoundException)
+                {
+                    var keysString = new Texts.Joined(", ", val.Keys).AsString();
+                    throw new ArgumentException($"The key '{key}' is not present in the map. The following keys are present in the map: {keysString}");
+                }
+            }
+            set => throw this.rejectWriteExc;
+        }
+
+        public void Add(string key, Value value)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return this.input().ContainsKey(key);
+        }
+
+        public bool Remove(string key)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool TryGetValue(string key, out Value value)
+        {
+            var success = this.input().TryGetValue(key, out var result);
+            value = result();
+            return success;
+        }
+
+        public void Add(KeyValuePair<string, Value> item)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public void Clear()
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool Contains(KeyValuePair<string, Value> item)
+        {
+            throw this.rejectEnumerateExc;
+        }
+
+        public void CopyTo(KeyValuePair<string, Value>[] array, int arrayIndex)
+        {
+            throw this.rejectEnumerateExc;
+        }
+
+        public bool Remove(KeyValuePair<string, Value> item)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public IEnumerator<KeyValuePair<string, Value>> GetEnumerator()
+        {
+            throw this.rejectEnumerateExc;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw this.rejectEnumerateExc;
+        }
     }
 
     /// <summary>
@@ -278,8 +423,13 @@ namespace Yaapii.Atoms.Map
     /// You must understand, that this map will build every time when any method is called.
     /// If you do not want this, use <see cref="MapOf"/>
     /// </summary>
-    public sealed class LiveMap<Key, Value> : MapEnvelope<Key, Value>
+    public sealed class LiveMap<Key, Value> : IDictionary<Key, Value>
     {
+        private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
+        private readonly UnsupportedOperationException rejectEnumerateExc = new UnsupportedOperationException("Enumerating the dictionary's values is not supported. Enumerating all values can have adverse side effects.");
+
+        private readonly Func<IDictionary<Key, Func<Value>>> input;
+
         /// <summary>
         /// A map from the given KeyValuePairs and appends them to the given Dictionary.
         /// </summary>
@@ -295,11 +445,17 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="src"></param>
         /// <param name="list"></param>
-        public LiveMap(LiveMap<Key, Value> src, LiveMany<KeyValuePair<Key, Value>> list) : this(
-            new LiveMany<KeyValuePair<Key, Value>>(() =>
-                new Enumerable.Joined<KeyValuePair<Key, Value>>(
-                    src,
-                    list
+        public LiveMap(LiveMap<Key, Value> src, LiveMany<KeyValuePair<Key, Value>> list) : this(() =>
+            new MapOf<Key, Func<Value>>(
+                new Enumerable.Joined<IKvp<Key, Func<Value>>>(
+                    new Mapped<Key, IKvp<Key, Func<Value>>>(key =>
+                        new KvpOf<Key, Func<Value>>(key, () => src[key]),
+                        src.Keys
+                    ),
+                    new Mapped<KeyValuePair<Key, Value>, IKvp<Key, Func<Value>>>(kvp =>
+                        new KvpOf<Key, Func<Value>>(kvp.Key, () => kvp.Value),
+                        list
+                    )
                 )
             )
         )
@@ -309,9 +465,11 @@ namespace Yaapii.Atoms.Map
         /// A map from the given key value pairs.
         /// </summary>
         public LiveMap(IKvp<Key, Value> entry, params IKvp<Key, Value>[] more) : this(
-            new LiveMany<IMapInput<Key, Value>>(
-                new MapInputOf<Key, Value>(entry),
-                new MapInputOf<Key, Value>(more)
+            new LiveMany<IKvp<Key, Value>>(() =>
+                new Enumerable.Joined<IKvp<Key, Value>>(
+                    new ManyOf<IKvp<Key, Value>>(entry),
+                    more
+                )
             )
         )
         { }
@@ -320,9 +478,12 @@ namespace Yaapii.Atoms.Map
         /// A map from the given key value pairs.
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
-        public LiveMap(LiveMany<IKvp<Key, Value>> entries) : this(
-            new LiveMany<IMapInput<Key, Value>>(
-                new MapInputOf<Key, Value>(entries)
+        public LiveMap(LiveMany<IKvp<Key, Value>> entries) : this(() =>
+            new MapOf<Key, Func<Value>>(
+                new Mapped<IKvp<Key, Value>, IKvp<Key, Func<Value>>>(kvp =>
+                    new KvpOf<Key, Func<Value>>(kvp.Key(), () => kvp.Value()),
+                    entries
+                )
             )
         )
         { }
@@ -331,42 +492,13 @@ namespace Yaapii.Atoms.Map
         /// A map from the given entries.
         /// </summary>
         /// <param name="entries">enumerable of entries</param>
-        public LiveMap(LiveMany<KeyValuePair<Key, Value>> entries) : this(
-            () =>
-            {
-                var temp = new Dictionary<Key, Value>();
-                foreach (var entry in entries)
-                {
-                    temp[entry.Key] = entry.Value;
-                }
-                return temp;
-            }
-        )
-        { }
-
-        /// <summary>
-        /// A map from the given inputs.
-        /// </summary>
-        /// <param name="inputs">inputs</param>
-        public LiveMap(params IMapInput<Key, Value>[] inputs) : this(
-            new LiveMany<IMapInput<Key, Value>>(inputs)
-        )
-        { }
-
-        /// <summary>
-        /// A map from the given inputs.
-        /// </summary>
-        /// <param name="inputs">enumerable of map inputs</param>
-        public LiveMap(LiveMany<IMapInput<Key, Value>> inputs) : this(
-            () =>
-            {
-                IDictionary<Key, Value> dict = new LazyDict<Key, Value>();
-                foreach (IMapInput<Key, Value> input in inputs)
-                {
-                    dict = input.Apply(dict);
-                }
-                return dict;
-            }
+        public LiveMap(LiveMany<KeyValuePair<Key, Value>> entries) : this(() =>
+            new MapOf<Key, Func<Value>>(
+                new Mapped<KeyValuePair<Key, Value>, IKvp<Key, Func<Value>>>(kvp =>
+                    new KvpOf<Key, Func<Value>>(kvp.Key, () => kvp.Value),
+                    entries
+                )
+            )
         )
         { }
 
@@ -374,9 +506,91 @@ namespace Yaapii.Atoms.Map
         /// A map from the given dictionary.
         /// </summary>
         /// <param name="input">input dictionary</param>
-        public LiveMap(Func<IDictionary<Key, Value>> input) : base(
-            input, true
-        )
-        { }
+        public LiveMap(Func<IDictionary<Key, Func<Value>>> input)
+        {
+            this.input = input;
+        }
+
+        public ICollection<Key> Keys => this.input().Keys;
+
+        public ICollection<Value> Values => throw this.rejectEnumerateExc;
+
+        public int Count => this.input().Count;
+
+        public bool IsReadOnly => true;
+
+        public Value this[Key key]
+        {
+            get
+            {
+                var val = this.input();
+                try
+                {
+                    return val[key].Invoke();
+                }
+                catch (KeyNotFoundException)
+                {
+                    throw new ArgumentException("The requested key is not present in the map.");
+                }
+            }
+            set => throw this.rejectWriteExc;
+        }
+
+        public void Add(Key key, Value value)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool ContainsKey(Key key)
+        {
+            return this.input().ContainsKey(key);
+        }
+
+        public bool Remove(Key key)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool TryGetValue(Key key, out Value value)
+        {
+            var success = this.input().TryGetValue(key, out var result);
+            value = result();
+            return success;
+        }
+
+        public void Add(KeyValuePair<Key, Value> item)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public void Clear()
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool Contains(KeyValuePair<Key, Value> item)
+        {
+            throw this.rejectEnumerateExc;
+        }
+
+        public void CopyTo(KeyValuePair<Key, Value>[] array, int arrayIndex)
+        {
+            throw this.rejectEnumerateExc;
+        }
+
+        public bool Remove(KeyValuePair<Key, Value> item)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public IEnumerator<KeyValuePair<Key, Value>> GetEnumerator()
+        {
+            throw this.rejectEnumerateExc;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw this.rejectEnumerateExc;
+        }
     }
 }
