@@ -44,26 +44,26 @@ namespace Yaapii.Atoms.Number
         /// <param name="blockSeperator">seperator for blocks, for example 1.000</param>
         /// <param name="decimalSeperator">seperator for floating point numbers, for example 16,235 </param>
         public NumberOf(string text, string decimalSeperator, string blockSeperator) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(
+            new Sticky<long>(() => Convert.ToInt64(
                 text,
                 new NumberFormatInfo()
                 {
                     NumberDecimalSeparator = decimalSeperator,
                     NumberGroupSeparator = blockSeperator
                 })),
-            new ScalarOf<int>(() => Convert.ToInt32(
+            new Sticky<int>(() => Convert.ToInt32(
                 text,
                 new NumberFormatInfo()
                 {
                     NumberDecimalSeparator = decimalSeperator,
                     NumberGroupSeparator = blockSeperator
                 })),
-            new ScalarOf<float>(() => (float)Convert.ToDecimal(text, new NumberFormatInfo()
+            new Sticky<float>(() => (float)Convert.ToDecimal(text, new NumberFormatInfo()
             {
                 NumberDecimalSeparator = decimalSeperator,
                 NumberGroupSeparator = blockSeperator
             })),
-            new ScalarOf<double>(() => Convert.ToDouble(
+            new Sticky<double>(() => Convert.ToDouble(
                 text,
                 new NumberFormatInfo()
                 {
@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Number
         /// A <see cref="int"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="str">The string</param>
-        public NumberOf(string str) : this(str, new ScalarOf<IFormatProvider>(() => CultureInfo.InvariantCulture))
+        public NumberOf(string str) : this(str, new Sticky<IFormatProvider>(() => CultureInfo.InvariantCulture))
         { }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="str">The string</param>
         /// <param name="provider">a number format provider</param>
-        public NumberOf(string str, IFormatProvider provider) : this(str, new ScalarOf<IFormatProvider>(provider))
+        public NumberOf(string str, IFormatProvider provider) : this(str, new Sticky<IFormatProvider>(provider))
         { }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Yaapii.Atoms.Number
                         throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
                     }
                 }),
-            new ScalarOf<int>(
+            new Sticky<int>(
                 () =>
                 {
                     try
@@ -118,7 +118,7 @@ namespace Yaapii.Atoms.Number
                         throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
                     }
                 }),
-            new ScalarOf<float>(
+            new Sticky<float>(
                 () =>
                 {
                     try
@@ -130,7 +130,7 @@ namespace Yaapii.Atoms.Number
                         throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
                     }
                 }),
-            new ScalarOf<double>(
+            new Sticky<double>(
                 () =>
                 {
                     try
@@ -150,10 +150,10 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="integer">The integer</param>
         public NumberOf(int integer) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(integer)),
-            new ScalarOf<int>(integer),
-            new ScalarOf<float>(() => Convert.ToSingle(integer)),
-            new ScalarOf<double>(() => Convert.ToDouble(integer))
+            new Sticky<long>(() => Convert.ToInt64(integer)),
+            new Sticky<int>(integer),
+            new Sticky<float>(() => Convert.ToSingle(integer)),
+            new Sticky<double>(() => Convert.ToDouble(integer))
         )
         { }
 
@@ -162,10 +162,10 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="dbl">The double</param>
         public NumberOf(double dbl) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(dbl)),
-            new ScalarOf<int>(() => Convert.ToInt32(dbl)),
-            new ScalarOf<float>(() => Convert.ToSingle(dbl)),
-            new ScalarOf<double>(dbl)
+            new Sticky<long>(() => Convert.ToInt64(dbl)),
+            new Sticky<int>(() => Convert.ToInt32(dbl)),
+            new Sticky<float>(() => Convert.ToSingle(dbl)),
+            new Sticky<double>(dbl)
             )
         { }
 
@@ -174,10 +174,10 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="lng">The long</param>
         public NumberOf(long lng) : this(
-            new ScalarOf<long>(() => lng),
-            new ScalarOf<int>(() => Convert.ToInt32(lng)),
-            new ScalarOf<float>(() => Convert.ToSingle(lng)),
-            new ScalarOf<double>(() => Convert.ToDouble(lng))
+            new Sticky<long>(() => lng),
+            new Sticky<int>(() => Convert.ToInt32(lng)),
+            new Sticky<float>(() => Convert.ToSingle(lng)),
+            new Sticky<double>(() => Convert.ToDouble(lng))
             )
         { }
 
@@ -186,10 +186,10 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="flt">The float</param>
         public NumberOf(float flt) : this(
-            new ScalarOf<long>(() => Convert.ToInt64(flt)),
-            new ScalarOf<int>(() => Convert.ToInt32(flt)),
-            new ScalarOf<float>(() => Convert.ToSingle(flt)),
-            new ScalarOf<double>(() => Convert.ToDouble(flt))
+            new Sticky<long>(() => Convert.ToInt64(flt)),
+            new Sticky<int>(() => Convert.ToInt32(flt)),
+            new Sticky<float>(flt),
+            new Sticky<double>(() => Convert.ToDouble(flt))
             )
         { }
 
