@@ -32,8 +32,8 @@ namespace Yaapii.Atoms.Map
     /// </summary>
     public sealed class KvpOf : IKvp
     {
-        private readonly Sticky<KeyValuePair<string, Func<string>>> entry;
-        private readonly Sticky<string> value;
+        private readonly ScalarOf<KeyValuePair<string, Func<string>>> entry;
+        private readonly ScalarOf<string> value;
         private readonly bool isLazy;
 
         /// <summary>
@@ -89,10 +89,10 @@ namespace Yaapii.Atoms.Map
         private KvpOf(Func<KeyValuePair<string, Func<string>>> kvp, bool isLazy)
         {
             this.entry =
-                new Sticky<KeyValuePair<string, Func<string>>>(
+                new ScalarOf<KeyValuePair<string, Func<string>>>(
                     () => kvp.Invoke()
                 );
-            this.value = new Sticky<string>(() => this.entry.Value().Value.Invoke());
+            this.value = new ScalarOf<string>(() => this.entry.Value().Value.Invoke());
             this.isLazy = isLazy;
         }
 
@@ -117,8 +117,8 @@ namespace Yaapii.Atoms.Map
     /// </summary>
     public sealed class KvpOf<TValue> : IKvp<TValue>
     {
-        private readonly Sticky<KeyValuePair<string, Func<TValue>>> entry;
-        private readonly Sticky<TValue> value;
+        private readonly ScalarOf<KeyValuePair<string, Func<TValue>>> entry;
+        private readonly ScalarOf<TValue> value;
         private readonly bool isLazy;
 
         /// <summary>
@@ -174,10 +174,10 @@ namespace Yaapii.Atoms.Map
         private KvpOf(Func<KeyValuePair<string, Func<TValue>>> kvp, bool isLazy)
         {
             this.entry =
-                new Sticky<KeyValuePair<string, Func<TValue>>>(
+                new ScalarOf<KeyValuePair<string, Func<TValue>>>(
                     () => kvp.Invoke()
                 );
-            this.value = new Sticky<TValue>(() => this.entry.Value().Value.Invoke());
+            this.value = new ScalarOf<TValue>(() => this.entry.Value().Value.Invoke());
             this.isLazy = isLazy;
         }
 
@@ -202,8 +202,8 @@ namespace Yaapii.Atoms.Map
     /// </summary>
     public sealed class KvpOf<TKey, TValue> : IKvp<TKey, TValue>
     {
-        private readonly Sticky<KeyValuePair<TKey, Func<TValue>>> entry;
-        private readonly Sticky<TValue> value;
+        private readonly ScalarOf<KeyValuePair<TKey, Func<TValue>>> entry;
+        private readonly ScalarOf<TValue> value;
         private readonly bool isLazy;
 
         /// <summary>
@@ -245,10 +245,10 @@ namespace Yaapii.Atoms.Map
         private KvpOf(Func<KeyValuePair<TKey, Func<TValue>>> kvp, bool isLazy)
         {
             this.entry =
-                new Sticky<KeyValuePair<TKey, Func<TValue>>>(
+                new ScalarOf<KeyValuePair<TKey, Func<TValue>>>(
                     () => kvp.Invoke()
                 );
-            this.value = new Sticky<TValue>(() => this.entry.Value().Value.Invoke());
+            this.value = new ScalarOf<TValue>(() => this.entry.Value().Value.Invoke());
             this.isLazy = isLazy;
         }
 

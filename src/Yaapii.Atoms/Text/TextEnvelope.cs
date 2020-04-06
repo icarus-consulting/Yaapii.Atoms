@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Texts
     public abstract class TextEnvelope : IText
     {
         private readonly Func<string> origin;
-        private readonly Sticky<string> fixedOrigin;
+        private readonly ScalarOf<string> fixedOrigin;
         private readonly bool live;
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Texts
         {
             this.origin = origin;
             this.live = live;
-            this.fixedOrigin = new Sticky<string>(() => origin());
+            this.fixedOrigin = new ScalarOf<string>(() => origin());
         }
 
         /// <summary>

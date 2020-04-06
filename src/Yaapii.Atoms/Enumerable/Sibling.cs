@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class Sibling<T> : IScalar<T>
         where T : IComparable<T>
     {
-        private readonly Sticky<T> result;
+        private readonly ScalarOf<T> result;
 
         /// <summary>
         /// Next neighbour element in a <see cref="IEnumerable{T}"/>.
@@ -96,7 +96,7 @@ namespace Yaapii.Atoms.Enumerable
         public Sibling(T item, IEnumerable<T> source, int relativeposition, IFunc<IEnumerable<T>, T> fallback)
         {
             this.result =
-                new Sticky<T>(() =>
+                new ScalarOf<T>(() =>
                 {
                     return new Enumerator.Sibling<T>(
                         source.GetEnumerator(),

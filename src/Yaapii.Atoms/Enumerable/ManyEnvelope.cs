@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Enumerable
     {
         private readonly bool live;
         private readonly Func<IEnumerable<string>> origin;
-        private readonly Sticky<IEnumerable<string>> fixedOrigin;
+        private readonly ScalarOf<IEnumerable<string>> fixedOrigin;
 
         /// <summary>
         /// Envelope for Enumerable.
@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Enumerable
         {
             this.live = live;
             this.origin = origin;
-            this.fixedOrigin = new Sticky<IEnumerable<string>>(() => origin());
+            this.fixedOrigin = new ScalarOf<IEnumerable<string>>(() => origin());
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Yaapii.Atoms.Enumerable
     public abstract class ManyEnvelope<T> : IEnumerable<T>
     {
         private readonly bool live;
-        private readonly Sticky<IEnumerable<T>> fixedOrigin;
+        private readonly ScalarOf<IEnumerable<T>> fixedOrigin;
         private readonly Func<IEnumerable<T>> origin;
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Yaapii.Atoms.Enumerable
         public ManyEnvelope(Func<IEnumerable<T>> origin, bool live)
         {
             this.live = live;
-            this.fixedOrigin = new Sticky<IEnumerable<T>>(origin);
+            this.fixedOrigin = new ScalarOf<IEnumerable<T>>(origin);
             this.origin = origin;
         }
 
