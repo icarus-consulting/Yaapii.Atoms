@@ -22,16 +22,17 @@
 
 using Xunit;
 
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class UpperTest
     {
         [Fact]
         public void ConvertsText()
         {
-            Assert.True(
-                new Upper(new TextOf("Hello!")).AsString() == "HELLO!",
-                "Can't upper case a text");
+            Assert.Equal(
+                "HELLO!",
+                new Upper(new LiveText("Hello!")).AsString()
+            );
         }
 
     }

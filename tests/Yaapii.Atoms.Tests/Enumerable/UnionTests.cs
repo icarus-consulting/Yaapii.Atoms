@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace Yaapii.Atoms.Enumerable.Test
+namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class UnionTests
     {
@@ -32,8 +32,8 @@ namespace Yaapii.Atoms.Enumerable.Test
         {
             Assert.Empty(
                 new Union<string>(
-                    new Many.Of<string>("a", "b"),
-                    new Many.Of<string>("c")
+                    new ManyOf<string>("a", "b"),
+                    new ManyOf<string>("c")
                 )
             );
         }

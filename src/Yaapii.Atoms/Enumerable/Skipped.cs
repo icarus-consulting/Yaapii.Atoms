@@ -20,12 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -36,7 +31,7 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Skipped<T> : Many.Envelope<T>
+    public sealed class Skipped<T> : ManyEnvelope<T>
     {
         /// <summary>
         /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
@@ -44,9 +39,10 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="enumerable">enumerable to skip items in</param>
         /// <param name="skip">how many to skip</param>
         public Skipped(IEnumerable<T> enumerable, int skip) : base(() =>
-            new Many.Live<T>(() =>
+            new LiveMany<T>(() =>
                 new Enumerator.Skipped<T>(enumerable.GetEnumerator(), skip)
-            )
+            ),
+            false
         )
         { }
     }

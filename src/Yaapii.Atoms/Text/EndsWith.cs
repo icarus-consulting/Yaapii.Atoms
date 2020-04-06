@@ -21,16 +21,16 @@
 // SOFTWARE.
 
 using System.Text.RegularExpressions;
+using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// Checks if a text ends with a given content.
     /// </summary>
     public sealed class EndsWith : IScalar<bool>
     {
-        private readonly IText _text;
-        private readonly IText _tail;
+        private readonly Sticky<bool> result;
 
         /// <summary>
         /// Checks if a <see cref="IText"/> ends with a given <see cref="string"/>
@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="tail">Ending content to use in the test</param>
         public EndsWith(IText text, string tail) : this(
             text,
-            new TextOf(tail)
+            new LiveText(tail)
         )
         { }
 
@@ -50,8 +50,12 @@ namespace Yaapii.Atoms.Text
         /// <param name="tail">Ending content to use in the test</param>
         public EndsWith(IText text, IText tail)
         {
-            this._text = text;
-            this._tail = tail;
+            this.result =
+                new Sticky<bool>(() =>
+                {
+                    var regex = new Regex(Regex.Escape(tail.AsString()) + "$");
+                    return regex.IsMatch(text.AsString());
+                });
         }
 
         /// <summary>
@@ -60,8 +64,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>The result</returns>
         public bool Value()
         {
-            var regex = new Regex(Regex.Escape(this._tail.AsString()) + "$");
-            return regex.IsMatch(this._text.AsString());
+            return this.result.Value();
         }
     }
 }

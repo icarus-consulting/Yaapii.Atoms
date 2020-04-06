@@ -21,12 +21,9 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -36,7 +33,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void ReadsAlternativeInput()
         {
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new InputWithFallback(
                         new InputOf(
                             new Uri(Path.GetFullPath("/this-file-is-absent-for-sure.txt"))

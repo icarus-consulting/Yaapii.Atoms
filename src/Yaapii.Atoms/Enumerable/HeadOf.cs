@@ -21,7 +21,6 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
-using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
@@ -33,7 +32,7 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class HeadOf<T> : Many.Envelope<T>
+    public sealed class HeadOf<T> : ManyEnvelope<T>
     {
         /// <summary>
         /// ctor
@@ -47,7 +46,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public HeadOf(IEnumerable<T> enumerable, int limit) : this(enumerable, new ScalarOf<int>(limit))
+        public HeadOf(IEnumerable<T> enumerable, int limit) : this(enumerable, new LiveScalar<int>(limit))
         { }
 
         /// <summary>
@@ -56,9 +55,10 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
         public HeadOf(IEnumerable<T> enumerable, IScalar<int> limit) : base(() =>
-            new Many.Live<T>(() =>
+            new LiveMany<T>(() =>
                 new Enumerator.HeadOf<T>(enumerable.GetEnumerator(), limit.Value())
-            )
+            ),
+            false
         )
         { }
     }

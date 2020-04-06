@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">source floats</param>
         public SumOf(params float[] src) : this(
-            new Many.Of<float>(src))
+            new ManyOf<float>(src))
         { }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">source longs</param>
         public SumOf(params long[] src) : this(
-            new Many.Of<long>(src))
+            new ManyOf<long>(src))
         { }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">source ints</param>
         public SumOf(params int[] src) : this(
-            new Many.Of<int>(src))
+            new ManyOf<int>(src))
         { }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">source doubles</param>
         public SumOf(params double[] src) : this(
-            new Many.Of<double>(src))
+            new ManyOf<double>(src))
         { }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">source doubles</param>
         public SumOf(IEnumerable<double> src) : base(
-            new ScalarOf<double>(() =>
+            new LiveScalar<double>(() =>
             {
                 double sum = 0D;
                 foreach (int val in src)
@@ -79,7 +79,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum;
             }),
-            new ScalarOf<int>(() =>
+            new LiveScalar<int>(() =>
             {
                 int sum = 0;
                 foreach (int val in src)
@@ -88,7 +88,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum;
             }),
-            new ScalarOf<long>(() =>
+            new LiveScalar<long>(() =>
             {
                 long sum = 0L;
                 foreach (long val in src)
@@ -97,7 +97,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum;
             }),
-            new ScalarOf<float>(() =>
+            new LiveScalar<float>(() =>
             {
                 float sum = 0F;
                 foreach (float val in src)
@@ -113,7 +113,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">source integers</param>
         public SumOf(IEnumerable<int> src) : base(
-            new ScalarOf<double>(() =>
+            new LiveScalar<double>(() =>
             {
                 double sum = 0D;
                 foreach (int val in src)
@@ -122,7 +122,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum;
             }),
-            new ScalarOf<int>(() =>
+            new LiveScalar<int>(() =>
             {
                 int sum = 0;
                 foreach (int val in src)
@@ -131,7 +131,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum;
             }),
-            new ScalarOf<long>(() =>
+            new LiveScalar<long>(() =>
             {
                 long sum = 0L;
                 foreach (long val in src)
@@ -140,7 +140,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum;
             }),
-            new ScalarOf<float>(() =>
+            new LiveScalar<float>(() =>
             {
                 float sum = 0F;
                 foreach (float val in src)
@@ -156,7 +156,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">source longs</param>
         public SumOf(IEnumerable<long> src) : base(
-            new ScalarOf<double>(() =>
+            new LiveScalar<double>(() =>
             {
                 double sum = 0D;
                 foreach (int val in src)
@@ -165,7 +165,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum;
             }),
-            new ScalarOf<int>(() =>
+            new LiveScalar<int>(() =>
             {
                 int sum = 0;
                 foreach (int val in src)
@@ -174,7 +174,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum;
             }),
-            new ScalarOf<long>(() =>
+            new LiveScalar<long>(() =>
             {
                 long sum = 0L;
                 foreach (long val in src)
@@ -183,7 +183,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum;
             }),
-            new ScalarOf<float>(() =>
+            new LiveScalar<float>(() =>
             {
                 float sum = 0F;
                 foreach (float val in src)
@@ -199,7 +199,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">source floats</param>
         public SumOf(IEnumerable<float> src) : base(
-            new ScalarOf<double>(() =>
+            new LiveScalar<double>(() =>
             {
                 double sum = 0D;
                 foreach (int val in src)
@@ -208,7 +208,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum;
             }),
-            new ScalarOf<int>(() =>
+            new LiveScalar<int>(() =>
             {
                 int sum = 0;
                 foreach (int val in src)
@@ -217,7 +217,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum;
             }),
-            new ScalarOf<long>(() =>
+            new LiveScalar<long>(() =>
             {
                 long sum = 0L;
                 foreach (long val in src)
@@ -226,7 +226,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum;
             }),
-            new ScalarOf<float>(() =>
+            new LiveScalar<float>(() =>
             {
                 float sum = 0F;
                 foreach (float val in src)

@@ -29,10 +29,10 @@ using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Tests;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class TextOfTest
     {
@@ -163,16 +163,12 @@ namespace Yaapii.Atoms.Text.Tests
         [Fact]
         public void ReadsDoubleIntoText()
         {
-            //  var content = "0,2545";
-
             double doub = 0.2545;
-
             var content = doub.ToString(CultureInfo.InvariantCulture);
 
             Assert.True(
-                    new TextOf(doub
-                    ).AsString() == content,
-                    "Can't read text from double");
+                new LiveText(doub).AsString() == content
+            );
         }
 
         [Fact]
@@ -192,8 +188,6 @@ namespace Yaapii.Atoms.Text.Tests
         [Fact]
         public void ReadsFloatIntoText()
         {
-            //var content = "0,2545";
-
             float doub = 0.2545f;
             var content = doub.ToString(CultureInfo.InvariantCulture);
 
@@ -306,7 +300,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void ComparesWithASubtext()
         {
             Assert.True(
-            new TextOf("here to there").CompareTo(
+            new Comparable(new TextOf("here to there")).CompareTo(
                 new SubText("from here to there", 5)
             ) == 0,
             "Can't compare sub texts");

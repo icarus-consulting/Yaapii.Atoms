@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source items</param>
-        public Mapped(Func<In, Out> fnc, params In[] src) : this(fnc, new Many.Of<In>(src))
+        public Mapped(Func<In, Out> fnc, params In[] src) : this(fnc, new ManyOf<In>(src))
         { }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source enumerator</param>
         public Mapped(Func<In, Out> fnc, IEnumerator<In> src) : this(
-            fnc, new Many.Of<In>(src))
+            fnc, new ManyOf<In>(src))
         { }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source enumerable</param>
         public Mapped(Func<In, Out> fnc, IEnumerable<In> src) : this(
-            fnc, new CollectionOf<In>(src))
+            fnc, new LiveCollection<In>(src))
         { }
 
         /// <summary>
@@ -65,9 +65,11 @@ namespace Yaapii.Atoms.Collection
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source collection</param>
         public Mapped(Func<In, Out> fnc, ICollection<In> src) : base(
-            () => new CollectionOf<Out>(
+            () => new LiveCollection<Out>(
                 new Enumerable.Mapped<In, Out>(fnc, src)
-            ))
+            ),
+            false
+        )
         { }
     }
 }

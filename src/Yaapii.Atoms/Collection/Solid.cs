@@ -36,21 +36,21 @@ namespace Yaapii.Atoms.Collection
         /// ctor
         /// </summary>
         /// <param name="array">source items</param>
-        public Solid(params T[] array) : this(new Many.Of<T>(array))
+        public Solid(params T[] array) : this(new LiveMany<T>(array))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">source enumerator</param>
-        public Solid(IEnumerator<T> src) : this(new Many.Of<T>(src))
+        public Solid(IEnumerator<T> src) : this(new ManyOf<T>(src))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">source enumerable</param>
-        public Solid(IEnumerable<T> src) : this(new CollectionOf<T>(src))
+        public Solid(IEnumerable<T> src) : this(new LiveCollection<T>(src))
         { }
 
         /// <summary>
@@ -60,7 +60,10 @@ namespace Yaapii.Atoms.Collection
         public Solid(ICollection<T> src) : base(
             () => 
                 new Sync<T>(
-                    new Sticky<T>(src)))
+                    src
+                ),
+            false
+        )
         { }
 
     }

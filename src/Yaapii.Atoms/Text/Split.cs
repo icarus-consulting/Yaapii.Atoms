@@ -21,27 +21,19 @@
 // SOFTWARE.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Enumerable;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> which has been splitted at the given string.
     /// </summary>
-    public sealed class Split : IEnumerable<String>
+    public sealed class Split : ManyEnvelope
     {
-        private readonly IText _origin;
-        private readonly IText _regex;
-        private readonly bool _remBlank;
-
         /// <summary>
         /// A <see cref="IText"/> which has been splitted at the given string.
         /// </summary>
@@ -49,8 +41,8 @@ namespace Yaapii.Atoms.Text
         /// <param name="rgx">regex to use for splitting</param>
         /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
         public Split(String text, String rgx, bool remBlank = true) : this(
-            new TextOf(text),
-            new TextOf(rgx),
+            new LiveText(text),
+            new LiveText(rgx),
             remBlank)
         { }
 
@@ -61,7 +53,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="rgx">regex to use for splitting</param>
         /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
         public Split(String text, IText rgx, bool remBlank = true) : this(
-            new TextOf(text),
+            new LiveText(text),
             rgx,
             remBlank)
         { }
@@ -74,8 +66,9 @@ namespace Yaapii.Atoms.Text
         /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
         public Split(IText text, String rgx, bool remBlank = true) : this(
             text,
-            new TextOf(rgx),
-            remBlank)
+            new LiveText(rgx),
+            remBlank
+        )
         { }
 
         /// <summary>
@@ -84,32 +77,24 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">text to split</param>
         /// <param name="rgx">regex to use for splitting</param>
         /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
-        public Split(IText text, IText rgx, bool remBlank = true)
-        {
-            this._origin = text;
-            this._regex = rgx;
-            this._remBlank = remBlank;
-        }
+        public Split(IText text, IText rgx, bool remBlank = true) : base(() =>
+            {
+                IEnumerable<string> split =
+                    new LiveMany<string>(
+                        new Regex(rgx.AsString()).Split(text.AsString())
+                    );
 
-        public IEnumerator<String> GetEnumerator()
-        {
-            var splitted =
-                new Many.Of<String>(
-                    new Regex(this._regex.AsString()).Split(this._origin.AsString()));
-
-            return 
-                this._remBlank 
-                ? new Filtered<String>(
-                    //(str) => !String.IsNullOrEmpty(str),
-                    (str) => !String.IsNullOrWhiteSpace(str),
-                    splitted).GetEnumerator() 
-                : splitted.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+                return
+                    remBlank ?
+                    new Filtered<String>(
+                        (str) => !String.IsNullOrWhiteSpace(str),
+                        split
+                    )
+                    :
+                    split;
+            },
+            false
+        )
+        { }
     }
 }
-#pragma warning restore NoGetOrSet // No Statics

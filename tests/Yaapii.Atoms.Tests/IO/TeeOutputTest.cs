@@ -21,12 +21,10 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -40,7 +38,7 @@ namespace Yaapii.Atoms.IO.Tests
             String content = "Hello, товарищ!";
 
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new TeeInput(
                         new InputOf(content),
                         new TeeOutput(

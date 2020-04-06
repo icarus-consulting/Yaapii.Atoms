@@ -32,20 +32,21 @@ namespace Yaapii.Atoms.Enumerable
     /// A reversed <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="X">type of items in enumerable</typeparam>
-    public sealed class Reversed<X> : Many.Envelope<X>
+    public sealed class Reversed<X> : ManyEnvelope<X>
     {
         /// <summary>
         /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
         public Reversed(IEnumerable<X> src) : base(() =>
-            new Many.Live<X>(() =>
-                {
-                    var lst = src.ToList<X>();
-                    lst.Reverse();
-                    return lst.GetEnumerator();
-                })
-            )
+            new LiveMany<X>(() =>
+            {
+                var lst = src.ToList<X>();
+                lst.Reverse();
+                return lst.GetEnumerator();
+            }),
+            false
+        )
         { }
     }
 }

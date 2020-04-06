@@ -26,7 +26,7 @@ using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -75,13 +75,16 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void ReadsRealUrl()
         {
-            Assert.True(
-                new TextOf(
-                        new StickyInput(
-                            new InputOf(
-                                new Url("http://www.google.de")))
-                ).AsString().Contains("<html"),
-            "Can't fetch text page from the URL");
+            Assert.Contains(
+                "<html",
+                new LiveText(
+                    new StickyInput(
+                        new InputOf(
+                            new Url("http://www.google.de")
+                        )
+                    )
+                ).AsString()
+            );
         }
 
         [Fact]

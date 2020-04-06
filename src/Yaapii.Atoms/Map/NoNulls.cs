@@ -23,7 +23,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Yaapii.Atoms.Lookup
+namespace Yaapii.Atoms.Map
 {
     /// <summary>
     /// A decorator of map that tolerates no NULLs.

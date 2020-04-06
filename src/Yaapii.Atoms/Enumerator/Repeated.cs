@@ -38,16 +38,16 @@ namespace Yaapii.Atoms.Enumerator
     /// <typeparam name="T">type of element to repeat</typeparam>
     public sealed class Repeated<T> : IEnumerator<T>
     {
-        private readonly IScalar<T> _element;
-        private int _left;
-        private int _max;
+        private readonly IScalar<T> element;
+        private int left;
+        private int max;
 
         /// <summary>
         /// <see cref="IEnumerator{T}"/> which repeats one value multiple times.
         /// </summary>
         /// <param name="elm">element to repeat</param>
         /// <param name="max">how often to repeat</param>
-        public Repeated(T elm, int max) : this(new ScalarOf<T>(elm), max)
+        public Repeated(T elm, int max) : this(new LiveScalar<T>(elm), max)
         { }
 
         /// <summary>
@@ -57,21 +57,21 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="max">how often to repeat</param>
         public Repeated(IScalar<T> elm, int max)
         {
-            this._element = elm;
-            this._max = max;
-            this._left = max;
+            this.element = elm;
+            this.max = max;
+            this.left = max;
         }
 
         public Boolean MoveNext()
         {
-            if (this._left == 0) return false;
-            --this._left;
+            if (this.left == 0) return false;
+            --this.left;
             return true;
         }
 
         public void Reset()
         {
-            this._left = this._max; 
+            this.left = this.max; 
         }
 
         public void Dispose()
@@ -83,7 +83,7 @@ namespace Yaapii.Atoms.Enumerator
         {
             get
             {
-                return this._element.Value();
+                return this.element.Value();
             }
         }
 

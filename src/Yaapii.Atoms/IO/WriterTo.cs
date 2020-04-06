@@ -84,7 +84,7 @@ namespace Yaapii.Atoms.IO
         /// A <see cref="StreamWriter"/> to a <see cref="IOutput"/> returned by a <see cref="Func{StreamWriter}"/>.
         /// </summary>
         /// <param name="fnc">Function returning a streamwriter</param>
-        private WriterTo(Func<StreamWriter> fnc) : this(new ScalarOf<StreamWriter>(fnc))
+        private WriterTo(Func<StreamWriter> fnc) : this(new LiveScalar<StreamWriter>(fnc))
         { }
 
         /// <summary>

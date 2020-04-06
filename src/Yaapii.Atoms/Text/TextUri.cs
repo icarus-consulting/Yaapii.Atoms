@@ -21,32 +21,34 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A text as a <see cref="Uri"/>
     /// </summary>
-    public sealed class TextUri : IScalar<Uri>
+    public sealed class UriOf : IScalar<Uri>
     {
-        private readonly IText source;
+        private readonly Sticky<Uri> source;
 
         /// <summary>
         /// A <see cref="string"/> as a <see cref="Uri"/>
         /// </summary>
         /// <param name="url">url as a string</param>
-        public TextUri(String url) : this(new TextOf(url))
+        public UriOf(String url) : this(new LiveText(url))
         { }
 
         /// <summary>
         /// A <see cref="IText"/> as a <see cref="Uri"/>
         /// </summary>
         /// <param name="url">uri as text</param>
-        public TextUri(IText url)
+        public UriOf(IText url)
         {
-            this.source = url;
+            this.source = 
+                new Sticky<Uri>(
+                    new UriBuilder(url.AsString()).Uri
+                );
         }
 
         /// <summary>
@@ -55,7 +57,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>the uri</returns>
         public Uri Value()
         {
-            return new UriBuilder(this.source.AsString()).Uri;
+            return this.source.Value();
         }
     }
 }

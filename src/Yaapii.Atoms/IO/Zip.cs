@@ -24,7 +24,7 @@ using System.IO.Compression;
 using Yaapii.Atoms;
 using Yaapii.Atoms.Error;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 ///<summary>
 ///Zips all Files in a Directory

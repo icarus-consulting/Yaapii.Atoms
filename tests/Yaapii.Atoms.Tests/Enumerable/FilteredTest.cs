@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
 using Yaapii.Atoms.Func;
 using System.Linq;
 using Yaapii.Atoms.Tests;
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                     new Filtered<string>(
 
                         input => input.Length > 1,
-                        new Many.Of<String>())
+                        new ManyOf<String>())
                     ).Value() == 0,
                 "cannot filter empty enumerable");
         }

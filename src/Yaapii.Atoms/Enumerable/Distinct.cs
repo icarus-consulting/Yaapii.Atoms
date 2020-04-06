@@ -28,14 +28,14 @@ namespace Yaapii.Atoms.Enumerable
     /// Multiple enumerables merged together, so that every entry is unique.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Distinct<T> : Many.Envelope<T>
+    public sealed class Distinct<T> : ManyEnvelope<T>
     {
         /// <summary>
         /// The distinct elements of one or multiple Enumerables.
         /// </summary>
         /// <param name="enumerables">enumerables to get distinct elements from</param>
         public Distinct(params IEnumerable<T>[] enumerables) : this(
-            new Many.Live<IEnumerable<T>>(enumerables)
+            new LiveMany<IEnumerable<T>>(enumerables)
         )
         { }
 
@@ -44,14 +44,15 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="enumerables">enumerables to get distinct elements from</param>
         public Distinct(IEnumerable<IEnumerable<T>> enumerables) : base(() =>
-            new Many.Live<T>(() =>
+            new LiveMany<T>(() =>
                 new Enumerator.Distinct<T>(
                     new Mapped<IEnumerable<T>, IEnumerator<T>>(
                         (e) => e.GetEnumerator(),
                         enumerables
-                        )
                     )
                 )
+            ),
+            false
         )
         { }
     }

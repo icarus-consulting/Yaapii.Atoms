@@ -25,8 +25,8 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Lists;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new Joined(
                     ", ",
                     new Skipped<string>(
-                        new Many.Of<string>("one", "two", "three", "four"),
+                        new ManyOf<string>("one", "two", "three", "four"),
                         2)
                     ).AsString() == "three, four");
         }

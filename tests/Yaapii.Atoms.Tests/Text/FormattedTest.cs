@@ -25,7 +25,7 @@ using System.Globalization;
 using Xunit;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class FormattedTest
     {
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Formatted(
-                    new TextOf("{0}. Number as {1}"),
+                    new LiveText("{0}. Number as {1}"),
                     1,
                     "string"
                 ).AsString().Contains("1. Number as string"),
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.Throws<FormatException>(
                 () => new Formatted(
-                    new TextOf("Formatted { {0} }"),
+                    new LiveText("Formatted { {0} }"),
                     new string[] {"invalid" }
             ).AsString());
         }
@@ -68,8 +68,8 @@ namespace Yaapii.Atoms.Text.Tests
                 new Formatted(
                     new TextOf("{0}. Formatted as {1}"),
                     new String[] { "1", "txt" }
-                ).AsString() == "1. Formatted as txt",
-                "Can't format a text with a collection");
+                ).AsString() == "1. Formatted as txt"
+            );
         }
 
         [Fact]
@@ -85,12 +85,13 @@ namespace Yaapii.Atoms.Text.Tests
         [Fact]
         public void FormatsWithstringAndText()
         {
-            Assert.True(
+            Assert.Equal(
+                "This is a FormattedText test",
                 new Formatted(
                     "{0} is a {1} test",
-                    new TextOf("This"),
-                    new TextOf("FormattedText")
-                ).AsString() == "This is a FormattedText test"
+                    new LiveText("This"),
+                    new LiveText("FormattedText")
+                ).AsString()
             );
                     
         }

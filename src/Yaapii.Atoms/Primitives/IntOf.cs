@@ -21,19 +21,17 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="int"/> of a text.
     /// </summary>
     public sealed class IntOf : IScalar<Int32>
     {
-        private readonly IScalar<int> _val;
+        private readonly Sticky<int> val;
 
         /// <summary>
         /// A int out of a <see cref="string"/> using invariant culture.
@@ -62,16 +60,16 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">a int as a string</param>
         /// <param name="culture">culture of the string</param>
-        public IntOf(IText text, CultureInfo culture) : this(new ScalarOf<int>(() => Convert.ToInt32(text.AsString(), culture.NumberFormat)))
+        public IntOf(IText text, CultureInfo culture) : this(new Sticky<int>(() => Convert.ToInt32(text.AsString(), culture.NumberFormat)))
         { }
 
         /// <summary>
         /// A int out of a scalar.
         /// </summary>
         /// <param name="value">the scalar returning the float</param>
-        public IntOf(IScalar<int> value)
+        private IntOf(IScalar<int> value)
         {
-            _val = value;
+            val = new Sticky<int>(value);
         }
 
         /// <summary>
@@ -80,7 +78,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>the int</returns>
         public Int32 Value()
         {
-            return _val.Value();
+            return val.Value();
         }
     }
 }

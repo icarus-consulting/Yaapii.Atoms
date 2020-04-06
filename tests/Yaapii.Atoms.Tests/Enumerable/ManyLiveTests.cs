@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 using Xunit;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Many.Live<string>(
+                    new LiveMany<string>(
                         "a", "b", "c"
                     )
                 ).Value() == 3,
@@ -45,26 +45,26 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Many.Live<IText>(
-                        new TextOf("a"), new TextOf("b"), new TextOf("c")
+                    new LiveMany<IText>(
+                        new LiveText("a"), 
+                        new LiveText("b"), 
+                        new LiveText("c")
                     )
-                ).Value() == 3,
-            "Can't convert objects to enumerable");
+                ).Value() == 3
+            );
         }
 
         [Fact]
         public void SensesChanges()
         {
             var lst = new List<string>();
-            var length =
-                new LengthOf(
-                    new Many.Live<string>(() =>
-                    {
-                        lst.Add("something");
-                        return lst;
-                    })
-                );
-            Assert.NotEqual(length.Value(), length.Value());
+            var live =
+                new LiveMany<string>(() =>
+                {
+                    lst.Add("something");
+                    return lst;
+                });
+            Assert.NotEqual(new LengthOf(live).Value(), new LengthOf(live).Value());
         }
     }
 

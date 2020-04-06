@@ -25,7 +25,7 @@ using System.IO;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.Bytes;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -90,13 +90,13 @@ namespace Yaapii.Atoms.IO.Tests
             var baos = new MemoryStream();
             String content = "Hello, товарищ!";
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new TeeInput(
                         new InputOf(content),
                         new OutputTo(baos)
                     )
-                ).AsString() == Encoding.UTF8.GetString(baos.ToArray()),
-                "Can't copy Input to Output and return Input");
+                ).AsString() == Encoding.UTF8.GetString(baos.ToArray())
+            );
         }
 
         [Fact]
@@ -111,7 +111,7 @@ namespace Yaapii.Atoms.IO.Tests
 
 
             var str = 
-                new TextOf(
+                new LiveText(
                     new BytesOf(
                         new TeeInput(
                             "Hello, друг!", 
@@ -121,7 +121,7 @@ namespace Yaapii.Atoms.IO.Tests
                 ).AsString();
 
             Assert.True(
-                str == new TextOf(new InputOf(new Uri(path))).AsString(),
+                str == new LiveText(new InputOf(new Uri(path))).AsString(),
                 "Can't copy Input to File and return content");
         }
     }

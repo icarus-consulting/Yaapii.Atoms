@@ -21,10 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Func;
 
 namespace Yaapii.Atoms.Func.Tests
 {
@@ -37,10 +34,10 @@ namespace Yaapii.Atoms.Func.Tests
                 (first, second) => new Random().Next()
             );
 
-            Assert.True(
+            Assert.Equal(
+                func.Apply(true, true) + func.Apply(true, true),
                 func.Apply(true, true) + func.Apply(true, true)
-                == func.Apply(true, true) + func.Apply(true, true),
-                "cannot cache results");
+            );
         }
     }
 }

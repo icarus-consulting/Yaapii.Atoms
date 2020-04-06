@@ -22,7 +22,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
 
 #pragma warning disable NoProperties // No Properties
 #pragma warning disable CS1591
@@ -34,8 +34,8 @@ namespace Yaapii.Atoms.Enumerator
     /// <typeparam name="T">type of elements</typeparam>
     public sealed class Joined<T> : IEnumerator<T>
     {
-        private readonly IEnumerable<IEnumerator<T>> _list;
-        private readonly Queue<IEnumerator<T>> _buffer;
+        private readonly IEnumerable<IEnumerator<T>> list;
+        private readonly Queue<IEnumerator<T>> buffer;
 
         /// <summary>
         /// Multiple <see cref="IEnumerator{T}"/> joined together.
@@ -50,15 +50,15 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="items">enumerables to join together</param>
         public Joined(IEnumerable<IEnumerator<T>> items)
         {
-            this._list = items;
-            this._buffer = new Queue<IEnumerator<T>>(items);
+            this.list = items;
+            this.buffer = new Queue<IEnumerator<T>>(items);
         }
 
         public T Current
         {
             get
             {
-                return this._buffer.Peek().Current;
+                return this.buffer.Peek().Current;
             }
         }
 
@@ -77,21 +77,21 @@ namespace Yaapii.Atoms.Enumerator
 
         public bool MoveNext()
         {
-            while(this._buffer.Count > 0 && !this._buffer.Peek().MoveNext())
+            while(this.buffer.Count > 0 && !this.buffer.Peek().MoveNext())
             {
-                this._buffer.Dequeue();
+                this.buffer.Dequeue();
             }
 
-            return this._buffer.Count > 0;
+            return this.buffer.Count > 0;
         }
 
         public void Reset()
         {
-            this._buffer.Clear();
-            var e = this._list.GetEnumerator();
+            this.buffer.Clear();
+            var e = this.list.GetEnumerator();
             while (e.MoveNext())
             {
-                this._buffer.Enqueue(e.Current);
+                this.buffer.Enqueue(e.Current);
             }
             
         }

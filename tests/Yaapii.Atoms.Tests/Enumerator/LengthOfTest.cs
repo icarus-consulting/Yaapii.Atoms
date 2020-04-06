@@ -26,7 +26,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Many.Of<int>(1, 2, 3, 4, 5).GetEnumerator()).Value() == 5,
+                    new ManyOf<int>(1, 2, 3, 4, 5).GetEnumerator()).Value() == 5,
                 "cannot count items");
         }
     }

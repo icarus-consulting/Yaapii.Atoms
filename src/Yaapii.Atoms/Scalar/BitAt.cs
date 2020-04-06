@@ -6,12 +6,8 @@ namespace Yaapii.Atoms.Scalar
     /// <summary>
     /// The value of a particular bit.
     /// </summary>
-    public sealed class BitAt : IScalar<bool>
+    public sealed class BitAt : ScalarEnvelope<bool>
     {
-        private readonly IBytes bytes;
-        private readonly int position;
-        private readonly Func<IBytes, bool> fallback;
-
         /// <summary>
         /// The value of the first bit.
         /// </summary>
@@ -126,47 +122,29 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="position">Zero based bit index in the bytes</param>
         /// <param name="fallback">Result in case of an error</param>
         public BitAt(IBytes bytes, int position, Func<IBytes, bool> fallback)
-        {
-            this.bytes = bytes;
-            this.position = position;
-            this.fallback = fallback;
-        }
-
-        public bool Value()
-        {
-            bool result;
-
-            FailWhenIndexIsNegative();
-            var byteIndex = this.position / 8;
-            var bitInByteIndex = this.position % 8;
-            var bytes = this.bytes.AsBytes();
-            if (this.CanGetBit(bytes, byteIndex))
+            : base(() =>
             {
-                var relevantByte = bytes[byteIndex];
-                result = (relevantByte & (1 << bitInByteIndex)) > 0;
-            }
-            else
-            {
-                result =
-                    this.fallback.Invoke(
-                        this.bytes
-                    );
-            }
+                if (position < 0)
+                {
+                    throw new ArgumentException($"The position must be non-negative but is {position}");
+                }
 
-            return result;
-        }
+                bool result;
+                var byteIndex = position / 8;
+                var bitInByteIndex = position % 8;
+                var bytesArr = bytes.AsBytes();
+                if (bytesArr.Length > byteIndex)
+                {
+                    var relevantByte = bytesArr[byteIndex];
+                    result = (relevantByte & (1 << bitInByteIndex)) > 0;
+                }
+                else
+                {
+                    result = fallback.Invoke(bytes);
+                }
 
-        private void FailWhenIndexIsNegative()
-        {
-            if (this.position < 0)
-            {
-                throw new ArgumentException($"The position must be non-negative but is {this.position}");
-            }
-        }
-
-        private bool CanGetBit(byte[] bytes, int byteIndex)
-        {
-            return bytes.Length > byteIndex;
-        }
+                return result;
+            })
+        { }
     }
 }

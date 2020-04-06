@@ -20,14 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
@@ -36,13 +31,17 @@ namespace Yaapii.Atoms.Enumerator.Tests
         [Fact]
         public void Filters()
         {
-            Assert.True(
+            Assert.Equal(
+                "Hello World",
                 new Joined(" ",
-                    new Many.Of<string>(
+                    new ManyOf<string>(
                         new Filtered<string>(
-                            new Many.Of<string>("Hello", "cruel", "World").GetEnumerator(),
-                                (str) => str != "cruel"))).AsString() == "Hello World",
-                "cannot filter enumerator contents");
+                            new ManyOf<string>("Hello", "cruel", "World").GetEnumerator(),
+                            (str) => str != "cruel"
+                        )
+                    )
+                ).AsString()
+             );
         }
     }
 }

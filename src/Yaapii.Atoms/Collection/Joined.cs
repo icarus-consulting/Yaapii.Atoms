@@ -35,9 +35,11 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="list">List of collections to join together</param>
         public Joined(params IEnumerable<T>[] list) : base(
-            () => new CollectionOf<T>(
+            () => new LiveCollection<T>(
                     new Enumerable.Joined<T>(list)
-             ))
+            ),
+            false
+        )
         { }
 
     }

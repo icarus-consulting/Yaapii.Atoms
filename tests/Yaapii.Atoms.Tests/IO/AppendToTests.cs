@@ -24,7 +24,7 @@ using System;
 using System.IO;
 using Xunit;
 using Yaapii.Atoms.Bytes;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.IO.Tests
             lengthOf.Value();
 
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new InputAsBytes(
                         new InputOf(new Uri(file))))
                 .AsString() == (txt + txt),
@@ -78,11 +78,11 @@ namespace Yaapii.Atoms.IO.Tests
             lengthOf.Value();
 
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new InputAsBytes(
                         new InputOf(file)))
-                .AsString() == txt + txt,
-                "Can't append file content");
+                .AsString() == txt + txt
+            );
         }
 
         [Fact]

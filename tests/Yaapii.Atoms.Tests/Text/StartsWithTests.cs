@@ -22,7 +22,7 @@
 
 using Xunit;
 
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class StartsWithTests
     {
@@ -31,8 +31,8 @@ namespace Yaapii.Atoms.Text.Tests
         {
             var x =
                 new StartsWith(
-                    new TextOf("Im an text with a really good end!"),
-                    new TextOf("Im a")
+                    new LiveText("Im an text with a really good end!"),
+                    new LiveText("Im a")
                 );
             Assert.True(x.Value());
         }
@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             var x =
                 new StartsWith(
-                    new TextOf("Im a text with a really good end!"),
+                    new LiveText("Im a text with a really good end!"),
                     "Im a"
                 );
             Assert.True(x.Value());
@@ -53,8 +53,8 @@ namespace Yaapii.Atoms.Text.Tests
         {
             var x =
                 new StartsWith(
-                    new TextOf("Im a text with a really good end!"),
-                    new TextOf("m an")
+                    new LiveText("Im a text with a really good end!"),
+                    new LiveText("m an")
                 );
             Assert.False(x.Value());
         }

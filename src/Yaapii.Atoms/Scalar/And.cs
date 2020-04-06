@@ -23,14 +23,12 @@ namespace Yaapii.Atoms.Scalar
 {
     /// <summary> Logical and. Returns true if all contents return true. </summary>
     /// <typeparam name="In"></typeparam>
-    public sealed class And<In> : IScalar<Boolean>
+    public sealed class And<In> : ScalarEnvelope<Boolean>
     {
-        private IEnumerable<IScalar<Boolean>> _enumerable;
-
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), new Many.Of<In>(src))
+        public And(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), new ManyOf<In>(src))
         { }
 
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
@@ -42,7 +40,7 @@ namespace Yaapii.Atoms.Scalar
         /// <summary> Logical and. Returns true if all calls to <see cref="IFunc{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(IFunc<In, Boolean> func, params In[] src) : this(func, new Many.Of<In>(src))
+        public And(IFunc<In, Boolean> func, params In[] src) : this(func, new ManyOf<In>(src))
         { }
 
         /// <summary> ctor </summary>
@@ -52,7 +50,7 @@ namespace Yaapii.Atoms.Scalar
             this(
                 new Enumerable.Mapped<In, IScalar<Boolean>>(
                     new FuncOf<In, IScalar<Boolean>>((item) =>
-                        new ScalarOf<Boolean>(func.Invoke(item))),
+                        new LiveScalar<Boolean>(func.Invoke(item))),
                     src
                 )
             )
@@ -68,56 +66,49 @@ namespace Yaapii.Atoms.Scalar
         /// <summary></summary>
         /// <param name="src"></param>
         private And(IEnumerable<IScalar<Boolean>> src)
-        {
-            _enumerable = src;
-        }
-
-        /// <summary> Get the value. </summary>
-        /// <returns> the value </returns>
-        public Boolean Value()
-        {
-            Boolean result = true;
-            foreach (IScalar<Boolean> item in this._enumerable)
+            : base(() =>
             {
-                if (!item.Value())
+                Boolean result = true;
+                foreach (IScalar<Boolean> item in src)
                 {
-                    result = false;
-                    break;
+                    if (!item.Value())
+                    {
+                        result = false;
+                        break;
+                    }
                 }
-            }
-            return result;
-        }
+                return result;
+            })
+        { }
     }
 
     /// <summary> Logical and. Returns true if all contents return true. </summary>
-    public sealed class And : IScalar<bool>
+    public sealed class And : ScalarEnvelope<bool>
     {
-        private readonly IEnumerable<IScalar<bool>> _enumerable;
-
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="funcs"> the conditions to apply </param>
-        public And(params Func<bool>[] funcs) : this(new Many.Of<System.Func<bool>>(funcs))
+        public And(params Func<bool>[] funcs) : this(new ManyOf<System.Func<bool>>(funcs))
         { }
 
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{Out}"/> were true. </summary>
         /// <param name="funcs"> the conditions to apply </param>
-        public And(Many.Of<Func<bool>> funcs) : this(
+        public And(ManyOf<Func<bool>> funcs) : this(
             new Mapped<Func<bool>, IScalar<bool>>(
-                func => new ScalarOf<bool>(func),
+                func => new LiveScalar<bool>(func),
                 funcs))
         { }
 
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         public And(params IScalar<Boolean>[] src) : this(
-            new Many.Of<IScalar<Boolean>>(src))
+            new ManyOf<IScalar<Boolean>>(src))
         { }
 
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         public And(params bool[] src) : this(
             new Mapped<bool, IScalar<bool>>(
-                tBool => new ScalarOf<bool>(tBool),
+                tBool => new LiveScalar<bool>(tBool),
                 src))
         { }
 
@@ -125,31 +116,26 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="src"> list of items </param>
         public And(IEnumerable<bool> src) : this(
             new Mapped<bool, IScalar<bool>>(
-                tBool => new ScalarOf<bool>(tBool),
+                tBool => new LiveScalar<bool>(tBool),
                 src))
         { }
 
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         public And(IEnumerable<IScalar<Boolean>> src)
-        {
-            this._enumerable = src;
-        }
-
-        /// <summary> Get the value. </summary>
-        /// <returns> the value </returns>
-        public bool Value()
-        {
-            Boolean result = true;
-            foreach (IScalar<Boolean> item in this._enumerable)
+            : base(() =>
             {
-                if (!item.Value())
+                Boolean result = true;
+                foreach (IScalar<Boolean> item in src)
                 {
-                    result = false;
-                    break;
+                    if (!item.Value())
+                    {
+                        result = false;
+                        break;
+                    }
                 }
-            }
-            return result;
-        }
+                return result;
+            })
+        { }
     }
 }

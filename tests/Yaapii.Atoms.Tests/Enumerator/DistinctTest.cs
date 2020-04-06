@@ -26,7 +26,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
@@ -37,11 +37,11 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
                 new Enumerable.LengthOf(
-                    new Many.Of<string>(
+                    new ManyOf<string>(
                         new Distinct<string>(
-                            new Many.Of<IEnumerator<string>>(
-                                new Many.Of<string>("A", "B", "F").GetEnumerator(),
-                                new Many.Of<string>("A", "E", "F").GetEnumerator()
+                            new ManyOf<IEnumerator<string>>(
+                                new ManyOf<string>("A", "B", "F").GetEnumerator(),
+                                new ManyOf<string>("A", "E", "F").GetEnumerator()
                             )
                         )
                     )
@@ -53,9 +53,9 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             var e =
                 new Distinct<string>(
-                    new Many.Of<IEnumerator<string>>(
-                        new Many.Of<string>("A").GetEnumerator(),
-                        new Many.Of<string>("A").GetEnumerator()
+                    new ManyOf<IEnumerator<string>>(
+                        new ManyOf<string>("A").GetEnumerator(),
+                        new ManyOf<string>("A").GetEnumerator()
                     )
                 );
 
@@ -70,11 +70,11 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
                 new Enumerable.LengthOf(
-                    new Many.Of<string>(
+                    new ManyOf<string>(
                         new Distinct<string>(
-                            new Many.Of<IEnumerator<string>>(
-                                new Many.Of<string>().GetEnumerator(),
-                                new Many.Of<string>().GetEnumerator()
+                            new ManyOf<IEnumerator<string>>(
+                                new ManyOf<string>().GetEnumerator(),
+                                new ManyOf<string>().GetEnumerator()
                             )
                         )
                     )

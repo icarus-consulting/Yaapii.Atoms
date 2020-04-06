@@ -33,18 +33,8 @@ namespace Yaapii.Atoms.Enumerable
     /// Pass a filter function which will applied to all items, similar to List{T}.Where(...) in LinQ
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Filtered<T> : Many.Envelope<T>
+    public sealed class Filtered<T> : ManyEnvelope<T>
     {
-        /// <summary>
-        /// the enumerable to filter
-        /// </summary>
-        private readonly IEnumerable<T> enumerable;
-
-        /// <summary>
-        /// filter function
-        /// </summary>
-        private readonly Func<T, Boolean> func;
-
         /// <summary>
         /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
         /// </summary>
@@ -54,9 +44,9 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="items">other items to filter</param>
         public Filtered(Func<T, Boolean> fnc, T item1, T item2, params T[] items) : this(
             fnc,
-            new Many.Live<T>(() => 
+            new LiveMany<T>(() => 
                 new Joined<T>(
-                    new Many.Live<T>(
+                    new LiveMany<T>(
                         item1,
                         item2
                     ),
@@ -72,17 +62,15 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
         public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src) : base(() =>
-            new Many.Live<T>(() =>
+            new LiveMany<T>(() =>
                 new Enumerator.Filtered<T>(
                     src.GetEnumerator(),
                     fnc
                 )
-            )
+            ),
+            false
         )
-        {
-            this.enumerable = src;
-            this.func = fnc;
-        }
+        { }
     }
 }
 #pragma warning restore NoGetOrSet // No Statics

@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Enumerable
     /// Multiple <see cref="IEnumerable{T}"/> joined together.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Joined<T> : Many.Envelope<T>
+    public sealed class Joined<T> : ManyEnvelope<T>
     {
         /// <summary>
         /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
         public Joined(IEnumerable<T> lst, params T[] items) : this(
-            new Many.Live<IEnumerable<T>>(lst, new Many.Live<T>(items)))
+            new LiveMany<IEnumerable<T>>(lst, new LiveMany<T>(items)))
         { }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="items">enumerables to join</param>
         public Joined(params IEnumerable<T>[] items) : this(
-            new Many.Live<IEnumerable<T>>(items)
+            new LiveMany<IEnumerable<T>>(items)
         )
         { }
 
@@ -57,7 +57,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="items">enumerables to join</param>
         public Joined(IEnumerable<IEnumerable<T>> items) : base(() => 
-            new Many.Live<T>(() =>
+            new LiveMany<T>(() =>
                 new Enumerator.Joined<T>(
                     new Mapped<IEnumerable<T>, IEnumerator<T>>(//Map the content of list: Get every enumerator out of it and build one whole enumerator from it
                         new StickyFunc<IEnumerable<T>, IEnumerator<T>>( //Sticky Gate
@@ -68,7 +68,8 @@ namespace Yaapii.Atoms.Enumerable
                         items //List with enumerators
                     )
                 )
-            )
+            ),
+            false
         )
         { }
     }

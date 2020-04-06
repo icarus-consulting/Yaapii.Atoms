@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Enumerator;
@@ -38,12 +38,15 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             var skipped =
                 new List<string>(
-                    new Many.Of<string>(
+                    new ManyOf<string>(
                         new Skipped<string>(
-                            new Many.Of<string>(
+                            new ManyOf<string>(
                                 "one", "two", "three", "four"
                             ).GetEnumerator(),
-                        2)));
+                            2
+                        )
+                    )
+                );
 
             Assert.True(new LengthOf(skipped.GetEnumerator()).Value() == 2, "cannot skip elements");
             Assert.False(skipped.Contains("one"), "cannot skip elements");
@@ -57,12 +60,13 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.False(
                 new Skipped<string>(
-                    new Many.Of<string>(
+                    new ManyOf<string>(
                         "one", "two"
                     ).GetEnumerator(),
                     2
                 ).MoveNext(),
-                "enumerates more elements than exist");
+                "enumerates more elements than exist"
+            );
         }
     }
 }

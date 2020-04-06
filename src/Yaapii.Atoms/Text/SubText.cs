@@ -23,23 +23,19 @@
 using System;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// Extracted subtext from a <see cref="IText"/>.
     /// </summary>
-    public sealed class SubText : IText
+    public sealed class SubText : TextEnvelope
     {
-        private readonly IText _origin;
-        private readonly IScalar<Int32> _start;
-        private readonly IScalar<Int32> _length;
-
         /// <summary>
         /// Extracted subtext from a <see cref="string"/>.
         /// </summary>
         /// <param name="text">text to extreact from</param>
         /// <param name="strt">where to start</param>
-        public SubText(String text, int strt) : this(new TextOf(text), strt)
+        public SubText(String text, int strt) : this(new LiveText(text), strt)
         { }
 
         /// <summary>
@@ -48,7 +44,11 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start</param>
         /// <param name="end">where to end</param>
-        public SubText(String text, int strt, int end) : this(new TextOf(text), strt, end)
+        public SubText(String text, int strt, int end) : this(
+            new LiveText(text), 
+            strt, 
+            end
+        )
         { }
 
         /// <summary>
@@ -56,7 +56,11 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start</param>
-        public SubText(IText text, int strt) : this(text, new ScalarOf<Int32>(strt), new ScalarOf<Int32>(() => text.AsString().Length - strt))
+        public SubText(IText text, int strt) : this(
+            text, 
+            new LiveScalar<Int32>(strt), 
+            new LiveScalar<Int32>(() => text.AsString().Length - strt)
+        )
         { }
 
         /// <summary>
@@ -65,17 +69,12 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start</param>
         /// <param name="end">where to end</param>
-        public SubText(IText text, int strt, int end) : this(text, new ScalarOf<Int32>(strt), new ScalarOf<Int32>(end))
+        public SubText(IText text, int strt, int end) : this(
+            text, 
+            new LiveScalar<Int32>(strt), 
+            new LiveScalar<Int32>(end)
+        )
         { }
-
-        ///// <summary>
-        ///// Extracted subtext from a <see cref="IText"/>.
-        ///// </summary>
-        ///// <param name="text">text to extract from</param>
-        ///// <param name="strt">where to start encapsulated in a scalar</param>
-        ///// <param name="end">where to end encapsulated in a scalar</param>
-        //public SubText(IText text, IScalar<Int32> strt, IScalar<Int32> end) : this(text, strt, end)
-        //{ }
 
         /// <summary>
         /// Extracted subtext from a <see cref="IText"/>.
@@ -83,44 +82,35 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start encapsulated in a scalar</param>
         /// <param name="len">where to end encapsulated in a scalar</param>
-        public SubText(IText text, ScalarOf<Int32> strt,
-            ScalarOf<Int32> len)
-        {
-            this._origin = text;
-            this._start = strt;
-            this._length = len;
-        }
+        /// <param name="live">should the object build its value live, every time it is used?</param>
+        public SubText(
+            IText text,
+            LiveScalar<Int32> strt,
+            LiveScalar<Int32> len,
+            bool live = false
+        ) : this(
+            text,
+            () => strt.Value(),
+            () => len.Value()
+        )
+        { }
 
         /// <summary>
-        /// Get content as a string.
+        /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            return this._origin.AsString().Substring(
-                this._start.Value(),
-                this._length.Value()
-            );
-        }
-
-        /// <summary>
-        /// Compare to other text.
-        /// </summary>
-        /// <param name="text">text to compare to</param>
-        /// <returns>-1 if this is lower, 0 if equal, 1 if this is higher</returns>
-        public int CompareTo(IText text)
-        {
-            return this.AsString().CompareTo(text.AsString());
-        }
-
-        /// <summary>
-        /// Check for equality.
-        /// </summary>
-        /// <param name="text">other object to compare to</param>
-        /// <returns>true if equal.</returns>
-        public bool Equals(IText text)
-        {
-            return this.CompareTo(text) == 0;
-        }
+        /// <param name="text">text to extract from</param>
+        /// <param name="strt">where to start encapsulated in a scalar</param>
+        /// <param name="len">where to end encapsulated in a scalar</param>
+        public SubText(IText text, Func<Int32> strt, Func<Int32> len) : base(() =>
+            {
+                return 
+                    text.AsString().Substring(
+                        strt(),
+                        len()
+                    );
+            },
+            false
+        )
+        { }
     }
 }

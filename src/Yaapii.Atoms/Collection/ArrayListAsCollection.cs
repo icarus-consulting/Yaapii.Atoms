@@ -37,15 +37,16 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="src">source ArrayList</param>
         public ArrayListAsCollection(ArrayList src) : base(new Scalar.Sticky<ICollection<object>>(() =>
-        {
-            var blocking = new BlockingCollection<object>();
-            foreach (var lst in src)
             {
-                new Each<object>(item => blocking.Add(item), lst).Invoke();
-            }
-
-            return new CollectionOf<object>(blocking.ToArray());
-        }))
+                var blocking = new BlockingCollection<object>();
+                foreach (var lst in src)
+                {
+                    new Each<object>(item => blocking.Add(item), lst).Invoke();
+                }
+                return new LiveCollection<object>(blocking.ToArray());
+            }),
+            false
+        )
         { }
     }
 }

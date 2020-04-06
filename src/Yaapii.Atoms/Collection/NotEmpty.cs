@@ -47,17 +47,19 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="origin">Collection</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(ICollection<T> origin, Exception ex) : base(new ScalarOf<ICollection<T>>(
-            () =>
-            {
-                new FailPrecise(
-                    new FailEmpty<T>(
-                        origin),
-                    ex).Go();
-
-                return origin;
-            }
-            ))
+        public NotEmpty(ICollection<T> origin, Exception ex) : base(
+            new LiveScalar<ICollection<T>>(
+                () =>
+                {
+                    new FailPrecise(
+                        new FailEmpty<T>(
+                            origin),
+                        ex).Go();
+                    return origin;
+                }
+            ),
+            false
+        )
         { }
     }
 }

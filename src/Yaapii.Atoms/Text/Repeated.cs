@@ -24,22 +24,22 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> repeated multiple times.
     /// </summary>
-    public sealed class Repeated : IText
+    public sealed class Repeated : TextEnvelope
     {
-        private readonly IText _origin;
-        private readonly int _count;
-
         /// <summary>
         /// A <see cref="IText"/>  repeated multiple times.
         /// </summary>
         /// <param name="text">text to repeat</param>
         /// <param name="count">how often to repeat</param>
-        public Repeated(String text, int count) : this(new TextOf(text), count)
+        public Repeated(String text, int count) : this(
+            new LiveText(text), 
+            count
+        )
         { }
 
         /// <summary>
@@ -47,44 +47,17 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to repeat</param>
         /// <param name="count">how often to repeat</param>
-        public Repeated(IText text, int count)
-        {
-            this._origin = text;
-            this._count = count;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            StringBuilder output = new StringBuilder();
-            for (int cnt = 0; cnt < this._count; ++cnt)
+        public Repeated(IText text, int count) : base(() =>
             {
-                output.Append(this._origin.AsString());
-            }
-            return output.ToString();
-        }
-
-        /// <summary>
-        /// Compare to other text.
-        /// </summary>
-        /// <param name="text">text to compare to</param>
-        /// <returns>-1 if this is lower, 0 if equal, 1 if this is higher</returns>
-        public int CompareTo(IText text)
-        {
-            return this.AsString().CompareTo(text.AsString());
-        }
-
-        /// <summary>
-        /// Check for equality.
-        /// </summary>
-        /// <param name="other">other object to compare to</param>
-        /// <returns>true if equal.</returns>
-        public bool Equals(IText other)
-        {
-            return CompareTo(other) == 0;
-        }
+                StringBuilder output = new StringBuilder();
+                for (int cnt = 0; cnt < count; ++cnt)
+                {
+                    output.Append(text.AsString());
+                }
+                return output.ToString();
+            },
+            false
+        )
+        { }
     }
 }

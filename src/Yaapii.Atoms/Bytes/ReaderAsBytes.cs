@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="rdr">the reader</param>
         /// <param name="enc">encoding of the reader</param>
         /// <param name="max">maximum buffer size</param>
-        public ReaderAsBytes(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(new ScalarOf<StreamReader>(rdr), enc, max)
+        public ReaderAsBytes(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(new LiveScalar<StreamReader>(rdr), enc, max)
         { }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="rdr">function to retrieve the reader</param>
         /// <param name="enc">encoding of the reader</param>
         /// <param name="max">maximum buffer size</param>
-        private ReaderAsBytes(Func<StreamReader> rdr, Encoding enc, int max = 16 << 10) : this(new ScalarOf<StreamReader>(rdr), enc, max)
+        private ReaderAsBytes(Func<StreamReader> rdr, Encoding enc, int max = 16 << 10) : this(new LiveScalar<StreamReader>(rdr), enc, max)
         { }
 
         /// <summary>

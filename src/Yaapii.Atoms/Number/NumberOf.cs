@@ -23,7 +23,7 @@
 using System;
 using System.Globalization;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Number
 {
@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Number
         /// <param name="str">The string</param>
         /// <param name="provider">a number format provider</param>
         public NumberOf(string str, IScalar<IFormatProvider> provider) : this(
-            new ScalarOf<long>(
+            new LiveScalar<long>(
                 () =>
                 {
                     try

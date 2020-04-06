@@ -26,7 +26,7 @@ using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.IO.Tests;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Bytes.Tests
 {
@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Bytes.Tests
                         new InputAsBytes(
                             new InputOf(
                                 new BytesOf(
-                                    new TextOf(content)
+                                    new LiveText(content)
                                 )
                             )
                         ).AsBytes()) == content,
@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Bytes.Tests
                         new InputAsBytes(
                             new InputOf(
                                 new BytesOf(
-                                    new TextOf(content)
+                                    new LiveText(content)
                                 )
                             ),
                             2

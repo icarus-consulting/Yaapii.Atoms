@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Enumerable
     /// </summary>
     /// <typeparam name="In">type of input elements</typeparam>
     /// <typeparam name="Out">type of mapped elements</typeparam>
-    public sealed class Mapped<In, Out> : Many.Envelope<Out>
+    public sealed class Mapped<In, Out> : ManyEnvelope<Out>
     {
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="fnc">function used to map</param>
         public Mapped(IFunc<In, Out> fnc, params In[] src) : this(
             fnc, 
-            new Many.Live<In>(src)
+            new LiveMany<In>(src)
         )
         { }
 
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="fnc">function used to map</param>
         public Mapped(IBiFunc<In, int, Out> fnc, params In[] src) : this(
             fnc, 
-            new Many.Live<In>(src)
+            new LiveMany<In>(src)
         )
         { }
 
@@ -75,7 +75,8 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="fnc">function used to map</param>
         public Mapped(Func<In, int, Out> fnc, IEnumerable<In> src) : this(
             new BiFuncOf<In, int, Out>(fnc),
-            src)
+            src
+        )
         { }
 
         /// <summary>
@@ -92,10 +93,11 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src) : base(() =>
-            new Many.Live<Out>(() =>
+            new LiveMany<Out>(() =>
                 new Enumerator.Mapped<In, Out>(
                     src.GetEnumerator(), fnc)
-            )
+            ),
+            false
         )
         { }
     }

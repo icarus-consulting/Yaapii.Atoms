@@ -22,14 +22,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Error;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Text;
-using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Error;
+using Yaapii.Atoms.Fail;
+using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Enumerator
 {
@@ -42,17 +39,17 @@ namespace Yaapii.Atoms.Enumerator
         /// <summary>
         /// enumerator to get item from
         /// </summary>
-        private readonly IEnumerator<T> _src;
+        private readonly IEnumerator<T> src;
 
         /// <summary>
         /// fallback function for alternative value
         /// </summary>
-        private readonly IBiFunc<Exception, IEnumerable<T>, T> _fallback;
+        private readonly IBiFunc<Exception, IEnumerable<T>, T> fallback;
 
         /// <summary>
         /// position of the item
         /// </summary>
-        private readonly int _pos;
+        private readonly int pos;
 
         /// <summary>
         /// First element in a <see cref="IEnumerable{T}"/>.
@@ -67,7 +64,8 @@ namespace Yaapii.Atoms.Enumerator
                     {
                         throw
                             new NoSuchElementException(
-                                new Formatted("Cannot get item: {0}", ex.Message).AsString());
+                                new Formatted("Cannot get item: {0}", ex.Message).AsString()
+                            );
                     })
                 )
         { }
@@ -142,9 +140,9 @@ namespace Yaapii.Atoms.Enumerator
             IBiFunc<Exception, IEnumerable<T>, T> fbk
         )
         {
-            this._pos = pos;
-            this._src = src;
-            this._fallback = fbk;
+            this.pos = pos;
+            this.src = src;
+            this.fallback = fbk;
         }
 
         /// <summary>
@@ -157,33 +155,33 @@ namespace Yaapii.Atoms.Enumerator
             try
             {
                 new FailPrecise(
-                    new FailWhen(this._pos < 0),
+                    new FailWhen(this.pos < 0),
                     new UnsupportedOperationException(
                         new Formatted(
                             "The position must be non-negative but is {0}",
-                            this._pos
+                            this.pos
                         ).AsString()
                     )
                 ).Go();
 
                 new FailPrecise(
-                    new FailWhen(!this._src.MoveNext()),
+                    new FailWhen(!this.src.MoveNext()),
                     new NoSuchElementException(
                 "The enumerable is empty")).Go(); //will never get out
 
-                for (int cur = 1; cur <= this._pos; ++cur)
+                for (int cur = 1; cur <= this.pos; ++cur)
                 {
-                    if(!this._src.MoveNext())
+                    if(!this.src.MoveNext())
                     {
-                        throw new InvalidOperationException($"Cannot get item {this._pos} - The enumerable has only {cur} items.");
+                        throw new InvalidOperationException($"Cannot get item {this.pos} - The enumerable has only {cur} items.");
                     }
                 }
 
-                ret = this._src.Current;
+                ret = this.src.Current;
             }
             catch (Exception ex)
             {
-                ret = this._fallback.Invoke(ex, new Many.Of<T>(this._src));
+                ret = this.fallback.Invoke(ex, new ManyOf<T>(this.src));
             }
             return ret;
 

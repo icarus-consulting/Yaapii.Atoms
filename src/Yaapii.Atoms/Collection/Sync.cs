@@ -41,14 +41,14 @@ namespace Yaapii.Atoms.Collection
         /// ctor
         /// </summary>
         /// <param name="syncRoot"></param>
-        public Sync(object syncRoot) : this(syncRoot, new CollectionOf<T>())
+        public Sync(object syncRoot) : this(syncRoot, new LiveCollection<T>())
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="items">items to make collection from</param>
-        public Sync(params T[] items) : this(new CollectionOf<T>(items))
+        public Sync(params T[] items) : this(new LiveCollection<T>(items))
         { }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="col"></param>
         public Sync(object syncRoot, ICollection<T> col) : base(
             new Scalar.Sync<ICollection<T>>(
-                new ScalarOf<ICollection<T>>(() =>
+                new LiveScalar<ICollection<T>>(() =>
                 {
                     lock (syncRoot)
                     {
@@ -77,7 +77,10 @@ namespace Yaapii.Atoms.Collection
                         return tmp;
                     }
                 }
-        )))
+                )
+            ),
+            false
+        )
         { }
     }
 }

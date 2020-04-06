@@ -23,19 +23,19 @@
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Lookup
+namespace Yaapii.Atoms.Map
 {
     /// <summary>
     /// Joined map.
     /// Since 9.9.2019
     /// </summary>
-    public sealed class Joined : Map.Envelope
+    public sealed class Joined : MapEnvelope
     {
         /// <summary>
         /// Joined map.
         /// </summary>
         public Joined(IKvp kvp, IDictionary<string, string> origin) : this(
-            new Map.Live(kvp), origin
+            new LiveMap(kvp), origin
         )
         { }
 
@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Lookup
         /// Joined map.
         /// </summary>
         public Joined(IMapInput input, IDictionary<string, string> origin) : this(
-            new Map.Live(input), origin
+            new LiveMap(input), origin
         )
         { }
 
@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Lookup
         /// Joined map.
         /// </summary>
         public Joined(params IDictionary<string, string>[] dicts) : this(
-            new Many.Live<IDictionary<string, string>>(dicts)
+            new LiveMany<IDictionary<string, string>>(dicts)
         )
         { }
 
@@ -62,86 +62,41 @@ namespace Yaapii.Atoms.Lookup
             () =>
             new LazyDict(
                 new Enumerable.Joined<IKvp>(
-                    new Mapped<IDictionary<string, string>, IEnumerable<IKvp>>(dict => 
-                        new Mapped<KeyValuePair<string, string>, IKvp>(entry => 
-                            new Kvp.Of(entry.Key, entry.Value),
+                    new Mapped<IDictionary<string, string>, IEnumerable<IKvp>>(dict =>
+                        new Mapped<KeyValuePair<string, string>, IKvp>(entry =>
+                            new KvpOf(entry.Key, entry.Value),
                                 dict
                             ),
                             dicts
                     )
                 )
-            )
+            ),
+            false
         )
         { }
-
-        /// <summary>
-        /// A live joined map.
-        /// </summary>
-        public sealed class Live : Map.LiveEnvelope
-        {
-            /// <summary>
-            /// Joined map.
-            /// </summary>
-            public Live(IKvp kvp, IDictionary<string, string> origin) : this(
-                new Map.Live(kvp), origin
-            )
-            { }
-
-            /// <summary>
-            /// Joined map.
-            /// </summary>
-            public Live(IMapInput input, IDictionary<string, string> origin) : this(
-                new Map.Live(input), origin
-            )
-            { }
-
-            /// <summary>
-            /// Joined map.
-            /// </summary>
-            public Live(params IDictionary<string, string>[] dicts) : this(
-                new Many.Live<IDictionary<string, string>>(dicts)
-            )
-            { }
-
-            /// <summary>
-            /// Joined map.
-            /// </summary>
-            public Live(IEnumerable<IDictionary<string, string>> dicts) : base(() =>
-                new Map.Live(
-                    new Enumerable.Joined<IKvp>(
-                        new Mapped<IDictionary<string, string>, IEnumerable<IKvp>>(dict =>
-                            new Mapped<KeyValuePair<string, string>, IKvp>(entry =>
-                                new Kvp.Of(entry.Key, entry.Value),
-                                    dict
-                                ),
-                                dicts
-                        )
-                    )
-                )
-            )
-            { }
-        }
     }
 
     /// <summary>
     /// Joined map.
     /// Since 9.9.2019
     /// </summary>
-    public sealed class Joined<Value> : Map.Envelope<Value>
+    public sealed class Joined<Value> : MapEnvelope<Value>
     {
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(IKvp<Value> kvp, IDictionary<string, Value> origin) : this(
-            new Map.Of<Value>(kvp), origin
+        public Joined(IKvp<Value> kvp, IDictionary<string, Value> origin, bool live = false) : this(
+            live,
+            new MapOf<Value>(kvp), origin
         )
         { }
 
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(IMapInput<Value> input, IDictionary<string, Value> origin) : this(
-            new Map.Of<Value>(input), origin
+        public Joined(IMapInput<Value> input, IDictionary<string, Value> origin, bool live = false) : this(
+            live,
+            new MapOf<Value>(input), origin
         )
         { }
 
@@ -149,26 +104,37 @@ namespace Yaapii.Atoms.Lookup
         /// Joined map.
         /// </summary>
         public Joined(params IDictionary<string, Value>[] dicts) : this(
-            new Many.Live<IDictionary<string, Value>>(dicts)
+            false,
+            dicts
         )
         { }
 
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(IEnumerable<IDictionary<string, Value>> dicts) : base(
+        public Joined(bool live, params IDictionary<string, Value>[] dicts) : this(
+            new LiveMany<IDictionary<string, Value>>(dicts),
+            live
+        )
+        { }
+
+        /// <summary>
+        /// Joined map.
+        /// </summary>
+        public Joined(IEnumerable<IDictionary<string, Value>> dicts, bool live = false) : base(
             () =>
                 new LazyDict<Value>(
                     new Enumerable.Joined<IKvp<Value>>(
                         new Mapped<IDictionary<string, Value>, IEnumerable<IKvp<Value>>>(
                             dict => new Mapped<KeyValuePair<string, Value>, IKvp<Value>>(
-                                entry => new Kvp.Of<Value>(entry.Key, entry.Value),
+                                entry => new KvpOf<Value>(entry.Key, entry.Value),
                                 dict
                             ),
                             dicts
                         )
                     )
-                )
+                ),
+            live
         )
         { }
     }
@@ -177,21 +143,32 @@ namespace Yaapii.Atoms.Lookup
     /// Joined map.
     /// Since 9.9.2019
     /// </summary>
-    public sealed class Joined<Key, Value> : Map.Envelope<Key, Value>
+    public sealed class Joined<Key, Value> : MapEnvelope<Key, Value>
     {
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(IKvp<Key, Value> kvp, IDictionary<Key, Value> origin) : this(
-            new Map.Of<Key, Value>(kvp), origin
+        public Joined(IKvp<Key, Value> kvp, IDictionary<Key, Value> origin, bool live = false) : this(
+            live,
+            new MapOf<Key, Value>(kvp), origin
         )
         { }
 
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(IMapInput<Key, Value> input, IDictionary<Key, Value> origin) : this(
-            new Map.Of<Key, Value>(input), origin
+        public Joined(IMapInput<Key, Value> input, IDictionary<Key, Value> origin, bool live = false) : this(
+            live,
+            new MapOf<Key, Value>(input), origin
+        )
+        { }
+
+        /// <summary>
+        /// Joined map.
+        /// </summary>
+        public Joined(bool live, params IDictionary<Key, Value>[] dicts) : this(
+            new LiveMany<IDictionary<Key, Value>>(dicts),
+            live
         )
         { }
 
@@ -199,26 +176,28 @@ namespace Yaapii.Atoms.Lookup
         /// Joined map.
         /// </summary>
         public Joined(params IDictionary<Key, Value>[] dicts) : this(
-            new Many.Live<IDictionary<Key, Value>>(dicts)
+            new LiveMany<IDictionary<Key, Value>>(dicts),
+            false
         )
         { }
 
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(IEnumerable<IDictionary<Key, Value>> dicts) : base(
+        public Joined(IEnumerable<IDictionary<Key, Value>> dicts, bool live = false) : base(
             () =>
-            new LazyDict<Key, Value>(
+                new LazyDict<Key, Value>(
                 new Enumerable.Joined<IKvp<Key, Value>>(
                     new Mapped<IDictionary<Key, Value>, IEnumerable<IKvp<Key, Value>>>(
                         dict => new Mapped<KeyValuePair<Key, Value>, IKvp<Key, Value>>(
-                            entry => new Kvp.Of<Key, Value>(entry.Key, entry.Value),
+                            entry => new KvpOf<Key, Value>(entry.Key, entry.Value),
                             dict
                         ),
                         dicts
                     )
                 )
-            )
+            ),
+            live
         )
         { }
     }

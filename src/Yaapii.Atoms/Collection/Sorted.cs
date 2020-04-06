@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
 
 namespace Yaapii.Atoms.Collection
 {
@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Collection
         /// A list with default sorting (ascending)
         /// </summary>
         /// <param name="src">the source enumerable</param>
-        public Sorted(params T[] src) : this(new ListOf<T>(src))
+        public Sorted(params T[] src) : this(new LiveList<T>(src))
         { }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="src">the source enumerable</param>
         public Sorted(IEnumerable<T> src) : this(
             Comparer<T>.Default,
-            new CollectionOf<T>(src))
+            new LiveCollection<T>(src))
         { }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="cmp">the comparer</param>
         /// <param name="src">the source enumerable</param>
-        public Sorted(Comparer<T> cmp, params T[] src) : this(cmp, new CollectionOf<T>(src))
+        public Sorted(Comparer<T> cmp, params T[] src) : this(cmp, new LiveCollection<T>(src))
         { }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="cmp">the comparer</param>
         /// <param name="src">the source enumerator</param>
-        public Sorted(Comparer<T> cmp, IEnumerator<T> src) : this(cmp, new CollectionOf<T>(src))
+        public Sorted(Comparer<T> cmp, IEnumerator<T> src) : this(cmp, new LiveCollection<T>(src))
         { }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="cmp">the comparer</param>
         /// <param name="src">the source enumerable</param>
-        public Sorted(Comparer<T> cmp, IEnumerable<T> src) : this(cmp, new CollectionOf<T>(src))
+        public Sorted(Comparer<T> cmp, IEnumerable<T> src) : this(cmp, new LiveCollection<T>(src))
         { }
 
         /// <summary>
@@ -81,8 +81,11 @@ namespace Yaapii.Atoms.Collection
         /// <param name="src">the source collection</param>
         public Sorted(Comparer<T> cmp, ICollection<T> src) : base(
             () =>
-                new CollectionOf<T>(
-                    new Enumerator.Sorted<T>(cmp, src.GetEnumerator())))
+                new LiveCollection<T>(
+                    new Enumerator.Sorted<T>(cmp, src.GetEnumerator())
+                ),
+            false
+        )
         { }
     }
 }

@@ -21,9 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Error
 {
@@ -32,7 +30,7 @@ namespace Yaapii.Atoms.Error
     /// </summary>
     public sealed class FailAlways : IFail
     {
-        private readonly Exception _error;
+        private readonly Func<Exception> error;
 
         /// <summary>
         /// Fail always with <see cref="System.Exception"/> with the given message.
@@ -45,16 +43,23 @@ namespace Yaapii.Atoms.Error
         /// Fail always with <see cref="System.Exception"/> with the given message.
         /// </summary>
         /// <param name="msg">message to wrap in exception</param>
-        public FailAlways(IText msg) : this(new Exception(msg.AsString()))
+        public FailAlways(IText msg) : this(() => new Exception(msg.AsString()))
         { }
 
         /// <summary>
         /// Fail always with specified exception with the given message.
         /// </summary>
         /// <param name="error">ex to throw</param>
-        public FailAlways(Exception error)
+        private FailAlways(Exception error) : this(() => error)
+        { }
+
+        /// <summary>
+        /// Fail always with specified exception with the given message.
+        /// </summary>
+        /// <param name="error">ex to throw</param>
+        private FailAlways(Func<Exception> error)
         {
-            _error = error;
+            this.error = error;
         }
 
         /// <summary>
@@ -62,7 +67,7 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         public void Go()
         {
-            throw _error;
+            throw error();
         }
     }
 }

@@ -23,27 +23,25 @@
 using System;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// An <see cref="IText"/> without whitespaces / control characters or defined letters or a defined text on the left side.
     /// </summary>
-    public sealed class TrimmedLeft : IText
+    public sealed class TrimmedLeft : TextEnvelope
     {
-        private readonly IScalar<IText> trimmedText;
-
         /// <summary>
         /// A <see cref="string"/> trimmed (removed whitespaces) on the left side.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public TrimmedLeft(string text) : this(new TextOf(text))
+        public TrimmedLeft(string text) : this(new LiveText(text))
         { }
 
         /// <summary>
         /// An <see cref="IText"/> trimmed (removed whitespaces) on the left side.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public TrimmedLeft(IText text) : this(text, new ScalarOf<char[]>(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' }))
+        public TrimmedLeft(IText text) : this(text, new LiveScalar<char[]>(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' }))
         { }
 
         /// <summary>
@@ -51,7 +49,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        public TrimmedLeft(string text, char[] trimText) : this(new TextOf(text), trimText)
+        public TrimmedLeft(string text, char[] trimText) : this(new LiveText(text), trimText)
         { }
 
         /// <summary>
@@ -59,7 +57,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        public TrimmedLeft(IText text, char[] trimText) : this(text, new ScalarOf<char[]>(trimText))
+        public TrimmedLeft(IText text, char[] trimText) : this(text, new LiveScalar<char[]>(trimText))
         { }
 
         /// <summary>
@@ -67,13 +65,12 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        public TrimmedLeft(IText text, IScalar<char[]> trimText) : this(
-            new ScalarOf<IText>(
-                () =>
-                {
-                    return new TextOf(text.AsString().TrimStart(trimText.Value()));
-                }
-            )
+        public TrimmedLeft(IText text, IScalar<char[]> trimText) : base(
+            () =>
+            {
+                return text.AsString().TrimStart(trimText.Value());
+            },
+            false
         )
         { }
 
@@ -82,7 +79,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public TrimmedLeft(string text, string removeText) : this(new TextOf(text), new TextOf(removeText))
+        public TrimmedLeft(string text, string removeText) : this(new LiveText(text), new LiveText(removeText))
         { }
 
         /// <summary>
@@ -90,7 +87,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public TrimmedLeft(string text, IText removeText) : this(new TextOf(text), removeText)
+        public TrimmedLeft(string text, IText removeText) : this(new LiveText(text), removeText)
         { }
 
         /// <summary>
@@ -98,15 +95,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public TrimmedLeft(IText text, string removeText) : this(text, new TextOf(removeText))
-        { }
-
-        /// <summary>
-        /// An <see cref="IText"/> from which an <see cref="IText"/> is removed on the left side.
-        /// </summary>
-        /// <param name="text">text to trim</param>
-        /// <param name="removeText">text that is removed from the text</param>
-        public TrimmedLeft(IText text, IText removeText) : this(text, new ScalarOf<IText>(removeText))
+        public TrimmedLeft(IText text, string removeText) : this(text, new LiveText(removeText))
         { }
 
         /// <summary>
@@ -114,53 +103,45 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public TrimmedLeft(IText text, IScalar<IText> removeText) : this(
-            new ScalarOf<IText>(
-                () =>
-                {
-                    IText returnValue = text;
-                    var startsWith =
-                        text.AsString()
-                        .StartsWith(
-                            removeText.Value().AsString()
-                        );
-                    if (startsWith)
-                    {
-                        text = new TextOf(text.AsString().Remove(0, removeText.Value().AsString().Length));
-                        returnValue = text;
-                    }
-                    return returnValue;
-                }
-            )
+        public TrimmedLeft(IText text, IText removeText) : this(
+            text,
+            removeText,
+            false
         )
         { }
 
         /// <summary>
-        /// 
+        /// An <see cref="IText"/> from which an IScalar&lt;<see cref="IText"/>&gt; is removed on the left side.
         /// </summary>
-        /// <param name="text"></param>
-        private TrimmedLeft(IScalar<IText> text)
-        {
-            this.trimmedText = text;
-        }
+        /// <param name="text">text to trim</param>
+        /// <param name="removeText">text that is removed from the text</param>
+        /// <param name="ignoreCase">Trim by disregarding case.</param>
+        public TrimmedLeft(IText text, IText removeText, bool ignoreCase) : base(
+            () =>
+            {
+                string str = text.AsString();
+                string remove = removeText.AsString();
 
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            return this.trimmedText.Value().AsString();
-        }
-
-        /// <summary>
-        /// Check for equality.
-        /// </summary>
-        /// <param name="other">other object to compare to</param>
-        /// <returns>true if equal.</returns>
-        public bool Equals(IText other)
-        {
-            return this.AsString().Equals(other.AsString());
-        }
+                if (ignoreCase)
+                {
+                    var lower = str.ToLower();
+                    var remLower = remove.ToLower();
+                    if (lower.StartsWith(remLower))
+                    {
+                        str = str.Remove(0, remove.Length);
+                    }
+                }
+                else
+                {
+                    if (str.StartsWith(remove))
+                    {
+                        str = str.Remove(0, remove.Length);
+                    }
+                }
+                return str;
+            },
+            false
+        )
+        { }
     }
 }

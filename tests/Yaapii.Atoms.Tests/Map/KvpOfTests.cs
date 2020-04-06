@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.Lookup;
 
-namespace Yaapii.Atoms.Dict.Tests
+namespace Yaapii.Atoms.Map.Tests
 {
     public sealed class KvpOfTests
     {
@@ -13,7 +12,7 @@ namespace Yaapii.Atoms.Dict.Tests
         {
             Assert.Equal(
                 "value",
-                new Kvp.Of("key", () => "value").Value()
+                new KvpOf("key", () => "value").Value()
             );
         }
 
@@ -22,8 +21,20 @@ namespace Yaapii.Atoms.Dict.Tests
         {
             Assert.Equal(
                 "key",
-                new Kvp.Of("key", () => throw new ApplicationException()).Key()
+                new KvpOf("key", () => throw new ApplicationException()).Key()
             );
+        }
+
+        [Fact]
+        public void KnowsAboutBeingLazy()
+        {
+            Assert.True(new KvpOf("2", () => "4").IsLazy());
+        }
+
+        [Fact]
+        public void KnowsAboutBeingNotLazy()
+        {
+            Assert.False(new KvpOf("2", "4").IsLazy());
         }
 
         [Fact]
@@ -31,7 +42,7 @@ namespace Yaapii.Atoms.Dict.Tests
         {
             Assert.Equal(
                 1,
-                new Kvp.Of<int>("key", () => 1).Value()
+                new KvpOf<int>("key", () => 1).Value()
             );
         }
 
@@ -40,8 +51,20 @@ namespace Yaapii.Atoms.Dict.Tests
         {
             Assert.Equal(
                 "key",
-                new Kvp.Of<int>("key", () => throw new ApplicationException()).Key()
+                new KvpOf<int>("key", () => throw new ApplicationException()).Key()
             );
+        }
+
+        [Fact]
+        public void KnowsAboutBeingLazyValue()
+        {
+            Assert.True(new KvpOf<int>("2", () => 4).IsLazy());
+        }
+
+        [Fact]
+        public void KnowsAboutBeingNotLazyValue()
+        {
+            Assert.False(new KvpOf<int>("2", 4).IsLazy());
         }
 
         [Fact]
@@ -49,7 +72,7 @@ namespace Yaapii.Atoms.Dict.Tests
         {
             Assert.Equal(
                 1,
-                new Kvp.Of<int, int>(8, () => 1).Value()
+                new KvpOf<int, int>(8, () => 1).Value()
             );
         }
 
@@ -58,8 +81,20 @@ namespace Yaapii.Atoms.Dict.Tests
         {
             Assert.Equal(
                 8,
-                new Kvp.Of<int, int>(8, () => throw new ApplicationException()).Key()
+                new KvpOf<int, int>(8, () => throw new ApplicationException()).Key()
             );
+        }
+
+        [Fact]
+        public void KnowsAboutBeingLazyKeyValue()
+        {
+            Assert.True(new KvpOf<int, int>(2, () => 4).IsLazy());
+        }
+
+        [Fact]
+        public void KnowsAboutBeingNotLazyKeyValue()
+        {
+            Assert.False(new KvpOf<int, int>(2, 4).IsLazy());
         }
     }
 }

@@ -28,14 +28,14 @@ using Yaapii.Atoms.Scalar;
 
 #pragma warning disable CS1591
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A float out of text.
     /// </summary>
     public sealed class FloatOf : IScalar<float>
     {
-        private readonly IScalar<float> _val;
+        private readonly Sticky<float> val;
 
         /// <summary>
         /// A float out of a <see cref="string"/> using invariant culture.
@@ -64,12 +64,12 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">a float as a text</param>
         /// <param name="culture">a culture of the string</param>
-        public FloatOf(IText text, CultureInfo culture) : this(new ScalarOf<float>(() => float.Parse(text.AsString(), culture.NumberFormat)))
+        public FloatOf(IText text, CultureInfo culture) : this(new LiveScalar<float>(() => float.Parse(text.AsString(), culture.NumberFormat)))
         { }
 
         public FloatOf(IScalar<float> value)
         {
-            _val = value;
+            val = new Sticky<float>(value);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>the float</returns>
         public float Value()
         {
-            return _val.Value();
+            return val.Value();
         }
     }
 }

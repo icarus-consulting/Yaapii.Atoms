@@ -27,15 +27,15 @@ namespace Yaapii.Atoms.Enumerable.Tests
     public sealed class ReducedTest
     {
         [Fact]
-        public void SkipIterable()
+        public void Reduces()
         {
-            Assert.True(
-                new Reduced<int, int>(
-                    new Many.Of<int>(1, 1, 2, 2, 3, 4, 5, 6),
-                    0,
+            Assert.Equal(
+                24,
+                new Reduced<int>(
+                    new ManyOf<int>(0, 1, 1, 2, 2, 3, 4, 5, 6),
                     (first, second) => first + second
-                ).Value() == 24,
-            "cannot reduce enumerable");
+                ).Value()
+            );
         }
     }
 }

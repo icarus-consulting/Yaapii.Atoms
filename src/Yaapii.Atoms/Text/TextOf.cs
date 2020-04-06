@@ -26,18 +26,15 @@ using System.IO;
 using System.Text;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable MaxClassLength // Class length max
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> out of other objects.
     /// </summary>
-    public sealed class TextOf : IText
+    public sealed class TextOf : TextEnvelope
     {
-        private readonly Lazy<String> origin;
-
         /// <summary>
         /// A <see cref="IText"/> out of a int.
         /// </summary>
@@ -101,6 +98,7 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of a <see cref="Uri"/>.
         /// </summary>
         /// <param name="uri">a file <see cref="Uri"/></param>
+        /// <param name="encoding">encoding of the data at the uri</param>
         public TextOf(Uri uri, Encoding encoding) : this(new InputOf(uri), encoding)
         { }
 
@@ -254,11 +252,11 @@ namespace Yaapii.Atoms.Text
         /// <param name="bytes">A <see cref="IBytes"/> object</param>
         /// <param name="encoding"><see cref="Encoding"/> of the <see cref="IBytes"/> object</param>
         public TextOf(IBytes bytes, Encoding encoding) : this(
-            () => 
+            () =>
             {
                 var memoryStream = new MemoryStream(bytes.AsBytes());
                 return new StreamReader(memoryStream, encoding).ReadToEnd(); // removes the BOM from the Byte-Array
-            })
+        })
         { }
 
         /// <summary>
@@ -294,59 +292,8 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A <see cref="IText"/> out of encapsulating <see cref="IScalar{T}"/>.
         /// </summary>
-        /// <param name="scalar">scalar of a string</param>
-        public TextOf(Func<String> scalar)
-        {
-            this.origin = new Lazy<string>(scalar);
-        }
-
-        /// <summary>
-        /// Gives the text as a string.
-        /// </summary>
-        /// <returns></returns>
-        public String AsString()
-        {
-            return this.origin.Value;
-        }
-
-        /// <summary>
-        /// Compares to another text.
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public int CompareTo(IText text)
-        {
-            return this.AsString().CompareTo(text.AsString());
-        }
-
-        /// <summary>
-        /// Checks for equality
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            if (obj as IText == null) return false;
-            return this.AsString().CompareTo((obj as IText).AsString()) == 0;
-        }
-
-        /// <summary>
-        /// Checks for equality
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public bool Equals(IText text)
-        {
-            return Equals(text as object);
-        }
-
-        /// <summary>
-        /// Hashcode for this text
-        /// </summary>
-        /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        /// <param name="txt">scalar of a string</param>
+        public TextOf(Func<String> txt) : base(txt, false)
+        { }
     }
 }

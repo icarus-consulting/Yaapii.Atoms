@@ -21,61 +21,24 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// A <see cref="IText"/> whose contents have been replaced by another text.
     /// </summary>
-    public sealed class Replaced : IText
+    public sealed class Replaced : TextEnvelope
     {
-        private readonly IText _origin;
-        private readonly String _needle;
-        private readonly String _replacement;
-
         /// <summary>
         /// A <see cref="IText"/>  whose contents have been replaced by another text.
         /// </summary>
         /// <param name="text">text to replace contents in</param>
         /// <param name="find">part to replace</param>
         /// <param name="replace">replacement to insert</param>
-        public Replaced(IText text, String find, String replace)
-        {
-            this._origin = text;
-            this._needle = find;
-            this._replacement = replace;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            return this._origin.AsString().Replace(this._needle, this._replacement);
-        }
-
-        /// <summary>
-        /// Compare to other text.
-        /// </summary>
-        /// <param name="text">text to compare to</param>
-        /// <returns>-1 if this is lower, 0 if equal, 1 if this is higher</returns>
-        public int CompareTo(IText text)
-        {
-            return this.AsString().CompareTo(text.AsString());
-        }
-
-        /// <summary>
-        /// Check for equality.
-        /// </summary>
-        /// <param name="text">other object to compare to</param>
-        /// <returns>true if equal.</returns>
-        public bool Equals(IText text)
-        {
-            return this.CompareTo(text) == 0;
-        }
-
+        public Replaced(IText text, String find, String replace) : base(() =>
+            text.AsString().Replace(find, replace), 
+            false
+        )
+        { }
     }
 }

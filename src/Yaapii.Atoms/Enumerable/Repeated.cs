@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
     /// </summary>
     /// <typeparam name="T">type of element to repeat</typeparam>
-    public sealed class Repeated<T> : Many.Envelope<T>
+    public sealed class Repeated<T> : ManyEnvelope<T>
     {
         /// <summary>
         /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="elm">function to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
         public Repeated(System.Func<T> elm, int cnt) :
-            this(new ScalarOf<T>(elm), cnt)
+            this(new LiveScalar<T>(elm), cnt)
         { }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="elm">element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
         public Repeated(T elm, int cnt) :
-            this(new ScalarOf<T>(elm), cnt)
+            this(new LiveScalar<T>(elm), cnt)
         { }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
         public Repeated(IScalar<T> elm, int cnt) : this(
-            elm, new ScalarOf<int>(cnt))
+            elm, new LiveScalar<int>(cnt))
         { }
 
         /// <summary>
@@ -66,9 +66,10 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
         public Repeated(IScalar<T> elm, IScalar<int> cnt) : base(() => 
-            new Many.Live<T>(() =>
+            new LiveMany<T>(() =>
                 new Enumerator.Repeated<T>(elm, cnt.Value())
-            )
+            ),
+            false
         )
         { }
     }

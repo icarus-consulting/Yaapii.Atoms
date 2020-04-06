@@ -22,7 +22,7 @@
 
 using Xunit;
 
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class IsWhitespaceTest
     {
@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new IsWhitespace(
-                    new TextOf("")
+                    new LiveText("")
                 ).Value(),
                 "Can't determine an empty text");
         }
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new IsWhitespace(
-                    new TextOf("  ")
+                    new LiveText("  ")
                 ).Value(),
                 "Can't determine an empty text with spaces");
         }
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.False(
                 new IsWhitespace(
-                    new TextOf("not empty")
+                    new LiveText("not empty")
                 ).Value(),
                 "Can't detect a nonempty text");
         }

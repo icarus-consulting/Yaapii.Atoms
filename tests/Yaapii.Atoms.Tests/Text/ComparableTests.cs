@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Yaapii.Atoms.Text.Tests
+namespace Yaapii.Atoms.Texts.Tests
 {
     public sealed class ComparableTests
     {
@@ -35,21 +35,21 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Comparable(
-                    new TextOf("Hallo Welt")
+                    new LiveText("Hallo Welt")
                 ).CompareTo(
-                    new TextOf("Tschüss Welt")
+                    new LiveText("Tschüss Welt")
                 ) <= -1
             );
         }
 
         [Fact]
-        public void SeesDIfferences()
+        public void SeesDifferences()
         {
             Assert.True(
                 new Comparable(
-                    new TextOf("Timm")
+                    new LiveText("Timm")
                 ).Equals(
-                    new TextOf("Jan-Peter")
+                    new LiveText("Jan-Peter")
                 ) == false
             );
         }
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Comparable(
-                    new TextOf("Timm")
+                    new LiveText("Timm")
                 ).AsString()
                 == "Timm"
             );

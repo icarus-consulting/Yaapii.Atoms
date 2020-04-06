@@ -29,7 +29,7 @@ using Yaapii.Atoms.Scalar;
 namespace Yaapii.Atoms.Collection
 {
     /// <summary>
-    /// Envelope for Collections. It enables ICollection classes frmo .Net to accept scalars.
+    /// Envelope for Collections. It enables ICollection classes from .Net to accept scalars.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public abstract class CollectionEnvelope<T> : ICollection<T>
@@ -37,29 +37,45 @@ namespace Yaapii.Atoms.Collection
         /// <summary>
         /// scalar of collection
         /// </summary>
-        private readonly IScalar<ICollection<T>> _col;
-        private readonly UnsupportedOperationException _readonlyError = new UnsupportedOperationException("The collection is readonly");
+        private readonly UnsupportedOperationException readonlyError = new UnsupportedOperationException("The collection is readonly");
+        private readonly IScalar<ICollection<T>> origin;
+        private readonly Scalar.Sticky<ICollection<T>> fixedOrigin;
+        private readonly bool live;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="fnc">Func which delivers <see cref="ICollection{T}"/></param>
-        public CollectionEnvelope(Func<ICollection<T>> fnc) : this(new ScalarOf<ICollection<T>>(fnc))
+        /// <param name="live">value is handled live or sticky</param>
+        public CollectionEnvelope(Func<ICollection<T>> fnc, bool live) : this(new LiveScalar<ICollection<T>>(fnc), live)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="slr">Scalar of ICollection</param>
-        public CollectionEnvelope(IScalar<ICollection<T>> slr)
+        /// <param name="live">value is handled live or sticky</param>
+        public CollectionEnvelope(IScalar<ICollection<T>> slr, bool live)
         {
-            this._col = slr;
+            this.origin = slr;
+            this.live = live;
+            this.fixedOrigin = new Scalar.Sticky<ICollection<T>>(
+                () =>
+                {
+                    var temp = new List<T>();
+                    foreach (var item in slr.Value())
+                    {
+                        temp.Add(item);
+                    }
+                    return temp;
+                }
+            );
         }
 
         /// <summary>
         /// Number of elements
         /// </summary>
-        public int Count => this._col.Value().Count;
+        public int Count => Val().Count;
 
         /// <summary>
         /// Is the collection readonly?
@@ -72,7 +88,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="item">Item to add</param>
         public void Add(T item)
         {
-            throw this._readonlyError;
+            throw this.readonlyError;
         }
 
         /// <summary>
@@ -80,7 +96,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         public void Clear()
         {
-            throw this._readonlyError;
+            throw this.readonlyError;
         }
 
         /// <summary>
@@ -90,7 +106,7 @@ namespace Yaapii.Atoms.Collection
         /// <returns>True if item is found</returns>
         public bool Contains(T item)
         {
-            return this._col.Value().Contains(item);
+            return Val().Contains(item);
         }
 
         /// <summary>
@@ -100,7 +116,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="arrayIndex">Index to start</param>
         public void CopyTo(T[] array, int arrayIndex)
         {
-            this._col.Value().CopyTo(array, arrayIndex);
+            Val().CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -109,7 +125,7 @@ namespace Yaapii.Atoms.Collection
         /// <returns></returns>
         public IEnumerator<T> GetEnumerator()
         {
-            return this._col.Value().GetEnumerator();
+            return Val().GetEnumerator();
         }
 
         /// <summary>
@@ -119,7 +135,7 @@ namespace Yaapii.Atoms.Collection
         /// <returns>True if success</returns>
         public bool Remove(T item)
         {
-            throw this._readonlyError;
+            throw this.readonlyError;
         }
 
         /// <summary>
@@ -128,7 +144,21 @@ namespace Yaapii.Atoms.Collection
         /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this._col.Value().GetEnumerator();
+            return Val().GetEnumerator();
+        }
+
+        private ICollection<T> Val()
+        {
+            ICollection<T> result;
+            if (this.live)
+            {
+                result = this.origin.Value();
+            }
+            else
+            {
+                result = this.fixedOrigin.Value();
+            }
+            return result;
         }
     }
 }

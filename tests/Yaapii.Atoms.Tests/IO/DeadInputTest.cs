@@ -20,12 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -35,7 +31,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void ReadsEmptyContent()
         {
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new DeadInput())
                 .AsString() == "",
                 "Can't read empty content");

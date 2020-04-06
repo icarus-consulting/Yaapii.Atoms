@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Enumerable;
 
@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         public void MaxAmongEmptyTest()
         {
             Assert.Throws<NoSuchElementException>(
-                () => new Max<int>(new Many.Of<int>()).Value());
+                () => new Max<int>(new ManyOf<int>()).Value());
         }
 
         [Fact]

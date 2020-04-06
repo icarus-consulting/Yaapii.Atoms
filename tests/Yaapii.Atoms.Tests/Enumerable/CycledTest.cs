@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Lists;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable.Tests
@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new ItemAt<string>(
                     new Cycled<string>(
-                        new Many.Of<string>(
+                        new ManyOf<string>(
                             "one", expected, "three"
                             )), 
                     7

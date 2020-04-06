@@ -34,30 +34,31 @@ namespace Yaapii.Atoms.Collection.Tests
         public void BehavesAsCollection()
         {
             new Joined<int>(
-                new Many.Of<int>(1, -1, 2, 0),
-                new Many.Of<int>(1, -1, 2, 0),
-                new Many.Of<int>(1, -1, 2, 0)
+                new ManyOf<int>(1, -1, 2, 0),
+                new ManyOf<int>(1, -1, 2, 0),
+                new ManyOf<int>(1, -1, 2, 0)
             );
         }
 
         [Fact]
         public void Size()
         {
-            Assert.True(
+            Assert.Equal(
+                8,
                 new Joined<String>(
-                    new Many.Of<string>("hello", "world", "друг"),
-                    new Many.Of<string>("how", "are", "you"),
-                    new Many.Of<string>("what's", "up")
-                ).Count == 8);
+                    new ManyOf<string>("hello", "world", "друг"),
+                    new ManyOf<string>("how", "are", "you"),
+                    new ManyOf<string>("what's", "up")
+                ).Count);
         }
 
         [Fact]
         public void SizeEmptyReturnZero()
         {
-            Assert.True(
+            Assert.Empty(
                 new Joined<String>(
                     new List<string>()
-                ).Count == 0);
+                ));
         }
 
         [Fact]
@@ -65,8 +66,8 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.NotEmpty(
                 new Joined<String>(
-                    new Many.Of<string>("1", "2"),
-                    new Many.Of<string>("3", "4")
+                    new ManyOf<string>("1", "2"),
+                    new ManyOf<string>("3", "4")
                 ));
         }
 
@@ -83,9 +84,9 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Throws<UnsupportedOperationException>(() =>
              new Joined<int>(
-                 new Many.Of<int>(1, 2),
-                 new Many.Of<int>(3, 4),
-                 new Many.Of<int>(5, 6)
+                 new ManyOf<int>(1, 2),
+                 new ManyOf<int>(3, 4),
+                 new ManyOf<int>(5, 6)
              ).Add(7));
         }
 
@@ -94,8 +95,8 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Throws<UnsupportedOperationException>(() =>
                 new Joined<String>(
-                    new Many.Of<string>("w", "a"),
-                    new Many.Of<string>("b", "c")
+                    new ManyOf<string>("w", "a"),
+                    new ManyOf<string>("b", "c")
                 ).Remove("t"));
         }
 
@@ -104,8 +105,8 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Throws<UnsupportedOperationException>(() =>
                 new Joined<int>(
-                    new Many.Of<int>(10),
-                    new Many.Of<int>(20)
+                    new ManyOf<int>(10),
+                    new ManyOf<int>(20)
                 ).Clear());
         }
     }

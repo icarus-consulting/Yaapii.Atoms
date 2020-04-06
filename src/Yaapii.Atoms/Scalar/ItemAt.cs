@@ -26,7 +26,7 @@ using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Enumerable
 {
@@ -34,13 +34,8 @@ namespace Yaapii.Atoms.Enumerable
     /// Element from position in a <see cref="IEnumerable{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of element</typeparam>
-    public sealed class ItemAt<T> : IScalar<T>
+    public sealed class ItemAt<T> : ScalarEnvelope<T>
     {
-        /// <summary>
-        /// position
-        /// </summary>
-        private readonly IScalar<T> saved;
-
         /// <summary>
         /// First element in a <see cref="IEnumerable{T}"/> with given Exception thrwon on fallback
         /// </summary>
@@ -187,30 +182,12 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback) : this(
-            new ScalarOf<T>(
-                () =>
-                {
-                    return new Enumerator.ItemAt<T>(
-                       source.GetEnumerator(), position, fallback
-                   ).Value();
-                }
-                )
+        public ItemAt(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+            : base(
+                () => new Enumerator.ItemAt<T>(
+                    source.GetEnumerator(), position, fallback
+                ).Value()
             )
         { }
-
-        internal ItemAt(IScalar<T> saved)
-        {
-            this.saved = new Scalar.Sticky<T>(saved);
-        }
-
-        /// <summary>
-        /// Get the item.
-        /// </summary>
-        /// <returns>the item</returns>
-        public T Value()
-        {
-            return saved.Value();
-        }
     }
 }

@@ -21,20 +21,17 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Text
+namespace Yaapii.Atoms.Texts
 {
     /// <summary>
     /// Text as long
     /// </summary>
     public sealed class LongOf : IScalar<long>
     {
-        private readonly IScalar<long> _val;
+        private readonly Sticky<long> val;
 
         /// <summary>
         /// A long out of a <see cref="string"/> using invariant culture.
@@ -63,7 +60,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">a string as a text</param>
         /// <param name="culture">culture of the text</param>
-        public LongOf(IText text, CultureInfo culture) : this(new ScalarOf<long>(() => Convert.ToInt64(text.AsString(), culture.NumberFormat)))
+        public LongOf(IText text, CultureInfo culture) : this(new Sticky<long>(() => Convert.ToInt64(text.AsString(), culture.NumberFormat)))
         { }
 
         /// <summary>
@@ -72,7 +69,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="value">a scalar of the number</param>
         public LongOf(IScalar<long> value)
         {
-            _val = value;
+            val = new Sticky<long>(value);
         }
 
         /// <summary>
@@ -81,7 +78,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>value as a long</returns>
         public long Value()
         {
-            return _val.Value();
+            return val.Value();
         }
     }
 }

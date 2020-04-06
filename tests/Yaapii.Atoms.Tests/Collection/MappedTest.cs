@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Collection.Tests
 {
@@ -38,20 +38,21 @@ namespace Yaapii.Atoms.Collection.Tests
                 0,
                 new Mapped<int, int>(
                     i => i + 1,
-                    new Many.Of<int>(-1, 1, 2)
+                    new ManyOf<int>(-1, 1, 2)
                 ));
         }
 
         [Fact]
         public void TransformsList()
         {
-
             Assert.Contains(
-                new TextOf("HELLO"),
-                new Mapped<String, IText>(
-                    input => new Upper(new TextOf(input)),
-                    new Many.Of<string>("hello", "world", "друг")
-                ));
+                "HELLO",
+                new Mapped<string, string>(
+                    input => 
+                    input.ToUpper(),
+                    new ManyOf<string>("hello", "world", "друг")
+                )
+            );
         }
 
         [Fact]
@@ -59,7 +60,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Empty(
                 new Mapped<String, IText>(
-                    input => new Upper(new TextOf(input)),
+                    input => new Upper(new LiveText(input)),
                     new List<string>()
                 ));
         }
