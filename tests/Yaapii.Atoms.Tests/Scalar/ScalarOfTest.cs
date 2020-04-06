@@ -22,13 +22,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Xunit;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Scalar.Tests
 {
-    public sealed class StickyTest
+    public sealed class ScalarOfTest
     {
         [Fact]
         public void CachesScalarResults()
