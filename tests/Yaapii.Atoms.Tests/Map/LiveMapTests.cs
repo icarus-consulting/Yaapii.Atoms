@@ -37,9 +37,13 @@ namespace Yaapii.Atoms.Map.Tests
             var one = new KeyValuePair<string, string>("hello", "map");
             var two = new KeyValuePair<string, string>("goodbye", "dictionary");
 
-            var m = new LiveMap(one, two);
+            var m =
+                new LiveMap(
+                    new KvpOf(() => one),
+                    new KvpOf(() => two)
+                );
 
-            Assert.True(m.Contains(one) && m.Contains(two));
+            Assert.True(m[one.Key] == one.Value && m[two.Key] == two.Value);
         }
 
         [Fact]
@@ -59,24 +63,12 @@ namespace Yaapii.Atoms.Map.Tests
         }
 
         [Fact]
-        public void MakesMapFromArraySequence()
-        {
-            Assert.Equal(
-                "B",
-                new LiveMap(
-                    "A", "B",
-                    "C", "D"
-                )["A"]
-            );
-        }
-
-        [Fact]
         public void MakesMapFromEnumerableSequence()
         {
             Assert.Equal(
                 "B",
                 new LiveMap(
-                    new ManyOf<string>(
+                    new LiveMany<string>(
                         "A", "B",
                         "C", "D"
                     )
@@ -89,7 +81,7 @@ namespace Yaapii.Atoms.Map.Tests
         {
             Assert.Throws<ArgumentException>(() =>
                 new LiveMap(
-                    new ManyOf<string>(
+                    new LiveMany<string>(
                         "A", "B",
                         "C"
                     )
@@ -105,14 +97,16 @@ namespace Yaapii.Atoms.Map.Tests
 
             var map =
                 new LiveMap<int, int>(
-                    new Repeated<KeyValuePair<int, int>>(
-                        new LiveScalar<KeyValuePair<int, int>>(() =>
-                            new KeyValuePair<int, int>(random.Next(), 1)),
-                            new LiveScalar<int>(() =>
-                            {
-                                Interlocked.Increment(ref size);
-                                return size;
-                            })
+                    new LiveMany<KeyValuePair<int, int>>(() =>
+                        new Repeated<KeyValuePair<int, int>>(
+                            new LiveScalar<KeyValuePair<int, int>>(() =>
+                                new KeyValuePair<int, int>(random.Next(), 1)),
+                                new LiveScalar<int>(() =>
+                                {
+                                    Interlocked.Increment(ref size);
+                                    return size;
+                                })
+                            )
                         )
                     );
 
@@ -128,9 +122,13 @@ namespace Yaapii.Atoms.Map.Tests
             var one = new KeyValuePair<string, int>("hello", 0);
             var two = new KeyValuePair<string, int>("goodbye", 1);
 
-            var m = new LiveMap<int>(one, two);
+            var m = 
+                new LiveMap<int>(
+                    new KvpOf<int>(() => one),
+                    new KvpOf<int>(() => two)
+                );
 
-            Assert.True(m.Contains(one) && m.Contains(two));
+            Assert.True(m[one.Key] == one.Value && m[two.Key] == two.Value);
         }
 
         [Fact]
@@ -138,9 +136,11 @@ namespace Yaapii.Atoms.Map.Tests
         {
             var m =
                 new LiveMap<int>(
-                    new ManyOf<KeyValuePair<string, int>>(
-                        new KeyValuePair<string, int>("hello", 0),
-                        new KeyValuePair<string, int>("world", 1)
+                    new LiveMany<KeyValuePair<string, int>>(() =>
+                        new ManyOf<KeyValuePair<string, int>>(
+                            new KeyValuePair<string, int>("hello", 0),
+                            new KeyValuePair<string, int>("world", 1)
+                        )
                     )
                 );
 
@@ -157,14 +157,16 @@ namespace Yaapii.Atoms.Map.Tests
 
             var map =
                 new LiveMap<int>(
-                    new Repeated<KeyValuePair<string, int>>(
-                        new LiveScalar<KeyValuePair<string, int>>(() =>
-                            new KeyValuePair<string, int>(random.Next() + "", 1)),
-                            new LiveScalar<int>(() =>
-                            {
-                                Interlocked.Increment(ref size);
-                                return size;
-                            })
+                    new LiveMany<KeyValuePair<string, int>>(() =>
+                        new Repeated<KeyValuePair<string, int>>(
+                            new LiveScalar<KeyValuePair<string, int>>(() =>
+                                new KeyValuePair<string, int>(random.Next() + "", 1)),
+                                new LiveScalar<int>(() =>
+                                {
+                                    Interlocked.Increment(ref size);
+                                    return size;
+                                })
+                            )
                         )
                     );
 
@@ -182,10 +184,11 @@ namespace Yaapii.Atoms.Map.Tests
 
             var m =
                 new LiveMap<string, string>(
-                    one, two
-                    );
+                    new KvpOf<string, string>(() => one),
+                    new KvpOf<string, string>(() => two)
+                );
 
-            Assert.True(m.Contains(one) && m.Contains(two));
+            Assert.True(m[one.Key] == one.Value && m[two.Key] == two.Value);
         }
 
         [Fact]
@@ -193,34 +196,24 @@ namespace Yaapii.Atoms.Map.Tests
         {
             var m =
                 new LiveMap<int, String>(
-                    new KeyValuePair<int, string>(0, "hello, "),
-                    new KeyValuePair<int, string>(1, "world!")
+                    new LiveMany<KeyValuePair<int, string>>(
+                        new KeyValuePair<int, string>(0, "hello, "),
+                        new KeyValuePair<int, string>(1, "world!")
+                    )
                 );
 
 
             Assert.True(m[0] == "hello, ");
             Assert.True(m[1] == "world!");
         }
-
-        [Fact]
-        public void MakesMapFromArraySequenceTypedKeyValue()
-        {
-            Assert.Equal(
-                "B",
-                new LiveMap(
-                    "A", "B",
-                    "C", "D"
-                )["A"]
-            );
-        }
-
+        
         [Fact]
         public void MakesMapFromEnumerableSequenceTypedKeyValue()
         {
             Assert.Equal(
                 "B",
                 new LiveMap(
-                    new ManyOf<string>(
+                    new LiveMany<string>(
                         "A", "B",
                         "C", "D"
                     )
@@ -233,7 +226,7 @@ namespace Yaapii.Atoms.Map.Tests
         {
             Assert.Throws<ArgumentException>(() =>
                 new LiveMap(
-                    new ManyOf<string>(
+                    new LiveMany<string>(
                         "A", "B",
                         "C"
                     )
@@ -249,14 +242,16 @@ namespace Yaapii.Atoms.Map.Tests
 
             var map =
                 new LiveMap<int, int>(
-                    new Repeated<KeyValuePair<int, int>>(
-                        new LiveScalar<KeyValuePair<int, int>>(() =>
-                            new KeyValuePair<int, int>(random.Next(), 1)),
-                            new LiveScalar<int>(() =>
-                            {
-                                Interlocked.Increment(ref size);
-                                return size;
-                            })
+                    new LiveMany<KeyValuePair<int, int>>(() =>
+                        new Repeated<KeyValuePair<int, int>>(
+                            new LiveScalar<KeyValuePair<int, int>>(() =>
+                                new KeyValuePair<int, int>(random.Next(), 1)),
+                                new LiveScalar<int>(() =>
+                                {
+                                    Interlocked.Increment(ref size);
+                                    return size;
+                                })
+                            )
                         )
                     );
 
