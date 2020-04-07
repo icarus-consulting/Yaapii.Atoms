@@ -20,49 +20,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.IO;
-using Yaapii.Atoms.IO;
+using System;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Bytes
 {
     /// <summary>
-    /// Input as bytes. Disposes input.
+    /// Bytes out of other objects that are reloaded on every call
     /// </summary>
-    public sealed class InputAsBytes : IBytes
+    public sealed class LiveBytes : IBytes
     {
-        private readonly IScalar<byte[]> bytes;
+        private readonly IScalar<IBytes> bytes;
 
         /// <summary>
-        /// Input as bytes.
+        /// Reloads the bytes input on every call
         /// </summary>
-        /// <param name="input">the input</param>
-        /// <param name="max">maximum buffer size</param>
-        public InputAsBytes(IInput input, int max = 16 << 10)
+        /// <param name="input">The input</param>
+        public LiveBytes(IInput input) : this(() => new BytesOf(input))
+        { }
+
+        /// <summary>
+        /// Relaods the bytes on every call
+        /// </summary>
+        /// <param name="bytes"></param>
+        public LiveBytes(Func<IBytes> bytes) : this(new LiveScalar<IBytes>(bytes))
+        { }
+
+        private LiveBytes(IScalar<IBytes> bytes)
         {
-            this.bytes = new Sticky<byte[]>(() =>
-            {
-                var baos = new MemoryStream();
-                byte[] output;
-                using (var source = input.Stream())
-                using (var stream = new TeeInput(new InputOf(source), new OutputTo(baos)).Stream())
-                {
-                    byte[] readBuffer = new byte[max];
-                    while ((stream.Read(readBuffer, 0, readBuffer.Length)) > 0)
-                    { }
-                    output = baos.ToArray();
-                }
-                return output;
-            });
+            this.bytes = bytes;
         }
 
-        /// <summary>
-        /// Get the content as byte array. (Self-Disposing)
-        /// </summary>
-        /// <returns>content as byte array</returns>
         public byte[] AsBytes()
         {
-            return this.bytes.Value();
+            return this.bytes.Value().AsBytes();
         }
     }
 }

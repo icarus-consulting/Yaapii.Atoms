@@ -179,14 +179,14 @@ namespace Yaapii.Atoms.Bytes
         /// Bytes out of function which returns a byte array.
         /// </summary>
         /// <param name="bytes">byte aray</param>
-        public BytesOf(Func<Byte[]> bytes) : this(new LiveScalar<Byte[]>(bytes))
+        public BytesOf(Func<Byte[]> bytes) : this(new Sticky<Byte[]>(bytes))
         { }
 
         /// <summary>
         /// Bytes out of byte array.
         /// </summary>
         /// <param name="bytes">byte aray</param>
-        public BytesOf(params Byte[] bytes) : this(new LiveScalar<Byte[]>(bytes))
+        public BytesOf(params Byte[] bytes) : this(new Sticky<Byte[]>(bytes))
         { }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Yaapii.Atoms.Bytes
         /// </summary>
         /// <param name="number">an int</param>
         public BytesOf(int number) : this(
-            new LiveScalar<Byte[]>(() =>
+            new Sticky<Byte[]>(() =>
                 BitConverter.GetBytes(number)
             )
         )
@@ -205,7 +205,7 @@ namespace Yaapii.Atoms.Bytes
         /// </summary>
         /// <param name="number">a long</param>
         public BytesOf(long number) : this(
-            new LiveScalar<Byte[]>(() =>
+            new Sticky<Byte[]>(() =>
                 BitConverter.GetBytes(number)
             )
         )
@@ -216,7 +216,7 @@ namespace Yaapii.Atoms.Bytes
         /// </summary>
         /// <param name="number">a float</param>
         public BytesOf(float number) : this(
-            new LiveScalar<Byte[]>(() =>
+            new Sticky<Byte[]>(() =>
                 BitConverter.GetBytes(number)
             )
         )
@@ -227,7 +227,7 @@ namespace Yaapii.Atoms.Bytes
         /// </summary>
         /// <param name="number">a double</param>
         public BytesOf(double number) : this(
-            new LiveScalar<Byte[]>(() =>
+            new Sticky<Byte[]>(() =>
                 BitConverter.GetBytes(number)
             )
         )

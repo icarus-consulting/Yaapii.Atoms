@@ -22,6 +22,7 @@
 
 using System;
 using System.Text;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Bytes
 {
@@ -30,7 +31,7 @@ namespace Yaapii.Atoms.Bytes
     /// </summary>
     public sealed class Base64Bytes : IBytes
     {
-        private readonly IBytes bytes;
+        private readonly IScalar<byte[]> bytes;
 
         /// <summary>
         /// Origin bytes decoded using the Base64 encoding scheme.
@@ -38,7 +39,12 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="bytes">origin bytes</param>
         public Base64Bytes(IBytes bytes)
         {
-            this.bytes = bytes;
+            this.bytes = new Sticky<byte[]>(() =>
+            {
+                var byts = bytes.AsBytes();
+                string base64String = Encoding.UTF8.GetString(byts, 0, byts.Length);
+                return Convert.FromBase64String(base64String);
+            });
         }
 
         /// <summary>
@@ -47,9 +53,7 @@ namespace Yaapii.Atoms.Bytes
         /// <returns></returns>
         public byte[] AsBytes()
         {
-            var bytes = this.bytes.AsBytes();
-            string base64String = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-            return Convert.FromBase64String(base64String);
+            return this.bytes.Value();
         }
     }
 }
