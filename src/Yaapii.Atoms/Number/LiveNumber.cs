@@ -39,9 +39,7 @@ namespace Yaapii.Atoms.Number
         /// <param name="blockSeperator">seperator for blocks, for example 1.000</param>
         /// <param name="decimalSeperator">seperator for floating point numbers, for example 16,235 </param>
         public LiveNumber(Func<string> text, string decimalSeperator, string blockSeperator) : this(
-            new LiveScalar<INumber>(() =>
-                new NumberOf(text(), decimalSeperator, blockSeperator)
-            )
+            () => new NumberOf(text(), decimalSeperator, blockSeperator)
         )
         { }
 
@@ -50,9 +48,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="str">The string</param>
         public LiveNumber(Func<string> str) : this(
-            new LiveScalar<INumber>(() =>
-                new NumberOf(str())
-            )
+            () => new NumberOf(str())
         )
         { }
 
@@ -62,9 +58,7 @@ namespace Yaapii.Atoms.Number
         /// <param name="str">The string</param>
         /// <param name="provider">a number format provider</param>
         public LiveNumber(Func<string> str, IFormatProvider provider) : this(
-            new LiveScalar<INumber>(() =>
-                new NumberOf(str(), provider)
-            )
+            () => new NumberOf(str(), provider)
         )
         { }
 
@@ -74,9 +68,7 @@ namespace Yaapii.Atoms.Number
         /// <param name="str">The string</param>
         /// <param name="provider">a number format provider</param>
         public LiveNumber(Func<string> str, IScalar<IFormatProvider> provider) : this(
-           new LiveScalar<INumber>(() =>
-                new NumberOf(str(), provider)
-            )
+           () => new NumberOf(str(), provider)
         )
         { }
 
@@ -85,9 +77,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="integer">The integer</param>
         public LiveNumber(Func<int> integer) : this(
-            new LiveScalar<INumber>(() =>
-                new NumberOf(integer())
-            )
+            () => new NumberOf(integer())
         )
         { }
 
@@ -96,9 +86,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="dbl">The double</param>
         public LiveNumber(Func<double> dbl) : this(
-            new LiveScalar<INumber>(() =>
-                new NumberOf(dbl())
-            )
+            () => new NumberOf(dbl())
         )
         { }
 
@@ -107,9 +95,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="lng">The long</param>
         public LiveNumber(Func<long> lng) : this(
-            new LiveScalar<INumber>(() =>
-                new NumberOf(lng())
-            )
+            () => new NumberOf(lng())
         )
         { }
 
@@ -118,9 +104,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="flt">The float</param>
         public LiveNumber(Func<float> flt) : this(
-            new LiveScalar<INumber>(() =>
-                new NumberOf(flt())
-            )
+            () => new NumberOf(flt())
         )
         { }
 
@@ -132,15 +116,13 @@ namespace Yaapii.Atoms.Number
         /// <param name="flt"></param>
         /// <param name="dbl"></param>
         public LiveNumber(IScalar<long> lng, IScalar<int> itg, IScalar<float> flt, IScalar<double> dbl) : this(
-            new LiveScalar<INumber>(() =>
-                new NumberOf(lng, itg, flt, dbl)
-            )
+            () => new NumberOf(lng, itg, flt, dbl)
         )
         { }
 
-        private LiveNumber(IScalar<INumber> number)
+        private LiveNumber(Func<INumber> number)
         {
-            this.number = number;
+            this.number = new LiveScalar<INumber>(number);
         }
 
         /// <summary>
