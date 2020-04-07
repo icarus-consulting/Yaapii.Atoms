@@ -21,9 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Globalization;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Texts;
 
 namespace Yaapii.Atoms.Number
 {
@@ -32,10 +30,7 @@ namespace Yaapii.Atoms.Number
     /// </summary>
     public sealed class LiveNumber : INumber
     {
-        private readonly IScalar<long> _lng;
-        private readonly IScalar<float> _flt;
-        private readonly IScalar<int> _itg;
-        private readonly IScalar<double> _dbl;
+        private readonly IScalar<INumber> number;
 
         /// <summary>
         /// A <see cref="IText"/> as a <see cref="INumber"/>
@@ -44,34 +39,9 @@ namespace Yaapii.Atoms.Number
         /// <param name="blockSeperator">seperator for blocks, for example 1.000</param>
         /// <param name="decimalSeperator">seperator for floating point numbers, for example 16,235 </param>
         public LiveNumber(Func<string> text, string decimalSeperator, string blockSeperator) : this(
-            new LiveScalar<long>(() => Convert.ToInt64(
-                text(),
-                new NumberFormatInfo()
-                {
-                    NumberDecimalSeparator = decimalSeperator,
-                    NumberGroupSeparator = blockSeperator
-                })),
-            new LiveScalar<int>(() => Convert.ToInt32(
-                text(),
-                new NumberFormatInfo()
-                {
-                    NumberDecimalSeparator = decimalSeperator,
-                    NumberGroupSeparator = blockSeperator
-                })),
-            new LiveScalar<float>(() => (float)Convert.ToDecimal(
-                text(),
-                new NumberFormatInfo()
-                {
-                    NumberDecimalSeparator = decimalSeperator,
-                    NumberGroupSeparator = blockSeperator
-                })),
-            new LiveScalar<double>(() => Convert.ToDouble(
-                text(),
-                new NumberFormatInfo()
-                {
-                    NumberDecimalSeparator = decimalSeperator,
-                    NumberGroupSeparator = blockSeperator
-                }))
+            new LiveScalar<INumber>(() =>
+                new NumberOf(text(), decimalSeperator, blockSeperator)
+            )
         )
         { }
 
@@ -79,7 +49,11 @@ namespace Yaapii.Atoms.Number
         /// A <see cref="int"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="str">The string</param>
-        public LiveNumber(Func<string> str) : this(str, new Sticky<IFormatProvider>(() => CultureInfo.InvariantCulture))
+        public LiveNumber(Func<string> str) : this(
+            new LiveScalar<INumber>(() =>
+                new NumberOf(str())
+            )
+        )
         { }
 
         /// <summary>
@@ -87,7 +61,11 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="str">The string</param>
         /// <param name="provider">a number format provider</param>
-        public LiveNumber(Func<string> str, IFormatProvider provider) : this(str, new Sticky<IFormatProvider>(provider))
+        public LiveNumber(Func<string> str, IFormatProvider provider) : this(
+            new LiveScalar<INumber>(() =>
+                new NumberOf(str(), provider)
+            )
+        )
         { }
 
         /// <summary>
@@ -96,55 +74,10 @@ namespace Yaapii.Atoms.Number
         /// <param name="str">The string</param>
         /// <param name="provider">a number format provider</param>
         public LiveNumber(Func<string> str, IScalar<IFormatProvider> provider) : this(
-            new LiveScalar<long>(
-                () =>
-                {
-                    try
-                    {
-                        return Convert.ToInt64(str(), provider.Value());
-                    }
-                    catch (FormatException)
-                    {
-                        throw new ArgumentException(new Formatted("'{0}' is not a number.", str()).AsString());
-                    }
-                }),
-            new LiveScalar<int>(
-                () =>
-                {
-                    try
-                    {
-                        return Convert.ToInt32(str(), provider.Value());
-                    }
-                    catch (FormatException)
-                    {
-                        throw new ArgumentException(new Formatted("'{0}' is not a number.", str()).AsString());
-                    }
-                }),
-            new LiveScalar<float>(
-                () =>
-                {
-                    try
-                    {
-                        return Convert.ToSingle(str(), provider.Value());
-                    }
-                    catch (FormatException)
-                    {
-                        throw new ArgumentException(new Formatted("'{0}' is not a number.", str()).AsString());
-                    }
-                }),
-            new LiveScalar<double>(
-                () =>
-                {
-                    try
-                    {
-                        return Convert.ToDouble(str(), provider.Value());
-                    }
-                    catch (FormatException)
-                    {
-                        throw new ArgumentException(new Formatted("'{0}' is not a number.", str()).AsString());
-                    }
-                })
+           new LiveScalar<INumber>(() =>
+                new NumberOf(str(), provider)
             )
+        )
         { }
 
         /// <summary>
@@ -152,10 +85,9 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="integer">The integer</param>
         public LiveNumber(Func<int> integer) : this(
-            new LiveScalar<long>(() => Convert.ToInt64(integer())),
-            new LiveScalar<int>(integer),
-            new LiveScalar<float>(() => Convert.ToSingle(integer())),
-            new LiveScalar<double>(() => Convert.ToDouble(integer()))
+            new LiveScalar<INumber>(() =>
+                new NumberOf(integer())
+            )
         )
         { }
 
@@ -164,11 +96,10 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="dbl">The double</param>
         public LiveNumber(Func<double> dbl) : this(
-            new LiveScalar<long>(() => Convert.ToInt64(dbl())),
-            new LiveScalar<int>(() => Convert.ToInt32(dbl())),
-            new LiveScalar<float>(() => Convert.ToSingle(dbl())),
-            new LiveScalar<double>(dbl)
+            new LiveScalar<INumber>(() =>
+                new NumberOf(dbl())
             )
+        )
         { }
 
         /// <summary>
@@ -176,11 +107,10 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="lng">The long</param>
         public LiveNumber(Func<long> lng) : this(
-            new LiveScalar<long>(lng),
-            new LiveScalar<int>(() => Convert.ToInt32(lng())),
-            new LiveScalar<float>(() => Convert.ToSingle(lng())),
-            new LiveScalar<double>(() => Convert.ToDouble(lng()))
+            new LiveScalar<INumber>(() =>
+                new NumberOf(lng())
             )
+        )
         { }
 
         /// <summary>
@@ -188,11 +118,10 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="flt">The float</param>
         public LiveNumber(Func<float> flt) : this(
-            new LiveScalar<long>(() => Convert.ToInt64(flt())),
-            new LiveScalar<int>(() => Convert.ToInt32(flt())),
-            new LiveScalar<float>(flt),
-            new LiveScalar<double>(() => Convert.ToDouble(flt()))
+            new LiveScalar<INumber>(() =>
+                new NumberOf(flt())
             )
+        )
         { }
 
         /// <summary>
@@ -202,12 +131,16 @@ namespace Yaapii.Atoms.Number
         /// <param name="itg"></param>
         /// <param name="flt"></param>
         /// <param name="dbl"></param>
-        public LiveNumber(IScalar<long> lng, IScalar<int> itg, IScalar<float> flt, IScalar<double> dbl)
+        public LiveNumber(IScalar<long> lng, IScalar<int> itg, IScalar<float> flt, IScalar<double> dbl) : this(
+            new LiveScalar<INumber>(() =>
+                new NumberOf(lng, itg, flt, dbl)
+            )
+        )
+        { }
+
+        private LiveNumber(IScalar<INumber> number)
         {
-            _lng = lng;
-            _itg = itg;
-            _flt = flt;
-            _dbl = dbl;
+            this.number = number;
         }
 
         /// <summary>
@@ -217,7 +150,7 @@ namespace Yaapii.Atoms.Number
         /// <returns></returns>
         public double AsDouble()
         {
-            return _dbl.Value();
+            return this.number.Value().AsDouble();
         }
 
         /// <summary>
@@ -227,7 +160,7 @@ namespace Yaapii.Atoms.Number
         /// <returns></returns>
         public float AsFloat()
         {
-            return _flt.Value();
+            return this.number.Value().AsFloat();
         }
 
         /// <summary>
@@ -237,7 +170,7 @@ namespace Yaapii.Atoms.Number
         /// <returns></returns>
         public int AsInt()
         {
-            return _itg.Value();
+            return this.number.Value().AsInt();
         }
 
         /// <summary>
@@ -247,16 +180,7 @@ namespace Yaapii.Atoms.Number
         /// <returns></returns>
         public long AsLong()
         {
-            return _lng.Value();
-        }
-
-        private ArgumentException ArgError(IText txt)
-        {
-            return
-                new ArgumentException(
-                    new Formatted("'{0}' is not a number.", txt.AsString()
-                ).AsString()
-            );
+            return this.number.Value().AsLong();
         }
     }
 }
