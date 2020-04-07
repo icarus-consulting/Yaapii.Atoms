@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Enumerable
     /// </summary>
     public sealed class LengthOf : IScalar<Int32>
     {
-        private readonly Sticky<Int32> result;
+        private readonly ScalarOf<Int32> result;
 
         /// <summary>
         /// Length of an <see cref="IEnumerable"/>
@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="items">the enumerable</param>
         public LengthOf(IEnumerable items)
         {
-            this.result = new Sticky<Int32>(() => new Enumerator.LengthOf(items.GetEnumerator()).Value());
+            this.result = new ScalarOf<Int32>(() => new Enumerator.LengthOf(items.GetEnumerator()).Value());
         }
 
         /// <summary>

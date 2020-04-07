@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <typeparam name="T"></typeparam>
     public class Contains<T> : IScalar<bool>
     {
-        private readonly Sticky<bool> result;
+        private readonly ScalarOf<bool> result;
 
         /// <summary>
         /// Lookup if an item is in a enumerable by calling .Equals(...) of the item.
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Enumerable
         public Contains(IEnumerable<T> items, Func<T, bool> match)
         {
             this.result =
-                new Sticky<bool>(() => new Enumerator.Contains<T>(items.GetEnumerator(), match).Value());
+                new ScalarOf<bool>(() => new Enumerator.Contains<T>(items.GetEnumerator(), match).Value());
         }
 
         /// <summary>

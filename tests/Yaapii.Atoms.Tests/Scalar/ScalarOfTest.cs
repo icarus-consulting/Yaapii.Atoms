@@ -22,19 +22,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Xunit;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Scalar.Tests
 {
-    public sealed class StickyTest
+    public sealed class ScalarOfTest
     {
         [Fact]
         public void CachesScalarResults()
         {
             IScalar<int> scalar =
-                new Sticky<int>(
+                new ScalarOf<int>(
                     () => new Random().Next());
 
             var val1 = scalar.Value();
@@ -49,7 +47,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         public void ReloadCachedScalarResults()
         {
             IScalar<List<int>> scalar =
-                new Sticky<List<int>>(
+                new ScalarOf<List<int>>(
                     () => new List<int>() { new Random().Next() },
                     lst => lst.Count > 1);
 

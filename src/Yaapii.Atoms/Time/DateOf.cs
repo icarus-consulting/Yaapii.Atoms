@@ -90,7 +90,7 @@ namespace Yaapii.Atoms.Time
         /// <param name="date"></param>
         public DateOf(IScalar<DateTime> date)
         {
-            this.date = new Sticky<DateTime>(date);
+            this.date = new ScalarOf<DateTime>(date);
         }
 
         /// <summary>

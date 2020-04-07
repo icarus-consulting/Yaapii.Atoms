@@ -34,11 +34,11 @@ namespace Yaapii.Atoms.IO
     /// </summary>
     public sealed class ValidatedZip : IInput
     {
-        private readonly Sticky<Stream> stream;
+        private readonly ScalarOf<Stream> stream;
 
         public ValidatedZip(IInput input)
         {
-            this.stream = new Sticky<Stream>(() =>
+            this.stream = new ScalarOf<Stream>(() =>
             {
                 new FailPrecise(
                     new FailWhen(!IsZip(input.Stream())),

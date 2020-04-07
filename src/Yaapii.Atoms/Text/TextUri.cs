@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class UriOf : IScalar<Uri>
     {
-        private readonly Sticky<Uri> source;
+        private readonly ScalarOf<Uri> source;
 
         /// <summary>
         /// A <see cref="string"/> as a <see cref="Uri"/>
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Texts
         public UriOf(IText url)
         {
             this.source = 
-                new Sticky<Uri>(
+                new ScalarOf<Uri>(
                     new UriBuilder(url.AsString()).Uri
                 );
         }

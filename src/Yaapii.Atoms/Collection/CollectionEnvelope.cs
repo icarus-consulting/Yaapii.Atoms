@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         private readonly UnsupportedOperationException readonlyError = new UnsupportedOperationException("The collection is readonly");
         private readonly IScalar<ICollection<T>> origin;
-        private readonly Scalar.Sticky<ICollection<T>> fixedOrigin;
+        private readonly ScalarOf<ICollection<T>> fixedOrigin;
         private readonly bool live;
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Collection
         {
             this.origin = slr;
             this.live = live;
-            this.fixedOrigin = new Scalar.Sticky<ICollection<T>>(
+            this.fixedOrigin = new ScalarOf<ICollection<T>>(
                 () =>
                 {
                     var temp = new List<T>();

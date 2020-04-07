@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class FloatOf : IScalar<float>
     {
-        private readonly Sticky<float> val;
+        private readonly ScalarOf<float> val;
 
         /// <summary>
         /// A float out of a <see cref="string"/> using invariant culture.
@@ -69,7 +69,7 @@ namespace Yaapii.Atoms.Texts
 
         public FloatOf(IScalar<float> value)
         {
-            val = new Sticky<float>(value);
+            val = new ScalarOf<float>(value);
         }
 
         /// <summary>

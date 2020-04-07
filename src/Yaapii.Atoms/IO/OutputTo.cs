@@ -88,7 +88,7 @@ namespace Yaapii.Atoms.IO
 
         private OutputTo(IScalar<Stream> origin)
         {
-            this._origin = new Sticky<Stream>(origin, stream => !stream.CanWrite);
+            this._origin = new ScalarOf<Stream>(origin, stream => !stream.CanWrite);
         }
 
         public Stream Stream()

@@ -76,7 +76,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="tgt">the target</param>
         private OutputStreamTo(IScalar<Stream> tgt) : base()
         {
-            this._target = new Sticky<Stream>(tgt);
+            this._target = new ScalarOf<Stream>(tgt);
         }
 
         public async new void WriteAsync(byte[] buffer, int offset, int length)
