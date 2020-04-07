@@ -80,7 +80,9 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="list">List of values</param>        
         public Solid(IEnumerable<KeyValuePair<Key, Value>> list) : this(
-            new LiveMap<Key, Value>(list)
+            new LiveMap<Key, Value>(() =>
+                new MapOf<Key, Value>(list)
+            )
         )
         { }
 
@@ -99,7 +101,11 @@ namespace Yaapii.Atoms.Map
         /// <param name="map">map to merge to</param>
         /// <param name="list">list of values to merge</param>
         public Solid(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
-            new LiveMap<Key, Value>(map, list)
+            new LiveMap<Key, Value>(() =>
+                new MapOf<Key, Value>(
+                    new Enumerable.Joined<KeyValuePair<Key, Value>>(map, list)
+                )
+            )
         )
         { }
 
