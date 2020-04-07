@@ -20,41 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using Yaapii.Atoms.Scalar;
-
 namespace Yaapii.Atoms.Bytes
 {
     /// <summary>
     /// Equality for <see cref="IBytes"/>
     /// </summary>
-    public sealed class BytesEqual : IScalar<bool>
+    public sealed class LiveBytesEqual : IScalar<bool>
     {
-        private readonly IScalar<bool> equals;
+        private readonly IBytes left;
+        private readonly IBytes right;
 
         /// <summary>
         /// Makes a truth about <see cref="IBytes"/> are equal or not.
         /// </summary>
         /// <param name="left"></param>
         /// <param name="right"></param>
-        public BytesEqual(IBytes left, IBytes right)
+        public LiveBytesEqual(IBytes left, IBytes right)
         {
-            equals = new Sticky<bool>(() =>
-            {
-                var leftBytes = left.AsBytes();
-                var rightBytes = right.AsBytes();
-                var equal = leftBytes.Length == rightBytes.Length;
-
-                for (var i = 0; i < leftBytes.Length && equal; i++)
-                {
-                    if (leftBytes[i] != rightBytes[i])
-                    {
-                        equal = false;
-                        break;
-                    }
-                }
-
-                return equal;
-            });
+            this.left = left;
+            this.right = right;
         }
 
         /// <summary>
@@ -63,7 +47,20 @@ namespace Yaapii.Atoms.Bytes
         /// <returns></returns>
         public bool Value()
         {
-            return this.equals.Value();
+            var left = this.left.AsBytes();
+            var right = this.right.AsBytes();
+            var equal = left.Length == right.Length;
+
+            for (var i = 0; i < left.Length && equal; i++)
+            {
+                if (left[i] != right[i])
+                {
+                    equal = false;
+                    break;
+                }
+            }
+
+            return equal;
         }
     }
 }
