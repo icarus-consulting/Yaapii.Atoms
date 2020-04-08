@@ -120,7 +120,7 @@ namespace Yaapii.Atoms.Number
         )
         { }
 
-        private LiveNumber(Func<INumber> number)
+        public LiveNumber(Func<INumber> number)
         {
             this.number = new LiveScalar<INumber>(number);
         }
