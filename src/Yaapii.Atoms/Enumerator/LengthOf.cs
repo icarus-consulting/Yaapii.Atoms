@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="items">enumerator to count</param>
         public LengthOf(IEnumerator items)
         {
-            this.length = new Sticky<int>(() =>
+            this.length = new ScalarOf<int>(() =>
             {
                 int size = 0;
                 while (items.MoveNext())

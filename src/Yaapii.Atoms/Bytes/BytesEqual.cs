@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="right"></param>
         public BytesEqual(IBytes left, IBytes right)
         {
-            equals = new Sticky<bool>(() =>
+            equals = new ScalarOf<bool>(() =>
             {
                 var leftBytes = left.AsBytes();
                 var rightBytes = right.AsBytes();
