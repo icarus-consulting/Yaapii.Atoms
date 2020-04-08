@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(IEnumerable<int> src) : base(
-            new LiveScalar<double>(() =>
+            new ScalarOf<double>(() =>
             {
                 var min = double.MaxValue;
                 var e = src.GetEnumerator();
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return min;
             }),
-            new LiveScalar<int>(() =>
+            new ScalarOf<int>(() =>
             {
                 var min = int.MaxValue;
                 var e = src.GetEnumerator();
@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return min;
             }),
-            new LiveScalar<long>(() =>
+            new ScalarOf<long>(() =>
             {
                 var min = long.MaxValue;
                 var e = src.GetEnumerator();
@@ -76,7 +76,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return min;
             }),
-            new LiveScalar<float>(() =>
+            new ScalarOf<float>(() =>
             {
                 var min = float.MaxValue;
                 var e = src.GetEnumerator();
@@ -102,7 +102,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(IEnumerable<double> src) : base(
-            new LiveScalar<double>(() =>
+            new ScalarOf<double>(() =>
             {
                 var min = double.MaxValue;
                 var e = src.GetEnumerator();
@@ -112,7 +112,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return min;
             }),
-            new LiveScalar<int>(() =>
+            new ScalarOf<int>(() =>
             {
                 var min = int.MaxValue;
                 var e = src.GetEnumerator();
@@ -122,7 +122,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return min;
             }),
-            new LiveScalar<long>(() =>
+            new ScalarOf<long>(() =>
             {
                 var min = long.MaxValue;
                 var e = src.GetEnumerator();
@@ -132,7 +132,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return min;
             }),
-            new LiveScalar<float>(() =>
+            new ScalarOf<float>(() =>
             {
                 var min = float.MaxValue;
                 var e = src.GetEnumerator();
@@ -158,7 +158,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(IEnumerable<long> src) : base(
-            new LiveScalar<double>(() =>
+            new ScalarOf<double>(() =>
             {
                 var min = double.MaxValue;
                 var e = src.GetEnumerator();
@@ -168,7 +168,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return min;
             }),
-            new LiveScalar<int>(() =>
+            new ScalarOf<int>(() =>
             {
                 var min = int.MaxValue;
                 var e = src.GetEnumerator();
@@ -178,7 +178,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return min;
             }),
-            new LiveScalar<long>(() =>
+            new ScalarOf<long>(() =>
             {
                 var min = long.MaxValue;
                 var e = src.GetEnumerator();
@@ -188,7 +188,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return min;
             }),
-            new LiveScalar<float>(() =>
+            new ScalarOf<float>(() =>
             {
                 var min = float.MaxValue;
                 var e = src.GetEnumerator();
@@ -214,7 +214,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(IEnumerable<float> src) : base(
-            new LiveScalar<double>(() =>
+            new ScalarOf<double>(() =>
             {
                 var min = double.MaxValue;
                 var e = src.GetEnumerator();
@@ -224,7 +224,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return min;
             }),
-            new LiveScalar<int>(() =>
+            new ScalarOf<int>(() =>
             {
                 var min = int.MaxValue;
                 var e = src.GetEnumerator();
@@ -234,7 +234,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return min;
             }),
-            new LiveScalar<long>(() =>
+            new ScalarOf<long>(() =>
             {
                 var min = long.MaxValue;
                 var e = src.GetEnumerator();
@@ -244,7 +244,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return min;
             }),
-            new LiveScalar<float>(() =>
+            new ScalarOf<float>(() =>
             {
                 var min = float.MaxValue;
                 var e = src.GetEnumerator();
