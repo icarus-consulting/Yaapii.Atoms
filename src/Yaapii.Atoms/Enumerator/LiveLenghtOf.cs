@@ -29,25 +29,17 @@ namespace Yaapii.Atoms.Enumerator
     /// <summary>
     /// Length of an <see cref="IEnumerator"/>
     /// </summary>
-    public sealed class LengthOf : IScalar<Int32>
+    public sealed class LiveLengthOf : IScalar<Int32>
     {
-        private readonly IScalar<int> length;
+        private readonly IEnumerator items;
 
         /// <summary>
         /// Length of an <see cref="IEnumerator"/>
         /// </summary>
         /// <param name="items">enumerator to count</param>
-        public LengthOf(IEnumerator items)
+        public LiveLengthOf(IEnumerator items)
         {
-            this.length = new ScalarOf<int>(() =>
-            {
-                int size = 0;
-                while (items.MoveNext())
-                {
-                    ++size;
-                }
-                return size;
-            });
+            this.items = items;
         }
 
         /// <summary>
@@ -56,7 +48,12 @@ namespace Yaapii.Atoms.Enumerator
         /// <returns>the length</returns>
         public Int32 Value()
         {
-            return this.length.Value();
+            int size = 0;
+            while (this.items.MoveNext())
+            {
+                ++size;
+            }
+            return size;
         }
     }
 }

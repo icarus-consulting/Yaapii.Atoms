@@ -20,43 +20,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections;
-using Yaapii.Atoms.Scalar;
+using Xunit;
 
-namespace Yaapii.Atoms.Enumerator
+namespace Yaapii.Atoms.Bytes.Tests
 {
-    /// <summary>
-    /// Length of an <see cref="IEnumerator"/>
-    /// </summary>
-    public sealed class LengthOf : IScalar<Int32>
+    public sealed class BytesEqualTest
     {
-        private readonly IScalar<int> length;
-
-        /// <summary>
-        /// Length of an <see cref="IEnumerator"/>
-        /// </summary>
-        /// <param name="items">enumerator to count</param>
-        public LengthOf(IEnumerator items)
+        [Fact]
+        public void TrueCorrectBytes()
         {
-            this.length = new ScalarOf<int>(() =>
-            {
-                int size = 0;
-                while (items.MoveNext())
-                {
-                    ++size;
-                }
-                return size;
-            });
+            Assert.True(
+                new BytesEqual(
+                    new BytesOf(3.2d),
+                    new BytesOf(3.2d)
+                ).Value()
+            );
         }
 
-        /// <summary>
-        /// Get the length.
-        /// </summary>
-        /// <returns>the length</returns>
-        public Int32 Value()
+        [Fact]
+        public void FalseDifferentLenght()
         {
-            return this.length.Value();
+            Assert.False(
+                new BytesEqual(
+                    new BytesOf(1),
+                    new BytesOf(3.2d)
+                ).Value()
+            );
+        }
+
+        [Fact]
+        public void FalseDifferentBytes()
+        {
+            Assert.False(
+                new BytesEqual(
+                    new BytesOf(1),
+                    new BytesOf(3.2d)
+                ).Value()
+            );
         }
     }
 }
