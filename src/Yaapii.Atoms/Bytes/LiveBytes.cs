@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Bytes
         /// Reloads the bytes input on every call
         /// </summary>
         /// <param name="input">The input</param>
-        public LiveBytes(IInput input) : this(() => new BytesOf(input))
+        public LiveBytes(Func<IInput> input) : this(() => new BytesOf(input()))
         { }
 
         /// <summary>

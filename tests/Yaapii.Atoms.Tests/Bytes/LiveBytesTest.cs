@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Bytes.Tests
         public void ReloadsInput()
         {
             var calls = 0;
-            var bytes = new LiveBytes(
+            var bytes = new LiveBytes(() =>
                 new InputOf(() =>
                 {
                     ++calls;
