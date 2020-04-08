@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Scalar.Tests
 
             Assert.True(
                 new Fallback<string>(
-                    new LiveScalar<string>(
+                    new Live<string>(
                         () => throw new Exception("NO STRINGS ATTACHED HAHAHA")),
                     fbk
                     ).Value() == fbk);
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Scalar.Tests
 
             Assert.True(
                 new Fallback<string>(
-                    new LiveScalar<string>(
+                    new Live<string>(
                         () => throw new Exception("NO STRINGS ATTACHED HAHAHA")),
                     () => fbk
                     ).Value() == fbk);
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Scalar.Tests
 
             Assert.True(
                 new Fallback<string>(
-                    new LiveScalar<string>(
+                    new Live<string>(
                         () => throw notAmused),
                     (ex) => ex.Message).Value() == notAmused.Message);
         }

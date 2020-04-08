@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="col"></param>
         public Sync(object syncRoot, ICollection<T> col) : base(
             new Scalar.Sync<ICollection<T>>(
-                new LiveScalar<ICollection<T>>(() =>
+                new Live<ICollection<T>>(() =>
                 {
                     lock (syncRoot)
                     {

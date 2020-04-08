@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Bytes
         /// Relaods the bytes on every call
         /// </summary>
         /// <param name="bytes"></param>
-        public LiveBytes(Func<IBytes> bytes) : this(new LiveScalar<IBytes>(bytes))
+        public LiveBytes(Func<IBytes> bytes) : this(new Live<IBytes>(bytes))
         { }
 
         private LiveBytes(IScalar<IBytes> bytes)

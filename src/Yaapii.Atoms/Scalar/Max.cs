@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="items">list of items</param>
         public Max(params Func<T>[] items) : this(
             new Enumerable.Mapped<Func<T>, IScalar<T>>(
-                item => new LiveScalar<T>(() => item.Invoke()),
+                item => new Live<T>(() => item.Invoke()),
                 new ManyOf<Func<T>>(items)
             )
         )
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(IEnumerable<T> items) : this(
-            new Enumerable.Mapped<T, IScalar<T>>(item => new LiveScalar<T>(item), items))
+            new Enumerable.Mapped<T, IScalar<T>>(item => new Live<T>(item), items))
         { }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(params T[] items) : this(
-            new Enumerable.Mapped<T, IScalar<T>>(item => new LiveScalar<T>(item), items))
+            new Enumerable.Mapped<T, IScalar<T>>(item => new Live<T>(item), items))
         { }
 
         /// <summary>

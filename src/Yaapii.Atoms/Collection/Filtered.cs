@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Collection
             this(
                 func,
                 new LiveMany<T>(
-                    new LiveScalar<IEnumerator<T>>(
+                    new Live<IEnumerator<T>>(
                         () => new Enumerable.Joined<T>(
                             new LiveMany<T>(
                                 item1,
@@ -71,7 +71,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="func">filter func</param>
         /// <param name="src">items to filter</param>
         public Filtered(Func<T, Boolean> func, IEnumerable<T> src) : base(
-            new LiveScalar<ICollection<T>>(() => 
+            new Live<ICollection<T>>(() => 
                 new LiveCollection<T>(
                     new Enumerable.Filtered<T>(
                         func, src

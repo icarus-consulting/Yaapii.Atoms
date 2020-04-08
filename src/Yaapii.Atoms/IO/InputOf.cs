@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.IO
         /// Input out of a file Uri.
         /// </summary>
         /// <param name="file">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
-        public InputOf(FileInfo file) : this(new LiveScalar<FileInfo>(file))
+        public InputOf(FileInfo file) : this(new Live<FileInfo>(file))
         { }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Yaapii.Atoms.IO
         /// Input out of a Url.
         /// </summary>
         /// <param name="url">a url starting with http:// or https://</param>
-        public InputOf(Url url) : this(new LiveScalar<Url>(url))
+        public InputOf(Url url) : this(new Live<Url>(url))
         { }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="builder">a stringbuilder</param>
         /// <param name="enc">encoding of the stringbuilder</param>
         public InputOf(StringBuilder builder, Encoding enc) : this(
-            new LiveScalar<Stream>(
+            new Live<Stream>(
                 () => new MemoryStream(
                     new BytesOf(builder, enc).AsBytes())))
         { }
@@ -227,7 +227,7 @@ namespace Yaapii.Atoms.IO
         /// ctor
         /// </summary>
         /// <param name="src">a <see cref="IBytes"/> object which will be copied to memory</param>
-        public InputOf(IBytes src) : this(new LiveScalar<Stream>(
+        public InputOf(IBytes src) : this(new Live<Stream>(
                         () =>
                         {
                             var b = src.AsBytes();
@@ -242,14 +242,14 @@ namespace Yaapii.Atoms.IO
         /// ctor
         /// </summary>
         /// <param name="stream">a <see cref="Stream"/> as input</param>
-        public InputOf(Stream stream) : this(new LiveScalar<Stream>(stream))
+        public InputOf(Stream stream) : this(new Live<Stream>(stream))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="fnc">a function retrieving a <see cref="Stream"/> as input</param>
-        public InputOf(Func<Stream> fnc) : this(new LiveScalar<Stream>(fnc))
+        public InputOf(Func<Stream> fnc) : this(new Live<Stream>(fnc))
         { }
 
         /// <summary>

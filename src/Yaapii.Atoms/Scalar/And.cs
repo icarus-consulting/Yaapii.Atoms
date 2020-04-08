@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.Scalar
             this(
                 new Enumerable.Mapped<In, IScalar<Boolean>>(
                     new FuncOf<In, IScalar<Boolean>>((item) =>
-                        new LiveScalar<Boolean>(func.Invoke(item))),
+                        new Live<Boolean>(func.Invoke(item))),
                     src
                 )
             )
@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="funcs"> the conditions to apply </param>
         public And(ManyOf<Func<bool>> funcs) : this(
             new Mapped<Func<bool>, IScalar<bool>>(
-                func => new LiveScalar<bool>(func),
+                func => new Live<bool>(func),
                 funcs))
         { }
 
@@ -108,7 +108,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="src"> list of items </param>
         public And(params bool[] src) : this(
             new Mapped<bool, IScalar<bool>>(
-                tBool => new LiveScalar<bool>(tBool),
+                tBool => new Live<bool>(tBool),
                 src))
         { }
 
@@ -116,7 +116,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="src"> list of items </param>
         public And(IEnumerable<bool> src) : this(
             new Mapped<bool, IScalar<bool>>(
-                tBool => new LiveScalar<bool>(tBool),
+                tBool => new Live<bool>(tBool),
                 src))
         { }
 

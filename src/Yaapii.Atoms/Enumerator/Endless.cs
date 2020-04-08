@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Enumerator
         /// A <see cref="IEnumerator{T}"/> that repeats one element infinitely.
         /// </summary>
         /// <param name="elm">element to repeat</param>
-        public Endless(T elm) : this(new LiveScalar<T>(elm))
+        public Endless(T elm) : this(new Live<T>(elm))
         { }
 
         /// <summary>

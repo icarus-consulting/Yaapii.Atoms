@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Scalar
     /// A <see cref="IScalar{T}"/> out of other objects
     /// </summary>
     /// <typeparam name="T">type of the value</typeparam>
-    public sealed class LiveScalar<T> : IScalar<T>
+    public sealed class Live<T> : IScalar<T>
     {
         private readonly Func<T> func;
 
@@ -40,35 +40,35 @@ namespace Yaapii.Atoms.Scalar
         /// A <see cref="IScalar{T}"/> out of an object.
         /// </summary>
         /// <param name="org"></param>
-        public LiveScalar(T org) : this((b) => org)
+        public Live(T org) : this((b) => org)
         { }
 
         /// <summary>
         /// A <see cref="IScalar{T}"/> out of the return value from a <see cref="Func{T, TResult}"/>.
         /// </summary>
         /// <param name="func"></param>
-        public LiveScalar(IFunc<T> func) : this(() => func.Invoke())
+        public Live(IFunc<T> func) : this(() => func.Invoke())
         { }
 
         /// <summary>
         /// A <see cref="IScalar{T}"/> out of the return value from a <see cref="Func{T, TResult}"/>.
         /// </summary>
         /// <param name="func"></param>
-        public LiveScalar(IFunc<bool, T> func) : this(() => func.Invoke(true))
+        public Live(IFunc<bool, T> func) : this(() => func.Invoke(true))
         { }
 
         /// <summary>
         /// A <see cref="IScalar{T}"/> out of the return value from an <see cref="IFunc{In, Out}"/>
         /// </summary>
         /// <param name="func"></param>
-        public LiveScalar(Func<bool, T> func) : this(() => func.Invoke(true))
+        public Live(Func<bool, T> func) : this(() => func.Invoke(true))
         { }
 
         /// <summary>
         /// Primary ctor
         /// </summary>
         /// <param name="func"></param>
-        public LiveScalar(Func<T> func)
+        public Live(Func<T> func)
         {
             this.func = func;
         }

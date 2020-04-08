@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Time
         /// <param name="patterns"></param>
         /// <param name="provider"></param>
         public DateOf(string date, IFormatProvider provider, params string[] patterns) : this(
-            new LiveScalar<DateTime>(() =>
+            new Live<DateTime>(() =>
             {
                 return DateTime.ParseExact(date, patterns, provider, DateTimeStyles.AssumeUniversal);
             }))
@@ -74,7 +74,7 @@ namespace Yaapii.Atoms.Time
         /// <param name="date">the date as text</param>
         /// <param name="dateFormat">format provider</param>
         public DateOf(IText date, IFormatProvider dateFormat) : this(
-            new LiveScalar<DateTime>(
+            new Live<DateTime>(
                 () =>
                     DateTime.Parse(
                         date.AsString(),

@@ -105,7 +105,7 @@ namespace Yaapii.Atoms.IO
         /// Append <see cref="IOutput"/> to a target <see cref="IOutput"/>.
         /// </summary>
         /// <param name="output">target output</param>
-        public AppendTo(IOutput output) : this(new LiveScalar<IOutput>(output))
+        public AppendTo(IOutput output) : this(new Live<IOutput>(output))
         { }
 
         /// <summary>

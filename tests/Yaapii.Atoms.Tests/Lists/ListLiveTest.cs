@@ -88,7 +88,7 @@ namespace Yaapii.Atoms.Lists.Tests
                 new LiveList<int>(
                     new Yaapii.Atoms.Enumerable.HeadOf<int>(
                         new Yaapii.Atoms.Enumerable.Endless<int>(1),
-                        new LiveScalar<int>(() => Interlocked.Increment(ref size))
+                        new Live<int>(() => Interlocked.Increment(ref size))
                 ));
 
             Assert.NotEqual(list.Count, list.Count);

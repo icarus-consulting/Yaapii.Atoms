@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="scalar">func to retry when needed</param>
         /// <param name="attempts">how often to retry</param>
         public Retry(Func<T> scalar, int attempts = 3)
-            : this(new LiveScalar<T>(() => scalar.Invoke()), attempts)
+            : this(new Live<T>(() => scalar.Invoke()), attempts)
         { }
 
         /// <summary>

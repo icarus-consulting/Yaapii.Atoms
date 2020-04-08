@@ -76,14 +76,14 @@ namespace Yaapii.Atoms.IO
         /// <see cref="IOutput"/> to a target <see cref="Stream"/> returned by a <see cref="Func{TResult}"/>.
         /// </summary>
         /// <param name="fnc">target stream returning function</param>
-        public OutputTo(Func<Stream> fnc) : this(new LiveScalar<Stream>(fnc))
+        public OutputTo(Func<Stream> fnc) : this(new Live<Stream>(fnc))
         { }
 
         /// <summary>
         /// <see cref="IOutput"/> to a target <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">target stream</param>
-        public OutputTo(Stream stream) : this(new LiveScalar<Stream>(() => stream))
+        public OutputTo(Stream stream) : this(new Live<Stream>(() => stream))
         { }
 
         private OutputTo(IScalar<Stream> origin)

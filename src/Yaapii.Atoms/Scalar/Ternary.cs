@@ -59,9 +59,9 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="alternative">alternative</param>
         public Ternary(In input, IFunc<In, Boolean> condition, IFunc<In, Out> consequent, IFunc<In, Out> alternative)
             : this(
-                new LiveScalar<bool>(() => condition.Invoke(input)),
-                new LiveScalar<Out>(() => consequent.Invoke(input)),
-                new LiveScalar<Out>(() => alternative.Invoke(input))
+                new Live<bool>(() => condition.Invoke(input)),
+                new Live<Out>(() => consequent.Invoke(input)),
+                new Live<Out>(() => alternative.Invoke(input))
             )
         { }
 
@@ -72,7 +72,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
         public Ternary(Boolean condition, Out consequent, Out alternative)
-            : this(new LiveScalar<Boolean>(condition), consequent, alternative)
+            : this(new Live<Boolean>(condition), consequent, alternative)
         { }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
         public Ternary(IScalar<Boolean> condition, Out consequent, Out alternative)
-            : this(condition, new LiveScalar<Out>(consequent), new LiveScalar<Out>(alternative))
+            : this(condition, new Live<Out>(consequent), new Live<Out>(alternative))
         { }
 
         /// <summary>
