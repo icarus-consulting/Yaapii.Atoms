@@ -131,5 +131,15 @@ namespace Yaapii.Atoms.Number.Tests
                 ).AsDouble() == 5.243d
             );
         }
+
+        [Fact]
+        public void AveragesLiveNumbers()
+        {
+            var list = new List<int>() { 1, 2, 3 };
+            var liveAverage = new LiveNumber(() => new AvgOf(list));
+            var first = liveAverage.AsDouble();
+            list.Add(4);
+            Assert.NotEqual(first, liveAverage.AsDouble());
+        }
     }
 }
