@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="patternStr"> pattern as string </param>
         /// <param name="ignoreCase"> Enables case sensitivity </param>
         public Contains(string inputStr, string patternStr, bool ignoreCase = false) :
-            this(new LiveScalar<string>(inputStr), new LiveScalar<string>(patternStr), new LiveScalar<StringComparison>(() => ignoreCase ? StringComparison.CurrentCultureIgnoreCase : StringComparison.CurrentCulture))
+            this(new Live<string>(inputStr), new Live<string>(patternStr), new Live<StringComparison>(() => ignoreCase ? StringComparison.CurrentCultureIgnoreCase : StringComparison.CurrentCulture))
         { }
 
         /// <summary> Checks if a text contains a pattern using IText </summary>
@@ -43,14 +43,14 @@ namespace Yaapii.Atoms.Texts
         /// <param name="patternText"> pattern as IText </param>
         /// <param name="ignoreCase"> Enables case sensitivity </param>
         public Contains(IText inputText, IText patternText, bool ignoreCase = false) :
-            this(new LiveScalar<string>(() => inputText.AsString()), new LiveScalar<string>(() => patternText.AsString()), new LiveScalar<StringComparison>(() => ignoreCase ? StringComparison.CurrentCultureIgnoreCase : StringComparison.CurrentCulture))
+            this(new Live<string>(() => inputText.AsString()), new Live<string>(() => patternText.AsString()), new Live<StringComparison>(() => ignoreCase ? StringComparison.CurrentCultureIgnoreCase : StringComparison.CurrentCulture))
         { }
 
         /// <summary> Checks if a text contains a pattern using IScalar </summary>
         /// <param name="inputValue"> text as IScalar of string </param>
         /// <param name="pattern"> pattern as IScalar of string </param>
         public Contains(IScalar<string> inputValue, IScalar<string> pattern)
-            : this(inputValue, pattern, new LiveScalar<StringComparison>(StringComparison.CurrentCulture))
+            : this(inputValue, pattern, new Live<StringComparison>(StringComparison.CurrentCulture))
         {
         }
 

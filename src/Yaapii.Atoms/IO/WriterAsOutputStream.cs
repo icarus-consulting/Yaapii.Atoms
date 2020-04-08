@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="enc">encoding of the writer</param>
         internal WriterAsOutputStream(StreamWriter wtr, Encoding enc) : this(
                 wtr,
-                new LiveScalar<Decoder>(() =>
+                new Live<Decoder>(() =>
                 {
                     var ddr = enc.GetDecoder();
                     ddr.Fallback = DecoderFallback.ExceptionFallback;

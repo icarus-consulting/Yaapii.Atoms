@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="source">Input</param>
         public Sha1DigestOf(IInput source) :
-            base(source, new LiveScalar<HashAlgorithm>(() => new SHA1CryptoServiceProvider()))
+            base(source, new Live<HashAlgorithm>(() => new SHA1CryptoServiceProvider()))
         { }
     }
 }

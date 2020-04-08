@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.IO
         /// A directory that cleans up when disposed.
         /// </summary>
         public TempDirectory(string path) : this(
-            new LiveScalar<string>(path)
+            new Live<string>(path)
         )
         { }
 

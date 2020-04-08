@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="origin">Collection</param>
         /// <param name="ex">Execption to be thrown if empty</param>
         public NotEmpty(ICollection<T> origin, Exception ex) : base(
-            new LiveScalar<ICollection<T>>(
+            new Live<ICollection<T>>(
                 () =>
                 {
                     new FailPrecise(

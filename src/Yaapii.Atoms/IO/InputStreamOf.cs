@@ -132,14 +132,14 @@ namespace Yaapii.Atoms.IO
         /// A readable stream out of a <see cref="IInput"/>.
         /// </summary>
         /// <param name="input">the input</param>
-        public InputStreamOf(IInput input) : this(new LiveScalar<Stream>(() => input.Stream()))
+        public InputStreamOf(IInput input) : this(new Live<Stream>(() => input.Stream()))
         { }
 
         /// <summary>
         /// A readable stream out of a <see cref="Func"/> that returns a <see cref="Stream"/>.
         /// </summary>
         /// <param name="input">the input</param>
-        public InputStreamOf(Func<Stream> input) : this(new LiveScalar<Stream>(input))
+        public InputStreamOf(Func<Stream> input) : this(new Live<Stream>(input))
         { }
 
         /// <summary>

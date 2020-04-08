@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Lists
         /// <param name="list">A threadsafe list</param>
         public SyncList(ICollection<T> list) : base(
             new Scalar.Sync<IList<T>>(
-                new LiveScalar<IList<T>>(() =>
+                new Live<IList<T>>(() =>
                     new LiveList<T>(
                         new Collection.Sync<T>(list)
                     )

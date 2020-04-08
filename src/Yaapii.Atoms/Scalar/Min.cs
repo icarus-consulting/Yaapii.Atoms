@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="items"><see cref="Func{TResult}"/> functions which retrieve items to compare</param>
         public Min(params Func<T>[] items) : this(
             new Enumerable.Mapped<Func<T>, IScalar<T>>(
-                item => new LiveScalar<T>(() => item.Invoke()),
+                item => new Live<T>(() => item.Invoke()),
                 new ManyOf<Func<T>>(items)))
         { }
 
@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="items">items to compare</param>
         public Min(IEnumerable<T> items) : this(
             new Enumerable.Mapped<T, IScalar<T>>(
-                item => new LiveScalar<T>(item),
+                item => new Live<T>(item),
                 items))
         { }
 
@@ -61,7 +61,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="items">items to compare</param>
         public Min(params T[] items) : this(
             new Enumerable.Mapped<T, IScalar<T>>(
-                item => new LiveScalar<T>(item),
+                item => new Live<T>(item),
                 items))
         { }
 

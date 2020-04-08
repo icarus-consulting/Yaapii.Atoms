@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="arguments">arguments to apply</param>
         public Formatted(String ptn, params object[] arguments) : this(
-            new LiveText(ptn), CultureInfo.InvariantCulture, new LiveScalar<object[]>(arguments))
+            new LiveText(ptn), CultureInfo.InvariantCulture, new Live<object[]>(arguments))
         { }
 
         /// <summary>

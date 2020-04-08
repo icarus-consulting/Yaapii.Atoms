@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.IO
         /// A writable <see cref="Stream"/> out of a <see cref="IOutput"/>.
         /// </summary>
         /// <param name="output">an output</param>
-        public OutputStreamTo(IOutput output) : this(new LiveScalar<Stream>(() => output.Stream()))
+        public OutputStreamTo(IOutput output) : this(new Live<Stream>(() => output.Stream()))
         { }
 
         /// <summary>

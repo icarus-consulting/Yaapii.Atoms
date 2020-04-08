@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Lists.Tests
                 new ListOf<int>(
                     new Yaapii.Atoms.Enumerable.HeadOf<int>(
                         new Yaapii.Atoms.Enumerable.Endless<int>(1),
-                        new LiveScalar<int>(() => Interlocked.Increment(ref size))
+                        new Live<int>(() => Interlocked.Increment(ref size))
                 ));
 
             Assert.Equal(3, new Enumerable.LengthOf(list).Value());

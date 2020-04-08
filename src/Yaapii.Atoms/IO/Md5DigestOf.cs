@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="source">Input</param>
         public Md5DigestOf(IInput source) :
-            base(source, new LiveScalar<HashAlgorithm>(() => new MD5CryptoServiceProvider()))
+            base(source, new Live<HashAlgorithm>(() => new MD5CryptoServiceProvider()))
         { }
     }
 }

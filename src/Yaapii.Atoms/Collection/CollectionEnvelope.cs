@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="fnc">Func which delivers <see cref="ICollection{T}"/></param>
         /// <param name="live">value is handled live or sticky</param>
-        public CollectionEnvelope(Func<ICollection<T>> fnc, bool live) : this(new LiveScalar<ICollection<T>>(fnc), live)
+        public CollectionEnvelope(Func<ICollection<T>> fnc, bool live) : this(new Live<ICollection<T>>(fnc), live)
         { }
 
         /// <summary>

@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="first">function to return first value to compare</param>
         /// <param name="second">function to return second value to compare</param>
-        public Equals(Func<T> first, Func<T> second) : this(new LiveScalar<T>(first), new LiveScalar<T>(second))
+        public Equals(Func<T> first, Func<T> second) : this(new Live<T>(first), new Live<T>(second))
         { }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="first">first value to compare</param>
         /// <param name="second">second value to compare</param>
-        public Equals(T first, T second) : this(new LiveScalar<T>(first), new LiveScalar<T>(second))
+        public Equals(T first, T second) : this(new Live<T>(first), new Live<T>(second))
         { }
 
         /// <summary>

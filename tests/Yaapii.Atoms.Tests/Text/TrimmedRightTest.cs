@@ -80,7 +80,7 @@ namespace Yaapii.Atoms.Texts.Tests
             Assert.True(
                 new TrimmedRight(
                     new LiveText(" \b   \t      Hello! \t \b  "), 
-                    new LiveScalar<char[]>(() => new char[] { '\b', '\t', ' ', 'H', '!', 'o' })
+                    new Live<char[]>(() => new char[] { '\b', '\t', ' ', 'H', '!', 'o' })
                 ).AsString() == " \b   \t      Hell"
             );
         }

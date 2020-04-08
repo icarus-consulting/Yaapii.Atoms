@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Func.Tests
                 input =>
                 {
                     iter.MoveNext();
-                    return new LiveScalar<int>(iter.Current);
+                    return new Live<int>(iter.Current);
                 },
                 3
             );
@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.Func.Tests
             () => new RepeatedFunc<bool, IScalar<int>>(
                 input =>
                 {
-                    return new LiveScalar<int>(
+                    return new Live<int>(
                             new Random().Next());
                 },
                 0

@@ -92,9 +92,9 @@ namespace Yaapii.Atoms.Map.Tests
                 new LiveMap<int, int>(() =>
                     new MapOf<int, int>(
                         new Repeated<KeyValuePair<int, int>>(
-                            new LiveScalar<KeyValuePair<int, int>>(() =>
+                            new Live<KeyValuePair<int, int>>(() =>
                                 new KeyValuePair<int, int>(random.Next(), 1)),
-                                new LiveScalar<int>(() =>
+                                new Live<int>(() =>
                                 {
                                     Interlocked.Increment(ref size);
                                     return size;
@@ -187,9 +187,9 @@ namespace Yaapii.Atoms.Map.Tests
                 new LiveMap<int>(() =>
                     new MapOf<int>(
                         new Repeated<KeyValuePair<string, int>>(
-                            new LiveScalar<KeyValuePair<string, int>>(() =>
+                            new Live<KeyValuePair<string, int>>(() =>
                                 new KeyValuePair<string, int>(random.Next() + "", 1)),
-                                new LiveScalar<int>(() =>
+                                new Live<int>(() =>
                                 {
                                     Interlocked.Increment(ref size);
                                     return size;
@@ -280,9 +280,9 @@ namespace Yaapii.Atoms.Map.Tests
                 new LiveMap<int, int>(() =>
                     new MapOf<int, int>(
                         new Repeated<KeyValuePair<int, int>>(
-                            new LiveScalar<KeyValuePair<int, int>>(() =>
+                            new Live<KeyValuePair<int, int>>(() =>
                                 new KeyValuePair<int, int>(random.Next(), 1)),
-                                new LiveScalar<int>(() =>
+                                new Live<int>(() =>
                                 {
                                     Interlocked.Increment(ref size);
                                     return size;

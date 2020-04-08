@@ -139,9 +139,9 @@ namespace Yaapii.Atoms.Map.Tests
             var map =
                 new MapOf(
                     new Repeated<KeyValuePair<string, string>>(
-                        new LiveScalar<KeyValuePair<string, string>>(
+                        new Live<KeyValuePair<string, string>>(
                             () => new KeyValuePair<string, string>(random.Next() + "", "1")),
-                            new LiveScalar<int>(() =>
+                            new Live<int>(() =>
                             {
                                 Interlocked.Increment(ref size);
                                 return size;
@@ -204,9 +204,9 @@ namespace Yaapii.Atoms.Map.Tests
             var map =
                 new MapOf<int>(
                     new Repeated<IKvp<int>>(
-                        new LiveScalar<IKvp<int>>(
+                        new Live<IKvp<int>>(
                             () => new KvpOf<int>(random.Next() + "", 1)),
-                            new LiveScalar<int>(() =>
+                            new Live<int>(() =>
                             {
                                 Interlocked.Increment(ref size);
                                 return size;
@@ -270,9 +270,9 @@ namespace Yaapii.Atoms.Map.Tests
             var map =
                 new MapOf<int, int>(
                     new Repeated<IKvp<int, int>>(
-                        new LiveScalar<IKvp<int, int>>(
+                        new Live<IKvp<int, int>>(
                             () => new KvpOf<int, int>(random.Next(), 1)),
-                            new LiveScalar<int>(() =>
+                            new Live<int>(() =>
                             {
                                 Interlocked.Increment(ref size);
                                 return size;

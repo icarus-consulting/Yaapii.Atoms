@@ -37,14 +37,14 @@ namespace Yaapii.Atoms.Time
         /// <summary>
         /// Current Datetime as ISO
         /// </summary>
-        public DateAsText() : this(new LiveScalar<DateTime>(() => DateTime.Now))
+        public DateAsText() : this(new Live<DateTime>(() => DateTime.Now))
         { }
 
         /// <summary>
         /// A date formatted as ISO
         /// </summary>
         /// <param name="date"></param>
-        public DateAsText(DateTime date) : this(new LiveScalar<DateTime>(date), "o")
+        public DateAsText(DateTime date) : this(new Live<DateTime>(date), "o")
         { }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Time
         /// </summary>
         /// <param name="date">a date</param>
         /// <param name="format">a format pattern</param>
-        public DateAsText(DateTime date, string format) : this(new LiveScalar<DateTime>(date), new TextOf(format), CultureInfo.CurrentCulture)
+        public DateAsText(DateTime date, string format) : this(new Live<DateTime>(date), new TextOf(format), CultureInfo.CurrentCulture)
         { }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Yaapii.Atoms.Time
         /// </summary>
         /// <param name="date">a date</param>
         /// <param name="format">a format pattern</param>
-        public DateAsText(DateTime date, IText format) : this(new LiveScalar<DateTime>(date), format, CultureInfo.CurrentCulture)
+        public DateAsText(DateTime date, IText format) : this(new Live<DateTime>(date), format, CultureInfo.CurrentCulture)
         { }
 
         /// <summary>

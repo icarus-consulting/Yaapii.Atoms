@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         /// <param name="lck">the object to lock</param>
-        public Sync(Func<T> src, object lck) : this(new LiveScalar<T>(src), lck)
+        public Sync(Func<T> src, object lck) : this(new Live<T>(src), lck)
         { }
 
         /// <summary>

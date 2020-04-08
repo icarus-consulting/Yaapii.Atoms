@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to trim</param>
         public TrimmedRight(IText text) : this(
             text, 
-            new LiveScalar<char[]>(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' })
+            new Live<char[]>(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' })
         )
         { }
 
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        public TrimmedRight(IText text, char[] trimText) : this(text, new LiveScalar<char[]>(trimText))
+        public TrimmedRight(IText text, char[] trimText) : this(text, new Live<char[]>(trimText))
         { }
 
         /// <summary>

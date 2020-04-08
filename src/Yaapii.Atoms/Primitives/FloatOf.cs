@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">a float as a text</param>
         /// <param name="culture">a culture of the string</param>
-        public FloatOf(IText text, CultureInfo culture) : this(new LiveScalar<float>(() => float.Parse(text.AsString(), culture.NumberFormat)))
+        public FloatOf(IText text, CultureInfo culture) : this(new Live<float>(() => float.Parse(text.AsString(), culture.NumberFormat)))
         { }
 
         public FloatOf(IScalar<float> value)
