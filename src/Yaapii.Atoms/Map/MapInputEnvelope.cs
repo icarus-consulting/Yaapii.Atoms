@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(IEnumerable<IKvp> kvps) : this(
-            input => new Joined(input, new LazyDict(kvps))
+            input => new Joined(input, new LazyDict(kvps, false))
         )
         { }
 
@@ -136,7 +136,7 @@ namespace Yaapii.Atoms.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(IEnumerable<IKvp<Value>> kvps) : this(
-            input => new Joined<Value>(input, new LazyDict<Value>(kvps))
+            input => new Joined<Value>(input, new LazyDict<Value>(kvps, false))
         )
         { }
 
@@ -210,7 +210,7 @@ namespace Yaapii.Atoms.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(IEnumerable<IKvp<Key, Value>> kvps) : this(
-            input => new Joined<Key, Value>(input, new LazyDict<Key, Value>(kvps))
+            input => new Joined<Key, Value>(input, new LazyDict<Key, Value>(kvps, false))
         )
         { }
 

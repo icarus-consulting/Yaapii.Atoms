@@ -15,7 +15,7 @@ namespace Yaapii.Atoms.Map
     {
         private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
 
-        private readonly Sticky<IDictionary<Key, Value>> origin;
+        private readonly ScalarOf<IDictionary<Key, Value>> origin;
         private readonly Func<Key, Value> fallback;
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="fallback">Fallback generating missing values</param>
         public FallbackMap(Func<IDictionary<Key, Value>> map, Func<Key, Value> fallback)
         {
-            this.origin = new Sticky<IDictionary<Key, Value>>(map);
+            this.origin = new ScalarOf<IDictionary<Key, Value>>(map);
             this.fallback = fallback;
         }
 
@@ -142,7 +142,7 @@ namespace Yaapii.Atoms.Map
     {
         private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
 
-        private readonly Sticky<IDictionary<string, Value>> origin;
+        private readonly ScalarOf<IDictionary<string, Value>> origin;
         private readonly Func<string, Value> fallback;
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="fallback">Fallback generating missing values</param>
         public FallbackMap(Func<IDictionary<string, Value>> map, Func<string, Value> fallback)
         {
-            this.origin = new Sticky<IDictionary<string, Value>>(map);
+            this.origin = new ScalarOf<IDictionary<string, Value>>(map);
             this.fallback = fallback;
         }
 
@@ -268,7 +268,7 @@ namespace Yaapii.Atoms.Map
     {
         private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
 
-        private readonly Sticky<IDictionary<string, string>> origin;
+        private readonly ScalarOf<IDictionary<string, string>> origin;
         private readonly Func<string, string> fallback;
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="fallback">Fallback generating missing values</param>
         public FallbackMap(Func<IDictionary<string, string>> map, Func<string, string> fallback)
         {
-            this.origin = new Sticky<IDictionary<string, string>>(map);
+            this.origin = new ScalarOf<IDictionary<string, string>>(map);
             this.fallback = fallback;
         }
 

@@ -28,7 +28,7 @@ namespace Yaapii.Atoms.Texts
     /// <summary> Check if a text contains a pattern </summary>
     public sealed class Contains : IScalar<bool>
     {
-        private readonly Sticky<bool> result;
+        private readonly ScalarOf<bool> result;
 
         /// <summary> Checks if a text contains a pattern using strings </summary>
         /// <param name="inputStr"> text as string </param>
@@ -72,7 +72,7 @@ namespace Yaapii.Atoms.Texts
         public Contains(Func<string> inputValue, Func<string> pattern, Func<StringComparison> stringComparison)
         {
             this.result = 
-                new Sticky<bool>(() => inputValue().IndexOf(pattern(), stringComparison()) >= 0);
+                new ScalarOf<bool>(() => inputValue().IndexOf(pattern(), stringComparison()) >= 0);
         }
 
         /// <summary> Returns if the inputValue contains the pattern </summary>

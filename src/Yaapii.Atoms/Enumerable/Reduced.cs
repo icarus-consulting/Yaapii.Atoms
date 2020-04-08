@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <typeparam name="T">type of elements in a list to reduce</typeparam>
     public sealed class Reduced<T> : IScalar<T>
     {
-        private readonly Sticky<T> result;
+        private readonly ScalarOf<T> result;
 
         /// <summary>
         /// <see cref="IEnumerable{Element}"/> whose items are folded to one item using the given function.
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Enumerable
         public Reduced(IEnumerable<T> elements, Func<T, T, T> fnc)
         {
             this.result =
-                new Sticky<T>(() =>
+                new ScalarOf<T>(() =>
                 {
                     var enm = elements.GetEnumerator();
 

@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Map
         private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
 
         private readonly Func<IDictionary<string, string>> origin;
-        private readonly Sticky<IDictionary<string, string>> fixedOrigin;
+        private readonly ScalarOf<IDictionary<string, string>> fixedOrigin;
         private readonly bool live;
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Map
         {
             this.origin = origin;
             this.live = live;
-            this.fixedOrigin = new Sticky<IDictionary<string, string>>(origin);
+            this.fixedOrigin = new ScalarOf<IDictionary<string, string>>(origin);
         }
 
         public string this[string key]
@@ -155,7 +155,7 @@ namespace Yaapii.Atoms.Map
         private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
 
         private readonly Func<IDictionary<string, Value>> origin;
-        private readonly Sticky<IDictionary<string, Value>> fixedOrigin;
+        private readonly ScalarOf<IDictionary<string, Value>> fixedOrigin;
         private readonly bool live;
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Yaapii.Atoms.Map
         {
             this.origin = origin;
             this.live = live;
-            this.fixedOrigin = new Sticky<IDictionary<string, Value>>(origin);
+            this.fixedOrigin = new ScalarOf<IDictionary<string, Value>>(origin);
         }
 
         public Value this[string key]
@@ -273,7 +273,7 @@ namespace Yaapii.Atoms.Map
         private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
 
         private readonly Func<IDictionary<Key, Value>> origin;
-        private readonly Sticky<IDictionary<Key, Value>> fixedOrigin;
+        private readonly ScalarOf<IDictionary<Key, Value>> fixedOrigin;
         private readonly bool live;
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Yaapii.Atoms.Map
         {
             this.origin = origin;
             this.live = live;
-            this.fixedOrigin = new Sticky<IDictionary<Key, Value>>(origin);
+            this.fixedOrigin = new ScalarOf<IDictionary<Key, Value>>(origin);
         }
 
         public Value this[Key key]

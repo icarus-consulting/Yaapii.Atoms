@@ -112,7 +112,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="recursive">include all files from sub directories</param>
         public DirectoryOf(IScalar<string> path, IScalar<bool> recursive)
         {
-            this._dir = new Scalar.Sticky<string>(() =>
+            this._dir = new ScalarOf<string>(() =>
             {
             var val = Path.GetFullPath(path.Value());
                 try

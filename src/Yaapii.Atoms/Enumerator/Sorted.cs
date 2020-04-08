@@ -23,6 +23,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoProperties // No Properties
 #pragma warning disable CS1591
@@ -46,7 +47,7 @@ namespace Yaapii.Atoms.Enumerator
         public Sorted(Comparer<T> cmp, IEnumerator<T> src)
         {
             this.sorted =
-                new Scalar.Sticky<IEnumerator<T>>(
+                new ScalarOf<IEnumerator<T>>(
                 () =>
                 {
                     var items = new List<T>();

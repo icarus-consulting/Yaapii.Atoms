@@ -35,7 +35,10 @@ namespace Yaapii.Atoms.Map
         /// Joined map.
         /// </summary>
         public Joined(IKvp kvp, IDictionary<string, string> origin) : this(
-            new LiveMap(kvp), origin
+            new LiveMap(() =>
+                new LiveMany<IKvp>(kvp)
+            ),
+            origin
         )
         { }
 
@@ -43,7 +46,10 @@ namespace Yaapii.Atoms.Map
         /// Joined map.
         /// </summary>
         public Joined(IMapInput input, IDictionary<string, string> origin) : this(
-            new LiveMap(input), origin
+            new LiveMap(() =>
+                new MapOf(input)
+            ),
+            origin
         )
         { }
 

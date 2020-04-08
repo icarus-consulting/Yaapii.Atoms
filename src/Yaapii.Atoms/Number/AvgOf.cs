@@ -108,7 +108,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src"></param>
         public AvgOf(IEnumerable<double> src) : base(
-            new LiveScalar<double>(() =>
+            new ScalarOf<double>(() =>
             {
                 double sum = 0D;
                 double total = 0D;
@@ -123,7 +123,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum / total;
             }),
-            new LiveScalar<int>(() =>
+            new ScalarOf<int>(() =>
             {
                 int sum = 0;
                 int total = 0;
@@ -138,7 +138,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum / total;
             }),
-            new LiveScalar<long>(() =>
+            new ScalarOf<long>(() =>
             {
                 long sum = 0L;
                 long total = 0L;
@@ -153,7 +153,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum / total;
             }),
-            new LiveScalar<float>(() =>
+            new ScalarOf<float>(() =>
             {
                 float sum = 0F;
                 float total = 0F;
@@ -182,7 +182,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src"></param>
         public AvgOf(IEnumerable<int> src) : base(
-            new LiveScalar<double>(() =>
+            new ScalarOf<double>(() =>
             {
                 double sum = 0D;
                 double total = 0D;
@@ -197,7 +197,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum / total;
             }),
-            new LiveScalar<int>(() =>
+            new ScalarOf<int>(() =>
             {
                 int sum = 0;
                 int total = 0;
@@ -212,7 +212,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum / total;
             }),
-            new LiveScalar<long>(() =>
+            new ScalarOf<long>(() =>
             {
                 long sum = 0L;
                 long total = 0L;
@@ -227,7 +227,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum / total;
             }),
-            new LiveScalar<float>(() =>
+            new ScalarOf<float>(() =>
             {
                 float sum = 0F;
                 float total = 0F;
@@ -256,7 +256,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src"></param>
         public AvgOf(IEnumerable<long> src) : base(
-            new LiveScalar<double>(() =>
+            new ScalarOf<double>(() =>
             {
                 double sum = 0D;
                 double total = 0D;
@@ -271,7 +271,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum / total;
             }),
-            new LiveScalar<int>(() =>
+            new ScalarOf<int>(() =>
             {
                 int sum = 0;
                 int total = 0;
@@ -286,7 +286,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum / total;
             }),
-            new LiveScalar<long>(() =>
+            new ScalarOf<long>(() =>
             {
                 long sum = 0L;
                 long total = 0L;
@@ -301,7 +301,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum / total;
             }),
-            new LiveScalar<float>(() =>
+            new ScalarOf<float>(() =>
             {
                 float sum = 0F;
                 float total = 0F;
@@ -330,7 +330,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src"></param>
         public AvgOf(IEnumerable<float> src) : base(
-            new LiveScalar<double>(() =>
+            new ScalarOf<double>(() =>
             {
                 double sum = 0D;
                 double total = 0D;
@@ -345,7 +345,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum / total;
             }),
-            new LiveScalar<int>(() =>
+            new ScalarOf<int>(() =>
             {
                 int sum = 0;
                 int total = 0;
@@ -360,7 +360,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum / total;
             }),
-            new LiveScalar<long>(() =>
+            new ScalarOf<long>(() =>
             {
                 long sum = 0L;
                 long total = 0L;
@@ -375,7 +375,7 @@ namespace Yaapii.Atoms.Number
                 }
                 return sum / total;
             }),
-            new LiveScalar<float>(() =>
+            new ScalarOf<float>(() =>
             {
                 float sum = 0F;
                 float total = 0F;
