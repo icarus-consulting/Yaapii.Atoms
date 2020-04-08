@@ -127,7 +127,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="converter">Converter method who returns the character.</param>
         private CharOf(IScalar<char> converter)
         {
-            _converter = converter;
+            _converter = new ScalarOf<char>(converter);
         }
 
         /// <summary>
