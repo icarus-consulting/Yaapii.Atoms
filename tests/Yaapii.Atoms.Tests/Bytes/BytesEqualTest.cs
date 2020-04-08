@@ -20,50 +20,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using Yaapii.Atoms.Scalar;
+using Xunit;
 
-namespace Yaapii.Atoms.Bytes
+namespace Yaapii.Atoms.Bytes.Tests
 {
-    /// <summary>
-    /// Equality for <see cref="IBytes"/>
-    /// </summary>
-    public sealed class BytesEqual : IScalar<bool>
+    public sealed class BytesEqualTest
     {
-        private readonly IScalar<bool> equals;
-
-        /// <summary>
-        /// Makes a truth about <see cref="IBytes"/> are equal or not.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        public BytesEqual(IBytes left, IBytes right)
+        [Fact]
+        public void TrueCorrectBytes()
         {
-            equals = new ScalarOf<bool>(() =>
-            {
-                var leftBytes = left.AsBytes();
-                var rightBytes = right.AsBytes();
-                var equal = leftBytes.Length == rightBytes.Length;
-
-                for (var i = 0; i < leftBytes.Length && equal; i++)
-                {
-                    if (leftBytes[i] != rightBytes[i])
-                    {
-                        equal = false;
-                        break;
-                    }
-                }
-
-                return equal;
-            });
+            Assert.True(
+                new BytesEqual(
+                    new BytesOf(3.2d),
+                    new BytesOf(3.2d)
+                ).Value()
+            );
         }
 
-        /// <summary>
-        /// Equal or not
-        /// </summary>
-        /// <returns></returns>
-        public bool Value()
+        [Fact]
+        public void FalseDifferentLenght()
         {
-            return this.equals.Value();
+            Assert.False(
+                new BytesEqual(
+                    new BytesOf(1),
+                    new BytesOf(3.2d)
+                ).Value()
+            );
+        }
+
+        [Fact]
+        public void FalseDifferentBytes()
+        {
+            Assert.False(
+                new BytesEqual(
+                    new BytesOf(1),
+                    new BytesOf(3.2d)
+                ).Value()
+            );
         }
     }
 }

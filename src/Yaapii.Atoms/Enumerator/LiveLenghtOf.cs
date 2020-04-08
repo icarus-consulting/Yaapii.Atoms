@@ -20,50 +20,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
+using System.Collections;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Bytes
+namespace Yaapii.Atoms.Enumerator
 {
     /// <summary>
-    /// Equality for <see cref="IBytes"/>
+    /// Length of an <see cref="IEnumerator"/>
     /// </summary>
-    public sealed class BytesEqual : IScalar<bool>
+    public sealed class LiveLengthOf : IScalar<Int32>
     {
-        private readonly IScalar<bool> equals;
+        private readonly IEnumerator items;
 
         /// <summary>
-        /// Makes a truth about <see cref="IBytes"/> are equal or not.
+        /// Length of an <see cref="IEnumerator"/>
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        public BytesEqual(IBytes left, IBytes right)
+        /// <param name="items">enumerator to count</param>
+        public LiveLengthOf(IEnumerator items)
         {
-            equals = new ScalarOf<bool>(() =>
-            {
-                var leftBytes = left.AsBytes();
-                var rightBytes = right.AsBytes();
-                var equal = leftBytes.Length == rightBytes.Length;
-
-                for (var i = 0; i < leftBytes.Length && equal; i++)
-                {
-                    if (leftBytes[i] != rightBytes[i])
-                    {
-                        equal = false;
-                        break;
-                    }
-                }
-
-                return equal;
-            });
+            this.items = items;
         }
 
         /// <summary>
-        /// Equal or not
+        /// Get the length.
         /// </summary>
-        /// <returns></returns>
-        public bool Value()
+        /// <returns>the length</returns>
+        public Int32 Value()
         {
-            return this.equals.Value();
+            int size = 0;
+            while (this.items.MoveNext())
+            {
+                ++size;
+            }
+            return size;
         }
     }
 }
