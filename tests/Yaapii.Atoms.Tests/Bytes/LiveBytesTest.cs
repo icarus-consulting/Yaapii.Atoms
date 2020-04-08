@@ -20,49 +20,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using Yaapii.Atoms.Scalar;
+using Xunit;
+using Yaapii.Atoms.IO;
 
-namespace Yaapii.Atoms.Bytes
+namespace Yaapii.Atoms.Bytes.Tests
 {
-    /// <summary>
-    /// Equality for <see cref="IBytes"/>
-    /// </summary>
-    public sealed class BytesEqual : IScalar<bool>
+    public sealed class LiveBytesTest
     {
-        private readonly IScalar<bool> equal;
-
-        /// <summary>
-        /// Makes a truth about <see cref="IBytes"/> are equal or not.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        public BytesEqual(IBytes left, IBytes right)
+        [Fact]
+        public void ReloadsInput()
         {
-            this.equal = new ScalarOf<bool>(() =>
-            {
-                var leftByte = left.AsBytes();
-                var rightByte = right.AsBytes();
-                var equal = leftByte.Length == rightByte.Length;
-
-                for (var i = 0; i < leftByte.Length && equal; i++)
+            var calls = 0;
+            var bytes = new LiveBytes(() =>
+                new InputOf(() =>
                 {
-                    if (leftByte[i] != rightByte[i])
-                    {
-                        equal = false;
-                        break;
-                    }
-                }
-                return equal;
-            });
+                    ++calls;
+                    return new InputStreamOf("");
+                })
+            );
+            bytes.AsBytes();
+            bytes.AsBytes();
+            Assert.Equal(2, calls);
         }
 
-        /// <summary>
-        /// Equal or not
-        /// </summary>
-        /// <returns></returns>
-        public bool Value()
+        [Fact]
+        public void ReloadsFunc()
         {
-            return this.equal.Value();
+            var calls = 0;
+            var bytes = new LiveBytes(
+                () =>
+                {
+                    ++calls;
+                    return new BytesOf(1);
+                }
+            );
+            bytes.AsBytes();
+            bytes.AsBytes();
+            Assert.Equal(2, calls);
         }
     }
 }

@@ -20,49 +20,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Bytes
 {
     /// <summary>
-    /// Equality for <see cref="IBytes"/>
+    /// Bytes out of other objects that are reloaded on every call
     /// </summary>
-    public sealed class BytesEqual : IScalar<bool>
+    public sealed class LiveBytes : IBytes
     {
-        private readonly IScalar<bool> equal;
+        private readonly IScalar<IBytes> bytes;
 
         /// <summary>
-        /// Makes a truth about <see cref="IBytes"/> are equal or not.
+        /// Reloads the bytes input on every call
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        public BytesEqual(IBytes left, IBytes right)
-        {
-            this.equal = new ScalarOf<bool>(() =>
-            {
-                var leftByte = left.AsBytes();
-                var rightByte = right.AsBytes();
-                var equal = leftByte.Length == rightByte.Length;
+        /// <param name="input">The input</param>
+        public LiveBytes(Func<IInput> input) : this(() => new BytesOf(input()))
+        { }
 
-                for (var i = 0; i < leftByte.Length && equal; i++)
-                {
-                    if (leftByte[i] != rightByte[i])
-                    {
-                        equal = false;
-                        break;
-                    }
-                }
-                return equal;
-            });
+        /// <summary>
+        /// Relaods the bytes on every call
+        /// </summary>
+        /// <param name="bytes"></param>
+        public LiveBytes(Func<IBytes> bytes) : this(new LiveScalar<IBytes>(bytes))
+        { }
+
+        private LiveBytes(IScalar<IBytes> bytes)
+        {
+            this.bytes = bytes;
         }
 
-        /// <summary>
-        /// Equal or not
-        /// </summary>
-        /// <returns></returns>
-        public bool Value()
+        public byte[] AsBytes()
         {
-            return this.equal.Value();
+            return this.bytes.Value().AsBytes();
         }
     }
 }
