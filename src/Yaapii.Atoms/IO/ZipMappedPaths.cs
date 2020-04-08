@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.IO
         public ZipMappedPaths(Func<string, string> mapping, IInput zip)
         {
             this.input =
-                new Sticky<Stream>(() =>
+                new ScalarOf<Stream>(() =>
                 {
                     Stream inMemory = new ValidatedZip(zip).Stream();
                     var newMemory = new MemoryStream();

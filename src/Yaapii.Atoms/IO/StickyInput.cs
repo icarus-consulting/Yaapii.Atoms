@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="input"></param>
         public StickyInput(IInput input)
         {
-            this._cache = new Sticky<byte[]>(
+            this._cache = new ScalarOf<byte[]>(
                 new LiveScalar<byte[]>(() =>
                     {
                         MemoryStream baos = new MemoryStream();

@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class StartsWith : IScalar<bool>
     {
-        private readonly Sticky<bool> result;
+        private readonly ScalarOf<bool> result;
 
         /// <summary>
         /// Checks if a <see cref="IText"/> starts with a given <see cref="string"/>
@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Texts
         public StartsWith(IText text, IText start)
         {
             this.result =
-                new Sticky<bool>(() =>
+                new ScalarOf<bool>(() =>
                 {
                     var regex = new Regex("^" + Regex.Escape(start.AsString()));
                     return regex.IsMatch(text.AsString());

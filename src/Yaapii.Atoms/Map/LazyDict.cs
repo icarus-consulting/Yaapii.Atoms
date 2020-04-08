@@ -36,10 +36,10 @@ namespace Yaapii.Atoms.Map
     /// </summary>
     public sealed class LazyDict : IDictionary<string, string>
     {
-        private readonly IDictionary<string, Sticky<string>> map;
+        private readonly IDictionary<string, ScalarOf<string>> map;
         private readonly UnsupportedOperationException rejectReadException = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
         private readonly bool rejectBuildingAllValues;
-        private readonly Sticky<bool> anyValueIsLazy;
+        private readonly ScalarOf<bool> anyValueIsLazy;
 
         /// <summary>
         /// ctor
@@ -60,16 +60,16 @@ namespace Yaapii.Atoms.Map
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
-                new MapOf<Sticky<string>>(() =>
+                new MapOf<ScalarOf<string>>(() =>
                 {
-                    var dict = new Dictionary<string, Sticky<string>>();
+                    var dict = new Dictionary<string, ScalarOf<string>>();
                     foreach (var kvp in kvps)
                     {
-                        dict[kvp.Key()] = new Sticky<string>(() => kvp.Value());
+                        dict[kvp.Key()] = new ScalarOf<string>(() => kvp.Value());
                     }
                     return dict;
                 });
-            this.anyValueIsLazy = new Sticky<bool>(() =>
+            this.anyValueIsLazy = new ScalarOf<bool>(() =>
             {
                 bool result = false;
                 foreach (var kvp in kvps)
@@ -111,7 +111,7 @@ namespace Yaapii.Atoms.Map
                 }
                 return
                     new LiveList<string>(
-                       new Enumerable.Mapped<Sticky<string>, string>(
+                       new Enumerable.Mapped<ScalarOf<string>, string>(
                            v => v.Value(),
                            map.Values
                        )
@@ -218,7 +218,7 @@ namespace Yaapii.Atoms.Map
                     + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
             }
             return
-                new Enumerable.Mapped<KeyValuePair<string, Sticky<string>>, KeyValuePair<string, string>>(
+                new Enumerable.Mapped<KeyValuePair<string, ScalarOf<string>>, KeyValuePair<string, string>>(
                     kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.Value()),
                     this.map
                 ).GetEnumerator();
@@ -276,10 +276,10 @@ namespace Yaapii.Atoms.Map
     /// </summary>
     public sealed class LazyDict<Value> : IDictionary<string, Value>
     {
-        private readonly IDictionary<string, Sticky<Value>> map;
+        private readonly IDictionary<string, ScalarOf<Value>> map;
         private readonly UnsupportedOperationException rejectReadException = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
         private readonly bool rejectBuildingAllValues;
-        private readonly Sticky<bool> anyValueIsLazy;
+        private readonly ScalarOf<bool> anyValueIsLazy;
 
         /// <summary>
         /// ctor
@@ -300,16 +300,16 @@ namespace Yaapii.Atoms.Map
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
-                new MapOf<Sticky<Value>>(() =>
+                new MapOf<ScalarOf<Value>>(() =>
                 {
-                    var dict = new Dictionary<string, Sticky<Value>>();
+                    var dict = new Dictionary<string, ScalarOf<Value>>();
                     foreach (var kvp in kvps)
                     {
-                        dict[kvp.Key()] = new Sticky<Value>(() => kvp.Value());
+                        dict[kvp.Key()] = new ScalarOf<Value>(() => kvp.Value());
                     }
                     return dict;
                 });
-            this.anyValueIsLazy = new Sticky<bool>(() =>
+            this.anyValueIsLazy = new ScalarOf<bool>(() =>
             {
                 bool result = false;
                 foreach (var kvp in kvps)
@@ -351,7 +351,7 @@ namespace Yaapii.Atoms.Map
                 }
                 return
                     new LiveList<Value>(
-                       new Enumerable.Mapped<Sticky<Value>, Value>(
+                       new Enumerable.Mapped<ScalarOf<Value>, Value>(
                            v => v.Value(),
                            map.Values
                        )
@@ -457,7 +457,7 @@ namespace Yaapii.Atoms.Map
                     + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
             }
             return
-                new Enumerable.Mapped<KeyValuePair<string, Sticky<Value>>, KeyValuePair<string, Value>>(
+                new Enumerable.Mapped<KeyValuePair<string, ScalarOf<Value>>, KeyValuePair<string, Value>>(
                     kvp => new KeyValuePair<string, Value>(kvp.Key, kvp.Value.Value()),
                     this.map
                 ).GetEnumerator();
@@ -515,10 +515,10 @@ namespace Yaapii.Atoms.Map
     /// </summary>
     public sealed class LazyDict<Key, Value> : IDictionary<Key, Value>
     {
-        private readonly IDictionary<Key, Sticky<Value>> map;
+        private readonly IDictionary<Key, ScalarOf<Value>> map;
         private readonly UnsupportedOperationException rejectReadException = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
         private readonly bool rejectBuildingAllValues;
-        private readonly Sticky<bool> anyValueIsLazy;
+        private readonly ScalarOf<bool> anyValueIsLazy;
 
         /// <summary>
         /// ctor
@@ -539,16 +539,16 @@ namespace Yaapii.Atoms.Map
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
-                new MapOf<Key, Sticky<Value>>(() =>
+                new MapOf<Key, ScalarOf<Value>>(() =>
                 {
-                    var dict = new Dictionary<Key, Sticky<Value>>();
+                    var dict = new Dictionary<Key, ScalarOf<Value>>();
                     foreach (var kvp in kvps)
                     {
-                        dict[kvp.Key()] = new Sticky<Value>(() => kvp.Value());
+                        dict[kvp.Key()] = new ScalarOf<Value>(() => kvp.Value());
                     }
                     return dict;
                 });
-            this.anyValueIsLazy = new Sticky<bool>(() =>
+            this.anyValueIsLazy = new ScalarOf<bool>(() =>
             {
                 bool result = false;
                 foreach (var kvp in kvps)
@@ -591,7 +591,7 @@ namespace Yaapii.Atoms.Map
                 }
                 return
                     new LiveList<Value>(
-                       new Enumerable.Mapped<Sticky<Value>, Value>(
+                       new Enumerable.Mapped<ScalarOf<Value>, Value>(
                            v => v.Value(),
                            map.Values
                        )
@@ -699,7 +699,7 @@ namespace Yaapii.Atoms.Map
                     + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
             }
             return
-                new Enumerable.Mapped<KeyValuePair<Key, Sticky<Value>>, KeyValuePair<Key, Value>>(
+                new Enumerable.Mapped<KeyValuePair<Key, ScalarOf<Value>>, KeyValuePair<Key, Value>>(
                     kvp => new KeyValuePair<Key, Value>(kvp.Key, kvp.Value.Value()),
                     this.map
                 ).GetEnumerator();

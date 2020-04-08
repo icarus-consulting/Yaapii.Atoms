@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class LongOf : IScalar<long>
     {
-        private readonly Sticky<long> val;
+        private readonly ScalarOf<long> val;
 
         /// <summary>
         /// A long out of a <see cref="string"/> using invariant culture.
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">a string as a text</param>
         /// <param name="culture">culture of the text</param>
-        public LongOf(IText text, CultureInfo culture) : this(new Sticky<long>(() => Convert.ToInt64(text.AsString(), culture.NumberFormat)))
+        public LongOf(IText text, CultureInfo culture) : this(new ScalarOf<long>(() => Convert.ToInt64(text.AsString(), culture.NumberFormat)))
         { }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="value">a scalar of the number</param>
         public LongOf(IScalar<long> value)
         {
-            val = new Sticky<long>(value);
+            val = new ScalarOf<long>(value);
         }
 
         /// <summary>

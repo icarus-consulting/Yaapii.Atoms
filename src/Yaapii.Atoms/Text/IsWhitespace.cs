@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class IsWhitespace : IScalar<Boolean>
     {
-        private readonly Sticky<bool> result;
+        private readonly ScalarOf<bool> result;
 
         /// <summary>
         /// Checks if a A <see cref="string"/> is whitespace.
@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="text">text to check</param>
         public IsWhitespace(IText text)
         {
-            this.result = new Sticky<bool>(() => !text.AsString().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + "")));
+            this.result = new ScalarOf<bool>(() => !text.AsString().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + "")));
         }
 
         /// <summary>

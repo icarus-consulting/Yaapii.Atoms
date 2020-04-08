@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Lists
     {
         private readonly UnsupportedOperationException readOnlyError = new UnsupportedOperationException("The list is readonly.");
         private readonly Func<IList<T>> origin;
-        private readonly Sticky<IList<T>> fixedOrigin;
+        private readonly ScalarOf<IList<T>> fixedOrigin;
         private readonly bool live;
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Lists
         {
             this.origin = lst;
             this.live = live;
-            this.fixedOrigin = new Sticky<IList<T>>(
+            this.fixedOrigin = new ScalarOf<IList<T>>(
                 () =>
                 {
                     var temp = new List<T>();

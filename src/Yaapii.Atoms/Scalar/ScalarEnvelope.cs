@@ -6,7 +6,7 @@ namespace Yaapii.Atoms.Scalar
 {
     public abstract class ScalarEnvelope<T> : IScalar<T>
     {
-        private readonly Sticky<T> result;
+        private readonly ScalarOf<T> result;
 
         public ScalarEnvelope(Func<T> result)
             : this(new LiveScalar<T>(result))
@@ -14,7 +14,7 @@ namespace Yaapii.Atoms.Scalar
 
         public ScalarEnvelope(IScalar<T> result)
         {
-            this.result = new Sticky<T>(result);
+            this.result = new ScalarOf<T>(result);
         }
 
         /// <summary>

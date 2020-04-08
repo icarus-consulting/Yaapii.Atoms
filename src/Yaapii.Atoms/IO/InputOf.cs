@@ -258,7 +258,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="stream">the input <see cref="Stream"/></param>
         private InputOf(IScalar<Stream> stream)
         {
-            this._origin = new Sticky<Stream>(stream, streamObj => !streamObj.CanRead);
+            this._origin = new ScalarOf<Stream>(stream, streamObj => !streamObj.CanRead);
         }
 
         /// <summary>

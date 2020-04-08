@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class BoolOf : IScalar<Boolean>
     {
-        private readonly Sticky<bool> bl;
+        private readonly ScalarOf<bool> bl;
 
         /// <summary>
         /// <see cref="string"/> as bool
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Texts
         public BoolOf(IText text)
         {
             this.bl =
-                new Sticky<bool>(() =>
+                new ScalarOf<bool>(() =>
                 {
                     try
                     {

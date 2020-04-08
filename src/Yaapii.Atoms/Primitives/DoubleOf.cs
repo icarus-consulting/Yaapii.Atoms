@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class DoubleOf : IScalar<Double>
     {
-        private readonly Sticky<Double> val;
+        private readonly ScalarOf<Double> val;
 
         /// <summary>
         /// A double out of <see cref="string"/>.
@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="value">a scalar of the double to sum</param>
         public DoubleOf(IScalar<Double> value)
         {
-            val = new Sticky<Double>(value);
+            val = new ScalarOf<Double>(value);
         }
 
         /// <summary>

@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.IO
         /// A directory that cleans up when disposed.
         /// </summary>
         public TempDirectory() : this(
-            new Sticky<string>(() =>
+            new ScalarOf<string>(() =>
                 Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())
             )
         )

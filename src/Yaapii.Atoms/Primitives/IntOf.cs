@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Texts
     /// </summary>
     public sealed class IntOf : IScalar<Int32>
     {
-        private readonly Sticky<int> val;
+        private readonly ScalarOf<int> val;
 
         /// <summary>
         /// A int out of a <see cref="string"/> using invariant culture.
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Texts
         /// </summary>
         /// <param name="text">a int as a string</param>
         /// <param name="culture">culture of the string</param>
-        public IntOf(IText text, CultureInfo culture) : this(new Sticky<int>(() => Convert.ToInt32(text.AsString(), culture.NumberFormat)))
+        public IntOf(IText text, CultureInfo culture) : this(new ScalarOf<int>(() => Convert.ToInt32(text.AsString(), culture.NumberFormat)))
         { }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Yaapii.Atoms.Texts
         /// <param name="value">the scalar returning the float</param>
         private IntOf(IScalar<int> value)
         {
-            val = new Sticky<int>(value);
+            val = new ScalarOf<int>(value);
         }
 
         /// <summary>
