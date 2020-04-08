@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="bytes"></param>
         public BytesBase64(IBytes bytes)
         {
-            this.bytes = new Sticky<byte[]>(() =>
+            this.bytes = new ScalarOf<byte[]>(() =>
                 Encoding.UTF8.GetBytes(
                     Convert.ToBase64String(
                         bytes.AsBytes()

@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="origin">The string in Hex format</param>
         public HexBytes(IText origin)
         {
-            this.bytes = new Sticky<byte[]>(() =>
+            this.bytes = new ScalarOf<byte[]>(() =>
             {
                 var hex = origin.AsString();
                 if ((hex.Length & 1) == 1)

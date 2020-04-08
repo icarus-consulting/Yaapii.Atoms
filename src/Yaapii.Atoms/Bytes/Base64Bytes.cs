@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="bytes">origin bytes</param>
         public Base64Bytes(IBytes bytes)
         {
-            this.bytes = new Sticky<byte[]>(() =>
+            this.bytes = new ScalarOf<byte[]>(() =>
             {
                 var byts = bytes.AsBytes();
                 string base64String = Encoding.UTF8.GetString(byts, 0, byts.Length);

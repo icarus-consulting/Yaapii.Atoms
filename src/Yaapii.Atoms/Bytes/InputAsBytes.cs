@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="max">maximum buffer size</param>
         public InputAsBytes(IInput input, int max = 16 << 10)
         {
-            this.bytes = new Sticky<byte[]>(() =>
+            this.bytes = new ScalarOf<byte[]>(() =>
             {
                 var baos = new MemoryStream();
                 byte[] output;
