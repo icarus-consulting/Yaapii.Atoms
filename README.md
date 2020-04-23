@@ -9,7 +9,11 @@ This is a .NET port of the java library [Cactoos](https://github.com/yegor256/ca
 
 It follows all the rules suggested in the two "[Elegant Objects](https://www.amazon.de/Elegant-Objects-Yegor-Bugayenko/dp/1519166915)" books.
 
+
+
 # Table Of Contents
+- [Design Change](#Design-change-V1.0-vs-V2.0)
+- [Migration](#migration)
 - [Functions](#functions)
 - [IO Input / Output](#io-input--output)
 - [Lists](#lists)
@@ -17,7 +21,168 @@ It follows all the rules suggested in the two "[Elegant Objects](https://www.ama
 - [Text](#text)
 - [LinQ Analogy](#linq-analogy)
 
+
+
+## Design change Version 1.0 vs 2.0
+
+### Caching
+
+Version 1 of Atoms follows the principles of cactoos. All objects in cactoos are so-called live objects. This means, if you create a Text from a url ```new TextOf(new Uri("http://www.google.de"))```, every call to that object will fetch the content again. There is no caching until you explicitely define it by using a Sticky object. Sticky objects exist for all Types (Text, Enumerable, Map...).
+
+However, after two years of working with Atoms, we realized that developers in our teams tend to think differently. They build objects and use them as if they have been cached. This produces a lot of unnecessary calculations and leads to slowdowns in our apps which we then solve in a second round where we analyze which objects should have been sticky. On the other hand, there are only a few cases where developers really need the live sensing of changes. 
+
+This has led to the decision to invert the library caching principle. **Atoms 2.0 now has all objects sticky by default**. We then introduced new **Live** Decorators instead. So if you need an object which senses changes, you decorate it using the live decorator:
+
+```csharp
+var currency = new Live(() => new TextOf(new Uri("https://api.exchangeratesapi.io/latest")));
+```
+
+Live decorators are available for all types.
+
+
+
+#### Caching envelopes
+
+If you want to write your own objects based on Atoms envelopes, you have a switch which you can use to tell the envelope if it should behave as a live object or not (default is no)
+
+```csharp
+public sealed class MyLiveTextObject : TextEnvelope
+{
+	MyLiveTextObject : base(..., live: true)
+}
+```
+
+
+
+#### Exception: Input and output
+
+Input and Output types are not sticky by default.
+
+
+
+
+
+### Shorthand Generics
+
+While Java developers can skip the generic expression in constructors, C# does not allow it. We added shorthand objects to allow skipping it if you use string as generic, for Enumerables and Maps. You have two objects to make an Enumerable: ```new ManyOf``` to get an enumerable of strings and ```new ManyOf<T>``` if you need another type.
+
+There are three objects to make a map:
+
+```csharp
+new MapOf(new KvpOf("Key", "Value")); //A map string to string
+new MapOf<int>(new KvpOf<int>("Key", 123)); //A map string to generic
+new MapOf<int, int>(new KvpOf<int, int>(123, 123)); //A map string to generic
+```
+
+Envelopes are available for all three map types.
+
+
+
+### Migration
+
+We decided to not leave the old sticky objects in the new version to get a fresh start.
+
+If you want to migrate from 1.x to 2.x and want to preserve the behaviour regarding sticky objects, you should (in this order):
+
+- Replace ```ScalarOf``` with ```Live```
+- Replace ```Sticky``` with ```ScalarOf```
+- Replace ```ManyOf``` with ```LiveMany```
+- Replace ```StickyEnumerable``` with ``ManyOf``
+- Replace ```ListOf``` with ```LiveList```
+- Replace ```StickyList``` with ``ListOf``
+- Replace ```CollectionOf``` with ```LiveCollection```
+- Replace ```Collection.Sticky``` with ```CollectionOf```
+- Replace ```TextOf``` with ```LiveText``` (StickyText did not exist)
+- Replace ```NumberOf``` with ```LiveNumber``` (Stickynumber did not exist)
+
+
+
+## Maps
+
+Maps are grouped in the Lookup Area of atoms. All map objects implement C# ```IDictionary<Key, Value> ``` interface.
+
+```csharp
+var map = new MapOf<string, int>("Amount", 100);
+```
+
+#### Kvp
+
+CSharp maps use ```KeyValuePair<Key,Value>``` as contents. These are structs and therefore not objects which we can implement or decorate. Atoms offers the type ```IKVp<Key,Value>``` as alternative.
+
+```csharp
+var map = 
+   new MapOf<string,int>(
+      new KvpOf<string,int>("firstname", "Mickey"),
+      new KvpOf<string,int>("lastname", "Rat"),
+   )
+```
+
+
+
+#### Lazy values
+
+This allows maps to accept functions to build the value, and get a simple **strategy pattern**
+
+```csharp
+//If you ask the map for "github", it will execute the function and retrieve the content. The content of the first kvp is NOT retrieved.
+var githubContent =
+   new MapOf<string,string>(
+      new KvpOf<string,string>("google", () => new TextOf(new Uri("https://www.google.de"))),
+      new KvpOf<string,string>("github", () => new TextOf(new Uri("https://www.github.com")))
+   )["github"];
+
+//Note that MapOf is sticky, so if you need live content, decorate the map:
+var liveContent =
+   new LiveMap<string,string>(() =>
+      new MapOf<string,string>(
+         new KvpOf<string,string>("google", () => new TextOf(new Uri("https://www.google.de"))),
+         new KvpOf<string,string>("github", () => new TextOf(new Uri("https://www.github.com")))
+      )
+   )["github"];
+
+//Beware: If you have lazy values, you normally do NOT want to execute all functions. Atoms prevents it, so the following will fail:
+foreach(var doNotDoThis in githubContent)
+{
+   ...
+}
+
+//If you know that you need all values, simply enumerate the keys:
+foreach(var key in githubContent.Keys)
+{
+  var value = githubContent[key];
+}
+```
+
+
+
+#### Shorthand Generics
+
+To save typing, there are two shorthand map objects:
+
+```csharp
+new MapOf(new KvpOf("Key", "Value")) //Use without generic to get a string-string map
+new MapOf<int>(new KvpOf("Key", 100)) //Use without generic to get a string-generic map
+```
+
+
+
+#### Shorthand Stringmap
+
+You can make a string-string map by simple writing value pairs one after another:
+
+```csharp
+var translations = 
+   new MapOf(
+   	"Objects", "Objekte",
+   	"Functions", "Funktionen",
+   	"Bigmac", "Viertelpfünder mit Käse"
+   )
+```
+
+
+
 ## Functions
+
 The interfaces are:
 ```csharp
 //Function with input and output
@@ -198,8 +363,8 @@ new LengthOf(
 var html1 = input.AsString(); //will read the url from the web
 var html2 = input.AsString(); //will return from the cache
 ```
-## Lists
-Lists use the IEnumerable<T> and IEnumerator<T> interfaces from C#:
+## Enumerables
+Enumerables use the IEnumerable<T> and IEnumerator<T> interfaces from C#:
 ```csharp
 public interface IEnumerable<out T> : IEnumerable
 {
@@ -211,28 +376,41 @@ public interface IEnumerator<out T> : IEnumerator, IDisposable
     T Current { get; }
 }
 ```
-### Filter lists
+### Base Objects
+
+Naming of base objects differs. To save chars, shorthand names are used: 
+
+```csharp
+//use without generic and get an IEnumerable<string>
+var strings = new ManyOf("a string", "another string"); 
+
+//use with generic and get an IEnumerable<T>
+var ints = new ManyOf<int>(98, 20); 
+```
+
+### Filter
+
 ```csharp
 new Filtered<string>(
     new List<string>() { "A", "B", "C" },
     (input) => input != "B"); //will be a list with "A" and "C" inside
 ```
-### Get an item from a list
+### Get an item from an enumerable
 ```csharp
 new ItemAt<int>(
-        new EnumerableOf<int>(1, 2, 3),
+        new ManyOf<int>(1, 2, 3),
         2
     ).Value(); //will be 3 (Zero based)
 
 //To get the first item simply do not specify a position:
 new ItemAt<int>(
-        new EnumerableOf<int>(1, 2, 3)
+        new ManyOf<int>(1, 2, 3)
     ).Value(); //will be 1
 
 //To get an item with a fallback if it isn't there:
 String fallback = "fallback";
                 new ItemAt<string>(
-                    new EnumerableOf<string>(), //empty list,
+                    new ManyOf<string>(), //empty list,
                     12, //position 12 which does not exist
                     fallback
                 ).Value(); //will be "fallback"
@@ -241,29 +419,29 @@ String fallback = "fallback";
 ```csharp
 //Default sorting is forward
 new Sorted<int>(
-    new EnumerableOf<int>(3, 2, 10, 44, -6, 0)
+    new ManyOf<int>(3, 2, 10, 44, -6, 0)
 ); //items will be sorted to -6, 0, 2, 3, 10, 44
 
 //Use another comparator for sorting
 new Sorted<string>(
     IReverseComparer<string>.Default, //comparator is from C#.NET library
-    new EnumerableOf<string>(
+    new ManyOf<string>(
         "a", "c", "hello", "dude", "Friend"
     )
 ); //will be sorted to hello, Friend, dude, c, a
 ```
-### Count items in lists
+### Count items in enumerables
 ```csharp
 var l = new LengthOf<int>(
-            new EnumerableOf<int>(1, 2, 3, 4, 5)
+            new ManyOf<int>(1, 2, 3, 4, 5)
         ).Value(); //will be 5
 ```
-### Map items in a list to another type
+### Map items in an enumerable to another type
 ```csharp
 IText greeting = 
     new ItemAt<IText>(
         new Mapped<String, IText>(
-            new EnumerableOf<string>("hello", "world", "damn"),
+            new ManyOf<string>("hello", "world", "damn"),
             input => new UpperText(new TextOf(input)) //is applied to every item and will make a uppertext of it
             ),
         0
@@ -276,13 +454,13 @@ new Mapped<string,string>(
     (input, index) => $"{input}={index+1}");
 // Returns a IEnumerable<string> with Content {"One=1", "Two=2", Three=3"}
 ```
-    
+
 ### Create cycling lists
 ```csharp
 //here is a list with 3 items and you call the 7th item. The cycled list will not fail but start over when it reaches the end.
 new ItemAt<string>(
     new Cycled<string>( //make a cycled list of the enumerable with 3 items
-        new EnumerableOf<string>(
+        new ManyOf<string>(
             "one", "two", "three"
             )),
     7
@@ -292,9 +470,9 @@ new ItemAt<string>(
 ```csharp
 new LengthOf(
     new Joined<string>(
-        new EnumerableOf<string>("hello", "world", "Miro"),
-        new EnumerableOf<string>("how", "are", "you"),
-        new EnumerableOf<string>("what's", "up")
+        new ManyOf<string>("hello", "world", "Miro"),
+        new ManyOf<string>("how", "are", "you"),
+        new ManyOf<string>("what's", "up")
     )
 ).Value(); //will be 8
 ```
@@ -302,7 +480,7 @@ new LengthOf(
 ```csharp
 new SumOfInts(
     new HeadOf<int>(
-        new EnumerableOf<int>(0, 1, 2, 3, 4),
+        new ManyOf<int>(0, 1, 2, 3, 4),
         3
     )).Value(); //will be 3 (0 + 1 + 2)
 ```
@@ -340,7 +518,7 @@ var sc1 = new ScalarOf<string>("this brave string");
 string str = sc.Value(); //returns the string
 
 var sc2 = new ScalarOf<IEnumerable<int>>(
-            new EnumerableOf<int>(1,2,3,4,5));
+            new ManyOf<int>(1,2,3,4,5));
 IEnumerable<int> lst = sc2.Value(); //returns the list
 ```
 ### Encapsulate functions
@@ -369,7 +547,7 @@ string html = sc.Value(); //will fetch the html from the url and return it as a 
 
 string html = sc.Value(); //will fetch the html from the url and return it as a string
 string html2 = sc.Value(); //will return the html from the cache
-```
+ ```
 ### Logical And
 ```csharp
 var result = 
@@ -524,57 +702,57 @@ new TextOf(
 ## LinQ Analogy
 ### Standard Query Operators
 
-LinQ                  | Yaapii.Atoms
-----------------------|-------------
-**Aggregate**         |*Not available yet*
-**All**               | And&lt;T&gt; <!--pre>var allResult = new And&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;() { "A", "B", "C" },<br>&nbsp;&nbsp;(input) => input != "B"<br>); //newFiltered contains A & C</pre-->
-**Any**		       |Or&lt;T&gt;<!--pre>var b = new Contains&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("Hello", "my", "cat", "is", "missing"),<br>&nbsp;&nbsp;(str) => str == "cat"<br>).Value()); //b = true </pre--> 
-**AsEnumerable**      |<pre>var arr = new int[]{ 1, 2, 3, 4 }; <br>var enumerable = new EnumerableOf&lt;int&gt;(arr);</pre>
-**Average**           |<pre>var avg = new AvgOf(1, 2, 3, 4).AsFloat(); //avg = 2.5</pre>
-**Cast**              |*Not available yet*
-**Concat**            |<pre>var joined = new Joined&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("dies", "ist"),<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("ein", "Test")<br>).Value(); //joined = {"dies", "ist", "ein", "Test"}</pre>
-**Contains**          |<pre>var b = new Contains&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("Hello", "my", "cat", "is", "missing"),<br>&nbsp;&nbsp;(str) => str == "cat"<br>).Value()); //b = true
-**Count**             |<pre>var length = new LengthOf&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(1, 2, 3, 4, 5)<br>).Value(); //length will be 5</pre>
-**DefaultIfEmpty**    |*Not available yet*
-**Distinct**          |<pre>var dis = new Distinct&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(1, 2, 3),<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(10, 2, 30)<br>).Value() // dis = {1, 2, 3, 10, 30}</pre> //actual with bug
-**ElementAt**         |<pre>var itm = new ItemAt&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(0,2,5),<br>&nbsp;&nbsp; 2<br>).Value() //itm = 2</pre>
-**ElementAtOrDefault**|<pre>var itm = new ItemAt&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;(),<br>&nbsp;&nbsp;12,<br>&nbsp;&nbsp;fallback<br>).Value() // itm = "fallback"</pre>
-**Empty**             |<pre>new EnmuerableOf&lt;int&gt;()</pre>
-**Except**            |*Not available yet*
-**First**             |<pre>var list = new EnumerableO&lt;int&gt;(1, 2, 3);<br>&nbsp;var first = new ItemAt&lt;int&gt;(list).Value();<br>&nbsp;// first = 1</pre>
-**FirstOrDefault**    |<pre>var itm = new ItemAt&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;(),<br>&nbsp;&nbsp;1,<br>&nbsp;&nbsp;fallback<br>).Value() // itm = "fallback"</pre>
-**Foreach**		   |<pre>var list = new List[];<br> new Each&lt;int&gt;(<br>&nbsp;&nbsp;(i) => lst[i] = i,<br>&nbsp;&nbsp;0,1,2<br>).Invoke(); //eachlist = {0,1,2}
-**GroupBy**           |*Not available yet*
-**GroupJoin**         |*Not available yet*
-**Intersect**         |*Not available yet*
-**Join**              |*Not available yet*
-**Last**              |<pre>var last = new ItemAt&lt;int&gt;(<br>&nbsp;&nbsp;new Reversed&lt;int&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;new EnumerableOf(5, 6 ,7 ,8)<br>&nbsp;&nbsp;)<br>).Value() // last = 8</pre>
-**LastOrDefault**     |<pre>var itm = new ItemAt&lt;string&gt;(<br>&nbsp;&nbsp;new Reversed&lt;string&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;new EnumerableOf&lt;string&gt;()<br>&nbsp;&nbsp;),<br>&nbsp;&nbsp;1,<br>&nbsp;&nbsp;fallback<br>).Value() // itm = "fallback"</pre>
-**LongCount**         |*Not available yet**
-**Max**               |<pre>var max = new MaxOf(22, 2.5, 35.8).AsDouble(); //max = 35.8; .AsInt() = 35</pre>|
-**Min**               |<pre>var max = new MaxOf(22, 2.5, 35.8).AsDouble(); //max = 2.5; .AsInt() = 2</pre>
-**OfType**            |*Not available yet*
-**OrderBy**           |<pre>var sorted = new Sorted&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(3, 2, 10, 44, -6, 0)<br>) //sorted = {-6, 0, 2, 3, 10, 44</pre>
-**OrderByDescending** |<pre>var sorted = new Sorted&lt;string&gt;(<br>&nbsp;&nbsp;IReverseComparer&lt;string&gt;.Default,<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("a", "c", "hello", "dude", "Friend")<br>) //sorted = {hello, Friend, dude, c, a}</pre>
-**Range**             |*Not available yet*
-**Repeat**            |<pre>var repeated = new Repeated&lt;int&gt;(10,5) // repeated = {10, 10, 10, 10, 10}</pre>
-**Reverse**           |<pre> var reversed = new Reversed&lt;int&gt;(EnumerableOf<int>(2,3,4)); //reversed = {4,3,2}</pre>
-**Select**            |<pre>var selected = Mapped&lt;string,string&gt;(<br>&nbsp;&nbsp;new List&lt;string&gt;() {"One", "Two", Three"}, <br>&nbsp;&nbsp;(tStr, index) => $"{tStr}={index+1}"<br>)// selected = {"One=1", "Two=2", Three=3"}</pre>
-**SelectMany**        |*Not available yet*
-**SequenceEqual**     |*Not available yet*
-**Single**            |*Not available yet*
-**SingleOrDefault**   |*Not available yet*
-**Skip**              |<pre>var skipped = new Skipped&lt;string&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;string&gt;("one", "two", "three", "four"),<br>&nbsp;&nbsp;2<br>) // skipped = {three, four}</pre>
-**SkipWhile**         |*Not available yet*
-**Sum**               |<pre>var sum = new SumOf(<br>&nbsp;&nbsp;1.5F, 2.5F, 3.5F<br>).AsFloat() //sum = 7.5</pre>
-**Take**              |<pre>var lmt = new HeadOf&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(0, 1, 2, 3, 4),<br>&nbsp;&nbsp;3<br>)//lmt = {0, 1, 2}</pre>
-**TakeWhile**         |*Not available yet*
-**ThenBy**            |*Not available yet*
-**ThenByDescending**  |*Not available yet*
-**ToArray**           |*Not available yet*
-**ToDictionary**      |<pre>var dic = new MapOf(<br>&nbsp;&nbsp;new Enumerable&lt;KeyValuePair<string,string&gt;>(<br>&nbsp;&nbsp;&nbsp;&nbsp;new KyValuePair&lt;string,string&gt;("key","value"),<br>&nbsp;&nbsp;&nbsp;&nbsp;new KyValuePair&lt;string,string&gt;("key2", "value2")<br>&nbsp;&nbsp;)<br>) // dic = {{key, value}{key2, value2}}</pre>
-**ToList**            |<pre>var list = new CollectionOf&lt;int&gt;(<br>&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(1,2,3,4)<br>);</pre>
-**ToLookup**          |*Not available yet*
-**Union**             |<pre>var enu = new Distinct&lt;int&gt;(<br>&nbsp;&nbsp;new Joined&lt;int&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(1,2,3,4),<br>&nbsp;&nbsp;&nbsp;&nbsp;new EnumerableOf&lt;int&gt;(3,4,5,6)<br>&nbsp;&nbsp;).Value()<br>).Value(); //enu ={1,2,3,4,5,6} </pre>
-**Where**             |<pre>var newFiltered = new Filtered&lt;string&gt;(<br>&nbsp;&nbsp;new List&lt;string&gt;() { "A", "B", "C" },<br>&nbsp;&nbsp;(input) => input != "B"<br>); //newFiltered contains A & C</pre>
-**Zip**               |*Not available yet*
+| LinQ                   | Yaapii.Atoms                             |
+| ---------------------- | ---------------------------------------- |
+| **Aggregate**          | *Not available yet*                      |
+| **All**                | And&lt;T&gt; <!--pre>var allResult = new And&lt;string&gt;(<br>&nbsp;&nbsp;new ManyOf&lt;string&gt;() { "A", "B", "C" },<br>&nbsp;&nbsp;(input) => input != "B"<br>); //newFiltered contains A & C</pre--> |
+| **Any**                | Or&lt;T&gt;<!--pre>var b = new Contains&lt;string&gt;(<br>&nbsp;&nbsp;new ManyOf&lt;string&gt;("Hello", "my", "cat", "is", "missing"),<br>&nbsp;&nbsp;(str) => str == "cat"<br>).Value()); //b = true </pre--> |
+| **AsEnumerable**       | <pre>var arr = new int[]{ 1, 2, 3, 4 }; <br>var enumerable = new ManyOf&lt;int&gt;(arr);</pre> |
+| **Average**            | <pre>var avg = new AvgOf(1, 2, 3, 4).AsFloat(); //avg = 2.5</pre> |
+| **Cast**               | *Not available yet*                      |
+| **Concat**             | <pre>var joined = new Joined&lt;string&gt;(<br>&nbsp;&nbsp;new ManyOf&lt;string&gt;("dies", "ist"),<br>&nbsp;&nbsp;new ManyOf&lt;string&gt;("ein", "Test")<br>).Value(); //joined = {"dies", "ist", "ein", "Test"}</pre> |
+| **Contains**           | <pre>var b = new Contains&lt;string&gt;(<br>&nbsp;&nbsp;new ManyOf&lt;string&gt;("Hello", "my", "cat", "is", "missing"),<br>&nbsp;&nbsp;(str) => str == "cat"<br>).Value()); //b = true |
+| **Count**              | <pre>var length = new LengthOf&lt;int&gt;(<br>&nbsp;&nbsp;new ManyOf&lt;int&gt;(1, 2, 3, 4, 5)<br>).Value(); //length will be 5</pre> |
+| **DefaultIfEmpty**     | *Not available yet*                      |
+| **Distinct**           | <pre>var dis = new Distinct&lt;int&gt;(<br>&nbsp;&nbsp;new ManyOf&lt;int&gt;(1, 2, 3),<br>&nbsp;&nbsp;new ManyOf&lt;int&gt;(10, 2, 30)<br>).Value() // dis = {1, 2, 3, 10, 30}</pre> //actual with bug |
+| **ElementAt**          | <pre>var itm = new ItemAt&lt;int&gt;(<br>&nbsp;&nbsp;new ManyOf&lt;int&gt;(0,2,5),<br>&nbsp;&nbsp; 2<br>).Value() //itm = 2</pre> |
+| **ElementAtOrDefault** | <pre>var itm = new ItemAt&lt;string&gt;(<br>&nbsp;&nbsp;new ManyOf&lt;string&gt;(),<br>&nbsp;&nbsp;12,<br>&nbsp;&nbsp;fallback<br>).Value() // itm = "fallback"</pre> |
+| **Empty**              | <pre>new EnmuerableOf&lt;int&gt;()</pre> |
+| **Except**             | *Not available yet*                      |
+| **First**              | <pre>var list = new EnumerableO&lt;int&gt;(1, 2, 3);<br>&nbsp;var first = new ItemAt&lt;int&gt;(list).Value();<br>&nbsp;// first = 1</pre> |
+| **FirstOrDefault**     | <pre>var itm = new ItemAt&lt;string&gt;(<br>&nbsp;&nbsp;new ManyOf&lt;string&gt;(),<br>&nbsp;&nbsp;1,<br>&nbsp;&nbsp;fallback<br>).Value() // itm = "fallback"</pre> |
+| **Foreach**            | <pre>var list = new List[];<br> new Each&lt;int&gt;(<br>&nbsp;&nbsp;(i) => lst[i] = i,<br>&nbsp;&nbsp;0,1,2<br>).Invoke(); //eachlist = {0,1,2} |
+| **GroupBy**            | *Not available yet*                      |
+| **GroupJoin**          | *Not available yet*                      |
+| **Intersect**          | *Not available yet*                      |
+| **Join**               | *Not available yet*                      |
+| **Last**               | <pre>var last = new ItemAt&lt;int&gt;(<br>&nbsp;&nbsp;new Reversed&lt;int&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;new ManyOf(5, 6 ,7 ,8)<br>&nbsp;&nbsp;)<br>).Value() // last = 8</pre> |
+| **LastOrDefault**      | <pre>var itm = new ItemAt&lt;string&gt;(<br>&nbsp;&nbsp;new Reversed&lt;string&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;new ManyOf&lt;string&gt;()<br>&nbsp;&nbsp;),<br>&nbsp;&nbsp;1,<br>&nbsp;&nbsp;fallback<br>).Value() // itm = "fallback"</pre> |
+| **LongCount**          | *Not available yet**                     |
+| **Max**                | <pre>var max = new MaxOf(22, 2.5, 35.8).AsDouble(); //max = 35.8; .AsInt() = 35</pre> |
+| **Min**                | <pre>var max = new MaxOf(22, 2.5, 35.8).AsDouble(); //max = 2.5; .AsInt() = 2</pre> |
+| **OfType**             | *Not available yet*                      |
+| **OrderBy**            | <pre>var sorted = new Sorted&lt;int&gt;(<br>&nbsp;&nbsp;new ManyOf&lt;int&gt;(3, 2, 10, 44, -6, 0)<br>) //sorted = {-6, 0, 2, 3, 10, 44</pre> |
+| **OrderByDescending**  | <pre>var sorted = new Sorted&lt;string&gt;(<br>&nbsp;&nbsp;IReverseComparer&lt;string&gt;.Default,<br>&nbsp;&nbsp;new ManyOf&lt;string&gt;("a", "c", "hello", "dude", "Friend")<br>) //sorted = {hello, Friend, dude, c, a}</pre> |
+| **Range**              | *Not available yet*                      |
+| **Repeat**             | <pre>var repeated = new Repeated&lt;int&gt;(10,5) // repeated = {10, 10, 10, 10, 10}</pre> |
+| **Reverse**            | <pre> var reversed = new Reversed&lt;int&gt;(ManyOf<int>(2,3,4)); //reversed = {4,3,2}</pre> |
+| **Select**             | <pre>var selected = Mapped&lt;string,string&gt;(<br>&nbsp;&nbsp;new List&lt;string&gt;() {"One", "Two", Three"}, <br>&nbsp;&nbsp;(tStr, index) => $"{tStr}={index+1}"<br>)// selected = {"One=1", "Two=2", Three=3"}</pre> |
+| **SelectMany**         | *Not available yet*                      |
+| **SequenceEqual**      | *Not available yet*                      |
+| **Single**             | *Not available yet*                      |
+| **SingleOrDefault**    | *Not available yet*                      |
+| **Skip**               | <pre>var skipped = new Skipped&lt;string&gt;(<br>&nbsp;&nbsp;new ManyOf&lt;string&gt;("one", "two", "three", "four"),<br>&nbsp;&nbsp;2<br>) // skipped = {three, four}</pre> |
+| **SkipWhile**          | *Not available yet*                      |
+| **Sum**                | <pre>var sum = new SumOf(<br>&nbsp;&nbsp;1.5F, 2.5F, 3.5F<br>).AsFloat() //sum = 7.5</pre> |
+| **Take**               | <pre>var lmt = new HeadOf&lt;int&gt;(<br>&nbsp;&nbsp;new ManyOf&lt;int&gt;(0, 1, 2, 3, 4),<br>&nbsp;&nbsp;3<br>)//lmt = {0, 1, 2}</pre> |
+| **TakeWhile**          | *Not available yet*                      |
+| **ThenBy**             | *Not available yet*                      |
+| **ThenByDescending**   | *Not available yet*                      |
+| **ToArray**            | *Not available yet*                      |
+| **ToDictionary**       | <pre>var dic = new MapOf(<br>&nbsp;&nbsp;new Enumerable&lt;KeyValuePair<string,string&gt;>(<br>&nbsp;&nbsp;&nbsp;&nbsp;new KyValuePair&lt;string,string&gt;("key","value"),<br>&nbsp;&nbsp;&nbsp;&nbsp;new KyValuePair&lt;string,string&gt;("key2", "value2")<br>&nbsp;&nbsp;)<br>) // dic = {{key, value}{key2, value2}}</pre> |
+| **ToList**             | <pre>var list = new CollectionOf&lt;int&gt;(<br>&nbsp;&nbsp;new ManyOf&lt;int&gt;(1,2,3,4)<br>);</pre> |
+| **ToLookup**           | *Not available yet*                      |
+| **Union**              | <pre>var enu = new Distinct&lt;int&gt;(<br>&nbsp;&nbsp;new Joined&lt;int&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;new ManyOf&lt;int&gt;(1,2,3,4),<br>&nbsp;&nbsp;&nbsp;&nbsp;new ManyOf&lt;int&gt;(3,4,5,6)<br>&nbsp;&nbsp;).Value()<br>).Value(); //enu ={1,2,3,4,5,6} </pre> |
+| **Where**              | <pre>var newFiltered = new Filtered&lt;string&gt;(<br>&nbsp;&nbsp;new List&lt;string&gt;() { "A", "B", "C" },<br>&nbsp;&nbsp;(input) => input != "B"<br>); //newFiltered contains A & C</pre> |
+| **Zip**                | *Not available yet*                      |
