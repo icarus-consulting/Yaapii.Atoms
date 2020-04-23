@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
-using Yaapii.Atoms.Lists;
+using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Scalar.Tests
 {

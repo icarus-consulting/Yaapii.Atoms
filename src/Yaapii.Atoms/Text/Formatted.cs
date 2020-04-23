@@ -26,7 +26,7 @@ using System.Linq;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A <see cref="IText"/> formatted with arguments.

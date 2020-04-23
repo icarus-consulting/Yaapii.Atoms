@@ -22,7 +22,7 @@
 
 using System;
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A <see cref="IText"/> which has been reversed.

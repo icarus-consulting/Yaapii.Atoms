@@ -23,7 +23,7 @@
 using Xunit;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Texts.Tests
+namespace Yaapii.Atoms.Text.Tests
 {
     public sealed class TrimmedTest
     {

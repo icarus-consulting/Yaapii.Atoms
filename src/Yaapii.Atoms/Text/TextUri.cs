@@ -23,7 +23,7 @@
 using System;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A text as a <see cref="Uri"/>

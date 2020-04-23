@@ -23,7 +23,7 @@
 using System.Text.RegularExpressions;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// Checks if a text ends with a given content.

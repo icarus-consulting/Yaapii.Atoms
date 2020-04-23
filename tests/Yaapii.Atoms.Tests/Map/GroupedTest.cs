@@ -23,7 +23,7 @@
 using Xunit;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Lists;
+using Yaapii.Atoms.List;
 using Yaapii.Atoms.Number;
 
 namespace Yaapii.Atoms.Map.Tests

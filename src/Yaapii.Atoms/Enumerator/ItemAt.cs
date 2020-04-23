@@ -26,7 +26,7 @@ using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Error;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Texts;
+using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerator
 {

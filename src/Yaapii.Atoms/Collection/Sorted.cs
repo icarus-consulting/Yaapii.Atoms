@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.Lists;
+using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Collection
 {

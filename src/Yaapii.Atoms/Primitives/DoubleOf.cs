@@ -25,7 +25,7 @@ using System.Globalization;
 using System.Text;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A double out of text.

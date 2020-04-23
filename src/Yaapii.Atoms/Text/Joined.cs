@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A <see cref="IText"/> of texts joined together.

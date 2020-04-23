@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Lists
+namespace Yaapii.Atoms.List
 {
     /// <summary>
     /// Makes a readonly list.

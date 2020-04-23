@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Lists
+namespace Yaapii.Atoms.List
 {
     /// <summary>
     /// Multiple lists joined together as one.
