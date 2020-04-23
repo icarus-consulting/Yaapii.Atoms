@@ -23,7 +23,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// Normalized A <see cref="IText"/> (whitespaces replaced with one single space)

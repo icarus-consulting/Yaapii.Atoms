@@ -24,7 +24,7 @@ using System.Collections;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Lists.Tests
+namespace Yaapii.Atoms.List.Tests
 {
     public class ManyOfArrayListTest
     {

@@ -28,7 +28,7 @@ using Yaapii.Atoms.Scalar;
 
 #pragma warning disable CS1591
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A float out of text.

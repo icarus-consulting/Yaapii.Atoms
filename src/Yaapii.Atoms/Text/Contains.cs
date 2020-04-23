@@ -23,7 +23,7 @@
 using System;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary> Check if a text contains a pattern </summary>
     public sealed class Contains : IScalar<bool>

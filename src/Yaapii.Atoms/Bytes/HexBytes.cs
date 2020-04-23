@@ -23,7 +23,7 @@
 using System;
 using System.IO;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Texts;
+using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Bytes
 {

@@ -24,7 +24,7 @@
 using System;
 using Yaapii.Atoms.Error;
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A Text that can be compared using the Equals method.

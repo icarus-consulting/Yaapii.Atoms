@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Yaapii.Atoms.Texts.Tests
+namespace Yaapii.Atoms.Text.Tests
 {
     public sealed class ComparableTests
     {

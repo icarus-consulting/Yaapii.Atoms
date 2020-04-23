@@ -28,7 +28,7 @@ using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 
 #pragma warning disable MaxClassLength // Class length max
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A <see cref="IText"/> out of other objects.

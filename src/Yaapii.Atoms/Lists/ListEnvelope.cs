@@ -28,7 +28,7 @@ using Yaapii.Atoms.Scalar;
 
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 
-namespace Yaapii.Atoms.Lists
+namespace Yaapii.Atoms.List
 {
     /// <summary>
     /// List envelope. Can make a readonly list from a scalar.

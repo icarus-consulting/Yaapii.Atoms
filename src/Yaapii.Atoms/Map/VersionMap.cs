@@ -7,7 +7,7 @@ using Yaapii.Atoms.Map;
 #pragma warning disable NoProperties // No Properties
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 
-namespace Yaapii.Atoms.Lookup
+namespace Yaapii.Atoms.Map
 {
     /// <summary>
     /// A map which matches a version. 
@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Lookup
             (version, available) =>
             new InvalidOperationException(
                 $"Cannot find value for version {version.ToString()}, the version must be within: "
-                + new Texts.Joined(", ",
+                + new Text.Joined(", ",
                     new Mapped<Version, string>(
                         v => v.ToString(),
                         available

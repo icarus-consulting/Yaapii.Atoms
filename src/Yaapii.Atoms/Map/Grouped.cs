@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
-using Yaapii.Atoms.Lists;
+using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Map
 {

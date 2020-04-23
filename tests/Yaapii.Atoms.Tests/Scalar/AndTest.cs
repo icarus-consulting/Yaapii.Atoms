@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Texts;
+using Yaapii.Atoms.Text;
 using Yaapii.Atoms.Enumerable;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum

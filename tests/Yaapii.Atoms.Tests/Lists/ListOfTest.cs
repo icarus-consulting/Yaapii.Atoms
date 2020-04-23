@@ -24,7 +24,7 @@ using System.Threading;
 using Xunit;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Lists.Tests
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class ListOfTest
     {

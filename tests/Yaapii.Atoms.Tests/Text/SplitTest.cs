@@ -24,7 +24,7 @@ using System.Linq;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Texts.Tests
+namespace Yaapii.Atoms.Text.Tests
 {
     public sealed class SplitTest
     {

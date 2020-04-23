@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A <see cref="IText"/> as uppercase.

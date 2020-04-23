@@ -24,7 +24,7 @@ using System;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable MaxClassLength // Class length max
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A <see cref="IText"/> envelope.

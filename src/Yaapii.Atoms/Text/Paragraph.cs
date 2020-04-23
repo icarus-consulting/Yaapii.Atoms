@@ -4,7 +4,7 @@ using System.Text;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A paragraph which seperates the given lines by a carriage return.

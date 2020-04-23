@@ -22,7 +22,7 @@
 
 using System;
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A <see cref="IText"/> whose contents have been replaced by another text.

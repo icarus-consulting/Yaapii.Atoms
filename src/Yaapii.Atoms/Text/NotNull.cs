@@ -22,7 +22,7 @@
 
 using System.IO;
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A <see cref="IText"/> that can't accept null.

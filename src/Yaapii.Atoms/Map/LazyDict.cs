@@ -25,9 +25,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.Lists;
+using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Texts;
+using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Map
 {

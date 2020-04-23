@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 using System;
-using Yaapii.Atoms.Texts;
+using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Error
 {

@@ -24,7 +24,7 @@ using System;
 using System.Linq;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms.Texts
+namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// Checks if a text is whitespace.

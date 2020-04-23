@@ -23,9 +23,9 @@
 using System;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Texts;
+using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Lists.Tests
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class MappedTest
     {

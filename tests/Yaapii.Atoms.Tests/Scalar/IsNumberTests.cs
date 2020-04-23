@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 using Xunit;
-using Yaapii.Atoms.Texts;
+using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Scalar.Tests
 {

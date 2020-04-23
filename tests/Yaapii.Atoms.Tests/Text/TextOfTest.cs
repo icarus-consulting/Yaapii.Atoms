@@ -29,10 +29,10 @@ using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Tests;
-using Yaapii.Atoms.Texts;
+using Yaapii.Atoms.Text;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Yaapii.Atoms.Texts.Tests
+namespace Yaapii.Atoms.Text.Tests
 {
     public sealed class TextOfTest
     {
