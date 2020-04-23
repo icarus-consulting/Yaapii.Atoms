@@ -35,7 +35,7 @@ However, after two years of working with Atoms, we realized that developers in o
 This has led to the decision to invert the library caching principle. **Atoms 2.0 now has all objects sticky by default**. We then introduced new **Live** Decorators instead. So if you need an object which senses changes, you decorate it using the live decorator:
 
 ```csharp
-var currency = new Live(() => new TextOf(new Uri("https://api.exchangeratesapi.io/latest")));
+var exchangeRate = new Live(() => new TextOf(new Uri("https://api.exchangeratesapi.io/latest")));
 ```
 
 Live decorators are available for all types.
