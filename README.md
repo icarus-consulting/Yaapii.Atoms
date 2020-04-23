@@ -14,7 +14,7 @@ It follows all the rules suggested in the two "[Elegant Objects](https://www.ama
 # Table Of Contents
 - [Design Change](#Design-change-V1.0-vs-V2.0)
 - [Migration](#migration)
-- [Maps](#maps)]
+- [Maps](#maps)
 - [Functions](#functions)
 - [IO Input / Output](#io-input--output)
 - [Lists](#lists)
