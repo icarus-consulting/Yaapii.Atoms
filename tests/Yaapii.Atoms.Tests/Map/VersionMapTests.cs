@@ -1,6 +1,5 @@
 ﻿using System;
 using Xunit;
-using Yaapii.Atoms.Lookup;
 using Yaapii.Atoms.Map;
 
 namespace Yaapii.Lookup.Tests
