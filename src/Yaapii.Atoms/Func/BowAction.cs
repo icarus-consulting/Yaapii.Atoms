@@ -74,7 +74,6 @@ namespace Yaapii.Atoms.Func
         public void Invoke()
         {
             this.actions["prepare"]();
-            var timeout = DateTime.Now + this.timespans["timeout"];
             var completed = false;
 
             var parallel =
@@ -92,15 +91,19 @@ namespace Yaapii.Atoms.Func
                     }
                 }
                 );
-            parallel.Start();
-
-            while (DateTime.Now < timeout)
+            try
             {
-                if (parallel.Status == TaskStatus.Faulted)
-                {
-                    throw parallel.Exception.InnerException;
-                }
-                if (completed) break;
+                parallel.Start();
+                parallel.Wait(this.timespans["timeout"]);
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+
+            if (parallel.Status == TaskStatus.Faulted)
+            {
+                throw parallel.Exception.InnerException;
             }
 
             if (!completed)
