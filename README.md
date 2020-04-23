@@ -113,8 +113,8 @@ CSharp maps use ```KeyValuePair<Key,Value>``` as contents. These are structs and
 ```csharp
 var map = 
    new MapOf<string,int>(
-      new KvpOf<string,int>("firstname", "Mickey"),
-      new KvpOf<string,int>("lastname", "Rat"),
+      new KvpOf<string, int>("age", 28),
+      new KvpOf<string, int>("height", 184),
    )
 ```
 
