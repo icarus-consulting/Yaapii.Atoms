@@ -23,7 +23,7 @@ namespace Yaapii.Atoms.Func
             trigger,
             () => { },
             shoot,
-            new TimeSpan(0,0,10)
+            new TimeSpan(0, 0, 10)
         )
         { }
 
@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Func
             prepare,
             shoot,
             timeout,
-            new TimeSpan(0,0,0,0,250)
+            new TimeSpan(0, 0, 0, 0, 250)
         )
         { }
 
@@ -66,7 +66,6 @@ namespace Yaapii.Atoms.Func
         public void Invoke(T parameter)
         {
             this.prepare();
-            var timeout = DateTime.Now + this.timespans["timeout"];
             var completed = false;
 
             var parallel =
@@ -84,15 +83,19 @@ namespace Yaapii.Atoms.Func
                     }
                 }
                 );
-            parallel.Start();
-
-            while (DateTime.Now < timeout)
+            try
             {
-                if(parallel.Status == TaskStatus.Faulted)
-                {
-                    throw parallel.Exception.InnerException;
-                }
-                if (completed) break;
+                parallel.Start();
+                parallel.Wait(this.timespans["timeout"]);
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+
+            if (parallel.Status == TaskStatus.Faulted)
+            {
+                throw parallel.Exception.InnerException;
             }
 
             if (!completed)
