@@ -64,5 +64,23 @@ namespace Yaapii.Atoms.Text.Tests
                 );
             }
         }
+
+        [Theory]
+        [InlineData("A fancy text")]
+        [InlineData("A fancy text with \n line break")]
+        [InlineData("A fancy text with € special character")]
+        public void EncodesString(string text)
+        {
+            Assert.Equal(
+                new LiveText(
+                    new BytesBase64(
+                        new BytesOf(
+                            new LiveText(text)
+                        )
+                    )
+                ).AsString(),
+                new TextBase64(text).AsString()
+            );
+        }
     }
 }
