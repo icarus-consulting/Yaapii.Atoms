@@ -44,13 +44,6 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.Equal(
                 max, check
             );
-
-
-            Assert.True(
-                new Lower(
-                    new LiveText("HelLo!")
-                ).AsString() == "hello!"
-            );
         }
     }
 }
