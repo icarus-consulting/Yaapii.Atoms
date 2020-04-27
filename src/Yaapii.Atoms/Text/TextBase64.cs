@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="string"/> as Base64-Encoded <see cref="IText"/>
         /// </summary>
         /// <param name="str">string to encode</param>
-        public TextBase64(String str) : base(() => str, false)
+        public TextBase64(String str) : this(new LiveText(str))
         { }
 
         /// <summary>
