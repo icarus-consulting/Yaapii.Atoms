@@ -49,7 +49,7 @@ If you want to write your own objects based on Atoms envelopes, you have a switc
 ```csharp
 public sealed class MyLiveTextObject : TextEnvelope
 {
-	MyLiveTextObject : base(..., live: true)
+     MyLiveTextObject(...) : base(..., live: true)
 }
 ```
 
