@@ -49,7 +49,7 @@ If you want to write your own objects based on Atoms envelopes, you have a switc
 ```csharp
 public sealed class MyLiveTextObject : TextEnvelope
 {
-	MyLiveTextObject : base(..., live: true)
+     MyLiveTextObject(...) : base(..., live: true)
 }
 ```
 
@@ -65,14 +65,14 @@ Input and Output types are not sticky by default.
 
 ### Shorthand Generics
 
-While Java developers can skip the generic expression in constructors, C# does not allow it. We added shorthand objects to allow skipping it if you use string as generic, for Enumerables and Maps. You have two objects to make an Enumerable: ```new ManyOf``` to get an enumerable of strings and ```new ManyOf<T>``` if you need another type.
+While Java developers can skip the generic expression in constructors, C# does not allow it. We added shorthand objects to allow skipping it if you use string as generic type, for Enumerables and Maps. You have two objects to make an Enumerable: ```new ManyOf``` to get an enumerable of strings and ```new ManyOf<T>``` if you need another type.
 
 There are three objects to make a map:
 
 ```csharp
 new MapOf(new KvpOf("Key", "Value")); //A map string to string
-new MapOf<int>(new KvpOf<int>("Key", 123)); //A map string to generic
-new MapOf<int, int>(new KvpOf<int, int>(123, 123)); //A map string to generic
+new MapOf<int>(new KvpOf<int>("Key", 123)); //A map string to generic type
+new MapOf<int, int>(new KvpOf<int, int>(123, 123)); //A map generic type to generic type
 ```
 
 Envelopes are available for all three map types.
