@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(IEnumerable<IDictionary<string, string>> dicts) : base(
+        public Joined(IEnumerable<IDictionary<string, string>> dicts, bool rejectBuildingAllValues = true) : base(
             () =>
             new LazyDict(
                 new Enumerable.Joined<IKvp>(
@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Map
                     )
                 )
             ),
-            false
+            rejectBuildingAllValues
         )
         { }
     }

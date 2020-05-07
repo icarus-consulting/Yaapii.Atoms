@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
+using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Map
 {
@@ -33,7 +34,7 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public MapInputOf(params IKvp[] kvps) : this(new List<IKvp>(kvps))
+        public MapInputOf(params IKvp[] kvps) : this(new ListOf<IKvp>(kvps))
         { }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public MapInputOf(params IKvp<Value>[] kvps) : this(new List<IKvp<Value>>(kvps))
+        public MapInputOf(params IKvp<Value>[] kvps) : this(new ListOf<IKvp<Value>>(kvps))
         { }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public MapInputOf(params IKvp<Key, Value>[] kvps) : this(new List<IKvp<Key, Value>>(kvps))
+        public MapInputOf(params IKvp<Key, Value>[] kvps) : this(new ListOf<IKvp<Key, Value>>(kvps))
         { }
 
         /// <summary>
