@@ -75,11 +75,14 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// A map from the given key value pairs.
         /// </summary>
-        public MapOf(IKvp entry, params IKvp[] more) : this(
-            new LiveMany<IMapInput>(
-                new MapInputOf(entry),
-                new MapInputOf(more)
-            )
+        public MapOf(IKvp entry, params IKvp[] more) : base(() =>
+            new LazyDict(
+                new Enumerable.Joined<IKvp>(
+                    new ManyOf<IKvp>(entry),
+                    more
+                )
+            ),
+            false
         )
         { }
 
@@ -87,10 +90,9 @@ namespace Yaapii.Atoms.Map
         /// A map from the given key value pairs.
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
-        public MapOf(IEnumerable<IKvp> entries) : this(
-            new LiveMany<IMapInput>(
-                new MapInputOf(entries)
-            )
+        /// <param name="rejectBuildingAllValues">if you have KVPs with value functions, it is by default prevented to build all values by getting the enumerator. You can deactivate that here.</param>
+        public MapOf(IEnumerable<IKvp> entries, bool rejectBuildingAllValues = true) : this(
+            new LazyDict(entries, rejectBuildingAllValues)
         )
         { }
 
@@ -219,15 +221,16 @@ namespace Yaapii.Atoms.Map
         { }
 
         /// <summary>
-        /// A map from the given key value pairs.
+        /// A map from the given IKvps.
         /// </summary>
-        /// <param name="entries">enumerable of kvps</param>
-        /// <param name="entry">A single entry</param>
-        public MapOf(IKvp<Value> entry, params IKvp<Value>[] entries) : this(
-            new LiveMany<IMapInput<Value>>(
-                new MapInputOf<Value>(entry),
-                new MapInputOf<Value>(entries)
-            )
+        public MapOf(IKvp<Value> entry, params IKvp<Value>[] more) : base(() =>
+            new LazyDict<Value>(
+                new Enumerable.Joined<IKvp<Value>>(
+                    new ManyOf<IKvp<Value>>(entry),
+                    more
+                )
+            ),
+            false
         )
         { }
 
@@ -235,10 +238,9 @@ namespace Yaapii.Atoms.Map
         /// A map from the given key value pairs.
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
-        public MapOf(IEnumerable<IKvp<Value>> entries) : this(
-            new LiveMany<IMapInput<Value>>(
-                new MapInputOf<Value>(entries)
-            )
+        /// <param name="rejectBuildingAllValues">if you have KVPs with value functions, it is by default prevented to build all values by getting the enumerator. You can deactivate that here.</param>
+        public MapOf(IEnumerable<IKvp<Value>> entries, bool rejectBuildingAllValues = true) : this(
+            new LazyDict<Value>(entries, rejectBuildingAllValues)
         )
         { }
 
@@ -353,11 +355,14 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// A map from the given key value pairs.
         /// </summary>
-        public MapOf(IKvp<Key, Value> entry, params IKvp<Key, Value>[] more) : this(
-            new LiveMany<IMapInput<Key, Value>>(
-                new MapInputOf<Key, Value>(entry),
-                new MapInputOf<Key, Value>(more)
-            )
+        public MapOf(IKvp<Key, Value> entry, params IKvp<Key, Value>[] more) : base(() =>
+             new LazyDict<Key, Value>(
+                 new Enumerable.Joined<IKvp<Key, Value>>(
+                     new ManyOf<IKvp<Key, Value>>(entry),
+                     more
+                 )
+             ),
+            false
         )
         { }
 
@@ -365,10 +370,9 @@ namespace Yaapii.Atoms.Map
         /// A map from the given key value pairs.
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
-        public MapOf(IEnumerable<IKvp<Key, Value>> entries) : this(
-            new LiveMany<IMapInput<Key, Value>>(
-                new MapInputOf<Key, Value>(entries)
-            )
+        /// <param name="rejectBuildingAllValues">if you have KVPs with value functions, it is by default prevented to build all values by getting the enumerator. You can deactivate that here.</param>
+        public MapOf(IEnumerable<IKvp<Key, Value>> entries, bool rejectBuildingAllValues = true) : this(
+            new LazyDict<Key, Value>(entries, rejectBuildingAllValues)
         )
         { }
 

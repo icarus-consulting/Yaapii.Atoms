@@ -286,5 +286,17 @@ namespace Yaapii.Atoms.Map.Tests
 
             Assert.Equal(a, b);
         }
+
+        [Fact]
+        public void DoesNotBuildAllValues()
+        {
+            Assert.Equal(
+                "works",
+                new MapOf(
+                    new KvpOf("name", () => throw new ApplicationException()),
+                    new KvpOf("anothername", () => "works")
+                )["anothername"]
+            );
+        }
     }
 }

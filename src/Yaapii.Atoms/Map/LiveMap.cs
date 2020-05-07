@@ -85,8 +85,8 @@ namespace Yaapii.Atoms.Map
         /// A map from the given key value pairs.
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
-        public LiveMap(Func<IEnumerable<IKvp<Key, Value>>> entries) : this(() =>
-            new LazyDict<Key, Value>(entries(), true)
+        public LiveMap(Func<IEnumerable<IKvp<Key, Value>>> entries, bool rejectBuildingAllValues = true) : this(() =>
+            new LazyDict<Key, Value>(entries(), rejectBuildingAllValues)
         )
         { }
 
