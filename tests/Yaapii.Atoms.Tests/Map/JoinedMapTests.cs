@@ -8,7 +8,7 @@ namespace Yaapii.Atoms.Map.Tests
         public void JoinsInputs()
         {
             var dict =
-                new Joined (
+                new Joined(
                     new LazyDict(new KvpOf("A", "I am")),
                     new LazyDict(new KvpOf("B", "trapped in")),
                     new LazyDict(new KvpOf("C", "a dictionary"))
@@ -97,6 +97,22 @@ namespace Yaapii.Atoms.Map.Tests
             Assert.Equal(
                 19,
                 dict[0]
+            );
+        }
+
+        [Fact]
+        public void JoinsLazy()
+        {
+            var dict =
+                new Joined(
+                    new LazyDict(new KvpOf("A", () => "I am")),
+                    new LazyDict(new KvpOf("B", () => "trapped in")),
+                    new LazyDict(new KvpOf("C", "a dictionary"))
+                );
+
+            Assert.Equal(
+                "I am trapped in a dictionary",
+                $"{dict["A"]} {dict["B"]} {dict["C"]}"
             );
         }
     }
