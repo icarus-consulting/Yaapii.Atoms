@@ -298,5 +298,17 @@ namespace Yaapii.Atoms.Map.Tests
                 )["anothername"]
             );
         }
+
+        [Fact]
+        public void IKvpRejectsBuildingAllValues()
+        {
+            var map =
+                new MapOf(
+                    new KvpOf("name", () => "also works"),
+                    new KvpOf("name2", () => "works")
+                );
+
+            Assert.Throws<InvalidOperationException>(() => map.GetEnumerator());
+        }
     }
 }

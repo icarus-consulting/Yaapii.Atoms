@@ -88,10 +88,20 @@ namespace Yaapii.Atoms.Map
 
         /// <summary>
         /// A map from the given key value pairs.
+        /// Rejects building of all values
+        /// </summary>
+        /// <param name="entries">enumerable of kvps</param>
+        public MapOf(IEnumerable<IKvp> entries) : this(
+            entries, true
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given key value pairs.
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
         /// <param name="rejectBuildingAllValues">if you have KVPs with value functions, it is by default prevented to build all values by getting the enumerator. You can deactivate that here.</param>
-        public MapOf(IEnumerable<IKvp> entries, bool rejectBuildingAllValues = true) : this(
+        public MapOf(IEnumerable<IKvp> entries, bool rejectBuildingAllValues) : this(
             new LazyDict(entries, rejectBuildingAllValues)
         )
         { }
