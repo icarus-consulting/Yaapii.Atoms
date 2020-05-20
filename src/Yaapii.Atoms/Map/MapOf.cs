@@ -163,7 +163,7 @@ namespace Yaapii.Atoms.Map
                     }
                 }
 
-                if (idx % 2 != 1)
+                if (idx % 2 != 1 && idx != -1)
                 {
                     throw new ArgumentException($"Cannot build a map because an even number of strings is needed, and the provided ones count {idx}");
                 }
