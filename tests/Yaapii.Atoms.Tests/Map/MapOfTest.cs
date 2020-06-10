@@ -310,5 +310,12 @@ namespace Yaapii.Atoms.Map.Tests
 
             Assert.Throws<InvalidOperationException>(() => map.GetEnumerator());
         }
+
+        [Fact]
+        public void WorksWithEmptyList()
+        {
+            var map = new MapOf(new ManyOf());
+            Assert.Equal(0, map.Keys.Count);
+        }
     }
 }
