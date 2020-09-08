@@ -35,6 +35,29 @@ namespace Yaapii.Atoms.Enumerable.Tests
     public sealed class FilteredTests
     {
         [Fact]
+        public void IsSticky()
+        {
+            var calls = 0;
+            var list =
+                new Filtered<string>(
+                    (input) =>
+                    {
+                        calls++;
+                        return input != "B";
+                    },
+                    new List<string>() { "A", "B", "C" }
+                );
+
+            new LengthOf(list).Value();
+            new LengthOf(list).Value();
+
+            Assert.Equal(
+                3,
+                calls
+            );
+        }
+
+        [Fact]
         public void Filters()
         {
             Assert.True(

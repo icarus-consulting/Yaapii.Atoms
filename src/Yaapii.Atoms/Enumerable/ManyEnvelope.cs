@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Enumerable
         {
             this.live = live;
             this.origin = origin;
-            this.fixedOrigin = new ScalarOf<IEnumerable<string>>(() => origin());
+            this.fixedOrigin = new ScalarOf<IEnumerable<string>>(() => new List<string>(origin()));
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Yaapii.Atoms.Enumerable
         public ManyEnvelope(Func<IEnumerable<T>> origin, bool live)
         {
             this.live = live;
-            this.fixedOrigin = new ScalarOf<IEnumerable<T>>(origin);
+            this.fixedOrigin = new ScalarOf<IEnumerable<T>>(()=> new List<T>(origin()));
             this.origin = origin;
         }
 
