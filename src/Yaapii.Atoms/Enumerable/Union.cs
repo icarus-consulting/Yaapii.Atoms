@@ -33,14 +33,16 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Union objects in two enumerables.
         /// </summary>
-        public Union(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> compare) : base(() =>
+        /// <param name="compare">Decission to put items from a in the resulting union</param>
+        public Union(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) : base(() =>
             {
                 var result = new List<T>();
-                foreach (var item in b)
+                foreach (var aItem in a)
                 {
-                    if (new Contains<T>(a, compare).Value())
+
+                    if (new Contains<T>(b, bItem => compare.Invoke(aItem, bItem)).Value())
                     {
-                        result.Add(item);
+                        result.Add(aItem);
                     }
                 }
                 return result;
