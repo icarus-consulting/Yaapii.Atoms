@@ -31,19 +31,19 @@ namespace Yaapii.Atoms.Scalar.Tests
     public sealed class ItemAtTests
     {
         [Fact]
-        public void FirstElementTest()
+        public void DeliversFirstElement()
         {
 
             Assert.True(
-            new ItemAt<int>(
-                new ManyOf<int>(1, 2, 3)
-            ).Value() == 1,
-            "Can't take the first item from the enumerable"
-        );
+                new ItemAt<int>(
+                    new ManyOf<int>(1, 2, 3)
+                ).Value() == 1,
+                "Can't take the first item from the enumerable"
+            );
         }
 
         [Fact]
-        public void ElementByPosTest()
+        public void DeliversElementByPos()
         {
             Assert.True(
                 new ItemAt<int>(
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
-        public void FailForEmptyCollectionTest()
+        public void FailsForEmptyCollection()
         {
             Assert.Throws<NoSuchElementException>(
                 () => new ItemAt<int>(
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
-        public void FallbackTest()
+        public void DeliversFallback()
         {
             String fallback = "fallback";
             Assert.True(
@@ -76,7 +76,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
-        public void FallbackShowsErrorTest()
+        public void FallbackShowsError()
         {
             Assert.Throws<NoSuchElementException>(() =>
                 new ItemAt<string>(
@@ -111,7 +111,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
-        public void StickyTest()
+        public void IsSticky()
         {
             var list = new List<string>();
             list.Add("pre");
@@ -119,8 +119,8 @@ namespace Yaapii.Atoms.Scalar.Tests
             sticky.Value();
             list.Clear();
             list.Add("post");
-             
-             Assert.Equal("pre" , sticky.Value());
+
+            Assert.Equal("pre", sticky.Value());
         }
     }
 }
