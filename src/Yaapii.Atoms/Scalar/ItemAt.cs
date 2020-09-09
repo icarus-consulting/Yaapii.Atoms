@@ -95,6 +95,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="fallback">fallback func</param>
         public ItemAt(IEnumerable<T> source, int position, T fallback) : this(
             source,
+            position,
             new FuncOf<IEnumerable<T>, T>(b => fallback)
         )
         { }
