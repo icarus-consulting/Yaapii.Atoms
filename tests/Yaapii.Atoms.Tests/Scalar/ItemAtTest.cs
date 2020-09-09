@@ -43,6 +43,19 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
+        public void DeliversFirstElementWithException()
+        {
+
+            Assert.True(
+                new ItemAt<int>(
+                    new ManyOf<int>(1, 2, 3),
+                    new NotFiniteNumberException("Cannot do this!")
+                ).Value() == 1,
+                "Can't take the first item from the enumerable"
+            );
+        }
+
+        [Fact]
         public void DeliversElementByPos()
         {
             Assert.True(
@@ -103,12 +116,23 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
-        public void FallbackShowsGivenError()
+        public void FallbackShowsGivenErrorWithPosition()
         {
             Assert.Throws<NotFiniteNumberException>(() =>
                 new ItemAt<string>(
                     new ManyOf<string>(),
                     12,
+                    new NotFiniteNumberException("Cannot do this!")
+                ).Value()
+            );
+        }
+
+        [Fact]
+        public void FallbackShowsGivenErrorWithoutPosition()
+        {
+            Assert.Throws<NotFiniteNumberException>(() =>
+                new ItemAt<string>(
+                    new ManyOf<string>(),
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value()
             );
