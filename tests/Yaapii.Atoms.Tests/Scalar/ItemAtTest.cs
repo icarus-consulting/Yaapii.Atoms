@@ -50,7 +50,8 @@ namespace Yaapii.Atoms.Scalar.Tests
                     new ManyOf<int>(1, 2, 3),
                     1
                 ).Value() == 2,
-            "Can't take the item by position from the enumerable");
+                "Can't take the item by position from the enumerable"
+            );
         }
 
         [Fact]
@@ -62,16 +63,18 @@ namespace Yaapii.Atoms.Scalar.Tests
                     1,
                     4
                 ).Value() == 2,
-            "Can't take the item by position from the enumerable");
+                "Can't take the item by position from the enumerable"
+            );
         }
 
         [Fact]
         public void FailsForEmptyCollection()
         {
-            Assert.Throws<NoSuchElementException>(
-                () => new ItemAt<int>(
-                        new List<int>()
-                    ).Value());
+            Assert.Throws<NoSuchElementException>(() =>
+                new ItemAt<int>(
+                    new List<int>()
+                ).Value()
+            );
         }
 
         [Fact]
@@ -95,7 +98,8 @@ namespace Yaapii.Atoms.Scalar.Tests
                     new ManyOf<string>(),
                     12,
                     (ex, enumerable) => throw ex
-                ).Value());
+                ).Value()
+            );
         }
 
         [Fact]
