@@ -21,7 +21,10 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
+using System.IO;
 using Xunit;
+using Yaapii.Atoms.List;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
@@ -60,6 +63,27 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 expected,
                 new Union<int>(
                    a, b
+                )
+            );
+        }
+
+        [Fact]
+        public void UsesCompareFunction()
+        {
+            var a = new ListOf<string>("c:/abraham/a.jpg", "c:/bertram/b.jpg", "c:/caesar/c.jpg");
+            var b = new ListOf<string>("a", "c");
+            var expected = new ListOf<string>("c:/abraham/a.jpg", "c:/caesar/c.jpg");
+
+            Assert.Equal(
+                expected,
+                new Union<string>(
+                    a,
+                    b,
+                    (aItem, bItem) =>
+                        new Equals<string>(
+                            Path.GetFileNameWithoutExtension(aItem),
+                            bItem
+                        ).Value()
                 )
             );
         }
