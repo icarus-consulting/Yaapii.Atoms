@@ -54,6 +54,18 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
+        public void DeliversElementByPosWithFallback()
+        {
+            Assert.True(
+                new ItemAt<int>(
+                    new ManyOf<int>(1, 2, 3),
+                    1,
+                    4
+                ).Value() == 2,
+            "Can't take the item by position from the enumerable");
+        }
+
+        [Fact]
         public void FailsForEmptyCollection()
         {
             Assert.Throws<NoSuchElementException>(
