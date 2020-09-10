@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Xunit;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.List.Tests
 {
@@ -63,21 +63,21 @@ namespace Yaapii.Atoms.List.Tests
         [Fact]
         public void LowBoundTest()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(
-                () => 
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
                 new LiveList<int>(
-                    new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
-                    [-1]);
+                    new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
+                )[-1]
+            );
         }
 
         [Fact]
         public void HighBoundTest()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(
-                () =>
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
                 new LiveList<int>(
-                    new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
-                        [11]);
+                    new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
+                )[11]
+            );
         }
 
         [Fact]
@@ -86,10 +86,13 @@ namespace Yaapii.Atoms.List.Tests
             int size = 2;
             var list =
                 new LiveList<int>(
-                    new Yaapii.Atoms.Enumerable.HeadOf<int>(
-                        new Yaapii.Atoms.Enumerable.Endless<int>(1),
-                        new Live<int>(() => Interlocked.Increment(ref size))
-                ));
+                    new LiveMany<int>(() =>
+                        new HeadOf<int>(
+                            new Endless<int>(1),
+                            Interlocked.Increment(ref size)
+                        )
+                    )
+                );
 
             Assert.NotEqual(list.Count, list.Count);
         }
