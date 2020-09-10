@@ -20,7 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System.Collections;
 using System.Collections.Generic;
+using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -31,19 +33,31 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> that starts from the beginning when ended.
     /// </summary>
     /// <typeparam name="T">type of the contents</typeparam>
-    public sealed class Cycled<T> : ManyEnvelope<T>
+    public sealed class Cycled<T> : IEnumerable<T>
     {
+        private readonly ScalarOf<IEnumerator<T>> chache;
+
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> that starts from the beginning when ended.
         /// </summary>
         /// <param name="enumerable">an enum to cycle</param>
-        public Cycled(IEnumerable<T> enumerable) : base(() =>
-            new LiveMany<T>(() =>
-                new Enumerator.Cycled<T>(enumerable)
-            ),
-            false
-        )
-        { }
+        public Cycled(IEnumerable<T> enumerable)
+        {
+            this.chache =
+                new ScalarOf<IEnumerator<T>>(() =>
+                    new Enumerator.Cycled<T>(enumerable)
+                );
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this.chache.Value();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
     }
 }
 #pragma warning restore NoGetOrSet // No Statics

@@ -22,6 +22,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoProperties // No Properties
 #pragma warning disable Immutability // Fields are readonly or constant
@@ -34,18 +35,27 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> that repeats one element infinitely.
     /// </summary>
     /// <typeparam name="T">type of the elements</typeparam>
-    public sealed class Endless<T> : ManyEnvelope<T>
+    public sealed class Endless<T> : IEnumerable<T>
     {
+        private readonly IScalar<IEnumerator<T>> cache;
+
         /// <summary>
         /// A <see cref="IEnumerable"/> that repeats one element infinitely.
         /// </summary>
         /// <param name="elm">element to repeat</param>
-        public Endless(T elm) : base(() => 
-            new LiveMany<T>(() =>
-                new Enumerator.Endless<T>(elm)
-            ),
-            false
-        )
-        { }
+        public Endless(T elm)
+        {
+            this.cache = new ScalarOf<IEnumerator<T>>(new Enumerator.Endless<T>(elm));
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this.cache.Value();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
     }
 }
