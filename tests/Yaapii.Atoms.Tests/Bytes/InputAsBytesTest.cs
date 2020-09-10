@@ -32,7 +32,6 @@ namespace Yaapii.Atoms.Bytes.Tests
 {
     public sealed class InputAsBytesTest
     {
-
         [Fact]
         public void ReadsLargeInMemoryContent()
         {
@@ -43,7 +42,7 @@ namespace Yaapii.Atoms.Bytes.Tests
                         new InputOf(
                         String.Join(
                             "",
-                                new HeadOf<string>(
+                            new HeadOf<string>(
                                 new Endless<string>(body),
                                 multiplier
                             )
@@ -101,6 +100,5 @@ namespace Yaapii.Atoms.Bytes.Tests
                         ).AsBytes()) == content,
                     "cannot read bytes with small buffer");
         }
-
     }
 }

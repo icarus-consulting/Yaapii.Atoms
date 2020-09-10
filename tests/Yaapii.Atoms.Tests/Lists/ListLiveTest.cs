@@ -96,6 +96,5 @@ namespace Yaapii.Atoms.List.Tests
 
             Assert.NotEqual(list.Count, list.Count);
         }
-
     }
 }

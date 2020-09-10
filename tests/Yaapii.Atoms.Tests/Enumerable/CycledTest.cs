@@ -20,13 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
@@ -41,9 +35,11 @@ namespace Yaapii.Atoms.Enumerable.Tests
                     new Cycled<string>(
                         new ManyOf<string>(
                             "one", expected, "three"
-                            )), 
+                        )
+                    ),
                     7
-                    ).Value() == expected);
+                ).Value() == expected
+            );
         }
     }
 }
