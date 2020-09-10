@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.List
     /// <typeparam name="T"></typeparam>
     public abstract class ListEnvelope<T> : IList<T>
     {
-        private readonly UnsupportedOperationException readOnlyError = new UnsupportedOperationException("The list is readonly.");
+        private readonly UnsupportedOperationException readOnlyError;
         private readonly Func<IList<T>> origin;
         private readonly ScalarOf<IList<T>> fixedOrigin;
         private readonly bool live;
@@ -56,19 +56,18 @@ namespace Yaapii.Atoms.List
         /// <param name="live">value is handled live or sticky</param>
         public ListEnvelope(Func<IList<T>> lst, bool live)
         {
+            this.readOnlyError = new UnsupportedOperationException("The list is readonly.");
             this.origin = lst;
             this.live = live;
-            this.fixedOrigin = new ScalarOf<IList<T>>(
-                () =>
+            this.fixedOrigin = new ScalarOf<IList<T>>(() =>
+            {
+                var temp = new List<T>();
+                foreach (var item in lst())
                 {
-                    var temp = new List<T>();
-                    foreach (var item in lst())
-                    {
-                        temp.Add(item);
-                    }
-                    return temp;
+                    temp.Add(item);
                 }
-            );
+                return temp;
+            });
         }
 
         /// <summary>
@@ -102,7 +101,10 @@ namespace Yaapii.Atoms.List
         /// Not supported.
         /// </summary>
         /// <param name="item"></param>
-        public void Add(T item) { throw this.readOnlyError; }
+        public void Add(T item)
+        {
+            throw this.readOnlyError;
+        }
 
         /// <summary>
         /// Unsupported.
