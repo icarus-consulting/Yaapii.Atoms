@@ -28,33 +28,13 @@ using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.List.Tests
 {
-    public sealed class ListLiveTest
+    public sealed class LiveListTest
     {
-        [Fact]
-        public void BehavesAsList()
-        {
-            Assert.Contains<int>(
-                2,
-                new LiveList<int>(1, 2)
-            );
-        }
-
-        [Fact]
-        public void ElementAtIndexTest()
-        {
-            int num = 345;
-
-            Assert.Equal(
-                num,
-                new LiveList<int>(-1, num, 0, 1)[1]
-            );
-        }
-
         [Fact]
         public void KnowsIfEmpty()
         {
             Assert.Empty(
-                new LiveList<int>(
+                new LiveList<int>(() =>
                     new List<int>()
                 )
             );
@@ -65,7 +45,7 @@ namespace Yaapii.Atoms.List.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(
                 () => 
-                new LiveList<int>(
+                new LiveList<int>(() =>
                     new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
                     [-1]);
         }
@@ -75,7 +55,7 @@ namespace Yaapii.Atoms.List.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(
                 () =>
-                new LiveList<int>(
+                new LiveList<int>(() =>
                     new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
                         [11]);
         }
@@ -85,11 +65,15 @@ namespace Yaapii.Atoms.List.Tests
         {
             int size = 2;
             var list =
-                new LiveList<int>(
-                    new Yaapii.Atoms.Enumerable.HeadOf<int>(
-                        new Yaapii.Atoms.Enumerable.Endless<int>(1),
-                        new Live<int>(() => Interlocked.Increment(ref size))
-                ));
+                new LiveList<int>(() =>
+                    new ListOf<int>(
+                        new Yaapii.Atoms.Enumerable.HeadOf<int>(
+                            new Yaapii.Atoms.Enumerable.Endless<int>(1),
+                                new Live<int>(() => Interlocked.Increment(ref size)
+                            )
+                        )
+                    )
+                );
 
             Assert.NotEqual(list.Count, list.Count);
         }

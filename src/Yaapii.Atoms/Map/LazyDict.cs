@@ -110,11 +110,9 @@ namespace Yaapii.Atoms.Map
                         + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
                 }
                 return
-                    new LiveList<string>(
-                       new Enumerable.Mapped<ScalarOf<string>, string>(
-                           v => v.Value(),
-                           map.Values
-                       )
+                    new List.Mapped<ScalarOf<string>, string>(
+                        v => v.Value(),
+                        map.Values
                    );
             }
         }
@@ -350,11 +348,9 @@ namespace Yaapii.Atoms.Map
                         + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
                 }
                 return
-                    new LiveList<Value>(
-                       new Enumerable.Mapped<ScalarOf<Value>, Value>(
-                           v => v.Value(),
-                           map.Values
-                       )
+                    new List.Mapped<ScalarOf<Value>, Value>(
+                        v => v.Value(),
+                        map.Values
                    );
             }
         }
@@ -590,11 +586,10 @@ namespace Yaapii.Atoms.Map
                         + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
                 }
                 return
-                    new LiveList<Value>(
-                       new Enumerable.Mapped<ScalarOf<Value>, Value>(
-                           v => v.Value(),
-                           map.Values
-                       )
+                    new List.Mapped<ScalarOf<Value>, Value>(
+                        v => v.Value(),
+                        map.Values
+                       
                    );
             }
         }

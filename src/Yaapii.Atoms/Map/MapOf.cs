@@ -285,7 +285,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="inputs">inputs</param>
         public MapOf(params IMapInput<Value>[] inputs) : this(
-            new LiveMany<IMapInput<Value>>(inputs)
+            new ManyOf<IMapInput<Value>>(inputs)
         )
         { }
 
@@ -326,7 +326,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         public MapOf(KeyValuePair<Key, Value> item, params KeyValuePair<Key, Value>[] more) : this(
             new Enumerable.Joined<KeyValuePair<Key, Value>>(
-                new LiveMany<KeyValuePair<Key, Value>>(more),
+                new ManyOf<KeyValuePair<Key, Value>>(more),
                 item
             )
         )
@@ -339,7 +339,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="list">KeyValuePairs to append</param>
         public MapOf(IDictionary<Key, Value> src, params KeyValuePair<Key, Value>[] list) : this(
             src,
-            new LiveMany<KeyValuePair<Key, Value>>(list))
+            new ManyOf<KeyValuePair<Key, Value>>(list))
         { }
 
         /// <summary>
@@ -416,7 +416,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">inputs</param>
-        public MapOf(params IMapInput<Key, Value>[] inputs) : this(new ManyOf<IMapInput<Key, Value>>(inputs))
+        public MapOf(params IMapInput<Key, Value>[] inputs) : this(new LiveMany<IMapInput<Key, Value>>(inputs))
         { }
 
         /// <summary>

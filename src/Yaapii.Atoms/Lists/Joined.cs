@@ -20,10 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.List
 {
@@ -40,7 +38,9 @@ namespace Yaapii.Atoms.List
         /// <param name="src">lists to join</param>
         public Joined(IList<T> origin, params IList<T>[] src) : this(
             new Enumerable.Joined<IList<T>>(
-                new ManyOf<IList<T>>(origin), src))
+                new LiveMany<IList<T>>(origin), src
+            )
+        )
         { }
 
         /// <summary>
@@ -50,14 +50,14 @@ namespace Yaapii.Atoms.List
         /// <param name="origin">a list to join</param>
         public Joined(IList<T> origin, params T[] src) : this(
             new Enumerable.Joined<IList<T>>(
-                new ManyOf<IList<T>>(origin), src))
+                new LiveMany<IList<T>>(origin), src))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">The lists to join together</param>
-        public Joined(params IList<T>[] src) : this(new ManyOf<IList<T>>(src))
+        public Joined(params IList<T>[] src) : this(new LiveMany<IList<T>>(src))
         { }
 
         /// <summary>
@@ -66,13 +66,10 @@ namespace Yaapii.Atoms.List
         /// <param name="src">The lists to join together</param>
         public Joined(IEnumerable<IList<T>> src) : base(() =>
             {
-                var blocking = new BlockingCollection<T>();
-                foreach (var lst in src)
-                {
-                    new Each<T>(item => blocking.Add(item), lst).Invoke();
-                }
-
-                return new LiveList<T>(blocking);
+                return 
+                    new ListOf<T>(
+                        new Atoms.Enumerable.Joined<T>(src)
+                    );
             },
             false
         )

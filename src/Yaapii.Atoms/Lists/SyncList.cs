@@ -35,38 +35,53 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="items">source items</param>
-        public SyncList(params T[] items) : this(new ManyOf<T>(items))
+        public SyncList() : this(new object())
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="items">source items</param>
-        public SyncList(IEnumerable<T> items) : this(new LiveList<T>(items))
+        /// <param name="syncRoot"></param>
+        public SyncList(object syncRoot) : this(syncRoot, new ListOf<T>())
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="items">source item enumerator</param>
-        public SyncList(IEnumerator<T> items) : this(new LiveList<T>(items))
+        /// <param name="items">items to make collection from</param>
+        public SyncList(params T[] items) : this(new ListOf<T>(items))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="list">A threadsafe list</param>
-        public SyncList(ICollection<T> list) : base(
+        /// <param name="lst">Collection to sync</param>
+        public SyncList(IList<T> lst) : this(lst, lst)
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="syncRoot">root object to sync</param>
+        /// <param name="col"></param>
+        public SyncList(object syncRoot, IList<T> col) : base(
             new Scalar.Sync<IList<T>>(
                 new Live<IList<T>>(() =>
-                    new LiveList<T>(
-                        new Collection.Sync<T>(list)
-                    )
-                )
+                {
+                    lock (syncRoot)
+                    {
+                        var tmp = new List<T>();
+                        foreach (var item in col)
+                        {
+                            tmp.Add(item);
+                        }
+                        return tmp;
+                    }
+                })
             ),
             false
         )
         { }
+
     }
 }

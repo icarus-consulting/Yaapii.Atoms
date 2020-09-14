@@ -39,20 +39,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="src">Source Enumerable</param>
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
-        public Grouped(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : this(
-            new LiveList<T>(src),
-            key,
-            value
-        )
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="src">Source Enumerable</param>
-        /// <param name="key">Function to convert Source Type to Key Type</param>
-        /// <param name="value">Function to Convert Source Type to Key Týpe</param>
-        public Grouped(IList<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : base(
+        public Grouped(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : base(
             () =>
             {
                 Dictionary<Key, IList<Value>> temp = new Dictionary<Key, IList<Value>>();
