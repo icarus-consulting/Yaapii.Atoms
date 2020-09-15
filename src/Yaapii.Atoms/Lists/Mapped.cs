@@ -35,40 +35,55 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="fnc">mapping function</param>
+        /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public Mapped(IFunc<In, Out> fnc, IEnumerable<In> src) : this((input)=>fnc.Invoke(input), src)
+        public Mapped(IFunc<In, Out> mapping, IEnumerable<In> src) : this((input) => mapping.Invoke(input), src)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="fnc">mapping function</param>
+        /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> fnc, IEnumerator<In> src) : this(fnc, new LiveList<In>(src))
+        public Mapped(Func<In, Out> mapping, IEnumerator<In> src) : base(() =>
+            new LiveList<Out>(() =>
+            {
+                var result = new List<Out>();
+                while(src.MoveNext())
+                {
+                    result.Add(mapping.Invoke(src.Current));
+                }
+                return result;
+            }),
+            false
+        )
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="fnc">mapping function</param>
+        /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> fnc, IEnumerable<In> src) : this(fnc, new LiveList<In>(src))
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="fnc">mapping function</param>
-        /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> fnc, ICollection<In> src) : base(
-            () =>
-            new LiveList<Out>(
-                  new Collection.Mapped<In, Out>(fnc, src)
+        public Mapped(Func<In, Out> mapping, IEnumerable<In> src) : base(() =>
+            new ListOf<Out>(
+                new Collection.Mapped<In, Out>(mapping, src)
             ),
             false
         )
         { }
 
-}
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="mapping">mapping function</param>
+        /// <param name="src">source enumerator</param>
+        public Mapped(Func<In, Out> mapping, ICollection<In> src) : base(() =>
+            new ListOf<Out>(
+                new Collection.Mapped<In, Out>(mapping, src)
+            ),
+            false
+        )
+        { }
+
+    }
 }

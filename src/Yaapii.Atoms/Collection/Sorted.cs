@@ -22,7 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using Yaapii.Atoms.Enumerator;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Collection
@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Collection
         /// A list with default sorting (ascending)
         /// </summary>
         /// <param name="src">the source enumerable</param>
-        public Sorted(params T[] src) : this(new LiveList<T>(src))
+        public Sorted(params T[] src) : this(new LiveMany<T>(src))
         { }
 
         /// <summary>

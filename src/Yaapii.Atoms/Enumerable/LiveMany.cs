@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
-        public LiveMany(IScalar<IEnumerator<T>> origin) : base(
+        private LiveMany(IScalar<IEnumerator<T>> origin) : base(
             new Live<IEnumerable<T>>(
                 () => new LiveEnumeratorAsEnumerable<T>(origin.Value())
             ),

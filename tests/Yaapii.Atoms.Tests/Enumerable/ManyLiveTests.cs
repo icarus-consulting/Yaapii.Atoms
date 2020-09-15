@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new LiveMany<string>(
+                    new ManyOf<string>(
                         "a", "b", "c"
                     )
                 ).Value() == 3,
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new LiveMany<IText>(
+                    new ManyOf<IText>(
                         new LiveText("a"), 
                         new LiveText("b"), 
                         new LiveText("c")

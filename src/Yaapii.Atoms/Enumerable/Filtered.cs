@@ -44,14 +44,12 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="items">other items to filter</param>
         public Filtered(Func<T, Boolean> fnc, T item1, T item2, params T[] items) : this(
             fnc,
-            new LiveMany<T>(() => 
-                new Joined<T>(
-                    new LiveMany<T>(
-                        item1,
-                        item2
-                    ),
-                    items
-                ).GetEnumerator()
+            new Joined<T>(
+                new LiveMany<T>(
+                    item1,
+                    item2
+                ),
+                items
             )
         )
         { }
@@ -62,11 +60,9 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
         public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src) : base(() =>
-            new LiveMany<T>(() =>
-                new Enumerator.Filtered<T>(
-                    src.GetEnumerator(),
-                    fnc
-                )
+            new Enumerator.Filtered<T>(
+                src.GetEnumerator(),
+                fnc
             ),
             false
         )

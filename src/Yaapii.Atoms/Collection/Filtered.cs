@@ -43,16 +43,14 @@ namespace Yaapii.Atoms.Collection
         public Filtered(Func<T, Boolean> func, T item1, T item2, params T[] items) :
             this(
                 func,
-                new LiveMany<T>(
-                    new Live<IEnumerator<T>>(
-                        () => new Enumerable.Joined<T>(
-                            new LiveMany<T>(
-                                item1,
-                                item2
-                            ),
-                            items
-                        ).GetEnumerator()
-                    )
+                new LiveMany<T>(() => 
+                    new Enumerable.Joined<T>(
+                        new ManyOf<T>(
+                            item1,
+                            item2
+                        ),
+                        items
+                    ).GetEnumerator()
                 )
             )
         { }

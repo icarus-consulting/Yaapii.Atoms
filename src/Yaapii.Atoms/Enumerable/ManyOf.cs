@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Enumerable
         public ManyOf(params string[] items) : this(() =>
             {
                 var lst = new List<string>();
-                for(int i=0;i<items.Length;i++)
+                for (int i = 0; i < items.Length; i++)
                 {
                     lst.Add(items[i]);
                 };
@@ -77,16 +77,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
         public ManyOf(Func<IEnumerator<string>> origin) : base(
-            () =>
-            {
-                var enm = origin();
-                var lst = new List<string>();
-                while (enm.MoveNext())
-                {
-                    lst.Add(enm.Current);
-                };
-                return lst;
-            },
+            origin,
             false
         )
         { }
@@ -133,16 +124,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
         public ManyOf(Func<IEnumerator<T>> origin) : base(
-            () =>
-            {
-                var enm = origin();
-                var lst = new List<T>();
-                while (enm.MoveNext())
-                {
-                    lst.Add(enm.Current);
-                };
-                return lst;
-            },
+            origin,
             false
         )
         { }

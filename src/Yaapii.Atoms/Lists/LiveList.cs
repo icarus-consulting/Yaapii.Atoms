@@ -20,8 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using System.Collections.Generic;
-using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.List
 {
@@ -34,23 +34,9 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="array">source array</param>
-        public LiveList(params T[] array) : this(new LiveMany<T>(array))
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="src">source enumerator</param>
-        public LiveList(IEnumerator<T> src) : this(new LiveMany<T>(() => src))
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
         /// <param name="src">source enumerable</param>
-        public LiveList(IEnumerable<T> src) : base(
-            () => new List<T>(src),
+        public LiveList(Func<IList<T>> src) : base(
+            src,
             true
         )
         { }
