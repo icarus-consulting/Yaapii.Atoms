@@ -39,7 +39,6 @@ namespace Yaapii.Atoms.Enumerable
                 var result = new List<T>();
                 foreach (var aItem in a)
                 {
-
                     if (new Contains<T>(b, bItem => compare.Invoke(aItem, bItem)).Value())
                     {
                         result.Add(aItem);
