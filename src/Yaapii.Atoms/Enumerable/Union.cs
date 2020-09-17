@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Union objects in two enumerables.
         /// </summary>
-        /// <param name="compare">Decission to put items from a in the resulting union</param>
+        /// <param name="compare">Condition to match</param>
         public Union(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) : base(() =>
             {
                 var result = new List<T>();
