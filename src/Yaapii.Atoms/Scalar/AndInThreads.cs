@@ -9,41 +9,65 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Scalar;
 
-namespace Yaapii.Atoms
+namespace Yaapii.Atoms.Scalar
 {
+    /// <summary>
+    /// Logical conjunction, in multiple threads. Returns true if all contents return true.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public sealed class AndInThreads<T> : IScalar<bool>
     {
         private IEnumerable<IScalar<bool>> iterable;
 
+        /// <summary>
+        /// Logical conjunction, in multiple threads. Returns true if all contents return true.
+        /// </summary>
+        /// <param name="src"></param>
         public AndInThreads(params IScalar<bool>[] src) : this(
             new ManyOf<IScalar<bool>>(src)
         )
         { }
 
-
+        /// <summary>
+        /// Logical conjunction, in multiple threads. Returns true if all contents return true.
+        /// </summary>
+        /// <param name="proc"></param>
+        /// <param name="src"></param>
         public AndInThreads(IAction<T> proc, params T[] src) : this(
             new FuncOf<T,bool>(proc, true), src
         )
         { }
 
-
+        /// <summary>
+        /// Logical conjunction, in multiple threads. Returns true if all contents return true.
+        /// </summary>
+        /// <param name="func"></param>
+        /// <param name="src"></param>
         public AndInThreads(IFunc<T, bool> func, params T[] src) : this(
             func, new ManyOf<T>(src)
         )
         { }
 
-
+        /// <summary>
+        /// Logical conjunction, in multiple threads. Returns true if all contents return true.
+        /// </summary>
+        /// <param name="proc"></param>
+        /// <param name="src"></param>
         public AndInThreads(IAction<T> proc, IEnumerable<T> src) : this(
             new FuncOf<T,bool>(proc, true), src
         )
         { }
 
+        /// <summary>
+        /// Logical conjunction, in multiple threads. Returns true if all contents return true.
+        /// </summary>
+        /// <param name="func"></param>
+        /// <param name="src"></param>
         public AndInThreads(IFunc<T, bool> func, IEnumerable<T> src) : this(
             new Mapped<T, IScalar<bool>>(
                 i => new ScalarOf<bool>(func.Invoke(i)),
@@ -51,6 +75,10 @@ namespace Yaapii.Atoms
             )
         {}
 
+        /// <summary>
+        /// Logical conjunction, in multiple threads. Returns true if all contents return true.
+        /// </summary>
+        /// <param name="src"></param>
         public AndInThreads(IEnumerable<IScalar<bool>> src)
         {
             this.iterable = src;
