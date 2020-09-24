@@ -12,14 +12,14 @@ using Yaapii.Atoms.Scalar;
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 namespace Yaapii.Atoms.Scalar.Tests
 {
-    public sealed class AndInThreadsTest
+    public sealed class ParallelAndTest
     {
 
         [Fact]
         void AllTrue()
         {
             var result =
-                new AndInThreads<bool>(
+                new ParallelAnd<bool>(
                     new True(),
                     new True(),
                     new True()
@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         void OneFalse()
         {
             var result =
-                new AndInThreads<bool>
+                new ParallelAnd<bool>
                 (
                     new True(),
                     new False(),
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         void AllFalse()
         {
             var result =
-                new AndInThreads<bool>
+                new ParallelAnd<bool>
                 (
                     new False(),
                     new False(),
@@ -57,7 +57,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         void EmtpyIterator()
         {
             var result =
-                new AndInThreads<bool>
+                new ParallelAnd<bool>
                 (
                     new ManyOf<IScalar<bool>>()
                 ).Value();
@@ -69,7 +69,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             var list = new LinkedList<string>();
             Assert.True(
-                new AndInThreads<bool>(
+                new ParallelAnd<bool>(
                     new Enumerable.Mapped<string, IScalar<bool>>(
                         str => { list.AddLast(str); return new True(); },
                         new ManyOf<string>("hello", "world")
@@ -85,7 +85,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             var list = new LinkedList<string>();
             Assert.True(
-                new AndInThreads<bool>(
+                new ParallelAnd<bool>(
                     new Enumerable.Mapped<string, IScalar<bool>>(
                         str => { list.AddLast(str); return new True(); },
                         new ManyOf<string>()
@@ -99,7 +99,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         void WorksWithFunc()
         {
             var result =
-                new AndInThreads<int>(
+                new ParallelAnd<int>(
                     new FuncOf<int, bool>(i => i > 0),
                     1,
                     -1,
@@ -112,7 +112,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         void WorksWithIterableScalarBool()
         {
             var result =
-                new AndInThreads<bool>(
+                new ParallelAnd<bool>(
                     new Atoms.List.ListOf<IScalar<bool>>(
                         new True(),
                         new True()
@@ -126,7 +126,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
 
             var result =
-                new AndInThreads<bool>(
+                new ParallelAnd<bool>(
                     new ListOf<IScalar<bool>>( )
                 ).Value();
 
