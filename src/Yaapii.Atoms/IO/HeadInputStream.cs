@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.IO
@@ -11,7 +12,7 @@ namespace Yaapii.Atoms.IO
     {
         private readonly IScalar<Stream> origin;
         private readonly long length;
-        private long processed;
+        private readonly IList<long> processed;
 
 
         public HeadInputStream(Stream origin, int length)
@@ -19,6 +20,7 @@ namespace Yaapii.Atoms.IO
             this.origin =
                 new ScalarOf<Stream>(origin);
             this.length = length;
+            this.processed = new List<long>() { 0 };
         }
 
 
@@ -46,27 +48,30 @@ namespace Yaapii.Atoms.IO
             origin.Value().Flush();
         }
 
-        public override int Read(byte[] buffer, int offset, int count)
+
+        public override int Read(byte[] buf, int offset, int len)
         {
-            int adjusted;
-            if (this.processed >= this.length)
+            if(this.processed[0] < this.length)
             {
-                adjusted = -1;
+                var dif = this.length - this.processed[0];
+                this.processed[0] = this.length;
+                return this.origin.Value().Read(buf, offset, (int)(dif));
             }
             else
             {
-                this.processed = this.processed + 1;
-                adjusted = this.origin.Value().Read(buffer, offset, count);
+                this.processed[0] = 0;
+                return 0;
             }
-            return adjusted;
+
+            
         }
 
         public override long Seek(long offset, SeekOrigin origin)
         {
             long adjusted;
-            if (this.processed + offset > this.length)
+            if (this.processed[0] + offset > this.length)
             {
-                adjusted = this.length - this.processed;
+                adjusted = this.length - this.processed[0];
             }
             else
             {
@@ -74,7 +79,7 @@ namespace Yaapii.Atoms.IO
             }
 
             long skipped = this.origin.Value().Seek(adjusted, SeekOrigin.Begin);
-            this.processed = this.processed + skipped;
+            this.processed[0] = this.processed[0] + skipped;
             return skipped;
         }
 
