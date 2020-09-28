@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Yaapii.Atoms.Error
 {
@@ -32,21 +30,29 @@ namespace Yaapii.Atoms.Error
     public sealed class FailWhen : IFail
     {
         private readonly Func<bool> _condition;
-        private readonly string _hint;
+        private readonly Exception _ex;
 
         /// <summary>
-        /// Fail if condition is matched.
+        /// Fail with <see cref="System.ArgumentException"/> if condition is matched.
         /// </summary>
         /// <param name="condition">condition to apply</param>
         public FailWhen(bool condition) : this(condition, "Failed because the given function failed.")
         { }
 
         /// <summary>
-        /// Fail if condition is matched.
+        /// Fail with <see cref="System.ArgumentException"/> if condition is matched.
         /// </summary>
         /// <param name="condition">condition to apply</param>
         /// <param name="hint">msg to put in exception</param>
         public FailWhen(bool condition, string hint) : this(() => condition, hint)
+        { }
+
+        /// <summary>
+        /// Fail with <see cref="System.ArgumentException"/> if condition is matched.
+        /// </summary>
+        /// <param name="condition">condition to apply</param>
+        /// <param name="ex">specific exception which will be thrown</param>
+        public FailWhen(bool condition, Exception ex) : this(() => condition, ex)
         { }
 
         /// <summary>
@@ -57,14 +63,24 @@ namespace Yaapii.Atoms.Error
         { }
 
         /// <summary>
-        /// Fail if condition is matched.
+        /// Fail with <see cref="System.ArgumentException"/> if condition is matched.
         /// </summary>
         /// <param name="condition">condition to apply</param>
         /// <param name="hint">msg to put in exception</param>
-        public FailWhen(Func<bool> condition, string hint)
+        public FailWhen(Func<bool> condition, string hint) : this(
+            condition, new ArgumentException(hint)
+        )
+        { }
+
+        /// <summary>
+        /// Fail with specified exception if condition is matched.
+        /// </summary>
+        /// <param name="condition">condition to apply</param>
+        /// <param name="ex">specific exception which will be thrown</param>
+        public FailWhen(Func<bool> condition, Exception ex)
         {
-            _condition = condition;
-            _hint = hint;
+            this._condition = condition;
+            this._ex = ex;
         }
 
         /// <summary>
@@ -72,7 +88,7 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         public void Go()
         {
-            if (_condition.Invoke()) throw new ArgumentException(_hint);
+            if (_condition.Invoke()) throw this._ex;
         }
     }
 }

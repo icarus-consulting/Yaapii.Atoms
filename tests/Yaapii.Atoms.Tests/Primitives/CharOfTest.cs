@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Primitives.Tests
 {

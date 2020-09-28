@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Yaapii.Atoms.Error
 {
@@ -32,23 +30,33 @@ namespace Yaapii.Atoms.Error
     public sealed class FailZero : IFail
     {
         private readonly long _number;
-        private readonly string _hint;
+        private readonly Exception _ex;
 
         /// <summary>
-        /// Fail if number is 0.
+        /// Fail with <see cref="System.Exception"/> if number is 0.
         /// </summary>
         /// <param name="number">number to check</param>
         public FailZero(long number) : this(number, "Number is zero") { }
 
         /// <summary>
-        /// Fail if number is 0.
+        /// Fail with <see cref="System.Exception"/> if number is 0.
         /// </summary>
         /// <param name="number">number to check</param>
         /// <param name="hint">msg to put in exception</param>
-        public FailZero(long number, string hint)
+        public FailZero(long number, string hint) : this(
+            number, new Exception(hint)
+        )
+        { }
+
+        /// <summary>
+        /// Fail with specified exception if number is 0.
+        /// </summary>
+        /// <param name="number">number to check</param>
+        /// <param name="ex">specific exception which will be thrown</param>
+        public FailZero(long number, Exception ex)
         {
-            _hint = hint;
-            _number = number;
+            this._number = number;
+            this._ex = ex;
         }
 
         /// <summary>
@@ -56,7 +64,7 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         public void Go()
         {
-            if (!_number.Equals(0)) throw new Exception(_hint + " is zero");
+            if (_number.Equals(0)) throw this._ex;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Func;
 
 namespace Yaapii.Atoms.Func.Tests
 {
@@ -37,10 +34,10 @@ namespace Yaapii.Atoms.Func.Tests
                 (first, second) => new Random().Next()
             );
 
-            Assert.True(
+            Assert.Equal(
+                func.Apply(true, true) + func.Apply(true, true),
                 func.Apply(true, true) + func.Apply(true, true)
-                == func.Apply(true, true) + func.Apply(true, true),
-                "cannot cache results");
+            );
         }
     }
 }

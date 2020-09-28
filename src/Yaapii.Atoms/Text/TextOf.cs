@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,8 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable MaxClassLength // Class length max
 namespace Yaapii.Atoms.Text
@@ -33,10 +33,8 @@ namespace Yaapii.Atoms.Text
     /// <summary>
     /// A <see cref="IText"/> out of other objects.
     /// </summary>
-    public sealed class TextOf : IText
+    public sealed class TextOf : TextEnvelope
     {
-        private readonly IScalar<String> _origin;
-
         /// <summary>
         /// A <see cref="IText"/> out of a int.
         /// </summary>
@@ -45,10 +43,19 @@ namespace Yaapii.Atoms.Text
         { }
 
         /// <summary>
+        /// A <see cref="IText"/> out of a long.
+        /// </summary>
+        /// <param name="input">number</param>
+        public TextOf(long input) : this(() => input + "")
+        { }
+
+        /// <summary>
         /// A <see cref="IText"/> out of a double
         /// </summary>
         /// <param name="input">a <see cref="double"/></param>
-        public TextOf(double input) : this(input.ToString())
+        public TextOf(double input) : this(
+            () => input.ToString(CultureInfo.InvariantCulture)
+        )
         { }
 
         /// <summary>
@@ -56,14 +63,18 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="input">a <see cref="double"/></param>
         /// <param name="cultureInfo">The </param>
-        public TextOf(double input, CultureInfo cultureInfo) : this(input.ToString(cultureInfo))
+        public TextOf(double input, CultureInfo cultureInfo) : this(
+            () => input.ToString(cultureInfo)
+        )
         { }
 
         /// <summary>
         /// A <see cref="IText"/> out of a float
         /// </summary>
         /// <param name="input">a <see cref="float"/></param>
-        public TextOf(float input) : this(input.ToString())
+        public TextOf(float input) : this(
+            () => input.ToString(CultureInfo.InvariantCulture)
+        )
         { }
 
         /// <summary>
@@ -71,7 +82,9 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="input">a <see cref="float"/></param>
         /// <param name="cultureInfo">The </param>
-        public TextOf(float input, CultureInfo cultureInfo) : this(input.ToString(cultureInfo))
+        public TextOf(float input, CultureInfo cultureInfo) : this(
+            () => input.ToString(cultureInfo)
+        )
         { }
 
         /// <summary>
@@ -85,6 +98,7 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of a <see cref="Uri"/>.
         /// </summary>
         /// <param name="uri">a file <see cref="Uri"/></param>
+        /// <param name="encoding">encoding of the data at the uri</param>
         public TextOf(Uri uri, Encoding encoding) : this(new InputOf(uri), encoding)
         { }
 
@@ -101,6 +115,13 @@ namespace Yaapii.Atoms.Text
         /// <param name="file"></param>
         /// <param name="encoding"></param>
         public TextOf(FileInfo file, Encoding encoding) : this(new InputOf(file), encoding)
+        { }
+
+        /// <summary>
+        /// A <see cref="IText"/> out of a <see cref="IInput"/>.
+        /// </summary>
+        /// <param name="stream">a <see cref="Stream"/></param>
+        public TextOf(Stream stream) : this(new InputOf(stream))
         { }
 
         /// <summary>
@@ -231,11 +252,11 @@ namespace Yaapii.Atoms.Text
         /// <param name="bytes">A <see cref="IBytes"/> object</param>
         /// <param name="encoding"><see cref="Encoding"/> of the <see cref="IBytes"/> object</param>
         public TextOf(IBytes bytes, Encoding encoding) : this(
-            () => 
+            () =>
             {
                 var memoryStream = new MemoryStream(bytes.AsBytes());
-                return new StreamReader(memoryStream).ReadToEnd(); // removes the BOM from the Byte-Array
-            })
+                return new StreamReader(memoryStream, encoding).ReadToEnd(); // removes the BOM from the Byte-Array
+        })
         { }
 
         /// <summary>
@@ -255,75 +276,24 @@ namespace Yaapii.Atoms.Text
         { }
 
         /// <summary>
-        /// A <see cref="IText"/> out of the return value of a <see cref="Func{Out}"/>.
-        /// </summary>
-        /// <param name="fnc">function returning a string </param>
-        public TextOf(Func<string> fnc) : this(new ScalarOf<string>(fnc))
-        { }
-
-        /// <summary>
         /// A <see cref="IText"/> out of the return value of a <see cref="IFunc{T}"/>.
         /// </summary>
         /// <param name="fnc">func returning a string</param>
-        public TextOf(IFunc<string> fnc) : this(new ScalarOf<string>(fnc))
+        public TextOf(IFunc<string> fnc) : this(() => fnc.Invoke())
         { }
 
         /// <summary>
         /// A <see cref="IText"/> out of encapsulating <see cref="IScalar{T}"/>.
         /// </summary>
         /// <param name="scalar">scalar of a string</param>
-        public TextOf(IScalar<String> scalar)
-        {
-            this._origin = scalar;
-        }
+        public TextOf(IScalar<String> scalar) : this(() => scalar.Value())
+        { }
 
         /// <summary>
-        /// Gives the text as a string.
+        /// A <see cref="IText"/> out of encapsulating <see cref="IScalar{T}"/>.
         /// </summary>
-        /// <returns></returns>
-        public String AsString()
-        {
-            return this._origin.Value();
-        }
-
-        /// <summary>
-        /// Compares to another text.
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public int CompareTo(IText text)
-        {
-            return this.AsString().CompareTo(text.AsString());
-        }
-
-        /// <summary>
-        /// Checks for equality
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            if (obj as IText == null) return false;
-            return this.AsString().CompareTo((obj as IText).AsString()) == 0;
-        }
-
-        /// <summary>
-        /// Checks for equality
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public bool Equals(IText text)
-        {
-            return Equals(text as object);
-        }
-
-        /// <summary>
-        /// Hashcode for this text
-        /// </summary>
-        /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        /// <param name="txt">scalar of a string</param>
+        public TextOf(Func<String> txt) : base(txt, false)
+        { }
     }
 }

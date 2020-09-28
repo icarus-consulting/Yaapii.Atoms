@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -38,14 +34,17 @@ namespace Yaapii.Atoms.Enumerable
     /// </summary>
     /// <typeparam name="In">type of input elements</typeparam>
     /// <typeparam name="Out">type of mapped elements</typeparam>
-    public sealed class Mapped<In, Out> : EnumerableEnvelope<Out>
+    public sealed class Mapped<In, Out> : ManyEnvelope<Out>
     {
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IFunc<In, Out> fnc, params In[] src) : this(fnc, new EnumerableOf<In>(src))
+        public Mapped(IFunc<In, Out> fnc, params In[] src) : this(
+            fnc, 
+            new LiveMany<In>(src)
+        )
         { }
 
         /// <summary>
@@ -53,7 +52,10 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IBiFunc<In, int, Out> fnc, params In[] src) : this(fnc, new EnumerableOf<In>(src))
+        public Mapped(IBiFunc<In, int, Out> fnc, params In[] src) : this(
+            fnc, 
+            new LiveMany<In>(src)
+        )
         { }
 
         /// <summary>
@@ -73,7 +75,8 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="fnc">function used to map</param>
         public Mapped(Func<In, int, Out> fnc, IEnumerable<In> src) : this(
             new BiFuncOf<In, int, Out>(fnc),
-            src)
+            src
+        )
         { }
 
         /// <summary>
@@ -89,12 +92,13 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src) : base(
-            new ScalarOf<IEnumerable<Out>>(
-                () =>
-                new EnumerableOf<Out>(               
-                    new MappedEnumerator<In, Out>(
-                        src.GetEnumerator(), fnc))))
-        {}
+        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src) : base(() =>
+            new LiveMany<Out>(() =>
+                new Enumerator.Mapped<In, Out>(
+                    src.GetEnumerator(), fnc)
+            ),
+            false
+        )
+        { }
     }
 }

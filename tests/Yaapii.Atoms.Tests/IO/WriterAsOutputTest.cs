@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 using System;
 using System.IO;
 using Xunit;
+using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.List;
@@ -45,36 +46,48 @@ namespace Yaapii.Atoms.IO.Tests
             if (File.Exists(outputPath)) File.Delete(outputPath);
 
             //Create large file
-            new IO.LengthOf(
+            new LengthOf(
                 new InputOf(
                     new TeeInputStream(
                         new MemoryStream(
                             new BytesOf(
-                                new JoinedText(",",
-                                new Limited<string>(
-                                    new Endless<string>("Hello World"),
-                                    1000))
-                                ).AsBytes()),
+                                new Joined(",",
+                                    new HeadOf<string>(
+                                        new Endless<string>("Hello World"),
+                                        1000
+                                    )
+                                )
+                            ).AsBytes()
+                        ),
                         new OutputTo(
-                            new Uri(inputPath)).Stream()))
+                            new Uri(inputPath)
+                        ).Stream()
+                    )
+                )
             ).Value();
 
             //Read from large file and write to output file (make a copy)
             var filestream = new FileStream(outputPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write);
 
             long left;
-            left = new LengthOf(
+            left = 
+                new LengthOf(
                     new TeeInput(
                         new InputOf(
-                            new Uri(Path.GetFullPath(inputPath))),
+                            new Uri(Path.GetFullPath(inputPath))
+                        ),
                         new WriterAsOutput(
-                            new StreamWriter(filestream)))
-                    ).Value();
+                            new StreamWriter(filestream)
+                        )
+                    )
+                ).Value();
 
-            long right = new LengthOf(
-                            new InputOf(
-                                new Uri(Path.GetFullPath(outputPath)))
-                         ).Value();
+            long right = 
+                new LengthOf(
+                    new InputOf(
+                        new Uri(Path.GetFullPath(outputPath))
+                    )
+                ).Value();
 
             Assert.True(left == right, "input and output are not the same size");
         }

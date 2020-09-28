@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Yaapii.Atoms.Error
 {
@@ -33,23 +32,36 @@ namespace Yaapii.Atoms.Error
     public sealed class FailEmpty<T> : IFail
     {
         private readonly IEnumerable<T> _enumerable;
-        private readonly string _hint;
+        private readonly Exception _ex;
 
         /// <summary>
-        /// Fail if enum is empty.
+        /// Fail with <see cref="System.Exception"/> if enum is empty.
         /// </summary>
         /// <param name="enumerable">enum to check</param>
-        public FailEmpty(IEnumerable<T> enumerable) : this(enumerable, "Collection is empty") { }
+        public FailEmpty(IEnumerable<T> enumerable) : this(
+            enumerable, "Collection is empty"
+        )
+        { }
 
         /// <summary>
-        /// Fail if enum is empty.
+        /// Fail with <see cref="System.Exception"/> if enum is empty.
         /// </summary>
         /// <param name="enumerable">enum to check</param>
         /// <param name="hint">msg to display in exception</param>
-        public FailEmpty(IEnumerable<T> enumerable, string hint)
+        public FailEmpty(IEnumerable<T> enumerable, string hint) : this(
+            enumerable, new Exception(hint)
+        )
+        { }
+
+        /// <summary>
+        /// Fail with specified exception if enum is empty.
+        /// </summary>
+        /// <param name="enumerable">enum to check</param>
+        /// <param name="ex">specific exception which will be thrown</param>
+        public FailEmpty(IEnumerable<T> enumerable, Exception ex)
         {
-            _enumerable = enumerable;
-            _hint = hint;
+            this._enumerable = enumerable;
+            this._ex = ex;
         }
 
         /// <summary>
@@ -57,7 +69,7 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         public void Go()
         {
-            if (!_enumerable.GetEnumerator().MoveNext()) throw new Exception(_hint + " is empty");
+            if (!_enumerable.GetEnumerator().MoveNext()) throw this._ex;
         }
     }
 }

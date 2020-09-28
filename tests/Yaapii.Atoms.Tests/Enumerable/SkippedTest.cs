@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,10 +36,10 @@ namespace Yaapii.Atoms.Enumerable.Tests
         public void SkipIterable()
         {
             Assert.True(
-                new JoinedText(
+                new Joined(
                     ", ",
                     new Skipped<string>(
-                        new EnumerableOf<string>("one", "two", "three", "four"),
+                        new ManyOf<string>("one", "two", "three", "four"),
                         2)
                     ).AsString() == "three, four");
         }

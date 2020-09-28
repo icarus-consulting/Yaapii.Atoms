@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.IO
         /// A writable <see cref="Stream"/> out of a <see cref="IOutput"/>.
         /// </summary>
         /// <param name="output">an output</param>
-        public OutputStreamTo(IOutput output) : this(new ScalarOf<Stream>(() => output.Stream()))
+        public OutputStreamTo(IOutput output) : this(new Live<Stream>(() => output.Stream()))
         { }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="tgt">the target</param>
         private OutputStreamTo(IScalar<Stream> tgt) : base()
         {
-            this._target = new StickyScalar<Stream>(tgt);
+            this._target = new ScalarOf<Stream>(tgt);
         }
 
         public async new void WriteAsync(byte[] buffer, int offset, int length)

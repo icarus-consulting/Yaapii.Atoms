@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -37,11 +37,11 @@ namespace Yaapii.Atoms.Enumerable.Tests
         public void SortsAnArray()
         {
             Assert.True(
-                new JoinedText(", ",
+                new Joined(", ",
                     new Enumerable.Mapped<int, string>(
                         i => i.ToString(),
                         new Sorted<int>(
-                            new EnumerableOf<int>(3, 2, 10, 44, -6, 0)
+                            new ManyOf<int>(3, 2, 10, 44, -6, 0)
                         )
                     )
                 ).AsString() == "-6, 0, 2, 3, 10, 44",
@@ -52,10 +52,10 @@ namespace Yaapii.Atoms.Enumerable.Tests
         public void SortsAnArrayWithComparator()
         {
             Assert.True(
-                new JoinedText(", ",
+                new Joined(", ",
                     new Sorted<string>(
-                        IReverseComparer<string>.Default,
-                        new EnumerableOf<string>(
+                        IReverseCompare<string>.Default,
+                        new ManyOf<string>(
                             "a", "c", "hello", "dude", "Friend"
                         )
                     )).AsString() == "hello, Friend, dude, c, a",
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.Empty(
                 new Sorted<int>(
-                    new EnumerableOf<int>()
+                    new ManyOf<int>()
                 ));
         }
     }

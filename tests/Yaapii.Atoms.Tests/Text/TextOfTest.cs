@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using Xunit;
+using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Tests;
 using Yaapii.Atoms.Text;
@@ -123,6 +124,19 @@ namespace Yaapii.Atoms.Text.Tests
         }
 
         [Fact]
+        public void ReadsStreamIntoText()
+        {
+            var content = "hello girl";
+
+            Assert.Equal(
+                content,
+                new TextOf(
+                    new MemoryStream(new BytesOf(content).AsBytes())
+                ).AsString()
+            );
+        }
+
+        [Fact]
         public void ReadsInputIntoText()
         {
             var content = "привет, друг!";
@@ -149,16 +163,12 @@ namespace Yaapii.Atoms.Text.Tests
         [Fact]
         public void ReadsDoubleIntoText()
         {
-            //  var content = "0,2545";
-
             double doub = 0.2545;
-
-            var content = doub.ToString(CultureInfo.CurrentCulture);
+            var content = doub.ToString(CultureInfo.InvariantCulture);
 
             Assert.True(
-                    new TextOf(doub
-                    ).AsString() == content,
-                    "Can't read text from double");
+                new LiveText(doub).AsString() == content
+            );
         }
 
         [Fact]
@@ -178,10 +188,8 @@ namespace Yaapii.Atoms.Text.Tests
         [Fact]
         public void ReadsFloatIntoText()
         {
-            //var content = "0,2545";
-
             float doub = 0.2545f;
-            var content = doub.ToString(CultureInfo.CurrentCulture);
+            var content = doub.ToString(CultureInfo.InvariantCulture);
 
             Assert.True(
                     new TextOf(doub
@@ -277,10 +285,22 @@ namespace Yaapii.Atoms.Text.Tests
         }
 
         [Fact]
+        public void ReadsBytesWithEncoding()
+        {
+            byte[] bytes = new byte[] { (byte)0xCA, (byte)0xFE };
+            Assert.True(
+                new TextOf(
+                    new BytesOf(bytes),
+                    Encoding.ASCII
+                ).AsString().CompareTo(Encoding.ASCII.GetString(bytes)) == 0,
+                "Can't read array of bytes");
+        }
+
+        [Fact]
         public void ComparesWithASubtext()
         {
             Assert.True(
-            new TextOf("here to there").CompareTo(
+            new Comparable(new TextOf("here to there")).CompareTo(
                 new SubText("from here to there", 5)
             ) == 0,
             "Can't compare sub texts");
@@ -308,6 +328,19 @@ namespace Yaapii.Atoms.Text.Tests
                     )
                 ).AsString().Contains("It doesn't work at all"),
                 "Can't print exception stacktrace");
+        }
+
+        [Fact]
+        public void ReadsLongIntoText()
+        {
+            long value = 68574581791096912;
+            var text = "68574581791096912";
+            Assert.True(
+                new TextOf(
+                    value
+                ).AsString() == text,
+                "Can't read long into text"
+            );
         }
     }
 }

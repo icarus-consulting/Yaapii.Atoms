@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.IO.Tests
@@ -35,24 +33,28 @@ namespace Yaapii.Atoms.IO.Tests
         public void CalculatesLength()
         {
             String text = "What's up, друг?";
-            Assert.True(
+            Assert.Equal(
                 new LengthOf(
                     new SlowInput(
                         new InputOf(
-                            new TextOf(text)))
-                ).Value() == Encoding.UTF8.GetBytes(text).Length,
-                "Can't calculate the length of Input");
+                            new LiveText(text)
+                        )
+                    )
+                ).Value(),
+                Encoding.UTF8.GetBytes(text).Length
+            );
         }
 
         [Fact]
         public void ReadsFileContentSlowly()
         {
             long size = 100_000L;
-            Assert.True(
+            Assert.Equal(
+                size,
                 new LengthOf(
                     new SlowInput(size)
-                ).Value() == size,
-            "Can't calculate length if the input is slow");
+                ).Value()
+            );
         }
 
     }

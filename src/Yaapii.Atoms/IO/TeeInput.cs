@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,23 +24,24 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Yaapii.Atoms.Bytes;
 
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
     /// <see cref="IInput"/> which will be copied to output while reading.
     /// </summary>
-    public sealed class TeeInput : IInput, IDisposable
+    public sealed class TeeInput : IInput
     {
         /// <summary>
         /// the source
         /// </summary>
-        private readonly IInput _source;
+        private readonly IInput source;
 
         /// <summary>
         /// the destination
         /// </summary>
-        private readonly IOutput _target;
+        private readonly IOutput target;
 
         /// <summary>
         /// <see cref="IInput"/> out of a file <see cref="Uri"/> which will be copied to <see cref="IOutput"/> while reading.
@@ -85,8 +86,8 @@ namespace Yaapii.Atoms.IO
         /// <param name="output">output</param>
         public TeeInput(IInput input, IOutput output)
         {
-            this._source = input;
-            this._target = output;
+            this.source = input;
+            this.target = output;
         }
 
         /// <summary>
@@ -95,21 +96,7 @@ namespace Yaapii.Atoms.IO
         /// <returns></returns>
         public Stream Stream()
         {
-            return new TeeInputStream(this._source.Stream(), this._target.Stream());
-        }
-
-        /// <summary>
-        /// Clean up.
-        /// </summary>
-        public void Dispose()
-        {
-            try
-            {
-                (_source as IDisposable)?.Dispose();
-                this._target.Stream().Flush();
-                (_target as IDisposable)?.Dispose();
-            }
-            catch (Exception) { }
+            return new TeeInputStream(this.source.Stream(), this.target.Stream());
         }
     }
 }

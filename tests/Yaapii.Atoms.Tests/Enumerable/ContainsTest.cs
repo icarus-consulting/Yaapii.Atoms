@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new Contains<string>(
-                    new EnumerableOf<string>("Hello", "my", "cat", "is", "missing"),
+                    new ManyOf<string>("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "cat"
                     ).Value());
         }
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.False(
                 new Contains<string>(
-                    new EnumerableOf<string>("Hello", "my", "cat", "is", "missing"),
+                    new ManyOf<string>("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "elephant"
                     ).Value());
         }
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         public void DoesntFindInEmtyList()
         {
             Assert.False(new Contains<string>(
-                new EnumerableOf<String>(),
+                new ManyOf<String>(),
                 (str) => str == "elephant"
                 ).Value());
         }

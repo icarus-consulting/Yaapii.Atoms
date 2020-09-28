@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -84,7 +84,7 @@ namespace Yaapii.Atoms.IO
         /// A <see cref="StreamWriter"/> to a <see cref="IOutput"/> returned by a <see cref="Func{StreamWriter}"/>.
         /// </summary>
         /// <param name="fnc">Function returning a streamwriter</param>
-        private WriterTo(Func<StreamWriter> fnc) : this(new ScalarOf<StreamWriter>(fnc))
+        private WriterTo(Func<StreamWriter> fnc) : this(new Live<StreamWriter>(fnc))
         { }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="tgt">the target streamwriter</param>
         private WriterTo(IScalar<StreamWriter> tgt) : base(new DeadStream())
         {
-            this._target = new StickyScalar<StreamWriter>(tgt, writer => !writer.BaseStream.CanWrite);
+            this._target = new ScalarOf<StreamWriter>(tgt, writer => !writer.BaseStream.CanWrite);
         }
 
 #pragma warning disable CS1591

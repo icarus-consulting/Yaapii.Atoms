@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ using System;
 using System.IO;
 using System.Text;
 using Xunit;
+using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
 
@@ -39,22 +40,27 @@ namespace Yaapii.Atoms.IO.Tests
             Directory.CreateDirectory(dir);
             var content = "yada yada";
 
-            string s = "";
-            using (var ipt =
-                new TeeInput(
-                    new InputOf(content),
-                    new WriterAsOutput(
-                        new WriterTo(uri))))
+            string s;
+            using (var output = new WriterTo(uri))
             {
-                s = new TextOf(ipt).AsString();
+                s =
+                    new LiveText(
+                        new TeeInput(
+                            new InputOf(content),
+                                new WriterAsOutput(
+                                    output
+                                )
+                            )
+                        ).AsString();
             }
 
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new InputAsBytes(
                         new InputOf(uri)
-                    )).AsString().CompareTo(s) == 0, //.Equals is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
-            "Can't copy Input to Output and return Input");
+                    )
+                ).AsString().CompareTo(s) == 0 //.CompareTo is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
+            );
         }
     }
 }

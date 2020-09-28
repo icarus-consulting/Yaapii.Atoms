@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
@@ -36,10 +32,10 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Enumerable.Joined<string>(
-                        new EnumerableOf<string>("hello", "world", "друг"),
-                        new EnumerableOf<string>("how", "are", "you"),
-                        new EnumerableOf<string>("what's", "up")
+                    new Joined<string>(
+                        new ManyOf<string>("hello", "world", "друг"),
+                        new ManyOf<string>("how", "are", "you"),
+                        new ManyOf<string>("what's", "up")
                     )
                 ).Value() == 8,
             "Can't concatenate enumerables together");
@@ -50,10 +46,10 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Enumerable.Joined<IEnumerable<string>>(
-                        new Enumerable.Mapped<string, IEnumerable<string>>(
-                           str => new EnumerableOf<string>(str),
-                           new EnumerableOf<string>("x")
+                    new Joined<IEnumerable<string>>(
+                        new Mapped<string, IEnumerable<string>>(
+                           str => new ManyOf<string>(str),
+                           new ManyOf<string>("x")
                         )
                 )).Value() == 1,
             "cannot join mapped iterables together");
@@ -64,8 +60,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Enumerable.Joined<string>(
-                        new Enumerable.EnumerableOf<string>("hello", "world", "друг"),
+                    new Joined<string>(
+                        new ManyOf<string>("hello", "world", "друг"),
                         "how",
                         "are",
                         "you",

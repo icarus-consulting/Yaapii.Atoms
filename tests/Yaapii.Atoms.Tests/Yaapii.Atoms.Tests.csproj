@@ -14,11 +14,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="IO\Resources\test.txt" />
+    <EmbeddedResource Include="IO\Resources\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="IO\Resources\test.txt" />
+    <Compile Remove="Assets\Zips\**" />
+    <EmbeddedResource Remove="Assets\Zips\**" />
+    <None Remove="Assets\Zips\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Zip\NotAZip" />
+    <None Remove="Assets\Zip\ZipWithThreeFiles.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Zip\NotAZip" />
+    <EmbeddedResource Include="Assets\Zip\ZipWithThreeFiles.zip" />
   </ItemGroup>
 
   <ItemGroup>

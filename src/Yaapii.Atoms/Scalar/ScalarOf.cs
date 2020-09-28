@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,65 +21,86 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Misc;
 
 namespace Yaapii.Atoms.Scalar
 {
     /// <summary>
-    /// A <see cref="IScalar{T}"/> out of other objects
+    /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
     /// </summary>
-    /// <typeparam name="T">type of the value</typeparam>
+    /// <typeparam name="T"></typeparam>
     public sealed class ScalarOf<T> : IScalar<T>
     {
-        private readonly IFunc<T> _func;
+        private readonly IScalar<T> origin;
+        private readonly Func<T, bool> shouldReload;
+        private readonly T[] cache;
+        private readonly bool[] filled; //this not-readonly flag is a compromise due to performance issues when using StickyFunc.
 
         /// <summary>
-        /// A <see cref="IScalar{T}"/> out of a object.
+        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
         /// </summary>
-        /// <param name="org"></param>
-        public ScalarOf(T org) : this((b) => org)
+        /// <param name="src">func to cache result from</param>
+        public ScalarOf(T src) : this(new Live<T>(src))
         { }
 
         /// <summary>
-        /// A <see cref="IScalar{T}"/> out of the return value from a <see cref="Func{T, TResult}"/>.
+        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
         /// </summary>
-        /// <param name="func"></param>
-        public ScalarOf(Func<T> func) : this(new FuncOf<T>(() => func.Invoke()))
+        /// <param name="src">func to cache result from</param>
+        public ScalarOf(Func<T> src) : this(new Live<T>(src))
         { }
 
         /// <summary>
-        /// A <see cref="IScalar{T}"/> out of the return value from a <see cref="Func{T, TResult}"/>.
+        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
         /// </summary>
-        /// <param name="func"></param>
-        public ScalarOf(Func<bool, T> func) : this(new FuncOf<T>(() => func.Invoke(true)))
+        /// <param name="src">scalar to cache result from</param>
+        public ScalarOf(IScalar<T> src) : this(src, input => false)
         { }
 
         /// <summary>
-        /// A <see cref="IScalar{T}"/> out of the return value from a <see cref="IFunc{In, Out}"/>
+        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
         /// </summary>
-        /// <param name="func"></param>
-        public ScalarOf(IFunc<bool, T> func) : this(new FuncOf<T>(() => func.Invoke(true)))
+        /// <param name="srcFunc">func to cache result from</param>
+        /// <param name="shouldReload">reload condition func</param>
+        public ScalarOf(Func<T> srcFunc, Func<T, bool> shouldReload) : this(new Live<T>(srcFunc), shouldReload)
         { }
 
         /// <summary>
-        /// Primary ctor
+        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
         /// </summary>
-        /// <param name="func"></param>
-        public ScalarOf(IFunc<T> func)
+        /// <param name="srcFunc">func to cache result from</param>
+        /// <param name="shouldReload">reload condition func</param>
+        public ScalarOf(IFunc<T> srcFunc, Func<T, bool> shouldReload) : this(new Live<T>(srcFunc), shouldReload)
+        { }
+
+        /// <summary>
+        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
+        /// </summary>
+        /// <param name="src">scalar to cache result from</param>
+        /// <param name="shouldReload">reload condition func</param>
+        public ScalarOf(IScalar<T> src, Func<T, bool> shouldReload)
         {
-            _func = func;
+            this.origin = src;
+            this.shouldReload = shouldReload;
+            this.cache = new T[1];
+            this.filled = new bool[1];
         }
 
         /// <summary>
-        /// Gives the value
+        /// Get the value.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the value</returns>
         public T Value()
         {
-            return _func.Invoke();
+            if (this.filled[0] != true)
+            {
+                this.cache.SetValue(this.origin.Value(), 0);
+                this.filled[0] = true;
+            }
+            else if (this.shouldReload(this.cache[0]))
+            {
+                this.cache[0] = this.origin.Value();
+            }
+            return this.cache[0];
         }
     }
 }

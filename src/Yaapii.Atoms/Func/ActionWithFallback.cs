@@ -1,6 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// MIT License
+//
+// Copyright(c) 2020 ICARUS Consulting GmbH
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+using System;
 
 namespace Yaapii.Atoms.Func
 {
@@ -12,12 +32,12 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// Action to call.
         /// </summary>
-        private readonly IAction _func;
+        private readonly IAction func;
 
         /// <summary>
         /// Fallback to call when the action fails.
         /// </summary>
-        private readonly IAction<Exception> _fallback;
+        private readonly IAction<Exception> fallback;
 
         /// <summary>
         /// A Action that executes a callback if it fails (= an <see cref="Exception"/> occurs).
@@ -56,8 +76,8 @@ namespace Yaapii.Atoms.Func
         /// <param name="fbk">Fallback action</param>
         public ActionWithFallback(IAction fnc, IAction<Exception> fbk)
         {
-            this._func = fnc;
-            this._fallback = fbk;
+            this.func = fnc;
+            this.fallback = fbk;
         }
 
         /// <summary>
@@ -67,11 +87,11 @@ namespace Yaapii.Atoms.Func
         {
             try
             {
-                _func.Invoke();
+                func.Invoke();
             }
             catch (Exception ex)
             {
-                _fallback.Invoke(ex);
+                fallback.Invoke(ex);
             }
         }
     }

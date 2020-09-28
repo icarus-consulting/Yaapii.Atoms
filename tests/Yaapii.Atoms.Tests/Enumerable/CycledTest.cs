@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@ using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.List;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
@@ -38,7 +39,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new ItemAt<string>(
                     new Cycled<string>(
-                        new EnumerableOf<string>(
+                        new ManyOf<string>(
                             "one", expected, "three"
                             )), 
                     7

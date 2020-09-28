@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Scalar;
 
@@ -48,22 +50,39 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="file">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
         public InputOf(Uri file) : this(
-            () => new FileStream(Uri.UnescapeDataString(file.AbsolutePath), FileMode.Open, FileAccess.Read))
+            () =>
+            {
+                if (file.HostNameType == UriHostNameType.Dns)
+                {
+                    return WebRequest.Create(file).GetResponse().GetResponseStream();
+                }
+                else
+                {
+                    return new FileStream(Uri.UnescapeDataString(file.LocalPath), FileMode.Open, FileAccess.Read);
+                }
+            })
         { }
 
         /// <summary>
         /// Input out of a file Uri.
         /// </summary>
         /// <param name="file">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
-        public InputOf(FileInfo file) : this(
-            () => new FileStream(Uri.UnescapeDataString(file.FullName), FileMode.Open, FileAccess.Read))
+        public InputOf(FileInfo file) : this(new Live<FileInfo>(file))
+        { }
+
+        /// <summary>
+        /// Input out of a scalar of a file Uri.
+        /// </summary>
+        /// <param name="file">scalar of a uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
+        public InputOf(IScalar<FileInfo> file) : this(
+            () => new FileStream(Uri.UnescapeDataString(file.Value().FullName), FileMode.Open, FileAccess.Read))
         { }
 
         /// <summary>
         /// Input out of a Url.
         /// </summary>
         /// <param name="url">a url starting with http:// or https://</param>
-        public InputOf(Url url) : this(new ScalarOf<Url>(url))
+        public InputOf(Url url) : this(new Live<Url>(url))
         { }
 
         /// <summary>
@@ -140,7 +159,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="builder">a stringbuilder</param>
         /// <param name="enc">encoding of the stringbuilder</param>
         public InputOf(StringBuilder builder, Encoding enc) : this(
-            new ScalarOf<Stream>(
+            new Live<Stream>(
                 () => new MemoryStream(
                     new BytesOf(builder, enc).AsBytes())))
         { }
@@ -208,7 +227,7 @@ namespace Yaapii.Atoms.IO
         /// ctor
         /// </summary>
         /// <param name="src">a <see cref="IBytes"/> object which will be copied to memory</param>
-        public InputOf(IBytes src) : this(new ScalarOf<Stream>(
+        public InputOf(IBytes src) : this(new Live<Stream>(
                         () =>
                         {
                             var b = src.AsBytes();
@@ -223,14 +242,14 @@ namespace Yaapii.Atoms.IO
         /// ctor
         /// </summary>
         /// <param name="stream">a <see cref="Stream"/> as input</param>
-        public InputOf(Stream stream) : this(new ScalarOf<Stream>(stream))
+        public InputOf(Stream stream) : this(new Live<Stream>(stream))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="fnc">a function retrieving a <see cref="Stream"/> as input</param>
-        public InputOf(Func<Stream> fnc) : this(new ScalarOf<Stream>(fnc))
+        public InputOf(Func<Stream> fnc) : this(new Live<Stream>(fnc))
         { }
 
         /// <summary>
@@ -239,7 +258,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="stream">the input <see cref="Stream"/></param>
         private InputOf(IScalar<Stream> stream)
         {
-            this._origin = new StickyScalar<Stream>(stream, streamObj => !streamObj.CanRead);
+            this._origin = new ScalarOf<Stream>(stream, streamObj => !streamObj.CanRead);
         }
 
         /// <summary>

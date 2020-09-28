@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Func.Tests
@@ -44,7 +40,7 @@ namespace Yaapii.Atoms.Func.Tests
                             input => input += "X",
                             input => input += "Y"
                         ),
-                        new EnumerableOf<string>("public", "final", "class")
+                        new ManyOf<string>("public", "final", "class")
                     ))
             ).Value() == 3,
             "cannot chain functions");
@@ -60,13 +56,13 @@ namespace Yaapii.Atoms.Func.Tests
                      new Enumerable.Mapped<string, string>(
                         new ChainedFunc<string, string, string>(
                             input => input += "1",
-                            new EnumerableOf<IFunc<string, string>>(
+                            new ManyOf<IFunc<string, string>>(
                                 new FuncOf<string, string>(input => input += ("2")),
                                 new FuncOf<string, string>(input => input.Replace("a", "b"))
                             ),
                             input => input.Trim()
                         ),
-                        new EnumerableOf<string>("private", "static", "String")))
+                        new ManyOf<string>("private", "static", "String")))
                  ).Value() == 2);
         }
     }

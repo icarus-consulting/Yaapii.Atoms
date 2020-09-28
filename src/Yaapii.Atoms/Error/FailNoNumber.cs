@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Yaapii.Atoms.Error
 {
@@ -32,24 +30,34 @@ namespace Yaapii.Atoms.Error
     public sealed class FailNoNumber : IFail
     {
         private readonly string _string;
-        private readonly string _hint;
+        private readonly Exception _ex;
 
         /// <summary>
-        /// Fail if is not a number.
+        /// Fail with <see cref="System.ArgumentNullException"/> if is not a number.
         /// </summary>
         /// <param name="value">string to check</param>
         public FailNoNumber(string value) : this(value, "Parameter is not a number")
         { }
 
         /// <summary>
-        /// Fail if is not a number.
+        /// Fail with <see cref="System.ArgumentNullException"/> if is not a number.
         /// </summary>
         /// <param name="value">string to check</param>
         /// <param name="hint">msg to throw in exception</param>
-        public FailNoNumber(string value, string hint)
+        public FailNoNumber(string value, string hint) : this(
+            value, new ArgumentNullException(hint)
+        )
+        { }
+
+        /// <summary>
+        /// Fail with specified exception if is not a number.
+        /// </summary>
+        /// <param name="value">string to check</param>
+        /// <param name="ex">specific exception which will be thrown</param>
+        public FailNoNumber(string value, Exception ex)
         {
-            _string = value;
-            _hint = hint;
+            this._string = value;
+            this._ex = ex;
         }
 
         /// <summary>
@@ -63,7 +71,7 @@ namespace Yaapii.Atoms.Error
             }
             catch (Exception)
             {
-                throw new ArgumentNullException(_hint);
+                throw this._ex;
             }
 
         }

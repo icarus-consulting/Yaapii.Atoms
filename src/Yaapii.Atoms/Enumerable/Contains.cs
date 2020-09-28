@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable
 {
@@ -33,8 +32,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <typeparam name="T"></typeparam>
     public class Contains<T> : IScalar<bool>
     {
-        private readonly IEnumerable<T> _items;
-        private readonly Func<T, bool> _match;
+        private readonly ScalarOf<bool> result;
 
         /// <summary>
         /// Lookup if an item is in a enumerable by calling .Equals(...) of the item.
@@ -53,8 +51,8 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="match">check to perform on each item</param>
         public Contains(IEnumerable<T> items, Func<T, bool> match)
         {
-            _match = match;
-            _items = items;
+            this.result =
+                new ScalarOf<bool>(() => new Enumerator.Contains<T>(items.GetEnumerator(), match).Value());
         }
 
         /// <summary>
@@ -63,7 +61,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <returns>true if item is in the enumerable</returns>
         public bool Value()
         {
-            return new ContainsEnumerator<T>(_items.GetEnumerator(), _match).Value();
+            return this.result.Value();
         }
     }
 }

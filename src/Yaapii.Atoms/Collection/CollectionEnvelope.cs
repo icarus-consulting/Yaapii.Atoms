@@ -1,44 +1,81 @@
-﻿using System;
+﻿// MIT License
+//
+// Copyright(c) 2020 ICARUS Consulting GmbH
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Collection
 {
     /// <summary>
-    /// Envelope for Collections. It enables ICollection classes frmo .Net to accept scalars.
+    /// Envelope for Collections. It enables ICollection classes from .Net to accept scalars.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class CollectionEnvelope<T> : ICollection<T>
+    public abstract class CollectionEnvelope<T> : ICollection<T>
     {
         /// <summary>
         /// scalar of collection
         /// </summary>
-        private readonly IScalar<ICollection<T>> _col;
-        private readonly UnsupportedOperationException _readonlyError = new UnsupportedOperationException("The collection is readonly");
+        private readonly UnsupportedOperationException readonlyError = new UnsupportedOperationException("The collection is readonly");
+        private readonly IScalar<ICollection<T>> origin;
+        private readonly ScalarOf<ICollection<T>> fixedOrigin;
+        private readonly bool live;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="fnc">Func which delivers <see cref="ICollection{T}"/></param>
-        public CollectionEnvelope(Func<ICollection<T>> fnc) : this(new ScalarOf<ICollection<T>>(fnc))
+        /// <param name="live">value is handled live or sticky</param>
+        public CollectionEnvelope(Func<ICollection<T>> fnc, bool live) : this(new Live<ICollection<T>>(fnc), live)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="slr">Scalar of ICollection</param>
-        public CollectionEnvelope(IScalar<ICollection<T>> slr)
+        /// <param name="live">value is handled live or sticky</param>
+        public CollectionEnvelope(IScalar<ICollection<T>> slr, bool live)
         {
-            this._col = slr;
+            this.origin = slr;
+            this.live = live;
+            this.fixedOrigin = new ScalarOf<ICollection<T>>(
+                () =>
+                {
+                    var temp = new List<T>();
+                    foreach (var item in slr.Value())
+                    {
+                        temp.Add(item);
+                    }
+                    return temp;
+                }
+            );
         }
 
         /// <summary>
         /// Number of elements
         /// </summary>
-        public int Count => this._col.Value().Count;
+        public int Count => Val().Count;
 
         /// <summary>
         /// Is the collection readonly?
@@ -51,7 +88,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="item">Item to add</param>
         public void Add(T item)
         {
-            throw this._readonlyError;
+            throw this.readonlyError;
         }
 
         /// <summary>
@@ -59,7 +96,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         public void Clear()
         {
-            throw this._readonlyError;
+            throw this.readonlyError;
         }
 
         /// <summary>
@@ -69,7 +106,7 @@ namespace Yaapii.Atoms.Collection
         /// <returns>True if item is found</returns>
         public bool Contains(T item)
         {
-            return this._col.Value().Contains(item);
+            return Val().Contains(item);
         }
 
         /// <summary>
@@ -79,7 +116,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="arrayIndex">Index to start</param>
         public void CopyTo(T[] array, int arrayIndex)
         {
-            this._col.Value().CopyTo(array, arrayIndex);
+            Val().CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -88,7 +125,7 @@ namespace Yaapii.Atoms.Collection
         /// <returns></returns>
         public IEnumerator<T> GetEnumerator()
         {
-            return this._col.Value().GetEnumerator();
+            return Val().GetEnumerator();
         }
 
         /// <summary>
@@ -98,7 +135,7 @@ namespace Yaapii.Atoms.Collection
         /// <returns>True if success</returns>
         public bool Remove(T item)
         {
-            throw this._readonlyError;
+            throw this.readonlyError;
         }
 
         /// <summary>
@@ -107,7 +144,21 @@ namespace Yaapii.Atoms.Collection
         /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this._col.Value().GetEnumerator();
+            return Val().GetEnumerator();
+        }
+
+        private ICollection<T> Val()
+        {
+            ICollection<T> result;
+            if (this.live)
+            {
+                result = this.origin.Value();
+            }
+            else
+            {
+                result = this.fixedOrigin.Value();
+            }
+            return result;
         }
     }
 }

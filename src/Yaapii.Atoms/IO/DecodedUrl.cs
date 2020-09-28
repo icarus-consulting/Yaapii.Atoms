@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Text;
-using Yaapii.Atoms.Error;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.IO
@@ -38,7 +35,7 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// source text
         /// </summary>
-        private readonly IText _source;
+        private readonly IText source;
 
         /// <summary>
         /// ctor
@@ -61,7 +58,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="url">url as text</param>
         public DecodedUrl(IText url)
         {
-            this._source = url;
+            this.source = url;
         }
 
         /// <summary>
@@ -71,7 +68,7 @@ namespace Yaapii.Atoms.IO
         public String Value()
         {
             return WebUtility.UrlDecode(
-                this._source.AsString()
+                this.source.AsString()
             );
         }
     }

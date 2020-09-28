@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -132,14 +132,14 @@ namespace Yaapii.Atoms.IO
         /// A readable stream out of a <see cref="IInput"/>.
         /// </summary>
         /// <param name="input">the input</param>
-        public InputStreamOf(IInput input) : this(new ScalarOf<Stream>(() => input.Stream()))
+        public InputStreamOf(IInput input) : this(new Live<Stream>(() => input.Stream()))
         { }
 
         /// <summary>
         /// A readable stream out of a <see cref="Func"/> that returns a <see cref="Stream"/>.
         /// </summary>
         /// <param name="input">the input</param>
-        public InputStreamOf(Func<Stream> input) : this(new ScalarOf<Stream>(input))
+        public InputStreamOf(Func<Stream> input) : this(new Live<Stream>(input))
         { }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="src">the source</param>
         private InputStreamOf(IScalar<Stream> src) : base()
         {
-            this._source = new StickyScalar<Stream>(src, stream => !stream.CanRead);
+            this._source = new ScalarOf<Stream>(src, stream => !stream.CanRead);
         }
 
         public override int Read(byte[] buf, int offset, int len)

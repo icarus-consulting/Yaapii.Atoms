@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Xunit;
+using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
 
@@ -47,7 +48,7 @@ namespace Yaapii.Atoms.IO.Tests
                 ).Value();
 
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new InputAsBytes(
                         new InputOf(new Uri(file))))
                 .AsString() == content,
@@ -72,11 +73,14 @@ namespace Yaapii.Atoms.IO.Tests
             ).Value();
 
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new InputAsBytes(
-                        new InputOf(file)))
+                        new InputOf(file)
+                    )
+                )
                 .AsString() == txt,
-                "Can't write file content");
+                "Can't write file content"
+            );
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Error
@@ -32,29 +30,36 @@ namespace Yaapii.Atoms.Error
     /// </summary>
     public sealed class FailAlways : IFail
     {
-        private readonly Exception _error;
+        private readonly Func<Exception> error;
 
         /// <summary>
-        /// Fail always with the given message.
+        /// Fail always with <see cref="System.Exception"/> with the given message.
         /// </summary>
         /// <param name="msg">message to wrap in exception</param>
         public FailAlways(string msg) : this(new TextOf(msg))
         { }
 
         /// <summary>
-        /// Fail always with the given message.
+        /// Fail always with <see cref="System.Exception"/> with the given message.
         /// </summary>
         /// <param name="msg">message to wrap in exception</param>
-        public FailAlways(IText msg) : this(new Exception(msg.AsString()))
+        public FailAlways(IText msg) : this(() => new Exception(msg.AsString()))
         { }
 
         /// <summary>
-        /// Fail always with the given message.
+        /// Fail always with specified exception with the given message.
         /// </summary>
         /// <param name="error">ex to throw</param>
-        public FailAlways(Exception error)
+        private FailAlways(Exception error) : this(() => error)
+        { }
+
+        /// <summary>
+        /// Fail always with specified exception with the given message.
+        /// </summary>
+        /// <param name="error">ex to throw</param>
+        private FailAlways(Func<Exception> error)
         {
-            _error = error;
+            this.error = error;
         }
 
         /// <summary>
@@ -62,7 +67,7 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         public void Go()
         {
-            throw _error;
+            throw error();
         }
     }
 }

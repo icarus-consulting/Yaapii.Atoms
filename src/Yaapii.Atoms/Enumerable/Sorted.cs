@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -35,7 +31,7 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class Sorted<T> : EnumerableEnvelope<T>
+    public sealed class Sorted<T> : ManyEnvelope<T>
         where T : IComparable<T>
     {
         /// <summary>
@@ -57,11 +53,12 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public Sorted(Comparer<T> cmp, IEnumerable<T> src) : base(
-            new ScalarOf<IEnumerable<T>>(
-                () =>
-                new EnumerableOf<T>(
-                    new SortedEnumerator<T>(cmp, src.GetEnumerator()))))
+        public Sorted(Comparer<T> cmp, IEnumerable<T> src) : base(() =>
+            new LiveMany<T>(() =>
+                new Enumerator.Sorted<T>(cmp, src.GetEnumerator())
+            ),
+            false
+        )
         { }
     }
 }

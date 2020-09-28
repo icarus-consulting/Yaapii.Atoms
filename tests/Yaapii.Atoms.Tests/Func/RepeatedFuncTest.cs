@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,13 +21,9 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Enumerator;
 
 namespace Yaapii.Atoms.Func.Tests
 {
@@ -36,12 +32,12 @@ namespace Yaapii.Atoms.Func.Tests
         [Fact]
         public void RunsFuncMultipleTimes()
         {
-            var iter = new StickyEnumerator<int>(1, 2, 5, 6);
+            var iter = new ManyOf<int>(1, 2, 5, 6).GetEnumerator();
             var func = new RepeatedFunc<bool, IScalar<int>>(
                 input =>
                 {
                     iter.MoveNext();
-                    return new ScalarOf<int>(iter.Current);
+                    return new Live<int>(iter.Current);
                 },
                 3
             );
@@ -70,7 +66,7 @@ namespace Yaapii.Atoms.Func.Tests
             () => new RepeatedFunc<bool, IScalar<int>>(
                 input =>
                 {
-                    return new ScalarOf<int>(
+                    return new Live<int>(
                             new Random().Next());
                 },
                 0

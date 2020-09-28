@@ -1,181 +1,382 @@
-﻿using System;
+﻿// MIT License
+//
+// Copyright(c) 2020 ICARUS Consulting GmbH
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Map
 {
     /// <summary>
-    /// Envelope of map.
+    /// Simplified map building.
+    /// Since 9.9.2019
     /// </summary>
-    /// <typeparam name="Key"></typeparam>
-    /// <typeparam name="Value"></typeparam>
-    public class MapEnvelope<Key, Value> : IDictionary<Key, Value>
+    public abstract class MapEnvelope : IDictionary<string, string>
     {
-        private readonly IScalar<ReadOnlyDictionary<Key, Value>> _map;
-        private readonly UnsupportedOperationException _readonly = new UnsupportedOperationException("Not supported, it's a read-only map");
+        private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
+
+        private readonly Func<IDictionary<string, string>> origin;
+        private readonly ScalarOf<IDictionary<string, string>> fixedOrigin;
+        private readonly bool live;
 
         /// <summary>
-        /// ctor
+        /// Simplified map building.
         /// </summary>
-        /// <param name="fnc">func returning IDictionary</param>
-        public MapEnvelope(Func<IDictionary<Key, Value>> fnc) : this(
-            new ScalarOf<IDictionary<Key, Value>>(fnc))
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="scalar">Scalar of IDictionary</param>
-        public MapEnvelope(IScalar<IDictionary<Key, Value>> scalar)
+        public MapEnvelope(Func<IDictionary<string, string>> origin, bool live)
         {
-            this._map = new ScalarOf<ReadOnlyDictionary<Key, Value>>(() => new ReadOnlyDictionary<Key, Value>(scalar.Value()));
+            this.origin = origin;
+            this.live = live;
+            this.fixedOrigin = new ScalarOf<IDictionary<string, string>>(origin);
         }
 
-        /// <summary>
-        /// Access a value by key
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public Value this[Key key] { get { return _map.Value()[key]; } set { throw this._readonly; } }
+        public string this[string key]
+        {
+            get
+            {
+                var val = Val();
+                try
+                {
+                    return val[key];
+                }
+                catch (KeyNotFoundException)
+                {
+                    var keysString = new Text.Joined(", ", val.Keys).AsString();
+                    throw new ArgumentException($"The key '{key}' is not present in the map. The following keys are present in the map: {keysString}");
+                }
+            }
+            set => throw this.rejectWriteExc;
+        }
 
-        /// <summary>
-        /// Access all keys
-        /// </summary>
-        public ICollection<Key> Keys => _map.Value().Keys;
+        public ICollection<string> Keys => Val().Keys;
 
-        /// <summary>
-        /// Access all values
-        /// </summary>
-        public ICollection<Value> Values => _map.Value().Values;
+        public ICollection<string> Values => Val().Values;
 
-        /// <summary>
-        /// Count entries
-        /// </summary>
-        public int Count => _map.Value().Count;
+        public int Count => Val().Count;
 
-        /// <summary>
-        /// Yes its readonly
-        /// </summary>
         public bool IsReadOnly => true;
 
-        /// <summary>
-        /// Unsupported
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        public void Add(Key key, Value value)
+        public void Add(string key, string value)
         {
-            throw this._readonly;
+            throw this.rejectWriteExc;
         }
 
-        /// <summary>
-        /// Unsupported
-        /// </summary>
-        /// <param name="item"></param>
-        public void Add(KeyValuePair<Key, Value> item)
+        public void Add(KeyValuePair<string, string> item)
         {
-            throw this._readonly;
+            throw this.rejectWriteExc;
         }
 
-        /// <summary>
-        /// Unsupported
-        /// </summary>
         public void Clear()
         {
-            throw this._readonly;
+            throw this.rejectWriteExc;
         }
 
-        /// <summary>
-        /// Test if map contains entry
-        /// </summary>
-        /// <param name="item">item to check</param>
-        /// <returns>true if it contains</returns>
-        public bool Contains(KeyValuePair<Key, Value> item)
+        public bool Contains(KeyValuePair<string, string> item)
         {
-            return this._map.Value().ContainsKey(item.Key) && this._map.Value()[item.Key].Equals(item.Value);
+            return Val().Contains(item);
         }
 
-        /// <summary>
-        /// Test if map contains key
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public bool ContainsKey(Key key)
+        public bool ContainsKey(string key)
         {
-            return this._map.Value().ContainsKey(key);
+            return Val().ContainsKey(key);
         }
 
-        /// <summary>
-        /// Copy this to an array
-        /// </summary>
-        /// <param name="array">target array</param>
-        /// <param name="arrayIndex">index to start</param>
-        public void CopyTo(KeyValuePair<Key, Value>[] array, int arrayIndex)
+        public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)
         {
-            if (arrayIndex > this._map.Value().Count)
-            {
-                throw
-                    new ArgumentOutOfRangeException(
-                        new FormattedText(
-                            "arrayIndex {0} is higher than the item count in the map {1}.",
-                            arrayIndex,
-                            this._map.Value().Count
-                        ).AsString());
-            }
-
-            new ListOf<KeyValuePair<Key, Value>>(this).CopyTo(array, arrayIndex);
+            Val().CopyTo(array, arrayIndex);
         }
 
-        /// <summary>
-        /// The enumerator
-        /// </summary>
-        /// <returns>The enumerator</returns>
-        public IEnumerator<KeyValuePair<Key, Value>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
         {
-            return this._map.Value().GetEnumerator();
+            return Val().GetEnumerator();
         }
 
-        /// <summary>
-        /// Unsupported
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public bool Remove(Key key)
+        public bool Remove(string key)
         {
-            throw this._readonly;
+            throw this.rejectWriteExc;
         }
 
-        /// <summary>
-        /// Unsupported
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public bool Remove(KeyValuePair<Key, Value> item)
+        public bool Remove(KeyValuePair<string, string> item)
         {
-            throw this._readonly;
+            throw this.rejectWriteExc;
         }
 
-        /// <summary>
-        /// Tries to get value
-        /// </summary>
-        /// <param name="key">key</param>
-        /// <param name="value">target to store value</param>
-        /// <returns>true if success</returns>
-        public bool TryGetValue(Key key, out Value value)
+        public bool TryGetValue(string key, out string value)
         {
-            throw this._readonly;
+            return Val().TryGetValue(key, out value);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return Val().GetEnumerator();
+        }
+
+        private IDictionary<string, string> Val()
+        {
+            IDictionary<string, string> result;
+            if (this.live)
+            {
+                result = this.origin();
+            }
+            else
+            {
+                result = this.fixedOrigin.Value();
+            }
+            return result;
+        }
+    }
+
+    /// <summary>
+    /// Simplified map building.
+    /// Since 9.9.2019
+    /// </summary>
+    public abstract class MapEnvelope<Value> : IDictionary<string, Value>
+    {
+        private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
+
+        private readonly Func<IDictionary<string, Value>> origin;
+        private readonly ScalarOf<IDictionary<string, Value>> fixedOrigin;
+        private readonly bool live;
+
+        /// <summary>
+        /// Simplified map building.
+        /// </summary>
+        public MapEnvelope(Func<IDictionary<string, Value>> origin, bool live)
+        {
+            this.origin = origin;
+            this.live = live;
+            this.fixedOrigin = new ScalarOf<IDictionary<string, Value>>(origin);
+        }
+
+        public Value this[string key]
+        {
+            get
+            {
+                var val = Val();
+                try
+                {
+                    return val[key];
+                }
+                catch (KeyNotFoundException)
+                {
+                    var keysString = new Text.Joined(", ", val.Keys).AsString();
+                    throw new ArgumentException($"The key '{key}' is not present in the map. The following keys are present in the map: {keysString}");
+                }
+            }
+            set => throw this.rejectWriteExc;
+        }
+
+        public ICollection<string> Keys => Val().Keys;
+
+        public ICollection<Value> Values => Val().Values;
+
+        public int Count => Val().Count;
+
+        public bool IsReadOnly => true;
+
+        public void Add(string key, Value value)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public void Add(KeyValuePair<string, Value> item)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public void Clear()
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool Contains(KeyValuePair<string, Value> item)
+        {
+            return Val().Contains(item);
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return Val().ContainsKey(key);
+        }
+
+        public void CopyTo(KeyValuePair<string, Value>[] array, int arrayIndex)
+        {
+            Val().CopyTo(array, arrayIndex);
+        }
+
+        public IEnumerator<KeyValuePair<string, Value>> GetEnumerator()
+        {
+            return Val().GetEnumerator();
+        }
+
+        public bool Remove(string key)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool Remove(KeyValuePair<string, Value> item)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool TryGetValue(string key, out Value value)
+        {
+            return Val().TryGetValue(key, out value);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return Val().GetEnumerator();
+        }
+
+        private IDictionary<string, Value> Val()
+        {
+            IDictionary<string, Value> result;
+            if (this.live)
+            {
+                result = this.origin();
+            }
+            else
+            {
+                result = this.fixedOrigin.Value();
+            }
+            return result;
+        }
+    }
+
+    /// <summary>
+    /// Simplified map building.
+    /// Since 9.9.2019
+    /// </summary>
+    public abstract class MapEnvelope<Key, Value> : IDictionary<Key, Value>
+    {
+        private readonly UnsupportedOperationException rejectWriteExc = new UnsupportedOperationException("Writing is not supported, it's a read-only map");
+
+        private readonly Func<IDictionary<Key, Value>> origin;
+        private readonly ScalarOf<IDictionary<Key, Value>> fixedOrigin;
+        private readonly bool live;
+
+        /// <summary>
+        /// Simplified map building.
+        /// </summary>
+        public MapEnvelope(Func<IDictionary<Key, Value>> origin, bool live)
+        {
+            this.origin = origin;
+            this.live = live;
+            this.fixedOrigin = new ScalarOf<IDictionary<Key, Value>>(origin);
+        }
+
+        public Value this[Key key]
+        {
+            get
+            {
+                try
+                {
+                    return Val()[key];
+                }
+                catch (KeyNotFoundException)
+                {
+                    throw new ArgumentException("The requested key is not present in the map.");
+                }
+            }
+            set => throw this.rejectWriteExc;
+        }
+
+        public ICollection<Key> Keys => Val().Keys;
+
+        public ICollection<Value> Values => Val().Values;
+
+        public int Count => Val().Count;
+
+        public bool IsReadOnly => true;
+
+        public void Add(Key key, Value value)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public void Add(KeyValuePair<Key, Value> item)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public void Clear()
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool Contains(KeyValuePair<Key, Value> item)
+        {
+            return Val().Contains(item);
+        }
+
+        public bool ContainsKey(Key key)
+        {
+            return Val().ContainsKey(key);
+        }
+
+        public void CopyTo(KeyValuePair<Key, Value>[] array, int arrayIndex)
+        {
+            Val().CopyTo(array, arrayIndex);
+        }
+
+        public IEnumerator<KeyValuePair<Key, Value>> GetEnumerator()
+        {
+            return Val().GetEnumerator();
+        }
+
+        public bool Remove(Key key)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool Remove(KeyValuePair<Key, Value> item)
+        {
+            throw this.rejectWriteExc;
+        }
+
+        public bool TryGetValue(Key key, out Value value)
+        {
+            return Val().TryGetValue(key, out value);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return Val().GetEnumerator();
+        }
+
+        private IDictionary<Key, Value> Val()
+        {
+            IDictionary<Key, Value> result;
+            if (this.live)
+            {
+                result = this.origin();
+            }
+            else
+            {
+                result = this.fixedOrigin.Value();
+            }
+            return result;
         }
     }
 }

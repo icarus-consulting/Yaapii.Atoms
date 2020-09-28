@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.IO.Tests
@@ -36,7 +33,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void ReadsAlternativeInput()
         {
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new InputWithFallback(
                         new InputOf(
                             new Uri(Path.GetFullPath("/this-file-is-absent-for-sure.txt"))

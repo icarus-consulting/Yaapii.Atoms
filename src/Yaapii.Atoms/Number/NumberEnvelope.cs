@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2017 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Number
     /// <summary>
     /// Wraps up Conversions to <see cref="INumber"/>
     /// </summary>
-    public class NumberEnvelope : INumber
+    public abstract class NumberEnvelope : INumber
     {
         private readonly IScalar<double> _dbl;
         private readonly IScalar<int> _int;
@@ -41,28 +41,28 @@ namespace Yaapii.Atoms.Number
         /// A <see cref="INumber"/> from a <see cref="double"/>
         /// </summary>
         /// <param name="dbl">the double</param>
-        public NumberEnvelope(double dbl) : this(new ScalarOf<double>(dbl))
+        public NumberEnvelope(double dbl) : this(new Live<double>(dbl))
         { }
 
         /// <summary>
         /// A <see cref="INumber"/> from a <see cref="int"/>
         /// </summary>
         /// <param name="itg">the int</param>
-        public NumberEnvelope(int itg) : this(new ScalarOf<int>(itg))
+        public NumberEnvelope(int itg) : this(new Live<int>(itg))
         { }
 
         /// <summary>
         /// A <see cref="INumber"/> from a <see cref="long"/>
         /// </summary>
         /// <param name="lng">the long</param>
-        public NumberEnvelope(long lng) : this(new ScalarOf<long>(lng))
+        public NumberEnvelope(long lng) : this(new Live<long>(lng))
         { }
 
         /// <summary>
         /// A <see cref="INumber"/> from a <see cref="float"/>
         /// </summary>
         /// <param name="flt">the float</param>
-        public NumberEnvelope(float flt) : this(new ScalarOf<float>(flt))
+        public NumberEnvelope(float flt) : this(new Live<float>(flt))
         { }
 
         /// <summary>
@@ -70,9 +70,9 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="flt">the float</param>
         public NumberEnvelope(IScalar<float> flt) : this(
-            new ScalarOf<double>(() => Convert.ToDouble(flt.Value())),
-            new ScalarOf<int>(() => Convert.ToInt32(flt.Value())),
-            new ScalarOf<long>(() => Convert.ToInt64(flt.Value())),
+            new Live<double>(() => Convert.ToDouble(flt.Value())),
+            new Live<int>(() => Convert.ToInt32(flt.Value())),
+            new Live<long>(() => Convert.ToInt64(flt.Value())),
             flt)
         { }
 
@@ -81,10 +81,10 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="itg">the int</param>
         public NumberEnvelope(IScalar<int> itg) : this(
-            new ScalarOf<double>(() => Convert.ToDouble(itg.Value())),
+            new Live<double>(() => Convert.ToDouble(itg.Value())),
             itg,
-            new ScalarOf<long>(() => Convert.ToInt64(itg.Value())),
-            new ScalarOf<float>(() => Convert.ToSingle(itg.Value())))
+            new Live<long>(() => Convert.ToInt64(itg.Value())),
+            new Live<float>(() => Convert.ToSingle(itg.Value())))
         { }
 
         /// <summary>
@@ -92,10 +92,10 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="lng">the long</param>
         public NumberEnvelope(IScalar<long> lng) : this(
-            new ScalarOf<double>(() => Convert.ToDouble(lng.Value())),
-            new ScalarOf<int>(() => Convert.ToInt32(lng.Value())),
+            new Live<double>(() => Convert.ToDouble(lng.Value())),
+            new Live<int>(() => Convert.ToInt32(lng.Value())),
             lng,
-            new ScalarOf<float>(() => Convert.ToSingle(lng.Value())))
+            new Live<float>(() => Convert.ToSingle(lng.Value())))
         { }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace Yaapii.Atoms.Number
         /// <param name="dbl"></param>
         public NumberEnvelope(IScalar<double> dbl) : this(
             dbl,
-            new ScalarOf<int>(() => Convert.ToInt32(dbl.Value())),
-            new ScalarOf<long>(() => Convert.ToInt64(dbl.Value())),
-            new ScalarOf<float>(() => Convert.ToSingle(dbl.Value())))
+            new Live<int>(() => Convert.ToInt32(dbl.Value())),
+            new Live<long>(() => Convert.ToInt64(dbl.Value())),
+            new Live<float>(() => Convert.ToSingle(dbl.Value())))
         { }
 
         /// <summary>

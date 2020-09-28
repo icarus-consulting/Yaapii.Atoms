@@ -4,6 +4,11 @@
 version: 1.0.{build}
 image: Visual Studio 2017
 configuration: Release
+environment:
+  GITHUB_TOKEN:
+    secure: tvoyJ/iv8Y+9VaKvOFvxegvQFBNqPkhiwghS8lQDsrt7B/1MWU4e8uOHQzfTU580
+  CODECOV_TOKEN:
+    secure: 2/6E5a1yzv5Wp1yRpHGDybeKyjdyJlO2xiRxuT4TBGBJcbSfjOrMRsFpMd/X334f
 # Do not build feature branch with open Pull Requests
 skip_branch_with_pr: true
 # Automatically register private account and/or project AppVeyor NuGet feeds.
@@ -16,22 +21,12 @@ artifacts:
 - path: '.\artifacts\**\*.nupkg'
 deploy:
   - provider: NuGet
-    name: AppVeyor Feed
-    on:
-      #branch: master # Deploy only on master branch
-      appveyor_repo_tag: true
-    server: https://ci.appveyor.com/nuget/icarus
-    api_key:
-      secure: wVt1RgJAnhNTyIjtK9yFkQbEEM+fBk1TLUzo0j3pe2U=
-    skip_symbols: true
-    artifact: /.*\.nupkg/
-  - provider: NuGet
     name: Nuget feed
     on:
       #branch: master
       appveyor_repo_tag: true
     api_key:
-      secure: AuUbKCY+YVcotkpwDEqZMGpK3G64913kOq3+Xt9DYBCZbdADh/xYvHHatjirUpy/
+      secure: P2AbVXF6ZhkWoNAFjmIhzMH3FEgJkFtXPozru7MTOWRn6HCRiq3Dz+TP36knnevg
     skip_symbols: false
     artifact: /.*\.nupkg/
 
