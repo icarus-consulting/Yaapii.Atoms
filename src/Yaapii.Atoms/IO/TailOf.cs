@@ -7,23 +7,31 @@ using Yaapii.Atoms.Number;
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
-    /// <see cref="IInput"/> which will be read from EOF 
+    /// Input showing only last N bytes of the stream.
     /// </summary>
     public sealed class TailOf : IInput, IDisposable
     {
-        /// <summary>
-        /// the source
-        /// </summary>
+
         private readonly IInput input;
 
         private readonly int count;
 
         private readonly int max;
 
-
+        /// <summary>
+        /// Input showing only last N bytes of the stream.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="bytes"></param>
         public TailOf(IInput input, int bytes) : this(input, bytes, 16384)
         {}
 
+        /// <summary>
+        /// Input showing only last N bytes of the stream.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="bytes"></param>
+        /// <param name="max"></param>
         public TailOf(IInput input, int bytes, int max)
         {
             this.input = input;
@@ -31,10 +39,6 @@ namespace Yaapii.Atoms.IO
             this.max = max;
         }
 
-        /// <summary>
-        /// Retrieves the stream for reading the tail
-        /// </summary>
-        /// <returns></returns>
         public Stream Stream()
         {
             if(this.max < this.count)
@@ -62,28 +66,14 @@ namespace Yaapii.Atoms.IO
         }
 
 
-        /**
-     * Copy full buffer to response.
-     * @param buffer The buffer array
-     * @param response The response array
-     * @param read Number of bytes read in buffer
-     * @return Number of bytes in the response buffer
-     */
+
         private int Copy(byte[] buffer, byte[] response, int read)
         {
             Array.Copy(buffer, read - this.count, response, 0, this.count);
             return new MinOf(this.count, read).AsInt();
         }
 
-        /**
-         * Copy buffer to response for read count smaller then buffer size.
-         * @param buffer The buffer array
-         * @param response The response array
-         * @param num Number of bytes in response array from previous read
-         * @param read Number of bytes read in the buffer
-         * @return New count of bytes in the response array
-         * @checkstyle ParameterNumberCheck (3 lines)
-         */
+
         private int CopyPartial(byte[] buffer, byte[] response, int num, int read)
         {
             int result;
@@ -101,10 +91,6 @@ namespace Yaapii.Atoms.IO
             return result;
         }
 
-
-        /// <summary>
-        /// Clean up
-        /// </summary>
         public void Dispose()
         {
             try
