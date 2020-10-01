@@ -10,16 +10,11 @@ namespace Yaapii.Atoms.IO
 
         private readonly IInput origin;
         private readonly string source;
-        private readonly Logger logger;
 
-        public LoggingInput(IInput input, string source) : this(input,source,Logger.GetLogger(source))
-        {}
-
-        public LoggingInput(IInput input, string source, Logger logger)
+        public LoggingInput(IInput input, string source)
         {
             this.origin = input;
             this.source = source;
-            this.logger = logger;
         }
 
         public Stream Stream()
@@ -27,17 +22,9 @@ namespace Yaapii.Atoms.IO
             return 
                 new LoggingInputStream(
                     this.origin.Stream(),
-                    this.source,
-                    this.logger
+                    this.source
                 );
         }
     }
 
-    internal class Logger
-    {
-        internal static Logger GetLogger(string source)
-        {
-            throw new NotImplementedException();
-        }
-    }
 }
