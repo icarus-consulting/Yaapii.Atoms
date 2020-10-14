@@ -77,30 +77,23 @@ namespace Yaapii.Atoms.Number
         /// A <see cref="int"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="str">The string</param>
-        public NumberOf(string str) : this(str, new ScalarOf<IFormatProvider>(() => CultureInfo.InvariantCulture))
+        public NumberOf(string str) : this(str, CultureInfo.InvariantCulture)
         { }
 
-        /// <summary>
-        /// A <see cref="int"/> as a <see cref="INumber"/>
-        /// </summary>
-        /// <param name="str">The string</param>
-        /// <param name="provider">a number format provider</param>
-        public NumberOf(string str, IFormatProvider provider) : this(str, new ScalarOf<IFormatProvider>(provider))
-        { }
 
         /// <summary>
         /// A <see cref="string"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="str">The string</param>
         /// <param name="provider">a number format provider</param>
-        public NumberOf(string str, IScalar<IFormatProvider> provider) : this(new TextOf(str), provider)
+        public NumberOf(string str, IFormatProvider provider) : this(new TextOf(str), provider)
         { }
 
         /// <summary>
         /// A <see cref="int"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="text">The text</param>
-        public NumberOf(IText text) : this(text, new ScalarOf<IFormatProvider>(() => CultureInfo.InvariantCulture))
+        public NumberOf(IText text) : this(text, CultureInfo.InvariantCulture)
         { }
 
         /// <summary>
@@ -108,13 +101,13 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="text">The text</param>
         /// <param name="provider">a number format provider</param>
-        public NumberOf(IText text, IScalar<IFormatProvider> provider) : this(
+        public NumberOf(IText text, IFormatProvider provider) : this(
             new ScalarOf<long>(
                 () =>
                 {
                     try
                     {
-                        return Convert.ToInt64(text.AsString(), provider.Value());
+                        return Convert.ToInt64(text.AsString(), provider);
                     }
                     catch (FormatException)
                     {
@@ -126,7 +119,7 @@ namespace Yaapii.Atoms.Number
                 {
                     try
                     {
-                        return Convert.ToInt32(text.AsString(), provider.Value());
+                        return Convert.ToInt32(text.AsString(), provider);
                     }
                     catch (FormatException)
                     {
@@ -138,7 +131,7 @@ namespace Yaapii.Atoms.Number
                 {
                     try
                     {
-                        return Convert.ToSingle(text.AsString(), provider.Value());
+                        return Convert.ToSingle(text.AsString(), provider);
                     }
                     catch (FormatException)
                     {
@@ -150,7 +143,7 @@ namespace Yaapii.Atoms.Number
                 {
                     try
                     {
-                        return Convert.ToDouble(text.AsString(), provider.Value());
+                        return Convert.ToDouble(text.AsString(), provider);
                     }
                     catch (FormatException)
                     {
