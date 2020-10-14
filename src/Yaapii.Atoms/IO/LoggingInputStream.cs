@@ -9,6 +9,9 @@ using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.IO
 {
+    /// <summary>
+    /// Logged input stream.
+    /// </summary>
     public sealed class LoggingInputStream : Stream
     {
 
@@ -17,7 +20,11 @@ namespace Yaapii.Atoms.IO
         private long bytes;
         private long time;
 
-
+        /// <summary>
+        /// Logged input stream.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="source"></param>
         public LoggingInputStream(Stream input, string source)
         {
             this.origin = input;
