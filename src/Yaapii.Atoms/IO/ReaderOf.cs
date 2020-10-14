@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -157,7 +157,7 @@ namespace Yaapii.Atoms.IO
         /// A <see cref="StreamReader"/> out of a <see cref="Func{TResult}"/> that returns a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="src">func retrieving a reader</param>
-        private ReaderOf(Func<StreamReader> src) : this(new ScalarOf<StreamReader>(src))
+        private ReaderOf(Func<StreamReader> src) : this(new Live<StreamReader>(src))
         { }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="src">scalar of a reader</param>
         private ReaderOf(IScalar<StreamReader> src) : base(new DeadInput().Stream())
         {
-            this._source = new Sticky<StreamReader>(src, stream => !stream.BaseStream.CanRead);
+            this._source = new ScalarOf<StreamReader>(src, stream => !stream.BaseStream.CanRead);
         }
 
         public override int Read()

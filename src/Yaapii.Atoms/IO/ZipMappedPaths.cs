@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.IO
         public ZipMappedPaths(Func<string, string> mapping, IInput zip)
         {
             this.input =
-                new Sticky<Stream>(() =>
+                new ScalarOf<Stream>(() =>
                 {
                     Stream inMemory = new ValidatedZip(zip).Stream();
                     var newMemory = new MemoryStream();

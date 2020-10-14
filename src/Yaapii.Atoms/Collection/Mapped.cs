@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source items</param>
-        public Mapped(Func<In, Out> fnc, params In[] src) : this(fnc, new EnumerableOf<In>(src))
+        public Mapped(Func<In, Out> fnc, params In[] src) : this(fnc, new ManyOf<In>(src))
         { }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source enumerator</param>
         public Mapped(Func<In, Out> fnc, IEnumerator<In> src) : this(
-            fnc, new EnumerableOf<In>(src))
+            fnc, new ManyOf<In>(src))
         { }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source enumerable</param>
         public Mapped(Func<In, Out> fnc, IEnumerable<In> src) : this(
-            fnc, new CollectionOf<In>(src))
+            fnc, new LiveCollection<In>(src))
         { }
 
         /// <summary>
@@ -65,9 +65,11 @@ namespace Yaapii.Atoms.Collection
         /// <param name="fnc">mapping function</param>
         /// <param name="src">source collection</param>
         public Mapped(Func<In, Out> fnc, ICollection<In> src) : base(
-            () => new CollectionOf<Out>(
+            () => new LiveCollection<Out>(
                 new Enumerable.Mapped<In, Out>(fnc, src)
-            ))
+            ),
+            false
+        )
         { }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,9 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using Yaapii.Atoms.Scalar;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Text
 {
@@ -34,7 +32,7 @@ namespace Yaapii.Atoms.Text
     /// </summary>
     public sealed class DoubleOf : IScalar<Double>
     {
-        private readonly IScalar<Double> _val;
+        private readonly ScalarOf<Double> val;
 
         /// <summary>
         /// A double out of <see cref="string"/>.
@@ -63,7 +61,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">a double as a text</param>
         /// <param name="culture">culture of the given text</param>
-        public DoubleOf(IText text, CultureInfo culture) : this(new ScalarOf<Double>(() => Convert.ToDouble(text.AsString(), culture.NumberFormat)))
+        public DoubleOf(IText text, CultureInfo culture) : this(new Live<Double>(() => Convert.ToDouble(text.AsString(), culture.NumberFormat)))
         { }
 
         /// <summary>
@@ -72,7 +70,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="value">a scalar of the double to sum</param>
         public DoubleOf(IScalar<Double> value)
         {
-            _val = value;
+            val = new ScalarOf<Double>(value);
         }
 
         /// <summary>
@@ -81,7 +79,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>value as double</returns>
         public Double Value()
         {
-            return _val.Value();
+            return val.Value();
         }
     }
 }

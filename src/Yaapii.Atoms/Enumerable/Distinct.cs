@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable
 {
@@ -30,31 +28,32 @@ namespace Yaapii.Atoms.Enumerable
     /// Multiple enumerables merged together, so that every entry is unique.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Distinct<T> : EnumerableEnvelope<T>
+    public sealed class Distinct<T> : ManyEnvelope<T>
     {
         /// <summary>
         /// The distinct elements of one or multiple Enumerables.
         /// </summary>
         /// <param name="enumerables">enumerables to get distinct elements from</param>
-        public Distinct(params IEnumerable<T>[] enumerables) : this(new EnumerableOf<IEnumerable<T>>(enumerables))
+        public Distinct(params IEnumerable<T>[] enumerables) : this(
+            new LiveMany<IEnumerable<T>>(enumerables)
+        )
         { }
 
         /// <summary>
         /// The distinct elements of one or multiple Enumerables.
         /// </summary>
         /// <param name="enumerables">enumerables to get distinct elements from</param>
-        public Distinct(IEnumerable<IEnumerable<T>> enumerables) : base(
-            new ScalarOf<IEnumerable<T>>(
-                new EnumerableOf<T>(
-                    new Enumerator.Distinct<T>(
-                        new Mapped<IEnumerable<T>, IEnumerator<T>>(
-                            (e) => e.GetEnumerator(),
-                            enumerables
-                            )
-                        )
+        public Distinct(IEnumerable<IEnumerable<T>> enumerables) : base(() =>
+            new LiveMany<T>(() =>
+                new Enumerator.Distinct<T>(
+                    new Mapped<IEnumerable<T>, IEnumerator<T>>(
+                        (e) => e.GetEnumerator(),
+                        enumerables
                     )
                 )
-            )
+            ),
+            false
+        )
         { }
     }
 }

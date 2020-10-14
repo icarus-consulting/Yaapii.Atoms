@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace Yaapii.Atoms.Enumerable.Test
+namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class UnionTests
     {
@@ -32,8 +32,8 @@ namespace Yaapii.Atoms.Enumerable.Test
         {
             Assert.Empty(
                 new Union<string>(
-                    new EnumerableOf<string>("a", "b"),
-                    new EnumerableOf<string>("c")
+                    new ManyOf<string>("a", "b"),
+                    new ManyOf<string>("c")
                 )
             );
         }

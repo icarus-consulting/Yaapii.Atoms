@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,11 +23,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Threading;
 using Xunit;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Map.Tests
 {
@@ -37,7 +33,7 @@ namespace Yaapii.Atoms.Map.Tests
         public void TryGetValueWithExistingKey()
         {
 
-            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
+            var map = new NonAbstractIntEnvelope(new Dictionary<int, int> { { 7, 42 } });
             int outValue;
             Assert.True(map.TryGetValue(7, out outValue));
             Assert.Equal(42, outValue);
@@ -47,14 +43,46 @@ namespace Yaapii.Atoms.Map.Tests
         public void TryGetValueWithMissingKey()
         {
 
-            var map = new NonAbstractEnvelope(new Dictionary<int, int> { { 7, 42 } });
+            var map = new NonAbstractIntEnvelope(new Dictionary<int, int> { { 7, 42 } });
             int outValue;
             Assert.False(map.TryGetValue(0, out outValue));
         }
 
-        private class NonAbstractEnvelope : MapEnvelope<int, int>
+        [Fact]
+        public void GetValueWithExistingKey()
         {
-            public NonAbstractEnvelope(IDictionary<int, int> map) : base(() => map)
+            var map = new NonAbstractIntEnvelope(new Dictionary<int, int> { { 7, 42 } });
+            var outValue = map[7];
+            Assert.Equal(42, outValue);
+        }
+
+        [Fact]
+        public void GetsValueWithMissingKeyOnIntKey()
+        {
+            var map = new NonAbstractIntEnvelope(new Dictionary<int, int> { { 7, 42 } });
+
+            var ex = Assert.Throws<ArgumentException>(() => map[0]);
+            Assert.Equal("The requested key is not present in the map.", ex.Message);
+        }
+
+        [Fact]
+        public void GetsValueWithMissingKeyOnStringKey()
+        {
+            var map = new NonAbstractStringEnvelope(new Dictionary<string, string> { { "foo", "bar" } });
+
+            var ex = Assert.Throws<ArgumentException>(() => map["wisdom"]);
+            Assert.Equal("The key 'wisdom' is not present in the map. The following keys are present in the map: foo", ex.Message);
+        }
+
+        private class NonAbstractIntEnvelope : MapEnvelope<int, int>
+        {
+            public NonAbstractIntEnvelope(IDictionary<int, int> map, bool live = false) : base(() => map, live)
+            { }
+        }
+
+        private class NonAbstractStringEnvelope : MapEnvelope
+        {
+            public NonAbstractStringEnvelope(IDictionary<string, string> map, bool live = false) : base(() => map, live)
             { }
         }
     }

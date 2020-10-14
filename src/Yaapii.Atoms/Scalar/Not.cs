@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,26 +29,14 @@ namespace Yaapii.Atoms.Scalar
     /// <summary>
     /// Logical negative.
     /// </summary>
-    public sealed class Not : IScalar<Boolean>
+    public sealed class Not : ScalarEnvelope<Boolean>
     {
-        private readonly IScalar<Boolean> origin;
-
         /// <summary>
         /// Logical negative.
         /// </summary>
         /// <param name="scalar">scalar to negate</param>
         public Not(IScalar<Boolean> scalar)
-        {
-            this.origin = scalar;
-        }
-
-        /// <summary>
-        /// Get the result.
-        /// </summary>
-        /// <returns>the result</returns>
-        public Boolean Value()
-        {
-            return !this.origin.Value();
-        }
+            : base(() => !scalar.Value())
+        { }
     }
 }

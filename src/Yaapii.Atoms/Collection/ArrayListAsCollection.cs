@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,16 +36,17 @@ namespace Yaapii.Atoms.Collection
         /// A ArrayList converted to IList&lt;object&gt;
         /// </summary>
         /// <param name="src">source ArrayList</param>
-        public ArrayListAsCollection(ArrayList src) : base(new Scalar.Sticky<ICollection<object>>(() =>
-        {
-            var blocking = new BlockingCollection<object>();
-            foreach (var lst in src)
+        public ArrayListAsCollection(ArrayList src) : base(new ScalarOf<ICollection<object>>(() =>
             {
-                new Each<object>(item => blocking.Add(item), lst).Invoke();
-            }
-
-            return new CollectionOf<object>(blocking.ToArray());
-        }))
+                var blocking = new BlockingCollection<object>();
+                foreach (var lst in src)
+                {
+                    new Each<object>(item => blocking.Add(item), lst).Invoke();
+                }
+                return new LiveCollection<object>(blocking.ToArray());
+            }),
+            false
+        )
         { }
     }
 }

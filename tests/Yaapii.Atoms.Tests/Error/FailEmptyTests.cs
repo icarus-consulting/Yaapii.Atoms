@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Error.Tests
         public void FailsWhenEmpty()
         {
             Assert.Throws<Exception>(() =>
-                new FailEmpty<int>(new EnumerableOf<int>()).Go()
+                new FailEmpty<int>(new ManyOf<int>()).Go()
             );
         }
 
@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Error.Tests
         {
             Assert.Throws<IndexOutOfRangeException>(() =>
                 new FailEmpty<int>(
-                    new EnumerableOf<int>(),
+                    new ManyOf<int>(),
                     new IndexOutOfRangeException()
                 ).Go()
             );

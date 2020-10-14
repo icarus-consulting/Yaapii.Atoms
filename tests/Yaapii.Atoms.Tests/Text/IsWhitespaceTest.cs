@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,11 +27,22 @@ namespace Yaapii.Atoms.Text.Tests
     public sealed class IsWhitespaceTest
     {
         [Fact]
+        public void ConvertsString()
+        {
+            Assert.True(
+                new IsWhitespace(
+                    " "
+                ).Value(),
+                "Can't convert string"
+            );
+        }
+
+        [Fact]
         public void DoesntMatchEmpty()
         {
             Assert.True(
                 new IsWhitespace(
-                    new TextOf("")
+                    new LiveText("")
                 ).Value(),
                 "Can't determine an empty text");
         }
@@ -41,7 +52,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new IsWhitespace(
-                    new TextOf("  ")
+                    new LiveText("  ")
                 ).Value(),
                 "Can't determine an empty text with spaces");
         }
@@ -51,7 +62,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.False(
                 new IsWhitespace(
-                    new TextOf("not empty")
+                    new LiveText("not empty")
                 ).Value(),
                 "Can't detect a nonempty text");
         }

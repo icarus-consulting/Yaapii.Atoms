@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,18 +32,71 @@ namespace Yaapii.Atoms.IO.Tests
     public sealed class TeeInputTest
     {
         [Fact]
+        public void CopiesFromUrlToFile()
+        {
+            using(var directory = new TempDirectory())
+            {
+                var directoryPath = directory.Value().FullName;
+                new LengthOf(
+                    new TeeInput(
+                        new Uri("http://www.google.de"),
+                        new Uri($@"file://{directoryPath}\output.txt")
+                    )
+                ).Value();
+
+                Assert.True(
+                    File.ReadAllText(
+                        $@"{directoryPath}\output.txt"
+                    ).Contains(
+                        "<html"
+                    ),
+                    "Can't copy website to file"
+                );
+            }
+        }
+
+        [Fact]
+        public void CopiesFromFileToFile()
+        {
+            using (var directory = new TempDirectory())
+            {
+                var directoryPath = directory.Value().FullName;
+                File.WriteAllText(
+                    $@"{directoryPath}\input.txt",
+                    "this is a test"
+                );
+
+                new LengthOf(
+                    new TeeInput(
+                        new Uri($@"{directoryPath}\input.txt"),
+                        new Uri($@"{directoryPath}\output.txt")
+                    )
+                ).Value();
+
+                Assert.True(
+                    File.ReadAllText(
+                        $@"{directoryPath}\output.txt"
+                    ).Contains(
+                        "this is a test"
+                    ),
+                    "Can't copy file to another file"
+                );
+            }
+        }
+
+        [Fact]
         public void CopiesContent()
         {
             var baos = new MemoryStream();
             String content = "Hello, товарищ!";
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new TeeInput(
                         new InputOf(content),
                         new OutputTo(baos)
                     )
-                ).AsString() == Encoding.UTF8.GetString(baos.ToArray()),
-                "Can't copy Input to Output and return Input");
+                ).AsString() == Encoding.UTF8.GetString(baos.ToArray())
+            );
         }
 
         [Fact]
@@ -58,7 +111,7 @@ namespace Yaapii.Atoms.IO.Tests
 
 
             var str = 
-                new TextOf(
+                new LiveText(
                     new BytesOf(
                         new TeeInput(
                             "Hello, друг!", 
@@ -68,7 +121,7 @@ namespace Yaapii.Atoms.IO.Tests
                 ).AsString();
 
             Assert.True(
-                str == new TextOf(new InputOf(new Uri(path))).AsString(),
+                str == new LiveText(new InputOf(new Uri(path))).AsString(),
                 "Can't copy Input to File and return content");
         }
     }

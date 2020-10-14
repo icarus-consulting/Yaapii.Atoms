@@ -10,17 +10,14 @@ namespace Yaapii.Atoms.Scalar
     /// Scalar that will raise error or return fallback if value is null.
     /// </summary>
     /// <typeparam name="T">type of return value</typeparam>
-    public class NoNull<T> : IScalar<T>
+    public class NoNull<T> : ScalarEnvelope<T>
     {
-        private readonly IScalar<T> _origin;
-        private readonly IFunc<T> _fallback;
-
         /// <summary>
         /// A scalar with a fallback if value is null.
         /// </summary>
         /// <param name="origin">the original</param>
         public NoNull(T origin) : this(
-            origin, 
+            origin,
             new IOException("got NULL instead of a valid value"))
         { }
 
@@ -30,7 +27,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="origin">the original</param>
         /// <param name="ex">error to raise if null</param>
         public NoNull(T origin, Exception ex) : this(
-            new ScalarOf<T>(origin), 
+            new Live<T>(origin),
             new FuncOf<T>(() => throw ex))
         { }
 
@@ -40,7 +37,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="origin">the original</param>
         /// <param name="fallback">the fallback value</param>
         public NoNull(T origin, T fallback) : this(
-            new ScalarOf<T>(origin),
+            new Live<T>(origin),
             fallback)
         { }
 
@@ -50,7 +47,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="origin">the original scalar</param>
         /// <param name="fallback">the fallback value</param>
         public NoNull(IScalar<T> origin, T fallback) : this(
-            origin, 
+            origin,
             new FuncOf<T>(() => fallback))
         { }
 
@@ -60,22 +57,17 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="origin">the original scalar</param>
         /// <param name="fallback">the fallback</param>
         public NoNull(IScalar<T> origin, IFunc<T> fallback)
-        {
-            _origin = origin;
-            _fallback = fallback;
-        }
+            : base(() =>
+            {
+                T ret = origin.Value();
 
-        /// <summary>
-        /// get the value
-        /// </summary>
-        /// <returns>value or fallback value, if null</returns>
-        public T Value()
-        {
-            T ret = _origin.Value();
+                if (ret == null)
+                {
+                    ret = fallback.Invoke();
+                }
 
-            if (ret == null) ret = _fallback.Invoke();
-
-            return ret;
-        }
+                return ret;
+            })
+        { }
     }
 }

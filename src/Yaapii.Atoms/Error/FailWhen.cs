@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,18 +33,26 @@ namespace Yaapii.Atoms.Error
         private readonly Exception _ex;
 
         /// <summary>
-        /// Fail if condition is matched.
+        /// Fail with <see cref="System.ArgumentException"/> if condition is matched.
         /// </summary>
         /// <param name="condition">condition to apply</param>
         public FailWhen(bool condition) : this(condition, "Failed because the given function failed.")
         { }
 
         /// <summary>
-        /// Fail if condition is matched.
+        /// Fail with <see cref="System.ArgumentException"/> if condition is matched.
         /// </summary>
         /// <param name="condition">condition to apply</param>
         /// <param name="hint">msg to put in exception</param>
         public FailWhen(bool condition, string hint) : this(() => condition, hint)
+        { }
+
+        /// <summary>
+        /// Fail with <see cref="System.ArgumentException"/> if condition is matched.
+        /// </summary>
+        /// <param name="condition">condition to apply</param>
+        /// <param name="ex">specific exception which will be thrown</param>
+        public FailWhen(bool condition, Exception ex) : this(() => condition, ex)
         { }
 
         /// <summary>
@@ -55,7 +63,7 @@ namespace Yaapii.Atoms.Error
         { }
 
         /// <summary>
-        /// Fail if condition is matched.
+        /// Fail with <see cref="System.ArgumentException"/> if condition is matched.
         /// </summary>
         /// <param name="condition">condition to apply</param>
         /// <param name="hint">msg to put in exception</param>
@@ -65,7 +73,7 @@ namespace Yaapii.Atoms.Error
         { }
 
         /// <summary>
-        /// Fail if condition is matched.
+        /// Fail with specified exception if condition is matched.
         /// </summary>
         /// <param name="condition">condition to apply</param>
         /// <param name="ex">specific exception which will be thrown</param>

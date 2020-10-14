@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,57 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-
 namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A <see cref="IText"/> as lowercase.
     /// </summary>
-    public sealed class Lower : IText
+    public sealed class Lower : TextEnvelope
     {
-        private readonly IText _origin;
-
         /// <summary>
         /// A <see cref="IText"/>  as lowercase.
         /// </summary>
         /// <param name="text">text to lower</param>
-        public Lower(IText text)
-        {
-            _origin = text;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            return this._origin.AsString().ToLower();
-        }
-
-        /// <summary>
-        /// Compare to other text.
-        /// </summary>
-        /// <param name="text">text to compare to</param>
-        /// <returns>-1 if this is lower, 0 if equal, 1 if this is higher</returns>
-        public int CompareTo(IText text)
-        {
-            return this.AsString().CompareTo(text.AsString());
-        }
-
-        /// <summary>
-        /// Check for equality.
-        /// </summary>
-        /// <param name="other">other object to compare to</param>
-        /// <returns>true if equal.</returns>
-        public bool Equals(IText other)
-        {
-            return CompareTo(other) == 0;
-        }
-
+        public Lower(IText text) : base(() => text.AsString().ToLower(), false)
+        { }
     }
 }

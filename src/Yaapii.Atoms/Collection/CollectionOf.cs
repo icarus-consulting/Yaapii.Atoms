@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,14 +36,14 @@ namespace Yaapii.Atoms.Collection
         /// Makes a collection from an array
         /// </summary>
         /// <param name="array"></param>
-        public CollectionOf(params T[] array) : this(new EnumerableOf<T>(array))
+        public CollectionOf(params T[] array) : this(new LiveMany<T>(array))
         { }
 
         /// <summary>
         /// Makes a collection from an <see cref="IEnumerator{T}"/>
         /// </summary>
         /// <param name="src"></param>
-        public CollectionOf(IEnumerator<T> src) : this(new EnumerableOf<T>(src))
+        public CollectionOf(IEnumerator<T> src) : this(new ManyOf<T>(src))
         { }
 
         /// <summary>
@@ -59,7 +59,9 @@ namespace Yaapii.Atoms.Collection
                     list.Add(item);
                 }
                 return list;
-            })
+            },
+            false
+        )
         { }
     }
 }

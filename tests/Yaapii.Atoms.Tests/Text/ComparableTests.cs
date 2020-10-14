@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -35,21 +35,21 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Comparable(
-                    new TextOf("Hallo Welt")
+                    new LiveText("Hallo Welt")
                 ).CompareTo(
-                    new TextOf("Tschüss Welt")
+                    new LiveText("Tschüss Welt")
                 ) <= -1
             );
         }
 
         [Fact]
-        public void SeesDIfferences()
+        public void SeesDifferences()
         {
             Assert.True(
                 new Comparable(
-                    new TextOf("Timm")
+                    new LiveText("Timm")
                 ).Equals(
-                    new TextOf("Jan-Peter")
+                    new LiveText("Jan-Peter")
                 ) == false
             );
         }
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Comparable(
-                    new TextOf("Timm")
+                    new LiveText("Timm")
                 ).AsString()
                 == "Timm"
             );

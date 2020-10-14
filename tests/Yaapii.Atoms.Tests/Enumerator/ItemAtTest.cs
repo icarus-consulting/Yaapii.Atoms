@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
             new ItemAt<int>(
-                new EnumerableOf<int>(1, 2, 3).GetEnumerator()
+                new ManyOf<int>(1, 2, 3).GetEnumerator()
             ).Value() == 1,
             "Can't take the first item from the enumerator");
         }
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
                 new ItemAt<int>(
-                    new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
+                    new ManyOf<int>(1, 2, 3).GetEnumerator(),
                     1
                 ).Value() == 2,
                 "Can't take the item by position from the enumerator");
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.Throws<NoSuchElementException>(
                 () => new ItemAt<int>(
-                        new EnumerableOf<int>(new int[0]).GetEnumerator(),
+                        new ManyOf<int>(new int[0]).GetEnumerator(),
                         0
                         ).Value());
         }
@@ -64,9 +64,9 @@ namespace Yaapii.Atoms.Enumerator.Tests
         [Fact]
         public void FailForNegativePositionTest()
         {
-            Assert.Throws<UnsupportedOperationException>(
+            Assert.Throws<NoSuchElementException>(
                     () => new ItemAt<int>(
-                        new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
+                        new ManyOf<int>(1, 2, 3).GetEnumerator(),
                         -1
             ).Value());
         }
@@ -78,7 +78,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
 
             Assert.True(
             new ItemAt<string>(
-                new EnumerableOf<string>().GetEnumerator(),
+                new ManyOf<string>().GetEnumerator(),
                 fallback
             ).Value() == fallback,
             "Can't fallback to default value");
@@ -90,9 +90,10 @@ namespace Yaapii.Atoms.Enumerator.Tests
             Assert.Throws<NoSuchElementException>(
                 () =>
                 new ItemAt<int>(
-                    new EnumerableOf<int>(1, 2, 3).GetEnumerator(),
-                3
-            ).Value());
+                    new LiveMany<int>(1, 2, 3).GetEnumerator(),
+                    3
+                ).Value()
+            );
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,7 @@
 
 using System;
 using System.Collections;
-using System.Diagnostics;
-using System.Text;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerator
 {
@@ -32,7 +31,7 @@ namespace Yaapii.Atoms.Enumerator
     /// </summary>
     public sealed class LengthOf : IScalar<Int32>
     {
-        private readonly IEnumerator enumerator;
+        private readonly IScalar<int> length;
 
         /// <summary>
         /// Length of an <see cref="IEnumerator"/>
@@ -40,7 +39,15 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="items">enumerator to count</param>
         public LengthOf(IEnumerator items)
         {
-            this.enumerator = items;
+            this.length = new ScalarOf<int>(() =>
+            {
+                int size = 0;
+                while (items.MoveNext())
+                {
+                    ++size;
+                }
+                return size;
+            });
         }
 
         /// <summary>
@@ -49,12 +56,7 @@ namespace Yaapii.Atoms.Enumerator
         /// <returns>the length</returns>
         public Int32 Value()
         {
-            int size = 0;
-            while (this.enumerator.MoveNext())
-            {
-                ++size;
-            }
-            return size;
+            return this.length.Value();
         }
     }
 }

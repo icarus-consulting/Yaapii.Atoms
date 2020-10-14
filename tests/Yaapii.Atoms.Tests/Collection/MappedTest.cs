@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Collection.Tests
@@ -37,20 +38,21 @@ namespace Yaapii.Atoms.Collection.Tests
                 0,
                 new Mapped<int, int>(
                     i => i + 1,
-                    new Enumerable.EnumerableOf<int>(-1, 1, 2)
+                    new ManyOf<int>(-1, 1, 2)
                 ));
         }
 
         [Fact]
         public void TransformsList()
         {
-
             Assert.Contains(
-                new TextOf("HELLO"),
-                new Mapped<String, IText>(
-                    input => new Upper(new TextOf(input)),
-                    new Enumerable.EnumerableOf<string>("hello", "world", "друг")
-                ));
+                "HELLO",
+                new Mapped<string, string>(
+                    input => 
+                    input.ToUpper(),
+                    new ManyOf<string>("hello", "world", "друг")
+                )
+            );
         }
 
         [Fact]
@@ -58,7 +60,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Empty(
                 new Mapped<String, IText>(
-                    input => new Upper(new TextOf(input)),
+                    input => new Upper(new LiveText(input)),
                     new List<string>()
                 ));
         }

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Replaced(
-                    new TextOf("Hello!"),
+                    new LiveText("Hello!"),
                     "ello", "i"
                 ).AsString() == "Hi!",
                 "Can't replace a text");
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Text.Tests
             String text = "HelloAgain!";
             Assert.True(
                 new Replaced(
-                    new TextOf(text),
+                    new LiveText(text),
                     "xyz", "i"
                 ).AsString() == text,
                 "Replace a text abnormally");
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Replaced(
-                    new TextOf("one cat, two cats, three cats"),
+                    new LiveText("one cat, two cats, three cats"),
                     "cat",
                     "dog"
                 ).AsString() == "one dog, two dogs, three dogs",

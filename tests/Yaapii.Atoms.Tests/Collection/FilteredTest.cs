@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -39,13 +39,13 @@ namespace Yaapii.Atoms.Collection.Tests
         [Fact]
         public void FiltersList()
         {
-            Assert.True(
+            Assert.Equal(
+                2,
                 new LengthOf(
                     new Filtered<string>(
                         input => input.Length > 4,
-                        new EnumerableOf<string>("hello", "world", "друг"))
-                ).Value() == 2,
-                "cannot filter list"
+                        new ManyOf<string>("hello", "world", "друг"))
+                ).Value()
             );
         }
 
@@ -63,11 +63,12 @@ namespace Yaapii.Atoms.Collection.Tests
         [Fact]
         public void Size()
         {
-            Assert.True(
+            Assert.Equal(
+                2,
                 new Filtered<string>(
                     input => input.Length >= 4,
-                    new EnumerableOf<string>("some", "text", "yes")
-                ).Count == 2
+                    new ManyOf<string>("some", "text", "yes")
+                ).Count
             );
         }
 
@@ -77,7 +78,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.NotEmpty(
                 new Filtered<string>(
                     input => input.Length > 4,
-                    new EnumerableOf<string>("first", "second")
+                    new ManyOf<string>("first", "second")
                 )
             );
         }
@@ -88,7 +89,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Empty(
                 new Filtered<string>(
                     input => input.Length > 16,
-                    new EnumerableOf<string>("third", "fourth")
+                    new ManyOf<string>("third", "fourth")
                 )
             );
         }

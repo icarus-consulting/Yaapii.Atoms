@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,50 +21,34 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Yaapii.Atoms.Bytes;
-using Yaapii.Atoms.IO;
 
 namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A <see cref="IText"/> as Base64 encoded <see cref="IText"/>
     /// </summary>
-    public sealed class TextBase64 : IText
+    public sealed class TextBase64 : TextEnvelope
     {
-        private readonly IText origin;
-
         /// <summary>
         /// A <see cref="string"/> as Base64-Encoded <see cref="IText"/>
         /// </summary>
         /// <param name="str">string to encode</param>
-        public TextBase64(String str) : this(new TextOf(str))
+        public TextBase64(String str) : this(new LiveText(str))
         { }
 
         /// <summary>
         /// A <see cref="IText"/> as Base64-Encoded <see cref="IText"/>
         /// </summary>
         /// <param name="text">text to encode</param>
-        public TextBase64(IText text)
-        {
-            this.origin =
-                new TextOf(
-                    new BytesBase64(
-                        new BytesOf(text)
-                    )
-                );
-        }
-
-        public string AsString()
-        {
-            return origin.AsString();
-                
-        }
-
-        public bool Equals(IText other)
-        {
-            return origin.Equals(other);
-        }
+        public TextBase64(IText text) : base(
+            new LiveText(
+                new BytesBase64(
+                    new BytesOf(text)
+                )
+            ),
+            false
+        )
+        { }
     }
 }

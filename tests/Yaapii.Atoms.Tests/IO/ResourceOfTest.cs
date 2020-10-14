@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             Assert.Equal(
                 "Hello from Embedded!",
-                new TextOf(
+                new LiveText(
                     new ResourceOf("IO/Resources/test.txt", Assembly.GetExecutingAssembly())
                 ).AsString()
             );
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             Assert.Equal(
                 "Hello from Embedded!",
-                new TextOf(
+                new LiveText(
                     new ResourceOf("IO/Resources/test.txt", this.GetType())
                 ).AsString()
             );
@@ -57,7 +57,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             Assert.Equal(
                 "Hello from Embedded!",
-                new TextOf(
+                new LiveText(
                     new ResourceOf(
                         name,
                         this.GetType())

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 
 using System.IO;
 using Yaapii.Atoms.IO;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Bytes
 {
@@ -30,15 +31,7 @@ namespace Yaapii.Atoms.Bytes
     /// </summary>
     public sealed class InputAsBytes : IBytes
     {
-        /// <summary>
-        /// input
-        /// </summary>
-        private readonly IInput source;
-
-        /// <summary>
-        /// buffer size
-        /// </summary>
-        private readonly int size;
+        private readonly IScalar<byte[]> bytes;
 
         /// <summary>
         /// Input as bytes.
@@ -47,8 +40,20 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="max">maximum buffer size</param>
         public InputAsBytes(IInput input, int max = 16 << 10)
         {
-            this.source = input;
-            this.size = max;
+            this.bytes = new ScalarOf<byte[]>(() =>
+            {
+                var baos = new MemoryStream();
+                byte[] output;
+                using (var source = input.Stream())
+                using (var stream = new TeeInput(new InputOf(source), new OutputTo(baos)).Stream())
+                {
+                    byte[] readBuffer = new byte[max];
+                    while ((stream.Read(readBuffer, 0, readBuffer.Length)) > 0)
+                    { }
+                    output = baos.ToArray();
+                }
+                return output;
+            });
         }
 
         /// <summary>
@@ -57,17 +62,7 @@ namespace Yaapii.Atoms.Bytes
         /// <returns>content as byte array</returns>
         public byte[] AsBytes()
         {
-            var baos = new MemoryStream();
-            byte[] output;
-            using (var source = this.source.Stream())
-            using (var stream = new TeeInput(new InputOf(source), new OutputTo(baos)).Stream())
-            {
-                byte[] readBuffer = new byte[this.size];
-                while ((stream.Read(readBuffer, 0, readBuffer.Length)) > 0)
-                { }
-                output = baos.ToArray();
-            }
-            return output;
+            return this.bytes.Value();
         }
     }
 }

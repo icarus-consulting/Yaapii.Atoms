@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -42,22 +42,22 @@ namespace Yaapii.Atoms.Enumerator
         /// <summary>
         /// enumerator to get item from
         /// </summary>
-        private readonly IEnumerator<T> _src;
+        private readonly IEnumerator<T> src;
 
         /// <summary>
         /// fallback function for alternative value
         /// </summary>
-        private readonly IFunc<IEnumerable<T>, T> _fallback;
+        private readonly IFunc<IEnumerable<T>, T> fallback;
 
         /// <summary>
         /// position of the item
         /// </summary>
-        private readonly int _pos;
+        private readonly int pos;
 
         /// <summary>
         /// item to start with
         /// </summary>
-        private readonly T _needle;
+        private readonly T needle;
 
         /// <summary>
         /// Right neighbour of a given item with a fallback value.
@@ -124,10 +124,10 @@ namespace Yaapii.Atoms.Enumerator
             int pos,
             IFunc<IEnumerable<T>, T> fbk)
         {
-            this._pos = pos;
-            this._src = src;
-            this._needle = item;
-            this._fallback = fbk;
+            this.pos = pos;
+            this.src = src;
+            this.needle = item;
+            this.fallback = fbk;
         }
 
         /// <summary>
@@ -140,30 +140,30 @@ namespace Yaapii.Atoms.Enumerator
             try
             {
                 new FailPrecise(
-                    new FailWhen(!this._src.MoveNext()),
+                    new FailWhen(!this.src.MoveNext()),
                     new IOException("cannot get neighbours because enumerable is empty")).Go();
 
                 int cur;
 
                 //Find the needle index
-                for (cur = 0; this._src.Current.CompareTo(this._needle) != 0; cur++)
+                for (cur = 0; this.src.Current.CompareTo(this.needle) != 0; cur++)
                 {
-                    if (!this._src.MoveNext()) throw new IOException("cannot get neighbour because item is not in the enumerable.");
+                    if (!this.src.MoveNext()) throw new IOException("cannot get neighbour because item is not in the enumerable.");
                 }
 
-                var idx = cur + this._pos;
+                var idx = cur + this.pos;
                 if (idx < 0) throw new ArgumentOutOfRangeException("position", "cannot get neighbour because position is not in range of the enumerable");
 
-                this._src.Reset();
+                this.src.Reset();
                 for (cur = 0; cur <= idx; cur++)
                 {
-                    if(!this._src.MoveNext()) throw new ArgumentOutOfRangeException("position", "cannot get neighbour because position is not in range of the enumerable");
+                    if(!this.src.MoveNext()) throw new ArgumentOutOfRangeException("position", "cannot get neighbour because position is not in range of the enumerable");
                 }
-                ret = this._src.Current;
+                ret = this.src.Current;
             }
             catch (Exception)
             {
-                ret = this._fallback.Invoke(new EnumerableOf<T>(this._src));
+                ret = this.fallback.Invoke(new ManyOf<T>(this.src));
             }
             return ret;
 

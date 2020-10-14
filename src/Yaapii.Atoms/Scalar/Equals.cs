@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,46 +30,32 @@ namespace Yaapii.Atoms.Scalar
     /// Checks the equality of contents.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Equals<T> : IScalar<Boolean>
+    public sealed class Equals<T> : ScalarEnvelope<Boolean>
         where T : IComparable<T>
     {
-        private readonly IScalar<T> _first;
-        private readonly IScalar<T> _second;
-
         /// <summary>
         /// Checks the equality of contents.
         /// </summary>
-        /// <param name="frst">function to return first value to compare</param>
-        /// <param name="scnd">function to return second value to compare</param>
-        public Equals(Func<T> frst, Func<T> scnd) : this(new ScalarOf<T>(frst), new ScalarOf<T>(scnd))
+        /// <param name="first">function to return first value to compare</param>
+        /// <param name="second">function to return second value to compare</param>
+        public Equals(Func<T> first, Func<T> second) : this(new Live<T>(first), new Live<T>(second))
         { }
 
         /// <summary>
         /// Checks the equality of contents.
         /// </summary>
-        /// <param name="frst">first value to compare</param>
-        /// <param name="scnd">second value to compare</param>
-        public Equals(T frst, T scnd) : this(new ScalarOf<T>(frst), new ScalarOf<T>(scnd))
+        /// <param name="first">first value to compare</param>
+        /// <param name="second">second value to compare</param>
+        public Equals(T first, T second) : this(new Live<T>(first), new Live<T>(second))
         { }
 
         /// <summary>
         /// Checks the equality of contents.
         /// </summary>
-        /// <param name="frst">scalar of first value to compare</param>
-        /// <param name="scnd">scalar of second value to compare</param>
-        public Equals(IScalar<T> frst, IScalar<T> scnd)
-        {
-            this._first = frst;
-            this._second = scnd;
-        }
-
-        /// <summary>
-        /// true if equality.
-        /// </summary>
-        /// <returns>true or false</returns>
-        public Boolean Value()
-        {
-            return this._first.Value().CompareTo(this._second.Value()) == 0;
-        }
+        /// <param name="first">scalar of first value to compare</param>
+        /// <param name="second">scalar of second value to compare</param>
+        public Equals(IScalar<T> first, IScalar<T> second)
+            : base(() => first.Value().CompareTo(second.Value()) == 0)
+        { }
     }
 }

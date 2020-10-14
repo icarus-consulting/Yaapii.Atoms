@@ -4,52 +4,53 @@ using System.Collections.Generic;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// Union objects in two enumerables.
+    /// Items which do only exist in one enumerable.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Divergency<T> : EnumerableEnvelope<T>
+    public class Divergency<T> : ManyEnvelope<T>
     {
         /// <summary>
-        /// Union objects in two enumerables.
+        /// Items which do only exist in one enumerable.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        public Divergency(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> compare) : base(() =>
-        {
-            var result = new List<T>();
-            foreach (var item in b)
+        public Divergency(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match) : base(() =>
             {
-                if (new Contains<T>(a, item).Value() != new Contains<T>(b, item).Value())
+                var result = new List<T>();
+                foreach (var item in b)
                 {
-                    result.Add(item);
+                    if (new Contains<T>(a, match).Value() != new Contains<T>(b, match).Value())
+                    {
+                        result.Add(item);
+                    }
                 }
-            }
-            return result;
-        })
+                return result;
+            },
+            false
+        )
         { }
 
         /// <summary>
-        /// Union objects in two enumerables.
+        /// Items which do only exist in one enumerable.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         public Divergency(IEnumerable<T> a, IEnumerable<T> b) : base(() =>
-        {
-            var result = new List<T>();
-            foreach (var item in new Joined<T>(a, b))
             {
-                if (new Contains<T>(a, item).Value() != new Contains<T>(b, item).Value())
+                var result = new List<T>();
+                foreach (var item in new Joined<T>(a, b))
                 {
-                    result.Add(item);
+                    if (new Contains<T>(a, item).Value() != new Contains<T>(b, item).Value())
+                    {
+                        result.Add(item);
+                    }
                 }
-            }
-            return result;
-        })
+                return result;
+            },
+            false
+        )
         { }
 
         /// <summary>
-        /// Union objects in two enumerables.
+        /// Items which do only exist in one enumerable.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        private Divergency(Func<IEnumerable<T>> unite) : base(unite)
+        private Divergency(Func<IEnumerable<T>> unite) : base(unite, false)
         { }
     }
 }

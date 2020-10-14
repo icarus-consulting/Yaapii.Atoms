@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,13 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerator.Tests
@@ -36,13 +31,17 @@ namespace Yaapii.Atoms.Enumerator.Tests
         [Fact]
         public void Filters()
         {
-            Assert.True(
+            Assert.Equal(
+                "Hello World",
                 new Joined(" ",
-                    new EnumerableOf<string>(
+                    new ManyOf<string>(
                         new Filtered<string>(
-                            new EnumerableOf<string>("Hello", "cruel", "World").GetEnumerator(),
-                                (str) => str != "cruel"))).AsString() == "Hello World",
-                "cannot filter enumerator contents");
+                            new ManyOf<string>("Hello", "cruel", "World").GetEnumerator(),
+                            (str) => str != "cruel"
+                        )
+                    )
+                ).AsString()
+             );
         }
     }
 }

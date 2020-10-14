@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Enumerable
     /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
     /// </summary>
     /// <typeparam name="T">Type of the enumerable</typeparam>
-    public sealed class NotEmpty<T> : EnumerableEnvelope<T>
+    public sealed class NotEmpty<T> : ManyEnvelope<T>
     {
         /// <summary>
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="origin">Enumerable</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(IEnumerable<T> origin, Exception ex) : base(new ScalarOf<IEnumerable<T>>(
+        public NotEmpty(IEnumerable<T> origin, Exception ex) : base(new Live<IEnumerable<T>>(
             () =>
             {
                 new FailPrecise(
@@ -56,8 +56,9 @@ namespace Yaapii.Atoms.Enumerable
                     ex).Go();
                 
                 return origin;
-            }
-            ))
+            }),
+            false
+        )
         { }
     }
 }

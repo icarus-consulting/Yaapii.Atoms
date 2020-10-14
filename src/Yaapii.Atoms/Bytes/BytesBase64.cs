@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Bytes
 {
@@ -31,7 +32,7 @@ namespace Yaapii.Atoms.Bytes
     /// </summary>
     public sealed class BytesBase64 : IBytes
     {
-        private readonly IBytes bytes;
+        private readonly IScalar<byte[]> bytes;
 
         /// <summary>
         /// Encoded origin bytes using the Base64 encoding scheme.
@@ -39,7 +40,12 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="bytes"></param>
         public BytesBase64(IBytes bytes)
         {
-            this.bytes = bytes;
+            this.bytes = new ScalarOf<byte[]>(() =>
+                Encoding.UTF8.GetBytes(
+                    Convert.ToBase64String(
+                        bytes.AsBytes()
+                    )
+                ));
         }
 
         /// <summary>
@@ -48,12 +54,7 @@ namespace Yaapii.Atoms.Bytes
         /// <returns></returns>
         public byte[] AsBytes()
         {
-            return 
-                Encoding.UTF8.GetBytes(
-                    Convert.ToBase64String(
-                        bytes.AsBytes()
-                    )
-                );
+            return this.bytes.Value();
         }
     }
 }

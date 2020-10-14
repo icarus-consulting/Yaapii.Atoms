@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,8 +31,8 @@ namespace Yaapii.Atoms.Text.Tests
         {
             var x =
                 new StartsWith(
-                    new TextOf("Im an text with a really good end!"),
-                    new TextOf("Im a")
+                    new LiveText("Im an text with a really good end!"),
+                    new LiveText("Im a")
                 );
             Assert.True(x.Value());
         }
@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             var x =
                 new StartsWith(
-                    new TextOf("Im a text with a really good end!"),
+                    new LiveText("Im a text with a really good end!"),
                     "Im a"
                 );
             Assert.True(x.Value());
@@ -53,8 +53,8 @@ namespace Yaapii.Atoms.Text.Tests
         {
             var x =
                 new StartsWith(
-                    new TextOf("Im a text with a really good end!"),
-                    new TextOf("m an")
+                    new LiveText("Im a text with a really good end!"),
+                    new LiveText("m an")
                 );
             Assert.False(x.Value());
         }

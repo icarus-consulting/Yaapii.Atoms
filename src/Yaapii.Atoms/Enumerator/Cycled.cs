@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -39,12 +39,12 @@ namespace Yaapii.Atoms.Enumerator
         /// <summary>
         /// enum to cycle
         /// </summary>
-        private readonly IEnumerable<T> _enumerable;
+        private readonly IEnumerable<T> enumerable;
 
         /// <summary>
         /// cache
         /// </summary>
-        private readonly Queue<IEnumerator<T>> _buffer = new Queue<IEnumerator<T>>();
+        private readonly Queue<IEnumerator<T>> buffer = new Queue<IEnumerator<T>>();
 
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> that starts from the beginning when ended.
@@ -52,23 +52,23 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="enumerable">enum to cycle</param>
         public Cycled(IEnumerable<T> enumerable)
         {
-            this._enumerable = enumerable;
+            this.enumerable = enumerable;
         }
 
         public bool MoveNext()
         {
-            if (this._buffer.Count == 0 || !this._buffer.Peek().MoveNext())
+            if (this.buffer.Count == 0 || !this.buffer.Peek().MoveNext())
             {
-                this._buffer.Clear();
-                this._buffer.Enqueue(this._enumerable.GetEnumerator());
-                return this._buffer.Peek().MoveNext();
+                this.buffer.Clear();
+                this.buffer.Enqueue(this.enumerable.GetEnumerator());
+                return this.buffer.Peek().MoveNext();
             }
             return true;
         }
 
         public void Reset()
         {
-            this._buffer.Clear();
+            this.buffer.Clear();
         }
 
         public void Dispose()
@@ -80,7 +80,7 @@ namespace Yaapii.Atoms.Enumerator
         {
             get
             {
-                return this._buffer.Peek().Current;
+                return this.buffer.Peek().Current;
             }
         }
 

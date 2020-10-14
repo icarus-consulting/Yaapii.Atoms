@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,13 +31,13 @@ namespace Yaapii.Atoms.Time
     /// </summary>
     public sealed class DateOf : IScalar<DateTime>
     {
-        private readonly IScalar<DateTime> _date;
+        private readonly IScalar<DateTime> date;
 
         /// <summary>
         /// A date parsed using a using <see cref="CultureInfo.InvariantCulture"/>
         /// </summary>
         /// <param name="date">the date as text</param>
-        public DateOf(string date) : this(date, CultureInfo.InvariantCulture, "yyyy-MM-ddTHH:mm:ss.fffffffZ", "yyyy-MM-ddTHH:mm:ss.fffffffzzz")
+        public DateOf(string date) : this(date, CultureInfo.InvariantCulture, "yyyy-MM-ddTHH:mm:ss.fffffffZ", "yyyy-MM-ddTHH:mm:ss.fffffffzzz", "ddd, dd MMM yyyy HH:mm:ss Z")
         { }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Time
         /// <param name="patterns"></param>
         /// <param name="provider"></param>
         public DateOf(string date, IFormatProvider provider, params string[] patterns) : this(
-            new ScalarOf<DateTime>(() =>
+            new Live<DateTime>(() =>
             {
                 return DateTime.ParseExact(date, patterns, provider, DateTimeStyles.AssumeUniversal);
             }))
@@ -74,7 +74,7 @@ namespace Yaapii.Atoms.Time
         /// <param name="date">the date as text</param>
         /// <param name="dateFormat">format provider</param>
         public DateOf(IText date, IFormatProvider dateFormat) : this(
-            new ScalarOf<DateTime>(
+            new Live<DateTime>(
                 () =>
                     DateTime.Parse(
                         date.AsString(),
@@ -90,7 +90,7 @@ namespace Yaapii.Atoms.Time
         /// <param name="date"></param>
         public DateOf(IScalar<DateTime> date)
         {
-            this._date = date;
+            this.date = new ScalarOf<DateTime>(date);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Yaapii.Atoms.Time
         /// <returns></returns>
         public DateTime Value()
         {
-            return this._date.Value();
+            return this.date.Value();
         }
     }
 }

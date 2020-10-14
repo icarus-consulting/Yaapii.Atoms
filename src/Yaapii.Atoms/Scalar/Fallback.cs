@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,11 +30,8 @@ namespace Yaapii.Atoms.Scalar
     /// Scalar which calls a fallback function if Value() fails.
     /// </summary>
     /// <typeparam name="Out">Type of output value</typeparam>
-    public class Fallback<Out> : IScalar<Out>
+    public class Fallback<Out> : ScalarEnvelope<Out>
     {
-        private readonly IScalar<Out> origin;
-        private readonly Func<Exception, Out> fbk;
-
         /// <summary>
         /// ctor
         /// </summary>
@@ -59,28 +56,19 @@ namespace Yaapii.Atoms.Scalar
         /// ctor
         /// </summary>
         /// <param name="origin">scalar which can fail</param>
-        /// <param name="fbk">fallback to apply when fails</param>
-        public Fallback(IScalar<Out> origin, Func<Exception, Out> fbk)
-        {
-            this.origin = origin;
-            this.fbk = fbk;
-        }
-
-        /// <summary>
-        /// Get the value or fallback if fails
-        /// </summary>
-        /// <returns>value or fallback value</returns>
-        public Out Value()
-        {
-            try
+        /// <param name="fallback">fallback to apply when fails</param>
+        public Fallback(IScalar<Out> origin, Func<Exception, Out> fallback)
+            : base(() =>
             {
-                return origin.Value();
-            }
-            catch (Exception ex)
-            {
-                return fbk.Invoke(ex);
-            }
-
-        }
+                try
+                {
+                    return origin.Value();
+                }
+                catch (Exception ex)
+                {
+                    return fallback.Invoke(ex);
+                }
+            })
+        { }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -34,8 +34,9 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new Contains(
                     "Hallo Welt!", 
-                    "Welt").Value(), 
-                "Contains works not! (String)");
+                    "Welt"
+                ).Value() 
+            );
         }
 
         [Fact]
@@ -45,8 +46,9 @@ namespace Yaapii.Atoms.Text.Tests
                 new Contains(
                     "Hallo Welt!", 
                     "welt", 
-                    true).Value(), 
-                "Contains with ignore case works not! (String)");
+                    true
+                ).Value()
+            );
         }
 
         [Fact]
@@ -54,9 +56,10 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Contains(
-                    new TextOf("Hallo Welt!"), 
-                    new TextOf("Welt")).Value(), 
-                "Contains works not! (IText)");
+                    new LiveText("Hallo Welt!"), 
+                    new LiveText("Welt")
+                ).Value()
+            );
         }
 
         [Fact]
@@ -64,10 +67,11 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Contains(
-                    new TextOf("Hallo Welt!"), 
-                    new TextOf("welt"), 
-                    true).Value(), 
-                "Contains with ignore case works not! (IText)");
+                    new LiveText("Hallo Welt!"), 
+                    new LiveText("welt"), 
+                    true
+                ).Value()
+            );
         }
 
         [Fact]
@@ -75,10 +79,10 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Contains(
-                    new ScalarOf<string>("Hallo Welt!"), 
-                    new ScalarOf<string>("Welt")
-                    ).Value(), 
-                "Contains works not! (IScalar)");
+                    new Live<string>("Hallo Welt!"), 
+                    new Live<string>("Welt")
+                ).Value()
+            );
         }
 
         [Fact]
@@ -86,10 +90,11 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Contains(
-                    new ScalarOf<string>("Hallo Welt!"), 
-                    new ScalarOf<string>("welt"), 
-                    new ScalarOf<StringComparison>(StringComparison.CurrentCultureIgnoreCase)).Value(), 
-                "Contains with ignore case works not! (IScalar)");
+                    new Live<string>("Hallo Welt!"), 
+                    new Live<string>("welt"), 
+                    new Live<StringComparison>(StringComparison.CurrentCultureIgnoreCase)
+                ).Value()
+            );
         }
 
         [Fact]
@@ -98,8 +103,9 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.False(
                 new Contains(
                     "Hallo Welt!", 
-                    "welt").Value(), 
-                "Contains works not! (String)");
+                    "welt"
+                ).Value()
+            );
         }
 
         [Fact]
@@ -109,8 +115,9 @@ namespace Yaapii.Atoms.Text.Tests
                 new Contains(
                     "Hallo Welt!", 
                     "world", 
-                    true).Value(), 
-                "Contains with ignore case works not! (String)");
+                    true
+                ).Value()
+            );
         }
 
         [Fact]
@@ -118,9 +125,10 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.False(
                 new Contains(
-                    new TextOf("Hallo Welt!"), 
-                    new TextOf("welt")).Value(), 
-                "Contains works not! (IText)");
+                    new LiveText("Hallo Welt!"), 
+                    new LiveText("welt")
+                ).Value()
+            );
         }
 
         [Fact]
@@ -128,9 +136,11 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.False(
                 new Contains(
-                    new TextOf("Hallo Welt!"), 
-                    new TextOf("world"), true).Value(), 
-                "Contains with ignore case works not! (IText)");
+                    new LiveText("Hallo Welt!"), 
+                    new LiveText("world"), 
+                    true
+                ).Value()
+            );
         }
 
         [Fact]
@@ -138,9 +148,10 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.False(
                 new Contains(
-                    new ScalarOf<string>("Hallo Welt!"), 
-                    new ScalarOf<string>("welt")).Value(), 
-                "Contains works not! (IScalar)");
+                    new Live<string>("Hallo Welt!"), 
+                    new Live<string>("welt")
+                ).Value()
+            );
         }
 
         [Fact]
@@ -148,11 +159,13 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.False(
                 new Contains(
-                    new ScalarOf<string>("Hallo Welt!"), 
-                    new ScalarOf<string>("world"), 
-                    new ScalarOf<StringComparison>(
-                        StringComparison.CurrentCultureIgnoreCase)).Value(), 
-                "Contains with ignore case works not! (IScalar)");
+                    new Live<string>("Hallo Welt!"), 
+                    new Live<string>("world"), 
+                    new Live<StringComparison>(
+                        StringComparison.CurrentCultureIgnoreCase
+                    )
+                ).Value()
+            );
         }
     }
 }

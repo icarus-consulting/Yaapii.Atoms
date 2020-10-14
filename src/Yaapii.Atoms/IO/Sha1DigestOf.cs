@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="source">Input</param>
         public Sha1DigestOf(IInput source) :
-            base(source, new ScalarOf<HashAlgorithm>(() => new SHA1CryptoServiceProvider()))
+            base(source, new Live<HashAlgorithm>(() => new SHA1CryptoServiceProvider()))
         { }
     }
 }

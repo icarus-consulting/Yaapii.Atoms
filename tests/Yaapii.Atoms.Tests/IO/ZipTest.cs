@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -59,18 +59,17 @@ namespace Yaapii.Atoms.IO.Tests
             try
             {
                 Directory.CreateDirectory(folder);
-                var newFile = File.Create(folder + "\\FileToZipOne.txt");
+                var newFile = File.Create(Path.Combine(folder, "FileToZipOne.txt"));
                 newFile.Close();
-                newFile = File.Create(folder + "\\FileToZipTwo.txt");
+                newFile = File.Create(Path.Combine(folder, "FileToZipTwo.txt"));
                 newFile.Close();
-                newFile = File.Create(folder + "\\FileToZipThree.txt");
+                newFile = File.Create(Path.Combine(folder, "FileToZipThree.txt"));
                 newFile.Close();
 
                 var streamOfZipped = new Zip(folder);
 
                 var archive = new ZipArchive(streamOfZipped.Stream());
-                Assert.True(archive.GetEntry(folder + "\\FileToZipTwo.txt") != null);
-
+                Assert.True(archive.GetEntry(Path.Combine(folder, "FileToZipTwo.txt")) != null);
             }
             finally
             {

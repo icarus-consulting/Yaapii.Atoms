@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,14 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerator.Tests
@@ -40,8 +34,8 @@ namespace Yaapii.Atoms.Enumerator.Tests
             Assert.True(
                 new ItemAt<string>(
                     new Mapped<int, string>(
-                        new EnumerableOf<int>(1).GetEnumerator(),
-                        i => new TextOf(i).AsString()),
+                        new ManyOf<int>(1).GetEnumerator(),
+                        i => new LiveText(i).AsString()),
                 0).Value() == "1",
             "cannot map contents of enumerator");
         }

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Bytes.Tests
                         new InputAsBytes(
                             new InputOf(
                                 new BytesOf(
-                                    new TextOf(content)
+                                    new LiveText(content)
                                 )
                             )
                         ).AsBytes()) == content,
@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Bytes.Tests
                         new InputAsBytes(
                             new InputOf(
                                 new BytesOf(
-                                    new TextOf(content)
+                                    new LiveText(content)
                                 )
                             ),
                             2

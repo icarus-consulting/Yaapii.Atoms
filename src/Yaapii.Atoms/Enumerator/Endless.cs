@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Enumerator
         /// A <see cref="IEnumerator{T}"/> that repeats one element infinitely.
         /// </summary>
         /// <param name="elm">element to repeat</param>
-        public Endless(T elm) : this(new ScalarOf<T>(elm))
+        public Endless(T elm) : this(new Live<T>(elm))
         { }
 
         /// <summary>

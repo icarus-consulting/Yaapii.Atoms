@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="wtr">a streamwriter</param>
         /// <param name="fnc">function returning a decoder for the writer</param>
-        public WriterAsOutput(StreamWriter wtr, Func<Decoder> fnc) : this(wtr, new ScalarOf<Decoder>(fnc))
+        public WriterAsOutput(StreamWriter wtr, Func<Decoder> fnc) : this(wtr, new Live<Decoder>(fnc))
         { }
 
         /// <summary>

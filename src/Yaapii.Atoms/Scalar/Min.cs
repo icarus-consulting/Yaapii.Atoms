@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,19 +32,17 @@ namespace Yaapii.Atoms.Enumerable
     /// Find the smallest item in a <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Min<T> : IScalar<T>
+    public sealed class Min<T> : ScalarEnvelope<T>
         where T : IComparable<T>
     {
-        private readonly IEnumerable<IScalar<T>> items;
-
         /// <summary>
         /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items"><see cref="Func{TResult}"/> functions which retrieve items to compare</param>
         public Min(params Func<T>[] items) : this(
             new Enumerable.Mapped<Func<T>, IScalar<T>>(
-                item => new ScalarOf<T>(() => item.Invoke()),
-                new EnumerableOf<Func<T>>(items)))
+                item => new Live<T>(() => item.Invoke()),
+                new ManyOf<Func<T>>(items)))
         { }
 
         /// <summary>
@@ -53,7 +51,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="items">items to compare</param>
         public Min(IEnumerable<T> items) : this(
             new Enumerable.Mapped<T, IScalar<T>>(
-                item => new ScalarOf<T>(item),
+                item => new Live<T>(item),
                 items))
         { }
 
@@ -63,8 +61,15 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="items">items to compare</param>
         public Min(params T[] items) : this(
             new Enumerable.Mapped<T, IScalar<T>>(
-                item => new ScalarOf<T>(item),
+                item => new Live<T>(item),
                 items))
+        { }
+
+        /// <summary>
+        /// Find the smallest item in the given scalars.
+        /// </summary>
+        /// <param name="items">items to compare</param>
+        public Min(params IScalar<T>[] items) : this(new ManyOf<IScalar<T>>(items))
         { }
 
         /// <summary>
@@ -72,42 +77,25 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="items">items to compare</param>
         public Min(IEnumerable<IScalar<T>> items)
-        {
-            this.items = items; //C# params Bug
-        }
-
-        /// <summary>
-        /// Find the smallest item in the given scalars.
-        /// </summary>
-        /// <param name="items">items to compare</param>
-        public Min(params IScalar<T>[] items)
-        {
-            this.items = items;
-        }
-
-        /// <summary>
-        /// Get the minimum.
-        /// </summary>
-        /// <returns>the minimum</returns>
-        public T Value()
-        {
-            IEnumerator<IScalar<T>> e = this.items.GetEnumerator();
-            if (!e.MoveNext())
+            : base(() =>
             {
-                throw new NoSuchElementException("Can't find greater element in an empty iterable");
-            }
-
-            T min = e.Current.Value();
-            while (e.MoveNext())
-            {
-                T next = e.Current.Value();
-                if (next.CompareTo(min) < 0)
+                var e = items.GetEnumerator();
+                if (!e.MoveNext())
                 {
-                    min = next;
+                    throw new NoSuchElementException("Can't find smaller element in an empty iterable");
                 }
-            }
-            return min;
-        }
 
+                T min = e.Current.Value();
+                while (e.MoveNext())
+                {
+                    T next = e.Current.Value();
+                    if (next.CompareTo(min) < 0)
+                    {
+                        min = next;
+                    }
+                }
+                return min;
+            })
+        { }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
@@ -36,15 +31,15 @@ namespace Yaapii.Atoms.Enumerable
     /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
     /// </summary>
     /// <typeparam name="T">type of element to repeat</typeparam>
-    public sealed class Repeated<T> : EnumerableEnvelope<T>
+    public sealed class Repeated<T> : ManyEnvelope<T>
     {
-/// <summary>
+        /// <summary>
         /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
         /// </summary>
         /// <param name="elm">function to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
         public Repeated(System.Func<T> elm, int cnt) :
-            this(new ScalarOf<T>(elm), cnt)
+            this(new Live<T>(elm), cnt)
         { }
 
         /// <summary>
@@ -53,7 +48,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="elm">element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
         public Repeated(T elm, int cnt) :
-            this(new ScalarOf<T>(elm), cnt)
+            this(new Live<T>(elm), cnt)
         { }
 
         /// <summary>
@@ -62,7 +57,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
         public Repeated(IScalar<T> elm, int cnt) : this(
-            elm, new ScalarOf<int>(cnt))
+            elm, new Live<int>(cnt))
         { }
 
         /// <summary>
@@ -70,11 +65,12 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
-        public Repeated(IScalar<T> elm, IScalar<int> cnt) : base(
-            new ScalarOf<IEnumerable<T>>(
-                () => 
-                new EnumerableOf<T>(
-                    new Enumerator.Repeated<T>(elm, cnt.Value()))))
+        public Repeated(IScalar<T> elm, IScalar<int> cnt) : base(() => 
+            new LiveMany<T>(() =>
+                new Enumerator.Repeated<T>(elm, cnt.Value())
+            ),
+            false
+        )
         { }
     }
 }

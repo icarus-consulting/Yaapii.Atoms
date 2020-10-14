@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Text
 {
@@ -32,7 +31,16 @@ namespace Yaapii.Atoms.Text
     /// </summary>
     public sealed class IsWhitespace : IScalar<Boolean>
     {
-        private readonly IText _origin;
+        private readonly ScalarOf<bool> result;
+
+        /// <summary>
+        /// Checks if a A <see cref="string"/> is whitespace.
+        /// </summary>
+        /// <param name="text">text to check</param>
+        public IsWhitespace(string text) : this(
+            new TextOf(text)
+        )
+        { }
 
         /// <summary>
         /// Checks if a A <see cref="IText"/> is whitespace.
@@ -40,7 +48,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">text to check</param>
         public IsWhitespace(IText text)
         {
-            this._origin = text;
+            this.result = new ScalarOf<bool>(() => !text.AsString().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + "")));
         }
 
         /// <summary>
@@ -49,7 +57,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>the result</returns>
         public Boolean Value()
         {
-            return !this._origin.AsString().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + ""));
+            return this.result.Value();
         }
     }
 }

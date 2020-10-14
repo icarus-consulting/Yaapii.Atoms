@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,10 +23,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.Error;
-using Yaapii.Atoms.Func;
 
 #pragma warning disable NoProperties // No Properties
 #pragma warning disable CS1591
@@ -42,24 +38,24 @@ namespace Yaapii.Atoms.Enumerator
         /// <summary>
         /// enumerator to filter
         /// </summary>
-        private readonly IEnumerator<X> _enumerator;
+        private readonly IEnumerator<X> enumerator;
 
         /// <summary>
         /// filter function
         /// </summary>
-        private readonly IFunc<X, Boolean> _func;
+        private readonly Func<X, Boolean> func;
 
         /// <summary>
         /// buffer to store filtered elements
         /// </summary>
-        private readonly Queue<X> _buffer;
+        private readonly Queue<X> buffer;
 
         /// <summary>
         /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public Filtered(IEnumerator<X> src, Func<X, Boolean> fnc) : this(src, new FuncOf<X, Boolean>(fnc))
+        public Filtered(IEnumerator<X> src, IFunc<X, Boolean> fnc) : this(src, (ipt) => fnc.Invoke(ipt))
         { }
 
         /// <summary>
@@ -67,18 +63,18 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public Filtered(IEnumerator<X> src, IFunc<X, Boolean> fnc)
+        public Filtered(IEnumerator<X> src, Func<X, Boolean> fnc)
         {
-            this._enumerator = src;
-            this._func = fnc;
-            this._buffer = new Queue<X>();
+            this.enumerator = src;
+            this.func = fnc;
+            this.buffer = new Queue<X>();
         }
 
         public X Current
         {
             get
             {
-                return this._buffer.Peek();
+                return this.buffer.Peek();
             }
         }
 
@@ -86,7 +82,7 @@ namespace Yaapii.Atoms.Enumerator
         {
             get
             {
-                return this._buffer.Peek();
+                return this.buffer.Peek();
             }
         }
 
@@ -97,31 +93,31 @@ namespace Yaapii.Atoms.Enumerator
 
         public bool MoveNext()
         {
-            if (this._buffer.Count > 0) this._buffer.Dequeue();
+            if (this.buffer.Count > 0) this.buffer.Dequeue();
 
-            if (this._buffer.Count == 0)
+            if (this.buffer.Count == 0)
             {
-                while (this._enumerator.MoveNext())
+                while (this.enumerator.MoveNext())
                 {
-                    X obj = this._enumerator.Current;
-                    if (_func.Invoke(obj))
+                    X obj = this.enumerator.Current;
+                    if (func.Invoke(obj))
                     {
-                        this._buffer.Enqueue(obj);
+                        this.buffer.Enqueue(obj);
                         break;
                     }
                 }
             }
             else
             {
-                this._buffer.Dequeue();
+                this.buffer.Dequeue();
             }
 
-            return this._buffer.Count > 0;
+            return this.buffer.Count > 0;
         }
 
         public void Reset()
         {
-            this._enumerator.Reset();
+            this.enumerator.Reset();
         }
     }
 }

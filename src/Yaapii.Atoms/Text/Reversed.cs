@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,61 +21,31 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Yaapii.Atoms.Text
 {
     /// <summary>
     /// A <see cref="IText"/> which has been reversed.
     /// </summary>
-    public sealed class Reversed : IText
+    public sealed class Reversed : TextEnvelope
     {
-        private readonly IText _origin;
-
         /// <summary>
         /// A <see cref="IText"/> which has been reversed.
         /// </summary>
         /// <param name="text">text to reverse</param>
-        public Reversed(IText text)
-        {
-            this._origin = text;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            char[] chararray = _origin.AsString().ToCharArray();
-            Array.Reverse(chararray);
-            string reverseTxt = "";
-            for (int i = 0; i <= chararray.Length - 1; i++)
+        public Reversed(IText text) : base (() => 
             {
-                reverseTxt += chararray.GetValue(i);
-            }
-            return reverseTxt;
-        }
-
-        /// <summary>
-        /// Compare to other text.
-        /// </summary>
-        /// <param name="text">text to compare to</param>
-        /// <returns>-1 if this is lower, 0 if equal, 1 if this is higher</returns>
-        public int CompareTo(IText text)
-        {
-            return this.AsString().CompareTo(text.AsString());
-        }
-
-        /// <summary>
-        /// Check for equality.
-        /// </summary>
-        /// <param name="other">other object to compare to</param>
-        /// <returns>true if equal.</returns>
-        public bool Equals(IText other)
-        {
-            return CompareTo(other) == 0;
-        }
+                char[] chararray = text.AsString().ToCharArray();
+                Array.Reverse(chararray);
+                string reverseTxt = "";
+                for (int i = 0; i <= chararray.Length - 1; i++)
+                {
+                    reverseTxt += chararray.GetValue(i);
+                }
+                return reverseTxt;
+            },
+            false
+        )
+        { }
     }
 }

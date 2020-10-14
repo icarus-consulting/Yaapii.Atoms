@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.IO.Tests
             using (var output = new WriterTo(uri))
             {
                 s =
-                    new TextOf(
+                    new LiveText(
                         new TeeInput(
                             new InputOf(content),
                                 new WriterAsOutput(
@@ -55,12 +55,12 @@ namespace Yaapii.Atoms.IO.Tests
             }
 
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new InputAsBytes(
                         new InputOf(uri)
                     )
-                ).AsString().CompareTo(s) == 0, //.CompareTo is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
-            "Can't copy Input to Output and return Input");
+                ).AsString().CompareTo(s) == 0 //.CompareTo is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
+            );
         }
     }
 }

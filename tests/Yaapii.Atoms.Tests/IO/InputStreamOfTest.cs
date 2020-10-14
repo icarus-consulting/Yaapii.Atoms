@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -40,10 +40,10 @@ namespace Yaapii.Atoms.IO.Tests
             if (File.Exists(path)) File.Delete(path);
 
             String content = "Hello, товарищ!";
-            File.WriteAllBytes(path, new BytesOf(new TextOf(content, Encoding.UTF8)).AsBytes());
+            File.WriteAllBytes(path, new BytesOf(new LiveText(content, Encoding.UTF8)).AsBytes());
 
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new InputAsBytes(
                         new InputOf(
                             new InputStreamOf(
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             String content = "Hello, дорогой товарищ!";
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new InputOf(
                         new InputStreamOf(
                             new StreamReader(
@@ -71,13 +71,17 @@ namespace Yaapii.Atoms.IO.Tests
         {
             String content = "Hello, صديق!";
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new InputOf(
                         new InputStreamOf(
                             new StreamReader(
                                 new InputOf(content).Stream()), 
-                            1))).AsString() == content,
-                "Can't read from reader through small buffer");
+                            1
+                        )
+                    )
+                ).AsString() == content,
+                "Can't read from reader through small buffer"
+            );
         }
 
         [Fact]
@@ -86,7 +90,8 @@ namespace Yaapii.Atoms.IO.Tests
             String content = "Hello,חבר!";
             Assert.True(
                 new InputStreamOf(content).Length > 0,
-                "Can't show that data is available");
+                "Can't show that data is available"
+            );
         }
 
         [Fact]
@@ -100,16 +105,17 @@ namespace Yaapii.Atoms.IO.Tests
             if (File.Exists(path)) File.Delete(path);
 
             String content = "Hello, товарищ!";
-            File.WriteAllBytes(path, new BytesOf(new TextOf(content, Encoding.UTF8)).AsBytes());
+            File.WriteAllBytes(path, new BytesOf(new LiveText(content, Encoding.UTF8)).AsBytes());
 
             Assert.True(
-                  new TextOf(
-                      new InputAsBytes(
-                          new InputOf(
-                               new InputStreamOf(
-                                    new Uri(path))))
-                   ).AsString() == content,
-                   "Can't read file content");
+                new LiveText(
+                    new InputAsBytes(
+                        new InputOf(
+                            new InputStreamOf(
+                                new Uri(path))))
+                ).AsString() == content,
+                "Can't read file content"
+            );
         }
     }
 }

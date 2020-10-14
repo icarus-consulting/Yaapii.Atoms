@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,17 +28,18 @@ namespace Yaapii.Atoms.Enumerable
     /// Enumerable partitioned by a given size.
     /// <para>Is a IEnumerable</para>
     /// </summary>
-    public sealed class Partitioned<T> : EnumerableEnvelope<IEnumerable<T>>
+    public sealed class Partitioned<T> : ManyEnvelope<IEnumerable<T>>
     {
         /// <summary>
         /// Enumerable partitioned by a given size.
         /// </summary>
         public Partitioned(int size, IEnumerable<T> list) : base(() =>
-            new EnumerableOf<IEnumerable<T>>(
+            new LiveMany<IEnumerable<T>>(() =>
                 new Enumerator.Partitioned<T>(
                     size, list.GetEnumerator()
                 )
-            )
+            ),
+            false
         )
         { }
     }

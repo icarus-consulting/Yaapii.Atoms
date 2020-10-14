@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Yaapii.Atoms.Text
@@ -30,53 +28,23 @@ namespace Yaapii.Atoms.Text
     /// <summary>
     /// Normalized A <see cref="IText"/> (whitespaces replaced with one single space)
     /// </summary>
-    public sealed class Normalized : IText
+    public sealed class Normalized : TextEnvelope
     {
-        private readonly IText _origin;
-
         /// <summary>
         /// Normalized A <see cref="IText"/>  (whitespaces replaced with one single space)
         /// </summary>
         /// <param name="text">text to normalize</param>
-        public Normalized(String text) : this(new TextOf(text))
+        public Normalized(String text) : this(new LiveText(text))
         { }
 
         /// <summary>
         /// Normalized A <see cref="IText"/>  (whitespaces replaced with one single space)
         /// </summary>
         /// <param name="text">text to normalize</param>
-        public Normalized(IText text)
-        {
-            this._origin = text;
-        }
-
-        /// <summary>
-        /// Get content as a string.
-        /// </summary>
-        /// <returns>the content as a string</returns>
-        public String AsString()
-        {
-            return Regex.Replace(new Trimmed(this._origin).AsString(), "\\s+", " ");
-        }
-
-        /// <summary>
-        /// Compare to other text.
-        /// </summary>
-        /// <param name="text">text to compare to</param>
-        /// <returns>-1 if this is lower, 0 if equal, 1 if this is higher</returns>
-        public int CompareTo(IText text)
-        {
-            return this.AsString().CompareTo(text.AsString());
-        }
-
-        /// <summary>
-        /// Check for equality.
-        /// </summary>
-        /// <param name="other">other object to compare to</param>
-        /// <returns>true if equal.</returns>
-        public bool Equals(IText other)
-        {
-            return CompareTo(other) == 0;
-        }
+        public Normalized(IText text) : base(() =>
+            Regex.Replace(new Trimmed(text).AsString(), "\\s+", " "),
+            false
+        )
+        { }
     }
 }

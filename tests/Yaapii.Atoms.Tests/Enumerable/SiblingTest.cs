@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
             new Sibling<int>(
                 2,
-                new EnumerableOf<int>(1, 2, 3)
+                new ManyOf<int>(1, 2, 3)
             ).Value() == 3,
             "Can't get the right neighbour from the enumerable"
         );
@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new Sibling<int>(
                     2,
-                    new EnumerableOf<int>(1, 2, 3),
+                    new ManyOf<int>(1, 2, 3),
                     -1
                 ).Value() == 1,
             "Can't take the left neighbour from the enumerable");
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new Sibling<string>(
                     "1",
-                    new EnumerableOf<string>("1", "2", "3"),
+                    new ManyOf<string>("1", "2", "3"),
                     -1,
                     "15"
                 ).Value() == "15");
@@ -76,7 +76,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 () =>
                     new Sibling<int>(
                         1337,
-                        new EnumerableOf<int>()
+                        new ManyOf<int>()
                 ).Value());
         }
 
@@ -87,7 +87,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new Sibling<string>(
                     "Not-there",
-                    new EnumerableOf<string>(),
+                    new ManyOf<string>(),
                     12,
                     fallback
                 ).Value() == fallback,
@@ -106,7 +106,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new Sibling<FakeSibling>(
                     nb1,
-                    new EnumerableOf<FakeSibling>(nb1, nb2),
+                    new ManyOf<FakeSibling>(nb1, nb2),
                     -1,
                     nb2
                 ).Value().TimeStamp() == nb2.TimeStamp(),

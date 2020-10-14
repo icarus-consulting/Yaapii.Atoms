@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -40,8 +40,8 @@ namespace Yaapii.Atoms.Enumerator.Tests
             new LengthOf(
                 new Joined<IEnumerator<String>>(
                     new Mapped<string, IEnumerator<string>>(
-                        new EnumerableOf<string>("x", "y", "z").GetEnumerator(),
-                        (input) => new EnumerableOf<string>(input).GetEnumerator()))
+                        new ManyOf<string>("x", "y", "z").GetEnumerator(),
+                        (input) => new ManyOf<string>(input).GetEnumerator()))
                     ).Value() == 3,
             "Can't concatenate mapped iterators together");
         }

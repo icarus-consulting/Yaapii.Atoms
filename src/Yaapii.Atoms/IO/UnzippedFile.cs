@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.IO
     {
         private readonly IInput zip;
         private readonly string filePath;
-        private readonly Scalar.Sticky<Stream> stream;
+        private readonly ScalarOf<Stream> stream;
         /// <summary>
         /// Content of a file in a zip archive
         /// is tolerant to slash style
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.IO
             this.zip = zip;
             this.filePath = virtualPath;
 
-            this.stream = new Scalar.Sticky<Stream>(() =>
+            this.stream = new ScalarOf<Stream>(() =>
             {
                 Stream content;
                 using (var archive = new ZipArchive(

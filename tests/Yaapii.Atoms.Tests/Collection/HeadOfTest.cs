@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Fail;
 
 namespace Yaapii.Atoms.Collection.Tests
@@ -36,7 +37,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Contains(
                 new HeadOf<int>(
                     2,
-                    new Enumerable.EnumerableOf<int>(1, -1, 2, 0)
+                    new ManyOf<int>(1, -1, 2, 0)
                 ),
                 predicate => predicate.Equals(-1));
         }
@@ -44,32 +45,35 @@ namespace Yaapii.Atoms.Collection.Tests
         [Fact]
         public void Size()
         {
-            Assert.True(
+            Assert.Equal(
+                2,
                 new HeadOf<string>(
                     2,
-                    new Enumerable.EnumerableOf<string>(
+                    new ManyOf<string>(
                         "hello", "world", "друг")
-                ).Count == 2);
+                ).Count);
         }
 
         [Fact]
         public void SizeEmptyReturnZero()
         {
-            Assert.True(
+            Assert.Empty(
                 new HeadOf<int>(
                     2,
                     new List<int>()
-                ).Count == 0);
+                )
+            );
         }
 
         [Fact]
         public void SizeLimitZeroReturnZero()
         {
-            Assert.True(
+            Assert.Empty(
                 new HeadOf<string>(
                     0,
-                    new Enumerable.EnumerableOf<string>("1", "2", "3")
-                ).Count == 0);
+                    new ManyOf<string>("1", "2", "3")
+                )
+            );
         }
 
         [Fact]
@@ -78,7 +82,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.NotEmpty(
                 new HeadOf<String>(
                     2,
-                    new Enumerable.EnumerableOf<string>("first", "second")
+                    new ManyOf<string>("first", "second")
                 ));
         }
 
@@ -87,7 +91,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Empty(
                 new HeadOf<String>(
-                    0, new Enumerable.EnumerableOf<string>("third", "fourth")
+                    0, new ManyOf<string>("third", "fourth")
                 ));
         }
 
@@ -97,7 +101,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Throws<UnsupportedOperationException>(() =>
             new HeadOf<int>(
                 2,
-                new Enumerable.EnumerableOf<int>(1, 2, 3, 4)
+                new ManyOf<int>(1, 2, 3, 4)
             ).Add(6));
         }
 
@@ -107,7 +111,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Throws<UnsupportedOperationException>(() =>
                new HeadOf<int>(
                    2,
-                   new Enumerable.EnumerableOf<int>(1, 2, 3, 4)
+                   new ManyOf<int>(1, 2, 3, 4)
                ).Remove(1));
         }
 
@@ -116,7 +120,7 @@ namespace Yaapii.Atoms.Collection.Tests
         {
             Assert.Throws<UnsupportedOperationException>(() =>
                 new HeadOf<int>(
-                    2, new Enumerable.EnumerableOf<int>(1, 2, 3, 4)
+                    2, new ManyOf<int>(1, 2, 3, 4)
                 ).Clear());
         }
     }

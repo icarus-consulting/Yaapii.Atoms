@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,8 +36,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new Distinct<int>(
-                        new EnumerableOf<int>(1, 2, 3),
-                        new EnumerableOf<int>(10, 2, 30)
+                        new ManyOf<int>(1, 2, 3),
+                        new ManyOf<int>(10, 2, 30)
                     )
                 ).Value() == 5);
         }
@@ -48,9 +48,9 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new Distinct<int>(
-                        new EnumerableOf<IEnumerable<int>>(
-                            new EnumerableOf<int>(1, 2, 3),
-                            new EnumerableOf<int>(10, 2, 30)
+                        new ManyOf<IEnumerable<int>>(
+                            new ManyOf<int>(1, 2, 3),
+                            new ManyOf<int>(10, 2, 30)
                         )
                     )
                 ).Value() == 5);
@@ -62,8 +62,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new Distinct<string>(
-                        new EnumerableOf<string>(),
-                        new EnumerableOf<string>()
+                        new ManyOf<string>(),
+                        new ManyOf<string>()
                     )
                 ).Value() == 0);
         }
@@ -73,10 +73,12 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             var dst =
                 new Distinct<string>(
-                    new EnumerableOf<string>("test", "test")
+                    new ManyOf<string>("test", "test")
                 );
-            Assert.True(
-                new LengthOf(dst).Value() == new LengthOf(dst).Value());
+            Assert.Equal(
+                new LengthOf(dst).Value(),
+                new LengthOf(dst).Value()
+            );
         }
     }
 }

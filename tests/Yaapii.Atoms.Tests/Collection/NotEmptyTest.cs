@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -34,18 +34,21 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Throws<Exception>(() =>
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new CollectionOf<bool>()
+                        new LiveCollection<bool>()
                     )).Value());
         }
 
         [Fact]
         public void NotEmptyCollectionThrowsNoExeption()
         {
-            Assert.True(
+            Assert.Equal(
+                1,
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new CollectionOf<bool>(false)
-                    )).Value() == 1);
+                        new LiveCollection<bool>(false)
+                    )
+                ).Value()
+            );
         }
 
         [Fact]
@@ -54,9 +57,11 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Throws<OperationCanceledException>(() =>
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new CollectionOf<bool>(),
+                        new LiveCollection<bool>(),
                         new OperationCanceledException()
-                    )).Value());
+                    )
+                ).Value()
+            );
         }
     }
 }

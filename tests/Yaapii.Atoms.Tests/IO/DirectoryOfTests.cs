@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Tests;
@@ -64,8 +62,8 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void EnumeratesDirectories()
         {
-            var dir = Path.GetFullPath("/assets/directoryof/dir");
-            var subdir = Path.GetFullPath("/assets/directoryof/dir/fancy-subdir");
+            var dir = Path.GetFullPath("assets/directoryof/dir");
+            var subdir = Path.GetFullPath("assets/directoryof/dir/fancy-subdir");
 
             Directory.CreateDirectory(dir);
             Directory.CreateDirectory(subdir);
@@ -97,6 +95,27 @@ namespace Yaapii.Atoms.IO.Tests
                 },
                 new Uri(Path.GetFullPath(file))
             ).Invoke();
+        }
+
+        [Fact]
+        public void EnumeratesFilesInSubDirectories()
+        {
+            using (var directory = new TempDirectory())
+            {
+                var dir = directory.Value().FullName;
+                var subdir = Path.GetFullPath(directory.Value().FullName + "/subdir/subdir2/subdir3/");
+                var file = Path.GetFullPath(directory.Value().FullName + "/subdir/subdir2/subdir3/test.txt");
+
+                Directory.CreateDirectory(subdir);
+                File.Create(file).Close();
+
+                Assert.True(
+                    new Contains<string>(
+                        new DirectoryOf(dir, true),
+                        file
+                    ).Value()
+                );
+            }
         }
     }
 }

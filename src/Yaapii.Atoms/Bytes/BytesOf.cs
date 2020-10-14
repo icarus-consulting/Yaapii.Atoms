@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -187,6 +187,50 @@ namespace Yaapii.Atoms.Bytes
         /// </summary>
         /// <param name="bytes">byte aray</param>
         public BytesOf(params Byte[] bytes) : this(new ScalarOf<Byte[]>(bytes))
+        { }
+
+        /// <summary>
+        /// Bytes out of an int.
+        /// </summary>
+        /// <param name="number">an int</param>
+        public BytesOf(int number) : this(
+            new ScalarOf<Byte[]>(() =>
+                BitConverter.GetBytes(number)
+            )
+        )
+        { }
+
+        /// <summary>
+        /// Bytes out of a long.
+        /// </summary>
+        /// <param name="number">a long</param>
+        public BytesOf(long number) : this(
+            new ScalarOf<Byte[]>(() =>
+                BitConverter.GetBytes(number)
+            )
+        )
+        { }
+
+        /// <summary>
+        /// Bytes out of a float.
+        /// </summary>
+        /// <param name="number">a float</param>
+        public BytesOf(float number) : this(
+            new ScalarOf<Byte[]>(() =>
+                BitConverter.GetBytes(number)
+            )
+        )
+        { }
+
+        /// <summary>
+        /// Bytes out of a double.
+        /// </summary>
+        /// <param name="number">a double</param>
+        public BytesOf(double number) : this(
+            new ScalarOf<Byte[]>(() =>
+                BitConverter.GetBytes(number)
+            )
+        )
         { }
 
         /// <summary>

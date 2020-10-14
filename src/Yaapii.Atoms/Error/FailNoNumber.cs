@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,14 +33,14 @@ namespace Yaapii.Atoms.Error
         private readonly Exception _ex;
 
         /// <summary>
-        /// Fail if is not a number.
+        /// Fail with <see cref="System.ArgumentNullException"/> if is not a number.
         /// </summary>
         /// <param name="value">string to check</param>
         public FailNoNumber(string value) : this(value, "Parameter is not a number")
         { }
 
         /// <summary>
-        /// Fail if is not a number.
+        /// Fail with <see cref="System.ArgumentNullException"/> if is not a number.
         /// </summary>
         /// <param name="value">string to check</param>
         /// <param name="hint">msg to throw in exception</param>
@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.Error
         { }
 
         /// <summary>
-        /// Fail if is not a number.
+        /// Fail with specified exception if is not a number.
         /// </summary>
         /// <param name="value">string to check</param>
         /// <param name="ex">specific exception which will be thrown</param>

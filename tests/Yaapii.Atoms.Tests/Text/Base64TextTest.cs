@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,13 +21,10 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Text.Tests
 {
@@ -39,34 +36,32 @@ namespace Yaapii.Atoms.Text.Tests
         [InlineData("A fancy text with € special character")]
         public void DecodeFromFile(string text)
         {
-            var file = Path.Combine(Directory.GetCurrentDirectory(), "test.txt");
-            try
+            using (var tempFile = new TempFile("test.txt"))
             {
                 new LengthOf(
                     new TeeInput(
-                        new TextOf(
+                        new LiveText(
                             new BytesBase64(
                                 new BytesOf(
-                                    new TextOf(text)
+                                    new LiveText(text)
                                 )
                             )
                         ).AsString(),
-                        new OutputTo(new Uri(file))
+                        new OutputTo(new Uri(tempFile.Value()))
                     )
                 ).Value();
 
                 Assert.True(
-                    new Base64Text(
-                        new TextOf(
-                            new Uri(file)
+                    new Comparable(
+                        new Base64Text(
+                            new LiveText(
+                                new Uri(tempFile.Value())
+                            )
                         )
-                    ).Equals(
-                    new TextOf(text)));
-            }
-            finally
-            {
-                // Cleanup
-                if (File.Exists(file)) File.Delete(file);
+                    ).CompareTo(
+                        new LiveText(text)
+                    ) == 0
+                );
             }
         }
     }

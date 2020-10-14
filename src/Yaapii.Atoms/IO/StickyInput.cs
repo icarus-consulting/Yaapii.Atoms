@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -46,8 +46,8 @@ namespace Yaapii.Atoms.IO
         /// <param name="input"></param>
         public StickyInput(IInput input)
         {
-            this._cache = new Sticky<byte[]>(
-                new ScalarOf<byte[]>(() =>
+            this._cache = new ScalarOf<byte[]>(
+                new Live<byte[]>(() =>
                     {
                         MemoryStream baos = new MemoryStream();
                         new LengthOf(

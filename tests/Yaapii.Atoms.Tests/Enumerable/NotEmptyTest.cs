@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.Throws<Exception>(() =>
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new EnumerableOf<bool>()
+                        new ManyOf<bool>()
                     )).Value());
         }
 
@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new EnumerableOf<bool>(false)
+                        new ManyOf<bool>(false)
                     )).Value() == 1);
         }
 
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.Throws<OperationCanceledException>(() =>
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new EnumerableOf<bool>(),
+                        new ManyOf<bool>(),
                         new OperationCanceledException()
                     )).Value());
         }

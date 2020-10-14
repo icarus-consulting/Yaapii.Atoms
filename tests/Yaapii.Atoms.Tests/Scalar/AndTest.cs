@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.True(
                     new And(
-                        new EnumerableOf<IScalar<Boolean>>(
+                        new ManyOf<IScalar<Boolean>>(
                             new False(),
                             new False(),
                             new False()
@@ -72,7 +72,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         public void EmptyIterator()
         {
             Assert.True(
-                    new And(new EnumerableOf<IScalar<Boolean>>())
+                    new And(new ManyOf<IScalar<Boolean>>())
                     .Value() == true);
         }
 
@@ -83,7 +83,7 @@ namespace Yaapii.Atoms.Scalar.Tests
             Assert.True(
                 new And<string>(
                         str => { list.AddLast(str); return true; },
-                        new EnumerableOf<string>("hello", "world")
+                        new ManyOf<string>("hello", "world")
 
                 ).Value() == true);
 
@@ -100,7 +100,7 @@ namespace Yaapii.Atoms.Scalar.Tests
             Assert.True(
                 new And<string>(
                         str => { list.AddLast(str); return true; },
-                        new EnumerableOf<string>()
+                        new ManyOf<string>()
                 ).Value() == true,
                 "Can't enumerate a list"
                 );

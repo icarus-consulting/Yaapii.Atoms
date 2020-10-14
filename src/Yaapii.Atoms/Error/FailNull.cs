@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,13 +33,13 @@ namespace Yaapii.Atoms.Error
         private readonly Exception _ex;
 
         /// <summary>
-        /// Fail if object is null.
+        /// Fail with <see cref="System.ArgumentNullException"/> if object is null.
         /// </summary>
         /// <param name="obj">object to check</param>
         public FailNull(object obj) : this(obj, "Parameter is null") { }
 
         /// <summary>
-        /// Fail if object is null.
+        /// Fail with <see cref="System.ArgumentNullException"/> if object is null.
         /// </summary>
         /// <param name="obj">object to check</param>
         /// <param name="hint">msg to put in exception</param>
@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Error
         { }
 
         /// <summary>
-        /// Fail if object is null.
+        /// Fail with specified exception if object is null.
         /// </summary>
         /// <param name="obj">object to check</param>
         /// <param name="ex">specific exception which will be thrown</param>

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
-using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
@@ -33,7 +32,7 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class HeadOf<T> : EnumerableEnvelope<T>
+    public sealed class HeadOf<T> : ManyEnvelope<T>
     {
         /// <summary>
         /// ctor
@@ -47,7 +46,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public HeadOf(IEnumerable<T> enumerable, int limit) : this(enumerable, new ScalarOf<int>(limit))
+        public HeadOf(IEnumerable<T> enumerable, int limit) : this(enumerable, new Live<int>(limit))
         { }
 
         /// <summary>
@@ -55,10 +54,12 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public HeadOf(IEnumerable<T> enumerable, IScalar<int> limit) : base(
-             new ScalarOf<IEnumerable<T>>(() =>
-                new EnumerableOf<T>(
-                  new Enumerator.HeadOf<T>(enumerable.GetEnumerator(), limit.Value()))))
+        public HeadOf(IEnumerable<T> enumerable, IScalar<int> limit) : base(() =>
+            new LiveMany<T>(() =>
+                new Enumerator.HeadOf<T>(enumerable.GetEnumerator(), limit.Value())
+            ),
+            false
+        )
         { }
     }
 }

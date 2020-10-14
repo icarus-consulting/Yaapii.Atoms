@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Scalar.Tests
 
             Assert.True(
                 new Fallback<string>(
-                    new ScalarOf<string>(
+                    new Live<string>(
                         () => throw new Exception("NO STRINGS ATTACHED HAHAHA")),
                     fbk
                     ).Value() == fbk);
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Scalar.Tests
 
             Assert.True(
                 new Fallback<string>(
-                    new ScalarOf<string>(
+                    new Live<string>(
                         () => throw new Exception("NO STRINGS ATTACHED HAHAHA")),
                     () => fbk
                     ).Value() == fbk);
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Scalar.Tests
 
             Assert.True(
                 new Fallback<string>(
-                    new ScalarOf<string>(
+                    new Live<string>(
                         () => throw notAmused),
                     (ex) => ex.Message).Value() == notAmused.Message);
         }

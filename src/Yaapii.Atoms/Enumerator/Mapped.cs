@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Func;
 
 #pragma warning disable NoProperties // No Properties
 #pragma warning disable CS1591
@@ -38,9 +36,9 @@ namespace Yaapii.Atoms.Enumerator
     /// <typeparam name="Out">type of mapped items</typeparam>
     public sealed class Mapped<In, Out> : IEnumerator<Out>
     {
-        private readonly IEnumerator<In> _enumerator;
-        private readonly Func<In, int, Out> _func;
-        private readonly List<int> _index;
+        private readonly IEnumerator<In> enumerator;
+        private readonly Func<In, int, Out> func;
+        private readonly List<int> index;
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
@@ -75,18 +73,18 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="fnc">mapping function</param>
         public Mapped(IEnumerator<In> src, Func<In, int, Out> fnc)
         {
-            this._enumerator = src;
-            this._func = fnc;
-            _index = new List<int>() { -1 };
+            this.enumerator = src;
+            this.func = fnc;
+            index = new List<int>() { -1 };
         }
 
         public Boolean MoveNext()
         {
-            var result = this._enumerator.MoveNext();
+            var result = this.enumerator.MoveNext();
 
             if (result)
             {
-                _index[0] += 1;
+                index[0] += 1;
             }
 
             return result;
@@ -96,7 +94,7 @@ namespace Yaapii.Atoms.Enumerator
         {
             get
             {
-                return this._func.Invoke(this._enumerator.Current, _index[0]);
+                return this.func.Invoke(this.enumerator.Current, index[0]);
             }
         }
 
@@ -110,8 +108,8 @@ namespace Yaapii.Atoms.Enumerator
 
         public void Reset()
         {
-            _index[0] = -1;
-            this._enumerator.Reset();
+            index[0] = -1;
+            this.enumerator.Reset();
         }
 
         public void Dispose()

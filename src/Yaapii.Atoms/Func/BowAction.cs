@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using Yaapii.Atoms.Map;
 
 namespace Yaapii.Atoms.Func
 {
@@ -11,105 +11,69 @@ namespace Yaapii.Atoms.Func
     public sealed class BowAction : IAction
     {
         private readonly Func<bool> trigger;
-        private readonly Action prepare;
-        private readonly Action shoot;
-        private readonly TimeSpan timeout;
+        private readonly IDictionary<string, Action> actions;
+        private readonly IDictionary<string, TimeSpan> timespans;
 
         /// <summary>
         /// An action which waits for a trigger to return true before executing.
         /// </summary>
-        public BowAction(Func<bool> trigger, Action shoot) : this(trigger, () => { }, shoot, new TimeSpan(0, 0, 5))
+        public BowAction(Func<bool> trigger, Action shoot) : this(
+            trigger, () => { },
+            shoot,
+            new TimeSpan(0, 0, 10),
+            new TimeSpan(0, 0, 0, 0, 250)
+        )
         { }
 
         /// <summary>
         /// An action which waits for a trigger to return true before executing.
         /// </summary>
-        public BowAction(Func<bool> trigger, Action shoot, TimeSpan timeout) : this(trigger, () => { }, shoot, timeout)
+        public BowAction(Func<bool> trigger, Action shoot, TimeSpan timeout) : this(
+            trigger,
+            () => { },
+            shoot,
+            timeout,
+            new TimeSpan(0, 0, 0, 0, 250)
+        )
         { }
 
         /// <summary>
         /// An action which waits for a trigger to return true before executing.
         /// </summary>
-        public BowAction(Func<bool> trigger, Action prepare, Action shoot) : this(trigger, prepare, shoot, new TimeSpan(0, 0, 5))
+        public BowAction(Func<bool> trigger, Action prepare, Action shoot) : this(
+            trigger,
+            prepare,
+            shoot,
+            new TimeSpan(0, 0, 10),
+            new TimeSpan(0, 0, 0, 0, 250)
+        )
+        { }
+
+        public BowAction(Func<bool> trigger, Action prepare, Action shoot, TimeSpan timeout, TimeSpan interval) : this(
+            trigger,
+            new MapOf<Action>(
+                new KvpOf<Action>("prepare", prepare),
+                new KvpOf<Action>("shoot", shoot)
+            ),
+            new MapOf<TimeSpan>(
+                new KvpOf<TimeSpan>("timeout", timeout),
+                new KvpOf<TimeSpan>("interval", interval)
+            ))
         { }
 
         /// <summary>
         /// An action which waits for a trigger to return true before executing.
         /// </summary>
-        public BowAction(Func<bool> trigger, Action prepare, Action shoot, TimeSpan timeout)
+        private BowAction(Func<bool> trigger, IDictionary<string, Action> actions, IDictionary<string, TimeSpan> timespans)
         {
             this.trigger = trigger;
-            this.prepare = prepare;
-            this.shoot = shoot;
-            this.timeout = timeout;
+            this.actions = actions;
+            this.timespans = timespans;
         }
 
         public void Invoke()
         {
-            this.prepare();
-            var timeout = DateTime.Now + this.timeout;
-            var completed = false;
-
-            var parallel =
-                new Task(() =>
-                    {
-                        while (true)
-                        {
-                            if (this.trigger.Invoke())
-                            {
-                                this.shoot();
-                                completed = true;
-                                break;
-                            }
-                            System.Threading.Thread.Sleep(1);
-                        }
-                    }
-                );
-            parallel.Start();
-            parallel.ContinueWith((t) =>
-                {
-                    throw t.Exception.InnerException;
-                },
-                TaskContinuationOptions.OnlyOnFaulted
-            );
-
-            while(DateTime.Now < timeout)
-            {
-                if (completed) break;
-            }
-
-            if (!completed)
-            {
-                throw new ApplicationException($"The task did not complete within {this.timeout.TotalMilliseconds}ms.");
-            }
-        }
-    }
-
-    /// <summary>
-    /// An action which waits for a trigger to return true before executing.
-    /// </summary>
-    public sealed class BowFunc<T> : IAction<T>
-    {
-        private readonly Func<bool> trigger;
-        private readonly Action prepare;
-        private readonly Action<T> shoot;
-        private readonly TimeSpan timeout;
-
-        /// <summary>
-        /// An action which waits for a trigger to return true before executing.
-        /// </summary>
-        public BowFunc(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout)
-        {
-            this.trigger = trigger;
-            this.prepare = prepare;
-            this.shoot = shoot;
-            this.timeout = timeout;
-        }
-
-        public void Invoke(T parameter)
-        {
-            this.prepare();
-            var timeout = DateTime.Now + this.timeout;
+            this.actions["prepare"]();
             var completed = false;
 
             var parallel =
@@ -119,30 +83,32 @@ namespace Yaapii.Atoms.Func
                     {
                         if (this.trigger.Invoke())
                         {
-                            this.shoot(parameter);
+                            this.actions["shoot"]();
                             completed = true;
                             break;
                         }
-                        System.Threading.Thread.Sleep(1);
+                        System.Threading.Thread.Sleep(this.timespans["interval"]);
                     }
                 }
                 );
-            parallel.Start();
-            parallel.ContinueWith((t) =>
+            try
             {
-                throw t.Exception.InnerException;
-            },
-                TaskContinuationOptions.OnlyOnFaulted
-            );
+                parallel.Start();
+                parallel.Wait(this.timespans["timeout"]);
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
 
-            while (DateTime.Now < timeout)
+            if (parallel.Status == TaskStatus.Faulted)
             {
-                if (completed) break;
+                throw parallel.Exception.InnerException;
             }
 
             if (!completed)
             {
-                throw new ApplicationException($"The task did not complete within {this.timeout.TotalMilliseconds}ms.");
+                throw new ApplicationException($"The task did not complete within {this.timespans["timeout"].TotalMilliseconds}ms.");
             }
         }
     }

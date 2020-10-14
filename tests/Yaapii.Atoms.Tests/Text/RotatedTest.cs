@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,9 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Rotated(
-                    new TextOf("Hello!"), 2
-                ).AsString() == "o!Hell",
-                "Can't rotate text to right");
+                    new LiveText("Hello!"), 2
+                ).AsString() == "o!Hell"
+            );
         }
 
         [Fact]
@@ -41,9 +41,9 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Rotated(
-                    new TextOf("Hi!"), -1
-                ).AsString() == "i!H",
-                "Can't rotate text to left");
+                    new LiveText("Hi!"), -1
+                ).AsString() == "i!H"
+            );
         }
 
         [Fact]
@@ -52,9 +52,8 @@ namespace Yaapii.Atoms.Text.Tests
             var nonrotate = "Atoms!";
             Assert.True(
                 new Rotated(
-                    new TextOf(nonrotate), 0
-                ).AsString() == nonrotate,
-                "Can't rotate text shift zero"
+                    new LiveText(nonrotate), 0
+                ).AsString() == nonrotate
             );
         }
 
@@ -64,7 +63,7 @@ namespace Yaapii.Atoms.Text.Tests
             var nonrotate = "Rotate";
             Assert.True(
                 new Rotated(
-                    new TextOf(nonrotate), nonrotate.Length
+                    new LiveText(nonrotate), nonrotate.Length
                 ).AsString() == nonrotate,
                 "Can't rotate text shift mod zero");
         }
@@ -74,9 +73,9 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Rotated(
-                    new TextOf(""), 2
-                ).AsString() == "",
-            "Can't rotate text when empty");
+                    new LiveText(""), 2
+                ).AsString() == ""
+            );
         }
     }
 }

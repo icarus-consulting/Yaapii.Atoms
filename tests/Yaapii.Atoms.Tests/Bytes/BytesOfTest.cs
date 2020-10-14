@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +36,66 @@ namespace Yaapii.Atoms.IO.Tests
     public sealed class BytesOfTest
     {
         [Fact]
+        public void ReadsIntIntoBytes()
+        {
+            int value = 123;
+            Assert.True(
+                BitConverter.ToInt32(
+                    new BytesOf(
+                        value
+                    ).AsBytes(),
+                    0
+                ) == value,
+                "Can't read int into bytes"
+            );
+        }
+
+        [Fact]
+        public void ReadsLongIntoBytes()
+        {
+            long value = 123456789123456789;
+            Assert.True(
+                BitConverter.ToInt64(
+                    new BytesOf(
+                        value
+                    ).AsBytes(),
+                    0
+                ) == value,
+                "Can't read long into bytes"
+            );
+        }
+
+        [Fact]
+        public void ReadsDoubleIntoBytes()
+        {
+            double value = 1.23;
+            Assert.True(
+                BitConverter.ToDouble(
+                    new BytesOf(
+                        value
+                    ).AsBytes(),
+                    0
+                ) == value,
+                "Can't read double into bytes"
+            );
+        }
+
+        [Fact]
+        public void ReadsFloatIntoBytes()
+        {
+            float value = 1.23f;
+            Assert.True(
+                BitConverter.ToSingle(
+                    new BytesOf(
+                        value
+                    ).AsBytes(),
+                    0
+                ) == value,
+                "Can't read float into bytes"
+            );
+        }
+
+        [Fact]
         public void ReadsLargeInMemoryContent()
         {
             int multiplier = 5_000;
@@ -70,17 +130,16 @@ namespace Yaapii.Atoms.IO.Tests
         {
             String source = "hello, друг!";
             Assert.True(
-                    new TextOf(
-                        new BytesOf(
-                            new StreamReader(
-                                new MemoryStream(
-                                    Encoding.UTF8.GetBytes(source))),
-                            Encoding.UTF8,
-                            16 << 10
-                        )
-                    ).AsString() == source,
-                    "Can't read string through a reader"
-                );
+                new LiveText(
+                    new BytesOf(
+                        new StreamReader(
+                            new MemoryStream(
+                                Encoding.UTF8.GetBytes(source))),
+                        Encoding.UTF8,
+                        16 << 10
+                    )
+                ).AsString() == source
+            );
         }
 
         [Fact]
@@ -91,11 +150,10 @@ namespace Yaapii.Atoms.IO.Tests
                 Encoding.UTF8.GetString(
                     new BytesOf(
                         new InputOf(
-                            new TextOf(source)
+                            new LiveText(source)
                         ),
                         2
-                    ).AsBytes()) == source,
-                "Can't read bytes from Input with a small reading buffer"
+                    ).AsBytes()) == source
                 );
         }
 
@@ -106,9 +164,10 @@ namespace Yaapii.Atoms.IO.Tests
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes("how are you?")))
             {
                 t =
-                    new TextOf(
+                    new LiveText(
                         new InputOf(stream),
-                        Encoding.UTF8);
+                        Encoding.UTF8
+                    );
             }
 
             Assert.Throws<ObjectDisposedException>(() => t.AsString());
@@ -118,13 +177,15 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void AsBytes()
         {
-            IText text = new TextOf("Hello!");
+            IText text = new LiveText("Hello!");
             Assert.True(
                 StructuralComparisons.StructuralEqualityComparer.Equals(
                     new BytesOf(
                         new InputOf(text)
                         ).AsBytes(),
-                    new BytesOf(text.AsString()).AsBytes()));
+                    new BytesOf(text.AsString()).AsBytes()
+                )
+            );
         }
 
         [Fact]
@@ -136,7 +197,7 @@ namespace Yaapii.Atoms.IO.Tests
             catch (IOException ex)
             {
                 stackTrace =
-                    new TextOf(
+                    new LiveText(
                         new BytesOf(
                             ex
                         )
@@ -147,7 +208,7 @@ namespace Yaapii.Atoms.IO.Tests
                 stackTrace.Contains("IOException") &&
                 stackTrace.Contains("doesn't work at all"),
                 "Can't print exception stacktrace"
-                );
+            );
         }
     }
 }

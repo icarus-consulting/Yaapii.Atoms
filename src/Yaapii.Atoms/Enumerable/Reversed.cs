@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,13 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Scalar;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -37,22 +32,21 @@ namespace Yaapii.Atoms.Enumerable
     /// A reversed <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="X">type of items in enumerable</typeparam>
-    public sealed class Reversed<X> : EnumerableEnvelope<X>
+    public sealed class Reversed<X> : ManyEnvelope<X>
     {
         /// <summary>
         /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
-        public Reversed(IEnumerable<X> src) : base(new ScalarOf<IEnumerable<X>>(
-            () =>
-            new EnumerableOf<X>(
-                new ScalarOf<IEnumerator<X>>(
-                    () =>
-                    {
-                        var lst = src.ToList<X>();
-                        lst.Reverse();
-                        return lst.GetEnumerator();
-                    }))))
+        public Reversed(IEnumerable<X> src) : base(() =>
+            new LiveMany<X>(() =>
+            {
+                var lst = src.ToList<X>();
+                lst.Reverse();
+                return lst.GetEnumerator();
+            }),
+            false
+        )
         { }
     }
 }

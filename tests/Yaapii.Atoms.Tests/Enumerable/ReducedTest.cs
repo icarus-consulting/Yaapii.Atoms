@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,15 +27,15 @@ namespace Yaapii.Atoms.Enumerable.Tests
     public sealed class ReducedTest
     {
         [Fact]
-        public void SkipIterable()
+        public void Reduces()
         {
-            Assert.True(
-                new Reduced<int, int>(
-                    new EnumerableOf<int>(1, 1, 2, 2, 3, 4, 5, 6),
-                    0,
+            Assert.Equal(
+                24,
+                new Reduced<int>(
+                    new ManyOf<int>(0, 1, 1, 2, 2, 3, 4, 5, 6),
                     (first, second) => first + second
-                ).Value() == 24,
-            "cannot reduce enumerable");
+                ).Value()
+            );
         }
     }
 }

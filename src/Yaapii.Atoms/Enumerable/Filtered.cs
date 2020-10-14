@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet // No Statics
 #pragma warning disable CS1591
@@ -38,18 +33,8 @@ namespace Yaapii.Atoms.Enumerable
     /// Pass a filter function which will applied to all items, similar to List{T}.Where(...) in LinQ
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Filtered<T> : EnumerableEnvelope<T>
+    public sealed class Filtered<T> : ManyEnvelope<T>
     {
-        /// <summary>
-        /// the enumerable to filter
-        /// </summary>
-        private readonly IEnumerable<T> _enumerable;
-
-        /// <summary>
-        /// filter function
-        /// </summary>
-        private readonly Func<T, Boolean> _func;
-
         /// <summary>
         /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
         /// </summary>
@@ -57,16 +42,16 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="item1">first item to filter</param>
         /// <param name="item2">secound item to filter</param>
         /// <param name="items">other items to filter</param>
-        public Filtered(Func<T, Boolean> fnc, T item1, T item2, params T[] items) :
-            this(
-                fnc,
-                new EnumerableOf<T>(
-                    new ScalarOf<IEnumerator<T>>(
-                        () => new Joined<T>(
-                            new EnumerableOf<T>(
-                                item1,
-                                item2),
-                            items).GetEnumerator())))
+        public Filtered(Func<T, Boolean> fnc, T item1, T item2, params T[] items) : this(
+            fnc,
+            new Joined<T>(
+                new LiveMany<T>(
+                    item1,
+                    item2
+                ),
+                items
+            )
+        )
         { }
 
         /// <summary>
@@ -74,16 +59,14 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src) : base(
-            new ScalarOf<IEnumerable<T>>(() =>
-                 new EnumerableOf<T>(
-                    new Enumerator.Filtered<T>(
-                        src.GetEnumerator(),
-                        fnc))))
-        {
-            this._enumerable = src;
-            this._func = fnc;
-        }
+        public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src) : base(() =>
+            new Enumerator.Filtered<T>(
+                src.GetEnumerator(),
+                fnc
+            ),
+            false
+        )
+        { }
     }
 }
 #pragma warning restore NoGetOrSet // No Statics

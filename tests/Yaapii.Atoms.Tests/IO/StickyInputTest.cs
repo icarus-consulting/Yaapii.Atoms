@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -75,13 +75,16 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void ReadsRealUrl()
         {
-            Assert.True(
-                new TextOf(
-                        new StickyInput(
-                            new InputOf(
-                                new Url("http://www.google.de")))
-                ).AsString().Contains("<html"),
-            "Can't fetch text page from the URL");
+            Assert.Contains(
+                "<html",
+                new LiveText(
+                    new StickyInput(
+                        new InputOf(
+                            new Url("http://www.google.de")
+                        )
+                    )
+                ).AsString()
+            );
         }
 
         [Fact]

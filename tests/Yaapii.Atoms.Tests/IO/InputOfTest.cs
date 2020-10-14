@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -40,12 +40,12 @@ namespace Yaapii.Atoms.IO.Tests
         public void ReadsAlternativeInputForFileCase()
         {
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new InputWithFallback(
                         new InputOf(
                             new Uri(Path.GetFullPath("/this-file-does-not-exist.txt"))
                         ),
-                        new InputOf(new TextOf("Alternative text!"))
+                        new InputOf(new LiveText("Alternative text!"))
                     )
                 ).AsString().EndsWith("text!"),
                 "Can't read alternative source from file not found");
@@ -59,20 +59,26 @@ namespace Yaapii.Atoms.IO.Tests
             String content = "Hello, товарищ!";
 
             new IO.LengthOf(
-                    new InputOf(
-                        new TeeInputStream(
-                            new MemoryStream(
-                                new BytesOf(
-                                    new Joined("\r\n",
-                                    new HeadOf<string>(
-                                        new Endless<string>(content),
-                                        10))
-                                    ).AsBytes()),
-                            new OutputTo(
-                                new Uri(path)).Stream()))).Value();
+                new InputOf(
+                    new TeeInputStream(
+                        new MemoryStream(
+                            new BytesOf(
+                                new Joined("\r\n",
+                                new HeadOf<string>(
+                                    new Endless<string>(content),
+                                    10)
+                                )
+                            ).AsBytes()
+                        ),
+                        new OutputTo(
+                            new Uri(path)
+                        ).Stream()
+                    )
+                )
+            ).Value();
 
             Assert.True(
-                    new TextOf(
+                    new LiveText(
                         new InputOf(
                             new Uri(path))
                     ).AsString().EndsWith(content),
@@ -85,7 +91,7 @@ namespace Yaapii.Atoms.IO.Tests
             Stream input;
             using (input = new MemoryStream(Encoding.UTF8.GetBytes("how are you?")))
             {
-                new TextOf(
+                new LiveText(
                     new InputOf(
                         input)).AsString();
             }
@@ -107,31 +113,52 @@ namespace Yaapii.Atoms.IO.Tests
                         new MemoryStream(
                             new BytesOf(
                                 new Joined("\r\n",
-                                new HeadOf<string>(
-                                    new Endless<string>("Hello World"),
-                                    10))
-                                ).AsBytes()),
+                                    new HeadOf<string>(
+                                        new Endless<string>("Hello World"),
+                                        10
+                                    )
+                                )
+                            ).AsBytes()
+                        ),
                         new OutputTo(
-                            new Uri(path)).Stream()))).Value();
+                            new Uri(path)
+                        ).Stream()
+                    )
+                )
+            ).Value();
 
 
             Assert.StartsWith(
                 "Hello World",
-                new TextOf(
+                new LiveText(
                     new BytesOf(
                         new InputOf(
                             new Uri(Path.GetFullPath(path))
                             )
-                        ).AsBytes()).AsString());
+                        ).AsBytes()
+                    ).AsString()
+                );
         }
 
         [Fact]
         public void ReadsRealUrl()
         {
             Assert.True(
-                    new TextOf(
+                new LiveText(
+                    new InputOf(
+                        new Url("http://www.google.de"))
+                ).AsString().Contains("<html"),
+                "Can't fetch bytes from the URL"
+            );
+        }
+
+        [Fact]
+        public void ReadsRealUrlFromUri()
+        {
+            Assert.True(
+                    new LiveText(
                         new InputOf(
-                            new Url("http://www.google.de"))
+                            new Uri("http://www.google.de"))
                     ).AsString().Contains("<html"),
                     "Can't fetch bytes from the URL"
             );
@@ -144,24 +171,30 @@ namespace Yaapii.Atoms.IO.Tests
             Directory.CreateDirectory(dir);
             if (File.Exists(path)) File.Delete(path);
 
-            var length = new LengthOf(
-                new InputOf(
-                    new TeeInputStream(
-                        new MemoryStream(
-                            new BytesOf(
-                                new Joined("\r\n",
-                                new HeadOf<string>(
-                                    new Endless<string>("Hello World"),
-                                    1000))
-                                ).AsBytes()),
+            var length = 
+                new LengthOf(
+                    new InputOf(
+                        new TeeInputStream(
+                            new MemoryStream(
+                                new BytesOf(
+                                    new Joined("\r\n",
+                                    new HeadOf<string>(
+                                        new Endless<string>("Hello World"),
+                                        1000
+                                    )
+                                )
+                            ).AsBytes()
+                        ),
                         new OutputTo(
-                            new Uri(path)).Stream()))
-            ).Value();
+                            new Uri(path)).Stream()
+                        )
+                    )
+                ).Value();
 
             Assert.True(
                 new Enumerable.LengthOf(
                     new Split(
-                        new TextOf(
+                        new LiveText(
                             new BytesOf(
                                 new InputOf(
                                     new Uri(path)
@@ -190,7 +223,7 @@ namespace Yaapii.Atoms.IO.Tests
             String starts = "Name it, ";
             String ends = "then it exists!";
             Assert.True(
-                    new TextOf(
+                    new LiveText(
                         new BytesOf(
                             new InputOf(
                                 new StringBuilder(starts).Append(ends)
@@ -204,7 +237,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void ReadsArrayOfChars()
         {
             Assert.True(
-                    new TextOf(
+                    new LiveText(
                         new BytesOf(
                             new InputOf(
                                 'H', 'o', 'l', 'd', ' ',
@@ -218,16 +251,18 @@ namespace Yaapii.Atoms.IO.Tests
         public void ReadsEncodedArrayOfChars()
         {
             Assert.True(
-                    new TextOf(
-                        new BytesOf(
-                            new InputOf(
-                                new char[]{
-                            'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
-                            ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
-                                }
-                            )
-                        ).AsBytes()).AsString() == "O que sera que sera",
-                        "Can't read array of encoded chars.");
+                new LiveText(
+                    new BytesOf(
+                        new InputOf(
+                            new char[]{
+                        'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
+                        ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
+                            }
+                        )
+                    ).AsBytes()
+                ).AsString() == "O que sera que sera",
+                "Can't read array of encoded chars."
+            );
         }
 
         [Fact]
@@ -235,13 +270,14 @@ namespace Yaapii.Atoms.IO.Tests
         {
             String source = "hello, source!";
             Assert.True(
-            new TextOf(
-                new InputOf(
-                    new StreamReader(
-                        new InputOf(source).Stream())
-                )
-            ).AsString() == source,
-            "Can't read string through a reader");
+                new LiveText(
+                    new InputOf(
+                        new StreamReader(
+                            new InputOf(source).Stream())
+                    )
+                ).AsString() == source,
+                "Can't read string through a reader"
+            );
         }
 
         [Fact]
@@ -249,13 +285,14 @@ namespace Yaapii.Atoms.IO.Tests
         {
             String source = "hello, друг!";
             Assert.True(
-                new TextOf(
+                new LiveText(
                     new InputOf(
                             new StreamReader(
                                 new InputOf(source).Stream()),
                             Encoding.UTF8)
                 ).AsString() == source,
-                "Can't read encoded string through a reader");
+                "Can't read encoded string through a reader"
+            );
         }
 
         [Fact]
@@ -276,8 +313,9 @@ namespace Yaapii.Atoms.IO.Tests
         {
             String content = "Hello,חבר!";
             Assert.True(
-                    new InputOf(content).Stream().Length > 0,
-                    "Can't show that data is available");
+                new InputOf(content).Stream().Length > 0,
+                "Can't show that data is available"
+            );
         }
 
     }

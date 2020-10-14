@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -37,14 +37,20 @@ namespace Yaapii.Atoms.Enumerator.Tests
         public void LimitsContent()
         {
             Assert.True(
-                new Joined(", ",
-                new EnumerableOf<IText>(
-                    new Mapped<int, IText>(
-                        new HeadOf<int>(
-                            new EnumerableOf<int>(1, 2, 3, 4).GetEnumerator(),
-                            2), 
-                        str => new TextOf(str + "")))).AsString() == "1, 2",
-            "cannot limit enumertor contents");
+                new Joined(
+                    ", ",
+                    new ManyOf<IText>(
+                        new Mapped<int, IText>(
+                            new HeadOf<int>(
+                                new ManyOf<int>(1, 2, 3, 4).GetEnumerator(),
+                                2
+                            ), 
+                            str => new TextOf(str + "")
+                        )
+                    )
+                ).AsString() == "1, 2",
+                "cannot limit enumertor contents"
+            );
                 
         }
     }

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 
 using System;
 using System.IO;
+using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Bytes
@@ -31,13 +32,13 @@ namespace Yaapii.Atoms.Bytes
     /// </summary>
     public sealed class HexBytes : IBytes
     {
-        private readonly IText origin;
+        private readonly IScalar<byte[]> bytes;
 
         /// <summary>
         /// Bytes from Hex String
         /// </summary>
         /// <param name="origin">The string in Hex format</param>
-        public HexBytes(string origin) : this(new TextOf(origin))
+        public HexBytes(string origin) : this(new LiveText(origin))
         { }
         /// <summary>
         /// Bytes from Hex String
@@ -45,21 +46,25 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="origin">The string in Hex format</param>
         public HexBytes(IText origin)
         {
-            this.origin = origin;
+            this.bytes = new ScalarOf<byte[]>(() =>
+            {
+                var hex = origin.AsString();
+                if ((hex.Length & 1) == 1)
+                {
+                    throw new IOException("Length of hexadecimal text is odd");
+                }
+                byte[] raw = new byte[hex.Length / 2];
+                for (int i = 0; i < raw.Length; i++)
+                {
+                    raw[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
+                }
+                return raw;
+            });
         }
+
         public byte[] AsBytes()
         {
-            var hex = this.origin.AsString();
-            if ((hex.Length & 1) == 1)
-            {
-                throw new IOException("Length of hexadecimal text is odd");
-            }
-            byte[] raw = new byte[hex.Length / 2];
-            for (int i = 0; i < raw.Length; i++)
-            {
-                raw[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
-            }
-            return raw;
+            return this.bytes.Value();
         }
     }
 }

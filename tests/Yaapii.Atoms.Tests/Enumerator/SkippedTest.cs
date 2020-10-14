@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -38,12 +38,15 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             var skipped =
                 new List<string>(
-                    new EnumerableOf<string>(
+                    new ManyOf<string>(
                         new Skipped<string>(
-                            new EnumerableOf<string>(
+                            new ManyOf<string>(
                                 "one", "two", "three", "four"
                             ).GetEnumerator(),
-                        2)));
+                            2
+                        )
+                    )
+                );
 
             Assert.True(new LengthOf(skipped.GetEnumerator()).Value() == 2, "cannot skip elements");
             Assert.False(skipped.Contains("one"), "cannot skip elements");
@@ -57,12 +60,13 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.False(
                 new Skipped<string>(
-                    new EnumerableOf<string>(
+                    new ManyOf<string>(
                         "one", "two"
                     ).GetEnumerator(),
                     2
                 ).MoveNext(),
-                "enumerates more elements than exist");
+                "enumerates more elements than exist"
+            );
         }
     }
 }

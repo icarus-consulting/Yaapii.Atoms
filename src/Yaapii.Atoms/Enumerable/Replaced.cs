@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,10 +23,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms;
 using Yaapii.Atoms.Func;
-using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable NoGetOrSet
@@ -36,7 +33,7 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
     /// </summary>
     /// <typeparam name="T">type of items in enumerable</typeparam>
-    public sealed class Replaced<T> : EnumerableEnvelope<T>
+    public sealed class Replaced<T> : ManyEnvelope<T>
     {
         /// <summary>
         /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
@@ -48,12 +45,28 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
+        /// A <see cref="IEnumerable"/> where an item at a given index is replaced.
+        /// </summary>
+        /// <param name="origin">enumerable</param>
+        /// <param name="index">index at which to replace the item</param>
+        /// <param name="replacement">item to insert instead</param>
+        public Replaced(IEnumerable<T> origin, int index, T replacement) : this(
+            new Mapped<T, T>(
+                (item, itemIndex) => itemIndex == index ? replacement : item,
+                origin
+            ),
+            item => false,
+            replacement
+        )
+        { }
+
+        /// <summary>
         /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
         /// </summary>
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>
         /// <param name="replacement">item to insert instead</param>
-        public Replaced(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement) : base(new ScalarOf<IEnumerable<T>>(
+        public Replaced(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement) : base(new Live<IEnumerable<T>>(
             () =>
             {
                 var result = new List<T>();
@@ -72,7 +85,9 @@ namespace Yaapii.Atoms.Enumerable
                 }
 
                 return result;
-            }))
+            }),
+            false
+        )
         { }
     }
 }

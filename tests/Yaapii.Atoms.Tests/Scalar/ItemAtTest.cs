@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,44 +31,72 @@ namespace Yaapii.Atoms.Scalar.Tests
     public sealed class ItemAtTests
     {
         [Fact]
-        public void FirstElementTest()
+        public void DeliversFirstElement()
         {
 
             Assert.True(
-            new ItemAt<int>(
-                new EnumerableOf<int>(1, 2, 3)
-            ).Value() == 1,
-            "Can't take the first item from the enumerable"
-        );
+                new ItemAt<int>(
+                    new ManyOf<int>(1, 2, 3)
+                ).Value() == 1,
+                "Can't take the first item from the enumerable"
+            );
         }
 
         [Fact]
-        public void ElementByPosTest()
+        public void DeliversFirstElementWithException()
+        {
+
+            Assert.True(
+                new ItemAt<int>(
+                    new ManyOf<int>(1, 2, 3),
+                    new NotFiniteNumberException("Cannot do this!")
+                ).Value() == 1,
+                "Can't take the first item from the enumerable"
+            );
+        }
+
+        [Fact]
+        public void DeliversElementByPos()
         {
             Assert.True(
                 new ItemAt<int>(
-                    new EnumerableOf<int>(1, 2, 3),
+                    new ManyOf<int>(1, 2, 3),
                     1
                 ).Value() == 2,
-            "Can't take the item by position from the enumerable");
+                "Can't take the item by position from the enumerable"
+            );
         }
 
         [Fact]
-        public void FailForEmptyCollectionTest()
+        public void DeliversElementByPosWithFallback()
         {
-            Assert.Throws<NoSuchElementException>(
-                () => new ItemAt<int>(
-                        new List<int>()
-                    ).Value());
+            Assert.True(
+                new ItemAt<int>(
+                    new ManyOf<int>(1, 2, 3),
+                    1,
+                    4
+                ).Value() == 2,
+                "Can't take the item by position from the enumerable"
+            );
         }
 
         [Fact]
-        public void FallbackTest()
+        public void FailsForEmptyCollection()
+        {
+            Assert.Throws<NoSuchElementException>(() =>
+                new ItemAt<int>(
+                    new List<int>()
+                ).Value()
+            );
+        }
+
+        [Fact]
+        public void DeliversFallback()
         {
             String fallback = "fallback";
             Assert.True(
                 new ItemAt<string>(
-                    new EnumerableOf<string>(),
+                    new ManyOf<string>(),
                     12,
                     fallback
                 ).Value() == fallback,
@@ -76,22 +104,23 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
-        public void FallbackShowsErrorTest()
+        public void FallbackShowsError()
         {
             Assert.Throws<NoSuchElementException>(() =>
                 new ItemAt<string>(
-                    new EnumerableOf<string>(),
+                    new ManyOf<string>(),
                     12,
                     (ex, enumerable) => throw ex
-                ).Value());
+                ).Value()
+            );
         }
 
         [Fact]
-        public void FallbackShowsGivenError()
+        public void FallbackShowsGivenErrorWithPosition()
         {
             Assert.Throws<NotFiniteNumberException>(() =>
                 new ItemAt<string>(
-                    new EnumerableOf<string>(),
+                    new ManyOf<string>(),
                     12,
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value()
@@ -99,7 +128,30 @@ namespace Yaapii.Atoms.Scalar.Tests
         }
 
         [Fact]
-        public void StickyTest()
+        public void FallbackShowsGivenErrorWithoutPosition()
+        {
+            Assert.Throws<NotFiniteNumberException>(() =>
+                new ItemAt<string>(
+                    new ManyOf<string>(),
+                    new NotFiniteNumberException("Cannot do this!")
+                ).Value()
+            );
+        }
+
+        [Fact]
+        public void FallbackShowsGivenErrorForNegativePosition()
+        {
+            Assert.Throws<NotFiniteNumberException>(() =>
+                new ItemAt<string>(
+                    new ManyOf<string>(),
+                    -12,
+                    new NotFiniteNumberException("Cannot do this!")
+                ).Value()
+            );
+        }
+
+        [Fact]
+        public void IsSticky()
         {
             var list = new List<string>();
             list.Add("pre");
@@ -107,8 +159,8 @@ namespace Yaapii.Atoms.Scalar.Tests
             sticky.Value();
             list.Clear();
             list.Add("post");
-             
-             Assert.Equal("pre" , sticky.Value());
+
+            Assert.Equal("pre", sticky.Value());
         }
     }
 }

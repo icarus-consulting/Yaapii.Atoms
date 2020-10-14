@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MaxOf(params int[] src) : this(
-            new EnumerableOf<int>(src))
+            new ManyOf<int>(src))
         { }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MaxOf(params double[] src) : this(
-            new EnumerableOf<double>(src))
+            new ManyOf<double>(src))
         { }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MaxOf(params long[] src) : this(
-            new EnumerableOf<long>(src))
+            new ManyOf<long>(src))
         { }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MaxOf(params float[] src) : this(
-            new EnumerableOf<float>(src))
+            new ManyOf<float>(src))
         { }
 
         /// <summary>

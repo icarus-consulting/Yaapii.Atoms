@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -47,17 +47,19 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="origin">Collection</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(ICollection<T> origin, Exception ex) : base(new ScalarOf<ICollection<T>>(
-            () =>
-            {
-                new FailPrecise(
-                    new FailEmpty<T>(
-                        origin),
-                    ex).Go();
-
-                return origin;
-            }
-            ))
+        public NotEmpty(ICollection<T> origin, Exception ex) : base(
+            new Live<ICollection<T>>(
+                () =>
+                {
+                    new FailPrecise(
+                        new FailEmpty<T>(
+                            origin),
+                        ex).Go();
+                    return origin;
+                }
+            ),
+            false
+        )
         { }
     }
 }

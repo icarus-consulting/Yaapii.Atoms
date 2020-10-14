@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,48 +31,37 @@ namespace Yaapii.Atoms.Scalar
     /// <see cref="IScalar{T}"/> which will retry multiple times before throwing an exception.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Retry<T> : IScalar<T>
+    public sealed class Retry<T> : ScalarEnvelope<T>
     {
-        private readonly IScalar<T> _scalar;
-        private readonly IFunc<Int32, bool> _exit;
-
         /// <summary>
         /// <see cref="IScalar{T}"/> which will retry multiple times before throwing an exception.
         /// </summary>
-        /// <param name="slr">func to retry when needed</param>
+        /// <param name="scalar">func to retry when needed</param>
         /// <param name="attempts">how often to retry</param>
-        public Retry(Func<T> slr, int attempts = 3) : this(new ScalarOf<T>(() => slr.Invoke()), attempts)
+        public Retry(Func<T> scalar, int attempts = 3)
+            : this(new Live<T>(() => scalar.Invoke()), attempts)
         { }
 
         /// <summary>
         /// <see cref="IScalar{T}"/> which will retry multiple times before throwing an exception.
         /// </summary>
-        /// <param name="slr">scalar to retry when needed</param>
+        /// <param name="scalar">scalar to retry when needed</param>
         /// <param name="attempts">how often to retry</param>
-        public Retry(IScalar<T> slr, int attempts = 3) :
-            this(slr, new FuncOf<int, bool>(attempt => attempt >= attempts))
+        public Retry(IScalar<T> scalar, int attempts = 3) :
+            this(scalar, new FuncOf<int, bool>(attempt => attempt >= attempts))
         { }
 
         /// <summary>
         /// <see cref="IScalar{T}"/> which will retry until the given condition <see cref="IFunc{In, Out}"/> matches before throwing an exception.
         /// </summary>
-        /// <param name="slr">scalar to retry when needed</param>
+        /// <param name="scalar">scalar to retry when needed</param>
         /// <param name="exit"></param>
-        public Retry(IScalar<T> slr, IFunc<Int32, Boolean> exit)
-        {
-            this._scalar = slr;
-            this._exit = exit;
-        }
-
-        /// <summary>
-        /// Get the value.
-        /// </summary>
-        /// <returns>the value</returns>
-        public T Value()
-        {
-            return new RetryFunc<Boolean, T>(
-                new FuncOf<Boolean, T>(input => this._scalar.Value()),
-                this._exit).Invoke(true);
-        }
+        public Retry(IScalar<T> scalar, IFunc<Int32, Boolean> exit)
+            : base(() =>
+                new RetryFunc<Boolean, T>(
+                    new FuncOf<Boolean, T>(input => scalar.Value()),
+                    exit).Invoke(true)
+            )
+        { }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -35,9 +35,11 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="list">List of collections to join together</param>
         public Joined(params IEnumerable<T>[] list) : base(
-            () => new CollectionOf<T>(
+            () => new LiveCollection<T>(
                     new Enumerable.Joined<T>(list)
-             ))
+            ),
+            false
+        )
         { }
 
     }

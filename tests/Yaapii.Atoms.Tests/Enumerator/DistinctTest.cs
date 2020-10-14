@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -37,11 +37,11 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
                 new Enumerable.LengthOf(
-                    new EnumerableOf<string>(
+                    new ManyOf<string>(
                         new Distinct<string>(
-                            new EnumerableOf<IEnumerator<string>>(
-                                new EnumerableOf<string>("A", "B", "F").GetEnumerator(),
-                                new EnumerableOf<string>("A", "E", "F").GetEnumerator()
+                            new ManyOf<IEnumerator<string>>(
+                                new ManyOf<string>("A", "B", "F").GetEnumerator(),
+                                new ManyOf<string>("A", "E", "F").GetEnumerator()
                             )
                         )
                     )
@@ -53,9 +53,9 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             var e =
                 new Distinct<string>(
-                    new EnumerableOf<IEnumerator<string>>(
-                        new EnumerableOf<string>("A").GetEnumerator(),
-                        new EnumerableOf<string>("A").GetEnumerator()
+                    new ManyOf<IEnumerator<string>>(
+                        new ManyOf<string>("A").GetEnumerator(),
+                        new ManyOf<string>("A").GetEnumerator()
                     )
                 );
 
@@ -70,11 +70,11 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.True(
                 new Enumerable.LengthOf(
-                    new EnumerableOf<string>(
+                    new ManyOf<string>(
                         new Distinct<string>(
-                            new EnumerableOf<IEnumerator<string>>(
-                                new EnumerableOf<string>().GetEnumerator(),
-                                new EnumerableOf<string>().GetEnumerator()
+                            new ManyOf<IEnumerator<string>>(
+                                new ManyOf<string>().GetEnumerator(),
+                                new ManyOf<string>().GetEnumerator()
                             )
                         )
                     )

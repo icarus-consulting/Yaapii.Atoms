@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -34,9 +34,9 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.True(
                 new Or(
-                    new EnumerableOf<IScalar<bool>>(
-                        new ScalarOf<bool>(true),
-                        new ScalarOf<bool>(false)
+                    new ManyOf<IScalar<bool>>(
+                        new Live<bool>(true),
+                        new Live<bool>(false)
                     )
                 ).Value()
             );

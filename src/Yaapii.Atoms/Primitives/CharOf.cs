@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="integer">The 32-bit signed integer to convert.</param>
         public CharOf(int integer) :
-            this(new ScalarOf<char>(() => Convert.ToChar(integer)))
+            this(new Live<char>(() => Convert.ToChar(integer)))
         { }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="uInteger">The 32-bit unsigned integer to convert.</param>
         public CharOf(uint uInteger) :
-            this(new ScalarOf<char>(() => Convert.ToChar(uInteger)))
+            this(new Live<char>(() => Convert.ToChar(uInteger)))
         { }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="shrt">The 16-bit signed integer to convert.</param>
         public CharOf(short shrt) :
-            this(new ScalarOf<char>(() => Convert.ToChar(shrt)))
+            this(new Live<char>(() => Convert.ToChar(shrt)))
         { }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="uShort">The 16-bit unsigned integer to convert.</param>
         public CharOf(ushort uShort) :
-            this(new ScalarOf<char>(() => Convert.ToChar(uShort)))
+            this(new Live<char>(() => Convert.ToChar(uShort)))
         { }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="lng">The 64-bit signed integer to convert.</param>
         public CharOf(long lng) :
-            this(new ScalarOf<char>(() => Convert.ToChar(lng)))
+            this(new Live<char>(() => Convert.ToChar(lng)))
         { }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="ulng">The 64-bit unsigned integer to convert.</param>
         public CharOf(ulong ulng) :
-            this(new ScalarOf<char>(() => Convert.ToChar(ulng)))
+            this(new Live<char>(() => Convert.ToChar(ulng)))
         { }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="dbl">The double-precision floating-point number to convert.</param>
         public CharOf(double dbl) :
-            this(new ScalarOf<char>(() => Convert.ToChar(Convert.ToInt64(dbl))))
+            this(new Live<char>(() => Convert.ToChar(Convert.ToInt64(dbl))))
         { }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="flt">The single-precision floating-point number.</param>
         public CharOf(float flt) :
-            this(new ScalarOf<char>(() => Convert.ToChar(Convert.ToInt64(flt))))
+            this(new Live<char>(() => Convert.ToChar(Convert.ToInt64(flt))))
         { }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="str">A string of length 1.</param>
         public CharOf(string str) :
-            this(new ScalarOf<char>(() => Convert.ToChar(str)))
+            this(new Live<char>(() => Convert.ToChar(str)))
         { }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="byt">The 8-bit unsigned integer to convert.</param>
         public CharOf(byte byt) :
-            this(new ScalarOf<char>(() => Convert.ToChar(byt)))
+            this(new Live<char>(() => Convert.ToChar(byt)))
         { }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="sByt">The 8-bit signed integer to convert.</param>
         public CharOf(sbyte sByt) :
-            this(new ScalarOf<char>(() => Convert.ToChar(sByt)))
+            this(new Live<char>(() => Convert.ToChar(sByt)))
         { }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="converter">Converter method who returns the character.</param>
         private CharOf(IScalar<char> converter)
         {
-            _converter = converter;
+            _converter = new ScalarOf<char>(converter);
         }
 
         /// <summary>

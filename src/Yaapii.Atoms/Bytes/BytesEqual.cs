@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using Yaapii.Atoms.Scalar;
+
 namespace Yaapii.Atoms.Bytes
 {
     /// <summary>
@@ -27,8 +29,7 @@ namespace Yaapii.Atoms.Bytes
     /// </summary>
     public sealed class BytesEqual : IScalar<bool>
     {
-        private readonly IBytes left;
-        private readonly IBytes right;
+        private readonly IScalar<bool> equal;
 
         /// <summary>
         /// Makes a truth about <see cref="IBytes"/> are equal or not.
@@ -37,8 +38,22 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="right"></param>
         public BytesEqual(IBytes left, IBytes right)
         {
-            this.left = left;
-            this.right = right;
+            this.equal = new ScalarOf<bool>(() =>
+            {
+                var leftByte = left.AsBytes();
+                var rightByte = right.AsBytes();
+                var equal = leftByte.Length == rightByte.Length;
+
+                for (var i = 0; i < leftByte.Length && equal; i++)
+                {
+                    if (leftByte[i] != rightByte[i])
+                    {
+                        equal = false;
+                        break;
+                    }
+                }
+                return equal;
+            });
         }
 
         /// <summary>
@@ -47,20 +62,7 @@ namespace Yaapii.Atoms.Bytes
         /// <returns></returns>
         public bool Value()
         {
-            var left = this.left.AsBytes();
-            var right = this.right.AsBytes();
-            var equal = left.Length == right.Length;
-
-            for(var i=0;i<left.Length && equal;i++)
-            {
-                if(left[i] != right[i])
-                {
-                    equal = false;
-                    break;
-                }
-            }
-
-            return equal;
+            return this.equal.Value();
         }
     }
 }

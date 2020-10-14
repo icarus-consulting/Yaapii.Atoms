@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.IO
         /// The temporary file is deleted when the object is disposed.
         /// </summary>
         /// <param name="extension">The file extension for the temprary file</param>
-        public TempFile(string extension) : this(new Sticky<string>(() =>
+        public TempFile(string extension) : this(new ScalarOf<string>(() =>
         {
             var file = Path.GetTempFileName();
             extension = extension.TrimStart('.');
@@ -56,14 +56,14 @@ namespace Yaapii.Atoms.IO
         /// The temporary file is deleted when the object is disposed.
         /// </summary>
         /// <param name="file">The file</param>
-        public TempFile(FileInfo file) : this(new Sticky<string>(() => file.FullName))
+        public TempFile(FileInfo file) : this(new ScalarOf<string>(() => file.FullName))
         { }
 
         /// <summary>
         /// Ctor
         /// </summary>
         public TempFile() :
-            this(new Sticky<string>(()=>Path.GetTempFileName()))
+            this(new ScalarOf<string>(()=>Path.GetTempFileName()))
         { }
 
         private TempFile(IScalar<string> path)

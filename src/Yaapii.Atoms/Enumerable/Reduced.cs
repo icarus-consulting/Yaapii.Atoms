@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,58 +22,58 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
     /// <see cref="IEnumerable{T}"/> whose items are reduced to one item using the given function.
     /// </summary>
-    /// <typeparam name="InAndOut">input and output type</typeparam>
-    /// <typeparam name="Element">type of elements in a list to reduce</typeparam>
-    public sealed class Reduced<InAndOut, Element> : IScalar<InAndOut>
+    /// <typeparam name="T">type of elements in a list to reduce</typeparam>
+    public sealed class Reduced<T> : IScalar<T>
     {
-        private readonly IEnumerable<Element> _enumerable;
-        private readonly InAndOut _input;
-        private readonly IBiFunc<InAndOut , Element, InAndOut> _func;
+        private readonly ScalarOf<T> result;
 
         /// <summary>
-        /// <see cref="IEnumerable{Element}"/> whose items are reduced to one item using the given function.
+        /// <see cref="IEnumerable{Element}"/> whose items are folded to one item using the given function.
         /// </summary>
-        /// <param name="toReduce">enumerable to reduce</param>
-        /// <param name="input">input for the reducing function</param>
+        /// <param name="elements">enumerable to reduce</param>
         /// <param name="fnc">reducing function</param>
-        public Reduced(IEnumerable<Element> toReduce, InAndOut input, Func<InAndOut, Element, InAndOut> fnc) : this(
-            toReduce, input, new BiFuncOf<InAndOut, Element, InAndOut>((arg1, arg2) => fnc.Invoke(arg1, arg2)))
+        public Reduced(IEnumerable<T> elements, IBiFunc<T, T, T> fnc) : this(
+            elements,
+            (arg1, arg2) => fnc.Invoke(arg1, arg2)
+        )
         { }
 
         /// <summary>
         /// <see cref="IEnumerable{Element}"/> whose items are reduced to one item using the given function.
         /// </summary>
-        /// <param name="toReduce">enumerable to reduce</param>
-        /// <param name="input">input for the reducing function</param>
+        /// <param name="elements">enumerable to reduce</param>
         /// <param name="fnc">reducing function</param>
-        public Reduced(IEnumerable<Element> toReduce, InAndOut input, IBiFunc<InAndOut, Element, InAndOut> fnc)
+        public Reduced(IEnumerable<T> elements, Func<T, T, T> fnc)
         {
-            this._enumerable = toReduce;
-            this._input = input;
-            this._func = fnc;
+            this.result =
+                new ScalarOf<T>(() =>
+                {
+                    var enm = elements.GetEnumerator();
+
+                    if (!enm.MoveNext()) throw new ArgumentException($"Cannot reduce, at least one element is needed but the enumerable is empty.");
+                    T result = enm.Current;
+                    while(enm.MoveNext())
+                    {
+                        result = fnc.Invoke(result, enm.Current);
+                    }
+                    return result;
+                });
         }
 
         /// <summary>
         /// Get the value.
         /// </summary>
         /// <returns>the value</returns>
-        public InAndOut Value()
+        public T Value()
         {
-            InAndOut memo = this._input;
-            foreach (Element item in this._enumerable)
-            {
-                memo = this._func.Invoke(memo, item);
-            }
-            return memo;
+            return this.result.Value();
         }
-
     }
 }

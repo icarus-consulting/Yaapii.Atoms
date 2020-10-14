@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="lmt">max number of items to limit to</param>
         /// <param name="src">items to limit</param>
-        public HeadOf(int lmt, params T[] src) : this(lmt, new EnumerableOf<T>(src))
+        public HeadOf(int lmt, params T[] src) : this(lmt, new ManyOf<T>(src))
         { }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="lmt">max number of items to limit to</param>
         /// <param name="src">Enumerator to limit</param>
-        public HeadOf(int lmt, IEnumerator<T> src) : this(lmt, new EnumerableOf<T>(src))
+        public HeadOf(int lmt, IEnumerator<T> src) : this(lmt, new ManyOf<T>(src))
         { }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="lmt">requested number of items</param>
         /// <param name="src">enumerable of items</param>
-        public HeadOf(int lmt, IEnumerable<T> src) : this(lmt, new CollectionOf<T>(src))
+        public HeadOf(int lmt, IEnumerable<T> src) : this(lmt, new LiveCollection<T>(src))
         { }
 
         /// <summary>
@@ -62,9 +62,11 @@ namespace Yaapii.Atoms.Collection
         /// <param name="src">source collection</param>
         /// <param name="lmt">requested number of elements</param>
         public HeadOf(int lmt, ICollection<T> src) : base(
-            () => new CollectionOf<T>(
+            () => new LiveCollection<T>(
                 new Enumerable.HeadOf<T>(src, lmt)
-            ))
+            ),
+            false
+        )
         { }
 
     }

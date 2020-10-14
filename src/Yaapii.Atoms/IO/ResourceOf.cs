@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="type">a class that is in the same container (assembly) with the resource</param>
         public ResourceOf(string name, Type type) : this(
             name,
-            new ScalarOf<Assembly>(Assembly.GetAssembly(type))
+            new Live<Assembly>(Assembly.GetAssembly(type))
         )
         { }
 
@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="container">container to search in. Use Assembly.GetExecutingAssembly() for the assembly your current code is in.</param>
         public ResourceOf(string name, Assembly container) : this(
             name,
-            new ScalarOf<Assembly>(container)
+            new Live<Assembly>(container)
         )
         { }
 

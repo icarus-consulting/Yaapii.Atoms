@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.IO
         /// A directory that cleans up when disposed.
         /// </summary>
         public TempDirectory() : this(
-            new Sticky<string>(() =>
+            new ScalarOf<string>(() =>
                 Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())
             )
         )
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.IO
         /// A directory that cleans up when disposed.
         /// </summary>
         public TempDirectory(string path) : this(
-            new ScalarOf<string>(path)
+            new Live<string>(path)
         )
         { }
 

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -76,19 +76,19 @@ namespace Yaapii.Atoms.IO
         /// <see cref="IOutput"/> to a target <see cref="Stream"/> returned by a <see cref="Func{TResult}"/>.
         /// </summary>
         /// <param name="fnc">target stream returning function</param>
-        public OutputTo(Func<Stream> fnc) : this(new ScalarOf<Stream>(fnc))
+        public OutputTo(Func<Stream> fnc) : this(new Live<Stream>(fnc))
         { }
 
         /// <summary>
         /// <see cref="IOutput"/> to a target <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">target stream</param>
-        public OutputTo(Stream stream) : this(new ScalarOf<Stream>(() => stream))
+        public OutputTo(Stream stream) : this(new Live<Stream>(() => stream))
         { }
 
         private OutputTo(IScalar<Stream> origin)
         {
-            this._origin = new Sticky<Stream>(origin, stream => !stream.CanWrite);
+            this._origin = new ScalarOf<Stream>(origin, stream => !stream.CanWrite);
         }
 
         public Stream Stream()

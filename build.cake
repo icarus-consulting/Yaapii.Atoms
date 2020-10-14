@@ -2,7 +2,7 @@
 #tool nuget:?package=OpenCover
 #tool nuget:?package=xunit.runner.console
 #tool nuget:?package=Codecov
-#addin nuget:?package=Cake.Codecov
+#addin nuget:?package=Cake.Codecov&version=0.5.0
 
 var target = Argument("target", "Default");
 var configuration   = Argument<string>("configuration", "Release");
@@ -21,13 +21,12 @@ var project = new DirectoryPath("./src/Yaapii.Atoms/Yaapii.Atoms.csproj");
 var owner = "icarus-consulting";
 var repository = "Yaapii.Atoms";
 
-var username = "";
-var password = "";
+var githubtoken = "";
 var codecovToken = "";
 
 var isAppVeyor          = AppVeyor.IsRunningOnAppVeyor;
 
-var version = "0.11.0";
+var version = "2.1.3";
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -201,8 +200,7 @@ Task("Version")
 Task("GetCredentials")
     .Does(() =>
 {
-    username = EnvironmentVariable("GITHUB_USERNAME");
-    password = EnvironmentVariable("GITHUB_PASSWORD");
+    githubtoken = EnvironmentVariable("GITHUB_TOKEN");
 	codecovToken = EnvironmentVariable("CODECOV_TOKEN");
 });
 
@@ -212,26 +210,25 @@ Task("Release")
   .IsDependentOn("Pack")
   .IsDependentOn("GetCredentials")
   .Does(() => {
-		GitReleaseManagerCreate(username, password, owner, repository, new GitReleaseManagerCreateSettings {
+		GitReleaseManagerCreate(githubtoken, owner, repository, new GitReleaseManagerCreateSettings {
             Milestone         = version,
             Name              = version,
             Prerelease        = false,
             TargetCommitish   = "master"
-    });
+		});
           
 		var nugetFiles = string.Join(",", GetFiles("./artifacts/**/*.nupkg").Select(f => f.FullPath) );
 		Information("Nuget artifacts: " + nugetFiles);
 
 		GitReleaseManagerAddAssets(
-			username,
-			password,
+			githubtoken,
 			owner,
 			repository,
 			version,
 			nugetFiles
 		);
 
-		GitReleaseManagerPublish(username, password, owner, repository, version);
+		GitReleaseManagerPublish(githubtoken, owner, repository, version);
 });
 
 Task("Default")

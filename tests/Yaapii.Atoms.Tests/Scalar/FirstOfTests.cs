@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
                 new FirstOf<string>(
-                    new EnumerableOf<string>(),
+                    new ManyOf<string>(),
                     new InvalidOperationException()
                 ).Value()
             );
@@ -45,14 +45,14 @@ namespace Yaapii.Atoms.Scalar.Tests
             Assert.Equal(
                 "gotcha",
                 new FirstOf<string>(
-                    new EnumerableOf<string>(), "gotcha").Value()
+                    new ManyOf(), "gotcha").Value()
                 );
         }
 
         [Fact]
         public void ReturnsFirstMatch()
         {
-            var list = new EnumerableOf<string>("hallo", "ich", "heisse", "Max");
+            var list = new ManyOf<string>("hallo", "ich", "heisse", "Max");
 
             Assert.Equal(
                 "Max",
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         [Fact]
         public void ReturnsFirstValue()
         {
-            var list = new EnumerableOf<string>("hallo", "ich", "heisse", "Max");
+            var list = new ManyOf<string>("hallo", "ich", "heisse", "Max");
 
             Assert.Equal(
                 "hallo",

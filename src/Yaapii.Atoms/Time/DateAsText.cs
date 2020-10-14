@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,19 +32,19 @@ namespace Yaapii.Atoms.Time
     /// </summary>
     public sealed class DateAsText : IText
     {
-        private readonly IScalar<string> _formatted;
+        private readonly ScalarOf<string> formatted;
 
         /// <summary>
         /// Current Datetime as ISO
         /// </summary>
-        public DateAsText() : this(new ScalarOf<DateTime>(() => DateTime.Now))
+        public DateAsText() : this(new Live<DateTime>(() => DateTime.Now))
         { }
 
         /// <summary>
         /// A date formatted as ISO
         /// </summary>
         /// <param name="date"></param>
-        public DateAsText(DateTime date) : this(new ScalarOf<DateTime>(date), "o")
+        public DateAsText(DateTime date) : this(new Live<DateTime>(date), "o")
         { }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Time
         /// </summary>
         /// <param name="date">a date</param>
         /// <param name="format">a format pattern</param>
-        public DateAsText(DateTime date, string format) : this(new ScalarOf<DateTime>(date), new TextOf(format), CultureInfo.CurrentCulture)
+        public DateAsText(DateTime date, string format) : this(new Live<DateTime>(date), new TextOf(format), CultureInfo.CurrentCulture)
         { }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Time
         /// </summary>
         /// <param name="date">a date</param>
         /// <param name="format">a format pattern</param>
-        public DateAsText(IScalar<DateTime> date, string format) : this(date, new TextOf(format), CultureInfo.CurrentCulture)
+        public DateAsText(IScalar<DateTime> date, string format) : this(date, new LiveText(format), CultureInfo.CurrentCulture)
         { }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Yaapii.Atoms.Time
         /// </summary>
         /// <param name="date">a date</param>
         /// <param name="format">a format pattern</param>
-        public DateAsText(DateTime date, IText format) : this(new ScalarOf<DateTime>(date), format, CultureInfo.CurrentCulture)
+        public DateAsText(DateTime date, IText format) : this(new Live<DateTime>(date), format, CultureInfo.CurrentCulture)
         { }
 
         /// <summary>
@@ -94,9 +94,10 @@ namespace Yaapii.Atoms.Time
         /// <param name="provider">a format provider</param>
         public DateAsText(IScalar<DateTime> date, IText format, IFormatProvider provider)
         {
-            this._formatted =
+            this.formatted =
                 new ScalarOf<string>(
-                    () => date.Value().ToString(format.AsString(), provider));
+                    () => date.Value().ToString(format.AsString(), provider)
+                );
         }
 
         /// <summary>
@@ -105,7 +106,7 @@ namespace Yaapii.Atoms.Time
         /// <returns></returns>
         public string AsString()
         {
-            return _formatted.Value();
+            return formatted.Value();
         }
 
         /// <summary>
@@ -115,7 +116,7 @@ namespace Yaapii.Atoms.Time
         /// <returns></returns>
         public bool Equals(IText other)
         {
-            return _formatted.Value().Equals(other.AsString());
+            return formatted.Value().Equals(other.AsString());
         }
     }
 }

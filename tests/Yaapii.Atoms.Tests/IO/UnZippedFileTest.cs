@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.IO;
-using System.IO.Compression;
 using Xunit;
-using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -55,7 +53,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             Assert.Contains(
                 fileName,
-                new Text.TextOf(
+                new LiveText(
                     new UnzippedFile(
                        new ResourceOf(
                            "Assets/Zip/ZipWithThreeFiles.zip",
@@ -73,15 +71,13 @@ namespace Yaapii.Atoms.IO.Tests
             Assert.Throws<InvalidOperationException>(() =>
             {
                 new UnzippedFile(
-                             new ResourceOf(
-                                 "Assets/Zip/NotAZip",
-                                 this.GetType()
-                             ),
-                             "irrelevant"
-                     ).Stream();
+                    new ResourceOf(
+                        "Assets/Zip/NotAZip",
+                        this.GetType()
+                    ),
+                    "irrelevant"
+                ).Stream();
             });
-
-            
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using Yaapii.Atoms.Error;
 
 namespace Yaapii.Atoms.Enumerator
 {
@@ -34,18 +31,18 @@ namespace Yaapii.Atoms.Enumerator
     /// <typeparam name="T"></typeparam>
     public class Contains<T> : IScalar<bool>
     {
-        private readonly Func<T, bool> _match;
-        private readonly IEnumerator<T> _src;
+        private readonly Func<T, bool> match;
+        private readonly IEnumerator<T> src;
 
         /// <summary>
         /// Lookup the item in the src.
         /// </summary>
         /// <param name="src">src enumerable</param>
         /// <param name="match">lookup item</param>
-        public Contains(IEnumerator<T> src, Func<T,bool> match)
+        public Contains(IEnumerator<T> src, Func<T, bool> match)
         {
-            _match = match;
-            _src = src;
+            this.match = match;
+            this.src = src;
         }
 
         /// <summary>
@@ -56,9 +53,9 @@ namespace Yaapii.Atoms.Enumerator
         {
             bool contains = false;
 
-            for (var cur = 0; this._src.MoveNext(); cur++)
+            for (var cur = 0; this.src.MoveNext(); cur++)
             {
-                if (_match.Invoke(this._src.Current))
+                if (match.Invoke(this.src.Current))
                 {
                     contains = true;
                     break;

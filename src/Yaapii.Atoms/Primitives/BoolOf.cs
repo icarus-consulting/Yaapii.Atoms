@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using Yaapii.Atoms.Text;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Text
 {
@@ -33,7 +31,7 @@ namespace Yaapii.Atoms.Text
     /// </summary>
     public sealed class BoolOf : IScalar<Boolean>
     {
-        private readonly IText _text;
+        private readonly ScalarOf<bool> bl;
 
         /// <summary>
         /// <see cref="string"/> as bool
@@ -48,7 +46,18 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">source text "true" or "false"</param>
         public BoolOf(IText text)
         {
-            this._text = text;
+            this.bl =
+                new ScalarOf<bool>(() =>
+                {
+                    try
+                    {
+                        return Convert.ToBoolean(text.AsString());
+                    }
+                    catch (FormatException ex)
+                    {
+                        throw new IOException(ex.Message, ex);
+                    }
+                });
         }
 
         /// <summary>
@@ -57,13 +66,7 @@ namespace Yaapii.Atoms.Text
         /// <returns>true or false</returns>
         public Boolean Value()
         {
-            try
-            {
-                return Convert.ToBoolean(this._text.AsString());
-            }catch(FormatException ex)
-            {
-                throw new IOException(ex.Message, ex);
-            }
+            return this.bl.Value();
         }
     }
 }

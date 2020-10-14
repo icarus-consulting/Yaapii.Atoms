@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ using Yaapii.Atoms.Func;
 using System.Linq;
 using Yaapii.Atoms.Tests;
 using Yaapii.Atoms.Enumerable;
+using System.Diagnostics;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
@@ -53,7 +54,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                     new Filtered<string>(
 
                         input => input.Length > 1,
-                        new EnumerableOf<String>())
+                        new ManyOf<String>())
                     ).Value() == 0,
                 "cannot filter empty enumerable");
         }
@@ -75,14 +76,53 @@ namespace Yaapii.Atoms.Enumerable.Tests
         }
 
         [Fact]
-        public void FilterItemsGivenByParamsCtor()
+        public void FiltersItemsGivenByParamsCtor()
         {
             Assert.True(
                 new LengthOf(
                     new Filtered<string>(
                        (input) => input != "B",
-                       "A", "B", "C")).Value() == 2,
-                "cannot filter items");
+                       "A", "B", "C")
+                ).Value() == 2,
+                "cannot filter items"
+            );
+        }
+
+        [Fact]
+        public void IsSticky()
+        {
+            var calls = 0;
+
+            var enm =
+                new Filtered<string>(
+                    (i) => { Debug.WriteLine("Read"); return true; },
+                    new List<string>() { "A" }
+                );
+
+            var enmr1 = enm.GetEnumerator();
+            var enmr2 = enm.GetEnumerator();
+
+            enmr1.MoveNext();
+            enmr2.MoveNext();
+
+
+            var enumerable =
+                new Filtered<string>(
+                    (input) =>
+                    {
+                        calls++;
+                        return input != "B";
+                    },
+                    new List<string>() { "A", "B", "C" }
+                );
+
+            new LengthOf(enumerable).Value();
+            new LengthOf(enumerable).Value();
+
+            Assert.Equal(
+                3,
+                calls
+            );
         }
     }
 }

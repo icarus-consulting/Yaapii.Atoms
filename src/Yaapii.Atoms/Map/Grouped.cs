@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2019 ICARUS Consulting GmbH
+// Copyright(c) 2020 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -39,29 +39,17 @@ namespace Yaapii.Atoms.Map
         /// <param name="src">Source Enumerable</param>
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
-        public Grouped(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : this(
-            new ListOf<T>(src),
-            key,
-            value
-        )
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="src">Source Enumerable</param>
-        /// <param name="key">Function to convert Source Type to Key Type</param>
-        /// <param name="value">Function to Convert Source Type to Key Týpe</param>
-        public Grouped(IList<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : base(
+        public Grouped(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : base(
             () =>
             {
                 Dictionary<Key, IList<Value>> temp = new Dictionary<Key, IList<Value>>();
-                foreach(var entry in src)
+                foreach (var entry in src)
                 {
                     temp[key.Invoke(entry)] = new Mapped<T, Value>(value, src);
                 }
                 return temp;
-            }
+            },
+            false
         )
         { }
     }
