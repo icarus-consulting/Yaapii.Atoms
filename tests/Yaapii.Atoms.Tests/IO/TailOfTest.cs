@@ -1,9 +1,32 @@
-﻿using System;
+﻿// MIT License
+//
+// Copyright(c) 2020 ICARUS Consulting GmbH
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Tests;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -13,7 +36,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void TailsOnLongStream()
         {
             var size = 4;
-            byte[] bytes = this.Generate(size);
+            byte[] bytes = new RandomByteArray(size).Generate();
 
             var b =
                 new BytesOf(
@@ -38,7 +61,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void TailsOnExactStream()
         {
             int size = 4;
-            byte[] bytes = this.Generate(size);
+            byte[] bytes = new RandomByteArray(size).Generate();
 
             var b =
                 new BytesOf(
@@ -58,7 +81,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void TailsOnExactStreamAndBuffer()
         {
             int size = 4;
-            byte[] bytes = this.Generate(size);
+            byte[] bytes = new RandomByteArray(size).Generate();
         
             Assert.Equal(
                 new BytesOf(
@@ -76,7 +99,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void TailsOnShorterStream()
         {
             int size = 4;
-            byte[] bytes = this.Generate(size);
+            byte[] bytes = new RandomByteArray(size).Generate();
             
             Assert.Equal(
                 new BytesOf(
@@ -93,7 +116,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void TailsOnStreamLongerThanBufferAndBytes()
         {
             int size = 4;
-            byte[] bytes = this.Generate(size);
+            byte[] bytes = new RandomByteArray(size).Generate();
 
             var res = new byte[bytes.Length-1];
             Array.Copy(bytes, 1, res, 0, bytes.Length - 1);
@@ -113,7 +136,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void failsIfBufferSizeSmallerThanTailSize()
         {
             int size = 4;
-            var bytes = this.Generate(size);
+            var bytes = new RandomByteArray(size).Generate();
             Assert.Throws<ArgumentException>(
                 () =>
                 {
@@ -127,18 +150,6 @@ namespace Yaapii.Atoms.IO.Tests
                         )
                     ).AsBytes();
                 });
-        }
-
-        /**
-         * Generate random byte array.
-         * @param size Size of array
-         * @return Generated array
-         */
-        private byte[] Generate(int size)
-        {
-            byte[] bytes = new byte[size];
-            new Random().NextBytes(bytes);
-            return bytes;
         }
     }
 }
