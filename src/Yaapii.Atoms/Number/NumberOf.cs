@@ -255,14 +255,5 @@ namespace Yaapii.Atoms.Number
         {
             return _lng.Value();
         }
-
-        private ArgumentException ArgError(IText txt)
-        {
-            return
-                new ArgumentException(
-                    new Formatted("'{0}' is not a number.", txt.AsString()
-                ).AsString()
-            );
-        }
     }
 }
