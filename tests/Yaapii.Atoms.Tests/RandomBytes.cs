@@ -20,26 +20,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+
 using System;
 using System.Collections.Generic;
-using System.Text;
+using Yaapii.Atoms.List;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Tests
 {
-    public sealed class RandomByteArray
+    /// <summary>
+    /// List of N random bytes.
+    /// </summary>
+    public sealed class RandomBytes : ListEnvelope<byte>
     {
-        private readonly int size;
-        public RandomByteArray(int size)
-        {
-            this.size = size;
-        }
+        /// <summary>
+        /// List of N random bytes.
+        /// </summary>
+        /// <param name="size">size of N</param>
+        public RandomBytes(int size) : this(
+            new ScalarOf<IList<byte>>(() =>
+            {
+                byte[] bytes = new byte[size];
+                new Random().NextBytes(bytes);
+                return new ListOf<byte>(bytes);
+            }),
+            false
+            )
+        { }
 
-        public byte[] Generate()
+        /// <summary>
+        /// List of N random bytes.
+        /// </summary>
+        /// <param name="lst">List</param>
+        /// <param name="live"></param>
+        public RandomBytes(IScalar<IList<byte>> lst, bool live) : base(lst, live)
         {
-            byte[] bytes = new byte[size];
-            new Random().NextBytes(bytes);
-            return bytes;
-
         }
     }
 }

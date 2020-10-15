@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 using Yaapii.Atoms.Bytes;
@@ -36,7 +37,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void TailsOnLongStream()
         {
             var size = 4;
-            byte[] bytes = new RandomByteArray(size).Generate();
+            byte[] bytes = new RandomBytes(size).ToArray();
 
             var b =
                 new BytesOf(
@@ -61,7 +62,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void TailsOnExactStream()
         {
             int size = 4;
-            byte[] bytes = new RandomByteArray(size).Generate();
+            byte[] bytes = new RandomBytes(size).ToArray();
 
             var b =
                 new BytesOf(
@@ -81,7 +82,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void TailsOnExactStreamAndBuffer()
         {
             int size = 4;
-            byte[] bytes = new RandomByteArray(size).Generate();
+            byte[] bytes = new RandomBytes(size).ToArray();
         
             Assert.Equal(
                 new BytesOf(
@@ -99,7 +100,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void TailsOnShorterStream()
         {
             int size = 4;
-            byte[] bytes = new RandomByteArray(size).Generate();
+            byte[] bytes = new RandomBytes(size).ToArray();
             
             Assert.Equal(
                 new BytesOf(
@@ -116,7 +117,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void TailsOnStreamLongerThanBufferAndBytes()
         {
             int size = 4;
-            byte[] bytes = new RandomByteArray(size).Generate();
+            byte[] bytes = new RandomBytes(size).ToArray();
 
             var res = new byte[bytes.Length-1];
             Array.Copy(bytes, 1, res, 0, bytes.Length - 1);
@@ -136,7 +137,7 @@ namespace Yaapii.Atoms.IO.Tests
         public void failsIfBufferSizeSmallerThanTailSize()
         {
             int size = 4;
-            var bytes = new RandomByteArray(size).Generate();
+            var bytes = new RandomBytes(size).ToArray();
             Assert.Throws<ArgumentException>(
                 () =>
                 {
