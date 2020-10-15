@@ -150,5 +150,27 @@ namespace Yaapii.Atoms.Number.Tests
                 ).AsLong() == 50L
             );
         }
+
+        [Fact]
+        public void DoubleSeperator()
+        {
+            Assert.True(
+                new NumberOf(
+                    "10.100,11",
+                    ",",
+                    "."
+                ).AsDouble() == 10100.11
+            );
+        }
+
+        [Fact]
+        public void StringAsInt()
+        {
+            Assert.True(
+                new NumberOf(
+                    "100"
+                ).AsInt() == 100
+            );
+        }
     }
 }
