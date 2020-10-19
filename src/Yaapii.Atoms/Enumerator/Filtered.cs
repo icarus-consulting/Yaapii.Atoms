@@ -23,10 +23,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.Error;
-using Yaapii.Atoms.Func;
 
 #pragma warning disable NoProperties // No Properties
 #pragma warning disable CS1591

@@ -22,23 +22,33 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
-namespace Yaapii.Atoms.List
+namespace Yaapii.Atoms.IO
 {
     /// <summary>
-    /// Makes a readonly list.
+    /// Input that only shows the first N bytes of the original input.
     /// </summary>
-    /// <typeparam name="T">type of items</typeparam>
-    public sealed class LiveList<T> : ListEnvelope<T>
+    public sealed class HeadOf : IInput
     {
+        private readonly IInput origin;
+        private readonly int length;
+
         /// <summary>
-        /// ctor
+        /// Input that only shows the first N bytes of the original input.
         /// </summary>
-        /// <param name="src">source enumerable</param>
-        public LiveList(Func<IList<T>> src) : base(
-            src,
-            true
-        )
-        { }
+        /// <param name="origin">Input</param>
+        /// <param name="length">Length</param>
+        public HeadOf(IInput origin, int length)
+        {
+            this.origin = origin;
+            this.length = length;
+        }
+
+        public Stream Stream()
+        {
+            return new HeadInputStream(this.origin.Stream(), this.length);
+        }
     }
 }

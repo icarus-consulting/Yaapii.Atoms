@@ -23,7 +23,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Enumerator;
 
 namespace Yaapii.Atoms.Enumerable
 {
@@ -34,38 +34,33 @@ namespace Yaapii.Atoms.Enumerable
     public abstract class ManyEnvelope : IEnumerable<string>
     {
         private readonly bool live;
-        private readonly Func<IEnumerable<string>> origin;
-        private readonly ScalarOf<IEnumerable<string>> fixedOrigin;
+        private readonly Func<IEnumerator<string>> origin;
+        private readonly Enumerator.Cached<string>.Cache<string> enumeratorCache;
 
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public ManyEnvelope(IScalar<IEnumerable<string>> fnc) : this(() => fnc.Value())
+        public ManyEnvelope(IScalar<IEnumerable<string>> fnc, bool live = false) : this(() => fnc.Value(), live)
         { }
 
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public ManyEnvelope(Func<IEnumerator<string>> origin) : this(() =>
-        {
-            var lst = new List<string>();
-            var enm = origin();
-            while (enm.MoveNext())
-            {
-                lst.Add(enm.Current);
-            }
-            return lst;
-        })
+        public ManyEnvelope(Func<IEnumerable<string>> origin, bool live = false) : this(() =>
+            origin().GetEnumerator(),
+            live
+        )
         { }
 
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public ManyEnvelope(Func<IEnumerable<string>> origin, bool live = false)
+        public ManyEnvelope(Func<IEnumerator<string>> origin, bool live = false)
         {
             this.live = live;
             this.origin = origin;
-            this.fixedOrigin = new ScalarOf<IEnumerable<string>>(() => origin());
+            this.enumeratorCache = new Cached<string>.Cache<string>(() => origin());
+
         }
 
         /// <summary>
@@ -74,16 +69,16 @@ namespace Yaapii.Atoms.Enumerable
         /// <returns>The enumerator</returns>
         public IEnumerator<string> GetEnumerator()
         {
-            IEnumerable<string> result;
+            IEnumerator<string> result;
             if (this.live)
             {
                 result = this.origin();
             }
             else
             {
-                result = this.fixedOrigin.Value();
+                result = new Cached<string>(this.enumeratorCache);
             }
-            return result.GetEnumerator();
+            return result;
         }
 
         /// <summary>
@@ -104,8 +99,8 @@ namespace Yaapii.Atoms.Enumerable
     public abstract class ManyEnvelope<T> : IEnumerable<T>
     {
         private readonly bool live;
-        private readonly ScalarOf<IEnumerable<T>> fixedOrigin;
-        private readonly Func<IEnumerable<T>> origin;
+        private readonly Enumerator.Cached<T>.Cache<T> enumeratorCache;
+        private readonly Func<IEnumerator<T>> origin;
 
         /// <summary>
         /// Envelope for Enumerable.
@@ -116,30 +111,16 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public ManyEnvelope(Func<IEnumerator<T>> origin, bool live) : this(
-            () =>
-            {
-                var lst = new List<T>();
-                var enm = origin();
-                while(enm.MoveNext())
-                {
-                    lst.Add(enm.Current);
-                }
-                return lst;
-            },
-            live
-        )
+        public ManyEnvelope(Func<IEnumerable<T>> origin, bool live) : this(() => origin().GetEnumerator(), live)
         { }
 
         /// <summary>
-        /// Envelope for Enumerable
+        /// Envelope for Enumerables.
         /// </summary>
-        /// <param name="origin">How to get the enumerator</param>
-        /// <param name="live">Should the object build the enumerator live, every time it is used?</param>
-        public ManyEnvelope(Func<IEnumerable<T>> origin, bool live)
+        public ManyEnvelope(Func<IEnumerator<T>> origin, bool live)
         {
             this.live = live;
-            this.fixedOrigin = new ScalarOf<IEnumerable<T>>(origin);
+            this.enumeratorCache = new Cached<T>.Cache<T>(() => origin());
             this.origin = origin;
         }
 
@@ -152,11 +133,11 @@ namespace Yaapii.Atoms.Enumerable
             IEnumerator<T> result;
             if (this.live)
             {
-                result = this.origin().GetEnumerator();
+                result = this.origin();
             }
             else
             {
-                result = this.fixedOrigin.Value().GetEnumerator();
+                result = new Enumerator.Cached<T>(this.enumeratorCache);
             }
             return result;
         }

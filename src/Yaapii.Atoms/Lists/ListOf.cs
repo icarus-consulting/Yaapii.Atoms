@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="array">source array</param>
-        public ListOf(params T[] array) : this(new LiveMany<T>(array))
+        public ListOf(params T[] array) : this(new ManyOf<T>(array))
         { }
 
         /// <summary>

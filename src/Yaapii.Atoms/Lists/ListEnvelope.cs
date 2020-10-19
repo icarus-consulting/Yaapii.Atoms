@@ -23,8 +23,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Fail;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 
@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.List
     {
         private readonly UnsupportedOperationException readOnlyError = new UnsupportedOperationException("The list is readonly.");
         private readonly Func<IList<T>> origin;
-        private readonly ScalarOf<IList<T>> fixedOrigin;
+        private readonly Enumerator.Cached<T>.Cache<T> enumeratorCache;
         private readonly bool live;
 
         /// <summary>
@@ -58,17 +58,7 @@ namespace Yaapii.Atoms.List
         {
             this.origin = lst;
             this.live = live;
-            this.fixedOrigin = new ScalarOf<IList<T>>(
-                () =>
-                {
-                    var temp = new List<T>();
-                    foreach (var item in lst())
-                    {
-                        temp.Add(item);
-                    }
-                    return temp;
-                }
-            );
+            this.enumeratorCache = new Enumerator.Cached<T>.Cache<T>(() => lst().GetEnumerator());
         }
 
         /// <summary>
@@ -80,7 +70,23 @@ namespace Yaapii.Atoms.List
         {
             get
             {
-                return Val()[index];
+                T result;
+                if (this.live)
+                {
+                    result = this.origin()[index];
+                }
+                else
+                {
+                    if (this.enumeratorCache.ContainsKey(index))
+                    {
+                        result = this.enumeratorCache[index];
+                    }
+                    else
+                    {
+                        throw new ArgumentException($"Cannot get item at index {index} from list because it has only {this.enumeratorCache.Count} items.");
+                    }
+                }
+                return result;
             }
             set
             {
@@ -91,25 +97,21 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// Count elements
         /// </summary>
-        public int Count { get { return Val().Count; } }
-
-        /// <summary>
-        /// This is a readonly collection, always true.
-        /// </summary>
-        public bool IsReadOnly => true;
-
-        /// <summary>
-        /// Not supported.
-        /// </summary>
-        /// <param name="item"></param>
-        public void Add(T item) { throw this.readOnlyError; }
-
-        /// <summary>
-        /// Unsupported.
-        /// </summary>
-        public void Clear()
+        public int Count
         {
-            throw this.readOnlyError;
+            get
+            {
+                var count = 0;
+                if (this.live)
+                {
+                    count = this.origin().Count;
+                }
+                else
+                {
+                    count = this.enumeratorCache.Count;
+                }
+                return count;
+            }
         }
 
         /// <summary>
@@ -119,7 +121,24 @@ namespace Yaapii.Atoms.List
         /// <returns>true if item is found</returns>
         public bool Contains(T item)
         {
-            return Val().Contains(item);
+            bool result = false;
+            if (this.live)
+            {
+                result = this.origin().Contains(item);
+            }
+            else
+            {
+                var idx = -1;
+                while (this.enumeratorCache.ContainsKey(idx))
+                {
+                    if (this.enumeratorCache[idx].Equals(item))
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -129,7 +148,19 @@ namespace Yaapii.Atoms.List
         /// <param name="arrayIndex">write start index</param>
         public void CopyTo(T[] array, int arrayIndex)
         {
-            Val().CopyTo(array, arrayIndex);
+            int idx = 0;
+            if (this.live)
+            {
+                this.origin().CopyTo(array, arrayIndex);
+            }
+            else
+            {
+                while (this.enumeratorCache.ContainsKey(idx))
+                {
+                    array[arrayIndex + idx] = this.enumeratorCache[idx];
+                    idx++;
+                }
+            }
         }
 
         /// <summary>
@@ -138,7 +169,16 @@ namespace Yaapii.Atoms.List
         /// <returns>Enumerator</returns>
         public IEnumerator<T> GetEnumerator()
         {
-            return Val().GetEnumerator();
+            IEnumerator<T> result;
+            if (this.live)
+            {
+                result = this.origin().GetEnumerator();
+            }
+            else
+            {
+                result = new Cached<T>(this.enumeratorCache);
+            }
+            return result;
         }
 
         /// <summary>
@@ -157,7 +197,43 @@ namespace Yaapii.Atoms.List
         /// <returns></returns>
         public int IndexOf(T item)
         {
-            return Val().IndexOf(item);
+            var result = -1;
+            if (this.live)
+            {
+                result = this.origin().IndexOf(item);
+            }
+            else
+            {
+                var pos = 0;
+                while (this.enumeratorCache.ContainsKey(pos))
+                {
+                    if (this.enumeratorCache[pos].Equals(item))
+                    {
+                        result = pos;
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// This is a readonly collection, always true.
+        /// </summary>
+        public bool IsReadOnly => true;
+
+        /// <summary>
+        /// Not supported.
+        /// </summary>
+        /// <param name="item"></param>
+        public void Add(T item) { throw this.readOnlyError; }
+
+        /// <summary>
+        /// Unsupported.
+        /// </summary>
+        public void Clear()
+        {
+            throw this.readOnlyError;
         }
 
         /// <summary>
@@ -187,20 +263,6 @@ namespace Yaapii.Atoms.List
         public void RemoveAt(int index)
         {
             throw this.readOnlyError;
-        }
-
-        private IList<T> Val()
-        {
-            IList<T> result;
-            if (this.live)
-            {
-                result = this.origin();
-            }
-            else
-            {
-                result = this.fixedOrigin.Value();
-            }
-            return result;
         }
     }
 }

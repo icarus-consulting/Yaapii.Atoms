@@ -42,23 +42,33 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="items">items to decorate</param>
-        public SolidList(IEnumerable<T> items) : this(new LiveList<T>(items))
+        public SolidList(IEnumerable<T> items) : base(() =>
+            new SyncList<T>(
+                new ListOf<T>(items)
+            ),
+            false
+        )
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="items">items to decorate</param>
-        public SolidList(IEnumerator<T> items) : this(new LiveList<T>(items))
+        /// <param name="enumerator">items to decorate</param>
+        public SolidList(IEnumerator<T> enumerator) : base(() =>
+            new SyncList<T>(
+                new ListOf<T>(enumerator)
+            ),
+            false
+        )
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="list">list to decorate</param>
-        public SolidList(ICollection<T> list) : base(
-            () => new SyncList<T>(
-                new LiveList<T>(list)
+        public SolidList(ICollection<T> list) : base(() =>
+            new SyncList<T>(
+                new ListOf<T>(list)
             ),
             false
         )

@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
@@ -41,7 +40,11 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source"></param>
         /// <param name="ex"></param>
-        public ItemAt(IEnumerable<T> source, Exception ex) : this(source, 0, ex)
+        public ItemAt(IEnumerable<T> source, Exception ex) : this(
+            source,
+            0,
+            ex
+        )
         { }
 
         /// <summary>
@@ -53,8 +56,8 @@ namespace Yaapii.Atoms.Enumerable
         public ItemAt(IEnumerable<T> source, int position, Exception ex) : this(
             source,
             position,
-            new FuncOf<IEnumerable<T>, T>(
-                (itr) => throw ex
+            new FuncOf<IEnumerable<T>, T>(itr =>
+                throw ex
             )
         )
         { }
@@ -64,9 +67,13 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         public ItemAt(IEnumerable<T> source) : this(
-                source,
-                new BiFuncOf<Exception, IEnumerable<T>, T>(
-                    (ex, itr) => throw new NoSuchElementException(new Formatted("Cannot get first element: {0}", ex.Message).AsString())))
+            source,
+            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, itr) =>
+                throw new NoSuchElementException(
+                    new Formatted("Cannot get first element: {0}", ex.Message).AsString()
+                )
+            )
+        )
         { }
 
         /// <summary>
@@ -76,8 +83,8 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="fallback">fallback func</param>
         public ItemAt(IEnumerable<T> source, T fallback) : this(
             source,
-            new FuncOf<IEnumerable<T>, T>(
-                b => fallback))
+            new FuncOf<IEnumerable<T>, T>(b => fallback)
+        )
         { }
 
         /// <summary>
@@ -88,7 +95,9 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="fallback">fallback func</param>
         public ItemAt(IEnumerable<T> source, int position, T fallback) : this(
             source,
-            new FuncOf<IEnumerable<T>, T>(b => fallback))
+            position,
+            new FuncOf<IEnumerable<T>, T>(b => fallback)
+        )
         { }
 
         /// <summary>
@@ -97,7 +106,10 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
         public ItemAt(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback) : this(
-            source, 0, fallback)
+            source,
+            0,
+            fallback
+        )
         { }
 
         /// <summary>
@@ -106,7 +118,9 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
         public ItemAt(IEnumerable<T> source, Func<IEnumerable<T>, T> fallback) : this(
-            source, 0, new FuncOf<IEnumerable<T>, T>(fallback)
+            source,
+            0,
+            new FuncOf<IEnumerable<T>, T>(fallback)
         )
         { }
 
@@ -116,7 +130,10 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
         public ItemAt(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback) : this(
-            source, 0, fallback)
+            source,
+            0,
+            fallback
+        )
         { }
 
         /// <summary>
@@ -137,7 +154,9 @@ namespace Yaapii.Atoms.Enumerable
                                 ex.Message
                             ).AsString()
                     );
-                }))
+                }
+            )
+        )
         { }
 
         /// <summary>
@@ -149,7 +168,8 @@ namespace Yaapii.Atoms.Enumerable
         public ItemAt(IEnumerable<T> source, int position, IFunc<IEnumerable<T>, T> fallback) : this(
             source,
             position,
-            (ex, enumerable) => fallback.Invoke(enumerable))
+            (ex, enumerable) => fallback.Invoke(enumerable)
+        )
         { }
 
         /// <summary>
@@ -161,7 +181,10 @@ namespace Yaapii.Atoms.Enumerable
         public ItemAt(IEnumerable<T> source, int position, Func<IEnumerable<T>, T> fallback) : this(
             source,
             position,
-            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback.Invoke(enumerable)))
+            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) =>
+                fallback.Invoke(enumerable)
+            )
+        )
         { }
 
         /// <summary>
@@ -173,7 +196,10 @@ namespace Yaapii.Atoms.Enumerable
         public ItemAt(IEnumerable<T> source, int position, Func<Exception, IEnumerable<T>, T> fallback) : this(
             source,
             position,
-            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback.Invoke(ex, enumerable)))
+            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) =>
+                fallback.Invoke(ex, enumerable)
+            )
+        )
         { }
 
         /// <summary>
@@ -182,12 +208,13 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback)
-            : base(
-                () => new Enumerator.ItemAt<T>(
-                    source.GetEnumerator(), position, fallback
-                ).Value()
-            )
+        public ItemAt(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback) : base(() =>
+            new Enumerator.ItemAt<T>(
+                source.GetEnumerator(),
+                position,
+                fallback
+            ).Value()
+        )
         { }
     }
 }

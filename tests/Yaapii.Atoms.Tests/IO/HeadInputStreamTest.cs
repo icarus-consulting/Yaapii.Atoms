@@ -20,52 +20,60 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using Xunit;
+using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.IO.Tests
 {
-    public sealed class ManyLiveTest
+    public sealed class HeadInputStreamTest
     {
         [Fact]
-        public void ConvertsScalarsToEnumerable()
+        void TestSkippingLessThanTotal()
         {
-            Assert.True(
-                new LengthOf(
-                    new ManyOf<string>(
-                        "a", "b", "c"
-                    )
-                ).Value() == 3,
-                "Can't convert scalars to iterable");
-        }
+            var stream = 
+                new HeadInputStream(
+                    new InputOf("testSkippingLessThanTotal").Stream(),
+                    5
+                );
 
-        [Fact]
-        public void ConvertsObjectsToEnumerable()
-        {
-            Assert.True(
-                new LengthOf(
-                    new ManyOf<IText>(
-                        new LiveText("a"), 
-                        new LiveText("b"), 
-                        new LiveText("c")
-                    )
-                ).Value() == 3
+            var skipped = stream.Seek(3L, SeekOrigin.Begin);
+
+            Assert.Equal(
+                3L,
+                skipped
+            );
+
+            Assert.Contains(
+                "tS",
+                new TextOf(new InputOf(stream)).AsString()
             );
         }
 
         [Fact]
-        public void SensesChanges()
+        void TestSkippingMoreThanTotal()
         {
-            var lst = new List<string>();
-            var live =
-                new LiveMany<string>(() =>
-                {
-                    lst.Add("something");
-                    return lst;
-                });
-            Assert.NotEqual(new LengthOf(live).Value(), new LengthOf(live).Value());
+            var stream = 
+                new HeadInputStream(
+                    new InputOf("testSkippingMoreThanTotal").Stream(),
+                    5
+                );
+            var skipped = stream.Seek(7L, SeekOrigin.Begin);
+
+            Assert.Equal(
+                5L,
+                skipped
+            );
+
+            var input = new TextOf(stream).AsString();
+            Assert.Equal(
+                "",
+                input
+            );
         }
     }
-
 }
