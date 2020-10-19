@@ -30,13 +30,8 @@ namespace Yaapii.Atoms.Number
     /// <summary>
     /// A parsed number
     /// </summary>
-    public sealed class NumberOf : INumber
+    public sealed class NumberOf : NumberEnvelope
     {
-        private readonly IScalar<long> _lng;
-        private readonly IScalar<float> _flt;
-        private readonly IScalar<int> _itg;
-        private readonly IScalar<double> _dbl;
-
         /// <summary>
         /// A <see cref="IText"/> as a <see cref="INumber"/>
         /// </summary>
@@ -208,52 +203,8 @@ namespace Yaapii.Atoms.Number
         /// <param name="itg"></param>
         /// <param name="flt"></param>
         /// <param name="dbl"></param>
-        public NumberOf(IScalar<long> lng, IScalar<int> itg, IScalar<float> flt, IScalar<double> dbl)
+        public NumberOf(IScalar<long> lng, IScalar<int> itg, IScalar<float> flt, IScalar<double> dbl) : base(dbl, itg, lng, flt)
         {
-            _lng = lng;
-            _itg = itg;
-            _flt = flt;
-            _dbl = dbl;
-        }
-
-        /// <summary>
-        /// Number as double representation
-        /// Precision: ±5.0e−324 to ±1.7e308	(15-16 digits)
-        /// </summary>
-        /// <returns></returns>
-        public double AsDouble()
-        {
-            return _dbl.Value();
-        }
-
-        /// <summary>
-        /// Number as float representation
-        /// Precision: 	±1.5e−45 to ±3.4e38	    (7 digits)
-        /// </summary>
-        /// <returns></returns>
-        public float AsFloat()
-        {
-            return _flt.Value();
-        }
-
-        /// <summary>
-        /// Number as integer representation
-        /// Range -2,147,483,648 to 2,147,483,647	(Signed 32-bit integer)
-        /// </summary>
-        /// <returns></returns>
-        public int AsInt()
-        {
-            return _itg.Value();
-        }
-
-        /// <summary>
-        /// Number as long representation
-        /// Range -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807	(Signed 64-bit integer)
-        /// </summary>
-        /// <returns></returns>
-        public long AsLong()
-        {
-            return _lng.Value();
         }
     }
 }
