@@ -60,8 +60,9 @@ Task("Restore")
 // Build
 ///////////////////////////////////////////////////////////////////////////////
 Task("Build")
-    .IsDependentOn("Clean") // we can define Task`s which a dependet on other task like this
+    .IsDependentOn("Clean")
     .IsDependentOn("Restore")
+    .IsDependentOn("Version")
     .Does(() =>
     {	
 	    //main = netstandard2.0, tests = netcoreapp2.0
@@ -246,9 +247,13 @@ Task("Release")
     });
 
 Task("Default")
+    .IsDependentOn("Clean")
+    .IsDependentOn("Restore")
+    .IsDependentOn("Version")
     .IsDependentOn("Build")
     .IsDependentOn("Test")
     .IsDependentOn("Generate-Coverage")
+    .IsDependentOn("GetCredentials")
     .IsDependentOn("Upload-Coverage")
     .IsDependentOn("Pack")
     .IsDependentOn("Release");
