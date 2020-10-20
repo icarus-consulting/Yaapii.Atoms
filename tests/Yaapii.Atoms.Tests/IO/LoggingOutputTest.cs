@@ -9,7 +9,7 @@ using Yaapii.Atoms.IO;
 
 namespace Yaapii.Atoms.IO.Tests
 {
-    public sealed class LoggingOutoutTest
+    public sealed class LoggingOutputTest
     {
         [Fact]
         public void LogWriteZeroBytes()
