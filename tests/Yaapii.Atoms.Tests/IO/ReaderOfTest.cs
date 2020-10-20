@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.IO.Tests
                     new InputOf(
                         new ReaderOf(
                             new Uri(path)))
-                ).AsString() == content,
+                ).ToString() == content,
                 "can't read data from file");
         }
 

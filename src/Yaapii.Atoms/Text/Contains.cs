@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="patternText"> pattern as IText </param>
         /// <param name="ignoreCase"> Enables case sensitivity </param>
         public Contains(IText inputText, IText patternText, bool ignoreCase = false) :
-            this(new Live<string>(() => inputText.AsString()), new Live<string>(() => patternText.AsString()), new Live<StringComparison>(() => ignoreCase ? StringComparison.CurrentCultureIgnoreCase : StringComparison.CurrentCulture))
+            this(new Live<string>(() => inputText.ToString()), new Live<string>(() => patternText.ToString()), new Live<StringComparison>(() => ignoreCase ? StringComparison.CurrentCultureIgnoreCase : StringComparison.CurrentCulture))
         { }
 
         /// <summary> Checks if a text contains a pattern using IScalar </summary>

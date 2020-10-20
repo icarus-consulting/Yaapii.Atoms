@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Text
             CultureInfo.InvariantCulture,
             () =>
             new Mapped<IText, string>(
-                txt => txt.AsString(),
+                txt => txt.ToString(),
                 arguments
             ).ToArray()
         )
@@ -151,7 +151,7 @@ namespace Yaapii.Atoms.Text
                 object[] strings = new object[new LengthOf(arguments).Value()];
                 for (int i = 0; i < arguments.Length; i++)
                 {
-                    strings[i] = arguments[i].AsString();
+                    strings[i] = arguments[i].ToString();
                 }
                 return strings;
             },
@@ -190,7 +190,7 @@ namespace Yaapii.Atoms.Text
                 object[] strings = new object[new LengthOf(arguments).Value()];
                 for (int i = 0; i < arguments.Length; i++)
                 {
-                    strings[i] = arguments[i].AsString();
+                    strings[i] = arguments[i].ToString();
                 }
                 return strings;
             },
@@ -231,7 +231,7 @@ namespace Yaapii.Atoms.Text
             Func<object[]> arguments,
             bool live = false
         ) : base(
-            () => String.Format(locale, ptn.AsString(), arguments()),
+            () => String.Format(locale, ptn.ToString(), arguments()),
             live
         )
         { }

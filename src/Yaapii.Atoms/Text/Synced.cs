@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Text
         public Synced(IText text, Object lck) : base(() =>
             {
                 lock (lck) {
-                    return text.AsString();
+                    return text.ToString();
                 }
             },
             true

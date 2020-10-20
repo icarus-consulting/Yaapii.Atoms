@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.IO.Tests
             Assert.True(
                 new LiveText(
                     new DeadInput())
-                .AsString() == "",
+                .ToString() == "",
                 "Can't read empty content");
         }
 

@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.IO.Tests
                 new LiveText(
                     new InputAsBytes(
                         new InputOf(new Uri(file))))
-                .AsString() == (txt + txt),
+                .ToString() == (txt + txt),
                 "Can't append path content");
         }
 
@@ -81,7 +81,7 @@ namespace Yaapii.Atoms.IO.Tests
                 new LiveText(
                     new InputAsBytes(
                         new InputOf(file)))
-                .AsString() == txt + txt
+                .ToString() == txt + txt
             );
         }
 

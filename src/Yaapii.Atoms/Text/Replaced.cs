@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="find">part to replace</param>
         /// <param name="replace">replacement to insert</param>
         public Replaced(IText text, String find, String replace) : base(() =>
-            text.AsString().Replace(find, replace), 
+            text.ToString().Replace(find, replace), 
             false
         )
         { }

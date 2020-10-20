@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.IO.Tests
                 new LiveText(
                     new InputAsBytes(
                         new InputOf(new Uri(file))))
-                .AsString() == content,
+                .ToString() == content,
                 "Can't write path content");
         }
 
@@ -78,7 +78,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new InputOf(file)
                     )
                 )
-                .AsString() == txt,
+                .ToString() == txt,
                 "Can't write file content"
             );
         }

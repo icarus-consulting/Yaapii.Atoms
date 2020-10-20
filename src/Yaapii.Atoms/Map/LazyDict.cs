@@ -196,7 +196,7 @@ namespace Yaapii.Atoms.Map
                             "arrayIndex {0} is higher than the item count in the map {1}.",
                             arrayIndex,
                             this.map.Count
-                        ).AsString());
+                        ).ToString());
             }
 
             new ListOf<KeyValuePair<string, string>>(this).CopyTo(array, arrayIndex);
@@ -433,7 +433,7 @@ namespace Yaapii.Atoms.Map
                             "arrayIndex {0} is higher than the item count in the map {1}.",
                             arrayIndex,
                             this.map.Count
-                        ).AsString());
+                        ).ToString());
             }
 
             new ListOf<KeyValuePair<string, Value>>(this).CopyTo(array, arrayIndex);
@@ -674,7 +674,7 @@ namespace Yaapii.Atoms.Map
                             "arrayIndex {0} is higher than the item count in the map {1}.",
                             arrayIndex,
                             this.map.Count
-                        ).AsString());
+                        ).ToString());
             }
 
             new ListOf<KeyValuePair<Key, Value>>(this).CopyTo(array, arrayIndex);

@@ -111,7 +111,7 @@ namespace Yaapii.Atoms.Number
                 }
                 catch (FormatException)
                 {
-                    throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
+                    throw new ArgumentException(new Formatted("'{0}' is not a number.", str).ToString());
                 }
             }),
             new ScalarOf<int>(() =>
@@ -122,7 +122,7 @@ namespace Yaapii.Atoms.Number
                 }
                 catch (FormatException)
                 {
-                    throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
+                    throw new ArgumentException(new Formatted("'{0}' is not a number.", str).ToString());
                 }
             }),
             new ScalarOf<long>(() =>
@@ -133,7 +133,7 @@ namespace Yaapii.Atoms.Number
                 }
                 catch (FormatException)
                 {
-                    throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
+                    throw new ArgumentException(new Formatted("'{0}' is not a number.", str).ToString());
                 }
             }),
             new ScalarOf<float>(() =>
@@ -144,7 +144,7 @@ namespace Yaapii.Atoms.Number
                 }
                 catch (FormatException)
                 {
-                    throw new ArgumentException(new Formatted("'{0}' is not a number.", str).AsString());
+                    throw new ArgumentException(new Formatted("'{0}' is not a number.", str).ToString());
                 }
             })
         )

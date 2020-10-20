@@ -69,7 +69,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
         public TrimmedRight(IText text, IScalar<char[]> trimText) : base(
-            () => text.AsString().TrimEnd(trimText.Value()),
+            () => text.ToString().TrimEnd(trimText.Value()),
             false
         )
         { }
@@ -115,8 +115,8 @@ namespace Yaapii.Atoms.Text
         public TrimmedRight(IText text, IText removeText, bool ignoreCase) : base(
             () =>
             {
-                string str = text.AsString();
-                string remove = removeText.AsString();
+                string str = text.ToString();
+                string remove = removeText.ToString();
 
                 if (ignoreCase)
                 {

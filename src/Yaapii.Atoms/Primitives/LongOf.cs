@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">a string as a text</param>
         /// <param name="culture">culture of the text</param>
-        public LongOf(IText text, CultureInfo culture) : this(new ScalarOf<long>(() => Convert.ToInt64(text.AsString(), culture.NumberFormat)))
+        public LongOf(IText text, CultureInfo culture) : this(new ScalarOf<long>(() => Convert.ToInt64(text.ToString(), culture.NumberFormat)))
         { }
 
         /// <summary>

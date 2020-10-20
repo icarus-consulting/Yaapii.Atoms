@@ -68,7 +68,7 @@ namespace Yaapii.Atoms.Text
         public TrimmedLeft(IText text, IScalar<char[]> trimText) : base(
             () =>
             {
-                return text.AsString().TrimStart(trimText.Value());
+                return text.ToString().TrimStart(trimText.Value());
             },
             false
         )
@@ -119,8 +119,8 @@ namespace Yaapii.Atoms.Text
         public TrimmedLeft(IText text, IText removeText, bool ignoreCase) : base(
             () =>
             {
-                string str = text.AsString();
-                string remove = removeText.AsString();
+                string str = text.ToString();
+                string remove = removeText.ToString();
 
                 if (ignoreCase)
                 {

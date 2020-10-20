@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Text
         public SubText(IText text, int strt) : this(
             text, 
             new Live<Int32>(strt), 
-            new Live<Int32>(() => text.AsString().Length - strt)
+            new Live<Int32>(() => text.ToString().Length - strt)
         )
         { }
 
@@ -104,7 +104,7 @@ namespace Yaapii.Atoms.Text
         public SubText(IText text, Func<Int32> strt, Func<Int32> len) : base(() =>
             {
                 return 
-                    text.AsString().Substring(
+                    text.ToString().Substring(
                         strt(),
                         len()
                     );

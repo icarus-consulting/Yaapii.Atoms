@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void NormalizesText()
         {
             Assert.True(
-            new Normalized(" \t hello  \t\tworld   \t").AsString() == "hello world",
+            new Normalized(" \t hello  \t\tworld   \t").ToString() == "hello world",
             "Can't normalize a text");
         }
     }

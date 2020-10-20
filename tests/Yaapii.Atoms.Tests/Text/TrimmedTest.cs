@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new Trimmed(
                     new TextOf("   \b \f \n \r \t \v   ")
-                ).AsString() == string.Empty
+                ).ToString() == string.Empty
             );
         }
 
@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void TrimsString()
         {
             Assert.True(
-                new Trimmed(" \b   \t      Hello! \t \b  ").AsString() == "Hello!"
+                new Trimmed(" \b   \t      Hello! \t \b  ").ToString() == "Hello!"
             );
         }
 
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void TrimsText()
         {
             Assert.True(
-                new Trimmed(new LiveText(" \b   \t      Hello! \t \b  ")).AsString() == "Hello!"
+                new Trimmed(new LiveText(" \b   \t      Hello! \t \b  ")).ToString() == "Hello!"
             );
         }
 
@@ -57,7 +57,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void TrimsStringWithCharArray()
         {
             Assert.True(
-                new Trimmed(" \b   \t      Hello! \t \b  ", new char[] { '\b', '\t', ' ', 'H', 'o' }).AsString() == "ello!"
+                new Trimmed(" \b   \t      Hello! \t \b  ", new char[] { '\b', '\t', ' ', 'H', 'o' }).ToString() == "ello!"
             );
         }
 
@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void TrimsTextWithCharArray()
         {
             Assert.True(
-                new Trimmed(new LiveText(" \b   \t      Hello! \t \b  "), new char[] { '\b', '\t', ' ', 'H', 'o' }).AsString() == "ello!"
+                new Trimmed(new LiveText(" \b   \t      Hello! \t \b  "), new char[] { '\b', '\t', ' ', 'H', 'o' }).ToString() == "ello!"
             );
         }
 
@@ -73,7 +73,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void TrimsTextWithScalar()
         {
             Assert.True(
-                new Trimmed(new LiveText(" \b   \t      Hello! \t \b  "), new Live<char[]>(() => new char[] { '\b', '\t', ' ', 'H', 'o' })).AsString() == "ello!"
+                new Trimmed(new LiveText(" \b   \t      Hello! \t \b  "), new Live<char[]>(() => new char[] { '\b', '\t', ' ', 'H', 'o' })).ToString() == "ello!"
             );
         }
 
@@ -81,7 +81,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void RemovesStringFromString()
         {
             Assert.True(
-                new Trimmed(" \b   \t      Hello! \t \b   \t      H", " \b   \t      H").AsString() == "ello! \t"
+                new Trimmed(" \b   \t      Hello! \t \b   \t      H", " \b   \t      H").ToString() == "ello! \t"
             );
         }
 
@@ -89,7 +89,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void RemovesTextFromString()
         {
             Assert.True(
-                new Trimmed(new LiveText(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").AsString() == "ello! \t"
+                new Trimmed(new LiveText(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").ToString() == "ello! \t"
             );
         }
 
@@ -97,7 +97,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void RemovesStringFromText()
         {
             Assert.True(
-                new Trimmed(" \b   \t      Hello! \t \b   \t      H", new LiveText(" \b   \t      H")).AsString() == "ello! \t"
+                new Trimmed(" \b   \t      Hello! \t \b   \t      H", new LiveText(" \b   \t      H")).ToString() == "ello! \t"
             );
         }
 
@@ -105,7 +105,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void RemovesTextFromText()
         {
             Assert.True(
-                new Trimmed(new LiveText(" \b   \t      Hello! \t \b   \t      H"), new LiveText(" \b   \t      H")).AsString() == "ello! \t"
+                new Trimmed(new LiveText(" \b   \t      Hello! \t \b   \t      H"), new LiveText(" \b   \t      H")).ToString() == "ello! \t"
             );
         }
     }

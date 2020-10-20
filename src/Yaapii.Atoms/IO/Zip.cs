@@ -74,7 +74,7 @@ public sealed class Zip : IInput
                 new Formatted(
                     "Path is not a directory or does not exist: {0}",
                     path
-                ).AsString()
+                ).ToString()
             )
         ).Go();
     }

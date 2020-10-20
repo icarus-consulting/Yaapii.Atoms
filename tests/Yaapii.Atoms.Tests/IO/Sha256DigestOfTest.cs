@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.IO.Tests
                 "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
                 new HexOf(
                     new Sha256DigestOf(new InputOf(string.Empty))
-                ).AsString()
+                ).ToString()
            );
         }
 
@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.IO.Tests
                 "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069",
                 new HexOf(
                     new Sha256DigestOf(new InputOf("Hello World!"))
-                ).AsString()
+                ).ToString()
             );
         }
 
@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.IO.Tests
                             this.GetType()
                         )
                     )
-                ).AsString()
+                ).ToString()
             );
         }
     }
