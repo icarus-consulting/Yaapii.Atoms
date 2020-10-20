@@ -13,6 +13,14 @@ indent_size = 4
 insert_final_newline = true
 csharp_space_after_keywords_in_control_flow_statements = true
 
+# Cake build script
+[*.cake]
+indent_size = 4
+
+# Appveyor cofinguration
+[*.yml]
+indent_size = 2
+
 # Xml project files
 # [*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
 # indent_size = 2
