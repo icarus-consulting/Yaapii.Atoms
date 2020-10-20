@@ -35,7 +35,6 @@ var repository              = "Yaapii.Atoms";
 
 // For publishing NuGetFeed
 var nuGetSource             = "https://api.nuget.org/v3/index.json";
-var nuGetSymbols            = "https://www.nuget.org/api/v2/symbolpackage";
 
 // API key tokens for deployment
 var gitHubToken             = "";
@@ -313,26 +312,24 @@ Task("NuGetFeed")
         var nugets = GetFiles($"{buildArtifacts.Path}/*.nupkg");
         foreach(var package in nugets)
         {
-            if(!package.GetFilename().FullPath.EndsWith(".snupkg"))
-            {
-                NuGetPush(
-                    package,
-                    new NuGetPushSettings {
-                        Source = nuGetSource,
-                        ApiKey = nuGetToken
-                    }
-                );
-            }
-            else
-            {
-                NuGetPush(
-                    package,
-                    new NuGetPushSettings {
-                        Source = nuGetSymbols,
-                        ApiKey = nuGetToken
-                    }
-                );
-            }
+            NuGetPush(
+                package,
+                new NuGetPushSettings {
+                    Source = nuGetSource,
+                    ApiKey = nuGetToken
+                }
+            );
+        }
+        var symbols = GetFiles($"{buildArtifacts.Path}/*.snupkg");
+        foreach(var symbol in symbols)
+        {
+            NuGetPush(
+                symbol,
+                new NuGetPushSettings {
+                    Source = nuGetSource,
+                    ApiKey = nuGetToken
+                }
+            );
         }
     });
 
