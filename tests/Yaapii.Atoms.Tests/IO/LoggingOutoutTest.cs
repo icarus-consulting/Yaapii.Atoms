@@ -12,7 +12,7 @@ namespace Yaapii.Atoms.IO.Tests
     public sealed class LoggingOutoutTest
     {
         [Fact]
-        public void logWriteZero()
+        public void LogWriteZeroBytes()
         {
             var res =
                 new LengthOf(
@@ -34,102 +34,112 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void LogWriteOneByte()
         {
+            using(var tempfile = new TempFile("txt"))
+            {
+                var append = new AppendTo(tempfile.Value());
 
-            var output = 
-                new LoggingOutput(
-                    new ConsoleOutput(),
-                    "memory"
-                ).Stream();
+                var output =
+                    new LoggingOutput(
+                        append,
+                        "memory"
+                    ).Stream();
 
-            output.Write(new BytesOf("a").AsBytes(), 0, 1);
+                output.Write(new BytesOf("a").AsBytes(), 0, 1);
 
+                append.Dispose();
 
+                var inputStream = new InputOf(new Uri(tempfile.Value())).Stream();
+                var content = "";
+                using (var reader = new StreamReader(inputStream))
+                {
+                   content = reader.ReadToEnd();
+                }
+                Assert.Equal(
+                    "a",
+                    content
+                );
+            }
         }
-
+        
         [Fact]
         public void LogWriteText()
         {
-            var output =
-                new LoggingOutput(
-                    new ConsoleOutput(),
-                    "memory"
-                ).Stream();
+            using (var tempfile = new TempFile("txt"))
+            {
+                var append = new AppendTo(tempfile.Value());
 
-            var bytes = new BytesOf("Hello, товарищ!").AsBytes();
-            output.Write(bytes,0, bytes.Length);
-           
-            new Assertion<>(
-                "Can't log 22 bytes written to memory",
-                logger.toString(),
-                Matchers.containsString("Written 22 byte(s) to memory in")
-            ).affirm();
+                var output =
+                    new LoggingOutput(
+                        append,
+                        "memory"
+                    ).Stream();
+
+                var bytes = new BytesOf("Hello World!").AsBytes();
+                output.Write(bytes, 0, bytes.Length);
+                append.Dispose();
+
+                var inputStream = new InputOf(new Uri(tempfile.Value())).Stream();
+                var content = "";
+                using (var reader = new StreamReader(inputStream))
+                {
+                    content = reader.ReadToEnd();
+                }
+
+                Assert.Equal(
+                    bytes,
+                    new BytesOf(content).AsBytes()
+                );
+            }
         }
-/*
-    @Test
-    public void logWriteToLargeTextFile() throws Exception
-{
-    final Logger logger = new FakeLogger();
-final Path temp = this.folder.newFolder("ccts-1").toPath();
-final Path path = temp.resolve("x/y/z/file.txt");
-try (OutputStream output = new LoggingOutput(
-    new OutputTo(path),
-    "text file",
-    logger
-).stream()
-        ) {
-    new LengthOf(
-        new TeeInput(
-            new ResourceOf("org/cactoos/large-text.txt"),
-            new OutputTo(output)
-        )
-    ).intValue();
-}
-new Assertion<>(
-    "Can't log write and close operations to text file",
-    logger.toString(),
-    Matchers.allOf(
-        Matchers.not(
-            Matchers.containsString(
-                "Written 16384 byte(s) to text file"
-            )
-        ),
-        Matchers.containsString("Written 74536 byte(s) to text file"),
-        Matchers.containsString("Closed output stream from text file")
-    )
-).affirm();
-}
+        
+        [Fact]
+        public void LogWriteToLargeTextFile()
+        {
+            using (var tempfile = new TempFile("txt"))
+            {
 
-    @Test
-    public void logAllWriteToLargeTextFile() throws Exception
-{
-    final Logger logger = new FakeLogger(Level.WARNING);
-final Path temp = this.folder.newFolder("ccts-2").toPath();
-final Path path = temp.resolve("a/b/c/file.txt");
-try (OutputStream output = new LoggingOutput(
-    new OutputTo(path),
-    "text file",
-    logger
-).stream()
-        ) {
-    new LengthOf(
-        new TeeInput(
-            new ResourceOf("org/cactoos/large-text.txt"),
-            new OutputTo(output)
-        )
-    ).intValue();
-}
-new Assertion<>(
-    "Can't log all write and close operations to text file",
-    logger.toString(),
-    Matchers.allOf(
-        Matchers.containsString("Written 16384 byte(s) to text file"),
-        Matchers.containsString("Written 32768 byte(s) to text file"),
-        Matchers.containsString("Written 49152 byte(s) to text file"),
-        Matchers.containsString("Written 65536 byte(s) to text file"),
-        Matchers.containsString("Written 74536 byte(s) to text file"),
-        Matchers.containsString("Closed output stream from text file")
-    )
-).affirm();
-}*/
+                try {
+                    var append = new AppendTo(tempfile.Value());
+
+                    var output =
+                        new LoggingOutput(
+                            append,
+                            "text file"
+                        ).Stream();
+
+                    var length =
+                        new LengthOf(
+                            new TeeInput(
+                                new ResourceOf("Assets/Txt/large-text.txt", this.GetType()),
+                                new OutputTo(output)
+                            )
+                        ).Value();
+
+                    append.Dispose();
+
+                    var inputStream = new InputOf(new Uri(tempfile.Value())).Stream();
+                    var content = "";
+                    var input = "";
+                    using (var reader = new StreamReader(inputStream))
+                    {
+                        content = reader.ReadToEnd();
+                    }
+                    using (var reader = new StreamReader(new ResourceOf("Assets/Txt/large-text.txt", this.GetType()).Stream()))
+                    {
+                        input = reader.ReadToEnd();
+                    }
+
+                    Assert.Equal(
+                        input,
+                        content
+                    );
+
+
+                }catch(Exception ex)
+                {
+
+                }
+            }
+        }
     }
 }
