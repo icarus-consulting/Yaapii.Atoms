@@ -1,14 +1,16 @@
 #------------------------------------------------------------#
 #     CI Build Configuration for master branch pre-release   #
 #------------------------------------------------------------#
-version: 1.0.{build}
-image: Visual Studio 2017
+version: 1.0.0.{build}
+image: Visual Studio 2019
 configuration: Release
 environment:
   GITHUB_TOKEN:
     secure: tvoyJ/iv8Y+9VaKvOFvxegvQFBNqPkhiwghS8lQDsrt7B/1MWU4e8uOHQzfTU580
   CODECOV_TOKEN:
     secure: 2/6E5a1yzv5Wp1yRpHGDybeKyjdyJlO2xiRxuT4TBGBJcbSfjOrMRsFpMd/X334f
+  NUGET_TOKEN:
+    secure: P2AbVXF6ZhkWoNAFjmIhzMH3FEgJkFtXPozru7MTOWRn6HCRiq3Dz+TP36knnevg
 # Do not build feature branch with open Pull Requests
 skip_branch_with_pr: true
 # Automatically register private account and/or project AppVeyor NuGet feeds.
@@ -17,16 +19,3 @@ nuget:
 build_script:
 - ps: .\build.ps1
 test: off
-artifacts:
-- path: '.\artifacts\**\*.nupkg'
-deploy:
-  - provider: NuGet
-    name: Nuget feed
-    on:
-      #branch: master
-      appveyor_repo_tag: true
-    api_key:
-      secure: P2AbVXF6ZhkWoNAFjmIhzMH3FEgJkFtXPozru7MTOWRn6HCRiq3Dz+TP36knnevg
-    skip_symbols: false
-    artifact: /.*\.nupkg/
-
