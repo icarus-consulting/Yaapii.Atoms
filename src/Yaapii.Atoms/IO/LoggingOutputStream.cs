@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.IO
 {
@@ -10,13 +11,25 @@ namespace Yaapii.Atoms.IO
     {
         private readonly Stream origin;
         private readonly string destination;
-        private long bytes;
-        private long time;
+        private readonly IScalar<IList<long>> bytes;
+        private readonly IScalar<IList<long>> time;
 
         public LoggingOutputStream(Stream output, string destination)
         {
             this.origin = output;
             this.destination = destination;
+            this.bytes = 
+                new ScalarOf<IList<long>>(
+                    new List<long>(1) 
+                    { 
+                        0 
+                    });
+            this.time = 
+                new ScalarOf<IList<long>>(
+                    new List<long>(1) 
+                    { 
+                        0 
+                    });
         }
 
         public override bool CanRead => this.origin.CanRead;
@@ -32,7 +45,8 @@ namespace Yaapii.Atoms.IO
         public override void Flush()
         {
             this.origin.Flush();
-            Debug.WriteLine($"Flushed output stream from {this.destination}.");
+
+            Debug.WriteLine($"Written {this.bytes.Value()[0]} byte(s) to {this.destination} in {this.time.Value()[0]}ms.");
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -56,10 +70,10 @@ namespace Yaapii.Atoms.IO
             this.origin.Write(buffer, offset, count);
             DateTime end = DateTime.UtcNow;
             long millis = (long)end.Subtract(start).TotalMilliseconds;
-            this.bytes += count;
-            this.time += millis;
+            this.bytes.Value()[0] += count;
+            this.time.Value()[0] += millis;
 
-            Debug.WriteLine($"Written {this.bytes} byte(s) to {this.destination} in {this.time}.");
+            Debug.WriteLine($"Written {this.bytes.Value()[0]} byte(s) to {this.destination} in {this.time.Value()[0]}.");
         }
     }
 }
