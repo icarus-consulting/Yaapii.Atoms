@@ -99,23 +99,23 @@ Task("Build")
                 MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(version)
             };
         var skipped = new List<string>();
-	    foreach(var module in GetSubDirectories(modules))
-	    {
+        foreach(var module in GetSubDirectories(modules))
+        {
             var name = module.GetDirectoryName();
-		    if(!blacklistedModules.Contains(name))
-		    {
-			    Information($"Building {name}");
-			
-			    DotNetCoreBuild(
-				    module.FullPath,
-				    settings
-			    );
-		    }
-		    else
-		    {
+            if(!blacklistedModules.Contains(name))
+            {
+                Information($"Building {name}");
+            
+                DotNetCoreBuild(
+                    module.FullPath,
+                    settings
+                );
+            }
+            else
+            {
                 skipped.Add(name);
-		    }
-	    }
+            }
+        }
         if (skipped.Count > 0)
         {
             Warning("The following builds have been skipped:");
@@ -142,22 +142,22 @@ Task("UnitTests")
                 NoRestore = true
             };
         var skipped = new List<string>();
-	    foreach(var test in GetSubDirectories(tests))
-	    {
+        foreach(var test in GetSubDirectories(tests))
+        {
             var name = test.GetDirectoryName();
-		    if(blacklistedUnitTests.Contains(name))
+            if(blacklistedUnitTests.Contains(name))
             {
                 skipped.Add(name);
             }
             else if(!name.StartsWith("TmxTest"))
             {
                 Information($"Testing {name}");
-			    DotNetCoreTest(
-				    test.FullPath,
-				    settings
-			    );
+                DotNetCoreTest(
+                    test.FullPath,
+                    settings
+                );
             }
-	    }
+        }
         if (skipped.Count > 0)
         {
             Warning("The following tests have been skipped:");
@@ -222,6 +222,7 @@ Task("UploadCoverage")
 ///////////////////////////////////////////////////////////////////////////////
 Task("NuGet")
     .IsDependentOn("Clean")
+    .IsDependentOn("Restore")
     .IsDependentOn("Version")
     .Does(() => 
     {
@@ -311,6 +312,7 @@ Task("GitHubRelease")
 Task("NuGetFeed")
     .WithCriteria(() => isAppVeyor && BuildSystem.AppVeyor.Environment.Repository.Tag.IsTag)
     .IsDependentOn("NuGet")
+    .IsDependentOn("Credentials")
     .Does(() => 
     {
         Information(Figlet("NuGetFeed"));
@@ -349,7 +351,6 @@ Task("Default")
     .IsDependentOn("Build")
     .IsDependentOn("UnitTests")
     .IsDependentOn("GenerateCoverage")
-    .IsDependentOn("Credentials")
     .IsDependentOn("UploadCoverage")
     .IsDependentOn("NuGet")
     .IsDependentOn("GitHubRelease")
