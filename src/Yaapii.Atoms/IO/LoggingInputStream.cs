@@ -39,6 +39,7 @@ namespace Yaapii.Atoms.IO
 
         private readonly Stream origin;
         private readonly string source;
+        private readonly Action<string> log;
         private long bytes;
         private long time;
 
@@ -47,10 +48,20 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="input"></param>
         /// <param name="source"></param>
-        public LoggingInputStream(Stream input, string source)
+        public LoggingInputStream(Stream input, string source) : this(input, source, (msg) => Debug.WriteLine(msg))
+        { }
+
+        /// <summary>
+        /// Logged input stream
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="source"></param>
+        /// <param name="log"></param>
+        public LoggingInputStream(Stream input, string source, Action<String> log)
         {
             this.origin = input;
             this.source = source;
+            this.log = log;
         }
 
         public override bool CanRead => this.origin.CanRead;
@@ -96,7 +107,7 @@ namespace Yaapii.Atoms.IO
                 this.time += millis;
             }
             var msg = $"Read {this.bytes} byte(s) from {this.source} in {this.time}.";
-            Debug.WriteLine(msg);
+            log.Invoke(msg);
 
             return byts;
         }
@@ -105,7 +116,7 @@ namespace Yaapii.Atoms.IO
         {
             long skipped = this.origin.Seek(offset, origin);
             var msg = $"Skipped {skipped} byte(s) from {this.source}.";
-            Debug.WriteLine(msg);
+            log.Invoke(msg);
             return skipped;
         }
 
