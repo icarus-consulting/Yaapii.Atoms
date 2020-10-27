@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.IO.Tests
     public sealed class LoggingOutputTest
     {
         [Fact]
-        public void LogWriteZeroBytes()
+        public void LogsZeroBytesOnEmptyInput()
         {
             var res =
                 new LengthOf(
@@ -54,22 +54,21 @@ namespace Yaapii.Atoms.IO.Tests
         }
 
         [Fact]
-        public void LogWriteOneByte()
+        public void LogsWriteOneBytesToTextFile()
         {
             using(var tempfile = new TempFile("txt"))
             {
-                var append = new AppendTo(tempfile.Value());
+                using (var append = new AppendTo(tempfile.Value()))
+                {
+                    var output =
+                        new LoggingOutput(
+                            append,
+                            "memory"
+                        ).Stream();
 
-                var output =
-                    new LoggingOutput(
-                        append,
-                        "memory"
-                    ).Stream();
+                    output.Write(new BytesOf("a").AsBytes(), 0, 1);
 
-                output.Write(new BytesOf("a").AsBytes(), 0, 1);
-
-                append.Dispose();
-
+                }
                 var inputStream = new InputOf(new Uri(tempfile.Value())).Stream();
                 var content = "";
                 using (var reader = new StreamReader(inputStream))
@@ -84,21 +83,23 @@ namespace Yaapii.Atoms.IO.Tests
         }
         
         [Fact]
-        public void LogWriteText()
+        public void LogsWriteTextToTextFile()
         {
             using (var tempfile = new TempFile("txt"))
             {
-                var append = new AppendTo(tempfile.Value());
+                var bytes = new BytesOf("Hello World!").AsBytes();
 
-                var output =
+                using (var append = new AppendTo(tempfile.Value()))
+                {
+                    var output =
                     new LoggingOutput(
                         append,
                         "memory"
                     ).Stream();
 
-                var bytes = new BytesOf("Hello World!").AsBytes();
-                output.Write(bytes, 0, bytes.Length);
-                append.Dispose();
+                    
+                    output.Write(bytes, 0, bytes.Length);
+                }
 
                 var inputStream = new InputOf(new Uri(tempfile.Value())).Stream();
                 var content = "";
@@ -115,19 +116,18 @@ namespace Yaapii.Atoms.IO.Tests
         }
         
         [Fact]
-        public void LogWriteToLargeTextFile()
+        public void LogsWriteLargeTextToTextFile()
         {
             using (var tempfile = new TempFile("txt"))
             {
 
-                try {
-                    var append = new AppendTo(tempfile.Value());
-
+                using (var append = new AppendTo(tempfile.Value()))
+                {
                     var output =
-                        new LoggingOutput(
-                            append,
-                            "text file"
-                        ).Stream();
+                    new LoggingOutput(
+                        append,
+                        "text file"
+                    ).Stream();
 
                     var length =
                         new LengthOf(
@@ -137,30 +137,24 @@ namespace Yaapii.Atoms.IO.Tests
                             )
                         ).Value();
 
-                    append.Dispose();
-
-                    var inputStream = new InputOf(new Uri(tempfile.Value())).Stream();
-                    var content = "";
-                    var input = "";
-                    using (var reader = new StreamReader(inputStream))
-                    {
-                        content = reader.ReadToEnd();
-                    }
-                    using (var reader = new StreamReader(new ResourceOf("Assets/Txt/large-text.txt", this.GetType()).Stream()))
-                    {
-                        input = reader.ReadToEnd();
-                    }
-
-                    Assert.Equal(
-                        input,
-                        content
-                    );
-
-
-                }catch(Exception ex)
-                {
-
                 }
+
+                var inputStream = new InputOf(new Uri(tempfile.Value())).Stream();
+                var content = "";
+                var input = "";
+                using (var reader = new StreamReader(inputStream))
+                {
+                    content = reader.ReadToEnd();
+                }
+                using (var reader = new StreamReader(new ResourceOf("Assets/Txt/large-text.txt", this.GetType()).Stream()))
+                {
+                    input = reader.ReadToEnd();
+                }
+
+                Assert.Equal(
+                    input,
+                    content
+                );
             }
         }
     }
