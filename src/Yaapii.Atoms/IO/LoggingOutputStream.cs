@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using Yaapii.Atoms.List;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.IO
@@ -36,6 +37,7 @@ namespace Yaapii.Atoms.IO
     {
         private readonly Stream origin;
         private readonly string destination;
+        private readonly Action<string> log;
         private readonly IScalar<IList<long>> bytes;
         private readonly IScalar<IList<long>> time;
 
@@ -44,21 +46,31 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="output">Destination of data</param>
         /// <param name="destination">The name of source data</param>
-        public LoggingOutputStream(Stream output, string destination)
+        public LoggingOutputStream(Stream output, string destination) : this(output, destination, (msg) => Debug.WriteLine(msg))
+        {}
+
+        /// <summary>
+        /// Logged output stream.
+        /// </summary>
+        /// <param name="output">Destination of data</param>
+        /// <param name="destination">The name of the source data</param>
+        /// <param name="log">The log action</param>
+        public LoggingOutputStream(Stream output, string destination, Action<string> log)
         {
             this.origin = output;
             this.destination = destination;
-            this.bytes = 
+            this.log = log;
+            this.bytes =
                 new ScalarOf<IList<long>>(
-                    new List<long>(1) 
-                    { 
-                        0 
+                    new List<long>(1)
+                    {
+                        0
                     });
-            this.time = 
+            this.time =
                 new ScalarOf<IList<long>>(
-                    new List<long>(1) 
-                    { 
-                        0 
+                    new List<long>(1)
+                    {
+                        0
                     });
         }
 
@@ -76,7 +88,7 @@ namespace Yaapii.Atoms.IO
         {
             this.origin.Flush();
 
-            Debug.WriteLine($"Written {this.bytes.Value()[0]} byte(s) to {this.destination} in {this.time.Value()[0]}ms.");
+            log.Invoke($"Written {this.bytes.Value()[0]} byte(s) to {this.destination} in {this.time.Value()[0]}ms.");
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -103,7 +115,7 @@ namespace Yaapii.Atoms.IO
             this.bytes.Value()[0] += count;
             this.time.Value()[0] += millis;
 
-            Debug.WriteLine($"Written {this.bytes.Value()[0]} byte(s) to {this.destination} in {this.time.Value()[0]}.");
+            log.Invoke($"Written {this.bytes.Value()[0]} byte(s) to {this.destination} in {this.time.Value()[0]}.");
         }
     }
 }
