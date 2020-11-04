@@ -35,12 +35,12 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void CreateMemoryInput()
         {
-            var content = "This is my input!";
-            var input =
-                new InputOf(content);
             var memoryInput =
-                new MemoryInput(input);
-
+                new MemoryInput(
+                    new InputOf(
+                        "This is my input!"
+                    )
+                );
 
             var memoryContent = "";
             using (var reader = new StreamReader(memoryInput.Stream()))
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.IO.Tests
             }
 
             Assert.Equal(
-                content,
+                "This is my input!",
                 memoryContent
             );
         }
@@ -57,11 +57,13 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void CreateEmptyMemoryInput()
         {
-            var input =
-                new InputOf("");
-            var memoryInput =
-                new MemoryInput(input);
 
+            var memoryInput =
+                new MemoryInput(
+                    new InputOf(
+                        ""
+                    )
+                );
 
             var memoryContent = "";
             using (var reader = new StreamReader(memoryInput.Stream()))
