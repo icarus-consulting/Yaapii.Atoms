@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.IO.Tests
         }
 
         [Fact]
-        public void CreatesEmptyMemoryInput()
+        public void MemorizesEmptyInput()
         {
 
             var memoryInput =
