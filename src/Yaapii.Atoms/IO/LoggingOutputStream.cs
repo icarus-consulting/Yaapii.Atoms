@@ -38,8 +38,8 @@ namespace Yaapii.Atoms.IO
         private readonly Stream origin;
         private readonly string destination;
         private readonly Action<string> log;
-        private readonly IScalar<IList<long>> bytes;
-        private readonly IScalar<IList<long>> time;
+        private readonly IList<long> bytes;
+        private readonly IList<long> time;
 
         /// <summary>
         /// Logged output stream.
@@ -61,17 +61,15 @@ namespace Yaapii.Atoms.IO
             this.destination = destination;
             this.log = log;
             this.bytes =
-                new ScalarOf<IList<long>>(
-                    new List<long>(1)
-                    {
-                        0
-                    });
+                new List<long>(1)
+                {
+                    0
+                };
             this.time =
-                new ScalarOf<IList<long>>(
-                    new List<long>(1)
-                    {
-                        0
-                    });
+                new List<long>(1)
+                {
+                    0
+                };
         }
 
         public override bool CanRead => this.origin.CanRead;
@@ -88,7 +86,7 @@ namespace Yaapii.Atoms.IO
         {
             this.origin.Flush();
 
-            log.Invoke($"Written {this.bytes.Value()[0]} byte(s) to {this.destination} in {this.time.Value()[0]}ms.");
+            log.Invoke($"Written {this.bytes[0]} byte(s) to {this.destination} in {this.time[0]}ms.");
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -112,10 +110,10 @@ namespace Yaapii.Atoms.IO
             this.origin.Write(buffer, offset, count);
             DateTime end = DateTime.UtcNow;
             long millis = (long)end.Subtract(start).TotalMilliseconds;
-            this.bytes.Value()[0] += count;
-            this.time.Value()[0] += millis;
+            this.bytes[0] += count;
+            this.time[0] += millis;
 
-            log.Invoke($"Written {this.bytes.Value()[0]} byte(s) to {this.destination} in {this.time.Value()[0]}.");
+            log.Invoke($"Written {this.bytes[0]} byte(s) to {this.destination} in {this.time[0]}.");
         }
     }
 }
