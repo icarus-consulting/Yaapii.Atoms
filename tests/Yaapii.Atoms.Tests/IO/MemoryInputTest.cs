@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.IO.Tests
     {
 
         [Fact]
-        public void CreateMemoryInput()
+        public void MemorizesInput()
         {
             var memoryInput =
                 new MemoryInput(
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.IO.Tests
         }
 
         [Fact]
-        public void CreateEmptyMemoryInput()
+        public void CreatesEmptyMemoryInput()
         {
 
             var memoryInput =
