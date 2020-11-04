@@ -22,11 +22,21 @@
 
 using System;
 using Xunit;
+using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Number.Tests
 {
     public sealed class NumberOfTest
     {
+        [Fact]
+        public void ParsesText()
+        {
+            Assert.Equal(
+                4673.453,
+                new NumberOf(new TextOf("4673.453")).AsDouble()
+            );
+        }
+
         [Fact]
         public void ParsesFloat()
         {
@@ -138,6 +148,28 @@ namespace Yaapii.Atoms.Number.Tests
                 new NumberOf(
                     (50)
                 ).AsLong() == 50L
+            );
+        }
+
+        [Fact]
+        public void DoubleSeperator()
+        {
+            Assert.True(
+                new NumberOf(
+                    "10.100,11",
+                    ",",
+                    "."
+                ).AsDouble() == 10100.11
+            );
+        }
+
+        [Fact]
+        public void StringAsInt()
+        {
+            Assert.True(
+                new NumberOf(
+                    "100"
+                ).AsInt() == 100
             );
         }
     }
