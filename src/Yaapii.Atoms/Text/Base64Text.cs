@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Text
                 new Base64Bytes(
                     new BytesOf(text)
                 )
-            ).AsString(),
+            ).ToString(),
             live
         )
         { }

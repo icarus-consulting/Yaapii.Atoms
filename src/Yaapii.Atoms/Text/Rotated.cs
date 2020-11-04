@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="shift">direction and amount of chars to rotate (minus means rotate left, plus means rotate right)</param>
         public Rotated(IText text, int shift) : base(() =>
             {
-                var str = text.AsString();
+                var str = text.ToString();
                 int length = str.Length;
                 if (length != 0 && shift != 0 && shift % length != 0)
                 {

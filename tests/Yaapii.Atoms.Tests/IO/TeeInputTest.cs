@@ -95,7 +95,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new InputOf(content),
                         new OutputTo(baos)
                     )
-                ).AsString() == Encoding.UTF8.GetString(baos.ToArray())
+                ).ToString() == Encoding.UTF8.GetString(baos.ToArray())
             );
         }
 
@@ -118,10 +118,10 @@ namespace Yaapii.Atoms.IO.Tests
                             new OutputTo(new Uri(path))
                         )
                     )
-                ).AsString();
+                ).ToString();
 
             Assert.True(
-                str == new LiveText(new InputOf(new Uri(path))).AsString(),
+                str == new LiveText(new InputOf(new Uri(path))).ToString(),
                 "Can't copy Input to File and return content");
         }
     }

@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new Rotated(
                     new LiveText("Hello!"), 2
-                ).AsString() == "o!Hell"
+                ).ToString() == "o!Hell"
             );
         }
 
@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new Rotated(
                     new LiveText("Hi!"), -1
-                ).AsString() == "i!H"
+                ).ToString() == "i!H"
             );
         }
 
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new Rotated(
                     new LiveText(nonrotate), 0
-                ).AsString() == nonrotate
+                ).ToString() == nonrotate
             );
         }
 
@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new Rotated(
                     new LiveText(nonrotate), nonrotate.Length
-                ).AsString() == nonrotate,
+                ).ToString() == nonrotate,
                 "Can't rotate text shift mod zero");
         }
 
@@ -74,7 +74,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new Rotated(
                     new LiveText(""), 2
-                ).AsString() == ""
+                ).ToString() == ""
             );
         }
     }

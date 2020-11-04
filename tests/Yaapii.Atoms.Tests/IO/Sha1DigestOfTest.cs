@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.IO.Tests
                 "da39a3ee5e6b4b0d3255bfef95601890afd80709",
                 new HexOf(
                     new Sha1DigestOf(new InputOf(string.Empty))
-                ).AsString()
+                ).ToString()
            );
         }
 
@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.IO.Tests
                 "2ef7bde608ce5404e97d5f042f95f89f1c232871",
                 new HexOf(
                     new Sha1DigestOf(new InputOf("Hello World!"))
-                ).AsString()
+                ).ToString()
             );
         }
 
@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.IO.Tests
                             this.GetType()
                         )
                     )
-                ).AsString()
+                ).ToString()
             );
         }
     }

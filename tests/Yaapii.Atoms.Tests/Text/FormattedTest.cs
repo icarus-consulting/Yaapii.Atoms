@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new Formatted(
                     "{0} Formatted {1}", 1, "text"
-                ).AsString().Contains("1 Formatted text"),
+                ).ToString().Contains("1 Formatted text"),
                 "Can't format a text");
         }
 
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Text.Tests
                     new LiveText("{0}. Number as {1}"),
                     1,
                     "string"
-                ).AsString().Contains("1. Number as string"),
+                ).ToString().Contains("1. Number as string"),
                 "Can't format a text with objects");
         }
 
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Text.Tests
                 () => new Formatted(
                     new LiveText("Formatted { {0} }"),
                     new string[] {"invalid" }
-            ).AsString());
+            ).ToString());
         }
 
         [Fact]
@@ -68,7 +68,7 @@ namespace Yaapii.Atoms.Text.Tests
                 new Formatted(
                     new TextOf("{0}. Formatted as {1}"),
                     new String[] { "1", "txt" }
-                ).AsString() == "1. Formatted as txt"
+                ).ToString() == "1. Formatted as txt"
             );
         }
 
@@ -78,7 +78,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new Formatted(
                     "{0:0.0}", new CultureInfo("de-DE"), 1234567890
-                ).AsString() == "1234567890,0",
+                ).ToString() == "1234567890,0",
                 "Can't format a text with Locale");
         }
 
@@ -91,7 +91,7 @@ namespace Yaapii.Atoms.Text.Tests
                     "{0} is a {1} test",
                     new LiveText("This"),
                     new LiveText("FormattedText")
-                ).AsString()
+                ).ToString()
             );
                     
         }

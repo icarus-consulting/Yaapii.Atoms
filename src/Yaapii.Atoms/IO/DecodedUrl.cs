@@ -68,7 +68,7 @@ namespace Yaapii.Atoms.IO
         public String Value()
         {
             return WebUtility.UrlDecode(
-                this.source.AsString()
+                this.source.ToString()
             );
         }
     }

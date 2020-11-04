@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Text.Tests
                 new Replaced(
                     new LiveText("Hello!"),
                     "ello", "i"
-                ).AsString() == "Hi!",
+                ).ToString() == "Hi!",
                 "Can't replace a text");
         }
 
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Text.Tests
                 new Replaced(
                     new LiveText(text),
                     "xyz", "i"
-                ).AsString() == text,
+                ).ToString() == text,
                 "Replace a text abnormally");
         }
 
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Text.Tests
                     new LiveText("one cat, two cats, three cats"),
                     "cat",
                     "dog"
-                ).AsString() == "one dog, two dogs, three dogs",
+                ).ToString() == "one dog, two dogs, three dogs",
                 "Can't replace a text with multiple needle occurrences");
         }
     }

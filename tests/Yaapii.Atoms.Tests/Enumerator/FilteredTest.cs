@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
                             (str) => str != "cruel"
                         )
                     )
-                ).AsString()
+                ).ToString()
              );
         }
     }

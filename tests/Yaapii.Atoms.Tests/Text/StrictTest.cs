@@ -1,4 +1,26 @@
-﻿using System;
+﻿// MIT License
+//
+// Copyright(c) 2020 ICARUS Consulting GmbH
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+using System;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 
@@ -10,7 +32,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void Throws()
         {
             Assert.Throws<ArgumentException>(() =>
-                new Strict("not valid", "valid", "also valid").AsString()
+                new Strict("not valid", "valid", "also valid").ToString()
             );
         }
 
@@ -20,7 +42,7 @@ namespace Yaapii.Atoms.Text.Tests
             var expected = "valid";
             Assert.Equal(
                 expected,
-                new Strict(expected, "not valid", "also not", "valid", "ending").AsString()
+                new Strict(expected, "not valid", "also not", "valid", "ending").ToString()
             );
         }
 
@@ -30,7 +52,7 @@ namespace Yaapii.Atoms.Text.Tests
             var expected = "LargeValid";
             Assert.Equal(
                 expected,
-                new Strict(expected, "not valid", "also not", "LargeValid", "ending").AsString()
+                new Strict(expected, "not valid", "also not", "LargeValid", "ending").ToString()
             );
         }
 
@@ -39,7 +61,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.Throws<ArgumentException>(
                 () =>
-                new Strict("valid", false, "not valid", "also not", "largeValid", "ending").AsString()
+                new Strict("valid", false, "not valid", "also not", "largeValid", "ending").ToString()
             );
         }
 
@@ -51,7 +73,7 @@ namespace Yaapii.Atoms.Text.Tests
                 expected,
                 new Strict(expected,
                     new ManyOf("NotValid", expected)
-                ).AsString()
+                ).ToString()
             );
         }
 
@@ -67,8 +89,8 @@ namespace Yaapii.Atoms.Text.Tests
                         new TextOf(expected)
                     )
                 );
-            text.AsString();
-            text.AsString();
+            text.ToString();
+            text.ToString();
             Assert.Equal(
                 1,
                 counter
@@ -87,7 +109,7 @@ namespace Yaapii.Atoms.Text.Tests
                         new TextOf("Not Valid"),
                         new TextOf(expected)
                     )
-                ).AsString()
+                ).ToString()
             );
         }
 
@@ -104,7 +126,7 @@ namespace Yaapii.Atoms.Text.Tests
                         "As well not valid",
                         "ExpEcteD"
                     )
-                ).AsString()
+                ).ToString()
             );
         }
 
@@ -119,7 +141,7 @@ namespace Yaapii.Atoms.Text.Tests
                     "Not Valid",
                     "As well not valid",
                     "ExpEcteD"
-                ).AsString()
+                ).ToString()
             );
         }
     }

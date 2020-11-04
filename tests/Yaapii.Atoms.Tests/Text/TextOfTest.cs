@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Text.Tests
                         new TextOf(
                             path,
                             Encoding.BigEndianUnicode
-                        ).AsString() == content,
+                        ).ToString() == content,
                         "Can't read text from Input");
                 },
                 path
@@ -72,7 +72,7 @@ namespace Yaapii.Atoms.Text.Tests
                     Assert.True(
                         new TextOf(
                             path
-                        ).AsString() == content,
+                        ).ToString() == content,
                         "Can't read text from Input");
                 },
                 path
@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Text.Tests
                         new TextOf(
                             new FileInfo(path.AbsolutePath),
                             Encoding.BigEndianUnicode
-                        ).AsString() == content,
+                        ).ToString() == content,
                         "Can't read text from Input");
                 },
                 path
@@ -116,7 +116,7 @@ namespace Yaapii.Atoms.Text.Tests
                         new TextOf(
                             new FileInfo(path.AbsolutePath),
                             Encoding.UTF8
-                        ).AsString() == content,
+                        ).ToString() == content,
                         "Can't read text from Input");
                 },
                 path
@@ -132,7 +132,7 @@ namespace Yaapii.Atoms.Text.Tests
                 content,
                 new TextOf(
                     new MemoryStream(new BytesOf(content).AsBytes())
-                ).AsString()
+                ).ToString()
             );
         }
 
@@ -145,7 +145,7 @@ namespace Yaapii.Atoms.Text.Tests
             new TextOf(
                 new InputOf(content),
                 Encoding.UTF8
-            ).AsString() == content,
+            ).ToString() == content,
             "Can't read text from Input");
         }
 
@@ -156,7 +156,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new TextOf(
                     new InputOf(content)
-                ).AsString() == content,
+                ).ToString() == content,
                 "Can't read text from Input with default charset");
         }
 
@@ -167,7 +167,7 @@ namespace Yaapii.Atoms.Text.Tests
             var content = doub.ToString(CultureInfo.InvariantCulture);
 
             Assert.True(
-                new LiveText(doub).AsString() == content
+                new LiveText(doub).ToString() == content
             );
         }
 
@@ -181,7 +181,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                     new TextOf(doub,
                    inf
-                    ).AsString() == content,
+                    ).ToString() == content,
                     "Can't read text from double with format");
         }
 
@@ -193,7 +193,7 @@ namespace Yaapii.Atoms.Text.Tests
 
             Assert.True(
                     new TextOf(doub
-                    ).AsString() == content,
+                    ).ToString() == content,
                     "Can't read text from float");
         }
 
@@ -208,7 +208,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                     new TextOf(doub,
                    inf
-                    ).AsString() == content,
+                    ).ToString() == content,
                     "Can't read text with format from float");
         }
 
@@ -222,7 +222,7 @@ namespace Yaapii.Atoms.Text.Tests
                         new InputOf(content),
                         2,
                         Encoding.UTF8
-                    ).AsString() == content,
+                    ).ToString() == content,
                     "Can't read text with a small reading buffer");
         }
 
@@ -235,7 +235,7 @@ namespace Yaapii.Atoms.Text.Tests
                     new TextOf(
                         new InputOf(content),
                         2
-                    ).AsString() == content,
+                    ).ToString() == content,
                     "Can't read text with a small reading buffer and default charset");
         }
 
@@ -247,7 +247,7 @@ namespace Yaapii.Atoms.Text.Tests
             new TextOf(
                 new StringReader(source),
                 Encoding.UTF8
-            ).AsString() == Encoding.UTF8.GetString(new BytesOf(source).AsBytes()),
+            ).ToString() == Encoding.UTF8.GetString(new BytesOf(source).AsBytes()),
             "Can't read string through a reader");
         }
 
@@ -257,7 +257,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             String source = "hello, друг! with default encoding";
             Assert.True(
-                new TextOf(new StringReader(source)).AsString() ==
+                new TextOf(new StringReader(source)).ToString() ==
                     Encoding.UTF8.GetString(new BytesOf(source).AsBytes()),
                 "Can't read string with default encoding through a reader");
         }
@@ -269,7 +269,7 @@ namespace Yaapii.Atoms.Text.Tests
                     new TextOf(
                         'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
                         ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a'
-                    ).AsString().CompareTo("O que sera que sera") == 0,
+                    ).ToString().CompareTo("O que sera que sera") == 0,
                     "Can't read array of encoded chars into text.");
         }
 
@@ -280,7 +280,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new TextOf(
                     bytes
-                ).AsString().CompareTo(Encoding.UTF8.GetString(bytes)) == 0,
+                ).ToString().CompareTo(Encoding.UTF8.GetString(bytes)) == 0,
                 "Can't read array of bytes");
         }
 
@@ -292,7 +292,7 @@ namespace Yaapii.Atoms.Text.Tests
                 new TextOf(
                     new BytesOf(bytes),
                     Encoding.ASCII
-                ).AsString().CompareTo(Encoding.ASCII.GetString(bytes)) == 0,
+                ).ToString().CompareTo(Encoding.ASCII.GetString(bytes)) == 0,
                 "Can't read array of bytes");
         }
 
@@ -314,7 +314,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                     new TextOf(
                         new StringBuilder(starts).Append(ends)
-                    ).AsString() == starts + ends,
+                    ).ToString() == starts + ends,
                     "Can't process a string builder");
         }
 
@@ -326,7 +326,7 @@ namespace Yaapii.Atoms.Text.Tests
                     new IOException(
                         "It doesn't work at all"
                     )
-                ).AsString().Contains("It doesn't work at all"),
+                ).ToString().Contains("It doesn't work at all"),
                 "Can't print exception stacktrace");
         }
 
@@ -338,7 +338,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new TextOf(
                     value
-                ).AsString() == text,
+                ).ToString() == text,
                 "Can't read long into text"
             );
         }

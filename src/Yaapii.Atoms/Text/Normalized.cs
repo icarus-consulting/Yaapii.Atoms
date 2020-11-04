@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to normalize</param>
         public Normalized(IText text) : base(() =>
-            Regex.Replace(new Trimmed(text).AsString(), "\\s+", " "),
+            Regex.Replace(new Trimmed(text).ToString(), "\\s+", " "),
             false
         )
         { }

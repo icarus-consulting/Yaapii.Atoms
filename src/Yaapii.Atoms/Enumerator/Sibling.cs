@@ -105,7 +105,7 @@ namespace Yaapii.Atoms.Enumerator
                             new Formatted(
                                 "Enumerator doesn't have a neighbour at position {0}",
                                 pos
-                            ).AsString()
+                            ).ToString()
                         );
                     }
             ))

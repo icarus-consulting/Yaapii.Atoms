@@ -168,9 +168,9 @@ namespace Yaapii.Atoms.Text
         /// <param name="live">should the object build its value live, every time it is used?</param>
         private Joined(IText delimit, Func<IEnumerable<IText>> txts, bool live = false) : base(() =>
             String.Join(
-                delimit.AsString(),
+                delimit.ToString(),
                 new Mapped<IText, string>(
-                    text => text.AsString(),
+                    text => text.ToString(),
                     txts()
                 )
             ),

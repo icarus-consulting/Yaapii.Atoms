@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.List.Tests
                         new ListOf<string>("hello", "world", "damn")
                     ),
                     0
-                ).Value().AsString()
+                ).Value().ToString()
             );
         }
 
