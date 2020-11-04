@@ -52,6 +52,16 @@ namespace Yaapii.Atoms.Number
         )
         { }
 
+        /// <summary>	
+        /// A <see cref="string"/> as a <see cref="INumber"/>	
+        /// </summary>	
+        /// <param name="str">The string</param>	
+        /// <param name="provider">a number format provider</param>	
+        public LiveNumber(Func<string> str, IScalar<IFormatProvider> provider) : this(
+           () => new NumberOf(str(), provider)
+        )
+        { }
+
         /// <summary>
         /// A <see cref="int"/> as a <see cref="INumber"/>
         /// </summary>

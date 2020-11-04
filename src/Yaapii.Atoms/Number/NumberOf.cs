@@ -75,6 +75,13 @@ namespace Yaapii.Atoms.Number
         public NumberOf(string str) : this(str, CultureInfo.InvariantCulture)
         { }
 
+        /// <summary>
+        /// A <see cref="string"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="str">The string</param>
+        /// <param name="provider">a number format provider</param>
+        public NumberOf(string str, IScalar<IFormatProvider> provider) :this(str, provider.Value())
+        { }
 
         /// <summary>
         /// A <see cref="string"/> as a <see cref="INumber"/>
