@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Text.Tests
 		{
 			IText s = null;
 			Assert.Throws<IOException>(
-				()=>new NotNull(s).AsString()
+				()=>new NotNull(s).ToString()
 			);
 		}
     }

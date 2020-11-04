@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
                 new ItemAt<string>(
                     new Mapped<int, string>(
                         new ManyOf<int>(1).GetEnumerator(),
-                        i => new LiveText(i).AsString()),
+                        i => new LiveText(i).ToString()),
                 0).Value() == "1",
             "cannot map contents of enumerator");
         }

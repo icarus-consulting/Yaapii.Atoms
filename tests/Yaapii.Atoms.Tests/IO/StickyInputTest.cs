@@ -83,7 +83,7 @@ namespace Yaapii.Atoms.IO.Tests
                             new Url("http://www.google.de")
                         )
                     )
-                ).AsString()
+                ).ToString()
             );
         }
 

@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Text
                 {
                     try
                     {
-                        return Convert.ToBoolean(text.AsString());
+                        return Convert.ToBoolean(text.ToString());
                     }
                     catch (FormatException ex)
                     {

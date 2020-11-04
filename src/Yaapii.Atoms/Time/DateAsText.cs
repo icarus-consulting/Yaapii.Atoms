@@ -96,7 +96,7 @@ namespace Yaapii.Atoms.Time
         {
             this.formatted =
                 new ScalarOf<string>(
-                    () => date.Value().ToString(format.AsString(), provider)
+                    () => date.Value().ToString(format.ToString(), provider)
                 );
         }
 
@@ -116,7 +116,7 @@ namespace Yaapii.Atoms.Time
         /// <returns></returns>
         public bool Equals(IText other)
         {
-            return formatted.Value().Equals(other.AsString());
+            return formatted.Value().Equals(other.ToString());
         }
     }
 }

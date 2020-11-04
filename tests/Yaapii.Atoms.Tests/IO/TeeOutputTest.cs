@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.IO.Tests
                             new OutputTo(copy)
                         )
                     )
-                ).AsString() == Encoding.UTF8.GetString(copy.ToArray()),
+                ).ToString() == Encoding.UTF8.GetString(copy.ToArray()),
                 "Can't copy Output to Output and return Input");
         }
     }

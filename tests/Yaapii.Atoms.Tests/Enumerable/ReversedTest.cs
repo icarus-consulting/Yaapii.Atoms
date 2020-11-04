@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                             "hello", "world", "dude"
                         )
                     )
-                ).AsString() == "dude world hello");
+                ).ToString() == "dude world hello");
         }
     }
 }

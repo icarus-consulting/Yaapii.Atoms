@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.IO.Tests
 
             Assert.Contains(
                 "tS",
-                new TextOf(new InputOf(stream)).AsString()
+                new TextOf(new InputOf(stream)).ToString()
             );
         }
 
@@ -69,7 +69,7 @@ namespace Yaapii.Atoms.IO.Tests
                 skipped
             );
 
-            var input = new TextOf(stream).AsString();
+            var input = new TextOf(stream).ToString();
             Assert.Equal(
                 "",
                 input

@@ -40,14 +40,14 @@ namespace Yaapii.Atoms.Map
         /// Key-value pair made of strings.
         /// </summary>
         public KvpOf(IText key, Func<string> value)
-            : this(key.AsString(), value)
+            : this(key.ToString(), value)
         { }
 
         /// <summary>
         /// Key-value pair made of strings.
         /// </summary>
         public KvpOf(IText key, string value)
-            : this(key.AsString(), value)
+            : this(key.ToString(), value)
         { }
 
         /// <summary>
@@ -125,14 +125,14 @@ namespace Yaapii.Atoms.Map
         /// Key-value pair matching a string to specified type value.
         /// </summary>
         public KvpOf(IText key, Func<TValue> value)
-            : this(key.AsString(), value)
+            : this(key.ToString(), value)
         { }
 
         /// <summary>
         /// Key-value pair matching a string to specified type value.
         /// </summary>
         public KvpOf(IText key, TValue value)
-            : this(key.AsString(), value)
+            : this(key.ToString(), value)
         { }
 
         /// <summary>

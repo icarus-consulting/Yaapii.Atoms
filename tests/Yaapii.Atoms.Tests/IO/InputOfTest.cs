@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.IO.Tests
                         ),
                         new InputOf(new LiveText("Alternative text!"))
                     )
-                ).AsString().EndsWith("text!"),
+                ).ToString().EndsWith("text!"),
                 "Can't read alternative source from file not found");
         }
 
@@ -81,7 +81,7 @@ namespace Yaapii.Atoms.IO.Tests
                     new LiveText(
                         new InputOf(
                             new Uri(path))
-                    ).AsString().EndsWith(content),
+                    ).ToString().EndsWith(content),
                     "Can't read file content");
         }
 
@@ -93,7 +93,7 @@ namespace Yaapii.Atoms.IO.Tests
             {
                 new LiveText(
                     new InputOf(
-                        input)).AsString();
+                        input)).ToString();
             }
 
             Assert.False(input.CanRead,
@@ -136,7 +136,7 @@ namespace Yaapii.Atoms.IO.Tests
                             new Uri(Path.GetFullPath(path))
                             )
                         ).AsBytes()
-                    ).AsString()
+                    ).ToString()
                 );
         }
 
@@ -147,7 +147,7 @@ namespace Yaapii.Atoms.IO.Tests
                 new LiveText(
                     new InputOf(
                         new Url("http://www.google.de"))
-                ).AsString().Contains("<html"),
+                ).ToString().Contains("<html"),
                 "Can't fetch bytes from the URL"
             );
         }
@@ -159,7 +159,7 @@ namespace Yaapii.Atoms.IO.Tests
                     new LiveText(
                         new InputOf(
                             new Uri("http://www.google.de"))
-                    ).AsString().Contains("<html"),
+                    ).ToString().Contains("<html"),
                     "Can't fetch bytes from the URL"
             );
         }
@@ -228,7 +228,7 @@ namespace Yaapii.Atoms.IO.Tests
                             new InputOf(
                                 new StringBuilder(starts).Append(ends)
                             )
-                        ).AsBytes()).AsString() == starts + ends,
+                        ).AsBytes()).ToString() == starts + ends,
                     "can't read from stringbuilder"
                 );
         }
@@ -243,7 +243,7 @@ namespace Yaapii.Atoms.IO.Tests
                                 'H', 'o', 'l', 'd', ' ',
                                 'i', 'n', 'f', 'i', 'n', 'i', 't', 'y'
                             )
-                        ).AsBytes()).AsString() == "Hold infinity",
+                        ).AsBytes()).ToString() == "Hold infinity",
                     "Can't read array of chars.");
         }
 
@@ -260,7 +260,7 @@ namespace Yaapii.Atoms.IO.Tests
                             }
                         )
                     ).AsBytes()
-                ).AsString() == "O que sera que sera",
+                ).ToString() == "O que sera que sera",
                 "Can't read array of encoded chars."
             );
         }
@@ -275,7 +275,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new StreamReader(
                             new InputOf(source).Stream())
                     )
-                ).AsString() == source,
+                ).ToString() == source,
                 "Can't read string through a reader"
             );
         }
@@ -290,7 +290,7 @@ namespace Yaapii.Atoms.IO.Tests
                             new StreamReader(
                                 new InputOf(source).Stream()),
                             Encoding.UTF8)
-                ).AsString() == source,
+                ).ToString() == source,
                 "Can't read encoded string through a reader"
             );
         }

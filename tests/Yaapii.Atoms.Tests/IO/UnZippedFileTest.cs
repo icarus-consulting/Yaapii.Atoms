@@ -61,7 +61,7 @@ namespace Yaapii.Atoms.IO.Tests
                        ),
                        fileName
                    )
-                ).AsString()
+                ).ToString()
             ); 
         }
 

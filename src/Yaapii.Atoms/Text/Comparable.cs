@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         public Comparable(IText text) : base(text, false)
         {
-            this.text = new TextOf(() => text.AsString());
+            this.text = new TextOf(() => text.ToString());
         }
 
         public int CompareTo(object obj)
@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Text
                 obj as IText,
                 "Cannot compare, because given object is not of type IText"
             ).Go();
-            return this.text.AsString().CompareTo(((IText)obj).AsString());
+            return this.text.ToString().CompareTo(((IText)obj).ToString());
         }
     }
 }

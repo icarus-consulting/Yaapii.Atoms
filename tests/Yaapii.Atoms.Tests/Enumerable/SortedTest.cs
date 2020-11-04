@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                             new ManyOf<int>(3, 2, 10, 44, -6, 0)
                         )
                     )
-                ).AsString() == "-6, 0, 2, 3, 10, 44",
+                ).ToString() == "-6, 0, 2, 3, 10, 44",
             "Can't sort an enumerable");
         }
 
@@ -58,7 +58,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                         new ManyOf<string>(
                             "a", "c", "hello", "dude", "Friend"
                         )
-                    )).AsString() == "hello, Friend, dude, c, a",
+                    )).ToString() == "hello, Friend, dude, c, a",
                 "Can't sort an enumerable with a custom comparator");
         }
 
