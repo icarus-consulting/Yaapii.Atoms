@@ -33,19 +33,21 @@ namespace Yaapii.Atoms.Func.Tests
         [Fact]
         public void RunsFuncMultipleTimes()
         {
+            var counter = 0;
             Assert.True(
-            new RetryFunc<bool, int>(
-                input =>
-                {
-                    if (new Random().NextDouble() > 0.3d)
+                new RetryFunc<bool, int>(
+                    input =>
                     {
-                        throw new ArgumentException("May happen");
-                    }
-                    return 0;
-                },
-                int.MaxValue
-            ).Invoke(true) == 0,
-            "cannot retry function"
+                        counter++;
+                        if (counter < 3)
+                        {
+                            throw new ArgumentException("happens in the beginning");
+                        }
+                        return 0;
+                    },
+                    int.MaxValue
+                ).Invoke(true) == 0,
+                "cannot retry function"
             );
         }
     }
