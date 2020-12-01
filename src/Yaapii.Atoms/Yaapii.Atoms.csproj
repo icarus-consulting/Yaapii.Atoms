@@ -2,16 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>Ported .NET version of Cactoos by Yegor Bugayenko.</Description>
     <NeutralLanguage>en-001</NeutralLanguage>
-    <PackageTags>yaapii, elegant objects, cactoos, oop, encapsulation, primitives</PackageTags>
-    <RepositoryUrl>https://github.com/icarus-consulting/Yaapii.Atoms</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/icarus-consulting/Yaapii.Atoms/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/icarus-consulting/Yaapii.Atoms</PackageProjectUrl>
-    <DocumentationFile>artifacts\Yaapii.Atoms.xml</DocumentationFile>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Authors>ICARUS Consulting GmbH</Authors>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <DocumentationFile>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)\Yaapii.Atoms.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

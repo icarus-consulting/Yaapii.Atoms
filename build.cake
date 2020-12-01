@@ -224,10 +224,23 @@ Task("NuGet")
     .IsDependentOn("Clean")
     .IsDependentOn("Restore")
     .IsDependentOn("Version")
+    .IsDependentOn("Build")
     .Does(() => 
     {
         Information(Figlet("NuGet"));
     
+        var nuGetPackSettings = 
+            new NuGetPackSettings 
+            {
+                Version = version,
+                BasePath = "./",
+                OutputDirectory = buildArtifacts,
+                Symbols = true,
+                ArgumentCustomization = args => args.Append("-SymbolPackageFormat snupkg")
+            };
+        NuGetPack("Yaapii.Atoms.nuspec", nuGetPackSettings);
+
+        /*
         var settings = new DotNetCorePackSettings()
         {
             Configuration = configuration,
@@ -254,6 +267,7 @@ Task("NuGet")
                 Warning($"Skipping NuGet package for {name}");
             }
         }
+        */
     });
 
 ///////////////////////////////////////////////////////////////////////////////
