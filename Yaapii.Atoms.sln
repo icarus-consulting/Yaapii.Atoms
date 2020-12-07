@@ -17,7 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		codecov.yml = codecov.yml
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
-		Yaapii.Atoms.nuspec = Yaapii.Atoms.nuspec
+		src\Yaapii.Atoms\Yaapii.Atoms.nuspec = src\Yaapii.Atoms\Yaapii.Atoms.nuspec
+		src\Yaapii.Atoms\Yaapii.Atoms.Sources.nuspec = src\Yaapii.Atoms\Yaapii.Atoms.Sources.nuspec
 	EndProjectSection
 EndProject
 Global

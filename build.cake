@@ -228,46 +228,39 @@ Task("NuGet")
     .Does(() => 
     {
         Information(Figlet("NuGet"));
-    
-        var nuGetPackSettings = 
-            new NuGetPackSettings 
-            {
-                Version = version,
-                BasePath = "./",
-                OutputDirectory = buildArtifacts,
-                Symbols = true,
-                ArgumentCustomization = args => args.Append("-SymbolPackageFormat snupkg")
-            };
-        NuGetPack("Yaapii.Atoms.nuspec", nuGetPackSettings);
 
-        /*
-        var settings = new DotNetCorePackSettings()
-        {
-            Configuration = configuration,
-            OutputDirectory = buildArtifacts,
-            NoRestore = true,
-            VersionSuffix = ""
-        };
-        settings.ArgumentCustomization = args => args.Append("--include-symbols").Append("-p:SymbolPackageFormat=snupkg");
-        settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(version);
         foreach(var module in GetSubDirectories(modules))
         {
             var name = module.GetDirectoryName();
             if(!blacklistedModules.Contains(name))
             {
-                Information($"Creating NuGet package for {name}");
-            
-                DotNetCorePack(
-                    module.ToString(),
-                    settings
-                );
+                var nuGetPackSettings = 
+                    new NuGetPackSettings 
+                    {
+                        Version = version,
+                        BasePath = "./",
+                        OutputDirectory = buildArtifacts,
+                    };
+                var nuspec = $"{module.FullPath}/{name}.Sources.nuspec";
+                if (System.IO.File.Exists(nuspec))
+                {
+                    Information($"Creating Sources NuGet package for {name}");
+                    NuGetPack(nuspec, nuGetPackSettings);
+                }
+                nuspec = $"{module.FullPath}/{name}.nuspec";
+                if (System.IO.File.Exists(nuspec))
+                {
+                    Information($"Creating NuGet package for {name}");
+                    nuGetPackSettings.Symbols = true;
+                    nuGetPackSettings.ArgumentCustomization = args => args.Append("-SymbolPackageFormat snupkg");
+                    NuGetPack(nuspec, nuGetPackSettings);
+                }
             }
             else
             {
                 Warning($"Skipping NuGet package for {name}");
             }
         }
-        */
     });
 
 ///////////////////////////////////////////////////////////////////////////////
