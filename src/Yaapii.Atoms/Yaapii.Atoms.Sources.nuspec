@@ -17,12 +17,12 @@
       <frameworkAssembly assemblyName="System.IO.Compression" targetFramework="" />
     </frameworkAssemblies>
     <contentFiles>
-      <files include="cs\netstandard2.0\LIBS\Yaapii.Atoms\**\*.cs" buildAction="content" flatten="true" copyToOutput="true" />
+      <files include="cs\netstandard2.0\LIBS\Yaapii.Atoms\**\*.cs" buildAction="compile" flatten="false" copyToOutput="false" />
     </contentFiles>
   </metadata>
   <files>
     <file src="LICENSE.txt" target=""/>
-    <file src="src\Yaapii.Atoms\**\*.cs" exclude="src\Yaapii.Atoms\obj\**\*.*" target="contentFiles\cs\netstandard2.0\LIBS" />
-    <file src="src\Yaapii.Atoms\**\*.cs" exclude="src\Yaapii.Atoms\obj\**\*.*" target="content\LIBS" />
+    <file src="src\Yaapii.Atoms\**\*.cs" exclude="src\Yaapii.Atoms\obj\**\*.*" target="contentFiles\cs\netstandard2.0\LIBS\Yaapii.Atoms" />
+    <file src="src\Yaapii.Atoms\**\*.cs" exclude="src\Yaapii.Atoms\obj\**\*.*" target="content\LIBS\Yaapii.Atoms" />
   </files>
 </package>

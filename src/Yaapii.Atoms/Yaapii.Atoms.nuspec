@@ -19,8 +19,8 @@
   </metadata>
   <files>
     <file src=".\LICENSE.txt" target=""/>
-    <file src=".\src\Yaapii.Atoms\bin\Release\netstandard2.0\Yaapii.Atoms.dll" target="lib\netstandard2.0\Yaapii.Atoms.dll" />
-    <file src=".\src\Yaapii.Atoms\bin\Release\netstandard2.0\Yaapii.Atoms.xml" target="lib\netstandard2.0\Yaapii.Atoms.xml" />
-    <file src=".\src\Yaapii.Atoms\bin\Release\netstandard2.0\Yaapii.Atoms.pdb" target="lib\netstandard2.0\Yaapii.Atoms.pdb" />
+    <file src=".\src\Yaapii.Atoms\bin\Release\netstandard2.0\Yaapii.Atoms.dll" target="lib\netstandard2.0" />
+    <file src=".\src\Yaapii.Atoms\bin\Release\netstandard2.0\Yaapii.Atoms.xml" target="lib\netstandard2.0" />
+    <file src=".\src\Yaapii.Atoms\bin\Release\netstandard2.0\Yaapii.Atoms.pdb" target="lib\netstandard2.0" />
   </files>
 </package>
