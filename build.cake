@@ -1,8 +1,9 @@
-#tool nuget:?package=GitReleaseManager
-#tool nuget:?package=OpenCover
-#tool nuget:?package=Codecov
-#addin "Cake.Figlet"
-#addin nuget:?package=Cake.Codecov&version=0.5.0
+#tool nuget:?package=GitReleaseManager&version=0.11
+#tool nuget:?package=OpenCover&version=4.7.922
+#tool nuget:?package=Codecov&version=1.12.3
+#addin nuget:?package=Cake.Figlet&version=1.3.1
+#addin nuget:?package=Cake.Codecov&version=0.9.1
+#addin nuget:?package=Cake.Incubator&version=5.1.0
 
 var target                  = Argument("target", "Default");
 var configuration           = "Release";
@@ -63,6 +64,20 @@ Task("Clean")
     Information(Figlet("Clean"));
     
     CleanDirectories(new DirectoryPath[] { buildArtifacts });
+    foreach(var module in GetSubDirectories(modules))
+    {
+        var name = module.GetDirectoryName();
+        if(!blacklistedModules.Contains(name))
+        {
+            CleanDirectories(
+                new DirectoryPath[] 
+                { 
+                    $"{module}/bin",
+                    $"{module}/obj",
+                }
+            );
+        }
+    }
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -213,44 +228,92 @@ Task("UploadCoverage")
     Codecov($"{buildArtifacts.Path}/coverage.xml", codeCovToken);
 });
 
+Task("AssertPackages")
+.Does(() => 
+{
+    foreach (var module in GetSubDirectories(modules))
+    {
+        var name = module.GetDirectoryName();
+        if(!blacklistedModules.Contains(name))
+        {
+            var project = ParseProject(new FilePath($"{module}/{name}.csproj"), configuration);
+            Information($"--> debug {name}");
+            var packageVersion = new Dictionary<string, string>();
+            foreach (var package in project.PackageReferences)
+            {
+                
+                packageVersion.Add(package.Name, package.Version);
+            }
+
+            foreach (var package in packageVersion)
+            {
+                if (package.Key.Contains(".Sources"))
+                {
+                    var nonSourcesPackage = package.Key.Replace(".Sources", string.Empty);
+                    if (packageVersion[nonSourcesPackage] != package.Value)
+                    {
+                        throw new Exception(
+                            $"Reference nuget packages must have equal version in project {name}:{Environment.NewLine}"
+                            + $"\t{package.Key} {package.Value} and {nonSourcesPackage} {packageVersion[nonSourcesPackage]}{Environment.NewLine}."
+                            + "\tUpdate nuget package in build configuration 'Release Sources'."
+                        );    
+                    }
+                }
+            }
+        }
+    }
+    Information("Package validation passed.");
+});
+
 ///////////////////////////////////////////////////////////////////////////////
 // NuGet
 ///////////////////////////////////////////////////////////////////////////////
 Task("NuGet")
 .IsDependentOn("Version")
 .IsDependentOn("Clean")
-.IsDependentOn("Restore") 
+.IsDependentOn("AssertPackages")
+.IsDependentOn("Restore")
 .IsDependentOn("Build")
 .Does(() =>
 {
     Information(Figlet("NuGet"));
     
-    foreach(var module in GetSubDirectories(modules))
+    var settings = new DotNetCorePackSettings()
+    {
+        Configuration = configuration,
+        OutputDirectory = buildArtifacts,
+        NoRestore = true,
+        NoBuild = true,
+        VersionSuffix = ""
+    };
+    settings.ArgumentCustomization = args => args.Append("--include-symbols").Append("-p:SymbolPackageFormat=snupkg");
+    settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersion(version);
+
+    var settingsSources = new DotNetCorePackSettings()
+    {
+        Configuration = "ReleaseSources",
+        OutputDirectory = buildArtifacts,
+        NoRestore = false,
+        NoBuild = false,
+        VersionSuffix = ""
+    };
+    settingsSources.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(version);
+
+    foreach (var module in GetSubDirectories(modules))
     {
         var name = module.GetDirectoryName();
         if(!blacklistedModules.Contains(name))
         {
-            var nuGetPackSettings = 
-                new NuGetPackSettings 
-                {
-                    Version = version,
-                    BasePath = "./",
-                    OutputDirectory = buildArtifacts,
-                };
-            var nuspec = $"{module.FullPath}/{name}.Sources.nuspec";
-            if (System.IO.File.Exists(nuspec))
-            {
-                Information($"Creating Sources NuGet package for {name}");
-                NuGetPack(nuspec, nuGetPackSettings);
-            }
-            nuspec = $"{module.FullPath}/{name}.nuspec";
-            if (System.IO.File.Exists(nuspec))
-            {
-                Information($"Creating NuGet package for {name}");
-                nuGetPackSettings.Symbols = true;
-                nuGetPackSettings.ArgumentCustomization = args => args.Append("-SymbolPackageFormat snupkg");
-                NuGetPack(nuspec, nuGetPackSettings);
-            }
+            DotNetCorePack(
+                module.ToString(),
+                settings
+            );
+
+            settingsSources.ArgumentCustomization = args => args.Append($"-p:PackageId={name}.Sources").Append("-p:IncludeBuildOutput=false").Append($"-p:Version={version}");
+            DotNetCorePack(
+                module.ToString(),
+                settingsSources
+            );
         }
         else
         {
@@ -296,8 +359,8 @@ Task("GitHubRelease")
             TargetCommitish   = "master"
         }
     );
-          
-    var nugets = string.Join(",", GetFiles("./artifacts/*.nupkg").Select(f => f.FullPath) );
+
+    var nugets = string.Join(",", GetFiles("./artifacts/*.*nupkg").Select(f => f.FullPath) );
     Information($"Release files:{Environment.NewLine}  " + nugets.Replace(",", $"{Environment.NewLine}  "));
     GitReleaseManagerAddAssets(
         gitHubToken,
@@ -310,7 +373,7 @@ Task("GitHubRelease")
 });
 
 ///////////////////////////////////////////////////////////////////////////////
-// NuGetFeed
+// NuGet Feed
 ///////////////////////////////////////////////////////////////////////////////
 Task("NuGetFeed")
 .WithCriteria(() => isAppVeyor && BuildSystem.AppVeyor.Environment.Repository.Tag.IsTag)
@@ -356,6 +419,7 @@ Task("Default")
 .IsDependentOn("GenerateCoverage")
 .IsDependentOn("Credentials")
 .IsDependentOn("UploadCoverage")
+.IsDependentOn("AssertPackages")
 .IsDependentOn("NuGet")
 .IsDependentOn("GitHubRelease")
 .IsDependentOn("NuGetFeed");
