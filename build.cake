@@ -239,11 +239,9 @@ Task("AssertPackages")
         if(!blacklistedModules.Contains(name))
         {
             var project = ParseProject(new FilePath($"{module}/{name}.csproj"), configuration);
-            Information($"--> debug {name}");
             var packageVersion = new Dictionary<string, string>();
             foreach (var package in project.PackageReferences)
             {
-                
                 packageVersion.Add(package.Name, package.Version);
             }
 
@@ -289,7 +287,7 @@ Task("NuGet")
         VersionSuffix = ""
     };
     settings.ArgumentCustomization = args => args.Append("--include-symbols").Append("-p:SymbolPackageFormat=snupkg");
-    settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersion(version);
+    settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(version);
 
     var settingsSources = new DotNetCorePackSettings()
     {
