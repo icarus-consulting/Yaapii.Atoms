@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <description>$description$</description>
+    <authors>$authors$</authors>
+
+    <requireLicenseAcceptance>$requireLicenseAcceptance$</requireLicenseAcceptance>
+    <license type="file">$licenseFile$</license>
+    <licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>
+    <projectUrl>$projectUrl$</projectUrl>
+    <releaseNotes>$releaseNotes$</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>$tags$</tags>
+    <repository type="git" url="$gitRepoUrl$" />
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.IO.Compression" />
+    </frameworkAssemblies>
+    <contentFiles>
+      <files include="cs\$targetFramework$\LIBS\$assemblyName$\**\*.cs" buildAction="Compile" />
+    </contentFiles>
+    <dependencies>
+      <group targetFramework=".$targetFramework$" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src=".\src\$assemblyName$\_._" target="lib\$targetFramework$\" />
+    <file src="$licenseFile$" target="" />
+    <file src="src\$assemblyName$\**\*.cs" exclude="src\$assemblyName$\obj\**\*.*" target="contentFiles\cs\$targetFramework$\LIBS\$assemblyName$" />
+    <file src="src\$assemblyName$\**\*.cs" exclude="src\$assemblyName$\obj\**\*.*" target="content\LIBS\$assemblyName$" />
+  </files>
+</package>
