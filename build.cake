@@ -36,10 +36,12 @@ var repository              = "Yaapii.Atoms";
 
 // For NuGetFeed
 var nuGetSource             = "https://api.nuget.org/v3/index.json";
+var appVeyorNuGetFeed       = "https://ci.appveyor.com/nuget/icarus/api/v2/package";
 
 // API key tokens for deployment
 var gitHubToken             = "";
 var nugetReleaseToken       = "";
+var appVeyorFeedToken       = "";
 var codeCovToken            = "";
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -333,6 +335,7 @@ Task("Credentials")
     
     gitHubToken = EnvironmentVariable("GITHUB_TOKEN");
     nugetReleaseToken = EnvironmentVariable("NUGET_TOKEN");
+    appVeyorFeedToken = EnvironmentVariable("APPVEYOR_TOKEN");
     codeCovToken = EnvironmentVariable("CODECOV_TOKEN");
 });
 
@@ -386,13 +389,26 @@ Task("NuGetFeed")
     var nugets = GetFiles($"{buildArtifacts.Path}/*.nupkg");
     foreach(var package in nugets)
     {
-        NuGetPush(
-            package,
-            new NuGetPushSettings {
-                Source = nuGetSource,
-                ApiKey = nugetReleaseToken
-            }
-        );
+        if (package.GetFilename().ToString().Contains(".Sources"))
+        {
+            NuGetPush(
+                package,
+                new NuGetPushSettings {
+                    Source = appVeyorNuGetFeed,
+                    ApiKey = appVeyorFeedToken
+                }
+            );
+        }
+        else
+        {
+            NuGetPush(
+                package,
+                new NuGetPushSettings {
+                    Source = nuGetSource,
+                    ApiKey = nugetReleaseToken
+                }
+            );
+        }
     }
     var symbols = GetFiles($"{buildArtifacts.Path}/*.snupkg");
     foreach(var symbol in symbols)
