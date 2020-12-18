@@ -15,7 +15,9 @@
     <tags>$tags$</tags>
     <repository type="git" url="$gitRepoUrl$" />
     <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" />
       <frameworkAssembly assemblyName="System.IO.Compression" />
+      <frameworkAssembly assemblyName="System.Net.Http" />
     </frameworkAssemblies>
     <contentFiles>
       <files include="cs\$targetFramework$\LIBS\$assemblyName$\**\*.cs" buildAction="Compile" />
