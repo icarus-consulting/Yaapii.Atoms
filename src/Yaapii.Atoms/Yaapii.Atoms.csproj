@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <DocumentationFile>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)\Yaapii.Atoms.xml</DocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>ICARUS Consulting GmbH</Authors>
@@ -18,11 +18,11 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'ReleaseSources'">
-    <Content Include="_._">
+    <Content Include="Assets\_._">
       <PackagePath>lib\netstandard2.0\</PackagePath>
     </Content>
-    <Content Include="_._">
-      <PackagePath>lib\net461\</PackagePath>
+    <Content Include="Assets\_._">
+      <PackagePath>lib\net45\</PackagePath>
     </Content>
     <Content Include="**\*.cs" Exclude="obj\**\*.*">
       <BuildAction>Compile</BuildAction>
@@ -37,14 +37,16 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='net461'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net45'">
     <Reference Include="System" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="_._" />
+    <Compile Remove="Assets\**" />
+    <EmbeddedResource Remove="Assets\**" />
+    <None Remove="Assets\**" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
