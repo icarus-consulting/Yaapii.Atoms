@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <DocumentationFile>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)\Yaapii.Atoms.xml</DocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>ICARUS Consulting GmbH</Authors>
@@ -15,34 +15,36 @@
     <RepositoryUrl>https://github.com/icarus-consulting/Yaapii.Atoms.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>https://github.com/icarus-consulting/Yaapii.Atoms/releases</PackageReleaseNotes>
-    </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)' == 'ReleaseSources'">
-    <NuspecFile>..\..\Yaapii.Atoms.Sources.nuspec</NuspecFile>
-    <NuspecProperties>version=$(Version)</NuspecProperties>
-    <NuspecProperties>$(NuspecProperties);description=$(Description);authors=$(Authors)</NuspecProperties>
-    <NuspecProperties>$(NuspecProperties);authors=$(Authors)</NuspecProperties>
-    <NuspecProperties>$(NuspecProperties);requireLicenseAcceptance=$(PackageRequireLicenseAcceptance)</NuspecProperties>
-    <NuspecProperties>$(NuspecProperties);licenseFile=$(PackageLicenseFile)</NuspecProperties>
-    <NuspecProperties>$(NuspecProperties);projectUrl=$(RepositoryUrl)</NuspecProperties>
-    <NuspecProperties>$(NuspecProperties);releaseNotes=$(PackageReleaseNotes)</NuspecProperties>
-    <NuspecProperties>$(NuspecProperties);copyright=$(Copyright)</NuspecProperties>
-    <NuspecProperties>$(NuspecProperties);tags=$(PackageTags)</NuspecProperties>
-    <NuspecProperties>$(NuspecProperties);id=$(PackageId)</NuspecProperties>
-    <NuspecProperties>$(NuspecProperties);gitRepoUrl=$(RepositoryUrl)</NuspecProperties>
-    <NuspecProperties>$(NuspecProperties);assemblyName=$(AssemblyName)</NuspecProperties>
-    <NuspecProperties>$(NuspecProperties);targetFramework=$(TargetFramework)</NuspecProperties>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="_._" />
+  <ItemGroup Condition="'$(Configuration)' == 'ReleaseSources'">
+    <Content Include="_._">
+      <PackagePath>lib\netstandard2.0\</PackagePath>
+    </Content>
+    <Content Include="_._">
+      <PackagePath>lib\net461\</PackagePath>
+    </Content>
+    <Content Include="**\*.cs" Exclude="obj\**\*.*">
+      <BuildAction>Compile</BuildAction>
+      <PackagePath>content\LIBS\$(AssemblyName)\;contentFiles\cs\netstandard2.0\LIBS\$(AssemblyName)\</PackagePath>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="..\..\LICENSE.txt">
-      <PackagePath>.\</PackagePath>
+      <PackagePath></PackagePath>
       <Visible>false</Visible>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net461'">
+    <Reference Include="System" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="_._" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

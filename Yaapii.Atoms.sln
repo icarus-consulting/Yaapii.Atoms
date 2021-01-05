@@ -17,7 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Asstes", "Asstes", "{5FD313
 		codecov.yml = codecov.yml
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
-		Yaapii.Atoms.Sources.nuspec = Yaapii.Atoms.Sources.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{466C3FC5-7B3E-4102-B705-6787D47E8893}"
