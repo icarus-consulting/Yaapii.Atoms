@@ -21,7 +21,7 @@ var version                 = "2.1.3";
 var modules                 = Directory("./src");
 var blacklistedModules      = new List<string>() { };
 
-var unitTests = Directory("./tests");
+var unitTests               = Directory("./tests");
 var blacklistedUnitTests    = new List<string>() { }; 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -89,7 +89,7 @@ Task("Restore")
 .Does(() =>
 {
     Information(Figlet("Restore"));
-
+    
     NuGetRestore($"./{repository}.sln");
 });
 
@@ -179,7 +179,7 @@ Task("UnitTests")
             Warning($"  {name}");
         }
     }
-});    
+});
 
 ///////////////////////////////////////////////////////////////////////////////
 // Generate Coverage
@@ -188,7 +188,7 @@ Task("GenerateCoverage")
 .IsDependentOn("Build")
 .Does(() => 
 {
-    Information(Figlet("GenerateCoverage"));
+    Information(Figlet("Generate Coverage"));
     
     try
     {
@@ -225,14 +225,19 @@ Task("UploadCoverage")
 .WithCriteria(() => isAppVeyor)
 .Does(() =>
 {
-    Information(Figlet("UploadCoverage"));
+    Information(Figlet("Upload Coverage"));
     
     Codecov($"{buildArtifacts.Path}/coverage.xml", codeCovToken);
 });
 
+///////////////////////////////////////////////////////////////////////////////
+// Assert Packages
+///////////////////////////////////////////////////////////////////////////////
 Task("AssertPackages")
 .Does(() => 
 {
+    Information(Figlet("Assert Packages"));
+
     foreach (var module in GetSubDirectories(modules))
     {
         var name = module.GetDirectoryName();
@@ -309,7 +314,7 @@ Task("NuGet")
                 settings
             );
 
-            settingsSources.ArgumentCustomization = args => args.Append($"-p:PackageId={name}.Sources").Append("-p:IncludeBuildOutput=false").Append($"-p:Version={version}");
+            settingsSources.ArgumentCustomization = args => args.Append($"-p:PackageId={name}.Sources").Append("-p:IncludeBuildOutput=false");
             DotNetCorePack(
                 module.ToString(),
                 settingsSources
@@ -382,7 +387,7 @@ Task("NuGetFeed")
 .IsDependentOn("Credentials")
 .Does(() => 
 {
-    Information(Figlet("NuGetFeed"));
+    Information(Figlet("NuGet Feed"));
     
     var nugets = GetFiles($"{buildArtifacts.Path}/*.nupkg");
     foreach(var package in nugets)
