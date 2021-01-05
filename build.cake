@@ -259,8 +259,9 @@ Task("AssertPackages")
                     {
                         throw new Exception(
                             $"Reference nuget packages must have equal version in project {name}:{Environment.NewLine}"
-                            + $"\t{package.Key} {package.Value} and {nonSourcesPackage} {packageVersion[nonSourcesPackage]}{Environment.NewLine}."
-                            + "\tUpdate nuget package in build configuration 'Release Sources'."
+                            + $"\t{package.Key} {package.Value} and {nonSourcesPackage} {packageVersion[nonSourcesPackage]}.{Environment.NewLine}"
+                            + $"\tUpdate nuget package in the {name}.csproj file.{Environment.NewLine}"
+                            + $"\tHint: search for '<PackageReference Include=\"{package.Key}\" Version=\"{package.Value}\" Condition=\"'$(Configuration)' == 'ReleaseSources'\">'."
                         );    
                     }
                 }
@@ -365,7 +366,6 @@ Task("GitHubRelease")
             TargetCommitish   = "master"
         }
     );
-
     var nugets = string.Join(",", GetFiles("./artifacts/*.*nupkg").Select(f => f.FullPath) );
     Information($"Release files:{Environment.NewLine}  " + nugets.Replace(",", $"{Environment.NewLine}  "));
     GitReleaseManagerAddAssets(
