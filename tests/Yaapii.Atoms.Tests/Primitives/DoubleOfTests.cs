@@ -20,10 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Text;
 
@@ -34,7 +31,7 @@ namespace Yaapii.Atoms.Primitives.Tests
         [Fact]
         public void ConvertsDouble()
         {
-            var piStr = Math.PI.ToString("G17");
+            var piStr = System.Math.PI.ToString("G17");
             var piFromStr = new DoubleOf(piStr, CultureInfo.CurrentCulture).Value();
             var piStr2 = piFromStr.ToString("G17");
 

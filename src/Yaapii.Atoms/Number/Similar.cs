@@ -20,9 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Number
@@ -30,9 +27,9 @@ namespace Yaapii.Atoms.Number
     /// <summary>
     /// Checks if two Numbers are similar with a given accuracy
     /// </summary>
-    public sealed class Similar : IScalar<Boolean>
+    public sealed class Similar : IScalar<bool>
     {
-        private readonly IScalar<Boolean> isSimilar;
+        private readonly IScalar<bool> isSimilar;
 
         /// <summary>
         /// Checks if two Numbers are similar with a given accuracy
@@ -52,23 +49,23 @@ namespace Yaapii.Atoms.Number
         public Similar(INumber first, INumber second, int accuracy)
         {
             this.isSimilar =
-                new ScalarOf<Boolean>(() =>
+                new ScalarOf<bool>(() =>
                 {
                     bool isSimilar;
                     if (accuracy > 0)
                     {
                         isSimilar =
-                            Math.Abs(
+                            System.Math.Abs(
                                 first.AsDouble() - second.AsDouble()
                             ) <
-                            Math.Pow(
+                            System.Math.Pow(
                                 10, -1 * accuracy
                             );
                     }
                     else
                     {
                         isSimilar =
-                            Math.Abs(
+                            System.Math.Abs(
                                     first.AsDouble() - second.AsDouble()
                                 ) == 0;
                     }
