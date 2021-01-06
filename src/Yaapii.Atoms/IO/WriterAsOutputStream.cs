@@ -21,7 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -134,13 +133,10 @@ namespace Yaapii.Atoms.IO
             char[] chars = new char[charCount];
             this._decoder.Value().GetChars(buffer, 0, charCount, chars, 0);
 
-            long max = Math.Min((long)length, charCount);
-
-
             this._writer.Write(chars);
             this._writer.Flush();
 
-            return (int)Math.Min((long)length, charCount);
+            return (int)System.Math.Min((long)length, charCount);
         }
 
         private async Task<int> NextAsync(byte[] buffer, int offset, int length)
@@ -149,13 +145,10 @@ namespace Yaapii.Atoms.IO
             char[] chars = new char[charCount];
             this._decoder.Value().GetChars(buffer, 0, charCount, chars, 0);
 
-            long max = Math.Min((long)length, charCount);
-
-
             await this._writer.WriteAsync(chars);
             await this._writer.FlushAsync();
 
-            return (int)Math.Min((long)length, charCount);
+            return (int)System.Math.Min((long)length, charCount);
         }
 
         public override bool CanRead => false;
@@ -171,8 +164,6 @@ namespace Yaapii.Atoms.IO
 
         public override long Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-
-
         public override void Flush()
         {
             this._writer.Flush();
@@ -183,12 +174,10 @@ namespace Yaapii.Atoms.IO
             throw new NotImplementedException();
         }
 
-
         public override long Seek(long offset, SeekOrigin origin)
         {
             throw new NotImplementedException();
         }
-
 
         public override void SetLength(long value)
         {
