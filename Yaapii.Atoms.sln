@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{5FD313
 		build.cake = build.cake
 		build.ps1 = build.ps1
 		codecov.yml = codecov.yml
-		LICENSE.txt = LICENSE.txt
+		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
 EndProject
