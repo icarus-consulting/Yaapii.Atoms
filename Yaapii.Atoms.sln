@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yaapii.Atoms", "src\Yaapii.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yaapii.Atoms.Tests", "tests\Yaapii.Atoms.Tests\Yaapii.Atoms.Tests.csproj", "{EF7ABB27-5BCB-4CFF-AE84-7CC7CEEA8A60}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Asstes", "Asstes", "{5FD3135C-F443-4396-8FF5-F278409C5418}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{5FD3135C-F443-4396-8FF5-F278409C5418}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
