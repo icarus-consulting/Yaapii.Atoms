@@ -338,9 +338,25 @@ Task("Credentials")
     Information(Figlet("Credentials"));
     
     gitHubToken = EnvironmentVariable("GITHUB_TOKEN");
+    if (string.IsNullOrEmpty(gitHubToken))
+    {
+        throw new Exception("Environment variable 'GITHUB_TOKEN' is not set");
+    }
     nugetReleaseToken = EnvironmentVariable("NUGET_TOKEN");
+    if (string.IsNullOrEmpty(nugetReleaseToken))
+    {
+        throw new Exception("Environment variable 'NUGET_TOKEN' is not set");
+    }
     appVeyorFeedToken = EnvironmentVariable("APPVEYOR_TOKEN");
+    if (string.IsNullOrEmpty(appVeyorFeedToken))
+    {
+        throw new Exception("Environment variable 'APPVEYOR_TOKEN' is not set");
+    }
     codeCovToken = EnvironmentVariable("CODECOV_TOKEN");
+    if (string.IsNullOrEmpty(codeCovToken))
+    {
+        throw new Exception("Environment variable 'CODECOV_TOKEN' is not set");
+    }
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -430,13 +446,13 @@ Task("NuGetFeed")
 // Default
 ///////////////////////////////////////////////////////////////////////////////
 Task("Default")
+.IsDependentOn("Credentials")
 .IsDependentOn("Version")
 .IsDependentOn("Clean")
 .IsDependentOn("Restore")
 .IsDependentOn("Build")
 .IsDependentOn("UnitTests")
 .IsDependentOn("GenerateCoverage")
-.IsDependentOn("Credentials")
 .IsDependentOn("UploadCoverage")
 .IsDependentOn("AssertPackages")
 .IsDependentOn("NuGet")
