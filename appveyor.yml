@@ -11,6 +11,8 @@ environment:
     secure: 2/6E5a1yzv5Wp1yRpHGDybeKyjdyJlO2xiRxuT4TBGBJcbSfjOrMRsFpMd/X334f
   NUGET_TOKEN:
     secure: P2AbVXF6ZhkWoNAFjmIhzMH3FEgJkFtXPozru7MTOWRn6HCRiq3Dz+TP36knnevg
+  APPVEYOR_TOKEN:
+    secure: wVt1RgJAnhNTyIjtK9yFkQbEEM+fBk1TLUzo0j3pe2U=
 # Do not build feature branch with open Pull Requests
 skip_branch_with_pr: true
 # Automatically register private account and/or project AppVeyor NuGet feeds.

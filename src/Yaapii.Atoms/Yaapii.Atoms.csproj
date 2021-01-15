@@ -1,18 +1,53 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>Ported .NET version of Cactoos by Yegor Bugayenko.</Description>
-    <NeutralLanguage>en-001</NeutralLanguage>
-    <PackageTags>yaapii, elegant objects, cactoos, oop, encapsulation, primitives</PackageTags>
-    <RepositoryUrl>https://github.com/icarus-consulting/Yaapii.Atoms</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/icarus-consulting/Yaapii.Atoms/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/icarus-consulting/Yaapii.Atoms</PackageProjectUrl>
-    <DocumentationFile>artifacts\Yaapii.Atoms.xml</DocumentationFile>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Authors>ICARUS Consulting GmbH</Authors>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <DocumentationFile>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)\Yaapii.Atoms.xml</DocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Authors>ICARUS Consulting GmbH</Authors>
+    <Description>Ported .NET version of Cactoos by Yegor Bugayenko.</Description>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <NeutralLanguage>en</NeutralLanguage>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Copyright>Copyright (c) 2021 ICARUS Consulting GmbH</Copyright>
+    <PackageTags>yaapii, elegant objects, cactoos, oop, encapsulation, primitives</PackageTags>
+    <PackageProjectUrl>https://github.com/icarus-consulting/Yaapii.Atoms</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/icarus-consulting/Yaapii.Atoms.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>https://github.com/icarus-consulting/Yaapii.Atoms/releases</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'ReleaseSources'">
+    <Content Include="Assets\_._">
+      <PackagePath>lib\netstandard2.0\</PackagePath>
+    </Content>
+    <Content Include="Assets\_._">
+      <PackagePath>lib\net45\</PackagePath>
+    </Content>
+    <Content Include="**\*.cs" Exclude="obj\**\*.*">
+      <BuildAction>Compile</BuildAction>
+      <PackagePath>content\LIBS\$(AssemblyName)\;contentFiles\cs\netstandard2.0\LIBS\$(AssemblyName)\</PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\LICENSE">
+      <PackagePath></PackagePath>
+      <Visible>false</Visible>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net45'">
+    <Reference Include="System" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Assets\**" />
+    <EmbeddedResource Remove="Assets\**" />
+    <None Remove="Assets\**" />
+  </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>full</DebugType>
