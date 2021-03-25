@@ -101,7 +101,7 @@ namespace Yaapii.Atoms.Func
                             completed = true;
                             break;
                         }
-                        System.Threading.Thread.Sleep(this.timespans["interval"]);
+                        Task.Delay(this.timespans["interval"]).Wait();
                     }
                 }
                 );
