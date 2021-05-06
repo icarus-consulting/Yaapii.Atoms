@@ -17,7 +17,7 @@ environment:
 skip_branch_with_pr: true
 # Automatically register private account and/or project AppVeyor NuGet feeds.
 nuget:
-  account_feed: true
+  account_feed: false
 build_script:
 - ps: .\build.ps1
 test: off
