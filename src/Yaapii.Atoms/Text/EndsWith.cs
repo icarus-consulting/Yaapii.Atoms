@@ -53,8 +53,8 @@ namespace Yaapii.Atoms.Text
             this.result =
                 new ScalarOf<bool>(() =>
                 {
-                    var regex = new Regex(Regex.Escape(tail.ToString()) + "$");
-                    return regex.IsMatch(text.ToString());
+                    var regex = new Regex(Regex.Escape(tail.AsString()) + "$");
+                    return regex.IsMatch(text.AsString());
                 });
         }
 

@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Time
             new Live<DateTime>(
                 () =>
                     DateTime.Parse(
-                        date.ToString(),
+                        date.AsString(),
                         dateFormat
                     )
                 )

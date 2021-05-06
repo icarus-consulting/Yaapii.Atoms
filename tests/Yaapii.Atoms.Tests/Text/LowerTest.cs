@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new Lower(
                     new LiveText("HelLo!")
-                ).ToString() == "hello!"
+                ).AsString() == "hello!"
             );
         }
     }

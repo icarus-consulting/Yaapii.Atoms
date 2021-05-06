@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.IO.Tests
                                     output
                                 )
                             )
-                        ).ToString();
+                        ).AsString();
             }
 
             Assert.True(
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.IO.Tests
                     new InputAsBytes(
                         new InputOf(uri)
                     )
-                ).ToString().CompareTo(s) == 0 //.CompareTo is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
+                ).AsString().CompareTo(s) == 0 //.CompareTo is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
             );
         }
     }

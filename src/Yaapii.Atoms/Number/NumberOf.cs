@@ -109,11 +109,11 @@ namespace Yaapii.Atoms.Number
                 {
                     try
                     {
-                        return Convert.ToInt64(text.ToString(), provider);
+                        return Convert.ToInt64(text.AsString(), provider);
                     }
                     catch (FormatException)
                     {
-                        throw new ArgumentException(new Formatted("'{0}' is not a number.", text).ToString());
+                        throw new ArgumentException(new Formatted("'{0}' is not a number.", text).AsString());
                     }
                 }),
             new ScalarOf<int>(
@@ -121,11 +121,11 @@ namespace Yaapii.Atoms.Number
                 {
                     try
                     {
-                        return Convert.ToInt32(text.ToString(), provider);
+                        return Convert.ToInt32(text.AsString(), provider);
                     }
                     catch (FormatException)
                     {
-                        throw new ArgumentException(new Formatted("'{0}' is not a number.", text).ToString());
+                        throw new ArgumentException(new Formatted("'{0}' is not a number.", text).AsString());
                     }
                 }),
             new ScalarOf<float>(
@@ -133,11 +133,11 @@ namespace Yaapii.Atoms.Number
                 {
                     try
                     {
-                        return Convert.ToSingle(text.ToString(), provider);
+                        return Convert.ToSingle(text.AsString(), provider);
                     }
                     catch (FormatException)
                     {
-                        throw new ArgumentException(new Formatted("'{0}' is not a number.", text).ToString());
+                        throw new ArgumentException(new Formatted("'{0}' is not a number.", text).AsString());
                     }
                 }),
             new ScalarOf<double>(
@@ -145,11 +145,11 @@ namespace Yaapii.Atoms.Number
                 {
                     try
                     {
-                        return Convert.ToDouble(text.ToString(), provider);
+                        return Convert.ToDouble(text.AsString(), provider);
                     }
                     catch (FormatException)
                     {
-                        throw new ArgumentException(new Formatted("'{0}' is not a number.", text).ToString());
+                        throw new ArgumentException(new Formatted("'{0}' is not a number.", text).AsString());
                     }
                 })
             )

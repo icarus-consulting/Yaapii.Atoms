@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.IO.Tests
                 new LiveText(
                     new InputOf(
                         new ReaderOf(baos.ToArray()))
-                ).ToString().CompareTo(content) == 0,
+                ).AsString().CompareTo(content) == 0,
                 "Can't read content");
         }
 

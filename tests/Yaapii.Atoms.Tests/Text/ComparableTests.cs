@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.True(
                 new Comparable(
                     new LiveText("Timm")
-                ).ToString()
+                ).AsString()
                 == "Timm"
             );
         }

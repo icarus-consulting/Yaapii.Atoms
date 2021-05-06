@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Text
                 {
                     throw new IOException("invalid text (null)");
                 }
-                return text.ToString();
+                return text.AsString();
             },
             false
         )

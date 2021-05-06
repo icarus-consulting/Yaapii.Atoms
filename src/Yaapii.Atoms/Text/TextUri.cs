@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Text
         {
             this.source = 
                 new ScalarOf<Uri>(
-                    new UriBuilder(url.ToString()).Uri
+                    new UriBuilder(url.AsString()).Uri
                 );
         }
 

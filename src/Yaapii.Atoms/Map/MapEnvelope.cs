@@ -61,7 +61,7 @@ namespace Yaapii.Atoms.Map
                 }
                 catch (KeyNotFoundException)
                 {
-                    var keysString = new Text.Joined(", ", val.Keys).ToString();
+                    var keysString = new Text.Joined(", ", val.Keys).AsString();
                     throw new ArgumentException($"The key '{key}' is not present in the map. The following keys are present in the map: {keysString}");
                 }
             }
@@ -179,7 +179,7 @@ namespace Yaapii.Atoms.Map
                 }
                 catch (KeyNotFoundException)
                 {
-                    var keysString = new Text.Joined(", ", val.Keys).ToString();
+                    var keysString = new Text.Joined(", ", val.Keys).AsString();
                     throw new ArgumentException($"The key '{key}' is not present in the map. The following keys are present in the map: {keysString}");
                 }
             }

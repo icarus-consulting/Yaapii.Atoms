@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                         input => new Upper(new LiveText(input)),
                         new ManyOf<string>("hello", "world", "damn")),
                     0
-                ).Value().ToString()
+                ).Value().AsString()
             );
         }
 
@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                         new ManyOf<string>("hello", "world", "damn")
                         ),
                     1
-                ).Value().ToString() == "WORLD1",
+                ).Value().AsString() == "WORLD1",
             "Can't get index of enumerable");
         }
     }

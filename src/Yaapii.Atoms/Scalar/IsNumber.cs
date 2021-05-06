@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Scalar
         public IsNumber(IText text, IFormatProvider provider)
             : base(() =>
                 double.TryParse(
-                    text.ToString(),
+                    text.AsString(),
                     NumberStyles.Any,
                     provider,
                     out var unused

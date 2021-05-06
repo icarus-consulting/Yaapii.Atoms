@@ -156,7 +156,7 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="text">a text</param>
         /// <param name="encoding">encoding of the string</param>
         public BytesOf(IText text, Encoding encoding) : this(
-            () => encoding.GetBytes(text.ToString()))
+            () => encoding.GetBytes(text.AsString()))
         { }
 
         /// <summary>

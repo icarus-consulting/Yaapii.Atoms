@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                     new Skipped<string>(
                         new ManyOf<string>("one", "two", "three", "four"),
                         2)
-                    ).ToString() == "three, four");
+                    ).AsString() == "three, four");
         }
     }
 }

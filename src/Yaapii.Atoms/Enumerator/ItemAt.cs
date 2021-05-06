@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.Enumerator
                     {
                         throw
                             new NoSuchElementException(
-                                new Formatted("Cannot get item: {0}", ex.Message).ToString()
+                                new Formatted("Cannot get item: {0}", ex.Message).AsString()
                             );
                     })
                 )
@@ -123,7 +123,7 @@ namespace Yaapii.Atoms.Enumerator
                                 new Formatted(
                                     "Cannot get item: {0}",
                                     ex.Message
-                                ).ToString());
+                                ).AsString());
                     }
             ))
         { }
@@ -160,7 +160,7 @@ namespace Yaapii.Atoms.Enumerator
                         new Formatted(
                             "The position must be non-negative but is {0}",
                             this.pos
-                        ).ToString()
+                        ).AsString()
                     )
                 ).Go();
 

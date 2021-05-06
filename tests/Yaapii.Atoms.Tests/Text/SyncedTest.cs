@@ -34,12 +34,12 @@ namespace Yaapii.Atoms.Text.Tests
             var check = 0;
             var text = new Synced(
                 new LiveText(
-                    () => new TextOf(check++).ToString()
+                    () => new TextOf(check++).AsString()
                 )
             );
 
             var max = Environment.ProcessorCount << 8;
-            Parallel.For(0, max, (nr) => text.ToString());
+            Parallel.For(0, max, (nr) => text.AsString());
 
             Assert.Equal(
                 max, check

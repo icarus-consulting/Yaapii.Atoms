@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Text.Tests
                                     new LiveText(text)
                                 )
                             )
-                        ).ToString(),
+                        ).AsString(),
                         new OutputTo(new Uri(tempFile.Value()))
                     )
                 ).Value();
