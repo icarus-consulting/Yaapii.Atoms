@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.IO.Tests
                 new TeeInput(
                     new InputOf("How are you, мой друг?"),
                     new DeadOutput()
-                )).ToString());
+                )).AsString());
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.IO.Tests
                 "Hello from Embedded!",
                 new LiveText(
                     new ResourceOf("IO/Resources/test.txt", Assembly.GetExecutingAssembly())
-                ).ToString()
+                ).AsString()
             );
         }
 
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.IO.Tests
                 "Hello from Embedded!",
                 new LiveText(
                     new ResourceOf("IO/Resources/test.txt", this.GetType())
-                ).ToString()
+                ).AsString()
             );
         }
 
@@ -61,7 +61,7 @@ namespace Yaapii.Atoms.IO.Tests
                     new ResourceOf(
                         name,
                         this.GetType())
-                ).ToString()
+                ).AsString()
             );
         }
     }

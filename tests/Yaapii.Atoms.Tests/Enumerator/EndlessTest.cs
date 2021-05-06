@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
                             str => new LiveText(str)
                         )
                     )
-                ).ToString() == expected
+                ).AsString() == expected
             );
 
         }

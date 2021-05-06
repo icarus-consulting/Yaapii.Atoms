@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
                                 new LiveMany<string>("B", "A", "C", "F", "E", "D").GetEnumerator()
                         )
                     )
-                ).ToString()
+                ).AsString()
             );
         }
     }

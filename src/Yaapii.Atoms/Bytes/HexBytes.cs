@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Bytes
         {
             this.bytes = new ScalarOf<byte[]>(() =>
             {
-                var hex = origin.ToString();
+                var hex = origin.AsString();
                 if ((hex.Length & 1) == 1)
                 {
                     throw new IOException("Length of hexadecimal text is odd");

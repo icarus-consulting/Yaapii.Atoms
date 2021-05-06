@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Map
                         v => v.ToString(),
                         available
                     )
-                ).ToString()
+                ).AsString()
             );
 
         /// <summary>

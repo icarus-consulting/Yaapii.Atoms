@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Text
                 StringBuilder output = new StringBuilder();
                 for (int cnt = 0; cnt < count; ++cnt)
                 {
-                    output.Append(text.ToString());
+                    output.Append(text.AsString());
                 }
                 return output.ToString();
             },

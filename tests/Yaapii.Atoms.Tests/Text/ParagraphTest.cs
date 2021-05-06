@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void BuildsWithParamsString()
         {
             var p = new Paragraph("a", "b", "c");
-            Assert.Equal("a\nb\nc".Replace("\n", Environment.NewLine), p.ToString());
+            Assert.Equal("a\nb\nc".Replace("\n", Environment.NewLine), p.AsString());
         }
 
         [Fact]
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Text.Tests
                     new LiveText("b"),
                     new LiveText("c")
                 ));
-            Assert.Equal("a\nb\nc".Replace("\n", Environment.NewLine), p.ToString());
+            Assert.Equal("a\nb\nc".Replace("\n", Environment.NewLine), p.AsString());
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace Yaapii.Atoms.Text.Tests
                 new string[] { "I", "was", "here" },
                 "foo", "bar"
             );
-            Assert.Equal("Hello\nWorld\nI\nwas\nhere\nfoo\nbar".Replace("\n", Environment.NewLine), p.ToString());
+            Assert.Equal("Hello\nWorld\nI\nwas\nhere\nfoo\nbar".Replace("\n", Environment.NewLine), p.AsString());
         }
 
         [Fact]
@@ -68,7 +68,7 @@ namespace Yaapii.Atoms.Text.Tests
                 new string[] { "I", "was", "here" },
                 new LiveText("foo"), new LiveText("bar")
             );
-            Assert.Equal("Hello\nWorld\nI\nwas\nhere\nfoo\nbar".Replace("\n", Environment.NewLine), p.ToString());
+            Assert.Equal("Hello\nWorld\nI\nwas\nhere\nfoo\nbar".Replace("\n", Environment.NewLine), p.AsString());
         }
     }
 }

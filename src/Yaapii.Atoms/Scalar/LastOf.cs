@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Enumerable
                             new Formatted(
                                 "Cannot get last element: {0}",
                                 ex.Message
-                            ).ToString()
+                            ).AsString()
                     );
                 }))
         { }

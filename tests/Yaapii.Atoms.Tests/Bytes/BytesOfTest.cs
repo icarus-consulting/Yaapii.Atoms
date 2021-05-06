@@ -138,7 +138,7 @@ namespace Yaapii.Atoms.IO.Tests
                         Encoding.UTF8,
                         16 << 10
                     )
-                ).ToString() == source
+                ).AsString() == source
             );
         }
 
@@ -170,7 +170,7 @@ namespace Yaapii.Atoms.IO.Tests
                     );
             }
 
-            Assert.Throws<ObjectDisposedException>(() => t.ToString());
+            Assert.Throws<ObjectDisposedException>(() => t.AsString());
         }
 
 
@@ -183,7 +183,7 @@ namespace Yaapii.Atoms.IO.Tests
                     new BytesOf(
                         new InputOf(text)
                         ).AsBytes(),
-                    new BytesOf(text.ToString()).AsBytes()
+                    new BytesOf(text.AsString()).AsBytes()
                 )
             );
         }
@@ -201,7 +201,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new BytesOf(
                             ex
                         )
-                    ).ToString();
+                    ).AsString();
             }
 
             Assert.True(

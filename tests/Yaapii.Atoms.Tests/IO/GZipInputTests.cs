@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.IO.Tests
                 "Hello!",
                 new LiveText(
                     new GZipInput(new InputOf(bytes))
-                ).ToString()
+                ).AsString()
             );
         }
     }

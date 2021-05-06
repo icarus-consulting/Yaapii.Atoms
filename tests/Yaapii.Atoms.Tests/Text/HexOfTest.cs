@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.Equal(
                 string.Empty,
-                new HexOf(new BytesOf(string.Empty.ToCharArray())).ToString()
+                new HexOf(new BytesOf(string.Empty.ToCharArray())).AsString()
             );
         }
 
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Text.Tests
                 "5768617427732075702c20d0b4d180d183d0b33f",
                 new HexOf(
                     new BytesOf("What's up, друг?")
-                ).ToString()
+                ).AsString()
             );
         }
     }

@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Bytes.Tests
                     new StreamReader(
                         new InputOf(source).Stream())
                 )
-            ).ToString() == source);
+            ).AsString() == source);
         }
     }
 }

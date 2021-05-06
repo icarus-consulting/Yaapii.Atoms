@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.IO.Tests
                 "d41d8cd98f00b204e9800998ecf8427e",
                 new HexOf(
                     new Md5DigestOf(new InputOf(string.Empty))
-                ).ToString()
+                ).AsString()
            );
         }
 
@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.IO.Tests
                 "ed076287532e86365e841e92bfc50d8c",
                 new HexOf(
                     new Md5DigestOf(new InputOf("Hello World!"))
-                ).ToString()
+                ).AsString()
             );
         }
 
@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.IO.Tests
                             this.GetType()
                         )
                     )
-                ).ToString()
+                ).AsString()
             );
         }
     }

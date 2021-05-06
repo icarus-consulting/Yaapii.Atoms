@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Text.Tests
                                     new LiveText(text)
                                 )
                             )
-                        ).ToString(),
+                        ).AsString(),
                         new OutputTo(new Uri(tempFile.Value()))
                     )
                 ).Value();
@@ -78,8 +78,8 @@ namespace Yaapii.Atoms.Text.Tests
                             new LiveText(text)
                         )
                     )
-                ).ToString(),
-                new TextBase64(text).ToString()
+                ).AsString(),
+                new TextBase64(text).AsString()
             );
         }
     }

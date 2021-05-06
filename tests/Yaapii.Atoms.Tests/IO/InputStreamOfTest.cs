@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new InputOf(
                             new InputStreamOf(
                                 new Uri(path))))
-                ).ToString() == content,
+                ).AsString() == content,
                 "Can't read file content");
 
         }
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new InputStreamOf(
                             new StreamReader(
                                 new InputOf(content).Stream())))
-                ).ToString() == content);
+                ).AsString() == content);
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace Yaapii.Atoms.IO.Tests
                             1
                         )
                     )
-                ).ToString() == content,
+                ).AsString() == content,
                 "Can't read from reader through small buffer"
             );
         }
@@ -113,7 +113,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new InputOf(
                             new InputStreamOf(
                                 new Uri(path))))
-                ).ToString() == content,
+                ).AsString() == content,
                 "Can't read file content"
             );
         }

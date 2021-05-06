@@ -154,10 +154,10 @@ namespace Yaapii.Atoms.Text
         private Strict(IText candidate, IEnumerable<IText> valid, IScalar<StringComparison> stringComparer) : base(() =>
         {
             var result = false;
-            var str = candidate.ToString();
+            var str = candidate.AsString();
             foreach (var txt in valid)
             {
-                if (txt.ToString().Equals(str, stringComparer.Value()))
+                if (txt.AsString().Equals(str, stringComparer.Value()))
                 {
                     result = true;
                     break;
@@ -165,7 +165,7 @@ namespace Yaapii.Atoms.Text
             }
             if (!result)
             {
-                throw new ArgumentException($"'{str}' is not valid here - expected: {new Joined(", ", valid).ToString()}");
+                throw new ArgumentException($"'{str}' is not valid here - expected: {new Joined(", ", valid).AsString()}");
             }
             return str;
         }, false)

@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">Origin text</param>
         /// <param name="live">should the value be created every time the object is used?</param>
-        public TextEnvelope(IText text, bool live) : this(() => text.ToString(), live)
+        public TextEnvelope(IText text, bool live) : this(() => text.AsString(), live)
         { }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Text
         /// Gives the text as a string.
         /// </summary>
         /// <returns></returns>
-        public String ToString()
+        public String AsString()
         {
             var result = string.Empty;
             if (this.live)

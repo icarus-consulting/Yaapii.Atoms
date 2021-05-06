@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">text to check</param>
         public IsWhitespace(IText text)
         {
-            this.result = new ScalarOf<bool>(() => !text.ToString().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + "")));
+            this.result = new ScalarOf<bool>(() => !text.AsString().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + "")));
         }
 
         /// <summary>

@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.IO.Tests
                         ),
                         new InputOf("hello, world!")
                     )
-                ).ToString().EndsWith("world!"),
+                ).AsString().EndsWith("world!"),
                 "Can't read alternative source"
             );
         }

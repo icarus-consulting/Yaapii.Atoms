@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
                             str => new TextOf(str + "")
                         )
                     )
-                ).ToString() == "1, 2",
+                ).AsString() == "1, 2",
                 "cannot limit enumertor contents"
             );
                 

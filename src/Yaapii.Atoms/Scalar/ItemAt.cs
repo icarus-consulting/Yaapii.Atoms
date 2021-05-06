@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Enumerable
             source,
             new BiFuncOf<Exception, IEnumerable<T>, T>((ex, itr) =>
                 throw new NoSuchElementException(
-                    new Formatted("Cannot get first element: {0}", ex.Message).ToString()
+                    new Formatted("Cannot get first element: {0}", ex.Message).AsString()
                 )
             )
         )
@@ -152,7 +152,7 @@ namespace Yaapii.Atoms.Enumerable
                                 "Cannot get element at position {0}: {1}",
                                 position,
                                 ex.Message
-                            ).ToString()
+                            ).AsString()
                     );
                 }
             )

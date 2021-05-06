@@ -54,8 +54,8 @@ namespace Yaapii.Atoms.Text
             this.result =
                 new ScalarOf<bool>(() =>
                 {
-                    var regex = new Regex("^" + Regex.Escape(start.ToString()));
-                    return regex.IsMatch(text.ToString());
+                    var regex = new Regex("^" + Regex.Escape(start.AsString()));
+                    return regex.IsMatch(text.AsString());
                 });
         }
 

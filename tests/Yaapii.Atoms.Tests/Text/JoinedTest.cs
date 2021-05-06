@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Text.Tests
                     " ", 
                     "hello", 
                     "world"
-                ).ToString() == "hello world"
+                ).AsString() == "hello world"
             );
         }
 
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Text.Tests
                     new LiveText(" "),
                     new LiveText("foo"),
                     new LiveText("bar")
-                ).ToString() == "foo bar"
+                ).AsString() == "foo bar"
             );
         }
     }

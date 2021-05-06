@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void RepeatsWordsText()
         {
             Assert.True(
-                new Repeated("hello", 2).ToString() == "hellohello",
+                new Repeated("hello", 2).AsString() == "hellohello",
                 "Can't repeat a text");
         }
 
@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void RepeatsCharText()
         {
             Assert.True(
-                new Repeated("A", 5).ToString() == "AAAAA",
+                new Repeated("A", 5).AsString() == "AAAAA",
                 "Can't repeat a char");
         }
     }

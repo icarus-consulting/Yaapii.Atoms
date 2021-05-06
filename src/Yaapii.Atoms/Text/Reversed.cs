@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">text to reverse</param>
         public Reversed(IText text) : base (() => 
             {
-                char[] chararray = text.ToString().ToCharArray();
+                char[] chararray = text.AsString().ToCharArray();
                 Array.Reverse(chararray);
                 string reverseTxt = "";
                 for (int i = 0; i <= chararray.Length - 1; i++)

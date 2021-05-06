@@ -81,7 +81,7 @@ namespace Yaapii.Atoms.Text
             {
                 IEnumerable<string> split =
                     new LiveMany<string>(
-                        new Regex(rgx.ToString()).Split(text.ToString())
+                        new Regex(rgx.AsString()).Split(text.AsString())
                     );
 
                 return

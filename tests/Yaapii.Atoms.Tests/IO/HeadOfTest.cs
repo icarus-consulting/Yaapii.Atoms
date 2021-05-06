@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new InputOf("readsHeadOfLongInput"),
                         5
                     )
-                ).ToString()
+                ).AsString()
             );
         }
 
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new InputOf("readsHeadOfLongInput"),
                         5
                     )
-                ).ToString();
+                ).AsString();
 
             Assert.Equal(
                 5,
@@ -76,7 +76,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new InputOf("readsEmptyHeadOfInput"),
                         0
                     )
-                ).ToString()
+                ).AsString()
             );
         }
 
@@ -91,7 +91,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new InputOf(input),
                         35
                     )
-                ).ToString()
+                ).AsString()
             );
         }
     }
