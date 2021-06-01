@@ -21,18 +21,14 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
 
 namespace Yaapii.Atoms.Enumerator.Tests
 {
     public sealed class RepeatedTest
     {
         [Fact]
-        public void AllSameTest()
+        public void RepeatsGivenAmount()
         {
             int size = 42;
             int element = 11;
@@ -48,13 +44,22 @@ namespace Yaapii.Atoms.Enumerator.Tests
         }
 
         [Fact]
-        public void EmptyTest()
+        public void WorksWithZeroRepeats()
         {
             Assert.True(
                 new LengthOf(
                     new Repeated<int>(0, 0)
-                    ).Value() == 0,
-                    "Can't generate an empty enumerator");
+                ).Value() == 0,
+                "Can't generate an empty enumerator"
+            );
+        }
+
+        [Fact]
+        public void RejectsMovingNegativeRepeats()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                new Repeated<int>(0, -1).MoveNext()
+            );
         }
     }
 }
