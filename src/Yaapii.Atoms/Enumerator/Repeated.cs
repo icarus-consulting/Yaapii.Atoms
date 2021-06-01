@@ -63,6 +63,10 @@ namespace Yaapii.Atoms.Enumerator
 
         public Boolean MoveNext()
         {
+            if(this.max < 0)
+            {
+                throw new ArgumentException($"The amount of repeats must be >= 0 but is {this.max}");
+            }
             if (this.left == 0) return false;
             --this.left;
             return true;
@@ -82,6 +86,10 @@ namespace Yaapii.Atoms.Enumerator
         {
             get
             {
+                if (this.max < 0)
+                {
+                    throw new ArgumentException($"The amount of repeats must be >= 0 but is {this.max}");
+                }
                 return this.element.Value();
             }
         }
