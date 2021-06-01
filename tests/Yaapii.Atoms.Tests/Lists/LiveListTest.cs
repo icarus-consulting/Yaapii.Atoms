@@ -43,21 +43,23 @@ namespace Yaapii.Atoms.List.Tests
         [Fact]
         public void LowBoundTest()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(
-                () => 
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
                 new LiveList<int>(() =>
-                    new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
-                    [-1]);
+                    new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
+                )
+                [-1]
+            );
         }
 
         [Fact]
         public void HighBoundTest()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(
-                () =>
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
                 new LiveList<int>(() =>
-                    new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
-                        [11]);
+                    new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
+                )
+                [11]
+            );
         }
 
         [Fact]

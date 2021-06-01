@@ -32,16 +32,30 @@ namespace Yaapii.Atoms.Enumerator
     /// An enumerator which is sticky. 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Cached<T> : IEnumerator<T>
+    public sealed class Sticky<T> : IEnumerator<T>
     {
         private readonly int[] position;
-        private readonly Cache<T> cache;
+        private readonly IDictionary<int, T> cache;
 
         /// In order to allow enumerables to not pre-compute/copy all elements,
         /// this ctor allows injecting and therefore re-using the caching elements.
         /// An enumerable like <see cref="ManyEnvelope"/> can then issue multiple 
         /// Enumerators while the same cache is filled when advancing them.
-        public Cached(Cache<T> cache)
+        public Sticky(IEnumerator<T> origin) : this(() => origin)
+        { }
+
+        /// In order to allow enumerables to not pre-compute/copy all elements,
+        /// this ctor allows injecting and therefore re-using the caching elements.
+        /// An enumerable like <see cref="ManyEnvelope"/> can then issue multiple 
+        /// Enumerators while the same cache is filled when advancing them.
+        public Sticky(Func<IEnumerator<T>> origin) : this(new Cache<T>(origin))
+        { }
+
+        /// In order to allow enumerables to not pre-compute/copy all elements,
+        /// this ctor allows injecting and therefore re-using the caching elements.
+        /// An enumerable like <see cref="ManyEnvelope"/> can then issue multiple 
+        /// Enumerators while the same cache is filled when advancing them.
+        public Sticky(IDictionary<int, T> cache)
         {
             this.position = new int[1] { -1 };
             this.cache = cache;
@@ -51,18 +65,11 @@ namespace Yaapii.Atoms.Enumerator
         {
             get
             {
-                lock (this.position)
+                if (this.position[0] == -1)
                 {
-                    if (this.position[0] == -1)
-                    {
-                        throw new InvalidOperationException("Cannot get current element - move the enumerator first.");
-                    }
-                    if (!this.cache.ContainsKey(this.position[0]))
-                    {
-                        throw new InvalidOperationException("Cannot get element - the enumerable does not have that much elements.");
-                    }
-                    return this.cache[this.position[0]];
+                    throw new InvalidOperationException("Cannot get current element - move the enumerator first.");
                 }
+                return this.cache[this.position[0]];
             }
         }
 
@@ -71,14 +78,11 @@ namespace Yaapii.Atoms.Enumerator
         public bool MoveNext()
         {
             bool moved = false;
-            lock (this.position)
+            var next = this.position[0] + 1;
+            if (this.cache.ContainsKey(next))
             {
-                var next = this.position[0] + 1;
-                if (this.cache.ContainsKey(next))
-                {
-                    this.position[0] = next;
-                    moved = true;
-                }
+                this.position[0] = next;
+                moved = true;
             }
             return moved;
         }
@@ -113,32 +117,23 @@ namespace Yaapii.Atoms.Enumerator
                 this.cache = new List<T>();
             }
 
-            public bool ContainsKey(int key)
+            public bool ContainsKey(int itemIndex)
             {
-                while (this.cache.Count < key + 1 && !this.reachedEnd[0])
+                var enumerator = this.origin.Value();
+                while (!this.reachedEnd[0] && this.count[0] - 1 < itemIndex)
                 {
-                    lock (origin)
+                    if (enumerator.MoveNext())
                     {
-                        if (!this.reachedEnd[0])
-                        {
-                            var moved = origin.Value().MoveNext();
-                            if (moved)
-                            {
-                                this.cache.Add(origin.Value().Current);
-                            }
-                            else
-                            {
-                                this.reachedEnd[0] = true;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        this.count[0]++;
+                        this.cache.Add(enumerator.Current);
+                    }
+                    else
+                    {
+                        this.reachedEnd[0] = true;
+                        break;
                     }
                 }
-                return this.cache.Count > key;
+                return this.count[0] > itemIndex;
             }
 
             public T this[int key]

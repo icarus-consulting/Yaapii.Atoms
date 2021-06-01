@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Enumerable
             new LiveMany<T>(() =>
                 new Enumerator.Endless<T>(elm)
             ),
-            false
+            true
         )
         { }
     }

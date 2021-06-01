@@ -50,7 +50,8 @@ namespace Yaapii.Atoms.Enumerable
                     item2
                 ),
                 items
-            )
+            ),
+            false
         )
         { }
 
@@ -59,12 +60,12 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src) : base(() =>
+        public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src, bool live = false) : base(() =>
             new Enumerator.Filtered<T>(
                 src.GetEnumerator(),
                 fnc
             ),
-            false
+            live
         )
         { }
     }

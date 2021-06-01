@@ -38,8 +38,10 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new ItemAt<int>(
                     new Endless<int>(1),
-                    0).Value() == 1,
-                "Can't get unique endless iterable item");
+                    0
+                ).Value() == 1,
+                "Can't get unique endless iterable item"
+            );
         }
     }
 }

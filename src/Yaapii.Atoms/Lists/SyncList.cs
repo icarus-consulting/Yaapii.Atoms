@@ -65,8 +65,8 @@ namespace Yaapii.Atoms.List
         /// <param name="syncRoot">root object to sync</param>
         /// <param name="col"></param>
         public SyncList(object syncRoot, IList<T> col) : base(
-            new Scalar.Sync<IList<T>>(
-                new Live<IList<T>>(() =>
+            new Scalar.Sync<IEnumerable<T>>(
+                new Live<IEnumerable<T>>(() =>
                 {
                     lock (syncRoot)
                     {

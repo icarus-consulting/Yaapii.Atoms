@@ -23,7 +23,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Yaapii.Atoms.Scalar;
 
 #pragma warning disable Immutability // Fields are readonly or constant
@@ -87,7 +86,7 @@ namespace Yaapii.Atoms.Enumerator
             }
         }
 
-        object IEnumerator.Current => throw new NotImplementedException();
+        object IEnumerator.Current => Current;
     }
 }
 #pragma warning restore NoProperties // No Properties
