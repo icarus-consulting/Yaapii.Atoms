@@ -103,13 +103,16 @@ namespace Yaapii.Atoms.Func
                 {
                     while (true)
                     {
-                        if (this.trigger.Invoke())
+                        lock (this.timespans)
                         {
-                            this.actions["shoot"]();
-                            completed = true;
-                            break;
+                            if (this.trigger.Invoke())
+                            {
+                                this.actions["shoot"]();
+                                completed = true;
+                                break;
+                            }
+                            Task.Delay(this.timespans["interval"]).Wait();
                         }
-                        Task.Delay(this.timespans["interval"]).Wait();
                     }
                 }
                 );
