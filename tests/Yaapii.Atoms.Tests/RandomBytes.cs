@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Tests
         /// </summary>
         /// <param name="lst">List</param>
         /// <param name="live"></param>
-        public RandomBytes(IScalar<IList<byte>> lst, bool live) : base(lst, live)
+        public RandomBytes(IScalar<IList<byte>> lst, bool live) : base(() => lst.Value().GetEnumerator(), live)
         {
         }
     }

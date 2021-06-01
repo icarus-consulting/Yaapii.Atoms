@@ -51,15 +51,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="src"></param>
         public LiveCollection(IEnumerable<T> src) : base(
-            () =>
-            {
-                ICollection<T> list = new LinkedList<T>();
-                foreach (T item in src)
-                {
-                    list.Add(item);
-                }
-                return list;
-            },
+            () => src.GetEnumerator(),
             true
         )
         { }

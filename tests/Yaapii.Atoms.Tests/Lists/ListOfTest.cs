@@ -22,6 +22,7 @@
 
 using System.Threading;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.List.Tests
@@ -39,8 +40,90 @@ namespace Yaapii.Atoms.List.Tests
                         new Live<int>(() => Interlocked.Increment(ref size))
                 ));
 
-            Assert.Equal(3, new Enumerable.LengthOf(list).Value());
-            Assert.Equal(3, new Enumerable.LengthOf(list).Value());
+            Assert.Equal(
+                new Enumerable.LengthOf(list).Value(),
+                new Enumerable.LengthOf(list).Value()
+            );
+        }
+
+        [Fact]
+        public void ContainsWorksWithFirstItem()
+        {
+            var list = new ListOf<string>("item");
+            Assert.Contains("item", list);
+        }
+
+        [Fact]
+        public void ContainsWorksWithHigherItem()
+        {
+            var list = new ListOf<string>("item1", "item2", "item3");
+            Assert.Contains("item2", list);
+        }
+
+        [Fact]
+        public void CountingAdvancesAll()
+        {
+            var advances = 0;
+            var origin = new ListOf<string>("item1", "item2", "item3");
+
+            var list =
+                new ListOf<string>(
+                    new Enumerator.Sticky<string>(
+                        new Enumerator.Sticky<string>.Cache<string>(() =>
+                            new LoggingEnumerator<string>(
+                                origin.GetEnumerator(),
+                                idx => advances++
+                            )
+                        )
+                    )
+                );
+
+            var count = list.Count;
+
+            Assert.Equal(3, advances);
+
+        }
+
+        [Fact]
+        public void FindsIndexOf()
+        {
+            var lst = new ListOf<string>("item1", "item2", "item3");
+
+            Assert.Equal(
+                2,
+                lst.IndexOf("item3")
+            );
+        }
+
+        [Fact]
+        public void DeliversIndexWhenNoFinding()
+        {
+            var lst = new ListOf<string>("item1", "item2", "item3");
+
+            Assert.Equal(
+                -1,
+                lst.IndexOf("item100")
+            );
+        }
+
+        [Fact]
+        public void CanCopyTo()
+        {
+            var array = new string[5];
+            var origin = new ListOf<string>("item1", "item2", "item3");
+            origin.CopyTo(array, 2);
+
+            Assert.Equal(
+                new string[] { null, null, "item1", "item2", "item3" },
+                array
+            );
+        }
+
+        [Fact]
+        public void ContainsWorksWithEmptyList()
+        {
+            var list = new ListOf<string>();
+            Assert.DoesNotContain("item", list);
         }
     }
 }

@@ -23,6 +23,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Scalar;
 
@@ -38,9 +39,9 @@ namespace Yaapii.Atoms.Collection
         /// scalar of collection
         /// </summary>
         private readonly UnsupportedOperationException readonlyError = new UnsupportedOperationException("The collection is readonly");
-        private readonly IScalar<ICollection<T>> origin;
-        private readonly ScalarOf<ICollection<T>> fixedOrigin;
+        private readonly Func<IEnumerator<T>> origin;
         private readonly bool live;
+        private readonly Sticky<T>.Cache<T> enumeratorCache;
 
         /// <summary>
         /// ctor
@@ -55,27 +56,41 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="slr">Scalar of ICollection</param>
         /// <param name="live">value is handled live or sticky</param>
-        public CollectionEnvelope(IScalar<ICollection<T>> slr, bool live)
+        public CollectionEnvelope(IScalar<ICollection<T>> slr, bool live) : this(
+            () => slr.Value().GetEnumerator(), live
+        )
+        { }
+
+        public CollectionEnvelope(Func<IEnumerator<T>> enumerator, bool live)
         {
-            this.origin = slr;
+            this.origin = enumerator;
             this.live = live;
-            this.fixedOrigin = new ScalarOf<ICollection<T>>(
-                () =>
-                {
-                    var temp = new List<T>();
-                    foreach (var item in slr.Value())
-                    {
-                        temp.Add(item);
-                    }
-                    return temp;
-                }
-            );
+            this.enumeratorCache = new Enumerator.Sticky<T>.Cache<T>(enumerator);
         }
 
         /// <summary>
         /// Number of elements
         /// </summary>
-        public int Count => Val().Count;
+        public int Count
+        {
+            get
+            {
+                int count = 0;
+                if (this.live)
+                {
+                    var enumerator = this.origin();
+                    while (enumerator.MoveNext())
+                    {
+                        count++;
+                    }
+                }
+                else
+                {
+                    count = this.enumeratorCache.Count;
+                }
+                return count;
+            }
+        }
 
         /// <summary>
         /// Is the collection readonly?
@@ -106,7 +121,33 @@ namespace Yaapii.Atoms.Collection
         /// <returns>True if item is found</returns>
         public bool Contains(T item)
         {
-            return Val().Contains(item);
+            bool result = false;
+            if (this.live)
+            {
+                var enumerator = this.origin();
+                while (enumerator.MoveNext())
+                {
+                    if (enumerator.Current.Equals(item))
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                var itemIndex = 0;
+                while (this.enumeratorCache.ContainsKey(itemIndex))
+                {
+                    if (this.enumeratorCache[itemIndex].Equals(item))
+                    {
+                        result = true;
+                        break;
+                    }
+                    itemIndex++;
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -116,7 +157,24 @@ namespace Yaapii.Atoms.Collection
         /// <param name="arrayIndex">Index to start</param>
         public void CopyTo(T[] array, int arrayIndex)
         {
-            Val().CopyTo(array, arrayIndex);
+            int idx = 0;
+            if (this.live)
+            {
+                var enumerator = this.origin();
+                while (enumerator.MoveNext())
+                {
+                    array[arrayIndex + idx] = enumerator.Current;
+                    idx++;
+                }
+            }
+            else
+            {
+                while (this.enumeratorCache.ContainsKey(idx))
+                {
+                    array[arrayIndex + idx] = this.enumeratorCache[idx];
+                    idx++;
+                }
+            }
         }
 
         /// <summary>
@@ -125,7 +183,7 @@ namespace Yaapii.Atoms.Collection
         /// <returns></returns>
         public IEnumerator<T> GetEnumerator()
         {
-            return Val().GetEnumerator();
+            return this.live ? this.origin() : new Yaapii.Atoms.Enumerator.Sticky<T>(this.enumeratorCache);
         }
 
         /// <summary>
@@ -144,21 +202,7 @@ namespace Yaapii.Atoms.Collection
         /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return Val().GetEnumerator();
-        }
-
-        private ICollection<T> Val()
-        {
-            ICollection<T> result;
-            if (this.live)
-            {
-                result = this.origin.Value();
-            }
-            else
-            {
-                result = this.fixedOrigin.Value();
-            }
-            return result;
+            return this.GetEnumerator();
         }
     }
 }

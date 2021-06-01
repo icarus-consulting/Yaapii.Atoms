@@ -35,14 +35,14 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="array">source array</param>
-        public ListOf(params T[] array) : this(new ManyOf<T>(array))
+        public ListOf(params T[] array) : this(new LiveMany<T>(array))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">source enumerator</param>
-        public ListOf(IEnumerator<T> src) : this(new ManyOf<T>(() => src))
+        public ListOf(IEnumerator<T> src) : base(() => src, false)
         { }
 
         /// <summary>
@@ -50,15 +50,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="src">source enumerable</param>
         public ListOf(IEnumerable<T> src) : base(
-            () =>
-            {
-                var temp = new List<T>();
-                foreach (T item in src)
-                {
-                    temp.Add(item);
-                }
-                return temp;
-            },
+            () => src.GetEnumerator(),
             false
         )
         { }

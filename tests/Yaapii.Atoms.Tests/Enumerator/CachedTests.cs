@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Enumerator
 {
@@ -33,8 +34,8 @@ namespace Yaapii.Atoms.Enumerator
             var advances = 0;
             var contents = new List<int>() { 1 };
             var enumerator =
-                new Cached<int>(
-                    new Cached<int>.Cache<int>(() => contents.GetEnumerator())
+                new Sticky<int>(
+                    new Sticky<int>.Cache<int>(() => contents.GetEnumerator())
                 );
 
             while (enumerator.MoveNext())
@@ -53,8 +54,8 @@ namespace Yaapii.Atoms.Enumerator
             var advances = 0;
             var contents = new List<int>() { 1, 2, 3 };
             var enumerator =
-                new Cached<int>(
-                    new Cached<int>.Cache<int>(() => contents.GetEnumerator())
+                new Sticky<int>(
+                    new Sticky<int>.Cache<int>(() => contents.GetEnumerator())
                 );
 
             while (enumerator.MoveNext())
@@ -74,10 +75,28 @@ namespace Yaapii.Atoms.Enumerator
         }
 
         [Fact]
+        public void DoesNotMoveWhenEmpty()
+        {
+            bool moved = false;
+            var contents = new List<int>();
+            var cache =
+                new Sticky<int>.Cache<int>(() =>
+                    new LoggingEnumerator<int>(
+                        contents.GetEnumerator(),
+                        idx => moved = true
+                    )
+                );
+
+            var count = cache.Count;
+
+            Assert.False(moved);
+        }
+
+        [Fact]
         public void CacheCachesItemCount()
         {
             var contents = new List<int>() { 1 };
-            var cache = new Cached<int>.Cache<int>(() => contents.GetEnumerator());
+            var cache = new Sticky<int>.Cache<int>(() => contents.GetEnumerator());
 
             var count = cache.Count;
 

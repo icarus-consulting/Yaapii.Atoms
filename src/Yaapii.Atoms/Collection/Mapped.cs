@@ -36,38 +36,36 @@ namespace Yaapii.Atoms.Collection
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="fnc">mapping function</param>
+        /// <param name="mapping">mapping function</param>
         /// <param name="src">source items</param>
-        public Mapped(Func<In, Out> fnc, params In[] src) : this(fnc, new ManyOf<In>(src))
+        public Mapped(Func<In, Out> mapping, params In[] src) : this(mapping, new ManyOf<In>(src))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="fnc">mapping function</param>
+        /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> fnc, IEnumerator<In> src) : this(
-            fnc, new ManyOf<In>(src))
+        public Mapped(Func<In, Out> mapping, IEnumerator<In> src) : this(
+            mapping, new ManyOf<In>(src))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="fnc">mapping function</param>
+        /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerable</param>
-        public Mapped(Func<In, Out> fnc, IEnumerable<In> src) : this(
-            fnc, new LiveCollection<In>(src))
+        public Mapped(Func<In, Out> mapping, IEnumerable<In> src) : this(
+            mapping, new LiveCollection<In>(src))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="fnc">mapping function</param>
+        /// <param name="mapping">mapping function</param>
         /// <param name="src">source collection</param>
-        public Mapped(Func<In, Out> fnc, ICollection<In> src) : base(
-            () => new LiveCollection<Out>(
-                new Enumerable.Mapped<In, Out>(fnc, src)
-            ),
+        public Mapped(Func<In, Out> mapping, ICollection<In> src) : base(() =>
+            new Enumerator.Mapped<In, Out>(src.GetEnumerator(), mapping),
             false
         )
         { }

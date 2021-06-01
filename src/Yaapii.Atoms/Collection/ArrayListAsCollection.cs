@@ -36,15 +36,15 @@ namespace Yaapii.Atoms.Collection
         /// A ArrayList converted to IList&lt;object&gt;
         /// </summary>
         /// <param name="src">source ArrayList</param>
-        public ArrayListAsCollection(ArrayList src) : base(new ScalarOf<ICollection<object>>(() =>
+        public ArrayListAsCollection(ArrayList src) : base(() =>
             {
                 var blocking = new BlockingCollection<object>();
                 foreach (var lst in src)
                 {
                     new Each<object>(item => blocking.Add(item), lst).Invoke();
                 }
-                return new LiveCollection<object>(blocking.ToArray());
-            }),
+                return blocking.GetConsumingEnumerable().GetEnumerator();
+            },
             false
         )
         { }

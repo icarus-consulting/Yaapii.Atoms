@@ -37,7 +37,9 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 "A",
                 new ItemAt<object>(
                     new ArrayListAsCollection(arr)
-                ).Value().ToString()
+                )
+                .Value()
+                .ToString()
             );
         }
     }

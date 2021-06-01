@@ -24,6 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerator;
+using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable
 {
@@ -35,7 +36,8 @@ namespace Yaapii.Atoms.Enumerable
     {
         private readonly bool live;
         private readonly Func<IEnumerator<string>> origin;
-        private readonly Enumerator.Cached<string>.Cache<string> enumeratorCache;
+        private readonly ScalarOf<IList<string>> fixedList;
+
 
         /// <summary>
         /// Envelope for Enumerable.
@@ -59,8 +61,17 @@ namespace Yaapii.Atoms.Enumerable
         {
             this.live = live;
             this.origin = origin;
-            this.enumeratorCache = new Cached<string>.Cache<string>(() => origin());
-
+            this.fixedList =
+                new ScalarOf<IList<string>>(() =>
+                {
+                    var result = new List<string>();
+                    var enm = origin();
+                    while (enm.MoveNext())
+                    {
+                        result.Add(enm.Current);
+                    }
+                    return result;
+                });
         }
 
         /// <summary>
@@ -76,7 +87,7 @@ namespace Yaapii.Atoms.Enumerable
             }
             else
             {
-                result = new Cached<string>(this.enumeratorCache);
+                result = this.fixedList.Value().GetEnumerator();
             }
             return result;
         }
@@ -99,7 +110,7 @@ namespace Yaapii.Atoms.Enumerable
     public abstract class ManyEnvelope<T> : IEnumerable<T>
     {
         private readonly bool live;
-        private readonly Enumerator.Cached<T>.Cache<T> enumeratorCache;
+        private readonly Enumerator.Sticky<T>.Cache<T> enumeratorCache;
         private readonly Func<IEnumerator<T>> origin;
 
         /// <summary>
@@ -120,7 +131,7 @@ namespace Yaapii.Atoms.Enumerable
         public ManyEnvelope(Func<IEnumerator<T>> origin, bool live)
         {
             this.live = live;
-            this.enumeratorCache = new Cached<T>.Cache<T>(() => origin());
+            this.enumeratorCache = new Sticky<T>.Cache<T>(origin);
             this.origin = origin;
         }
 
@@ -137,7 +148,7 @@ namespace Yaapii.Atoms.Enumerable
             }
             else
             {
-                result = new Enumerator.Cached<T>(this.enumeratorCache);
+                result = new Enumerator.Sticky<T>(this.enumeratorCache);
             }
             return result;
         }

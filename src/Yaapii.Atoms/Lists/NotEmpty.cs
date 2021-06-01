@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.List
         /// <param name="origin">List</param>
         /// <param name="ex">Execption to be thrown if empty</param>
         public NotEmpty(IList<T> origin, Exception ex) : base(
-            new Live<IList<T>>(
+            new Live<IEnumerable<T>>(
                 () =>
                 {
                     new FailPrecise(

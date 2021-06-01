@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         public Mapped(IFunc<In, Out> fnc, params In[] src) : this(
-            fnc, 
+            fnc,
             new LiveMany<In>(src)
         )
         { }
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         public Mapped(IBiFunc<In, int, Out> fnc, params In[] src) : this(
-            fnc, 
+            fnc,
             new LiveMany<In>(src)
         )
         { }
@@ -63,9 +63,11 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(Func<In, Out> fnc, IEnumerable<In> src) : this(
+        public Mapped(Func<In, Out> fnc, IEnumerable<In> src, bool live = false) : this(
             (In1, In2) => fnc.Invoke(In1),
-            src)
+            src,
+            live
+        )
         { }
 
         /// <summary>
@@ -73,9 +75,10 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(Func<In, int, Out> fnc, IEnumerable<In> src) : this(
+        public Mapped(Func<In, int, Out> fnc, IEnumerable<In> src, bool live = false) : this(
             new BiFuncOf<In, int, Out>(fnc),
-            src
+            src,
+            live
         )
         { }
 
@@ -84,7 +87,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IFunc<In, Out> fnc, IEnumerable<In> src) : this(new BiFuncOf<In, int, Out>((In1, In2) => fnc.Invoke(In1)), src)
+        public Mapped(IFunc<In, Out> fnc, IEnumerable<In> src, bool live = false) : this(new BiFuncOf<In, int, Out>((In1, In2) => fnc.Invoke(In1)), src, live)
         { }
 
         /// <summary>
@@ -92,12 +95,9 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src) : base(() =>
-            new LiveMany<Out>(() =>
-                new Enumerator.Mapped<In, Out>(
-                    src.GetEnumerator(), fnc)
-            ),
-            false
+        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src, bool live = false) : base(() =>
+            new Enumerator.Mapped<In, Out>(src.GetEnumerator(), fnc),
+            live
         )
         { }
     }

@@ -22,14 +22,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Yaapii.Atoms.List;
-using Yaapii.Atoms.Func;
-using System.Linq;
-using Yaapii.Atoms.Tests;
-using Yaapii.Atoms.Enumerable;
 using System.Diagnostics;
+using System.Linq;
+using Xunit;
+using Yaapii.Atoms.Tests;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
@@ -42,8 +38,36 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new LengthOf(
                     new Filtered<string>(
                        (input) => input != "B",
-                       new List<string>() { "A", "B", "C" })).Value() == 2,
-                "cannot filter items");
+                       new List<string>() { "A", "B", "C" }
+                    )
+                ).Value() == 2,
+                "cannot filter items"
+            );
+        }
+
+        [Fact]
+        public void CachesFilterResult()
+        {
+            var filterings = 0;
+            var filtered =
+                new Filtered<string>(
+                    (input) =>
+                    {
+                        filterings++;
+                        return input != "B";
+                    },
+                    new List<string>() { "A", "B", "C" }
+                );
+
+            var enm1 = filtered.GetEnumerator();
+            enm1.MoveNext();
+            var current = enm1.Current;
+
+            var enm2 = filtered.GetEnumerator();
+            enm2.MoveNext();
+            var current2 = enm2.Current;
+
+            Assert.Equal(1, filterings);
         }
 
         [Fact]
@@ -52,11 +76,12 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new Filtered<string>(
-
                         input => input.Length > 1,
-                        new ManyOf<String>())
-                    ).Value() == 0,
-                "cannot filter empty enumerable");
+                        new ManyOf<String>()
+                    )
+                ).Value() == 0,
+                "cannot filter empty enumerable"
+            );
         }
 
         [Fact]
