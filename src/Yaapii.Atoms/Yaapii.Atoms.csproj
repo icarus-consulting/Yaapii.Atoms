@@ -8,7 +8,7 @@
     <Description>Ported .NET version of Cactoos by Yegor Bugayenko.</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <NeutralLanguage>en</NeutralLanguage>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright (c) 2021 ICARUS Consulting GmbH</Copyright>
     <PackageTags>yaapii, elegant objects, cactoos, oop, encapsulation, primitives</PackageTags>
     <PackageProjectUrl>https://github.com/icarus-consulting/Yaapii.Atoms</PackageProjectUrl>
