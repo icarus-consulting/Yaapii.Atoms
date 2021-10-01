@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.Equal(
                 "ello! \t \b  ",
                 new TrimmedLeft(
-                    " \b   \t      Hello! \t \b  ", 
+                    " \b   \t      Hello! \t \b  ",
                     new char[] { '\b', '\t', ' ', 'H', 'o' }
                 ).AsString()
             );
@@ -75,7 +75,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.Equal(
                 "ello! \t \b  ",
                 new TrimmedLeft(
-                    new LiveText(" \b   \t      Hello! \t \b  "), 
+                    new LiveText(" \b   \t      Hello! \t \b  "),
                     new char[] { '\b', '\t', ' ', 'H', 'o' }
                 ).AsString()
             );
@@ -87,7 +87,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.Equal(
                 "ello! \t \b  ",
                 new TrimmedLeft(
-                    new LiveText(" \b   \t      Hello! \t \b  "), 
+                    new LiveText(" \b   \t      Hello! \t \b  "),
                     new Live<char[]>(() => new char[] { '\b', '\t', ' ', 'H', 'o' })
                 ).AsString()
             );

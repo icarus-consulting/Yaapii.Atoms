@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,13 +21,9 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Bytes;
-using Yaapii.Atoms.IO;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -56,7 +52,7 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void LogsWriteOneBytesToTextFile()
         {
-            using(var tempfile = new TempFile("txt"))
+            using (var tempfile = new TempFile("txt"))
             {
                 using (var append = new AppendTo(tempfile.Value()))
                 {
@@ -73,7 +69,7 @@ namespace Yaapii.Atoms.IO.Tests
                 var content = "";
                 using (var reader = new StreamReader(inputStream))
                 {
-                   content = reader.ReadToEnd();
+                    content = reader.ReadToEnd();
                 }
                 Assert.Equal(
                     "a",
@@ -81,7 +77,7 @@ namespace Yaapii.Atoms.IO.Tests
                 );
             }
         }
-        
+
         [Fact]
         public void LogsWriteTextToTextFile()
         {
@@ -97,7 +93,7 @@ namespace Yaapii.Atoms.IO.Tests
                         "memory"
                     ).Stream();
 
-                    
+
                     output.Write(bytes, 0, bytes.Length);
                 }
 
@@ -114,7 +110,7 @@ namespace Yaapii.Atoms.IO.Tests
                 );
             }
         }
-        
+
         [Fact]
         public void LogsWriteLargeTextToTextFile()
         {

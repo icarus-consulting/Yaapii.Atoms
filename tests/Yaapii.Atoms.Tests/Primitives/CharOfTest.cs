@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,13 +32,13 @@ namespace Yaapii.Atoms.Primitives.Tests
         public void CharOfInteger()
         {
             Assert.True(
-                new CharOf((int) 1337).Value() == (char) ((int) 1337));
+                new CharOf((int)1337).Value() == (char)((int)1337));
         }
 
         [Fact]
         public void ChardOfIntegerOutsideOfRange()
         {
-            Assert.Throws<OverflowException>(() => new CharOf((int) 2147483647).Value());
+            Assert.Throws<OverflowException>(() => new CharOf((int)2147483647).Value());
         }
 
         [Fact]
@@ -51,33 +51,33 @@ namespace Yaapii.Atoms.Primitives.Tests
         [Fact]
         public void ChardOfUIntegerOutsideOfRange()
         {
-            Assert.Throws<OverflowException>(() => new CharOf((uint) 2147483647).Value());
+            Assert.Throws<OverflowException>(() => new CharOf((uint)2147483647).Value());
         }
 
         [Fact]
         public void CharOfLong()
         {
             Assert.True(
-                new CharOf((long) 1338).Value() == (char) ((long) 1338));
+                new CharOf((long)1338).Value() == (char)((long)1338));
         }
 
         [Fact]
         public void ChardOfLongOutsideOfRange()
         {
-            Assert.Throws<OverflowException>(() => new CharOf((long) 2147483647).Value());
+            Assert.Throws<OverflowException>(() => new CharOf((long)2147483647).Value());
         }
 
         [Fact]
         public void CharOfULong()
         {
             Assert.True(
-                new CharOf((ulong) 1338).Value() == (char)((ulong) 1338));
+                new CharOf((ulong)1338).Value() == (char)((ulong)1338));
         }
 
         [Fact]
         public void ChardOfULongOutsideOfRange()
         {
-            Assert.Throws<OverflowException>(() => new CharOf((ulong) 2147483647).Value());
+            Assert.Throws<OverflowException>(() => new CharOf((ulong)2147483647).Value());
         }
 
         [Fact]

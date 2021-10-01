@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,16 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks.Dataflow;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.List;
-using Yaapii.Atoms.Scalar;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 namespace Yaapii.Atoms.Scalar.Tests
@@ -149,7 +145,7 @@ namespace Yaapii.Atoms.Scalar.Tests
 
             var result =
                 new ParallelAnd<bool>(
-                    new ListOf<IScalar<bool>>( )
+                    new ListOf<IScalar<bool>>()
                 ).Value();
 
             Assert.True(result);

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,21 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Func;
-using Yaapii.Atoms.IO;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Scalar
 {
@@ -61,7 +50,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="proc"></param>
         /// <param name="src"></param>
         public ParallelAnd(IAction<T> proc, params T[] src) : this(
-            new FuncOf<T,bool>(proc, true), src
+            new FuncOf<T, bool>(proc, true), src
         )
         { }
 
@@ -81,7 +70,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="proc"></param>
         /// <param name="src"></param>
         public ParallelAnd(IAction<T> proc, IEnumerable<T> src) : this(
-            new FuncOf<T,bool>(proc, true), src
+            new FuncOf<T, bool>(proc, true), src
         )
         { }
 
@@ -95,7 +84,7 @@ namespace Yaapii.Atoms.Scalar
                 i => new ScalarOf<bool>(func.Invoke(i)),
                 src)
             )
-        {}
+        { }
 
         /// <summary>
         /// Logical conjunction, in multiple threads. Returns true if all contents return true.
@@ -120,6 +109,6 @@ namespace Yaapii.Atoms.Scalar
 
             return result;
         }
-        
+
     }
 }

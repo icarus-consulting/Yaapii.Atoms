@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,9 @@
 using System;
 using System.Collections.Generic;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Text;
-using Yaapii.Atoms.Enumerable;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 namespace Yaapii.Atoms.Scalar.Tests
@@ -123,7 +123,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         {
             Assert.True(
                     new And<int>(
-                        new FuncOf<int,bool>(input => input > 0),
+                        new FuncOf<int, bool>(input => input > 0),
                         1, 2, 3
                     ).Value());
         }
@@ -133,7 +133,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         [InlineData("ABC", true)]
         public void TestValueAndFunctionList(string value, bool expected)
         {
-            var and = 
+            var and =
                 new And<string>(
                     value,
                     str => str.Contains("A"),

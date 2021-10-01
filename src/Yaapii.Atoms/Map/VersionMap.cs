@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Map;
 
 #pragma warning disable NoProperties // No Properties
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum

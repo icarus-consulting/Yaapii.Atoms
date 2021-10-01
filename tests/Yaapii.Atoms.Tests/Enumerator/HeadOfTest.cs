@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,13 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerator.Tests
@@ -44,14 +39,14 @@ namespace Yaapii.Atoms.Enumerator.Tests
                             new HeadOf<int>(
                                 new ManyOf<int>(1, 2, 3, 4).GetEnumerator(),
                                 2
-                            ), 
+                            ),
                             str => new TextOf(str + "")
                         )
                     )
                 ).AsString() == "1, 2",
                 "cannot limit enumertor contents"
             );
-                
+
         }
     }
 }

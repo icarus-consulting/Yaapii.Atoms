@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Collection
         public Filtered(Func<T, Boolean> func, T item1, T item2, params T[] items) :
             this(
                 func,
-                new LiveMany<T>(() => 
+                new LiveMany<T>(() =>
                     new Enumerable.Joined<T>(
                         new ManyOf<T>(
                             item1,
@@ -69,7 +69,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="func">filter func</param>
         /// <param name="src">items to filter</param>
         public Filtered(Func<T, Boolean> func, IEnumerable<T> src) : base(
-            new Live<ICollection<T>>(() => 
+            new Live<ICollection<T>>(() =>
                 new LiveCollection<T>(
                     new Enumerable.Filtered<T>(
                         func, src

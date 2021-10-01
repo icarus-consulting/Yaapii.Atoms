@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using Xunit;
-using Yaapii.Atoms.IO;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.IO.Tests
@@ -35,12 +30,12 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void ChecksumOfEmptyString()
         {
-           Assert.Equal(
-                "da39a3ee5e6b4b0d3255bfef95601890afd80709",
-                new HexOf(
-                    new Sha1DigestOf(new InputOf(string.Empty))
-                ).AsString()
-           );
+            Assert.Equal(
+                 "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                 new HexOf(
+                     new Sha1DigestOf(new InputOf(string.Empty))
+                 ).AsString()
+            );
         }
 
         [Fact]

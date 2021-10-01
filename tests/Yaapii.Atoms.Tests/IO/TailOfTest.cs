@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,9 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 using Yaapii.Atoms.Bytes;
-using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Tests;
 
 namespace Yaapii.Atoms.IO.Tests
@@ -49,9 +46,9 @@ namespace Yaapii.Atoms.IO.Tests
                     )
                 ).AsBytes();
 
-            var dest = new byte[bytes.Length-1];
-            Array.Copy(bytes,1,dest,0, bytes.Length-1);
-            
+            var dest = new byte[bytes.Length - 1];
+            Array.Copy(bytes, 1, dest, 0, bytes.Length - 1);
+
             Assert.Equal(
                 b,
                 dest
@@ -83,7 +80,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             int size = 4;
             byte[] bytes = new RandomBytes(size).ToArray();
-        
+
             Assert.Equal(
                 new BytesOf(
                     new TailOf(
@@ -101,7 +98,7 @@ namespace Yaapii.Atoms.IO.Tests
         {
             int size = 4;
             byte[] bytes = new RandomBytes(size).ToArray();
-            
+
             Assert.Equal(
                 new BytesOf(
                     new TailOf(
@@ -119,7 +116,7 @@ namespace Yaapii.Atoms.IO.Tests
             int size = 4;
             byte[] bytes = new RandomBytes(size).ToArray();
 
-            var res = new byte[bytes.Length-1];
+            var res = new byte[bytes.Length - 1];
             Array.Copy(bytes, 1, res, 0, bytes.Length - 1);
             Assert.Equal(
                 new BytesOf(

@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -136,11 +136,11 @@ namespace Yaapii.Atoms.IO
         {
             this._dir = new ScalarOf<string>(() =>
             {
-            var val = Path.GetFullPath(path.Value());
+                var val = Path.GetFullPath(path.Value());
                 try
                 {
                     //check if path is a directory
-                    if ((File.GetAttributes(val) & FileAttributes.Directory ) != FileAttributes.Directory)
+                    if ((File.GetAttributes(val) & FileAttributes.Directory) != FileAttributes.Directory)
                     {
                         throw new ArgumentException();
                     }
@@ -169,7 +169,7 @@ namespace Yaapii.Atoms.IO
                 this._recursive,
                 new Sorted<string>(
                     Directory.EnumerateFiles(_dir.Value(), "*", SearchOption.AllDirectories)
-                    
+
                 ).GetEnumerator(),
                 new Sorted<string>(
                     new Joined<string>(

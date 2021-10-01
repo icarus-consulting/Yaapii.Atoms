@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using Yaapii.Atoms.Error;
 
 namespace Yaapii.Atoms.Func
 {
@@ -55,7 +51,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="func">func to call</param>
         /// <param name="fallback">fallback func</param>
-        public FuncWithFallback(System.Func<In, Out> func, System.Func<Exception, Out> fallback) :this(
+        public FuncWithFallback(System.Func<In, Out> func, System.Func<Exception, Out> fallback) : this(
             new FuncOf<In, Out>((X) => func(X)),
             new FuncOf<Exception, Out>((e) => fallback(e)))
         { }
@@ -88,8 +84,8 @@ namespace Yaapii.Atoms.Func
         /// <param name="fallback">fallback func</param>
         /// <param name="flw">func to call afterwards</param>
         public FuncWithFallback(System.Func<In, Out> func, System.Func<Exception, Out> fallback, System.Func<Out, Out> flw) : this(
-            new FuncOf<In, Out>((X) => func(X)), 
-            new FuncOf<Exception, Out>((e) => fallback(e)), 
+            new FuncOf<In, Out>((X) => func(X)),
+            new FuncOf<Exception, Out>((e) => fallback(e)),
             new FuncOf<Out, Out>(flw))
         { }
 

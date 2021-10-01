@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Yaapii.Atoms.Misc;
 
 namespace Yaapii.Atoms.Func
 {
@@ -39,7 +35,7 @@ namespace Yaapii.Atoms.Func
     /// <typeparam name="In">type of input</typeparam>
     /// <typeparam name="Out">type of output</typeparam>
     public sealed class AsyncFunc<In, Out> : IFunc<In, Task<Out>>
-        where Out:class
+        where Out : class
     {
         /// <summary>
         /// func to call

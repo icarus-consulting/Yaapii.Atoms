@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Collection.Tests
             Assert.Contains(
                 "HELLO",
                 new Mapped<string, string>(
-                    input => 
+                    input =>
                     input.ToUpper(),
                     new ManyOf<string>("hello", "world", "друг")
                 )

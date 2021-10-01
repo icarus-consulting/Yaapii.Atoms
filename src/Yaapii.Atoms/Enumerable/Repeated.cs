@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
-        public Repeated(IScalar<T> elm, IScalar<int> cnt) : base(() => 
+        public Repeated(IScalar<T> elm, IScalar<int> cnt) : base(() =>
             new LiveMany<T>(() =>
                 new Enumerator.Repeated<T>(elm, cnt.Value())
             ),

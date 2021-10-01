@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using Yaapii.Atoms.IO;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -47,7 +43,7 @@ namespace Yaapii.Atoms.IO.Tests
          * Ctor.
          * @param size The size of the array to encapsulate
          */
-        internal SlowInput(int size): this(new InputOf(new MemoryStream(new byte[size])))
+        internal SlowInput(int size) : this(new InputOf(new MemoryStream(new byte[size])))
         { }
 
         /**
@@ -61,8 +57,8 @@ namespace Yaapii.Atoms.IO.Tests
 
         public Stream Stream()
         {
-        return new SlowInputStream(this._origin.Stream());
-    }
+            return new SlowInputStream(this._origin.Stream());
+        }
 
-}
+    }
 }

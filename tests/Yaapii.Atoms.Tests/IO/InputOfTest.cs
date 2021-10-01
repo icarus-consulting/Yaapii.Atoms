@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -171,7 +171,7 @@ namespace Yaapii.Atoms.IO.Tests
             Directory.CreateDirectory(dir);
             if (File.Exists(path)) File.Delete(path);
 
-            var length = 
+            var length =
                 new LengthOf(
                     new InputOf(
                         new TeeInputStream(

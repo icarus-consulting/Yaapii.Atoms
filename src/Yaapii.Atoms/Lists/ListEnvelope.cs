@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Scalar;
 
@@ -95,7 +93,7 @@ namespace Yaapii.Atoms.List
                 T result;
                 if (this.live)
                 {
-                    if(index < 0)
+                    if (index < 0)
                     {
                         throw new ArgumentOutOfRangeException($"Index of item must be > 0 but is {index}");
                     }

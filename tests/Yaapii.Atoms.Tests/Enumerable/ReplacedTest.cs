@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new ItemAt<string>(
                     new Replaced<string>(
-                        new string[] { "A", "B", "C", "D", "E"},
+                        new string[] { "A", "B", "C", "D", "E" },
                         2,
                         "F"
                     ),

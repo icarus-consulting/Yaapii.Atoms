@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Func.Tests
                 () => { actions.Add("ask trigger"); return count++ > 0; },
                 () => actions.Add("prepare"),
                 (str) => actions.Add("shoot"),
-                new TimeSpan(0,0,10)
+                new TimeSpan(0, 0, 10)
             ).Invoke("test");
 
             Assert.Equal(

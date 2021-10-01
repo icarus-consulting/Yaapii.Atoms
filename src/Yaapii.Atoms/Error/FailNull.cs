@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Error
         /// </summary>
         /// <param name="obj">object to check</param>
         /// <param name="hint">msg to put in exception</param>
-        public FailNull(object obj, string hint) :this(
+        public FailNull(object obj, string hint) : this(
             obj, new ArgumentNullException(hint))
         { }
 

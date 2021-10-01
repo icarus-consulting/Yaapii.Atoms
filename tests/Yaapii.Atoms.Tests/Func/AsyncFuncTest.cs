@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,9 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using Yaapii.Atoms.Func;
 
 namespace Yaapii.Atoms.Func.Tests
 {
@@ -35,7 +32,7 @@ namespace Yaapii.Atoms.Func.Tests
         [Fact]
         public void RunsInBackground()
         {
-            var future = 
+            var future =
 
                 new AsyncFunc<bool, string>(
                     input =>
@@ -61,7 +58,7 @@ namespace Yaapii.Atoms.Func.Tests
                     }
                 ).Invoke(true);
 
-            Assert.True(future == "done!","cannot await future");
+            Assert.True(future == "done!", "cannot await future");
         }
     }
 }

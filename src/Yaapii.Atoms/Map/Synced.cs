@@ -1,6 +1,6 @@
 ﻿// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -192,7 +192,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="map">Map to make threadsafe</param>
         public Sync(IDictionary<Key, Value> map) : base(
             () =>
-                new Sync<IDictionary<Key, Value>>(() => 
+                new Sync<IDictionary<Key, Value>>(() =>
                     new ConcurrentDictionary<Key, Value>(map)
                 ).Value(),
             false
