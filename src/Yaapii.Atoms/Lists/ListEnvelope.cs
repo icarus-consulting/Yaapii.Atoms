@@ -23,8 +23,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Yaapii.Atoms.Enumerable;
-using Yaapii.Atoms.Enumerator;
 using Yaapii.Atoms.Fail;
 using Yaapii.Atoms.Scalar;
 
@@ -35,40 +33,51 @@ namespace Yaapii.Atoms.List
     /// <summary>
     /// List envelope. Can make a readonly list from a scalar.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public abstract class ListEnvelope<T> : IList<T>
     {
-        private readonly UnsupportedOperationException readOnlyError = new UnsupportedOperationException("The list is readonly.");
-        //private readonly Enumerator.Sticky<T>.Cache<T> enumeratorCache;
+        private readonly UnsupportedOperationException readOnlyError;
         private readonly Func<IEnumerator<T>> origin;
         private readonly bool live;
         private readonly ScalarOf<IList<T>> fixedList;
 
         /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="lst">A scalar to a <see cref="IList{T}"/></param>
-        /// <param name="live">value is handled live or sticky</param>
-        public ListEnvelope(IScalar<IEnumerable<T>> lst, bool live) : this(() => lst.Value().GetEnumerator(), live)
-        { }
-
-        /// <summary>
-        /// ctor
+        /// List envelope. Can make a readonly list from a scalar.
         /// </summary>
         /// <param name="live">value is handled live or sticky</param>
-        public ListEnvelope(Func<IList<T>> lst, bool live) : this(
-            () => lst().GetEnumerator(),
+        public ListEnvelope(IScalar<IList<T>> lst, bool live) : this(() =>
+            lst.Value().GetEnumerator(),
             live
         )
         { }
 
         /// <summary>
-        /// ctor
+        /// List envelope. Can make a readonly list from a scalar.
+        /// </summary>
+        /// <param name="live">value is handled live or sticky</param>
+        public ListEnvelope(IScalar<IEnumerable<T>> lst, bool live) : this(() =>
+            lst.Value().GetEnumerator(),
+            live
+        )
+        { }
+
+        /// <summary>
+        /// List envelope. Can make a readonly list from a scalar.
+        /// </summary>
+        /// <param name="live">value is handled live or sticky</param>
+        public ListEnvelope(Func<IList<T>> lst, bool live) : this(() =>
+            lst().GetEnumerator(),
+            live
+        )
+        { }
+
+        /// <summary>
+        /// List envelope. Can make a readonly list from a scalar.
         /// </summary>
         /// <param name="live">value is handled live or sticky</param>
         public ListEnvelope(Func<IEnumerator<T>> enumerator, bool live)
         {
             this.live = live;
+            this.origin = enumerator;
             this.fixedList =
                 new ScalarOf<IList<T>>(() =>
                 {
@@ -80,14 +89,12 @@ namespace Yaapii.Atoms.List
                     }
                     return result;
                 });
-            this.origin = enumerator;
+            this.readOnlyError = new UnsupportedOperationException("The list is readonly.");
         }
 
         /// <summary>
-        /// access items
+        /// Access items.
         /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
         public T this[int index]
         {
             get
@@ -95,7 +102,7 @@ namespace Yaapii.Atoms.List
                 T result;
                 if (this.live)
                 {
-                    if(index < 0)
+                    if (index < 0)
                     {
                         throw new ArgumentOutOfRangeException($"Index of item must be > 0 but is {index}");
                     }
@@ -127,7 +134,7 @@ namespace Yaapii.Atoms.List
         }
 
         /// <summary>
-        /// Count elements
+        /// Count elements.
         /// </summary>
         public int Count
         {
@@ -151,7 +158,7 @@ namespace Yaapii.Atoms.List
         }
 
         /// <summary>
-        /// Test if containing the given item
+        /// Test if containing the given item.
         /// </summary>
         /// <param name="item">Item to find</param>
         /// <returns>true if item is found</returns>
@@ -178,7 +185,7 @@ namespace Yaapii.Atoms.List
         }
 
         /// <summary>
-        /// copy to a target array
+        /// Copy to a target array.
         /// </summary>
         /// <param name="array">target array</param>
         /// <param name="arrayIndex">write start index</param>
@@ -208,7 +215,6 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// Enumerator for this list.
         /// </summary>
-        /// <returns>Enumerator</returns>
         public IEnumerator<T> GetEnumerator()
         {
             return this.live ? this.origin() : this.fixedList.Value().GetEnumerator();
@@ -217,17 +223,14 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// Enumerator for this list.
         /// </summary>
-        /// <returns>Enumerator</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
 
         /// <summary>
-        /// Index of given item
+        /// Index of given item.
         /// </summary>
-        /// <param name="item">item</param>
-        /// <returns></returns>
         public int IndexOf(T item)
         {
             var result = -1;
@@ -259,7 +262,6 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// Not supported.
         /// </summary>
-        /// <param name="item"></param>
         public void Add(T item) { throw this.readOnlyError; }
 
         /// <summary>
@@ -273,8 +275,6 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// Unsupported.
         /// </summary>
-        /// <param name="index"></param>
-        /// <param name="item"></param>
         public void Insert(int index, T item)
         {
             throw this.readOnlyError;
@@ -283,8 +283,6 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// Unsupported.
         /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
         public bool Remove(T item)
         {
             throw readOnlyError;
@@ -293,7 +291,6 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// Unsupported.
         /// </summary>
-        /// <param name="index"></param>
         public void RemoveAt(int index)
         {
             throw this.readOnlyError;
