@@ -63,7 +63,56 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(Func<In, Out> fnc, IEnumerable<In> src, bool live = false) : this(
+        public Mapped(Func<In, Out> fnc, IEnumerable<In> src) : this(
+            fnc,
+            src,
+            false
+        )
+        { }
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Index, Out}"/> function with index.
+        /// </summary>
+        /// <param name="src">enumerable to map</param>
+        /// <param name="fnc">function used to map</param>
+        public Mapped(Func<In, int, Out> fnc, IEnumerable<In> src) : this(
+            fnc,
+            src,
+            false
+        )
+        { }
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
+        /// </summary>
+        /// <param name="src">enumerable to map</param>
+        /// <param name="fnc">function used to map</param>
+        public Mapped(IFunc<In, Out> fnc, IEnumerable<In> src) : this(
+            fnc,
+            src,
+            false
+        )
+        { }
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
+        /// </summary>
+        /// <param name="src">enumerable to map</param>
+        /// <param name="fnc">function used to map</param>
+        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src) : this(
+            fnc,
+            src,
+            false
+        )
+        { }
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Out}"/> function.
+        /// </summary>
+        /// <param name="src">enumerable to map</param>
+        /// <param name="fnc">function used to map</param>
+        /// <param name="live">live or sticky</param>
+        public Mapped(Func<In, Out> fnc, IEnumerable<In> src, bool live) : this(
             (In1, In2) => fnc.Invoke(In1),
             src,
             live
@@ -75,7 +124,8 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(Func<In, int, Out> fnc, IEnumerable<In> src, bool live = false) : this(
+        /// <param name="live">live or sticky</param>
+        public Mapped(Func<In, int, Out> fnc, IEnumerable<In> src, bool live) : this(
             new BiFuncOf<In, int, Out>(fnc),
             src,
             live
@@ -87,7 +137,14 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IFunc<In, Out> fnc, IEnumerable<In> src, bool live = false) : this(new BiFuncOf<In, int, Out>((In1, In2) => fnc.Invoke(In1)), src, live)
+        /// <param name="live">live or sticky</param>
+        public Mapped(IFunc<In, Out> fnc, IEnumerable<In> src, bool live) : this(
+            new BiFuncOf<In, int, Out>((In1, In2) =>
+                fnc.Invoke(In1)
+            ),
+            src,
+            live
+        )
         { }
 
         /// <summary>
@@ -95,8 +152,12 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src, bool live = false) : base(() =>
-            new Enumerator.Mapped<In, Out>(src.GetEnumerator(), fnc),
+        /// <param name="live">live or sticky</param>
+        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src, bool live) : base(() =>
+            new Enumerator.Mapped<In, Out>(
+                src.GetEnumerator(),
+                fnc
+            ),
             live
         )
         { }
