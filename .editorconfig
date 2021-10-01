@@ -3,22 +3,26 @@
 # top-most EditorConfig file
 root = true
 
-# Don't use tabs for indentation.
+                                 
 [*]
+charset = utf-8
+end_of_line = lf
 indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
 
 # Code files
 [*.{cs,csx,vb,vbx}]
 indent_size = 4
-insert_final_newline = true
+                           
 csharp_space_after_keywords_in_control_flow_statements = true
 
 # Cake build script
 [*.cake]
 indent_size = 4
 
-# Appveyor cofinguration
-[*.yml]
+# Appveyor configuration
+[*.{yml,yaml}]
 indent_size = 2
 
 # Xml project files
