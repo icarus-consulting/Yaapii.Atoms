@@ -1,4 +1,4 @@
-﻿using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Map
 {
