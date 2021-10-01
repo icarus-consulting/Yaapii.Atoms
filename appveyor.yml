@@ -1,7 +1,7 @@
 #------------------------------------------------------------#
 #     CI Build Configuration for master branch pre-release   #
 #------------------------------------------------------------#
-version: 1.0.0.{build}
+version: "{build}"
 image: Visual Studio 2019
 configuration: Release
 environment:
