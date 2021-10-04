@@ -38,11 +38,31 @@ namespace Yaapii.Atoms.Enumerable
         private readonly Func<IEnumerator<string>> origin;
         private readonly ScalarOf<IList<string>> fixedList;
 
+        /// <summary>
+        /// Envelope for Enumerable.
+        /// </summary>
+        public ManyEnvelope(IScalar<IEnumerable<string>> fnc) : this(
+            fnc,
+            false
+        )
+        { }
 
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public ManyEnvelope(IScalar<IEnumerable<string>> fnc, bool live = false) : this(() => fnc.Value(), live)
+        public ManyEnvelope(Func<IEnumerator<string>> origin) : this(
+            origin,
+            false
+        )
+        { }
+
+        /// <summary>
+        /// Envelope for Enumerable.
+        /// </summary>
+        public ManyEnvelope(IScalar<IEnumerable<string>> fnc, bool live) : this(() =>
+            fnc.Value(),
+            live
+        )
         { }
 
         /// <summary>
@@ -57,7 +77,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public ManyEnvelope(Func<IEnumerator<string>> origin, bool live = false)
+        public ManyEnvelope(Func<IEnumerator<string>> origin, bool live)
         {
             this.live = live;
             this.origin = origin;

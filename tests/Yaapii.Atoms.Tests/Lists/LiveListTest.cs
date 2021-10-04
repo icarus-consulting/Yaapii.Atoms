@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.List.Tests
@@ -63,15 +64,31 @@ namespace Yaapii.Atoms.List.Tests
         }
 
         [Fact]
-        public void SensesChanges()
+        public void SensesChangesFromArray()
+        {
+            var volatileArray = new int[] { 1, 2 };
+            var live =
+                new LiveList<int>(
+                    volatileArray
+                );
+
+            var a = new List<int>(live);
+            volatileArray[0] = 3;
+            var b = new List<int>(live);
+            Assert.NotEqual(a, b);
+        }
+
+        [Fact]
+        public void SensesChangesFromFunc()
         {
             int size = 2;
             var list =
                 new LiveList<int>(() =>
                     new ListOf<int>(
-                        new Yaapii.Atoms.Enumerable.HeadOf<int>(
-                            new Yaapii.Atoms.Enumerable.Endless<int>(1),
-                                new Live<int>(() => Interlocked.Increment(ref size)
+                        new HeadOf<int>(
+                            new Endless<int>(1),
+                            new Live<int>(() =>
+                                Interlocked.Increment(ref size)
                             )
                         )
                     )
@@ -80,5 +97,23 @@ namespace Yaapii.Atoms.List.Tests
             Assert.NotEqual(list.Count, list.Count);
         }
 
+        [Fact]
+        public void SensesChangesFromEnumerator()
+        {
+            int size = 2;
+            var list =
+                new LiveList<int>(
+                    new ListOf<int>(
+                        new HeadOf<int>(
+                            new Endless<int>(1),
+                            new Live<int>(() =>
+                                Interlocked.Increment(ref size)
+                            )
+                        )
+                    ).GetEnumerator()
+                );
+
+            Assert.NotEqual(list.Count, list.Count);
+        }
     }
 }

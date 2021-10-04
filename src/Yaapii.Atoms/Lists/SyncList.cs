@@ -21,7 +21,6 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
-using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.List
@@ -29,43 +28,75 @@ namespace Yaapii.Atoms.List
     /// <summary>
     /// A list which is threadsafe.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public sealed class SyncList<T> : ListEnvelope<T>
     {
         /// <summary>
-        /// ctor
+        /// A list which is threadsafe.
         /// </summary>
         public SyncList() : this(new object())
         { }
 
         /// <summary>
-        /// ctor
+        /// A list which is threadsafe.
         /// </summary>
-        /// <param name="syncRoot"></param>
-        public SyncList(object syncRoot) : this(syncRoot, new ListOf<T>())
+        public SyncList(object syncRoot) : this(
+            syncRoot,
+            new ListOf<T>()
+        )
         { }
 
         /// <summary>
-        /// ctor
+        /// A list which is threadsafe.
         /// </summary>
-        /// <param name="items">items to make collection from</param>
-        public SyncList(params T[] items) : this(new ListOf<T>(items))
+        /// <param name="items">Items to make list from</param>
+        public SyncList(params T[] items) : this(
+            new ListOf<T>(items)
+        )
         { }
 
         /// <summary>
-        /// ctor
+        /// A list which is threadsafe.
         /// </summary>
-        /// <param name="lst">Collection to sync</param>
-        public SyncList(IList<T> lst) : this(lst, lst)
+        /// <param name="items">Items to make list from</param>
+        public SyncList(IEnumerable<T> items) : this(
+            new ListOf<T>(items)
+        )
         { }
 
         /// <summary>
-        /// ctor
+        /// A list which is threadsafe.
         /// </summary>
-        /// <param name="syncRoot">root object to sync</param>
-        /// <param name="col"></param>
+        /// <param name="items">Items to make list from</param>
+        public SyncList(IEnumerator<T> items) : this(
+            new ListOf<T>(items)
+        )
+        { }
+
+        /// <summary>
+        /// A list which is threadsafe.
+        /// </summary>
+        /// <param name="lst">Items to make list from</param>
+        public SyncList(ICollection<T> lst) : this(
+            new ListOf<T>(lst)
+        )
+        { }
+
+        /// <summary>
+        /// A list which is threadsafe.
+        /// </summary>
+        /// <param name="lst">List to sync</param>
+        public SyncList(IList<T> lst) : this(
+            lst,
+            lst
+        )
+        { }
+
+        /// <summary>
+        /// A list which is threadsafe.
+        /// </summary>
+        /// <param name="syncRoot">Root object to sync</param>
         public SyncList(object syncRoot, IList<T> col) : base(
-            new Scalar.Sync<IEnumerable<T>>(
+            new Sync<IEnumerable<T>>(
                 new Live<IEnumerable<T>>(() =>
                 {
                     lock (syncRoot)
@@ -82,6 +113,5 @@ namespace Yaapii.Atoms.List
             false
         )
         { }
-
     }
 }

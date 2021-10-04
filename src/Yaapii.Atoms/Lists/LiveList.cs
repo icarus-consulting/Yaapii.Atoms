@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.List
 {
@@ -32,7 +33,25 @@ namespace Yaapii.Atoms.List
     public sealed class LiveList<T> : ListEnvelope<T>
     {
         /// <summary>
-        /// ctor
+        /// Makes a readonly list.
+        /// </summary>
+        public LiveList(params T[] array) : this(() =>
+            new List<T>(array)
+        )
+        { }
+
+        /// <summary>
+        /// Makes a readonly list.
+        /// </summary>
+        public LiveList(IEnumerator<T> src) : this(() =>
+            new List<T>(
+                new LiveMany<T>(() => src)
+            )
+        )
+        { }
+
+        /// <summary>
+        /// Makes a readonly list.
         /// </summary>
         /// <param name="src">source enumerable</param>
         public LiveList(Func<IList<T>> src) : base(
