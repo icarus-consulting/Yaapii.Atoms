@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="find">part to replace</param>
         /// <param name="replace">replacement to insert</param>
         public Replaced(IText text, String find, String replace) : base(() =>
-            text.AsString().Replace(find, replace), 
+            text.AsString().Replace(find, replace),
             false
         )
         { }

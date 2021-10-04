@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,9 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Yaapii.Atoms.IO;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 namespace Yaapii.Atoms.IO
@@ -87,7 +85,7 @@ namespace Yaapii.Atoms.IO
         public override async Task<int> ReadBlockAsync(char[] buffer, int index, int count)
         {
             var done = await this._source.ReadBlockAsync(buffer, index, count);
-            if(done > 0)
+            if (done > 0)
             {
                 await this._destination.WriteAsync(buffer);
             }
@@ -105,7 +103,7 @@ namespace Yaapii.Atoms.IO
         {
             return this._source.Peek();
         }
-        
+
         public override string ReadToEnd()
         {
             string s = this._source.ReadToEnd();

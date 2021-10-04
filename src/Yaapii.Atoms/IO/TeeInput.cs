@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Yaapii.Atoms.Bytes;
 
 namespace Yaapii.Atoms.IO
@@ -66,7 +64,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="input">input byte array</param>
         /// <param name="file">output Uri</param>
-        public TeeInput(byte[] input, Uri file) : 
+        public TeeInput(byte[] input, Uri file) :
             this(new BytesAsInput(input), new OutputTo(file))
         { }
 

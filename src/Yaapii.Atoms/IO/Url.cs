@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Yaapii.Atoms.IO
 {
@@ -51,7 +49,7 @@ namespace Yaapii.Atoms.IO
         /// <returns></returns>
         public Uri Value()
         {
-            if(!_source.StartsWith("http://") && !_source.StartsWith("https://") &&  !_source.StartsWith("ftp://"))
+            if (!_source.StartsWith("http://") && !_source.StartsWith("https://") && !_source.StartsWith("ftp://"))
             {
                 throw new ArgumentException("url must start with http or https");
             }

@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,15 +31,15 @@ namespace Yaapii.Atoms.Scalar.Tests
         [Fact]
         public void IncreasesOne()
         {
-            List<int> lst = new List<int>() { 2, 1, 0};
+            List<int> lst = new List<int>() { 2, 1, 0 };
 
             new Each<int>(
-                (i) => lst[i] = i, 
-                0,1,2
+                (i) => lst[i] = i,
+                0, 1, 2
             ).Invoke();
 
             Assert.True(
-                lst[0] == 0 && 
+                lst[0] == 0 &&
                 lst[2] == 2
             );
         }

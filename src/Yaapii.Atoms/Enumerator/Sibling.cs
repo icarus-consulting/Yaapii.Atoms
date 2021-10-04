@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using Yaapii.Atoms.List;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Error;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Text;
-using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Enumerator
 {
@@ -157,7 +155,7 @@ namespace Yaapii.Atoms.Enumerator
                 this.src.Reset();
                 for (cur = 0; cur <= idx; cur++)
                 {
-                    if(!this.src.MoveNext()) throw new ArgumentOutOfRangeException("position", "cannot get neighbour because position is not in range of the enumerable");
+                    if (!this.src.MoveNext()) throw new ArgumentOutOfRangeException("position", "cannot get neighbour because position is not in range of the enumerable");
                 }
                 ret = this.src.Current;
             }

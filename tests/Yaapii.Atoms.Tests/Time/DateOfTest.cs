@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Time.Tests
         {
             Assert.True(
                 new DateOf(
-                    "2017-12-13 14:15:16.0170000", 
+                    "2017-12-13 14:15:16.0170000",
                     "yyyy-MM-dd HH:mm:ss.fffffff").Value().ToUniversalTime() ==
                 new DateTime(2017, 12, 13, 14, 15, 16, 17, DateTimeKind.Utc).ToUniversalTime());
         }

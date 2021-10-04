@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,7 @@ public sealed class Zip : IInput
         var memory = new MemoryStream();
         using (var zip = new ZipArchive(memory, ZipArchiveMode.Create, true))
         {
-            foreach (var file in Directory.GetFiles(this.path,"*",SearchOption.AllDirectories))
+            foreach (var file in Directory.GetFiles(this.path, "*", SearchOption.AllDirectories))
             {
                 var entry = zip.CreateEntry(file);
                 new LengthOf(

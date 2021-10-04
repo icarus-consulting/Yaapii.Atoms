@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -130,7 +130,7 @@ namespace Yaapii.Atoms.Map.Tests
             var one = new KeyValuePair<string, int>("hello", 0);
             var two = new KeyValuePair<string, int>("goodbye", 1);
 
-            var m = 
+            var m =
                 new LiveMap<int>(() =>
                     new LiveMany<IKvp<int>>(
                         new KvpOf<int>(() => one),

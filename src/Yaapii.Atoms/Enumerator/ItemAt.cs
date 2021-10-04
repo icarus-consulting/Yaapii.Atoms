@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -171,7 +171,7 @@ namespace Yaapii.Atoms.Enumerator
 
                 for (int cur = 1; cur <= this.pos; ++cur)
                 {
-                    if(!this.src.MoveNext())
+                    if (!this.src.MoveNext())
                     {
                         throw new InvalidOperationException($"Cannot get item {this.pos} - The enumerable has only {cur} items.");
                     }

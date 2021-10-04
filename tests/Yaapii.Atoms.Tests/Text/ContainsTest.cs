@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,9 +33,9 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Contains(
-                    "Hallo Welt!", 
+                    "Hallo Welt!",
                     "Welt"
-                ).Value() 
+                ).Value()
             );
         }
 
@@ -44,8 +44,8 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Contains(
-                    "Hallo Welt!", 
-                    "welt", 
+                    "Hallo Welt!",
+                    "welt",
                     true
                 ).Value()
             );
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Contains(
-                    new LiveText("Hallo Welt!"), 
+                    new LiveText("Hallo Welt!"),
                     new LiveText("Welt")
                 ).Value()
             );
@@ -67,8 +67,8 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Contains(
-                    new LiveText("Hallo Welt!"), 
-                    new LiveText("welt"), 
+                    new LiveText("Hallo Welt!"),
+                    new LiveText("welt"),
                     true
                 ).Value()
             );
@@ -79,7 +79,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Contains(
-                    new Live<string>("Hallo Welt!"), 
+                    new Live<string>("Hallo Welt!"),
                     new Live<string>("Welt")
                 ).Value()
             );
@@ -90,8 +90,8 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.True(
                 new Contains(
-                    new Live<string>("Hallo Welt!"), 
-                    new Live<string>("welt"), 
+                    new Live<string>("Hallo Welt!"),
+                    new Live<string>("welt"),
                     new Live<StringComparison>(StringComparison.CurrentCultureIgnoreCase)
                 ).Value()
             );
@@ -102,7 +102,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.False(
                 new Contains(
-                    "Hallo Welt!", 
+                    "Hallo Welt!",
                     "welt"
                 ).Value()
             );
@@ -113,8 +113,8 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.False(
                 new Contains(
-                    "Hallo Welt!", 
-                    "world", 
+                    "Hallo Welt!",
+                    "world",
                     true
                 ).Value()
             );
@@ -125,7 +125,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.False(
                 new Contains(
-                    new LiveText("Hallo Welt!"), 
+                    new LiveText("Hallo Welt!"),
                     new LiveText("welt")
                 ).Value()
             );
@@ -136,8 +136,8 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.False(
                 new Contains(
-                    new LiveText("Hallo Welt!"), 
-                    new LiveText("world"), 
+                    new LiveText("Hallo Welt!"),
+                    new LiveText("world"),
                     true
                 ).Value()
             );
@@ -148,7 +148,7 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.False(
                 new Contains(
-                    new Live<string>("Hallo Welt!"), 
+                    new Live<string>("Hallo Welt!"),
                     new Live<string>("welt")
                 ).Value()
             );
@@ -159,8 +159,8 @@ namespace Yaapii.Atoms.Text.Tests
         {
             Assert.False(
                 new Contains(
-                    new Live<string>("Hallo Welt!"), 
-                    new Live<string>("world"), 
+                    new Live<string>("Hallo Welt!"),
+                    new Live<string>("world"),
                     new Live<StringComparison>(
                         StringComparison.CurrentCultureIgnoreCase
                     )

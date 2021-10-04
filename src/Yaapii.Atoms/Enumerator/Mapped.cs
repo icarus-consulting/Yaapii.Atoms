@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fnc">mapping function</param>
-        public Mapped(IEnumerator<In> src, Func<In, Out> fnc) : this(src, (input, index)=> fnc.Invoke(input))
+        public Mapped(IEnumerator<In> src, Func<In, Out> fnc) : this(src, (input, index) => fnc.Invoke(input))
         { }
 
         /// <summary>

@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">Text to be accessed thread safe</param>
         public Synced(IText text) : this(text, text)
-        {}
+        { }
 
         /// <summary>
         /// An <see cref="IText"/> which is thread safe.
@@ -44,7 +44,8 @@ namespace Yaapii.Atoms.Text
         /// <returns></returns>
         public Synced(IText text, Object lck) : base(() =>
             {
-                lock (lck) {
+                lock (lck)
+                {
                     return text.AsString();
                 }
             },

@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Enumerator
 
         public Boolean MoveNext()
         {
-            if(this.max < 0)
+            if (this.max < 0)
             {
                 throw new ArgumentException($"The amount of repeats must be >= 0 but is {this.max}");
             }
@@ -74,12 +74,12 @@ namespace Yaapii.Atoms.Enumerator
 
         public void Reset()
         {
-            this.left = this.max; 
+            this.left = this.max;
         }
 
         public void Dispose()
         {
-            
+
         }
 
         public T Current

@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.IO
         /// A stream which is decompressing.
         /// </summary>
         /// <returns></returns>
-        public Stream Stream() 
+        public Stream Stream()
         {
             return new GZipStream(this.origin.Stream(), CompressionMode.Decompress);
         }

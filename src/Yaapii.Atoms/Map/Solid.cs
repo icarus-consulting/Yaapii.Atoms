@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="map">map to merge to</param>
         /// <param name="list">list of values to merge</param>
         public Solid(IDictionary<Key, Value> map, params KeyValuePair<Key, Value>[] list) : this(
-            map, 
+            map,
             new LiveMany<KeyValuePair<Key, Value>>(list)
         )
         { }

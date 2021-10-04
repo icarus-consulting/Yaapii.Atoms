@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,7 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Yaapii.Atoms.Number;
 
 namespace Yaapii.Atoms.IO
@@ -46,7 +44,7 @@ namespace Yaapii.Atoms.IO
         /// <param name="input"></param>
         /// <param name="bytes"></param>
         public TailOf(IInput input, int bytes) : this(input, bytes, 16384)
-        {}
+        { }
 
         /// <summary>
         /// Input showing only last N bytes of the stream.
@@ -63,7 +61,7 @@ namespace Yaapii.Atoms.IO
 
         public Stream Stream()
         {
-            if(this.max < this.count)
+            if (this.max < this.count)
             {
                 throw new ArgumentException($"Can't tail {this.count} bytes if buffer is set to {this.max}");
             }
@@ -72,9 +70,9 @@ namespace Yaapii.Atoms.IO
             int num = 0;
             var stream = this.input.Stream();
 
-            for(int read = stream.Read(buffer, 0, buffer.Length); read > 0; read = stream.Read(buffer, 0, buffer.Length))
+            for (int read = stream.Read(buffer, 0, buffer.Length); read > 0; read = stream.Read(buffer, 0, buffer.Length))
             {
-                if(read < this.max && read < this.count)
+                if (read < this.max && read < this.count)
                 {
                     num = this.CopyPartial(buffer, response, num, read);
                 }

@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,13 +27,13 @@ namespace Yaapii.Atoms.Text.Tests
 {
     public sealed class NotNullTests
     {
-		[Fact]
-		public void NotNull()
-		{
-			IText s = null;
-			Assert.Throws<IOException>(
-				()=>new NotNull(s).AsString()
-			);
-		}
+        [Fact]
+        public void NotNull()
+        {
+            IText s = null;
+            Assert.Throws<IOException>(
+                () => new NotNull(s).AsString()
+            );
+        }
     }
 }

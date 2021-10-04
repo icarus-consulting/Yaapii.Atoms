@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -57,7 +57,7 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.Throws<FormatException>(
                 () => new Formatted(
                     new LiveText("Formatted { {0} }"),
-                    new string[] {"invalid" }
+                    new string[] { "invalid" }
             ).AsString());
         }
 
@@ -93,7 +93,7 @@ namespace Yaapii.Atoms.Text.Tests
                     new LiveText("FormattedText")
                 ).AsString()
             );
-                    
+
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,17 +33,17 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> which has been reversed.
         /// </summary>
         /// <param name="text">text to reverse</param>
-        public Reversed(IText text) : base (() => 
-            {
-                char[] chararray = text.AsString().ToCharArray();
-                Array.Reverse(chararray);
-                string reverseTxt = "";
-                for (int i = 0; i <= chararray.Length - 1; i++)
-                {
-                    reverseTxt += chararray.GetValue(i);
-                }
-                return reverseTxt;
-            },
+        public Reversed(IText text) : base(() =>
+           {
+               char[] chararray = text.AsString().ToCharArray();
+               Array.Reverse(chararray);
+               string reverseTxt = "";
+               for (int i = 0; i <= chararray.Length - 1; i++)
+               {
+                   reverseTxt += chararray.GetValue(i);
+               }
+               return reverseTxt;
+           },
             false
         )
         { }

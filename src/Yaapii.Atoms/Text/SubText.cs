@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -45,8 +45,8 @@ namespace Yaapii.Atoms.Text
         /// <param name="strt">where to start</param>
         /// <param name="end">where to end</param>
         public SubText(String text, int strt, int end) : this(
-            new LiveText(text), 
-            strt, 
+            new LiveText(text),
+            strt,
             end
         )
         { }
@@ -57,8 +57,8 @@ namespace Yaapii.Atoms.Text
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start</param>
         public SubText(IText text, int strt) : this(
-            text, 
-            new Live<Int32>(strt), 
+            text,
+            new Live<Int32>(strt),
             new Live<Int32>(() => text.AsString().Length - strt)
         )
         { }
@@ -70,8 +70,8 @@ namespace Yaapii.Atoms.Text
         /// <param name="strt">where to start</param>
         /// <param name="end">where to end</param>
         public SubText(IText text, int strt, int end) : this(
-            text, 
-            new Live<Int32>(strt), 
+            text,
+            new Live<Int32>(strt),
             new Live<Int32>(end)
         )
         { }
@@ -103,7 +103,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="len">where to end encapsulated in a scalar</param>
         public SubText(IText text, Func<Int32> strt, Func<Int32> len) : base(() =>
             {
-                return 
+                return
                     text.AsString().Substring(
                         strt(),
                         len()

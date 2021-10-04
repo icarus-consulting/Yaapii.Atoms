@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Enumerable
 
                     if (!enm.MoveNext()) throw new ArgumentException($"Cannot reduce, at least one element is needed but the enumerable is empty.");
                     T result = enm.Current;
-                    while(enm.MoveNext())
+                    while (enm.MoveNext())
                     {
                         result = fnc.Invoke(result, enm.Current);
                     }

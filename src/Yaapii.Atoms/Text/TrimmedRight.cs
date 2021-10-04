@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Text
@@ -42,7 +41,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to trim</param>
         public TrimmedRight(IText text) : this(
-            text, 
+            text,
             new Live<char[]>(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' })
         )
         { }

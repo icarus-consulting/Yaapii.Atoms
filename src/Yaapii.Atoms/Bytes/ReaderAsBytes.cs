@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.Bytes
                 writer.Flush();
                 stream.Position = 0;
                 return new StreamReader(stream);
-            }, 
+            },
             Encoding.UTF8, max)
         { }
 
@@ -97,7 +97,7 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="max">maximum buffer size</param>
         public ReaderAsBytes(IScalar<StreamReader> rdr, Encoding enc, int max)
         {
-            this._reader = new ScalarOf<StreamReader>(rdr, reader=> !reader.BaseStream.CanRead);
+            this._reader = new ScalarOf<StreamReader>(rdr, reader => !reader.BaseStream.CanRead);
             this._encoding = enc;
             this._size = max;
         }

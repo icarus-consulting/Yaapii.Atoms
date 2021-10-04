@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using Yaapii.Atoms.List;
 
 #pragma warning disable NoProperties // No Properties
 #pragma warning disable CS1591
@@ -77,7 +76,7 @@ namespace Yaapii.Atoms.Enumerator
 
         public bool MoveNext()
         {
-            while(this.buffer.Count > 0 && !this.buffer.Peek().MoveNext())
+            while (this.buffer.Count > 0 && !this.buffer.Peek().MoveNext())
             {
                 this.buffer.Dequeue();
             }
@@ -93,7 +92,7 @@ namespace Yaapii.Atoms.Enumerator
             {
                 this.buffer.Enqueue(e.Current);
             }
-            
+
         }
     }
 }

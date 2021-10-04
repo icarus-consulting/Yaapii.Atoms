@@ -1,6 +1,6 @@
-﻿// MIT License
+// MIT License
 //
-// Copyright(c) 2020 ICARUS Consulting GmbH
+// Copyright(c) 2021 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -80,7 +80,7 @@ namespace Yaapii.Atoms.Number
         /// </summary>
         /// <param name="str">The string</param>
         /// <param name="provider">a number format provider</param>
-        public NumberOf(string str, IScalar<IFormatProvider> provider) :this(str, provider.Value())
+        public NumberOf(string str, IScalar<IFormatProvider> provider) : this(str, provider.Value())
         { }
 
         /// <summary>
