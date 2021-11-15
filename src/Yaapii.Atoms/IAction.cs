@@ -67,7 +67,7 @@ namespace Yaapii.Atoms
     /// <typeparam name="In1"></typeparam>
     /// <typeparam name="In2"></typeparam>
     /// <typeparam name="In3"></typeparam>
-    public interface IAction<In1, In2, In3>
+    public interface IAction<In1, In2, In3>   
     {
         /// <summary>
         /// Execute the proc.
