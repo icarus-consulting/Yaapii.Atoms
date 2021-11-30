@@ -13,7 +13,7 @@ var configuration           = "Release";
 ///////////////////////////////////////////////////////////////////////////////
 var buildArtifacts          = Directory("./artifacts");
 var deployment              = Directory("./artifacts/deployment");
-var version                 = "1.0.0";
+var version                 = "2.3.0";
 
 ///////////////////////////////////////////////////////////////////////////////
 // MODULES
@@ -283,14 +283,13 @@ Task("NuGet")
 .Does(() =>
 {
     Information(Figlet("NuGet"));
+    Information($"Building NuGet Package for Version {version}");
     
     var settings = new DotNetCorePackSettings()
     {
         Configuration = configuration,
         OutputDirectory = buildArtifacts,
-        NoRestore = true,
-        NoBuild = true,
-        VersionSuffix = ""
+        NoRestore = true
     };
     settings.ArgumentCustomization = args => args.Append("--include-symbols").Append("-p:SymbolPackageFormat=snupkg");
     settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(version);
