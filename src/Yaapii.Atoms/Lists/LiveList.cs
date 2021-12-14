@@ -53,6 +53,14 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// Makes a readonly list.
         /// </summary>
+        public LiveList(IEnumerable<T> src) : this(
+            () => new List<T>(src)
+        )
+        { }
+
+        /// <summary>
+        /// Makes a readonly list.
+        /// </summary>
         /// <param name="src">source enumerable</param>
         public LiveList(Func<IList<T>> src) : base(
             src,
