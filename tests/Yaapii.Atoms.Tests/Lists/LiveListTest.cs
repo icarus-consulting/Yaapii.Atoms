@@ -32,6 +32,15 @@ namespace Yaapii.Atoms.List.Tests
     public sealed class LiveListTest
     {
         [Fact]
+        public void WorksWithMultipleValues()
+        {
+            var list = new LiveList<string>("one", "two");
+            Assert.NotNull(
+                list[1]
+            );
+        }
+
+        [Fact]
         public void KnowsIfEmpty()
         {
             Assert.Empty(
