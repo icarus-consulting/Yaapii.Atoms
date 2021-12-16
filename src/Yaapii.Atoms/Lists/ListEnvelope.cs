@@ -108,7 +108,7 @@ namespace Yaapii.Atoms.List
                     }
                     var enumerator = this.origin();
                     var idx = -1;
-                    while (index >= 0 && enumerator.MoveNext() && idx < index)
+                    while (index >= 0 && idx < index && enumerator.MoveNext() )
                     {
                         idx++;
                     }
