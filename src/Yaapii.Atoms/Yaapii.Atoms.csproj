@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <DocumentationFile>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)\Yaapii.Atoms.xml</DocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>ICARUS Consulting GmbH</Authors>
@@ -9,7 +9,7 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Copyright (c) 2021 ICARUS Consulting GmbH</Copyright>
+    <Copyright>Copyright (c) 2022 ICARUS Consulting GmbH</Copyright>
     <PackageTags>yaapii, elegant objects, cactoos, oop, encapsulation, primitives</PackageTags>
     <PackageProjectUrl>https://github.com/icarus-consulting/Yaapii.Atoms</PackageProjectUrl>
     <RepositoryUrl>https://github.com/icarus-consulting/Yaapii.Atoms.git</RepositoryUrl>
@@ -22,7 +22,7 @@
       <PackagePath>lib\netstandard2.0\</PackagePath>
     </Content>
     <Content Include="Assets\_._">
-      <PackagePath>lib\net45\</PackagePath>
+      <PackagePath>lib\net461\</PackagePath>
     </Content>
     <Content Include="**\*.cs" Exclude="obj\**\*.*">
       <BuildAction>Compile</BuildAction>
@@ -37,9 +37,10 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='net45'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net461'">
     <Reference Include="System" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>
 
