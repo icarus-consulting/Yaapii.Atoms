@@ -120,5 +120,28 @@ namespace Yaapii.Atoms.Enumerator
             this.enumerator.Reset();
         }
     }
+
+    /// <summary>
+    /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition.
+    /// </summary>
+    public static class Filtered
+    {
+        /// <summary>
+        /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
+        /// </summary>
+        /// <param name="src">enumerable to filter</param>
+        /// <param name="fnc">filter function</param>
+        public static Filtered<T> New<T>(IEnumerator<T> src, IFunc<T, Boolean> fnc) =>
+            new Filtered<T>(src, fnc);
+
+
+        /// <summary>
+        /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="src">enumerable to filter</param>
+        /// <param name="fnc">filter function</param>
+        public static Filtered<T> New<T>(IEnumerator<T> src, Func<T, Boolean> fnc) =>
+            new Filtered<T>(src, fnc);
+    }
 }
-#pragma warning restore NoProperties // No Properties
+

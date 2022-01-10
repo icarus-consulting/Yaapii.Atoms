@@ -65,4 +65,22 @@ namespace Yaapii.Atoms.List
         )
         { }
     }
+
+    public static class NotEmpty
+    {
+        /// <summary>
+        /// Ensures that <see cref="IList{T}" /> is not empty/>
+        /// </summary>
+        /// <param name="origin">List</param>
+        public static NotEmpty<T> New<T>(IList<T> origin)
+            => new NotEmpty<T>(origin);
+
+        /// <summary>
+        /// Ensures that <see cref="IList{T}" /> is not empty/>
+        /// </summary>
+        /// <param name="origin">List</param>
+        /// <param name="ex">Execption to be thrown if empty</param>
+        public static NotEmpty<T> New<T>(IList<T> origin, Exception ex)
+            => new NotEmpty<T>(origin, ex);
+    }
 }

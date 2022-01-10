@@ -78,4 +78,37 @@ namespace Yaapii.Atoms.Scalar
             }
         }
     }
+
+    public static class Sync
+    {
+        /// <summary>
+        /// A <see cref="IScalar{T}"/> that is threadsafe.
+        /// </summary>
+        /// <param name="src">the scalar to make operate threadsafe</param>
+        public static Sync<T> New<T>(Func<T> src)
+            => new Sync<T>(src);
+
+        /// <summary>
+        /// A <see cref="IScalar{T}"/> that is threadsafe.
+        /// </summary>
+        /// <param name="src">the scalar to make operate threadsafe</param>
+        /// <param name="lck">the object to lock</param>
+        public static Sync<T> New<T>(Func<T> src, object lck)
+            => new Sync<T>(src, lck);
+
+        /// <summary>
+        /// A <see cref="IScalar{T}"/> that is threadsafe.
+        /// </summary>
+        /// <param name="src">the scalar to make operate threadsafe</param>
+        public static Sync<T> New<T>(IScalar<T> src)
+            => new Sync<T>(src);
+
+        /// <summary>
+        /// A <see cref="IScalar{T}"/> that is threadsafe.
+        /// </summary>
+        /// <param name="src">the scalar to make operate threadsafe</param>
+        /// <param name="lck">object to lock while using scalar</param>
+        public static Sync<T> New<T>(IScalar<T> src, Object lck)
+            => new Sync<T>(src, lck);
+    }
 }

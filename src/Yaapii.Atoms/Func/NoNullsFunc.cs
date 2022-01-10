@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// The function
         /// </summary>
-        private readonly IFunc<In, Out> _func;
+        private readonly IFunc<In, Out> func;
 
         /// <summary>
         /// Function that does not allow null as input.
@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Func
         /// <param name="func">the function</param>
         public NoNullsFunc(IFunc<In, Out> func)
         {
-            _func = func;
+            this.func = func;
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Func
         {
             new FailNull(input, "got NULL instead of a valid function");
 
-            Out result = _func.Invoke(input);
+            Out result = func.Invoke(input);
             if (result == null)
             {
                 throw new IOException("got NULL instead of a valid result");
@@ -69,17 +69,17 @@ namespace Yaapii.Atoms.Func
     /// Check whether a func returns null. React with Exception or fallback value / function.
     /// </summary>
     /// <typeparam name="Out">The type of output</typeparam>
-    public class NoNullsFunc<Out> : IFunc<Out>
+    public sealed class NoNullsFunc<Out> : IFunc<Out>
     {
         /// <summary>
         /// fnc to call
         /// </summary>
-        private readonly IFunc<Out> _fnc;
+        private readonly IFunc<Out> func;
 
         /// <summary>
         /// error to raise
         /// </summary>
-        private readonly IFunc<Out> _fbk;
+        private readonly IFunc<Out> fallback;
 
         /// <summary>
         /// Raises an <see cref="IOException"/> when the return value is null.
@@ -142,8 +142,8 @@ namespace Yaapii.Atoms.Func
         /// <param name="fallback">fallback value</param>
         public NoNullsFunc(IFunc<Out> fnc, IFunc<Out> fallback)
         {
-            _fnc = fnc;
-            _fbk = fallback;
+            func = fnc;
+            this.fallback = fallback;
         }
 
         /// <summary>
@@ -152,11 +152,74 @@ namespace Yaapii.Atoms.Func
         /// <returns>The value or the fallback value (if any)</returns>
         public Out Invoke()
         {
-            Out ret = _fnc.Invoke();
+            Out ret = func.Invoke();
 
-            if (ret == null) ret = _fbk.Invoke();
+            if (ret == null) ret = fallback.Invoke();
 
             return ret;
         }
+    }
+
+    public static class NoNullsFunc
+    {
+        /// <summary>
+        /// Raises an <see cref="IOException"/> when the return value is null.
+        /// </summary>
+        /// <param name="fnc">func to check</param>
+        public static NoNullsFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc) => new NoNullsFunc<In, Out>(fnc);
+
+        /// <summary>
+        /// Raises an <see cref="IOException"/> when the return value is null.
+        /// </summary>
+        /// <param name="fnc">func to check</param>
+        public static NoNullsFunc<Out> New<Out>(Func<Out> fnc) => new NoNullsFunc<Out>(fnc);
+
+        /// <summary>
+        /// Raises an <see cref="IOException"/> when the return value is null.
+        /// </summary>
+        /// <param name="fnc">func to check</param>
+        public static NoNullsFunc<Out> New<Out>(IFunc<Out> fnc) => new NoNullsFunc<Out>(fnc);
+
+        /// <summary>
+        /// Raises given <see cref="Exception"/> when the return value is null.
+        /// </summary>
+        /// <param name="fnc">func to check</param>
+        /// <param name="ex">Exception to throw</param>
+        public static NoNullsFunc<Out> New<Out>(Func<Out> fnc, Exception ex) => new NoNullsFunc<Out>(fnc, ex);
+
+        /// <summary>
+        /// Raises given <see cref="Exception"/> when the return value is null.
+        /// </summary>
+        /// <param name="fnc">func to check</param>
+        /// <param name="ex">Exception to throw</param>
+        public static NoNullsFunc<Out> New<Out>(IFunc<Out> fnc, Exception ex) => new NoNullsFunc<Out>(fnc);
+
+        /// <summary>
+        /// Returns the fallback if the func returns null.
+        /// </summary>
+        /// <param name="fnc">func to check</param>
+        /// <param name="fallback">fallback value</param>
+        public static NoNullsFunc<Out> New<Out>(Func<Out> fnc, Out fallback) => new NoNullsFunc<Out>(fnc, fallback);
+
+        /// <summary>
+        /// Returns the fallback if the func returns null.
+        /// </summary>
+        /// <param name="fnc">func to check</param>
+        /// <param name="fallback">fallback value</param>
+        public static NoNullsFunc<Out> New<Out>(IFunc<Out> fnc, Out fallback) => new NoNullsFunc<Out>(fnc, fallback);
+
+        /// <summary>
+        /// Calls the fallback function if the func return null.
+        /// </summary>
+        /// <param name="fnc">func to check</param>
+        /// <param name="fallback">fallback value</param>
+        public static NoNullsFunc<Out> New<Out>(Func<Out> fnc, Func<Out> fallback) => new NoNullsFunc<Out>(fnc, fallback);
+
+        /// <summary>
+        /// Calls the fallback function if the func return null.
+        /// </summary>
+        /// <param name="fnc">func to check</param>
+        /// <param name="fallback">fallback value</param>
+        public static NoNullsFunc<Out> New<Out>(IFunc<Out> fnc, IFunc<Out> fallback) => new NoNullsFunc<Out>(fnc, fallback);
     }
 }

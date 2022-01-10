@@ -167,4 +167,58 @@ namespace Yaapii.Atoms.Enumerator
 
         }
     }
+
+    /// <summary>
+    /// Element from position, starting with given item in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+    /// </summary>
+    public static class Sibling
+    {
+        /// <summary>
+        /// Right neighbour of a given item with a fallback value.
+        /// </summary>
+        /// <param name="src">the enumerator</param>
+        /// <param name="item">the item to start with</param>
+        /// <param name="fallback">the fallback to return if fails</param>
+        public static Sibling<T> New<T>(IEnumerator<T> src, T item, T fallback)
+            where T : IComparable<T>
+            => new Sibling<T>(src, item, fallback);
+
+        /// <summary>
+        /// Right neighbour of a given item with a fallback value.
+        /// </summary>
+        /// <param name="src">the enumerator</param>
+        /// <param name="item">the item to start with</param>
+        /// <param name="pos">position of the neighbour</param>
+        /// <param name="fallback">the fallback to return if fails</param>
+        public static Sibling<T> New<T>(IEnumerator<T> src, T item, int pos, T fallback)
+            where T : IComparable<T>
+            => new Sibling<T>(src, item, pos, fallback);
+
+
+        /// <summary>
+        /// Element at a position in a <see cref="IEnumerable{T}"/>.
+        /// </summary>
+        /// <param name="src">source <see cref="IEnumerable{T}"/></param>
+        /// <param name="pos">position</param>
+        /// <param name="item">item to start with</param>
+        public static Sibling<T> New<T>(IEnumerator<T> src, T item, int pos)
+            where T : IComparable<T>
+            => new Sibling<T>(src, item, pos);
+
+        /// <summary>
+        /// Element at position in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="src">source <see cref="IEnumerable{T}"/></param>
+        /// <param name="fbk">fallback function</param>
+        /// <param name="pos">position</param>
+        /// <param name="item">item to start with</param>
+        public static Sibling<T> New<T>(
+            IEnumerator<T> src,
+            T item,
+            int pos,
+            IFunc<IEnumerable<T>, T> fbk)
+            where T : IComparable<T>
+            => new Sibling<T>(src, item, pos, fbk);
+        
+    }
 }

@@ -23,9 +23,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-#pragma warning disable NoProperties // No Properties
-#pragma warning disable CS1591
-
 namespace Yaapii.Atoms.Enumerator
 {
     /// <summary>
@@ -91,4 +88,3 @@ namespace Yaapii.Atoms.Enumerator
         }
     }
 }
-#pragma warning restore NoProperties // No Properties

@@ -722,4 +722,275 @@ namespace Yaapii.Atoms.Func
             }
         }
     }
+
+    public static class ActionSwitch
+    {
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(
+            IKvp<Action<In1, In2>> consequence1,
+            IKvp<Action<In1, In2>> consequence2
+        ) => new ActionSwitch<In1, In2>(
+            consequence1,
+            consequence2
+        );
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(
+            IKvp<Action<In1, In2>> consequence1,
+            IKvp<Action<In1, In2>> consequence2,
+            IKvp<Action<In1, In2>> consequence3
+        ) => new ActionSwitch<In1, In2>(
+            consequence1,
+            consequence2,
+            consequence3
+        );
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(
+            IKvp<Action<In1, In2>> consequence1,
+            IKvp<Action<In1, In2>> consequence2,
+            IKvp<Action<In1, In2>> consequence3,
+            IKvp<Action<In1, In2>> consequence4
+        ) => new ActionSwitch<In1, In2>(
+            consequence1,
+            consequence2,
+            consequence3,
+            consequence4
+        );
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(
+            IKvp<Action<In1, In2>> consequence1,
+            IKvp<Action<In1, In2>> consequence2,
+            IKvp<Action<In1, In2>> consequence3,
+            IKvp<Action<In1, In2>> consequence4,
+            IKvp<Action<In1, In2>> consequence5
+        ) => new ActionSwitch<In1, In2>(
+            consequence1,
+            consequence2,
+            consequence3,
+            consequence4,
+            consequence5
+        );
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(
+            IKvp<Action<In1, In2>> consequence1,
+            IKvp<Action<In1, In2>> consequence2,
+            IKvp<Action<In1, In2>> consequence3,
+            IKvp<Action<In1, In2>> consequence4,
+            IKvp<Action<In1, In2>> consequence5,
+            IKvp<Action<In1, In2>> consequence6
+        ) => new ActionSwitch<In1, In2>(
+            consequence1,
+            consequence2,
+            consequence3,
+            consequence4,
+            consequence5,
+            consequence6
+        );
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(
+            IKvp<Action<In1, In2>> consequence1,
+            IKvp<Action<In1, In2>> consequence2,
+            IKvp<Action<In1, In2>> consequence3,
+            IKvp<Action<In1, In2>> consequence4,
+            IKvp<Action<In1, In2>> consequence5,
+            IKvp<Action<In1, In2>> consequence6,
+            IKvp<Action<In1, In2>> consequence7
+
+        ) => new ActionSwitch<In1, In2>(
+            consequence1,
+            consequence2,
+            consequence3,
+            consequence4,
+            consequence5,
+            consequence6,
+            consequence7
+        );
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(
+            IKvp<Action<In1, In2>> consequence1,
+            IKvp<Action<In1, In2>> consequence2,
+            IKvp<Action<In1, In2>> consequence3,
+            IKvp<Action<In1, In2>> consequence4,
+            IKvp<Action<In1, In2>> consequence5,
+            IKvp<Action<In1, In2>> consequence6,
+            IKvp<Action<In1, In2>> consequence7,
+            IKvp<Action<In1, In2>> consequence8
+        ) => new ActionSwitch<In1, In2>(
+            consequence1,
+            consequence2,
+            consequence3,
+            consequence4,
+            consequence5,
+            consequence6,
+            consequence7,
+            consequence8
+        );
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(
+            IKvp<Action<In1, In2>> consequence1,
+            IKvp<Action<In1, In2>> consequence2,
+            Action<string, In1, In2> fallback
+        ) => new ActionSwitch<In1, In2>(consequence1, consequence2, fallback);
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(
+            IKvp<Action<In1, In2>> consequence1,
+            IKvp<Action<In1, In2>> consequence2,
+            IKvp<Action<In1, In2>> consequence3,
+            Action<string, In1, In2> fallback
+        ) => new ActionSwitch<In1, In2>(
+            consequence1,
+            consequence2,
+            consequence3,
+            fallback
+        );
+
+
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(
+            IKvp<Action<In1, In2>> consequence1,
+            IKvp<Action<In1, In2>> consequence2,
+            IKvp<Action<In1, In2>> consequence3,
+            IKvp<Action<In1, In2>> consequence4,
+            Action<string, In1, In2> fallback
+        ) => new ActionSwitch<In1, In2>(
+            consequence1,
+            consequence2,
+            consequence3,
+            fallback
+        );
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(
+            IKvp<Action<In1, In2>> consequence1,
+            IKvp<Action<In1, In2>> consequence2,
+            IKvp<Action<In1, In2>> consequence3,
+            IKvp<Action<In1, In2>> consequence4,
+            IKvp<Action<In1, In2>> consequence5,
+            Action<string, In1, In2> fallback
+        ) => new ActionSwitch<In1, In2>(
+            consequence1,
+            consequence2,
+            consequence3,
+            consequence4,
+            consequence5,
+            fallback
+        );
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(
+            IKvp<Action<In1, In2>> consequence1,
+            IKvp<Action<In1, In2>> consequence2,
+            IKvp<Action<In1, In2>> consequence3,
+            IKvp<Action<In1, In2>> consequence4,
+            IKvp<Action<In1, In2>> consequence5,
+            IKvp<Action<In1, In2>> consequence6,
+            Action<string, In1, In2> fallback
+        ) => new ActionSwitch<In1, In2>(
+            consequence1,
+            consequence2,
+            consequence3,
+            consequence4,
+            consequence5,
+            consequence6,
+            fallback
+        );
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(
+            IKvp<Action<In1, In2>> consequence1,
+            IKvp<Action<In1, In2>> consequence2,
+            IKvp<Action<In1, In2>> consequence3,
+            IKvp<Action<In1, In2>> consequence4,
+            IKvp<Action<In1, In2>> consequence5,
+            IKvp<Action<In1, In2>> consequence6,
+            IKvp<Action<In1, In2>> consequence7,
+            Action<string, In1, In2> fallback
+        ) => new ActionSwitch<In1, In2>(
+            consequence1,
+            consequence2,
+            consequence3,
+            consequence4,
+            consequence5,
+            consequence6,
+            consequence7,
+            fallback
+        );
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(
+            IKvp<Action<In1, In2>> consequence1,
+            IKvp<Action<In1, In2>> consequence2,
+            IKvp<Action<In1, In2>> consequence3,
+            IKvp<Action<In1, In2>> consequence4,
+            IKvp<Action<In1, In2>> consequence5,
+            IKvp<Action<In1, In2>> consequence6,
+            IKvp<Action<In1, In2>> consequence7,
+            IKvp<Action<In1, In2>> consequence8,
+            Action<string, In1, In2> fallback
+        ) => new ActionSwitch<In1, In2>(
+            consequence1,
+            consequence2,
+            consequence3,
+            consequence4,
+            consequence5,
+            consequence6,
+            consequence7,
+            consequence8,
+            fallback
+        );
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(params IKvp<Action<In1, In2>>[] consequences) =>
+            new ActionSwitch<In1, In2>(consequences);
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(IEnumerable<IKvp<Action<In1, In2>>> consequences) =>
+            new ActionSwitch<In1, In2>(consequences);
+
+        /// <summary>
+        /// An action fork that is dependant on a named condition.
+        /// </summary>
+        public static ActionSwitch<In1, In2> New<In1, In2>(IEnumerable<IKvp<Action<In1, In2>>> consequences, Action<string, In1, In2> fallback) =>
+            new ActionSwitch<In1, In2>(consequences);
+    }
 }

@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         public void SortsAnArray()
         {
             Assert.True(
-                new Joined(", ",
+                new Text.Joined(", ",
                     new Enumerable.Mapped<int, string>(
                         i => i.ToString(),
                         new Sorted<int>(
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         public void SortsAnArrayWithComparator()
         {
             Assert.True(
-                new Joined(", ",
+                new Text.Joined(", ",
                     new Sorted<string>(
                         IReverseCompare<string>.Default,
                         new ManyOf<string>(

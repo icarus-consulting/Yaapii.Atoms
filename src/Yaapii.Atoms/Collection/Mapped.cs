@@ -40,6 +40,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="src">source items</param>
         public Mapped(Func<In, Out> mapping, params In[] src) : this(mapping, new ManyOf<In>(src))
         { }
+        public static Mapped<In, Out> New(Func<In, Out> mapping, params In[] src) => new Mapped<In, Out>(mapping, src);
 
         /// <summary>
         /// ctor
@@ -49,6 +50,7 @@ namespace Yaapii.Atoms.Collection
         public Mapped(Func<In, Out> mapping, IEnumerator<In> src) : this(
             mapping, new ManyOf<In>(src))
         { }
+        public static Mapped<In, Out> New(Func<In, Out> mapping, IEnumerator<In> src) => new Mapped<In, Out>(mapping, src);
 
         /// <summary>
         /// ctor
@@ -58,6 +60,7 @@ namespace Yaapii.Atoms.Collection
         public Mapped(Func<In, Out> mapping, IEnumerable<In> src) : this(
             mapping, new LiveCollection<In>(src))
         { }
+        public static Mapped<In, Out> New(Func<In, Out> mapping, IEnumerable<In> src) => new Mapped<In, Out>(mapping, src);
 
         /// <summary>
         /// ctor
@@ -69,5 +72,22 @@ namespace Yaapii.Atoms.Collection
             false
         )
         { }
+        public static Mapped<In, Out> New(Func<In, Out> mapping, ICollection<In> src) => new Mapped<In, Out>(mapping, src);
+    }
+
+    // <summary>
+    /// A collection which is mapped to the output type.
+    /// </summary>
+    /// <typeparam name="In">source type</typeparam>
+    /// <typeparam name="Out">target type</typeparam>
+    public static class Mapped
+    {
+        public static Mapped<In, Out> New<In, Out>(Func<In, Out> mapping, params In[] src) => new Mapped<In, Out>(mapping, src);
+
+        public static Mapped<In, Out> New<In, Out>(Func<In, Out> mapping, IEnumerator<In> src) => new Mapped<In, Out>(mapping, src);
+
+        public static Mapped<In, Out> New<In, Out>(Func<In, Out> mapping, IEnumerable<In> src) => new Mapped<In, Out>(mapping, src);
+
+        public static Mapped<In, Out> New<In, Out>(Func<In, Out> mapping, ICollection<In> src) => new Mapped<In, Out>(mapping, src);
     }
 }

@@ -47,6 +47,34 @@ namespace Yaapii.Atoms.Map
         /// <param name="input">input dictionary</param>
         public LiveMap(Func<IDictionary<string, string>> input) : base(input, true)
         { }
+
+        /// <summary>
+        /// A map from the given key value pairs.
+        /// </summary>
+        /// <param name="entries">enumerable of kvps</param>
+        public static LiveMap<Value> New<Value>(Func<IEnumerable<IKvp<Value>>> entries)
+            => new LiveMap<Value>(entries);
+
+        /// <summary>
+        /// A map from the given dictionary.
+        /// </summary>
+        /// <param name="input">input dictionary</param>
+        public static LiveMap<Value> New<Value>(Func<IDictionary<string, Value>> input)
+            => new LiveMap<Value>(input);
+
+        /// <summary>
+        /// A map from the given key value pairs.
+        /// </summary>
+        /// <param name="entries">enumerable of kvps</param>
+        public static LiveMap<Key, Value> New<Key, Value>(Func<IEnumerable<IKvp<Key, Value>>> entries, bool rejectBuildingAllValues = true)
+            => new LiveMap<Key, Value>(entries, rejectBuildingAllValues);
+
+        /// <summary>
+        /// A map from the given dictionary.
+        /// </summary>
+        /// <param name="input">input dictionary</param>
+        public static LiveMap<Key, Value> New<Key, Value>(Func<IDictionary<Key, Value>> input)
+            => new LiveMap<Key, Value>(input);
     }
 
     /// <summary>

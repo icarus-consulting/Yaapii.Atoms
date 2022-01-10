@@ -24,7 +24,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-#pragma warning disable NoProperties // No Properties
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
@@ -67,5 +66,17 @@ namespace Yaapii.Atoms.Enumerable
         {
             this.origin.Reset();
         }
+    }
+
+    /// <summary>
+    /// An enumerator that logs the object T when it is moved.
+    /// </summary>
+    public static class LoggingEnumerator
+    {
+        /// <summary>
+        /// An enumerator that logs the object T when it is moved.
+        /// </summary>
+        public static LoggingEnumerator<T> New<T>(IEnumerator<T> origin, Action<T> log) =>
+            new LoggingEnumerator<T>(origin, log);
     }
 }

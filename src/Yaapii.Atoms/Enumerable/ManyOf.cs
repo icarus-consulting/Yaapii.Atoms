@@ -25,9 +25,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Yaapii.Atoms.Scalar;
 
-#pragma warning disable NoGetOrSet // No Statics
-#pragma warning disable CS1591
-
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
@@ -81,6 +78,34 @@ namespace Yaapii.Atoms.Enumerable
             false
         )
         { }
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> out of an array.
+        /// </summary>
+        /// <param name="items"></param>
+        public static ManyOf<T> New<T>(params T[] items) => new ManyOf<T>(items);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/>.
+        /// </summary>
+        /// <param name="e">a enumerator</param>
+        public static ManyOf<T> New<T>(IEnumerator<T> e) => new ManyOf<T>(e);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// </summary>
+        public static ManyOf<T> New<T>(IScalar<IEnumerator<T>> sc) => new ManyOf<T>(sc);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// </summary>
+        /// <param name="fnc">function which retrieves enumerator</param>
+        public static ManyOf<T> New<T>(Func<IEnumerable<T>> fnc) => new ManyOf<T>(fnc);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
+        /// </summary>
+        public static ManyOf<T> New<T>(Func<IEnumerator<T>> origin) => new ManyOf<T>(origin);
     }
 
     /// <summary>

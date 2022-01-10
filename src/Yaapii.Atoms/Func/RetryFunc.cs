@@ -34,12 +34,12 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// func to retry
         /// </summary>
-        private readonly IFunc<In, Out> _func;
+        private readonly IFunc<In, Out> func;
 
         /// <summary>
         /// exit condition
         /// </summary>
-        private readonly IFunc<Int32, Boolean> _exit;
+        private readonly IFunc<Int32, Boolean> exit;
 
         /// <summary>
         /// Function that will retry if it fails.
@@ -98,8 +98,8 @@ namespace Yaapii.Atoms.Func
         /// <param name="ext">exit condition</param>
         public RetryFunc(IFunc<In, Out> fnc, IFunc<Int32, Boolean> ext)
         {
-            this._func = fnc;
-            this._exit = ext;
+            this.func = fnc;
+            this.exit = ext;
         }
 
         /// <summary>
@@ -113,18 +113,12 @@ namespace Yaapii.Atoms.Func
             Exception error = new ArgumentException(
                 "An immediate exit, didn't have a chance to try at least once");
 
-            while (!this._exit.Invoke(attempt))
+            while (!this.exit.Invoke(attempt))
             {
                 try
                 {
-                    return this._func.Invoke(input);
+                    return this.func.Invoke(input);
                 }
-                //catch (System.Threading.ThreadStateException ex)
-                //{
-                //    Thread.CurrentThread.Join();
-                //    error = ex;
-                //    break;
-                //}
                 catch (Exception ex)
                 {
                     error = ex;
@@ -133,6 +127,62 @@ namespace Yaapii.Atoms.Func
             }
             throw error;
         }
+    }
 
+    public static class RetryFunc
+    {
+        /// <summary>
+        /// Function that will retry if it fails.
+        /// </summary>
+        /// <param name="fnc">func to retry</param>
+        public static RetryFunc<In, Out> New<In, Out>(Func<In, Out> fnc) =>
+            new RetryFunc<In, Out>(fnc);
+
+        /// <summary>
+        /// Function that will retry if it fails.
+        /// </summary>
+        /// <param name="fnc">func to retry</param>
+        public static RetryFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc) =>
+            new RetryFunc<In, Out>(fnc);
+
+        /// <summary>
+        /// Function that will retry if it fails.
+        /// </summary>
+        /// <param name="fnc">func to retry</param>
+        /// <param name="attempts">how often to retry</param>
+        public static RetryFunc<In, Out> New<In, Out>(System.Func<In, Out> fnc, int attempts = 3) =>
+            new RetryFunc<In, Out>(fnc);
+
+        /// <summary>
+        /// Function that will retry if it fails.
+        /// </summary>
+        /// <param name="fnc">func to retry</param>
+        /// <param name="attempts">how often to retry</param>
+        public static RetryFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, int attempts = 3) =>
+            new RetryFunc<In, Out>(fnc, attempts);
+
+        /// <summary>
+        /// Function that will retry if it fails.
+        /// </summary>
+        /// <param name="fnc">func to retry</param>
+        /// <param name="stopCondition">exit condition</param>
+        public static RetryFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, System.Func<Int32, Boolean> stopCondition) =>
+            new RetryFunc<In, Out>(fnc, stopCondition);
+
+        /// <summary>
+        /// Function that will retry if it fails.
+        /// </summary>
+        /// <param name="fnc">func to retry</param>
+        /// <param name="stopCondition">exit condition</param>
+        public static RetryFunc<In, Out> New<In, Out>(System.Func<In, Out> fnc, System.Func<Int32, Boolean> stopCondition) =>
+            new RetryFunc<In, Out>(fnc, stopCondition);
+
+        /// <summary>
+        /// Function that will retry if it fails.
+        /// </summary>
+        /// <param name="fnc">func to retry</param>
+        /// <param name="stopCondition">exit condition</param>
+        public static RetryFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, IFunc<Int32, Boolean> stopCondition) =>
+            new RetryFunc<In, Out>(fnc, stopCondition);
     }
 }

@@ -25,9 +25,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Scalar;
 
-#pragma warning disable NoProperties // No Properties
-#pragma warning disable CS1591
-
 namespace Yaapii.Atoms.Enumerator
 {
     /// <summary>
@@ -78,5 +75,22 @@ namespace Yaapii.Atoms.Enumerator
 
         object IEnumerator.Current => throw new NotImplementedException();
     }
+
+    public static class Endless
+    {
+
+            /// <summary>
+            /// A <see cref="IEnumerator{T}"/> that repeats one element infinitely.
+            /// </summary>
+            /// <param name="elm">element to repeat</param>
+            public static Endless<T> New<T>(T elm) =>
+                new Endless<T>(elm);
+
+            /// <summary>
+            /// A <see cref="IEnumerator{T}"/> that repeats one element infinitely.
+            /// </summary>
+            /// <param name="elm">scalar of element to repeat</param>
+            public static Endless<T> New<T>(IScalar<T> elm) =>
+                new Endless<T>(elm);
+        }
 }
-#pragma warning restore NoProperties // No Properties

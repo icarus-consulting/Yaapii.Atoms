@@ -34,12 +34,12 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// original func
         /// </summary>
-        private readonly IFunc<In, Out> _func;
+        private readonly IFunc<In, Out> func;
 
         /// <summary>
         /// threadsafe-lock
         /// </summary>
-        private readonly Object _lck;
+        private readonly Object lck;
 
         /// <summary>
         /// Function that is threadsafe.
@@ -62,8 +62,8 @@ namespace Yaapii.Atoms.Func
         /// <param name="lck">object that will be locked</param>
         public SyncFunc(IFunc<In, Out> fnc, object lck)
         {
-            this._func = fnc;
-            this._lck = lck;
+            this.func = fnc;
+            this.lck = lck;
         }
 
         /// <summary>
@@ -73,11 +73,32 @@ namespace Yaapii.Atoms.Func
         /// <returns></returns>
         public Out Invoke(In input)
         {
-            lock (this._lck)
+            lock (this.lck)
             {
-                return this._func.Invoke(input);
+                return this.func.Invoke(input);
             }
         }
+    }
 
+    public static class SyncFunc
+    {
+        /// <summary>
+        /// Function that is threadsafe.
+        /// </summary>
+        /// <param name="fnc">func to cache output from</param>
+        public static SyncFunc<In, Out> New<In, Out>(Func<In, Out> fnc) => new SyncFunc<In, Out>(fnc);
+
+        /// <summary>
+        /// Function that is threadsafe.
+        /// </summary>
+        /// <param name="fnc">func to cache output from</param>
+        public static SyncFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc) => new SyncFunc<In, Out>(fnc);
+
+        /// <summary>
+        /// Function that is threadsafe.
+        /// </summary>
+        /// <param name="fnc">func to cache result from</param>
+        /// <param name="lck">object that will be locked</param>
+        public static SyncFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, object lck) => new SyncFunc<In, Out>(fnc, lck);
     }
 }

@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// func that will be called
         /// </summary>
-        private readonly IFunc<bool, Out> _func;
+        private readonly IFunc<bool, Out> func;
 
         /// <summary>
         /// Function that has only output.
@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Func
         /// <param name="fnc">func to call</param>
         public FuncOf(System.Func<Out> fnc)
         {
-            this._func = new FuncOf<bool, Out>(() => fnc.Invoke());
+            this.func = new FuncOf<bool, Out>(() => fnc.Invoke());
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Func
         /// <returns>the output</returns>
         public Out Invoke()
         {
-            return this._func.Invoke(true);
+            return this.func.Invoke(true);
         }
     }
 
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Func
     /// <typeparam name="Out">output</typeparam>
     public sealed class FuncOf<In, Out> : IFunc<In, Out>
     {
-        private readonly System.Func<In, Out> _func;
+        private readonly System.Func<In, Out> func;
 
         /// <summary>
         /// ctor
@@ -88,7 +88,7 @@ namespace Yaapii.Atoms.Func
         /// <param name="func">function to execute</param>
         public FuncOf(System.Func<In, Out> func)
         {
-            _func = func;
+            this.func = func;
         }
 
         /// <summary>
@@ -98,7 +98,110 @@ namespace Yaapii.Atoms.Func
         /// <returns></returns>
         public Out Invoke(In input)
         {
-            return _func.Invoke(input);
+            return func.Invoke(input);
         }
+    }
+
+    /// <summary>
+    /// Function that has two inputs and an output
+    /// </summary>
+    /// <typeparam name="In1">type of first input</typeparam>
+    /// <typeparam name="In2">type of second input</typeparam>
+    /// <typeparam name="Out">type of output</typeparam>
+    public sealed class FuncOf<In1, In2, Out> : IBiFunc<In1, In2, Out>
+    {
+        private readonly System.Func<In1, In2, Out> func;
+
+        /// <summary>
+        /// Function that has two inputs and an output.
+        /// </summary>
+        /// <param name="func"></param>
+        public FuncOf(System.Func<In1, In2, Out> func)
+        {
+            this.func = func;
+        }
+
+        /// <summary>
+        /// Invoke the function with arguments and retrieve th output.
+        /// </summary>
+        /// <param name="arg1">first argument</param>
+        /// <param name="arg2">second argument</param>
+        /// <returns>the output</returns>
+        public Out Invoke(In1 arg1, In2 arg2)
+        {
+            return func.Invoke(arg1, arg2);
+        }
+
+        /// <summary>
+        /// Function that has two inputs and an output.
+        /// </summary>
+        /// <param name="func"></param>
+        public static FuncOf<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> func) =>
+            new FuncOf<In1, In2, Out>(func);
+    }
+
+    /// <summary>
+    /// Function that has two inputs and an output
+    /// </summary>
+    /// <typeparam name="In1">type of first input</typeparam>
+    /// <typeparam name="In2">type of second input</typeparam>
+    /// <typeparam name="Out">type of output</typeparam>
+    public sealed class FuncOf<In1, In2, In3, Out> : IFunc<In1, In2, In3, Out>
+    {
+        private readonly System.Func<In1, In2, In3, Out> func;
+
+        /// <summary>
+        /// Function that has two inputs and an output.
+        /// </summary>
+        /// <param name="func"></param>
+        public FuncOf(System.Func<In1, In2, In3, Out> func)
+        {
+            this.func = func;
+        }
+
+        /// <summary>
+        /// Invoke the function with arguments and retrieve th output.
+        /// </summary>
+        /// <param name="arg1">first argument</param>
+        /// <param name="arg2">second argument</param>
+        /// <returns>the output</returns>
+        public Out Invoke(In1 arg1, In2 arg2, In3 arg3)
+        {
+            return func.Invoke(arg1, arg2, arg3);
+        }
+
+        /// <summary>
+        /// Function that has two inputs and an output.
+        /// </summary>
+        /// <param name="func"></param>
+        public static FuncOf<In1, In2, In3, Out> New<In1, In2, In3, Out>(System.Func<In1, In2, In3, Out> func) =>
+            new FuncOf<In1, In2, In3, Out>(func);
+    }
+
+    public static class FuncOf
+    {
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="fnc"></param>
+        public static FuncOf<In> New<In>(System.Func<In> fnc) => new FuncOf<In>(fnc);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="fnc"></param>
+        public static FuncOf<In, Out> New<In, Out>(System.Func<In, Out> fnc) =>
+            new FuncOf<In, Out>(fnc);
+
+        /// <summary>
+        /// Function that has input and output
+        /// </summary>
+        /// <param name="proc">procedure to execute</param>
+        /// <param name="result"></param>
+        public static FuncOf<In, Out> New<In, Out>(IAction<In> proc, Out result) =>
+            new FuncOf<In, Out>(proc, result);
+
+        public static FuncOf<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> func) =>
+            new FuncOf<In1, In2, Out>(func);
     }
 }

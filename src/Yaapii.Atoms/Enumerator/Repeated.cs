@@ -96,6 +96,24 @@ namespace Yaapii.Atoms.Enumerator
 
         object IEnumerator.Current => Current;
     }
+
+    /// <summary>
+    /// <see cref="IEnumerator{T}"/> which repeats one value multiple times.
+    /// </summary>
+    public static class Repeated
+    {
+        /// <summary>
+        /// <see cref="IEnumerator{T}"/> which repeats one value multiple times.
+        /// </summary>
+        /// <param name="elm">element to repeat</param>
+        /// <param name="max">how often to repeat</param>
+        public static Repeated<T> New<T>(T elm, int max) => new Repeated<T>(elm, max);
+
+        /// <summary>
+        /// <see cref="IEnumerator{T}"/> which repeats one value multiple times.
+        /// </summary>
+        /// <param name="elm">element to repeat</param>
+        /// <param name="max">how often to repeat</param>
+        public static Repeated<T> New<T>(IScalar<T> elm, int max) => new Repeated<T>(elm, max);
+    }
 }
-#pragma warning restore NoProperties // No Properties
-#pragma warning restore Immutability // Fields are readonly or constant

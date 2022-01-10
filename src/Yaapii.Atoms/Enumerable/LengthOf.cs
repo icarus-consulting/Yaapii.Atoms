@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Enumerable
     /// every time when you call .Value(). It is recommended to use a StickyScalar, 
     /// if you want to re-use its value.
     /// </summary>
-    public sealed class LengthOf : IScalar<Int32>
+    public sealed class LengthOf : ScalarEnvelope<Int32>
     {
         private readonly ScalarOf<Int32> result;
 
@@ -40,19 +40,9 @@ namespace Yaapii.Atoms.Enumerable
         /// Length of an <see cref="IEnumerable"/>
         /// </summary>
         /// <param name="items">the enumerable</param>
-        public LengthOf(IEnumerable items)
-        {
-            this.result = new ScalarOf<Int32>(() => new Enumerator.LengthOf(items.GetEnumerator()).Value());
-        }
-
-        /// <summary>
-        /// Get the length.
-        /// </summary>
-        /// <returns>the length</returns>
-        public Int32 Value()
-        {
-            return this.result.Value();
-        }
-
+        public LengthOf(IEnumerable items) : base(() =>
+            new Enumerator.LengthOf(items.GetEnumerator()).Value()
+        )
+        { }
     }
 }

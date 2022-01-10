@@ -321,6 +321,130 @@ namespace Yaapii.Atoms.Map
                 false
             )
         { }
+
+        /// <summary>
+        /// Sorts the given map with the default comperator of the key
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        public static Sorted<Key, Value> New<Key, Value>(IDictionary<Key, Value> dict)
+            => new Sorted<Key, Value>(dict);
+
+        /// <summary>
+        /// Sorts the given map with the given compare function
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        /// <param name="compare">Function to compare two keys</param>
+        public static Sorted<Key, Value> New<Key, Value>(IDictionary<Key, Value> dict, Func<Key, Key, int> compare)
+            => new Sorted<Key, Value>(dict, compare);
+
+        /// <summary>
+        /// Sorts the given map with the default comperator of the key
+        /// </summary>
+        /// <param name="pairs">Map elements to be sorted</param>
+        public static Sorted<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs)
+            => new Sorted<Key, Value>(pairs);
+
+        /// <summary>
+        /// Sorts the given map with the given key compare function
+        /// </summary>
+        /// <param name="pairs">Map elements to be sorted</param>
+        /// <param name="compare">Function to compare two keys</param>
+        public static Sorted<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, Func<Key, Key, int> compare)
+            => new Sorted<Key, Value>(pairs, compare);
+
+        /// <summary>
+        /// Sorts the given map with the given compare function
+        /// </summary>
+        /// <param name="pairs">Map elements to be sorted</param>
+        /// <param name="compare">Function to compare two elements</param>
+        public static Sorted<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, Func<KeyValuePair<Key, Value>, KeyValuePair<Key, Value>, int> compare)
+            => new Sorted<Key, Value>(pairs, compare);
+
+        /// <summary>
+        /// Sorts the given map with the given key comparer
+        /// </summary>
+        /// <param name="pairs">Map elements to be sorted</param>
+        /// <param name="cmp">Comparer comparing keys</param>
+        public static Sorted<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<Key> cmp)
+            => new Sorted<Key, Value>(pairs, cmp);
+
+        /// <summary>
+        /// Sorts the given map with the given comparer
+        /// </summary>
+        /// <param name="pairs">Map elements to be sorted</param>
+        /// <param name="cmp">Comparer comparing elements</param>
+        public static Sorted<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<KeyValuePair<Key, Value>> cmp)
+            => new Sorted<Key, Value>(pairs, cmp);
+
+        /// <summary>
+        /// Sorts the given map with the given comparer
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        /// <param name="cmp">Comparer comparing keys</param>
+        public static Sorted<Key, Value> New<Key, Value>(IDictionary<Key, Value> dict, IComparer<Key> cmp)
+            => new Sorted<Key, Value>(dict, cmp);
+
+        /// <summary>
+        /// Sorts the given map with the default comperator of the key
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        public static Sorted<Value> New<Value>(IDictionary<string, Value> dict)
+            => new Sorted<Value>(dict);
+
+        /// <summary>
+        /// Sorts the given map with the given compare function
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        /// <param name="compare">Function to compare two keys</param>
+        public static Sorted<Value> New<Value>(IDictionary<string, Value> dict, Func<string, string, int> compare)
+            => new Sorted<Value>(dict, compare);
+
+        /// <summary>
+        /// Sorts the given map with the default comperator of the key
+        /// </summary>
+        /// <param name="pairs">Map elements to be sorted</param>
+        public static Sorted<Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs)
+            => new Sorted<Value>(pairs);
+
+        /// <summary>
+        /// Sorts the given map with the given key compare function
+        /// </summary>
+        /// <param name="pairs">Map elements to be sorted</param>
+        /// <param name="compare">Function to compare two keys</param>
+        public static Sorted<Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, Func<string, string, int> compare)
+            => new Sorted<Value>(pairs, compare);
+
+        /// <summary>
+        /// Sorts the given map with the given compare function
+        /// </summary>
+        /// <param name="pairs">Map elements to be sorted</param>
+        /// <param name="compare">Function to compare two elements</param>
+        public static Sorted<Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, Func<KeyValuePair<string, Value>, KeyValuePair<string, Value>, int> compare)
+            => new Sorted<Value>(pairs, compare);
+
+        /// <summary>
+        /// Sorts the given map with the given key comparer
+        /// </summary>
+        /// <param name="pairs">Map elements to be sorted</param>
+        /// <param name="cmp">Comparer comparing keys</param>
+        public static Sorted<Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, IComparer<string> cmp)
+            => new Sorted<Value>(pairs, cmp);
+
+        /// <summary>
+        /// Sorts the given map with the given comparer
+        /// </summary>
+        /// <param name="pairs">Map elements to be sorted</param>
+        /// <param name="cmp">Comparer comparing elements</param>
+        public static Sorted<Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, IComparer<KeyValuePair<string, Value>> cmp)
+            => new Sorted<Value>(pairs, cmp);
+
+        /// <summary>
+        /// Sorts the given map with the given comparer
+        /// </summary>
+        /// <param name="dict">Map to be sorted</param>
+        /// <param name="cmp">Comparer comparing keys</param>
+        public static Sorted<Value> New<Value>(IDictionary<string, Value> dict, IComparer<string> cmp)
+            => new Sorted<Value>(dict, cmp);
     }
 
     /// <summary>

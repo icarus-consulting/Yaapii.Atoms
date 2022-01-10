@@ -35,17 +35,17 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// Func to call
         /// </summary>
-        private readonly Func<In1, In2, Out> _func;
+        private readonly Func<In1, In2, Out> func;
 
         /// <summary>
         /// Fallback to call wehen func fails
         /// </summary>
-        private readonly IFunc<Exception, Out> _fallback;
+        private readonly IFunc<Exception, Out> fallback;
 
         /// <summary>
         /// A follow function
         /// </summary>
-        private readonly IFunc<Out, Out> _follow;
+        private readonly IFunc<Out, Out> followUp;
 
         /// <summary>
         /// A bi-function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
@@ -113,9 +113,9 @@ namespace Yaapii.Atoms.Func
         /// <param name="flw">Func to call aferwards</param>
         public BiFuncWithFallback(System.Func<In1, In2, Out> fnc, IFunc<Exception, Out> fbk, IFunc<Out, Out> flw)
         {
-            this._func = fnc;
-            this._fallback = fbk;
-            this._follow = flw;
+            this.func = fnc;
+            this.fallback = fbk;
+            this.followUp = flw;
         }
 
         /// <summary>
@@ -129,13 +129,68 @@ namespace Yaapii.Atoms.Func
             Out result;
             try
             {
-                result = this._func.Invoke(first, second);
+                result = this.func.Invoke(first, second);
             }
             catch (Exception ex)
             {
-                result = this._fallback.Invoke(ex);
+                result = this.fallback.Invoke(ex);
             }
-            return this._follow.Invoke(result);
+            return this.followUp.Invoke(result);
         }
+    }
+
+    public abstract class BiFuncWithFallback
+    {
+        /// <summary>
+        /// A bi-function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="fnc">Func to call</param>
+        /// <param name="fbk">Fallback func</param>
+        public static BiFuncWithFallback<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc, System.Func<Exception, Out> fbk)
+            => new BiFuncWithFallback<In1, In2, Out>(fnc, fbk);
+
+        /// <summary>
+        /// A bi-function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="fnc">Func to call</param>
+        /// <param name="fbk">Fallback func</param>
+        public static BiFuncWithFallback<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc, IFunc<Exception, Out> fbk) =>
+            new BiFuncWithFallback<In1, In2, Out>(fnc, fbk);
+
+        /// <summary>
+        /// A bi-function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="fnc">Func to call</param>
+        /// <param name="fbk">Fallback func</param>
+        /// <param name="flw">Func to call aferwards</param>
+        public BiFuncWithFallback<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc, System.Func<Exception, Out> fbk, IFunc<Out, Out> flw) =>
+            new BiFuncWithFallback<In1, In2, Out>(fnc, fbk, flw);
+
+        /// <summary>
+        /// A bi-function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="fnc">Func to call</param>
+        /// <param name="fbk">Fallback func</param>
+        /// <param name="flw">Func to call aferwards</param>
+        public BiFuncWithFallback<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc, IFunc<Exception, Out> fbk, System.Func<Out, Out> flw) =>
+            new BiFuncWithFallback<In1, In2, Out>(fnc, fbk, flw);
+
+        /// <summary>
+        /// A bi-function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="fnc">Func to call</param>
+        /// <param name="fbk">Fallback func</param>
+        /// <param name="flw">Func to call aferwards</param>
+        public BiFuncWithFallback<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc, System.Func<Exception, Out> fbk, System.Func<Out, Out> flw) =>
+            new BiFuncWithFallback<In1, In2, Out>(fnc, fbk, flw);
+
+        /// <summary>
+        /// A bi-function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="fnc">Func to call</param>
+        /// <param name="fbk">Fallback func</param>
+        /// <param name="flw">Func to call aferwards</param>
+        public BiFuncWithFallback<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc, IFunc<Exception, Out> fbk, IFunc<Out, Out> flw) =>
+            new BiFuncWithFallback<In1, In2, Out>(fnc, fbk, flw);
     }
 }

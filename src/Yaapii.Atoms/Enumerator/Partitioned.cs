@@ -120,4 +120,19 @@ namespace Yaapii.Atoms.Enumerator
             return result;
         }
     }
+
+    /// <summary>
+    /// Partitiones an Enumerator by a given size
+    /// <para>Is a IEnumerator</para>
+    /// </summary>
+    public static class Partitioned
+    {
+        /// <summary>
+        /// Partitiones an Enumerator by a given size
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="enumerator"></param>
+        public static Partitioned<T> New<T>(int size, IEnumerator<T> enumerator) =>
+            new Partitioned<T>(size, enumerator);
+    }
 }

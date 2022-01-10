@@ -53,4 +53,16 @@ namespace Yaapii.Atoms.Map
         )
         { }
     }
+
+    public static class Grouped
+    {
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">Source Enumerable</param>
+        /// <param name="key">Function to convert Source Type to Key Type</param>
+        /// <param name="value">Function to Convert Source Type to Key Týpe</param>
+        public static Grouped<T, Key, Value> New<T, Key, Value>(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value)
+            => new Grouped<T, Key, Value>(src, key, value);
+    }
 }

@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.Func
     /// </summary>
     public sealed class ActionOf : IAction
     {
-        private readonly System.Action _func;
+        private readonly System.Action func;
 
         /// <summary>
         /// Action with input but no output as runnable.
@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Func
         /// <param name="fnc"></param>
         public ActionOf(System.Action fnc)
         {
-            this._func = fnc;
+            this.func = fnc;
         }
 
         /// <summary>
@@ -47,10 +47,16 @@ namespace Yaapii.Atoms.Func
         {
             new FuncOf<bool, bool>((input) =>
                 {
-                    this._func.Invoke();
+                    this.func.Invoke();
                     return true;
                 }).Invoke(true);
         }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="action">action to execute</param>
+        public static ActionOf<T> New<T>(Action<T> action) => new ActionOf<T>(action);
     }
 
     /// <summary>
@@ -62,7 +68,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// the action
         /// </summary>
-        private readonly System.Action<In> _func;
+        private readonly System.Action<In> func;
 
         /// <summary>
         /// ctor
@@ -77,7 +83,7 @@ namespace Yaapii.Atoms.Func
         /// <param name="fnc">action to execute</param>
         public ActionOf(Action<In> fnc)
         {
-            this._func = fnc;
+            this.func = fnc;
         }
 
         /// <summary>
@@ -86,9 +92,7 @@ namespace Yaapii.Atoms.Func
         /// <param name="input">input argument</param>
         public void Invoke(In input)
         {
-            this._func.Invoke(input);
+            this.func.Invoke(input);
         }
     }
-
-
 }

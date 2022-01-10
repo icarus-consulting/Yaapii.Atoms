@@ -41,25 +41,47 @@ namespace Yaapii.Atoms.Collection
             origin,
             new Exception("Collection is empty"))
         { }
+        public static NotEmpty<T> New(ICollection<T> origin) => new NotEmpty<T>(origin);
 
         /// <summary>
         /// Ensures that <see cref="ICollection{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Collection</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(ICollection<T> origin, Exception ex) : base(
+        public NotEmpty(ICollection<T> origin, Exception ex) : this(
+            origin, () => throw ex
+        )
+        { }
+
+        /// <summary>
+        /// Ensures that <see cref="ICollection{T}" /> is not empty/>
+        /// </summary>
+        /// <param name="origin">Collection</param>
+        /// <param name="ex">Execption to be thrown if empty</param>
+        public NotEmpty(ICollection<T> origin, Func<ICollection<T>> fallback) : base(
             new Live<ICollection<T>>(
                 () =>
                 {
-                    new FailPrecise(
-                        new FailEmpty<T>(
-                            origin),
-                        ex).Go();
+                    if (!origin.GetEnumerator().MoveNext())
+                    {
+                        origin = fallback();
+                    }
                     return origin;
                 }
             ),
             false
         )
         { }
+        public static NotEmpty<T> New(ICollection<T> origin, Func<ICollection<T>> fallback) => new NotEmpty<T>(origin, fallback);
+    }
+
+    /// <summary>
+    /// Ensures that <see cref="ICollection{T}" /> is not empty/>
+    /// </summary>
+    public static class NotEmpty
+    {
+        public static NotEmpty<T> New<T>(ICollection<T> origin) => new NotEmpty<T>(origin);
+
+        public static NotEmpty<T> New<T>(ICollection<T> origin, Func<ICollection<T>> fallback) => new NotEmpty<T>(origin, fallback);
     }
 }

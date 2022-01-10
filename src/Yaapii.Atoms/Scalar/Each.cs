@@ -33,8 +33,8 @@ namespace Yaapii.Atoms.Scalar
     /// <typeparam name="In"></typeparam>
     public sealed class Each<In> : IAction
     {
-        private readonly IAction<In> _action;
-        private readonly IEnumerable<In> _enumerable;
+        private readonly IAction<In> act;
+        private readonly IEnumerable<In> enumerable;
 
         /// <summary>
         /// Executes the given Action for every element in the params.
@@ -76,8 +76,8 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="enumerable"></param>
         public Each(IAction<In> action, IEnumerable<In> enumerable)
         {
-            _action = action;
-            _enumerable = enumerable;
+            act = action;
+            this.enumerable = enumerable;
         }
 
         /// <summary>
@@ -85,10 +85,53 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         public void Invoke()
         {
-            foreach (var item in _enumerable)
+            foreach (var item in enumerable)
             {
-                _action.Invoke(item);
+                act.Invoke(item);
             }
         }
+    }
+
+    public static class Each
+    {
+        /// <summary>
+        /// Executes the given Action for every element in the params.
+        /// Replaces ForEach in LinQ. 
+        /// <para>Object is <see cref="IAction"/></para>
+        /// </summary>
+        /// <param name="act">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public static Each<In> New<In>(Action<In> act, params In[] src)
+            => new Each<In>(act, src);
+
+        /// <summary>
+        ///  Executes the given Action for every element in the Enumerable.
+        /// Replaces ForEach in LinQ.
+        /// <para>Object is <see cref="IAction"/></para>
+        /// </summary>
+        /// <param name="act">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public static Each<In> New<In>(Action<In> act, IEnumerable<In> src)
+            => new Each<In>(act, src);
+
+        /// <summary>
+        ///  Executes the given IAction for every element in the params.
+        /// Replaces ForEach in LinQ.
+        /// <para>Object is <see cref="IAction"/></para>        /// </summary>
+        /// <param name="act">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public static Each<In> New<In>(IAction<In> act, params In[] src)
+            => new Each<In>(act, src);
+
+
+        /// <summary>
+        ///  Executes the given IAction for every element in the Enumerable.
+        /// Replaces ForEach in LinQ.
+        /// <para>Object is <see cref="IAction"/></para>
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="enumerable"></param>
+        public static Each<In> New<In>(IAction<In> action, IEnumerable<In> enumerable)
+            => new Each<In>(action, enumerable);
     }
 }

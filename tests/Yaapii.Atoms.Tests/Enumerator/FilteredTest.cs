@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.Equal(
                 "Hello World",
-                new Joined(" ",
+                new Text.Joined(" ",
                     new ManyOf<string>(
                         new Filtered<string>(
                             new ManyOf<string>("Hello", "cruel", "World").GetEnumerator(),

@@ -26,21 +26,20 @@ using Yaapii.Atoms.Enumerable;
 namespace Yaapii.Atoms.Collection
 {
     /// <summary>
-    /// Envelope for collections. 
-    /// It accepts a scalar and makes readonly Collection from it.
+    /// Collection out of other things. 
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public sealed class CollectionOf<T> : CollectionEnvelope<T>
     {
         /// <summary>
-        /// Makes a collection from an array
+        /// A collection from an array
         /// </summary>
         /// <param name="array"></param>
         public CollectionOf(params T[] array) : this(new LiveMany<T>(array))
         { }
 
         /// <summary>
-        /// Makes a collection from an <see cref="IEnumerator{T}"/>
+        /// A collection from an <see cref="IEnumerator{T}"/>
         /// </summary>
         /// <param name="src"></param>
         public CollectionOf(IEnumerator<T> src) : this(new ManyOf<T>(src))
@@ -63,5 +62,15 @@ namespace Yaapii.Atoms.Collection
             false
         )
         { }
+    }
+
+    public static class CollectionOf
+    {
+        public static CollectionOf<T> New<T>(params T[] array) => new CollectionOf<T>(array);
+
+        public static CollectionOf<T> New<T>(IEnumerator<T> src) => new CollectionOf<T>(src);
+
+        public static CollectionOf<T> New<T>(IEnumerable<T> src) => new CollectionOf<T>(src);
+
     }
 }

@@ -68,4 +68,31 @@ namespace Yaapii.Atoms.List
         )
         { }
     }
+
+    public static class LiveList
+    {
+        /// <summary>
+        /// Makes a readonly list.
+        /// </summary>
+        public static LiveList<T> New<T>(params T[] array)
+            => new LiveList<T>(array);
+
+        /// <summary>
+        /// Makes a readonly list.
+        /// </summary>
+        public static LiveList<T> New<T>(IEnumerator<T> src) =>
+            new LiveList<T>(src);
+
+        /// <summary>
+        /// Makes a readonly list.
+        /// </summary>
+        public static LiveList<T> New<T>(IEnumerable<T> src) =>
+            new LiveList<T>(src);
+
+        /// <summary>
+        /// Makes a readonly list.
+        /// </summary>
+        public static LiveList<T> New<T>(Func<IList<T>> src) =>
+            new LiveList<T>(src);
+    }
 }

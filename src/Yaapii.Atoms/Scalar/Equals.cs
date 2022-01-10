@@ -56,4 +56,34 @@ namespace Yaapii.Atoms.Scalar
             : base(() => first.Value().CompareTo(second.Value()) == 0)
         { }
     }
+
+    public static class Equals
+    {
+        /// <summary>
+        /// Checks the equality of contents.
+        /// </summary>
+        /// <param name="first">function to return first value to compare</param>
+        /// <param name="second">function to return second value to compare</param>
+        public static Equals<T> New<T>(Func<T> first, Func<T> second)
+            where T : IComparable<T>
+            => new Equals<T>(first, second);
+
+        /// <summary>
+        /// Checks the equality of contents.
+        /// </summary>
+        /// <param name="first">first value to compare</param>
+        /// <param name="second">second value to compare</param>
+        public static Equals<T> New<T>(T first, T second)
+            where T : IComparable<T>
+            => new Equals<T>(first, second);
+
+        /// <summary>
+        /// Checks the equality of contents.
+        /// </summary>
+        /// <param name="first">scalar of first value to compare</param>
+        /// <param name="second">scalar of second value to compare</param>
+        public static Equals<T> New<T>(IScalar<T> first, IScalar<T> second)
+            where T : IComparable<T>
+            => new Equals<T>(first, second);
+    }
 }

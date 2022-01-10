@@ -90,4 +90,46 @@ namespace Yaapii.Atoms.Scalar
             })
         { }
     }
+
+    public static class NoNull
+    {
+        /// <summary>
+        /// A scalar with a fallback if value is null.
+        /// </summary>
+        /// <param name="origin">the original</param>
+        public static NoNull<T> New<T>(T origin)
+            => new NoNull<T>(origin);
+
+        /// <summary>
+        /// A scalar with a fallback if value is null.
+        /// </summary>
+        /// <param name="origin">the original</param>
+        /// <param name="ex">error to raise if null</param>
+        public static NoNull<T> New<T>(T origin, Exception ex)
+            => new NoNull<T>(origin, ex);
+
+        /// <summary>
+        /// A scalar with a fallback if value is null.
+        /// </summary>
+        /// <param name="origin">the original</param>
+        /// <param name="fallback">the fallback value</param>
+        public static NoNull<T> New<T>(T origin, T fallback)
+            => new NoNull<T>(origin, fallback);
+
+        /// <summary>
+        /// A scalar with a fallback if value is null.
+        /// </summary>
+        /// <param name="origin">the original scalar</param>
+        /// <param name="fallback">the fallback value</param>
+        public static NoNull<T> New<T>(IScalar<T> origin, T fallback)
+            => new NoNull<T>(origin, fallback);
+
+        /// <summary>
+        /// A scalar with a fallback if value is null.
+        /// </summary>
+        /// <param name="origin">the original scalar</param>
+        /// <param name="fallback">the fallback</param>
+        public static NoNull<T> New<T>(IScalar<T> origin, IFunc<T> fallback)
+            => new NoNull<T>(origin, fallback);
+    }
 }

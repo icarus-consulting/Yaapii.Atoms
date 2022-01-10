@@ -37,14 +37,14 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// original func
         /// </summary>
-        private readonly IBiFunc<In1, In2, Out> _func;
+        private readonly IBiFunc<In1, In2, Out> func;
 
         /// <summary>
         /// cache
         /// </summary>
-        private readonly Dictionary<Dictionary<In1, In2>, Out> _cache;
+        private readonly Dictionary<Dictionary<In1, In2>, Out> cache;
 
-        private readonly KeyMapComparer _comparer;
+        private readonly KeyMapComparer comparer;
 
         /// <summary>
         /// Function with two inputs which returns the output from cache.
@@ -59,9 +59,9 @@ namespace Yaapii.Atoms.Func
         /// <param name="fnc">func to cache result from</param>
         public StickyBiFunc(IBiFunc<In1, In2, Out> fnc)
         {
-            this._func = fnc;
-            this._comparer = new KeyMapComparer();
-            this._cache = new Dictionary<Dictionary<In1, In2>, Out>(this._comparer);
+            this.func = fnc;
+            this.comparer = new KeyMapComparer();
+            this.cache = new Dictionary<Dictionary<In1, In2>, Out>(this.comparer);
         }
 
         /// <summary>
@@ -76,18 +76,18 @@ namespace Yaapii.Atoms.Func
             keymap[first] = second;
 
             Out output;
-            var km = new Filtered<Dictionary<In1, In2>>((key) => this._comparer.Equals(keymap, key), this._cache.Keys);
+            var km = new Filtered<Dictionary<In1, In2>>((key) => this.comparer.Equals(keymap, key), this.cache.Keys);
             if (km.Count() == 0)
             {
-                output = this._func.Invoke(first, second);
-                this._cache.Add(keymap, output);
-                km = new Filtered<Dictionary<In1, In2>>((key) => this._comparer.Equals(keymap, key), this._cache.Keys);
+                output = this.func.Invoke(first, second);
+                this.cache.Add(keymap, output);
+                km = new Filtered<Dictionary<In1, In2>>((key) => this.comparer.Equals(keymap, key), this.cache.Keys);
             }
 
-            return this._cache[new ItemAt<Dictionary<In1, In2>>(km).Value()];
+            return this.cache[new ItemAt<Dictionary<In1, In2>>(km).Value()];
         }
 
-        class KeyMapComparer : IEqualityComparer<Dictionary<In1, In2>>
+        private sealed class KeyMapComparer : IEqualityComparer<Dictionary<In1, In2>>
         {
             public bool Equals(Dictionary<In1, In2> x, Dictionary<In1, In2> y)
             {
@@ -123,6 +123,22 @@ namespace Yaapii.Atoms.Func
                 return obj.GetHashCode();
             }
         }
+    }
 
+    public static class StickyBiFunc
+    {
+        /// <summary>
+        /// Function with two inputs which returns the output from cache.
+        /// </summary>
+        /// <param name="fnc">func to cache result from</param>
+        public static StickyBiFunc<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc) =>
+            new StickyBiFunc<In1, In2, Out>(fnc);
+
+        /// <summary>
+        /// Function with two inputs which returns the output from cache.
+        /// </summary>
+        /// <param name="fnc">func to cache result from</param>
+        public static StickyBiFunc<In1, In2, Out> New<In1, In2, Out>(IBiFunc<In1, In2, Out> fnc) =>
+            new StickyBiFunc<In1, In2, Out>(fnc);
     }
 }

@@ -25,9 +25,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Scalar;
 
-#pragma warning disable NoProperties // No Properties
-#pragma warning disable CS1591
-
 namespace Yaapii.Atoms.Enumerator
 {
     /// <summary>
@@ -91,5 +88,6 @@ namespace Yaapii.Atoms.Enumerator
             throw new NotSupportedException("#Reset() is not supported");
         }
     }
+
+
 }
-#pragma warning restore NoProperties // No Properties

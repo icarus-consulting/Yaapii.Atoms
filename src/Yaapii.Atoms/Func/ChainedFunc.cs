@@ -35,17 +35,17 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// first function
         /// </summary>
-        private readonly IFunc<In, Between> _before;
+        private readonly IFunc<In, Between> before;
 
         /// <summary>
         /// chained functions
         /// </summary>
-        private readonly IEnumerable<IFunc<Between, Between>> _funcs;
+        private readonly IEnumerable<IFunc<Between, Between>> funcs;
 
         /// <summary>
         /// last function
         /// </summary>
-        private readonly IFunc<Between, Out> _after;
+        private readonly IFunc<Between, Out> after;
 
         /// <summary>
         /// Chains functions together.
@@ -109,9 +109,9 @@ namespace Yaapii.Atoms.Func
             IFunc<Between, Out> after
         )
         {
-            this._before = before;
-            this._funcs = funcs;
-            this._after = after;
+            this.before = before;
+            this.funcs = funcs;
+            this.after = after;
         }
 
         /// <summary>
@@ -121,12 +121,59 @@ namespace Yaapii.Atoms.Func
         /// <returns>output</returns>
         public Out Invoke(In input)
         {
-            Between temp = this._before.Invoke(input);
-            foreach (IFunc<Between, Between> func in this._funcs)
+            Between temp = this.before.Invoke(input);
+            foreach (IFunc<Between, Between> func in this.funcs)
             {
                 temp = func.Invoke(temp);
             }
-            return this._after.Invoke(temp);
+            return this.after.Invoke(temp);
         }
+    }
+
+    public static class ChainedFunc
+    {
+        /// <summary>
+        /// Chains functions together.
+        /// </summary>
+        /// <param name="before">first function</param>
+        /// <param name="after">last function</param>
+        public static ChainedFunc<In, Between, Out> New<In, Between, Out>(System.Func<In, Between> before, System.Func<Between, Out> after)
+            => new ChainedFunc<In, Between, Out>(before, after);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="before">first function</param>
+        /// <param name="after">last function</param>
+        public static ChainedFunc<In, Between, Out> New<In, Between, Out>(IFunc<In, Between> before, IFunc<Between, Out> after)
+            => new ChainedFunc<In, Between, Out>(before, after);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="before">first function</param>
+        /// <param name="funcs">functions to chain</param>
+        /// <param name="after">last function</param>
+        public static ChainedFunc<In, Between, Out> New<In, Between, Out>(System.Func<In, Between> before, IEnumerable<IFunc<Between, Between>> funcs, System.Func<Between, Out> after)
+            => new ChainedFunc<In, Between, Out>(before, funcs, after);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="before">first function</param>
+        /// <param name="funcs">functions to chain</param>
+        /// <param name="after">last function</param>
+        public static ChainedFunc<In, Between, Out> New<In, Between, Out>(System.Func<In, Between> before, IEnumerable<System.Func<Between, Between>> funcs, System.Func<Between, Out> after)
+            => new ChainedFunc<In, Between, Out>(before, funcs, after);
+
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="before">first function</param>
+        /// <param name="funcs">functions to chain</param>
+        /// <param name="after">last function</param>
+        public static ChainedFunc<In, Between, Out> New<In, Between, Out>(IFunc<In, Between> before, IEnumerable<IFunc<Between, Between>> funcs, IFunc<Between, Out> after)
+            => new ChainedFunc<In, Between, Out>(before, funcs, after);
     }
 }

@@ -23,8 +23,6 @@
 using System;
 using System.Collections.Generic;
 
-#pragma warning disable NoGetOrSet // No Statics
-#pragma warning disable CS1591
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
@@ -61,5 +59,36 @@ namespace Yaapii.Atoms.Enumerable
         )
         { }
     }
+
+    /// <summary>
+    /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+    /// </summary>
+    /// <typeparam name="T">type of elements</typeparam>
+    public static class Sorted
+    {
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
+        /// </summary>
+        /// <param name="src">enumerable to sort</param>
+        public static Sorted<T> New<T>(params T[] src) where T : IComparable<T> =>
+            new Sorted<T>(src);
+
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// </summary>
+        /// <param name="src">enumerable to sort</param>
+        public static Sorted<T> New<T>(IEnumerable<T> src) where T : IComparable<T> =>
+            new Sorted<T>(src);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// </summary>
+        /// <param name="cmp">comparer</param>
+        /// <param name="src">enumerable to sort</param>
+        public static Sorted<T> New<T>(Comparer<T> cmp, IEnumerable<T> src)
+            where T : IComparable<T> =>
+            new Sorted<T>(cmp, src);
+    }
 }
-#pragma warning restore NoGetOrSet // No Statics
+

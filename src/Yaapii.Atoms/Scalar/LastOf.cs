@@ -114,4 +114,54 @@ namespace Yaapii.Atoms.Enumerable
             )
         { }
     }
+
+    public static class LastOf
+    {
+        /// <summary>
+        /// Last element in <see cref="IEnumerable{T}"/> with given Exception thrown on fallback
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="ex"></param>
+        public static LastOf<T> New<T>(IEnumerable<T> source, Exception ex)
+            => new LastOf<T>(source, ex);
+
+        /// <summary>
+        /// Last element in a <see cref="IEnumerable{T}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        public static LastOf<T> New<T>(IEnumerable<T> source)
+            => new LastOf<T>(source);
+
+        /// <summary>
+        /// Last element in a <see cref="IEnumerable{T}"/> with a fallback value.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="fallback">fallback func</param>
+        public static LastOf<T> New<T>(IEnumerable<T> source, T fallback)
+            => new LastOf<T>(source, fallback);
+
+        /// <summary>
+        /// Last element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="fallback">fallback func</param>
+        public static LastOf<T> New<T>(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
+            => new LastOf<T>(source, fallback);
+
+        /// <summary>
+        /// Last Element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="fallback">fallback func</param>
+        public static LastOf<T> New<T>(IEnumerable<T> source, Func<Exception, IEnumerable<T>, T> fallback)
+            => new LastOf<T>(source, fallback);
+
+        /// <summary>
+        /// Last Element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="fallback">fallback func</param>
+        public static LastOf<T> New<T>(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+            => new LastOf<T>(source, fallback);
+    }
 }

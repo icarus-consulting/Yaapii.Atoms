@@ -31,7 +31,6 @@ namespace Yaapii.Atoms.Collection
     /// <typeparam name="T"></typeparam>
     public sealed class HeadOf<T> : CollectionEnvelope<T>
     {
-
         /// <summary>
         /// ctor
         /// </summary>
@@ -68,6 +67,13 @@ namespace Yaapii.Atoms.Collection
             false
         )
         { }
+    }
 
+    public static class HeadOf
+    {
+        public static HeadOf<T> New<T>(int lmt, params T[] src) => new HeadOf<T>(lmt, src);
+        public static HeadOf<T> New<T>(int lmt, ICollection<T> src) => new HeadOf<T>(lmt, src);
+        public static HeadOf<T> New<T>(int lmt, IEnumerable<T> src) => new HeadOf<T>(lmt, src);
+        public static HeadOf<T> New<T>(int lmt, IEnumerator<T> src) => new HeadOf<T>(lmt, src);
     }
 }

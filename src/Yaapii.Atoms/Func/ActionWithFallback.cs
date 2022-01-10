@@ -94,6 +94,38 @@ namespace Yaapii.Atoms.Func
                 fallback.Invoke(ex);
             }
         }
+
+        /// <summary>
+        /// A Action with input that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="fnc">Action to call</param>
+        /// <param name="fbk">Fallback action</param>
+        public static ActionWithFallback<T> New<T>(IAction<T> fnc, System.Action<Exception> fbk) =>
+            new ActionWithFallback<T>(fnc, fbk);
+
+        /// <summary>
+        /// A Action with input that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="fnc">Action to call</param>
+        /// <param name="fbk">Fallback action</param>
+        public static ActionWithFallback<T> New<T>(System.Action fnc, IAction<Exception> fbk) =>
+            new ActionWithFallback<T>(fnc, fbk);
+
+        /// <summary>
+        /// A Action with input that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="fnc">Action to call</param>
+        /// <param name="fbk">Fallback action</param>
+        public static ActionWithFallback<T> New<T>(System.Action<T> fnc, System.Action<Exception> fbk) =>
+            new ActionWithFallback<T>(fnc, fbk);
+
+        /// <summary>
+        /// A Action with input that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="fnc">Action to call</param>
+        /// <param name="fbk">Fallback action</param>
+        public static ActionWithFallback<T> New<T>(IAction<T> fnc, IAction<Exception> fbk) =>
+            new ActionWithFallback<T>(fnc, fbk);
     }
 
     /// <summary>

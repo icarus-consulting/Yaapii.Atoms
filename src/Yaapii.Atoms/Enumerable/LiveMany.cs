@@ -26,9 +26,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Yaapii.Atoms.Scalar;
 
-#pragma warning disable NoGetOrSet // No Statics
-#pragma warning disable CS1591
-
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
@@ -95,5 +92,26 @@ namespace Yaapii.Atoms.Enumerable
                 return this.GetEnumerator();
             }
         }
+    }
+
+    public static class LiveMany
+    {
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> out of an array.
+        /// </summary>
+        /// <param name="items"></param>
+        public static LiveMany<T> New<T>(params T[] items) => new LiveMany<T>(items);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// </summary>
+        /// <param name="fnc">function which retrieves enumerator</param>
+        public static LiveMany<T> New<T>(Func<IEnumerator<T>> fnc) => new LiveMany<T>(fnc);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// </summary>
+        /// <param name="fnc">function which retrieves enumerator</param>
+        public static LiveMany<T> New<T>(Func<IEnumerable<T>> fnc) => new LiveMany<T>(fnc);
     }
 }

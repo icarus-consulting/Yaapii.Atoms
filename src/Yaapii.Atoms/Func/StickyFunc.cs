@@ -35,23 +35,23 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// original func
         /// </summary>
-        private readonly IFunc<In, Out> _func;
+        private readonly IFunc<In, Out> func;
 
         /// <summary>
         /// cache
         /// </summary>
-        private readonly Dictionary<In, Out> _cache;
+        private readonly Dictionary<In, Out> cache;
 
         /// <summary>
         /// Reload Condition Func
         /// </summary>
-        private readonly IFunc<Out, bool> _reloadConditionFnc;
+        private readonly IFunc<Out, bool> reloadCondition;
 
         /// <summary>
         /// Func that caches the result and returns from cache.
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
-        public StickyFunc(System.Func<In, Out> fnc) :
+        public StickyFunc(Func<In, Out> fnc) :
             this(new FuncOf<In, Out>((X) => fnc(X)))
         { }
 
@@ -94,9 +94,9 @@ namespace Yaapii.Atoms.Func
         /// <param name="reloadConditionFnc">reload condition func</param>
         public StickyFunc(IFunc<In, Out> fnc, IFunc<Out, bool> reloadConditionFnc)
         {
-            this._func = fnc;
-            this._cache = new Dictionary<In, Out>();
-            _reloadConditionFnc = reloadConditionFnc;
+            this.func = fnc;
+            this.cache = new Dictionary<In, Out>();
+            reloadCondition = reloadConditionFnc;
         }
 
         /// <summary>
@@ -106,12 +106,60 @@ namespace Yaapii.Atoms.Func
         /// <returns>output</returns>
         public Out Invoke(In input)
         {
-            if (!this._cache.ContainsKey(input) || _reloadConditionFnc.Invoke(_cache[input]))
+            if (!this.cache.ContainsKey(input) || reloadCondition.Invoke(cache[input]))
             {
-                this._cache[input] = _func.Invoke(input);
+                this.cache[input] = func.Invoke(input);
             }
-            return this._cache[input];
+            return this.cache[input];
         }
+    }
 
+    public static class StickyFunc
+    {
+        /// <summary>
+        /// Func that caches the result and returns from cache.
+        /// </summary>
+        /// <param name="fnc">func to cache output from</param>
+        public static StickyFunc<In, Out> New<In, Out>(Func<In, Out> fnc) =>
+            new StickyFunc<In, Out>(fnc);
+
+        /// <summary>
+        /// Func that caches the result and returns from cache.
+        /// </summary>
+        /// <param name="fnc">func to cache output from</param>
+        public static StickyFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc) =>
+            new StickyFunc<In, Out>(fnc);
+
+        /// <summary>
+        /// Func that caches the result and returns from cache with reload condition func
+        /// </summary>
+        /// <param name="fnc">func to cache output from</param>
+        /// <param name="reloadCondition">reload condition func</param>
+        public static StickyFunc<In, Out> New<In, Out>(Func<In, Out> fnc, Func<Out, bool> reloadCondition) =>
+            new StickyFunc<In, Out>(fnc, reloadCondition);
+
+        /// <summary>
+        /// Func that caches the result and returns from cache with reload condition func
+        /// </summary>
+        /// <param name="fnc">func to cache output from</param>
+        /// <param name="reloadCondition">reload condition func</param>
+        public static StickyFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, Func<Out, bool> reloadCondition) =>
+            new StickyFunc<In, Out>(fnc, reloadCondition);
+
+        /// <summary>
+        /// Func that caches the result and returns from cache with reload condition func
+        /// </summary>
+        /// <param name="fnc">func to cache output from</param>
+        /// <param name="reloadCondition">reload condition func</param>
+        public static StickyFunc<In, Out> New<In, Out>(Func<In, Out> fnc, IFunc<Out, bool> reloadCondition) =>
+            new StickyFunc<In, Out>(fnc, reloadCondition);
+
+        /// <summary>
+        /// Func that caches the result and returns from cache with reload condition func
+        /// </summary>
+        /// <param name="fnc">func to cache output from</param>
+        /// <param name="reloadCondition">reload condition func</param>
+        public static StickyFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, IFunc<Out, bool> reloadCondition) =>
+            new StickyFunc<In, Out>(fnc, reloadCondition);
     }
 }

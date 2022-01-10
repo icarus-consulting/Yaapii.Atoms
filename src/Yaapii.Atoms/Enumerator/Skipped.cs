@@ -86,6 +86,17 @@ namespace Yaapii.Atoms.Enumerator
             }
         }
     }
+
+    /// <summary>
+    /// A <see cref="IEnumerator{Tests}"/> which skips a given count of items.
+    /// </summary>
+    public static class Skipped
+    {
+        /// <summary>
+        /// A <see cref="IEnumerator{Tests}"/> which skips a given count of items.
+        /// </summary>
+        /// <param name="enumerator"><see cref="IEnumerator{T}"/> to skip items in</param>
+        /// <param name="skip">how many to skip</param>
+        public static Skipped<T> New<T>(IEnumerator<T> enumerator, int skip) => new Skipped<T>(enumerator, skip);
+    }
 }
-#pragma warning restore Immutability // Fields are readonly or constant
-#pragma warning restore NoProperties // No Properties

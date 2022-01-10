@@ -32,11 +32,9 @@ namespace Yaapii.Atoms.Enumerable
     /// Element before another element in a <see cref="IEnumerable{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of element</typeparam>
-    public sealed class Sibling<T> : IScalar<T>
+    public sealed class Sibling<T> : ScalarEnvelope<T>
         where T : IComparable<T>
     {
-        private readonly ScalarOf<T> result;
-
         /// <summary>
         /// Next neighbour element in a <see cref="IEnumerable{T}"/>.
         /// </summary>
@@ -93,27 +91,79 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="item">item to start</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="relativeposition">requested position relative to the given item</param>
-        public Sibling(T item, IEnumerable<T> source, int relativeposition, IFunc<IEnumerable<T>, T> fallback)
-        {
-            this.result =
-                new ScalarOf<T>(() =>
-                {
-                    return new Enumerator.Sibling<T>(
-                        source.GetEnumerator(),
-                        item,
-                        relativeposition,
-                        fallback
-                    ).Value();
-                });
-        }
+        public Sibling(T item, IEnumerable<T> source, int relativeposition, IFunc<IEnumerable<T>, T> fallback) : base(() =>
+            new Enumerator.Sibling<T>(
+                source.GetEnumerator(),
+                item,
+                relativeposition,
+                fallback
+            ).Value()
+        )
+        { }
+    }
+
+    public static class Sibling
+    {
 
         /// <summary>
-        /// Get the item.
+        /// Next neighbour element in a <see cref="IEnumerable{T}"/>.
         /// </summary>
-        /// <returns>the item</returns>
-        public T Value()
-        {
-            return this.result.Value();
-        }
+        /// <param name="source">source enum</param>
+        /// <param name="item">item to start</param>
+        public static Sibling<T> New<T>(T item, IEnumerable<T> source)
+            where T : IComparable<T> =>
+            new Sibling<T>(item, source);
+
+        /// <summary>
+        /// Next neighbour in a <see cref="IEnumerable{T}"/> with a fallback value.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="fallback">fallback func</param>
+        /// <param name="item">item to start</param>
+        public static Sibling<T> New<T>(T item, IEnumerable<T> source, T fallback)
+            where T : IComparable<T> =>
+            new Sibling<T>(item, source, fallback);
+
+        /// <summary>
+        /// Element at a position in a <see cref="IEnumerable{T}"/> with a fallback value.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="relativeposition">requested position relative to the given item</param>
+        /// <param name="item">item to start</param>
+        public static Sibling<T> New<T>(T item, IEnumerable<T> source, int relativeposition)
+            where T : IComparable<T> =>
+            new Sibling<T>(item, source, relativeposition);
+
+        /// <summary>
+        /// Element at a position in a <see cref="IEnumerable{T}"/> with a fallback value.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="relativeposition">requested position relative to the given item</param>
+        /// <param name="fallback">fallback func</param>
+        /// <param name="item">item to start</param>
+        public static Sibling<T> New<T>(T item, IEnumerable<T> source, int relativeposition, T fallback)
+            where T : IComparable<T> =>
+            new Sibling<T>(item, source, relativeposition, fallback);
+
+        /// <summary>
+        /// Next neighbour of an item in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">soruce enum</param>
+        /// <param name="fallback">fallback value</param>
+        /// <param name="item">item to start</param>
+        public static Sibling<T> New<T>(T item, IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
+            where T : IComparable<T> =>
+            new Sibling<T>(item, source, fallback);
+
+        /// <summary>
+        /// Element that comes before another element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="item">item to start</param>
+        /// <param name="fallback">fallback func</param>
+        /// <param name="relativeposition">requested position relative to the given item</param>
+        public static Sibling<T> New<T>(T item, IEnumerable<T> source, int relativeposition, IFunc<IEnumerable<T>, T> fallback)
+            where T : IComparable<T> =>
+            new Sibling<T>(item, source, relativeposition, fallback);
     }
 }

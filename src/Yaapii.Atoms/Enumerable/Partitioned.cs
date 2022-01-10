@@ -33,14 +33,26 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Enumerable partitioned by a given size.
         /// </summary>
-        public Partitioned(int size, IEnumerable<T> list) : base(() =>
+        public Partitioned(int size, IEnumerable<T> items) : base(() =>
             new LiveMany<IEnumerable<T>>(() =>
                 new Enumerator.Partitioned<T>(
-                    size, list.GetEnumerator()
+                    size, items.GetEnumerator()
                 )
             ),
             false
         )
         { }
+    }
+
+    /// <summary>
+    /// Enumerable partitioned by a given size.
+    /// <para>Is a IEnumerable</para>
+    /// </summary>
+    public static class Partitioned
+    {
+        /// <summary>
+        /// Enumerable partitioned by a given size.
+        /// </summary>
+        public static Partitioned<T> New<T>(int size, IEnumerable<T> items) => new Partitioned<T>(size, items);
     }
 }
