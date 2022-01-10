@@ -30,10 +30,8 @@ namespace Yaapii.Atoms.Enumerable
     /// Lookup if an item is in a enumerable.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Contains<T> : IScalar<bool>
+    public sealed class Contains<T> : ScalarEnvelope<bool>
     {
-        private readonly ScalarOf<bool> result;
-
         /// <summary>
         /// Lookup if an item is in a enumerable by calling .Equals(...) of the item.
         /// </summary>
@@ -49,19 +47,19 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="items">enumerable to search through</param>
         /// <param name="match">check to perform on each item</param>
-        public Contains(IEnumerable<T> items, Func<T, bool> match)
-        {
-            this.result =
-                new ScalarOf<bool>(() => new Enumerator.Contains<T>(items.GetEnumerator(), match).Value());
-        }
+        public Contains(IEnumerable<T> items, Func<T, bool> match) : base(() =>
+            new Enumerator.Contains<T>(items.GetEnumerator(), match).Value())
+        { }
+    }
 
-        /// <summary>
-        /// see if the item is in the enumerable.
-        /// </summary>
-        /// <returns>true if item is in the enumerable</returns>
-        public bool Value()
-        {
-            return this.result.Value();
-        }
+    /// <summary>
+    /// Lookup if an item is in a enumerable.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public static class Contains
+    {
+        public static Contains<T> New<T>(IEnumerable<T> src, T item) => new Contains<T>(src, item);
+
+        public static Contains<T> New<T>(IEnumerable<T> items, Func<T, bool> match) => new Contains<T>(items, match);
     }
 }

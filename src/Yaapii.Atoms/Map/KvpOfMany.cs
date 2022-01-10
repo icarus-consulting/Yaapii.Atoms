@@ -71,6 +71,62 @@ namespace Yaapii.Atoms.Map
             new KvpOf<IEnumerable<string>>(key, values)
         )
         { }
+
+        /// <summary>
+        /// A key to many strings.
+        /// The functions are executed only when the value is requested.
+        /// The result is sticky.
+        /// </summary>
+        public static KvpOfMany<TValue> New<TValue>(string key, params Func<TValue>[] values)
+            => new KvpOfMany<TValue>(key, values);
+
+        /// <summary>
+        /// A key to many strings.
+        /// The functions are executed only when the value is requested.
+        /// The result is sticky.
+        /// </summary>
+        public static KvpOfMany<TValue> New<TValue>(string key, params TValue[] values)
+            => new KvpOfMany<TValue>(key, values);
+
+        /// <summary>
+        /// A key to many strings.
+        /// </summary>
+        public static KvpOfMany<TValue> New<TValue>(string key, IEnumerable<TValue> values)
+            => new KvpOfMany<TValue>(key, values);
+
+        /// <summary>
+        /// A key to many values.
+        /// </summary>
+        public static KvpOfMany<TValue> New<TValue>(string key, Func<IEnumerable<TValue>> values)
+            => new KvpOfMany<TValue>(key, values);
+
+        /// <summary>
+        /// A key to many values.
+        /// The functions are executed only when the value is requested.
+        /// The result is sticky.
+        /// </summary>
+        public static KeyToValues<TKey, TValue> New<TKey, TValue>(TKey key, params Func<TValue>[] many)
+            => new KeyToValues<TKey, TValue>(key, many);
+
+        /// <summary>
+        /// A key to many values.
+        /// The functions are executed only when the value is requested.
+        /// The result is sticky.
+        /// </summary>
+        public static KeyToValues<TKey, TValue> New<TKey, TValue>(TKey key, params TValue[] many)
+            => new KeyToValues<TKey, TValue>(key, many);
+
+        /// <summary>
+        /// A key to many values.
+        /// </summary>
+        public static KeyToValues<TKey, TValue> New<TKey, TValue>(TKey key, IEnumerable<TValue> many)
+            => new KeyToValues<TKey, TValue>(key, many);
+
+        /// <summary>
+        /// A key to many values.
+        /// </summary>
+        public static KeyToValues<TKey, TValue> New<TKey, TValue>(TKey key, Func<IEnumerable<TValue>> many)
+            => new KeyToValues<TKey, TValue>(key, many);
     }
 
     /// <summary>

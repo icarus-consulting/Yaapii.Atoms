@@ -23,11 +23,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-#pragma warning disable NoProperties // No Properties
-#pragma warning disable Immutability // Fields are readonly or constant
-#pragma warning disable NoGetOrSet // No Statics
-#pragma warning disable CS1591
-
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
@@ -47,5 +42,14 @@ namespace Yaapii.Atoms.Enumerable
             true
         )
         { }
+    }
+
+    public static class Endless
+    {
+        /// <summary>
+        /// A <see cref="IEnumerable"/> that repeats one element infinitely.
+        /// </summary>
+        /// <param name="elm">element to repeat</param>
+        public static Endless<T> New<T>(T elm) => new Endless<T>(elm);
     }
 }

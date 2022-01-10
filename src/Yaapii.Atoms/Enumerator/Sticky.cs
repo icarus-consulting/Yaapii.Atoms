@@ -199,4 +199,28 @@ namespace Yaapii.Atoms.Enumerator
             IEnumerator IEnumerable.GetEnumerator() => throw new InvalidOperationException("Getting the enumerator is not supported.");
         }
     }
+
+    /// <summary>
+    /// An enumerator which is sticky. 
+    /// </summary>
+    public sealed class Sticky
+    {
+        /// In order to allow enumerables to not pre-compute/copy all elements,
+        /// this ctor allows injecting and therefore re-using the caching elements.
+        /// An enumerable like <see cref="ManyEnvelope"/> can then issue multiple 
+        /// Enumerators while the same cache is filled when advancing them.
+        public Sticky<T> New<T>(IEnumerator<T> origin) => new Sticky<T>(origin);
+
+        /// In order to allow enumerables to not pre-compute/copy all elements,
+        /// this ctor allows injecting and therefore re-using the caching elements.
+        /// An enumerable like <see cref="ManyEnvelope"/> can then issue multiple 
+        /// Enumerators while the same cache is filled when advancing them.
+        public Sticky<T> New<T>(Func<IEnumerator<T>> origin) => new Sticky<T>(origin);
+
+        /// In order to allow enumerables to not pre-compute/copy all elements,
+        /// this ctor allows injecting and therefore re-using the caching elements.
+        /// An enumerable like <see cref="ManyEnvelope"/> can then issue multiple 
+        /// Enumerators while the same cache is filled when advancing them.
+        public Sticky<T> New<T>(IDictionary<int, T> cache) => new Sticky<T>(cache);
+    }
 }

@@ -268,6 +268,42 @@ namespace Yaapii.Atoms.Map
         {
             return GetEnumerator();
         }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public static LazyDict<Value> New<Value>(params IKvp<Value>[] kvps)
+            => new LazyDict<Value>(kvps);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public static LazyDict<Value> New<Value>(bool rejectBuildingAllValues, params IKvp<Value>[] kvps)
+            => new LazyDict<Value>(kvps);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public static LazyDict<Value> New<Value>(IEnumerable<IKvp<Value>> kvps, bool rejectBuildingAllValues = true)
+            => new LazyDict<Value>(kvps, rejectBuildingAllValues);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public static LazyDict<Key, Value> New<Key, Value>(params IKvp<Key, Value>[] kvps)
+            => new LazyDict<Key, Value>(kvps);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public static LazyDict<Key, Value> New<Key, Value>(bool rejectBuildingAllValues, params IKvp<Key, Value>[] kvps)
+            => new LazyDict<Key, Value>(rejectBuildingAllValues, kvps);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public static LazyDict<Key, Value> New<Key, Value>(IEnumerable<IKvp<Key, Value>> kvps, bool rejectBuildingAllValues = true)
+            => new LazyDict<Key, Value>(kvps, rejectBuildingAllValues);
     }
 
     /// <summary>

@@ -21,7 +21,6 @@
 // SOFTWARE.
 
 using Xunit;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
@@ -31,12 +30,13 @@ namespace Yaapii.Atoms.Enumerable.Tests
         public void SkipIterable()
         {
             Assert.True(
-                new Joined(
+                new Text.Joined(
                     ", ",
                     new Skipped<string>(
                         new ManyOf<string>("one", "two", "three", "four"),
-                        2)
-                    ).AsString() == "three, four");
+                        2
+                    )
+                ).AsString() == "three, four");
         }
     }
 }

@@ -22,9 +22,6 @@
 
 using System.Collections.Generic;
 
-#pragma warning disable NoGetOrSet // No Statics
-#pragma warning disable CS1591
-
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
@@ -45,5 +42,18 @@ namespace Yaapii.Atoms.Enumerable
             false
         )
         { }
+    }
+
+    /// <summary>
+    /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
+    /// </summary>
+    public static class Skipped
+    {
+        /// <summary>
+        /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
+        /// </summary>
+        /// <param name="enumerable">enumerable to skip items in</param>
+        /// <param name="skip">how many to skip</param>
+        public static Skipped<T> New<T>(IEnumerable<T> enumerable, int skip) => new Skipped<T>(enumerable, skip);
     }
 }

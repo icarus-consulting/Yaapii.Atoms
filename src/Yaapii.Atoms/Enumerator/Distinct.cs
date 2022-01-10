@@ -109,5 +109,15 @@ namespace Yaapii.Atoms.Enumerator
         public void Dispose()
         { }
     }
+
+    public static class Distinct
+    {
+        /// <summary>
+        /// Enumerator that only gives the distinct elements of multiple enumerators.
+        /// </summary>
+        /// <param name="enumerators"></param>
+        public static Distinct<T> New<T>(IEnumerable<IEnumerator<T>> enumerators) =>
+            new Distinct<T>(enumerators);
+    }
 }
 

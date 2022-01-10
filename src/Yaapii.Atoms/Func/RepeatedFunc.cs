@@ -34,19 +34,19 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// function to call
         /// </summary>
-        private readonly IFunc<In, Out> _func;
+        private readonly IFunc<In, Out> func;
 
         /// <summary>
         /// how often to run
         /// </summary>
-        private readonly int _times;
+        private readonly int times;
 
         /// <summary>
         /// Function that repeats its calculation a few times before returning the result.
         /// </summary>
         /// <param name="fnc">function to call</param>
         /// <param name="max">how often it repeats</param>
-        public RepeatedFunc(System.Func<In, Out> fnc, int max) : this(new FuncOf<In, Out>((X) => fnc(X)), max)
+        public RepeatedFunc(Func<In, Out> fnc, int max) : this(new FuncOf<In, Out>((X) => fnc(X)), max)
         { }
 
         /// <summary>
@@ -56,8 +56,8 @@ namespace Yaapii.Atoms.Func
         /// <param name="max">how often it repeats</param>
         public RepeatedFunc(IFunc<In, Out> fnc, int max)
         {
-            this._func = fnc;
-            this._times = max;
+            this.func = fnc;
+            this.times = max;
         }
 
         /// <summary>
@@ -67,18 +67,35 @@ namespace Yaapii.Atoms.Func
         /// <returns>the output</returns>
         public Out Invoke(In input)
         {
-            if (this._times <= 0)
+            if (this.times <= 0)
             {
                 throw new ArgumentException("The number of repetitions must be at least 1");
             }
 
             Out result;
-            result = this._func.Invoke(input);
-            for (int idx = 0; idx < this._times - 1; ++idx)
+            result = this.func.Invoke(input);
+            for (int idx = 0; idx < this.times - 1; ++idx)
             {
-                result = this._func.Invoke(input);
+                result = this.func.Invoke(input);
             }
             return result;
         }
+    }
+
+    public static class RepeatedFunc
+    {
+        /// <summary>
+        /// Function that repeats its calculation a few times before returning the result.
+        /// </summary>
+        /// <param name="fnc">function to call</param>
+        /// <param name="max">how often it repeats</param>
+        public static RepeatedFunc<In, Out> New<In, Out>(Func<In, Out> fnc, int max) => new RepeatedFunc<In, Out>(fnc, max);
+
+        /// <summary>
+        /// Function that repeats its calculation a few times before returning the result.
+        /// </summary>
+        /// <param name="fnc">function to call</param>
+        /// <param name="max">how often it repeats</param>
+        public static RepeatedFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, int max) => new RepeatedFunc<In, Out>(fnc, max);
     }
 }

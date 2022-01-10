@@ -109,6 +109,47 @@ namespace Yaapii.Atoms.Scalar
 
             return result;
         }
+    }
 
+    public static class ParallelAnd
+    {
+        /// <summary>
+        /// Logical conjunction, in multiple threads. Returns true if all contents return true.
+        /// </summary>
+        /// <param name="act"></param>
+        /// <param name="src"></param>
+        public static ParallelAnd<T> New<T>(IAction<T> act, params T[] src)
+            => new ParallelAnd<T>(act, src);
+
+        /// <summary>
+        /// Logical conjunction, in multiple threads. Returns true if all contents return true.
+        /// </summary>
+        /// <param name="func"></param>
+        /// <param name="src"></param>
+        public static ParallelAnd<T> New<T>(IFunc<T, bool> func, params T[] src)
+            => new ParallelAnd<T>(func, src);
+
+        /// <summary>
+        /// Logical conjunction, in multiple threads. Returns true if all contents return true.
+        /// </summary>
+        /// <param name="proc"></param>
+        /// <param name="src"></param>
+        public static ParallelAnd<T> New<T>(IAction<T> proc, IEnumerable<T> src)
+            => new ParallelAnd<T>(proc, src);
+
+        /// <summary>
+        /// Logical conjunction, in multiple threads. Returns true if all contents return true.
+        /// </summary>
+        /// <param name="func"></param>
+        /// <param name="src"></param>
+        public static ParallelAnd<T> New<T>(IFunc<T, bool> func, IEnumerable<T> src)
+            => new ParallelAnd<T>(func, src);
+
+        /// <summary>
+        /// Logical conjunction, in multiple threads. Returns true if all contents return true.
+        /// </summary>
+        /// <param name="src"></param>
+        public static ParallelAnd<T> New<T>(IEnumerable<IScalar<bool>> src)
+            => new ParallelAnd<T>(src);
     }
 }

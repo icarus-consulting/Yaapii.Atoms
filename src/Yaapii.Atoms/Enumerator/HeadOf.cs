@@ -83,6 +83,19 @@ namespace Yaapii.Atoms.Enumerator
 
         }
     }
+
+    /// <summary>
+    /// A <see cref="IEnumerator{T}"/> limited to an item maximum.
+    /// </summary>
+    public static class HeadOf
+    {
+        /// <summary>
+        /// A <see cref="IEnumerator{T}"/> limited to an item maximum.
+        /// </summary>
+        /// <param name="enumerator">enumerator to limit</param>
+        /// <param name="limit">maximum item count</param>
+        public static HeadOf<T> New<T>(IEnumerator<T> enumerator, int limit) =>
+            new HeadOf<T>(enumerator, limit);
+    }
 }
-#pragma warning restore NoProperties // No Properties
-#pragma warning restore Immutability // Fields are readonly or constant
+

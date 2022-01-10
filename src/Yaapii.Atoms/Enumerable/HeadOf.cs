@@ -23,9 +23,6 @@
 using System.Collections.Generic;
 using Yaapii.Atoms.Scalar;
 
-#pragma warning disable NoGetOrSet // No Statics
-#pragma warning disable CS1591
-
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
@@ -61,6 +58,32 @@ namespace Yaapii.Atoms.Enumerable
             false
         )
         { }
+    }
+
+    /// <summary>
+    /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
+    /// </summary>
+    public static class HeadOf
+    {
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="enumerable">enumerable to limit</param>
+        public static HeadOf<T> New<T>(IEnumerable<T> enumerable) => new HeadOf<T>(enumerable);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="enumerable">enumerable to limit</param>
+        /// <param name="limit">maximum item count</param>
+        public static HeadOf<T> New<T>(IEnumerable<T> enumerable, int limit) => new HeadOf<T>(enumerable, limit);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
+        /// </summary>
+        /// <param name="enumerable">enumerable to limit</param>
+        /// <param name="limit">maximum item count</param>
+        public static HeadOf<T> New<T>(IEnumerable<T> enumerable, IScalar<int> limit) => new HeadOf<T>(enumerable, limit);
     }
 }
 

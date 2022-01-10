@@ -23,8 +23,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-#pragma warning disable NoProperties // No Properties
-#pragma warning disable CS1591
 namespace Yaapii.Atoms.Enumerator
 {
     /// <summary>
@@ -95,5 +93,23 @@ namespace Yaapii.Atoms.Enumerator
 
         }
     }
+
+    /// <summary>
+    /// Multiple <see cref="IEnumerator{T}"/> joined together.
+    /// </summary>
+    /// <typeparam name="T">type of elements</typeparam>
+    public static class Joined
+    {
+        /// <summary>
+        /// Multiple <see cref="IEnumerator{T}"/> joined together.
+        /// </summary>
+        /// <param name="items">enumerables to join together</param>
+        public static Joined<T> New<T>(params IEnumerator<T>[] items) => new Joined<T>(items);
+
+        /// <summary>
+        /// Multiple <see cref="IEnumerator{T}"/> joined together.
+        /// </summary>
+        /// <param name="items">enumerables to join together</param>
+        public static Joined<T> New<T>(IEnumerable<IEnumerator<T>> items) => new Joined<T>(items);
+    }
 }
-#pragma warning restore NoProperties // No Properties

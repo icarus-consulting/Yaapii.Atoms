@@ -55,4 +55,28 @@ namespace Yaapii.Atoms.List
         )
         { }
     }
+
+    public static class ListOf
+    {
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="array">source array</param>
+        public static ListOf<T> New<T>(params T[] array)
+            => new ListOf<T>(array);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">source enumerator</param>
+        public static ListOf<T> New<T>(IEnumerator<T> src)
+            => new ListOf<T>(src);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">source enumerable</param>
+        public static ListOf<T> New<T>(IEnumerable<T> src)
+            => new ListOf<T>(src);
+    }
 }

@@ -114,4 +114,61 @@ namespace Yaapii.Atoms.List
         )
         { }
     }
+
+    public static class SyncList
+    {
+        /// <summary>
+        /// A list which is threadsafe.
+        /// </summary>
+        public static SyncList<T> New<T>()
+            => new SyncList<T>();
+
+        /// <summary>
+        /// A list which is threadsafe.
+        /// </summary>
+        public static SyncList<T> New<T>(object syncRoot)
+            => new SyncList<T>(syncRoot);
+
+        /// <summary>
+        /// A list which is threadsafe.
+        /// </summary>
+        /// <param name="items">Items to make list from</param>
+        public static SyncList<T> New<T>(params T[] items)
+            => new SyncList<T>(items);
+
+        /// <summary>
+        /// A list which is threadsafe.
+        /// </summary>
+        /// <param name="items">Items to make list from</param>
+        public static SyncList<T> New<T>(IEnumerable<T> items)
+            => new SyncList<T>(items);
+
+        /// <summary>
+        /// A list which is threadsafe.
+        /// </summary>
+        /// <param name="items">Items to make list from</param>
+        public static SyncList<T> New<T>(IEnumerator<T> items)
+            => new SyncList<T>(items);
+
+        /// <summary>
+        /// A list which is threadsafe.
+        /// </summary>
+        /// <param name="lst">Items to make list from</param>
+        public static SyncList<T> New<T>(ICollection<T> lst)
+            => new SyncList<T>(lst);
+
+        /// <summary>
+        /// A list which is threadsafe.
+        /// </summary>
+        /// <param name="lst">List to sync</param>
+        public static SyncList<T> New<T>(IList<T> lst)
+            => new SyncList<T>(lst);
+
+        /// <summary>
+        /// A list which is threadsafe.
+        /// </summary>
+        /// <param name="syncRoot">Root object to sync</param>
+        public static SyncList<T> New<T>(object syncRoot, IList<T> col)
+            => new SyncList<T>(syncRoot, col);
+    }
 }

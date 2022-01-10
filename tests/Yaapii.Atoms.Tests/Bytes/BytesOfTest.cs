@@ -102,7 +102,7 @@ namespace Yaapii.Atoms.IO.Tests
             Assert.True(
                 new BytesOf(
                     new InputOf(
-                        new Joined(
+                        new Text.Joined(
                             "",
                             new HeadOf<string>(
                                 new Endless<string>(body),

@@ -26,7 +26,6 @@ using System.Collections.Generic;
 using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 
-#pragma warning disable NoGetOrSet
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
@@ -90,5 +89,37 @@ namespace Yaapii.Atoms.Enumerable
         )
         { }
     }
+
+    /// <summary>
+    /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
+    /// </summary>
+    public static class Replaced
+    {
+        /// <summary>
+        /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
+        /// </summary>
+        /// <param name="origin">enumerable</param>
+        /// <param name="condition">matching condition</param>
+        /// <param name="replacement">item to insert instead</param>
+        public static Replaced<T> New<T>(IEnumerable<T> origin, Func<T, bool> condition, T replacement) =>
+            new Replaced<T>(origin, condition, replacement);
+
+        /// <summary>
+        /// A <see cref="IEnumerable"/> where an item at a given index is replaced.
+        /// </summary>
+        /// <param name="origin">enumerable</param>
+        /// <param name="index">index at which to replace the item</param>
+        /// <param name="replacement">item to insert instead</param>
+        public static Replaced<T> New<T>(IEnumerable<T> origin, int index, T replacement) =>
+            new Replaced<T>(origin, index, replacement);
+
+        /// <summary>
+        /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
+        /// </summary>
+        /// <param name="origin">enumerable</param>
+        /// <param name="condition">matching condition</param>
+        /// <param name="replacement">item to insert instead</param>
+        public static Replaced<T> New<T>(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement) =>
+            new Replaced<T>(origin, condition, replacement);
+    }
 }
-#pragma warning restore NoGetOrSet

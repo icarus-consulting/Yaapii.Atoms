@@ -23,9 +23,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-#pragma warning disable NoGetOrSet // No Statics
-#pragma warning disable CS1591
-
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
@@ -48,5 +45,17 @@ namespace Yaapii.Atoms.Enumerable
             false
         )
         { }
+    }
+
+    /// <summary>
+    /// A reversed <see cref="IEnumerable{T}"/>
+    /// </summary>
+    public static class Reversed
+    {
+        /// <summary>
+        /// A reversed <see cref="IEnumerable{T}"/>
+        /// </summary>
+        /// <param name="src">enumerable to reverse</param>
+        public static Reversed<T> New<T>(IEnumerable<T> src) => new Reversed<T>(src);
     }
 }

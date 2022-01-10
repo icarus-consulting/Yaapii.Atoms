@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.IO.Tests
                         new TeeInputStream(
                             new MemoryStream(
                                 new BytesOf(
-                                    new Joined(lmt,
+                                    new Text.Joined(lmt,
                                         new HeadOf<string>(
                                             new Endless<string>(str),
                                             times

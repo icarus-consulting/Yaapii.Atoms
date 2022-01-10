@@ -34,17 +34,17 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// func to call
         /// </summary>
-        private readonly IFunc<In, Out> _func;
+        private readonly IFunc<In, Out> fund;
 
         /// <summary>
         /// fallback to call when necessary
         /// </summary>
-        private readonly IFunc<Exception, Out> _fallback;
+        private readonly IFunc<Exception, Out> fallback;
 
         /// <summary>
         /// a followup function
         /// </summary>
-        private readonly IFunc<Out, Out> _follow;
+        private readonly IFunc<Out, Out> follow;
 
         /// <summary>
         /// A function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
@@ -97,9 +97,9 @@ namespace Yaapii.Atoms.Func
         /// <param name="flw">func to call afterwards</param>
         public FuncWithFallback(IFunc<In, Out> fnc, IFunc<Exception, Out> fbk, IFunc<Out, Out> flw)
         {
-            this._func = fnc;
-            this._fallback = fbk;
-            this._follow = flw;
+            this.fund = fnc;
+            this.fallback = fbk;
+            this.follow = flw;
         }
 
         /// <summary>
@@ -112,13 +112,13 @@ namespace Yaapii.Atoms.Func
             Out result;
             try
             {
-                result = this._func.Invoke(input);
+                result = this.fund.Invoke(input);
             }
             catch (Exception ex)
             {
-                result = this._fallback.Invoke(ex);
+                result = this.fallback.Invoke(ex);
             }
-            return this._follow.Invoke(result);
+            return this.follow.Invoke(result);
         }
     }
 
@@ -131,17 +131,17 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// func to call
         /// </summary>
-        private readonly IFunc<Out> _func;
+        private readonly IFunc<Out> func;
 
         /// <summary>
         /// fallback to call when necessary
         /// </summary>
-        private readonly IFunc<Exception, Out> _fallback;
+        private readonly IFunc<Exception, Out> fallback;
 
         /// <summary>
         /// a followup function
         /// </summary>
-        private readonly IFunc<Out, Out> _follow;
+        private readonly IFunc<Out, Out> follow;
 
         /// <summary>
         /// A function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
@@ -194,9 +194,9 @@ namespace Yaapii.Atoms.Func
         /// <param name="flw">func to call afterwards</param>
         public FuncWithFallback(IFunc<Out> fnc, IFunc<Exception, Out> fbk, IFunc<Out, Out> flw)
         {
-            this._func = fnc;
-            this._fallback = fbk;
-            this._follow = flw;
+            this.func = fnc;
+            this.fallback = fbk;
+            this.follow = flw;
         }
 
         /// <summary>
@@ -208,13 +208,101 @@ namespace Yaapii.Atoms.Func
             Out result;
             try
             {
-                result = this._func.Invoke();
+                result = this.func.Invoke();
             }
             catch (Exception ex)
             {
-                result = this._fallback.Invoke(ex);
+                result = this.fallback.Invoke(ex);
             }
-            return this._follow.Invoke(result);
+            return this.follow.Invoke(result);
         }
+    }
+
+    public static class FuncWithFallback
+    {
+        /// <summary>
+        /// A function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="func">func to call</param>
+        /// <param name="fallback">fallback func</param>
+        public static FuncWithFallback<In, Out> New<In, Out>(System.Func<In, Out> func, System.Func<Exception, Out> fallback) =>
+            new FuncWithFallback<In, Out>(func, fallback);
+
+        /// <summary>
+        /// A function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="func">func to call</param>
+        /// <param name="fallback">fallback func</param>
+        public static FuncWithFallback<In, Out> New<In, Out>(System.Func<In, Out> func, Atoms.IFunc<Exception, Out> fallback) =>
+            new FuncWithFallback<In, Out>(func, fallback);
+
+        /// <summary>
+        /// A function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="fnc">func to call</param>
+        /// <param name="fbk">fallback func</param>
+        public static FuncWithFallback<In, Out> New<In, Out>(IFunc<In, Out> fnc, IFunc<Exception, Out> fbk) =>
+            new FuncWithFallback<In, Out>(fnc, fbk);
+
+        /// <summary>
+        /// A function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="func">func to call</param>
+        /// <param name="fallback">fallback func</param>
+        /// <param name="flw">func to call afterwards</param>
+        public static FuncWithFallback<In, Out> New<In, Out>(System.Func<In, Out> func, System.Func<Exception, Out> fallback, System.Func<Out, Out> flw) =>
+            new FuncWithFallback<In, Out>(func, fallback, flw);
+
+        /// <summary>
+        /// A function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="fnc">func to call</param>
+        /// <param name="fbk">fallback func</param>
+        /// <param name="flw">func to call afterwards</param>
+        public static FuncWithFallback<In, Out> New<In, Out>(IFunc<In, Out> fnc, IFunc<Exception, Out> fbk, IFunc<Out, Out> flw) =>
+            new FuncWithFallback<In, Out>(fnc, fbk, flw);
+
+        /// <summary>
+        /// A function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="func">func to call</param>
+        /// <param name="fallback">fallback func</param>
+        public static FuncWithFallback<Out> New<Out>(System.Func<Out> func, System.Func<Exception, Out> fallback) =>
+            new FuncWithFallback<Out>(func, fallback);
+
+        /// <summary>
+        /// A function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="func">func to call</param>
+        /// <param name="fallback">fallback func</param>
+        public static FuncWithFallback<Out> New<Out>(System.Func<Out> func, Atoms.IFunc<Exception, Out> fallback) =>
+            new FuncWithFallback<Out>(func, fallback);
+
+        /// <summary>
+        /// A function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="fnc">func to call</param>
+        /// <param name="fbk">fallback func</param>
+        public static FuncWithFallback<Out> New<Out>(IFunc<Out> fnc, IFunc<Exception, Out> fbk) =>
+            new FuncWithFallback<Out>(fnc, fbk);
+
+        /// <summary>
+        /// A function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="func">func to call</param>
+        /// <param name="fallback">fallback func</param>
+        /// <param name="flw">func to call afterwards</param>
+        public static FuncWithFallback<Out> New<Out>(System.Func<Out> func, System.Func<Exception, Out> fallback, System.Func<Out, Out> flw) =>
+            new FuncWithFallback<Out>(func, fallback, flw);
+
+        /// <summary>
+        /// A function that executes a callback if it fails (= an <see cref="Exception"/> occurs).
+        /// </summary>
+        /// <param name="fnc">func to call</param>
+        /// <param name="fbk">fallback func</param>
+        /// <param name="flw">func to call afterwards</param>
+        public static FuncWithFallback<Out> New<Out>(IFunc<Out> fnc, IFunc<Exception, Out> fbk, IFunc<Out, Out> flw) =>
+            new FuncWithFallback<Out>(fnc, fbk, flw);
+
     }
 }

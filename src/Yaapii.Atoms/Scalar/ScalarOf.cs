@@ -41,6 +41,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="src">func to cache result from</param>
         public ScalarOf(T src) : this(new Live<T>(src))
         { }
+        public static ScalarOf<T> New(T src) => new ScalarOf<T>(src);
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
@@ -48,6 +49,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="src">func to cache result from</param>
         public ScalarOf(Func<T> src) : this(new Live<T>(src))
         { }
+        public static ScalarOf<T> New(Func<T> src) => new ScalarOf<T>(src);
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
@@ -55,6 +57,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="src">scalar to cache result from</param>
         public ScalarOf(IScalar<T> src) : this(src, input => false)
         { }
+        public static ScalarOf<T> New(IScalar<T> src) => new ScalarOf<T>(src);
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
@@ -63,6 +66,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="shouldReload">reload condition func</param>
         public ScalarOf(Func<T> srcFunc, Func<T, bool> shouldReload) : this(new Live<T>(srcFunc), shouldReload)
         { }
+        public static ScalarOf<T> New(Func<T> srcFunc, Func<T, bool> shouldReload) => new ScalarOf<T>(srcFunc, shouldReload);
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
@@ -71,6 +75,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="shouldReload">reload condition func</param>
         public ScalarOf(IFunc<T> srcFunc, Func<T, bool> shouldReload) : this(new Live<T>(srcFunc), shouldReload)
         { }
+        public static ScalarOf<T> New(IFunc<T> srcFunc, Func<T, bool> shouldReload) => new ScalarOf<T>(srcFunc, shouldReload);
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
@@ -84,6 +89,7 @@ namespace Yaapii.Atoms.Scalar
             this.cache = new T[1];
             this.filled = new bool[1];
         }
+        public static ScalarOf<T> New(IScalar<T> src, Func<T, bool> shouldReload) => new ScalarOf<T>(src, shouldReload);
 
         /// <summary>
         /// Get the value.
@@ -101,6 +107,6 @@ namespace Yaapii.Atoms.Scalar
                 this.cache[0] = this.origin.Value();
             }
             return this.cache[0];
-        }
+        }        
     }
 }

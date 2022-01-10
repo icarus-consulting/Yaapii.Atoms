@@ -208,6 +208,146 @@ namespace Yaapii.Atoms.Map
             input, false
         )
         { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public static MapOf<Value> New<Value>(KeyValuePair<string, Value> entry, params KeyValuePair<string, Value>[] more)
+            => new MapOf<Value>(entry, more);
+
+        /// <summary>
+        /// A map by taking the given entries.
+        /// </summary>
+        /// <param name="entries">enumerator of KeyValuePairs</param>
+        public static MapOf<Value> New<Value>(IEnumerator<KeyValuePair<string, Value>> entries)
+            => new MapOf<Value>(entries);
+
+        /// <summary>
+        /// A map from the given IKvps.
+        /// </summary>
+        public static MapOf<Value> New<Value>(IKvp<Value> entry, params IKvp<Value>[] more)
+            => new MapOf<Value>(entry, more);
+
+        /// <summary>
+        /// A map from the given key value pairs.
+        /// </summary>
+        /// <param name="entries">enumerable of kvps</param>
+        /// <param name="rejectBuildingAllValues">if you have KVPs with value functions, it is by default prevented to build all values by getting the enumerator. You can deactivate that here.</param>
+        public static MapOf<Value> New<Value>(IEnumerable<IKvp<Value>> entries, bool rejectBuildingAllValues = true)
+            => new MapOf<Value>(entries, rejectBuildingAllValues);
+
+        /// <summary>
+        /// A map from another map.
+        /// </summary>
+        /// <param name="entries">enumerable of entries</param>
+        public static MapOf<Value> New<Value>(IDictionary<string, Value> entries)
+            => new MapOf<Value>(entries);
+
+        /// <summary>
+        /// A map from the given entries.
+        /// </summary>
+        /// <param name="entries">enumerable of entries</param>
+        public static MapOf<Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> entries)
+            => new MapOf<Value>(entries);
+
+        /// <summary>
+        /// A map from the given inputs.
+        /// </summary>
+        /// <param name="inputs">inputs</param>
+        public static MapOf<Value> New<Value>(params IMapInput<Value>[] inputs)
+            => new MapOf<Value>(inputs);
+
+        /// <summary>
+        /// A map from the given inputs.
+        /// </summary>
+        /// <param name="inputs">enumerable of map inputs</param>
+        public static MapOf<Value> New<Value>(IEnumerable<IMapInput<Value>> inputs)
+            => new MapOf<Value>(inputs);
+
+        /// <summary>
+        /// A map from the given dictionary.
+        /// </summary>
+        /// <param name="input">input dictionary</param>
+        public static MapOf<Value> New<Value>(Func<IDictionary<string, Value>> input)
+            => new MapOf<Value>(input);
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public static MapOf<Key, Value> New<Key, Value>(KeyValuePair<Key, Value> item, params KeyValuePair<Key, Value>[] more)
+            => new MapOf<Key, Value>(item, more);
+
+        /// <summary>
+        /// A map from the given KeyValuePairs and appends them to the given Dictionary.
+        /// </summary>
+        /// <param name="src">source dictionary</param>
+        /// <param name="list">KeyValuePairs to append</param>
+        public static MapOf<Key, Value> New<Key, Value>(IDictionary<Key, Value> src, params KeyValuePair<Key, Value>[] list)
+            => new MapOf<Key, Value>(src, list);
+
+        /// <summary>
+        /// A map by merging the given KeyValuePairs to the given Dictionary.
+        /// </summary>
+        /// <param name="src"></param>
+        /// <param name="list"></param>
+        public static MapOf<Key, Value> New<Key, Value>(IDictionary<Key, Value> src, IEnumerable<KeyValuePair<Key, Value>> list)
+            => new MapOf<Key, Value>(src, list);
+
+        /// <summary>
+        /// A map by taking the given entries.
+        /// </summary>
+        /// <param name="entries">enumerator of KeyValuePairs</param>
+        public static MapOf<Key, Value> New<Key, Value>(IEnumerator<KeyValuePair<Key, Value>> entries)
+            => new MapOf<Key, Value>(entries);
+
+        /// <summary>
+        /// A map from the given key value pairs.
+        /// </summary>
+        public static MapOf<Key, Value> New<Key, Value>(IKvp<Key, Value> entry, params IKvp<Key, Value>[] more)
+            => new MapOf<Key, Value>(entry, more);
+
+        /// <summary>
+        /// A map from the given key value pairs.
+        /// </summary>
+        /// <param name="entries">enumerable of kvps</param>
+        /// <param name="rejectBuildingAllValues">if you have KVPs with value functions, it is by default prevented to build all values by getting the enumerator. You can deactivate that here.</param>
+        public static MapOf<Key, Value> New<Key, Value>(IEnumerable<IKvp<Key, Value>> entries, bool rejectBuildingAllValues = true)
+            => new MapOf<Key, Value>(entries, rejectBuildingAllValues);
+
+        /// <summary>
+        /// A map from another map.
+        /// </summary>
+        /// <param name="entries">enumerable of entries</param>
+        public static MapOf<Key, Value> New<Key, Value>(IDictionary<Key, Value> entries)
+            => new MapOf<Key, Value>(entries);
+
+        /// <summary>
+        /// A map from the given entries.
+        /// </summary>
+        /// <param name="entries">enumerable of entries</param>
+        public static MapOf<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> entries)
+            => new MapOf<Key, Value>(entries);
+
+        /// <summary>
+        /// A map from the given inputs.
+        /// </summary>
+        /// <param name="inputs">inputs</param>
+        public static MapOf<Key, Value> New<Key, Value>(params IMapInput<Key, Value>[] inputs)
+            => new MapOf<Key, Value>(inputs);
+
+        /// <summary>
+        /// A map from the given inputs.
+        /// </summary>
+        /// <param name="inputs">enumerable of map inputs</param>
+        public static MapOf<Key, Value> New<Key, Value>(IEnumerable<IMapInput<Key, Value>> inputs)
+            => new MapOf<Key, Value>(inputs);
+
+        /// <summary>
+        /// A map from the given dictionary.
+        /// </summary>
+        /// <param name="input">input dictionary</param>
+        public static MapOf<Key, Value> New<Key, Value>(Func<IDictionary<Key, Value>> input)
+            => new MapOf<Key, Value>(input);
     }
 
     /// <summary>
@@ -318,6 +458,7 @@ namespace Yaapii.Atoms.Map
             input, false
         )
         { }
+
     }
 
     /// <summary>

@@ -137,5 +137,35 @@ namespace Yaapii.Atoms.Scalar
                 return result;
             })
         { }
+
+        /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
+        /// <param name="func"> the condition to apply </param>
+        /// <param name="src"> list of items </param>
+        public static And<In> New<In>(Func<In, bool> func, params In[] src)
+            => new And<In>(func, src);
+
+        /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
+        /// <param name="func"> the condition to apply </param>
+        /// <param name="src"> list of items </param>
+        public static And<In> New<In>(Func<In, bool> func, IEnumerable<In> src)
+            => new And<In>(func, src);
+
+        /// <summary> Logical and. Returns true if all calls to <see cref="IFunc{In, Out}"/> were true. </summary>
+        /// <param name="func"> the condition to apply </param>
+        /// <param name="src"> list of items </param>
+        public static And<In> New<In>(IFunc<In, Boolean> func, params In[] src)
+            => new And<In>(func, src);
+
+        /// <summary> ctor </summary>
+        /// <param name="func"> the condition to apply </param>
+        /// <param name="src"> list of items </param>
+        public static And<In> New<In>(IFunc<In, Boolean> func, IEnumerable<In> src)
+            => new And<In>(func, src);
+
+        /// <summary> True if all functions return true with given input value </summary>
+        /// <param name="value"> Input value wich will executed by all given functions </param>
+        /// <param name="functions"> Functions wich will executed with given input value </param>
+        public static And<In> New<In>(In value, params Func<In, bool>[] functions)
+            => new And<In>(value, functions);
     }
 }

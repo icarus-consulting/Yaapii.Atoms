@@ -217,4 +217,116 @@ namespace Yaapii.Atoms.Enumerable
         )
         { }
     }
+
+    public sealed class ItemAt
+    {
+        /// <summary>
+        /// First element in a <see cref="IEnumerable{T}"/> with given Exception thrwon on fallback
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="ex"></param>
+        public static ItemAt<T> New<T>(IEnumerable<T> source, Exception ex)
+            => new ItemAt<T>(source, ex);
+
+        /// <summary>
+        /// Element at position in <see cref="IEnumerable{T}"/> with given Exception thrown on fallback
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="position"></param>
+        /// <param name="ex"></param>
+        public static ItemAt<T> New<T>(IEnumerable<T> source, int position, Exception ex)
+            => new ItemAt<T>(source, position, ex);
+
+        /// <summary>
+        /// First element in a <see cref="IEnumerable{T}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        public static ItemAt<T> New<T>(IEnumerable<T> source)
+            => new ItemAt<T>(source);
+
+        /// <summary>
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback value.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="fallback">fallback func</param>
+        public static ItemAt<T> New<T>(IEnumerable<T> source, T fallback)
+            => new ItemAt<T>(source, fallback);
+
+        /// <summary>
+        /// Element at a position in a <see cref="IEnumerable{T}"/> with a fallback value.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="position">position</param>
+        /// <param name="fallback">fallback func</param>
+        public static ItemAt<T> New<T>(IEnumerable<T> source, int position, T fallback)
+            => new ItemAt<T>(source, position, fallback);
+
+        /// <summary>
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">soruce enum</param>
+        /// <param name="fallback">fallback value</param>
+        public static ItemAt<T> New<T>(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+            => new ItemAt<T>(source, fallback);
+
+        /// <summary>
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">soruce enum</param>
+        /// <param name="fallback">fallback value</param>
+        public static ItemAt<T> New<T>(IEnumerable<T> source, Func<IEnumerable<T>, T> fallback)
+            => new ItemAt<T>(source, fallback);
+
+        /// <summary>
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">soruce enum</param>
+        /// <param name="fallback">fallback value</param>
+        public static ItemAt<T> New<T>(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
+            => new ItemAt<T>(source, fallback);
+
+        /// <summary>
+        /// Element from position in a <see cref="IEnumerable{T}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="position">position of item</param>
+        public static ItemAt<T> New<T>(IEnumerable<T> source, int position)
+            => new ItemAt<T>(source, position);
+
+        /// <summary>
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="position">position of item</param>
+        /// <param name="fallback">fallback func</param>
+        public static ItemAt<T> New<T>(IEnumerable<T> source, int position, IFunc<IEnumerable<T>, T> fallback)
+            => new ItemAt<T>(source, position, fallback);
+
+        /// <summary>
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="position">position of item</param>
+        /// <param name="fallback">fallback func</param>
+        public static ItemAt<T> New<T>(IEnumerable<T> source, int position, Func<IEnumerable<T>, T> fallback)
+            => new ItemAt<T>(source, position, fallback);
+
+        /// <summary>
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="position">position of item</param>
+        /// <param name="fallback">fallback func</param>
+        public static ItemAt<T> New<T>(IEnumerable<T> source, int position, Func<Exception, IEnumerable<T>, T> fallback)
+            => new ItemAt<T>(source, position, fallback);
+
+        /// <summary>
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// </summary>
+        /// <param name="source">source enum</param>
+        /// <param name="position">position of item</param>
+        /// <param name="fallback">fallback func</param>
+        public static ItemAt<T> New<T>(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+            => new ItemAt<T>(source, position, fallback);
+    }
 }

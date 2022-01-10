@@ -116,5 +116,19 @@ namespace Yaapii.Atoms.Func
             }
         }
 
+        /// <summary>
+        /// Proc that is threadsafe.
+        /// </summary>
+        /// <param name="act">proc to make threadsafe</param>
+        public static SyncAction<In> New<In>(IAction<In> act)
+            => new SyncAction<In>(act);
+
+        /// <summary>
+        /// Proc that is threadsafe.
+        /// </summary>
+        /// <param name="act">proc to make threadsafe</param>
+        /// <param name="lck">object to lock threadsafe</param>
+        public static SyncAction<In> New<In>(IAction<In> act, object lck)
+            => new SyncAction<In>(act, lck);
     }
 }

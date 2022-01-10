@@ -24,9 +24,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-#pragma warning disable NoProperties // No Properties
-#pragma warning disable CS1591
-
 namespace Yaapii.Atoms.Enumerator
 {
     /// <summary>
@@ -116,5 +113,42 @@ namespace Yaapii.Atoms.Enumerator
         public void Dispose()
         { }
     }
+
+    /// <summary>
+    /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given function.
+    /// </summary>
+    public static class Mapped
+    {
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
+        /// </summary>
+        /// <param name="src">source enumerable</param>
+        /// <param name="fnc">mapping function</param>
+        public static Mapped<In, Out> New<In, Out>(IEnumerator<In> src, IFunc<In, Out> fnc) =>
+            new Mapped<In, Out>(src, fnc);
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Index, Out}"/> function with index.
+        /// </summary>
+        /// <param name="src">source enumerable</param>
+        /// <param name="fnc">mapping function</param>
+        public static Mapped<In, Out> New<In, Out>(IEnumerator<In> src, Func<In, Out> fnc) =>
+            new Mapped<In, Out>(src, fnc);
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
+        /// </summary>
+        /// <param name="src">source enumerable</param>
+        /// <param name="fnc">mapping function</param>
+        public static Mapped<In, Out> New<In, Out>(IEnumerator<In> src, IBiFunc<In, int, Out> fnc) =>
+            new Mapped<In, Out>(src, fnc);
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Index, Out}"/> function with index.
+        /// </summary>
+        /// <param name="src">source enumerable</param>
+        /// <param name="fnc">mapping function</param>
+        public static Mapped<In, Out> New<In, Out>(IEnumerator<In> src, Func<In, int, Out> fnc) =>
+            new Mapped<In, Out>(src, fnc);
+    }
 }
-#pragma warning restore NoProperties // No Properties

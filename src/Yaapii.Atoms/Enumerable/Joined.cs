@@ -148,4 +148,43 @@ namespace Yaapii.Atoms.Enumerable
         )
         { }
     }
+
+    /// <summary>
+    /// Multiple <see cref="IEnumerable{T}"/> joined together.
+    /// </summary>
+    public static class Joined
+    {
+        /// <summary>
+        /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
+        /// </summary>
+        /// <param name="lst">enumerable of items to join</param>
+        /// <param name="items">array of items to join</param>
+        public static Joined<T> New<T>(T first, T second, IEnumerable<T> lst, params T[] items) => new Joined<T>(first, second, lst, items);
+
+        /// <summary>
+        /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
+        /// </summary>
+        /// <param name="lst">enumerable of items to join</param>
+        /// <param name="items">array of items to join</param>
+        public static Joined<T> New<T>(T first, IEnumerable<T> lst, params T[] items) => new Joined<T>(first, lst, items);
+
+        /// <summary>
+        /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
+        /// </summary>
+        /// <param name="lst">enumerable of items to join</param>
+        /// <param name="items">array of items to join</param>
+        public static Joined<T> New<T>(IEnumerable<T> lst, params T[] items) => new Joined<T>(lst, items);
+
+        /// <summary>
+        /// Multiple <see cref="IEnumerable{T}"/> joined together.
+        /// </summary>
+        /// <param name="items">enumerables to join</param>
+        public static Joined<T> New<T>(params IEnumerable<T>[] items) => new Joined<T>(items);
+
+        /// <summary>
+        /// Multiple <see cref="IEnumerable{T}"/> joined together.
+        /// </summary>
+        /// <param name="items">enumerables to join</param>
+        public static Joined<T> New<T>(IEnumerable<IEnumerable<T>> items) => new Joined<T>(items);
+    }
 }

@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.IO.Tests
                     new TeeInputStream(
                         new MemoryStream(
                             new BytesOf(
-                                new Joined(",",
+                                new Text.Joined(",",
                                     new HeadOf<string>(
                                         new Endless<string>("Hello World"),
                                         1000

@@ -75,4 +75,36 @@ namespace Yaapii.Atoms.List
         )
         { }
     }
+    public static class Joined
+    {
+        /// <summary>
+        /// Multiple <see cref="IList{T}"/> joined together
+        /// </summary>
+        /// <param name="origin">a list to join</param>
+        /// <param name="src">lists to join</param>
+        public static Joined<T> New<T>(IList<T> origin, params IList<T>[] src)
+            => new Joined<T>(origin, src);
+
+        /// <summary>
+        /// Multiple <see cref="IList{T}"/> joined together
+        /// </summary>
+        /// <param name="src">The lists to join together</param>
+        /// <param name="origin">a list to join</param>
+        public static Joined<T> New<T>(IList<T> origin, params T[] src)
+            => new Joined<T>(origin, src);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">The lists to join together</param>
+        public static Joined<T> New<T>(params IList<T>[] src)
+            => new Joined<T>(src);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">The lists to join together</param>
+        public static Joined<T> New<T>(IEnumerable<IList<T>> src)
+            => new Joined<T>(src);
+    }
 }

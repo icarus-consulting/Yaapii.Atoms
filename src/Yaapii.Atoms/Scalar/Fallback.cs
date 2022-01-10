@@ -69,4 +69,32 @@ namespace Yaapii.Atoms.Scalar
             })
         { }
     }
+
+    public static class Fallback
+    {
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="origin">Scalar which can fail</param>
+        /// <param name="fallback">Fallback if scalar fails</param>
+        public static Fallback<Out> New<Out>(IScalar<Out> origin, Out fallback)
+            => new Fallback<Out>(origin, fallback);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="origin">Scalar which can fail</param>
+        /// <param name="fallback">Fallback if scalar fails</param>
+        public static Fallback<Out> New<Out>(IScalar<Out> origin, Func<Out> fallback)
+            => new Fallback<Out>(origin, fallback);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="origin">scalar which can fail</param>
+        /// <param name="fallback">fallback to apply when fails</param>
+        public static Fallback<Out> New<Out>(IScalar<Out> origin, Func<Exception, Out> fallback)
+            => new Fallback<Out>(origin, fallback);
+    }
 }

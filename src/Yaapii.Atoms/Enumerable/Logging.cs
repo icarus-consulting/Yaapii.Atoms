@@ -67,4 +67,23 @@ namespace Yaapii.Atoms.Enumerable
             return this.GetEnumerator();
         }
     }
+
+    /// <summary>
+    /// Enumerable that logs object T when it is iterated.
+    /// T is logged right after the underlying enumerator is moved.
+    /// </summary>
+    public static class Logging
+    {
+        /// <summary>
+        /// Enumerable that logs object T to debug console when it is iterated.
+        /// T is logged right after the underlying enumerator is moved.
+        /// </summary>
+        public static Logging<T> New<T>(IEnumerable<T> origin) => new Logging<T>(origin);
+
+        /// <summary>
+        /// Enumerable that logs object T when it is iterated.
+        /// T is logged right after the underlying enumerator is moved.
+        /// </summary>
+        public static Logging<T> New<T>(IEnumerable<T> origin, Action<T> log) => new Logging<T>(origin, log);
+    }
 }

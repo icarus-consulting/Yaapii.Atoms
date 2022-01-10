@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Enumerator.Tests
         {
             Assert.Equal(
                 "A B C D E F",
-                new Joined(
+                new Text.Joined(
                     " ",
                     new ManyOf<string>(
                         new Sorted<string>(

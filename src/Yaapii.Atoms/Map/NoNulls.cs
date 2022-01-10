@@ -193,4 +193,14 @@ namespace Yaapii.Atoms.Map
             return map.GetEnumerator();
         }
     }
+
+    public static class NoNulls
+    {
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="map">IDictionary</param>
+        public static NoNulls<Key, Value> New<Key, Value>(IDictionary<Key, Value> map)
+            => new NoNulls<Key, Value>(map);
+    }
 }

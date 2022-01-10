@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Scalar
     /// <typeparam name="In"></typeparam>
     public sealed class Or<In> : IScalar<Boolean>
     {
-        private readonly Or _or;
+        private readonly Or or;
 
         /// <summary>
         /// Logical or. Returns true if any calls to <see cref="Func{In, Out}"/>
@@ -110,7 +110,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="or">Non generic or</param>
         private Or(Or or)
         {
-            _or = or;
+            this.or = or;
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Yaapii.Atoms.Scalar
         /// <returns>the value</returns>
         public Boolean Value()
         {
-            return _or.Value();
+            return or.Value();
         }
     }
 
@@ -194,5 +194,52 @@ namespace Yaapii.Atoms.Scalar
                 return foundTrue;
             })
         { }
+
+        /// <summary>
+        /// Logical or. Returns true if any calls to <see cref="Func{In, Out}"/>
+        /// were true.
+        /// </summary>
+        /// <param name="func">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public static Or<In> New<In>(Func<In, bool> func, params In[] src)
+            => new Or<In>(func, src);
+
+        /// <summary>
+        /// Logical or. Returns true if any calls to <see cref="Func{In, Out}"/>
+        /// were true.
+        /// </summary>
+        /// <param name="func">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public static Or<In> New<In>(Func<In, bool> func, IEnumerable<In> src)
+            => new Or<In>(func, src);
+
+        /// <summary>
+        /// Logical or. Returns true if any calls to <see cref="IFunc{In, Out}"/>
+        /// were true.
+        /// </summary>
+        /// <param name="func">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public static Or<In> New<In>(IFunc<In, Boolean> func, params In[] src)
+            => new Or<In>(func, src);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="func">the condition to apply</param>
+        /// <param name="src">list of items</param>
+        public static Or<In> New<In>(IFunc<In, Boolean> func, IEnumerable<In> src)
+            => new Or<In>(func, src);
+
+        /// <summary>
+        /// True if any functions return true with given input value
+        /// </summary>
+        /// <param name="value">
+        /// Input value wich will executed by all given functions
+        /// </param>
+        /// <param name="functions">
+        /// Functions wich will executed with given input value
+        /// </param>
+        public static Or<In> New<In>(In value, params Func<In, bool>[] functions)
+            => new Or<In>(value, functions);
     }
 }

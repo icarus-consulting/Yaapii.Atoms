@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <see cref="IEnumerable{T}"/> whose items are reduced to one item using the given function.
     /// </summary>
     /// <typeparam name="T">type of elements in a list to reduce</typeparam>
-    public sealed class Reduced<T> : IScalar<T>
+    public sealed class Reduced<T> : ScalarEnvelope<T>
     {
         private readonly ScalarOf<T> result;
 
@@ -50,30 +50,39 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="elements">enumerable to reduce</param>
         /// <param name="fnc">reducing function</param>
-        public Reduced(IEnumerable<T> elements, Func<T, T, T> fnc)
-        {
-            this.result =
-                new ScalarOf<T>(() =>
-                {
-                    var enm = elements.GetEnumerator();
+        public Reduced(IEnumerable<T> elements, Func<T, T, T> fnc) : base(() =>
+            {
+                var enm = elements.GetEnumerator();
 
-                    if (!enm.MoveNext()) throw new ArgumentException($"Cannot reduce, at least one element is needed but the enumerable is empty.");
-                    T result = enm.Current;
-                    while (enm.MoveNext())
-                    {
-                        result = fnc.Invoke(result, enm.Current);
-                    }
-                    return result;
-                });
-        }
+                if (!enm.MoveNext()) throw new ArgumentException($"Cannot reduce, at least one element is needed but the enumerable is empty.");
+                T result = enm.Current;
+                while (enm.MoveNext())
+                {
+                    result = fnc.Invoke(result, enm.Current);
+                }
+                return result;
+            }
+        )
+        { }
+    }
+
+    /// <summary>
+    /// <see cref="IEnumerable{T}"/> whose items are reduced to one item using the given function.
+    /// </summary>
+    public static class Reduced
+    {
+        /// <summary>
+        /// <see cref="IEnumerable{Element}"/> whose items are folded to one item using the given function.
+        /// </summary>
+        /// <param name="elements">enumerable to reduce</param>
+        /// <param name="fnc">reducing function</param>
+        public static Reduced<T> New<T>(IEnumerable<T> elements, IBiFunc<T, T, T> fnc) => new Reduced<T>(elements, fnc);
 
         /// <summary>
-        /// Get the value.
+        /// <see cref="IEnumerable{Element}"/> whose items are reduced to one item using the given function.
         /// </summary>
-        /// <returns>the value</returns>
-        public T Value()
-        {
-            return this.result.Value();
-        }
+        /// <param name="elements">enumerable to reduce</param>
+        /// <param name="fnc">reducing function</param>
+        public static Reduced<T> New<T>(IEnumerable<T> elements, Func<T, T, T> fnc) => new Reduced<T>(elements, fnc);
     }
 }

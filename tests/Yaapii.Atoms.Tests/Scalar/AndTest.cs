@@ -88,7 +88,7 @@ namespace Yaapii.Atoms.Scalar.Tests
                 ).Value() == true);
 
             Assert.True(
-                new Joined(" ", list).AsString() == "hello world",
+                new Text.Joined(" ", list).AsString() == "hello world",
             "Can't iterate a list with a procedure");
         }
 
