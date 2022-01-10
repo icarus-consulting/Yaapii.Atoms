@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright(c) 2021 ICARUS Consulting GmbH
+// Copyright(c) 2022 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -108,7 +108,7 @@ namespace Yaapii.Atoms.List
                     }
                     var enumerator = this.origin();
                     var idx = -1;
-                    while (index >= 0 && idx < index && enumerator.MoveNext() )
+                    while (index >= 0 && idx < index && enumerator.MoveNext())
                     {
                         idx++;
                     }
