@@ -34,8 +34,6 @@ namespace Yaapii.Atoms.Enumerable
     /// </summary>
     public sealed class LengthOf : ScalarEnvelope<Int32>
     {
-        private readonly ScalarOf<Int32> result;
-
         /// <summary>
         /// Length of an <see cref="IEnumerable"/>
         /// </summary>
