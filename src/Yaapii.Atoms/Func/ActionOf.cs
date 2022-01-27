@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Func
         /// ctor
         /// </summary>
         /// <param name="action">action to execute</param>
-        public static ActionOf<T> New<T>(Action<T> action) => new ActionOf<T>(action);
+        public static IAction<T> New<T>(Action<T> action) => new ActionOf<T>(action);
     }
 
     /// <summary>

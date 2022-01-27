@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Collection
 
     public static class LiveCollection
     {
-        public static LiveCollection<T> New<T>(IEnumerator<T> src) => new LiveCollection<T>(src);
-        public static LiveCollection<T> New<T>(IEnumerable<T> src) => new LiveCollection<T>(src);
+        public static ICollection<T> New<T>(IEnumerator<T> src) => new LiveCollection<T>(src);
+        public static ICollection<T> New<T>(IEnumerable<T> src) => new LiveCollection<T>(src);
     }
 }

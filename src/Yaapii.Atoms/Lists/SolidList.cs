@@ -81,28 +81,28 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="items">items to decorate</param>
-        public static SolidList<T> New<T>(params T[] items)
+        public static IList<T> New<T>(params T[] items)
             => new SolidList<T>(items);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="items">items to decorate</param>
-        public static SolidList<T> New<T>(IEnumerable<T> items)
+        public static IList<T> New<T>(IEnumerable<T> items)
             => new SolidList<T>(items);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="enumerator">items to decorate</param>
-        public static SolidList<T> New<T>(IEnumerator<T> enumerator)
+        public static IList<T> New<T>(IEnumerator<T> enumerator)
             => new SolidList<T>(enumerator);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="list">list to decorate</param>
-        public static SolidList<T> New<T>(ICollection<T> list)
+        public static IList<T> New<T>(ICollection<T> list)
             => new SolidList<T>(list);
     }
 }

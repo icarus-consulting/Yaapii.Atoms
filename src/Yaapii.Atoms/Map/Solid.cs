@@ -129,21 +129,21 @@ namespace Yaapii.Atoms.Map
         /// A map from the given Tuple pairs.
         /// </summary>
         /// <param name="pairs">Pairs of mappings</param>
-        public static Solid<Key, Value> New<Key, Value>(Tuple<Key, Value>[] pairs)
+        public static IDictionary<Key, Value> New<Key, Value>(Tuple<Key, Value>[] pairs)
             => new Solid<Key, Value>(pairs);
 
         /// <summary>
         /// A map from the given Tuple pairs.
         /// </summary>
         /// <param name="pairs">Pairs of mappings</param>
-        public static Solid<Key, Value> New<Key, Value>(IEnumerable<Tuple<Key, Value>> pairs)
+        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<Tuple<Key, Value>> pairs)
             => new Solid<Key, Value>(pairs);
 
         /// <summary>
         /// Makes a map from the given values.
         /// </summary>
         /// <param name="list"></param>
-        public static Solid<Key, Value> New<Key, Value>(params KeyValuePair<Key, Value>[] list)
+        public static IDictionary<Key, Value> New<Key, Value>(params KeyValuePair<Key, Value>[] list)
             => new Solid<Key, Value>(list);
 
         /// <summary>
@@ -151,21 +151,21 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="map">map to merge to</param>
         /// <param name="list">list of values to merge</param>
-        public static Solid<Key, Value> New<Key, Value>(IDictionary<Key, Value> map, params KeyValuePair<Key, Value>[] list)
+        public static IDictionary<Key, Value> New<Key, Value>(IDictionary<Key, Value> map, params KeyValuePair<Key, Value>[] list)
             => new Solid<Key, Value>(list);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="list">List of values</param>        
-        public static Solid<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> list)
+        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> list)
             => new Solid<Key, Value>(list);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="list">List of values</param>
-        public static Solid<Key, Value> New<Key, Value>(IEnumerator<KeyValuePair<Key, Value>> list)
+        public static IDictionary<Key, Value> New<Key, Value>(IEnumerator<KeyValuePair<Key, Value>> list)
             => new Solid<Key, Value>(list);
 
         /// <summary>
@@ -173,14 +173,14 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="map">map to merge to</param>
         /// <param name="list">list of values to merge</param>
-        public static Solid<Key, Value> New<Key, Value>(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list)
+        public static IDictionary<Key, Value> New<Key, Value>(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list)
             => new Solid<Key, Value>(list);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="map"></param>
-        public static Solid<Key, Value> New<Key, Value>(IDictionary<Key, Value> map)
+        public static IDictionary<Key, Value> New<Key, Value>(IDictionary<Key, Value> map)
             => new Solid<Key, Value>(map);
     }
 }

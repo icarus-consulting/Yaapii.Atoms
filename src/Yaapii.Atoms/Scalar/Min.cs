@@ -104,7 +104,7 @@ namespace Yaapii.Atoms.Enumerable
         /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items"><see cref="Func{TResult}"/> functions which retrieve items to compare</param>
-        public static Min<T> New<T>(params Func<T>[] items)
+        public static IScalar<T> New<T>(params Func<T>[] items)
             where T : IComparable<T>
             => new Min<T>(items);
 
@@ -112,7 +112,7 @@ namespace Yaapii.Atoms.Enumerable
         /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">items to compare</param>
-        public static Min<T> New<T>(IEnumerable<T> items)
+        public static IScalar<T> New<T>(IEnumerable<T> items)
             where T : IComparable<T>
             => new Min<T>(items);
 
@@ -120,7 +120,7 @@ namespace Yaapii.Atoms.Enumerable
         /// Find the smallest item in the given items
         /// </summary>
         /// <param name="items">items to compare</param>
-        public static Min<T> New<T>(params T[] items)
+        public static IScalar<T> New<T>(params T[] items)
             where T : IComparable<T>
             => new Min<T>(items);
 
@@ -128,7 +128,7 @@ namespace Yaapii.Atoms.Enumerable
         /// Find the smallest item in the given scalars.
         /// </summary>
         /// <param name="items">items to compare</param>
-        public static Min<T> New<T>(params IScalar<T>[] items)
+        public static IScalar<T> New<T>(params IScalar<T>[] items)
             where T : IComparable<T>
             => new Min<T>(items);
 
@@ -136,7 +136,7 @@ namespace Yaapii.Atoms.Enumerable
         /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">items to compare</param>
-        public static Min<T> New<T>(IEnumerable<IScalar<T>> items)
+        public static IScalar<T> New<T>(IEnumerable<IScalar<T>> items)
             where T : IComparable<T>
             => new Min<T>(items);
     }

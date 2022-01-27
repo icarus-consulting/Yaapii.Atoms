@@ -66,11 +66,11 @@ namespace Yaapii.Atoms.Collection
 
     public static class CollectionOf
     {
-        public static CollectionOf<T> New<T>(params T[] array) => new CollectionOf<T>(array);
+        public static ICollection<T> New<T>(params T[] array) => new CollectionOf<T>(array);
 
-        public static CollectionOf<T> New<T>(IEnumerator<T> src) => new CollectionOf<T>(src);
+        public static ICollection<T> New<T>(IEnumerator<T> src) => new CollectionOf<T>(src);
 
-        public static CollectionOf<T> New<T>(IEnumerable<T> src) => new CollectionOf<T>(src);
+        public static ICollection<T> New<T>(IEnumerable<T> src) => new CollectionOf<T>(src);
 
     }
 }

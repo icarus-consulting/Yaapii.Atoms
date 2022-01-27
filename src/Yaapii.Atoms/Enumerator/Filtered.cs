@@ -131,7 +131,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public static Filtered<T> New<T>(IEnumerator<T> src, IFunc<T, Boolean> fnc) =>
+        public static IEnumerator<T> New<T>(IEnumerator<T> src, IFunc<T, Boolean> fnc) =>
             new Filtered<T>(src, fnc);
 
 
@@ -140,7 +140,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public static Filtered<T> New<T>(IEnumerator<T> src, Func<T, Boolean> fnc) =>
+        public static IEnumerator<T> New<T>(IEnumerator<T> src, Func<T, Boolean> fnc) =>
             new Filtered<T>(src, fnc);
     }
 }

@@ -122,14 +122,14 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source"></param>
         /// <param name="ex"></param>
-        public static LastOf<T> New<T>(IEnumerable<T> source, Exception ex)
+        public static IScalar<T> New<T>(IEnumerable<T> source, Exception ex)
             => new LastOf<T>(source, ex);
 
         /// <summary>
         /// Last element in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
-        public static LastOf<T> New<T>(IEnumerable<T> source)
+        public static IScalar<T> New<T>(IEnumerable<T> source)
             => new LastOf<T>(source);
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static LastOf<T> New<T>(IEnumerable<T> source, T fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, T fallback)
             => new LastOf<T>(source, fallback);
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static LastOf<T> New<T>(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
             => new LastOf<T>(source, fallback);
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static LastOf<T> New<T>(IEnumerable<T> source, Func<Exception, IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, Func<Exception, IEnumerable<T>, T> fallback)
             => new LastOf<T>(source, fallback);
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static LastOf<T> New<T>(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback)
             => new LastOf<T>(source, fallback);
     }
 }

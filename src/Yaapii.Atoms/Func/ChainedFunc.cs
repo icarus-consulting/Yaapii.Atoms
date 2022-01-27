@@ -137,7 +137,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="before">first function</param>
         /// <param name="after">last function</param>
-        public static ChainedFunc<In, Between, Out> New<In, Between, Out>(System.Func<In, Between> before, System.Func<Between, Out> after)
+        public static IFunc<In, Out> New<In, Between, Out>(System.Func<In, Between> before, System.Func<Between, Out> after)
             => new ChainedFunc<In, Between, Out>(before, after);
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="before">first function</param>
         /// <param name="after">last function</param>
-        public static ChainedFunc<In, Between, Out> New<In, Between, Out>(IFunc<In, Between> before, IFunc<Between, Out> after)
+        public static IFunc<In, Out> New<In, Between, Out>(IFunc<In, Between> before, IFunc<Between, Out> after)
             => new ChainedFunc<In, Between, Out>(before, after);
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Yaapii.Atoms.Func
         /// <param name="before">first function</param>
         /// <param name="funcs">functions to chain</param>
         /// <param name="after">last function</param>
-        public static ChainedFunc<In, Between, Out> New<In, Between, Out>(System.Func<In, Between> before, IEnumerable<IFunc<Between, Between>> funcs, System.Func<Between, Out> after)
+        public static IFunc<In, Out> New<In, Between, Out>(System.Func<In, Between> before, IEnumerable<IFunc<Between, Between>> funcs, System.Func<Between, Out> after)
             => new ChainedFunc<In, Between, Out>(before, funcs, after);
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Yaapii.Atoms.Func
         /// <param name="before">first function</param>
         /// <param name="funcs">functions to chain</param>
         /// <param name="after">last function</param>
-        public static ChainedFunc<In, Between, Out> New<In, Between, Out>(System.Func<In, Between> before, IEnumerable<System.Func<Between, Between>> funcs, System.Func<Between, Out> after)
+        public static IFunc<In, Out> New<In, Between, Out>(System.Func<In, Between> before, IEnumerable<System.Func<Between, Between>> funcs, System.Func<Between, Out> after)
             => new ChainedFunc<In, Between, Out>(before, funcs, after);
 
 
@@ -173,7 +173,7 @@ namespace Yaapii.Atoms.Func
         /// <param name="before">first function</param>
         /// <param name="funcs">functions to chain</param>
         /// <param name="after">last function</param>
-        public static ChainedFunc<In, Between, Out> New<In, Between, Out>(IFunc<In, Between> before, IEnumerable<IFunc<Between, Between>> funcs, IFunc<Between, Out> after)
+        public static IFunc<In, Out> New<In, Between, Out>(IFunc<In, Between> before, IEnumerable<IFunc<Between, Between>> funcs, IFunc<Between, Out> after)
             => new ChainedFunc<In, Between, Out>(before, funcs, after);
     }
 }

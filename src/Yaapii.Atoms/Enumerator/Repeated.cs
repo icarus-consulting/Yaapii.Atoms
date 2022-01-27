@@ -107,13 +107,13 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="elm">element to repeat</param>
         /// <param name="max">how often to repeat</param>
-        public static Repeated<T> New<T>(T elm, int max) => new Repeated<T>(elm, max);
+        public static IEnumerator<T> New<T>(T elm, int max) => new Repeated<T>(elm, max);
 
         /// <summary>
         /// <see cref="IEnumerator{T}"/> which repeats one value multiple times.
         /// </summary>
         /// <param name="elm">element to repeat</param>
         /// <param name="max">how often to repeat</param>
-        public static Repeated<T> New<T>(IScalar<T> elm, int max) => new Repeated<T>(elm, max);
+        public static IEnumerator<T> New<T>(IScalar<T> elm, int max) => new Repeated<T>(elm, max);
     }
 }

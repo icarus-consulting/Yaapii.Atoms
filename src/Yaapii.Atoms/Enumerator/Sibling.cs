@@ -179,7 +179,7 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="src">the enumerator</param>
         /// <param name="item">the item to start with</param>
         /// <param name="fallback">the fallback to return if fails</param>
-        public static Sibling<T> New<T>(IEnumerator<T> src, T item, T fallback)
+        public static IScalar<T> New<T>(IEnumerator<T> src, T item, T fallback)
             where T : IComparable<T>
             => new Sibling<T>(src, item, fallback);
 
@@ -190,7 +190,7 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="item">the item to start with</param>
         /// <param name="pos">position of the neighbour</param>
         /// <param name="fallback">the fallback to return if fails</param>
-        public static Sibling<T> New<T>(IEnumerator<T> src, T item, int pos, T fallback)
+        public static IScalar<T> New<T>(IEnumerator<T> src, T item, int pos, T fallback)
             where T : IComparable<T>
             => new Sibling<T>(src, item, pos, fallback);
 
@@ -201,7 +201,7 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="src">source <see cref="IEnumerable{T}"/></param>
         /// <param name="pos">position</param>
         /// <param name="item">item to start with</param>
-        public static Sibling<T> New<T>(IEnumerator<T> src, T item, int pos)
+        public static IScalar<T> New<T>(IEnumerator<T> src, T item, int pos)
             where T : IComparable<T>
             => new Sibling<T>(src, item, pos);
 
@@ -212,7 +212,7 @@ namespace Yaapii.Atoms.Enumerator
         /// <param name="fbk">fallback function</param>
         /// <param name="pos">position</param>
         /// <param name="item">item to start with</param>
-        public static Sibling<T> New<T>(
+        public static IScalar<T> New<T>(
             IEnumerator<T> src,
             T item,
             int pos,

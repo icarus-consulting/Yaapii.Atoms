@@ -120,14 +120,14 @@ namespace Yaapii.Atoms.Func
         /// Func that caches the result and returns from cache.
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
-        public static StickyFunc<In, Out> New<In, Out>(Func<In, Out> fnc) =>
+        public static IFunc<In, Out> New<In, Out>(Func<In, Out> fnc) =>
             new StickyFunc<In, Out>(fnc);
 
         /// <summary>
         /// Func that caches the result and returns from cache.
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
-        public static StickyFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc) =>
+        public static IFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc) =>
             new StickyFunc<In, Out>(fnc);
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
         /// <param name="reloadCondition">reload condition func</param>
-        public static StickyFunc<In, Out> New<In, Out>(Func<In, Out> fnc, Func<Out, bool> reloadCondition) =>
+        public static IFunc<In, Out> New<In, Out>(Func<In, Out> fnc, Func<Out, bool> reloadCondition) =>
             new StickyFunc<In, Out>(fnc, reloadCondition);
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
         /// <param name="reloadCondition">reload condition func</param>
-        public static StickyFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, Func<Out, bool> reloadCondition) =>
+        public static IFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, Func<Out, bool> reloadCondition) =>
             new StickyFunc<In, Out>(fnc, reloadCondition);
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
         /// <param name="reloadCondition">reload condition func</param>
-        public static StickyFunc<In, Out> New<In, Out>(Func<In, Out> fnc, IFunc<Out, bool> reloadCondition) =>
+        public static IFunc<In, Out> New<In, Out>(Func<In, Out> fnc, IFunc<Out, bool> reloadCondition) =>
             new StickyFunc<In, Out>(fnc, reloadCondition);
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
         /// <param name="reloadCondition">reload condition func</param>
-        public static StickyFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, IFunc<Out, bool> reloadCondition) =>
+        public static IFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, IFunc<Out, bool> reloadCondition) =>
             new StickyFunc<In, Out>(fnc, reloadCondition);
     }
 }

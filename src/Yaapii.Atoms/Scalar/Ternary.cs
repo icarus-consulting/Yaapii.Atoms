@@ -114,7 +114,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static Ternary<In, Out> New<In, Out>(In input, System.Func<In, Boolean> condition, System.Func<In, Out> consequent, System.Func<In, Out> alternative)
+        public static IScalar<Out> New<In, Out>(In input, System.Func<In, Boolean> condition, System.Func<In, Out> consequent, System.Func<In, Out> alternative)
             => new Ternary<In, Out>(input, condition, consequent, alternative);
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static Ternary<In, Out> New<In, Out>(In input, IFunc<In, Boolean> condition, IFunc<In, Out> consequent, IFunc<In, Out> alternative)
+        public static IScalar<Out> New<In, Out>(In input, IFunc<In, Boolean> condition, IFunc<In, Out> consequent, IFunc<In, Out> alternative)
             => new Ternary<In, Out>(input, condition, consequent, alternative);
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static Ternary<In, Out> New<In, Out>(Boolean condition, Out consequent, Out alternative)
+        public static IScalar<Out> New<In, Out>(Boolean condition, Out consequent, Out alternative)
             => new Ternary<In, Out>(condition, consequent, alternative);
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static Ternary<In, Out> New<In, Out>(IScalar<Boolean> condition, Out consequent, Out alternative)
+        public static IScalar<Out> New<In, Out>(IScalar<Boolean> condition, Out consequent, Out alternative)
             => new Ternary<In, Out>(condition, consequent, alternative);
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static Ternary<In, Out> New<In, Out>(IScalar<Boolean> condition, IScalar<Out> consequent, IScalar<Out> alternative)
+        public static IScalar<Out> New<In, Out>(IScalar<Boolean> condition, IScalar<Out> consequent, IScalar<Out> alternative)
             => new Ternary<In, Out>(condition, consequent, alternative);
     }
 }

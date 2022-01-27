@@ -728,7 +728,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(
+        public static IAction<string, In1, In2> New<In1, In2>(
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2
         ) => new ActionSwitch<In1, In2>(
@@ -739,7 +739,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(
+        public static IAction<string, In1, In2> New<In1, In2>(
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2,
             IKvp<Action<In1, In2>> consequence3
@@ -752,7 +752,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(
+        public static IAction<string, In1, In2> New<In1, In2>(
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2,
             IKvp<Action<In1, In2>> consequence3,
@@ -767,7 +767,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(
+        public static IAction<string, In1, In2> New<In1, In2>(
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2,
             IKvp<Action<In1, In2>> consequence3,
@@ -784,7 +784,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(
+        public static IAction<string, In1, In2> New<In1, In2>(
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2,
             IKvp<Action<In1, In2>> consequence3,
@@ -803,7 +803,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(
+        public static IAction<string, In1, In2> New<In1, In2>(
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2,
             IKvp<Action<In1, In2>> consequence3,
@@ -825,7 +825,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(
+        public static IAction<string, In1, In2> New<In1, In2>(
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2,
             IKvp<Action<In1, In2>> consequence3,
@@ -848,7 +848,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(
+        public static IAction<string, In1, In2> New<In1, In2>(
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2,
             Action<string, In1, In2> fallback
@@ -857,7 +857,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(
+        public static IAction<string, In1, In2> New<In1, In2>(
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2,
             IKvp<Action<In1, In2>> consequence3,
@@ -874,7 +874,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(
+        public static IAction<string, In1, In2> New<In1, In2>(
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2,
             IKvp<Action<In1, In2>> consequence3,
@@ -890,7 +890,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(
+        public static IAction<string, In1, In2> New<In1, In2>(
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2,
             IKvp<Action<In1, In2>> consequence3,
@@ -909,7 +909,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(
+        public static IAction<string, In1, In2> New<In1, In2>(
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2,
             IKvp<Action<In1, In2>> consequence3,
@@ -930,7 +930,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(
+        public static IAction<string, In1, In2> New<In1, In2>(
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2,
             IKvp<Action<In1, In2>> consequence3,
@@ -953,7 +953,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(
+        public static IAction<string, In1, In2> New<In1, In2>(
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2,
             IKvp<Action<In1, In2>> consequence3,
@@ -978,19 +978,19 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(params IKvp<Action<In1, In2>>[] consequences) =>
+        public static IAction<string, In1, In2> New<In1, In2>(params IKvp<Action<In1, In2>>[] consequences) =>
             new ActionSwitch<In1, In2>(consequences);
 
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(IEnumerable<IKvp<Action<In1, In2>>> consequences) =>
+        public static IAction<string, In1, In2> New<In1, In2>(IEnumerable<IKvp<Action<In1, In2>>> consequences) =>
             new ActionSwitch<In1, In2>(consequences);
 
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static ActionSwitch<In1, In2> New<In1, In2>(IEnumerable<IKvp<Action<In1, In2>>> consequences, Action<string, In1, In2> fallback) =>
+        public static IAction<string, In1, In2> New<In1, In2>(IEnumerable<IKvp<Action<In1, In2>>> consequences, Action<string, In1, In2> fallback) =>
             new ActionSwitch<In1, In2>(consequences);
     }
 }

@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Func
         /// Function that has two inputs and an output.
         /// </summary>
         /// <param name="func"></param>
-        public static BiFuncOf<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> func) =>
+        public static IBiFunc<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> func) =>
             new BiFuncOf<In1, In2, Out>(func);
     }
 }

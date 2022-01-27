@@ -131,20 +131,20 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        public static BowFunc<T> New<T>(Func<bool> trigger, Action<T> shoot)
+        public static IAction<T> New<T>(Func<bool> trigger, Action<T> shoot)
             => new BowFunc<T>(trigger, shoot);
 
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        public static BowFunc<T> New<T>(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout)
+        public static IAction<T> New<T>(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout)
             => new BowFunc<T>(trigger, prepare, shoot, timeout);
 
 
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        public static BowFunc<T> New<T>(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout, TimeSpan interval)
+        public static IAction<T> New<T>(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout, TimeSpan interval)
             => new BowFunc<T>(trigger, prepare, shoot, timeout, interval);
 
     }

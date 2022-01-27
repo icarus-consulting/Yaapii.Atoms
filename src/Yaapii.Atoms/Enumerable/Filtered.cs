@@ -93,7 +93,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="item1">first item to filter</param>
         /// <param name="item2">secound item to filter</param>
         /// <param name="items">other items to filter</param>
-        public static Filtered<T> New<T>(Func<T, Boolean> fnc, T item1, T item2, params T[] items) =>
+        public static IEnumerable<T> New<T>(Func<T, Boolean> fnc, T item1, T item2, params T[] items) =>
             new Filtered<T>(fnc, item1, item2, items);
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public static Filtered<T> New<T>(Func<T, Boolean> fnc, IEnumerable<T> src) => new Filtered<T>(fnc, src);
+        public static IEnumerable<T> New<T>(Func<T, Boolean> fnc, IEnumerable<T> src) => new Filtered<T>(fnc, src);
 
         /// <summary>
         /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
@@ -109,6 +109,6 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
         /// <param name="live">live or sticky</param>
-        public static Filtered<T> New<T>(Func<T, Boolean> fnc, IEnumerable<T> src, bool live) => new Filtered<T>(fnc, src, live);
+        public static IEnumerable<T> New<T>(Func<T, Boolean> fnc, IEnumerable<T> src, bool live) => new Filtered<T>(fnc, src, live);
     }
 }

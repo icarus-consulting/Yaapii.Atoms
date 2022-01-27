@@ -132,7 +132,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="size"></param>
         /// <param name="enumerator"></param>
-        public static Partitioned<T> New<T>(int size, IEnumerator<T> enumerator) =>
+        public static IEnumerator<IEnumerable<T>> New<T>(int size, IEnumerator<T> enumerator) =>
             new Partitioned<T>(size, enumerator);
     }
 }

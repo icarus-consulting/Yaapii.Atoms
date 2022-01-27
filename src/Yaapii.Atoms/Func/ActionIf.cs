@@ -58,11 +58,11 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// ctor
         /// </summary>
-        public static KvpEnvelope<Action<T>> New<T>(string condition, Action<T> consequence) => new ActionIf<T>(condition, consequence);
+        public static IKvp<Action<T>> New<T>(string condition, Action<T> consequence) => new ActionIf<T>(condition, consequence);
 
         /// <summary>
         /// ctor
         /// </summary>
-        public static KvpEnvelope<Action<In1, In2>> New<In1, In2>(string condition, Action<In1, In2> consequence) => new ActionIf<In1, In2>(condition, consequence);
+        public static IKvp<Action<In1, In2>> New<In1, In2>(string condition, Action<In1, In2> consequence) => new ActionIf<In1, In2>(condition, consequence);
     }
 }

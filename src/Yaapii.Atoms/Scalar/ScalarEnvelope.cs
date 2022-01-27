@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.Scalar
         private readonly ScalarOf<T> result;
 
         public ScalarEnvelope(Func<T> result)
-            : this(new Live<T>(result))
+            : this(new ScalarOf<T>(result))
         { }
 
         public ScalarEnvelope(IScalar<T> result)

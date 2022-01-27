@@ -225,7 +225,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source"></param>
         /// <param name="ex"></param>
-        public static ItemAt<T> New<T>(IEnumerable<T> source, Exception ex)
+        public static IScalar<T> New<T>(IEnumerable<T> source, Exception ex)
             => new ItemAt<T>(source, ex);
 
         /// <summary>
@@ -234,14 +234,14 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source"></param>
         /// <param name="position"></param>
         /// <param name="ex"></param>
-        public static ItemAt<T> New<T>(IEnumerable<T> source, int position, Exception ex)
+        public static IScalar<T> New<T>(IEnumerable<T> source, int position, Exception ex)
             => new ItemAt<T>(source, position, ex);
 
         /// <summary>
         /// First element in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
-        public static ItemAt<T> New<T>(IEnumerable<T> source)
+        public static IScalar<T> New<T>(IEnumerable<T> source)
             => new ItemAt<T>(source);
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static ItemAt<T> New<T>(IEnumerable<T> source, T fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, T fallback)
             => new ItemAt<T>(source, fallback);
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="position">position</param>
         /// <param name="fallback">fallback func</param>
-        public static ItemAt<T> New<T>(IEnumerable<T> source, int position, T fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, int position, T fallback)
             => new ItemAt<T>(source, position, fallback);
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
-        public static ItemAt<T> New<T>(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, fallback);
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
-        public static ItemAt<T> New<T>(IEnumerable<T> source, Func<IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, Func<IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, fallback);
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
-        public static ItemAt<T> New<T>(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, fallback);
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
-        public static ItemAt<T> New<T>(IEnumerable<T> source, int position)
+        public static IScalar<T> New<T>(IEnumerable<T> source, int position)
             => new ItemAt<T>(source, position);
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public static ItemAt<T> New<T>(IEnumerable<T> source, int position, IFunc<IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, int position, IFunc<IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, position, fallback);
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public static ItemAt<T> New<T>(IEnumerable<T> source, int position, Func<IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, int position, Func<IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, position, fallback);
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public static ItemAt<T> New<T>(IEnumerable<T> source, int position, Func<Exception, IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, int position, Func<Exception, IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, position, fallback);
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public static ItemAt<T> New<T>(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, position, fallback);
     }
 }

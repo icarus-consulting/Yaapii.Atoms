@@ -100,7 +100,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="fnc">Action to call</param>
         /// <param name="fbk">Fallback action</param>
-        public static ActionWithFallback<T> New<T>(IAction<T> fnc, System.Action<Exception> fbk) =>
+        public static IAction<T> New<T>(IAction<T> fnc, System.Action<Exception> fbk) =>
             new ActionWithFallback<T>(fnc, fbk);
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="fnc">Action to call</param>
         /// <param name="fbk">Fallback action</param>
-        public static ActionWithFallback<T> New<T>(System.Action fnc, IAction<Exception> fbk) =>
+        public static IAction<T> New<T>(System.Action fnc, IAction<Exception> fbk) =>
             new ActionWithFallback<T>(fnc, fbk);
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="fnc">Action to call</param>
         /// <param name="fbk">Fallback action</param>
-        public static ActionWithFallback<T> New<T>(System.Action<T> fnc, System.Action<Exception> fbk) =>
+        public static IAction<T> New<T>(System.Action<T> fnc, System.Action<Exception> fbk) =>
             new ActionWithFallback<T>(fnc, fbk);
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="fnc">Action to call</param>
         /// <param name="fbk">Fallback action</param>
-        public static ActionWithFallback<T> New<T>(IAction<T> fnc, IAction<Exception> fbk) =>
+        public static IAction<T> New<T>(IAction<T> fnc, IAction<Exception> fbk) =>
             new ActionWithFallback<T>(fnc, fbk);
     }
 
@@ -136,12 +136,12 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// Action to call.
         /// </summary>
-        private readonly IAction<In> _func;
+        private readonly IAction<In> func;
 
         /// <summary>
         /// Fallback to call when the action falis.
         /// </summary>
-        private readonly IAction<Exception> _fallback;
+        private readonly IAction<Exception> fallback;
 
         /// <summary>
         /// A Action with input that executes a callback if it fails (= an <see cref="Exception"/> occurs).
@@ -180,8 +180,8 @@ namespace Yaapii.Atoms.Func
         /// <param name="fbk">Fallback action</param>
         public ActionWithFallback(IAction<In> fnc, IAction<Exception> fbk)
         {
-            this._func = fnc;
-            this._fallback = fbk;
+            this.func = fnc;
+            this.fallback = fbk;
         }
 
         /// <summary>
@@ -192,11 +192,11 @@ namespace Yaapii.Atoms.Func
         {
             try
             {
-                this._func.Invoke(input);
+                this.func.Invoke(input);
             }
             catch (Exception ex)
             {
-                this._fallback.Invoke(ex);
+                this.fallback.Invoke(ex);
             }
         }
     }

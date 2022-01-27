@@ -45,6 +45,6 @@ namespace Yaapii.Atoms.Collection
 
     public static class Joined
     {
-        public static Joined<T> New<T>(params IEnumerable<T>[] list) => new Joined<T>(list);
+        public static ICollection<T> New<T>(params IEnumerable<T>[] list) => new Joined<T>(list);
     }
 }

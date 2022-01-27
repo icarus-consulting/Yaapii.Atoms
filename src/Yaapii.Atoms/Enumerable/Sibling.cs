@@ -110,7 +110,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="item">item to start</param>
-        public static Sibling<T> New<T>(T item, IEnumerable<T> source)
+        public static IScalar<T> New<T>(T item, IEnumerable<T> source)
             where T : IComparable<T> =>
             new Sibling<T>(item, source);
 
@@ -120,7 +120,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="item">item to start</param>
-        public static Sibling<T> New<T>(T item, IEnumerable<T> source, T fallback)
+        public static IScalar<T> New<T>(T item, IEnumerable<T> source, T fallback)
             where T : IComparable<T> =>
             new Sibling<T>(item, source, fallback);
 
@@ -130,7 +130,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="relativeposition">requested position relative to the given item</param>
         /// <param name="item">item to start</param>
-        public static Sibling<T> New<T>(T item, IEnumerable<T> source, int relativeposition)
+        public static IScalar<T> New<T>(T item, IEnumerable<T> source, int relativeposition)
             where T : IComparable<T> =>
             new Sibling<T>(item, source, relativeposition);
 
@@ -141,7 +141,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="relativeposition">requested position relative to the given item</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="item">item to start</param>
-        public static Sibling<T> New<T>(T item, IEnumerable<T> source, int relativeposition, T fallback)
+        public static IScalar<T> New<T>(T item, IEnumerable<T> source, int relativeposition, T fallback)
             where T : IComparable<T> =>
             new Sibling<T>(item, source, relativeposition, fallback);
 
@@ -151,7 +151,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
         /// <param name="item">item to start</param>
-        public static Sibling<T> New<T>(T item, IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(T item, IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
             where T : IComparable<T> =>
             new Sibling<T>(item, source, fallback);
 
@@ -162,7 +162,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="item">item to start</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="relativeposition">requested position relative to the given item</param>
-        public static Sibling<T> New<T>(T item, IEnumerable<T> source, int relativeposition, IFunc<IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(T item, IEnumerable<T> source, int relativeposition, IFunc<IEnumerable<T>, T> fallback)
             where T : IComparable<T> =>
             new Sibling<T>(item, source, relativeposition, fallback);
     }

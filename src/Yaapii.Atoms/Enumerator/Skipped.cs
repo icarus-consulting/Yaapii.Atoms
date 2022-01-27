@@ -97,6 +97,6 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="enumerator"><see cref="IEnumerator{T}"/> to skip items in</param>
         /// <param name="skip">how many to skip</param>
-        public static Skipped<T> New<T>(IEnumerator<T> enumerator, int skip) => new Skipped<T>(enumerator, skip);
+        public static IEnumerator<T> New<T>(IEnumerator<T> enumerator, int skip) => new Skipped<T>(enumerator, skip);
     }
 }

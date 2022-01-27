@@ -110,39 +110,39 @@ namespace Yaapii.Atoms.Scalar
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
         /// </summary>
         /// <param name="src">func to cache result from</param>
-        public static ScalarOf<T> New<T>(T src) => new ScalarOf<T>(src);
+        public static IScalar<T> New<T>(T src) => new ScalarOf<T>(src);
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
         /// </summary>
         /// <param name="src">func to cache result from</param>
-        public static ScalarOf<T> New<T>(Func<T> src) => new ScalarOf<T>(src);
+        public static IScalar<T> New<T>(Func<T> src) => new ScalarOf<T>(src);
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
         /// </summary>
         /// <param name="src">scalar to cache result from</param>
-        public static ScalarOf<T> New<T>(IScalar<T> src) => new ScalarOf<T>(src);
+        public static IScalar<T> New<T>(IScalar<T> src) => new ScalarOf<T>(src);
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
         /// </summary>
         /// <param name="srcFunc">func to cache result from</param>
         /// <param name="shouldReload">reload condition func</param>
-        public static ScalarOf<T> New<T>(IFunc<T> srcFunc, Func<T, bool> shouldReload) => new ScalarOf<T>(srcFunc, shouldReload);
+        public static IScalar<T> New<T>(IFunc<T> srcFunc, Func<T, bool> shouldReload) => new ScalarOf<T>(srcFunc, shouldReload);
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
         /// </summary>
         /// <param name="srcFunc">func to cache result from</param>
         /// <param name="shouldReload">reload condition func</param>
-        public static ScalarOf<T> New<T>(Func<T> srcFunc, Func<T, bool> shouldReload) => new ScalarOf<T>(srcFunc, shouldReload);
+        public static IScalar<T> New<T>(Func<T> srcFunc, Func<T, bool> shouldReload) => new ScalarOf<T>(srcFunc, shouldReload);
 
         /// <summary>
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
         /// </summary>
         /// <param name="src">scalar to cache result from</param>
         /// <param name="shouldReload">reload condition func</param>
-        public static ScalarOf<T> New<T>(IScalar<T> src, Func<T, bool> shouldReload) => new ScalarOf<T>(src, shouldReload);
+        public static IScalar<T> New<T>(IScalar<T> src, Func<T, bool> shouldReload) => new ScalarOf<T>(src, shouldReload);
     }
 }

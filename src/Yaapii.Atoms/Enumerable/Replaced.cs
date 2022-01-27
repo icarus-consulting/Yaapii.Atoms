@@ -101,7 +101,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>
         /// <param name="replacement">item to insert instead</param>
-        public static Replaced<T> New<T>(IEnumerable<T> origin, Func<T, bool> condition, T replacement) =>
+        public static IEnumerable<T> New<T>(IEnumerable<T> origin, Func<T, bool> condition, T replacement) =>
             new Replaced<T>(origin, condition, replacement);
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="origin">enumerable</param>
         /// <param name="index">index at which to replace the item</param>
         /// <param name="replacement">item to insert instead</param>
-        public static Replaced<T> New<T>(IEnumerable<T> origin, int index, T replacement) =>
+        public static IEnumerable<T> New<T>(IEnumerable<T> origin, int index, T replacement) =>
             new Replaced<T>(origin, index, replacement);
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>
         /// <param name="replacement">item to insert instead</param>
-        public static Replaced<T> New<T>(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement) =>
+        public static IEnumerable<T> New<T>(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement) =>
             new Replaced<T>(origin, condition, replacement);
     }
 }

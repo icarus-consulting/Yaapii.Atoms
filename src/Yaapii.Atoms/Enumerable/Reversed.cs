@@ -56,6 +56,6 @@ namespace Yaapii.Atoms.Enumerable
         /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
-        public static Reversed<T> New<T>(IEnumerable<T> src) => new Reversed<T>(src);
+        public static IEnumerable<T> New<T>(IEnumerable<T> src) => new Reversed<T>(src);
     }
 }

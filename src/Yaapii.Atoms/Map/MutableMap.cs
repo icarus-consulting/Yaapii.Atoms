@@ -249,28 +249,28 @@ namespace Yaapii.Atoms.Map
         /// A map whose contents can be changed.
         /// (Our normal objects are immutable)
         /// </summary>
-        public static MutableMap<TValue> New<TValue>(IEnumerable<IKvp<TValue>> kvps)
+        public static IDictionary<string, TValue> New<TValue>(IEnumerable<IKvp<TValue>> kvps)
             => new MutableMap<TValue>(kvps);
 
         /// <summary>
         /// A map whose contents can be changed.
         /// (Our normal objects are immutable)
         /// </summary>
-        public static MutableMap<TValue> New<TValue>(IEnumerable<KeyValuePair<string, TValue>> kvps)
+        public static IDictionary<string, TValue> New<TValue>(IEnumerable<KeyValuePair<string, TValue>> kvps)
             => new MutableMap<TValue>(kvps);
 
         /// <summary>
         /// A map whose contents can be changed.
         /// (Our normal objects are immutable)
         /// </summary>
-        public static MutableMap<TKey, TValue> New<TKey, TValue>(IEnumerable<IKvp<TKey, TValue>> kvps)
+        public static IDictionary<TKey, TValue> New<TKey, TValue>(IEnumerable<IKvp<TKey, TValue>> kvps)
             => new MutableMap<TKey, TValue>(kvps);
 
         /// <summary>
         /// A map whose contents can be changed.
         /// (Our normal objects are immutable)
         /// </summary>
-        public static MutableMap<TKey, TValue> New<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> kvps)
+        public static IDictionary<TKey, TValue> New<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> kvps)
             => new MutableMap<TKey, TValue>(kvps);
     }
 }
