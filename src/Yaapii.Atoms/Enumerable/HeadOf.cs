@@ -69,21 +69,21 @@ namespace Yaapii.Atoms.Enumerable
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
-        public static HeadOf<T> New<T>(IEnumerable<T> enumerable) => new HeadOf<T>(enumerable);
+        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable) => new HeadOf<T>(enumerable);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static HeadOf<T> New<T>(IEnumerable<T> enumerable, int limit) => new HeadOf<T>(enumerable, limit);
+        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable, int limit) => new HeadOf<T>(enumerable, limit);
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static HeadOf<T> New<T>(IEnumerable<T> enumerable, IScalar<int> limit) => new HeadOf<T>(enumerable, limit);
+        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable, IScalar<int> limit) => new HeadOf<T>(enumerable, limit);
     }
 }
 

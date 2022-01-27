@@ -46,25 +46,25 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public static MapInputOf<Value> New<Value>(params IKvp<Value>[] kvps)
+        public static IMapInput<Value> New<Value>(params IKvp<Value>[] kvps)
             => new MapInputOf<Value>(kvps);
 
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public static MapInputOf<Value> New<Value>(IEnumerable<IKvp<Value>> kvps)
+        public static IMapInput<Value> New<Value>(IEnumerable<IKvp<Value>> kvps)
             => new MapInputOf<Value>(kvps);
 
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public static MapInputOf<Key, Value> New<Key, Value>(params IKvp<Key, Value>[] kvps)
+        public static IMapInput<Key, Value> New<Key, Value>(params IKvp<Key, Value>[] kvps)
             => new MapInputOf<Key, Value>(kvps);
 
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public static MapInputOf<Key, Value> New<Key, Value>(IEnumerable<IKvp<Key, Value>> kvps)
+        public static IMapInput<Key, Value> New<Key, Value>(IEnumerable<IKvp<Key, Value>> kvps)
             => new MapInputOf<Key, Value>(kvps);
     }
 

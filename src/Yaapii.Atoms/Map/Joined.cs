@@ -88,65 +88,63 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// Joined map.
         /// </summary>
-        public static Joined<Value> New<Value>(IKvp<Value> kvp, IDictionary<string, Value> origin, bool live = false)
+        public static IDictionary<string,Value> New<Value>(IKvp<Value> kvp, IDictionary<string, Value> origin, bool live = false)
             => new Joined<Value>(kvp, origin, live);
 
         /// <summary>
         /// Joined map.
         /// </summary>
-        public static Joined<Value> New<Value>(IMapInput<Value> input, IDictionary<string, Value> origin, bool live = false)
+        public static IDictionary<string,Value> New<Value>(IMapInput<Value> input, IDictionary<string, Value> origin, bool live = false)
             => new Joined<Value>(input, origin);
 
         /// <summary>
         /// Joined map.
         /// </summary>
-        public static Joined<Value> New<Value>(params IDictionary<string, Value>[] dicts)
+        public static IDictionary<string,Value> New<Value>(params IDictionary<string, Value>[] dicts)
             => new Joined<Value>(dicts);
 
         /// <summary>
         /// Joined map.
         /// </summary>
-        public static Joined<Value> New<Value>(bool live, params IDictionary<string, Value>[] dicts)
+        public static IDictionary<string,Value> New<Value>(bool live, params IDictionary<string, Value>[] dicts)
             => new Joined<Value>(live, dicts);
 
         /// <summary>
         /// Joined map.
         /// </summary>
-        public static Joined<Value> New<Value>(IEnumerable<IDictionary<string, Value>> dicts, bool live = false)
+        public static IDictionary<string,Value> New<Value>(IEnumerable<IDictionary<string, Value>> dicts, bool live = false)
             => new Joined<Value>(dicts, live);
 
         /// <summary>
         /// Joined map.
         /// </summary>
-        public static Joined<Key, Value> New<Key, Value>(IKvp<Key, Value> kvp, IDictionary<Key, Value> origin, bool live = false)
+        public static IDictionary<Key, Value> New<Key, Value>(IKvp<Key, Value> kvp, IDictionary<Key, Value> origin, bool live = false)
             => new Joined<Key, Value>(kvp, origin, live);
 
         /// <summary>
         /// Joined map.
         /// </summary>
-        public static Joined<Key, Value> New<Key, Value>(IMapInput<Key, Value> input, IDictionary<Key, Value> origin, bool live = false)
+        public static IDictionary<Key, Value> New<Key, Value>(IMapInput<Key, Value> input, IDictionary<Key, Value> origin, bool live = false)
             => new Joined<Key, Value>(input, origin, live);
 
         /// <summary>
         /// Joined map.
         /// </summary>
-        public static Joined<Key, Value> New<Key, Value>(bool live, params IDictionary<Key, Value>[] dicts)
+        public static IDictionary<Key, Value> New<Key, Value>(bool live, params IDictionary<Key, Value>[] dicts)
             => new Joined<Key, Value>(live, dicts);
 
         /// <summary>
         /// Joined map.
         /// </summary>
-        public static Joined<Key, Value> New<Key, Value>(params IDictionary<Key, Value>[] dicts)
+        public static IDictionary<Key, Value> New<Key, Value>(params IDictionary<Key, Value>[] dicts)
             => new Joined<Key, Value>(dicts);
 
         /// <summary>
         /// Joined map.
         /// </summary>
-        public static Joined<Key, Value> New<Key, Value>(IEnumerable<IDictionary<Key, Value>> dicts, bool live = false)
+        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<IDictionary<Key, Value>> dicts, bool live = false)
             => new Joined<Key, Value>(dicts, live);
     }
-
-
 
     /// <summary>
     /// Joined map.

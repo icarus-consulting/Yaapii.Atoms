@@ -104,12 +104,12 @@ namespace Yaapii.Atoms.Enumerator
         /// Multiple <see cref="IEnumerator{T}"/> joined together.
         /// </summary>
         /// <param name="items">enumerables to join together</param>
-        public static Joined<T> New<T>(params IEnumerator<T>[] items) => new Joined<T>(items);
+        public static IEnumerator<T> New<T>(params IEnumerator<T>[] items) => new Joined<T>(items);
 
         /// <summary>
         /// Multiple <see cref="IEnumerator{T}"/> joined together.
         /// </summary>
         /// <param name="items">enumerables to join together</param>
-        public static Joined<T> New<T>(IEnumerable<IEnumerator<T>> items) => new Joined<T>(items);
+        public static IEnumerator<T> New<T>(IEnumerable<IEnumerator<T>> items) => new Joined<T>(items);
     }
 }

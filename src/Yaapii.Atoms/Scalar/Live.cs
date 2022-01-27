@@ -85,35 +85,35 @@ namespace Yaapii.Atoms.Scalar
             /// A <see cref="IScalar{T}"/> out of an object.
             /// </summary>
             /// <param name="org"></param>
-        public static Live<T> New<T>(T org)
+        public static IScalar<T> New<T>(T org)
             => new Live<T>(org);
 
         /// <summary>
         /// A <see cref="IScalar{T}"/> out of the return value from a <see cref="Func{T, TResult}"/>.
         /// </summary>
         /// <param name="func"></param>
-        public static Live<T> New<T>(IFunc<T> func)
+        public static IScalar<T> New<T>(IFunc<T> func)
             => new Live<T>(func);
 
         /// <summary>
         /// A <see cref="IScalar{T}"/> out of the return value from a <see cref="Func{T, TResult}"/>.
         /// </summary>
         /// <param name="func"></param>
-        public static Live<T> New<T>(IFunc<bool, T> func)
+        public static IScalar<T> New<T>(IFunc<bool, T> func)
             => new Live<T>(func);
 
         /// <summary>
         /// A <see cref="IScalar{T}"/> out of the return value from an <see cref="IFunc{In, Out}"/>
         /// </summary>
         /// <param name="func"></param>
-        public static Live<T> New<T>(Func<bool, T> func)
+        public static IScalar<T> New<T>(Func<bool, T> func)
             => new Live<T>(func);
 
         /// <summary>
         /// Primary ctor
         /// </summary>
         /// <param name="func"></param>
-        public static Live<T> New<T>(Func<T> func)
+        public static IScalar<T> New<T>(Func<T> func)
             => new Live<T>(func);
     }
 }

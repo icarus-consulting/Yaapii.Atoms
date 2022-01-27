@@ -76,7 +76,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// An enumerator that logs the object T when it is moved.
         /// </summary>
-        public static LoggingEnumerator<T> New<T>(IEnumerator<T> origin, Action<T> log) =>
+        public static IEnumerator<T> New<T>(IEnumerator<T> origin, Action<T> log) =>
             new LoggingEnumerator<T>(origin, log);
     }
 }

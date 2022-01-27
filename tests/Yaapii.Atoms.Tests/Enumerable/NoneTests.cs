@@ -20,41 +20,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.Collections.Generic;
 using Xunit;
-using Yaapii.Atoms.Func;
+using Yaapii.Atoms.Enumerable;
 
-namespace Yaapii.Atoms.Scalar.Tests
+namespace Yaapii.Atoms.Tests.Enumerable
 {
-    public sealed class EachTests
+    public sealed class NoneTests
     {
         [Fact]
-        public void IncreasesOne()
+        public void StringIsEmpty()
         {
-            List<int> lst = new List<int>() { 2, 1, 0 };
-
-            new Each<int>(
-                (i) => lst[i] = i,
-                0, 1, 2
-            ).Invoke();
-
-            Assert.True(
-                lst[0] == 0 &&
-                lst[2] == 2
+            Assert.False(
+                new None().GetEnumerator().MoveNext()
             );
         }
 
         [Fact]
-        public void TestProc()
+        public void GenericIsEmpty()
         {
-            var list = new LinkedList<int>();
-            new Each<int>(
-                new ActionOf<int>(i => list.AddLast(i)),
-                1, 1
-            ).Invoke();
-
-            Assert.True(
-                list.Count == 2);
+            Assert.False(
+                new None<int>().GetEnumerator().MoveNext()
+            );
         }
     }
 }

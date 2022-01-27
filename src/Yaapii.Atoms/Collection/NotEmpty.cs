@@ -80,8 +80,8 @@ namespace Yaapii.Atoms.Collection
     /// </summary>
     public static class NotEmpty
     {
-        public static NotEmpty<T> New<T>(ICollection<T> origin) => new NotEmpty<T>(origin);
+        public static ICollection<T> New<T>(ICollection<T> origin) => new NotEmpty<T>(origin);
 
-        public static NotEmpty<T> New<T>(ICollection<T> origin, Func<ICollection<T>> fallback) => new NotEmpty<T>(origin, fallback);
+        public static ICollection<T> New<T>(ICollection<T> origin, Func<ICollection<T>> fallback) => new NotEmpty<T>(origin, fallback);
     }
 }

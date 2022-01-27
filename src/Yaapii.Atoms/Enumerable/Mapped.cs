@@ -173,42 +173,42 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static Mapped<In, Out> New<In, Out>(IFunc<In, Out> fnc, params In[] src) => new Mapped<In, Out>(fnc, src);
+        public static IEnumerable<Out> New<In, Out>(IFunc<In, Out> fnc, params In[] src) => new Mapped<In, Out>(fnc, src);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static Mapped<In, Out> New<In, Out>(IBiFunc<In, int, Out> fnc, params In[] src) => new Mapped<In, Out>(fnc, src);
+        public static IEnumerable<Out> New<In, Out>(IBiFunc<In, int, Out> fnc, params In[] src) => new Mapped<In, Out>(fnc, src);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Out}"/> function.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static Mapped<In, Out> New<In, Out>(Func<In, Out> fnc, IEnumerable<In> src) => new Mapped<In, Out>(fnc, src);
+        public static IEnumerable<Out> New<In, Out>(Func<In, Out> fnc, IEnumerable<In> src) => new Mapped<In, Out>(fnc, src);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Index, Out}"/> function with index.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static Mapped<In, Out> New<In, Out>(Func<In, int, Out> fnc, IEnumerable<In> src) => new Mapped<In, Out> (fnc, src);
+        public static IEnumerable<Out> New<In, Out>(Func<In, int, Out> fnc, IEnumerable<In> src) => new Mapped<In, Out> (fnc, src);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static Mapped<In, Out> New<In, Out>(IFunc<In, Out> fnc, IEnumerable<In> src) => new Mapped<In, Out>(fnc, src);
+        public static IEnumerable<Out> New<In, Out>(IFunc<In, Out> fnc, IEnumerable<In> src) => new Mapped<In, Out>(fnc, src);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static Mapped<In, Out> New<In, Out>(IBiFunc<In, int, Out> fnc, IEnumerable<In> src) => new Mapped<In, Out>(fnc, src);
+        public static IEnumerable<Out> New<In, Out>(IBiFunc<In, int, Out> fnc, IEnumerable<In> src) => new Mapped<In, Out>(fnc, src);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Out}"/> function.
@@ -216,7 +216,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         /// <param name="live">live or sticky</param>
-        public static Mapped<In, Out> New<In, Out>(Func<In, Out> fnc, IEnumerable<In> src, bool live) => new Mapped<In, Out>(fnc, src, live);
+        public static IEnumerable<Out> New<In, Out>(Func<In, Out> fnc, IEnumerable<In> src, bool live) => new Mapped<In, Out>(fnc, src, live);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Index, Out}"/> function with index.
@@ -224,7 +224,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         /// <param name="live">live or sticky</param>
-        public static Mapped<In, Out> New<In, Out>(Func<In, int, Out> fnc, IEnumerable<In> src, bool live) => new Mapped<In, Out>(fnc, src, live);
+        public static IEnumerable<Out> New<In, Out>(Func<In, int, Out> fnc, IEnumerable<In> src, bool live) => new Mapped<In, Out>(fnc, src, live);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
@@ -232,7 +232,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         /// <param name="live">live or sticky</param>
-        public static Mapped<In, Out> New<In, Out>(IFunc<In, Out> fnc, IEnumerable<In> src, bool live) => new Mapped<In, Out>(fnc, src, live);
+        public static IEnumerable<Out> New<In, Out>(IFunc<In, Out> fnc, IEnumerable<In> src, bool live) => new Mapped<In, Out>(fnc, src, live);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
@@ -240,6 +240,6 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         /// <param name="live">live or sticky</param>
-        public static Mapped<In, Out> New<In, Out>(IBiFunc<In, int, Out> fnc, IEnumerable<In> src, bool live) => new Mapped<In, Out>(fnc, src, live);
+        public static IEnumerable<Out> New<In, Out>(IBiFunc<In, int, Out> fnc, IEnumerable<In> src, bool live) => new Mapped<In, Out>(fnc, src, live);
     }
 }

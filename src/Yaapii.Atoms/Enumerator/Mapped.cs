@@ -124,7 +124,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fnc">mapping function</param>
-        public static Mapped<In, Out> New<In, Out>(IEnumerator<In> src, IFunc<In, Out> fnc) =>
+        public static IEnumerator<Out> New<In, Out>(IEnumerator<In> src, IFunc<In, Out> fnc) =>
             new Mapped<In, Out>(src, fnc);
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fnc">mapping function</param>
-        public static Mapped<In, Out> New<In, Out>(IEnumerator<In> src, Func<In, Out> fnc) =>
+        public static IEnumerator<Out> New<In, Out>(IEnumerator<In> src, Func<In, Out> fnc) =>
             new Mapped<In, Out>(src, fnc);
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fnc">mapping function</param>
-        public static Mapped<In, Out> New<In, Out>(IEnumerator<In> src, IBiFunc<In, int, Out> fnc) =>
+        public static IEnumerator<Out> New<In, Out>(IEnumerator<In> src, IBiFunc<In, int, Out> fnc) =>
             new Mapped<In, Out>(src, fnc);
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fnc">mapping function</param>
-        public static Mapped<In, Out> New<In, Out>(IEnumerator<In> src, Func<In, int, Out> fnc) =>
+        public static IEnumerator<Out> New<In, Out>(IEnumerator<In> src, Func<In, int, Out> fnc) =>
             new Mapped<In, Out>(src, fnc);
     }
 }

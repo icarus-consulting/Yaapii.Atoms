@@ -200,7 +200,7 @@ namespace Yaapii.Atoms.Map
         /// ctor
         /// </summary>
         /// <param name="map">IDictionary</param>
-        public static NoNulls<Key, Value> New<Key, Value>(IDictionary<Key, Value> map)
+        public static IDictionary<Key, Value> New<Key, Value>(IDictionary<Key, Value> map)
             => new NoNulls<Key, Value>(map);
     }
 }

@@ -97,7 +97,7 @@ namespace Yaapii.Atoms.Scalar
         /// A scalar with a fallback if value is null.
         /// </summary>
         /// <param name="origin">the original</param>
-        public static NoNull<T> New<T>(T origin)
+        public static IScalar<T> New<T>(T origin)
             => new NoNull<T>(origin);
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="origin">the original</param>
         /// <param name="ex">error to raise if null</param>
-        public static NoNull<T> New<T>(T origin, Exception ex)
+        public static IScalar<T> New<T>(T origin, Exception ex)
             => new NoNull<T>(origin, ex);
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="origin">the original</param>
         /// <param name="fallback">the fallback value</param>
-        public static NoNull<T> New<T>(T origin, T fallback)
+        public static IScalar<T> New<T>(T origin, T fallback)
             => new NoNull<T>(origin, fallback);
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="origin">the original scalar</param>
         /// <param name="fallback">the fallback value</param>
-        public static NoNull<T> New<T>(IScalar<T> origin, T fallback)
+        public static IScalar<T> New<T>(IScalar<T> origin, T fallback)
             => new NoNull<T>(origin, fallback);
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="origin">the original scalar</param>
         /// <param name="fallback">the fallback</param>
-        public static NoNull<T> New<T>(IScalar<T> origin, IFunc<T> fallback)
+        public static IScalar<T> New<T>(IScalar<T> origin, IFunc<T> fallback)
             => new NoNull<T>(origin, fallback);
     }
 }

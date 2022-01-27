@@ -66,12 +66,12 @@ namespace Yaapii.Atoms.Enumerable
         /// The distinct elements of one or multiple Enumerables.
         /// </summary>
         /// <param name="enumerables">enumerables to get distinct elements from</param>
-        public static Distinct<T> New<T>(params IEnumerable<T>[] enumerables) => new Distinct<T>(enumerables);
+        public static IEnumerable<T> New<T>(params IEnumerable<T>[] enumerables) => new Distinct<T>(enumerables);
 
         /// <summary>
         /// The distinct elements of one or multiple Enumerables.
         /// </summary>
         /// <param name="enumerables">enumerables to get distinct elements from</param>
-        public static Distinct<T> New<T>(IEnumerable<IEnumerable<T>> enumerables) => new Distinct<T>(enumerables);
+        public static IEnumerable<T> New<T>(IEnumerable<IEnumerable<T>> enumerables) => new Distinct<T>(enumerables);
     }
 }

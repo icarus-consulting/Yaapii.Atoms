@@ -82,28 +82,28 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="elm">function to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
-        public static Repeated<T> New<T>(System.Func<T> elm, int cnt) => new Repeated<T>(elm, cnt);
+        public static IEnumerable<T> New<T>(System.Func<T> elm, int cnt) => new Repeated<T>(elm, cnt);
 
         /// <summary>
         /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
         /// </summary>
         /// <param name="elm">element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
-        public static Repeated<T> New<T>(T elm, int cnt) => new Repeated<T>(elm, cnt);
+        public static IEnumerable<T> New<T>(T elm, int cnt) => new Repeated<T>(elm, cnt);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
-        public static Repeated<T> New<T>(IScalar<T> elm, int cnt) => new Repeated<T>(elm, cnt);
+        public static IEnumerable<T> New<T>(IScalar<T> elm, int cnt) => new Repeated<T>(elm, cnt);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
-        public static Repeated<T> New<T>(IScalar<T> elm, IScalar<int> cnt) => new Repeated<T>(elm, cnt);
+        public static IEnumerable<T> New<T>(IScalar<T> elm, IScalar<int> cnt) => new Repeated<T>(elm, cnt);
     }
 }
 

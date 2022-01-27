@@ -90,7 +90,7 @@ namespace Yaapii.Atoms.Enumerator
             /// A <see cref="IEnumerator{T}"/> that repeats one element infinitely.
             /// </summary>
             /// <param name="elm">scalar of element to repeat</param>
-            public static Endless<T> New<T>(IScalar<T> elm) =>
+            public static IEnumerator<T> New<T>(IScalar<T> elm) =>
                 new Endless<T>(elm);
         }
 }

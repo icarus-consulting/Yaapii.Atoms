@@ -72,7 +72,7 @@ namespace Yaapii.Atoms.List
         /// Ensures that <see cref="IList{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">List</param>
-        public static NotEmpty<T> New<T>(IList<T> origin)
+        public static IList<T> New<T>(IList<T> origin)
             => new NotEmpty<T>(origin);
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="origin">List</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public static NotEmpty<T> New<T>(IList<T> origin, Exception ex)
+        public static IList<T> New<T>(IList<T> origin, Exception ex)
             => new NotEmpty<T>(origin, ex);
     }
 }

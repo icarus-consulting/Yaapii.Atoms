@@ -76,12 +76,12 @@ namespace Yaapii.Atoms.Collection
     ///
     public static class Solid
     {
-        public static Solid<T> New<T>(params T[] array) => new Solid<T>(array);
+        public static ICollection<T> New<T>(params T[] array) => new Solid<T>(array);
 
-        public static Solid<T> New<T>(IEnumerator<T> src) => new Solid<T>(src);
+        public static ICollection<T> New<T>(IEnumerator<T> src) => new Solid<T>(src);
 
-        public static Solid<T> New<T>(IEnumerable<T> src) => new Solid<T>(src);
+        public static ICollection<T> New<T>(IEnumerable<T> src) => new Solid<T>(src);
 
-        public static Solid<T> New<T>(ICollection<T> src) => new Solid<T>(src);
+        public static ICollection<T> New<T>(ICollection<T> src) => new Solid<T>(src);
     }
 }

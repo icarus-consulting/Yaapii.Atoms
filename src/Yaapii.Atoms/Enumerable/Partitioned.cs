@@ -53,6 +53,6 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Enumerable partitioned by a given size.
         /// </summary>
-        public static Partitioned<T> New<T>(int size, IEnumerable<T> items) => new Partitioned<T>(size, items);
+        public static IEnumerable<IEnumerable<T>> New<T>(int size, IEnumerable<T> items) => new Partitioned<T>(size, items);
     }
 }

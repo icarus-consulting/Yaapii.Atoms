@@ -32,7 +32,7 @@ namespace Yaapii.Atoms.Func
     /// <typeparam name="In1">type of first argument</typeparam>
     /// <typeparam name="In2">type of second argument</typeparam>
     /// <typeparam name="Out">type of output</typeparam>
-    public sealed class StickyBiFunc<In1, In2, Out>
+    public sealed class StickyBiFunc<In1, In2, Out> : IBiFunc<In1, In2, Out>
     {
         /// <summary>
         /// original func
@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Func
         /// <param name="first"></param>
         /// <param name="second"></param>
         /// <returns></returns>
-        public Out Apply(In1 first, In2 second)
+        public Out Invoke(In1 first, In2 second)
         {
             var keymap = new Dictionary<In1, In2>();
             keymap[first] = second;
@@ -131,14 +131,14 @@ namespace Yaapii.Atoms.Func
         /// Function with two inputs which returns the output from cache.
         /// </summary>
         /// <param name="fnc">func to cache result from</param>
-        public static StickyBiFunc<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc) =>
+        public static IBiFunc<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc) =>
             new StickyBiFunc<In1, In2, Out>(fnc);
 
         /// <summary>
         /// Function with two inputs which returns the output from cache.
         /// </summary>
         /// <param name="fnc">func to cache result from</param>
-        public static StickyBiFunc<In1, In2, Out> New<In1, In2, Out>(IBiFunc<In1, In2, Out> fnc) =>
+        public static IBiFunc<In1, In2, Out> New<In1, In2, Out>(IBiFunc<In1, In2, Out> fnc) =>
             new StickyBiFunc<In1, In2, Out>(fnc);
     }
 }

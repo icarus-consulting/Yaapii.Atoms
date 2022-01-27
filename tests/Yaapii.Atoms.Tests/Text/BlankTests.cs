@@ -21,42 +21,19 @@
 // SOFTWARE.
 
 using Xunit;
-using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Tests.Enumerable
+namespace Yaapii.Atoms.Tests.Text
 {
-    public sealed class LessThanTests
+    public sealed class BlankTests
     {
         [Fact]
-        public void DetectsLess()
+        public void IsBlank()
         {
             Assert.True(
-                new LessThan(
-                    3,
-                    new ManyOf("a", "b")
-                ).Value()
-            );
-        }
-
-        [Fact]
-        public void NoMatchOnMore()
-        {
-            Assert.False(
-                new LessThan(
-                    3,
-                    new ManyOf("a", "b", "c", "d")
-                ).Value()
-            );
-        }
-
-        [Fact]
-        public void NoMatchOnEqual()
-        {
-            Assert.False(
-                new LessThan(
-                    3,
-                    new ManyOf("a", "b", "c")
-                ).Value()
+                string.IsNullOrEmpty(
+                    new Blank().AsString()
+                )
             );
         }
     }

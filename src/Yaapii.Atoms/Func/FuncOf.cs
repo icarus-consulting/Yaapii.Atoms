@@ -184,13 +184,13 @@ namespace Yaapii.Atoms.Func
         /// ctor
         /// </summary>
         /// <param name="fnc"></param>
-        public static FuncOf<In> New<In>(System.Func<In> fnc) => new FuncOf<In>(fnc);
+        public static IFunc<Out> New<Out>(System.Func<Out> fnc) => new FuncOf<Out>(fnc);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="fnc"></param>
-        public static FuncOf<In, Out> New<In, Out>(System.Func<In, Out> fnc) =>
+        public static IFunc<In, Out> New<In, Out>(System.Func<In, Out> fnc) =>
             new FuncOf<In, Out>(fnc);
 
         /// <summary>
@@ -198,10 +198,10 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="proc">procedure to execute</param>
         /// <param name="result"></param>
-        public static FuncOf<In, Out> New<In, Out>(IAction<In> proc, Out result) =>
+        public static IFunc<In, Out> New<In, Out>(IAction<In> proc, Out result) =>
             new FuncOf<In, Out>(proc, result);
 
-        public static FuncOf<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> func) =>
+        public static IBiFunc<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> func) =>
             new FuncOf<In1, In2, Out>(func);
     }
 }

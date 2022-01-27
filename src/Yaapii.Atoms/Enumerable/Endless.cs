@@ -50,6 +50,6 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable"/> that repeats one element infinitely.
         /// </summary>
         /// <param name="elm">element to repeat</param>
-        public static Endless<T> New<T>(T elm) => new Endless<T>(elm);
+        public static IEnumerable<T> New<T>(T elm) => new Endless<T>(elm);
     }
 }

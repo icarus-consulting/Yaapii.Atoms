@@ -86,19 +86,19 @@ namespace Yaapii.Atoms.Func
         /// Function that is threadsafe.
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
-        public static SyncFunc<In, Out> New<In, Out>(Func<In, Out> fnc) => new SyncFunc<In, Out>(fnc);
+        public static IFunc<In, Out> New<In, Out>(Func<In, Out> fnc) => new SyncFunc<In, Out>(fnc);
 
         /// <summary>
         /// Function that is threadsafe.
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
-        public static SyncFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc) => new SyncFunc<In, Out>(fnc);
+        public static IFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc) => new SyncFunc<In, Out>(fnc);
 
         /// <summary>
         /// Function that is threadsafe.
         /// </summary>
         /// <param name="fnc">func to cache result from</param>
         /// <param name="lck">object that will be locked</param>
-        public static SyncFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, object lck) => new SyncFunc<In, Out>(fnc, lck);
+        public static IFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, object lck) => new SyncFunc<In, Out>(fnc, lck);
     }
 }

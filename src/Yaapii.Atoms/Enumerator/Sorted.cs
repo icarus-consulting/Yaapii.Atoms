@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Enumerator
     /// <summary>
     /// A <see cref="IEnumerator{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
-    /// <typeparam name="T">type of items in enumertor</typeparam>
+    /// <typeparam name="T">type of items in enumerator</typeparam>
     public sealed class Sorted<T> : IEnumerator<T>
         where T : IComparable<T>
     {
@@ -41,7 +41,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerator to sort</param>
-        public Sorted(Comparer<T> cmp, IEnumerator<T> src)
+        public Sorted(IComparer<T> cmp, IEnumerator<T> src)
         {
             this.sorted =
                 new ScalarOf<IEnumerator<T>>(
@@ -89,5 +89,19 @@ namespace Yaapii.Atoms.Enumerator
         }
     }
 
+    /// <summary>
+    /// A <see cref="IEnumerator{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+    /// </summary>
+    /// <typeparam name="T">type of items in enumerator</typeparam>
+    public static class Sorted
+    {
+        /// <summary>
+        /// A <see cref="IEnumerator{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// </summary>
+        /// <typeparam name="T">type of items in enumerator</typeparam>
+        public static IEnumerator<T> New<T>(IComparer<T> cmp, IEnumerator<T> src)
+            where T : IComparable<T>
+            => new Sorted<T>(cmp, src);
+    }
 
 }

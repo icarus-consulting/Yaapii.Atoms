@@ -156,10 +156,10 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="ex">Exception to throw if no value can be found.</param>
-        public static FirstOf<T> New<T>(IEnumerable<T> source, Exception ex)
+        public static IScalar<T> New<T>(IEnumerable<T> source, Exception ex)
             => new FirstOf<T>(source, ex);
 
-        public static FirstOf<T> New<T>(IEnumerable<T> source)
+        public static IScalar<T> New<T>(IEnumerable<T> source)
             => new FirstOf<T>(source);
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="condition">condition to find the desired item</param>
-        public static FirstOf<T> New<T>(Func<T, bool> condition, IEnumerable<T> source)
+        public static IScalar<T> New<T>(Func<T, bool> condition, IEnumerable<T> source)
             => new FirstOf<T>(condition, source);
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="source">source enum</param>
         /// <param name="condition">condition to find the desired item</param>
         /// <param name="ex">Exception to throw if no value can be found.</param>
-        public static FirstOf<T> New<T>(Func<T, bool> condition, IEnumerable<T> source, Exception ex)
+        public static IScalar<T> New<T>(Func<T, bool> condition, IEnumerable<T> source, Exception ex)
             => new FirstOf<T>(condition, source, ex);
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static FirstOf<T> New<T>(IEnumerable<T> source, T fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, T fallback)
             => new FirstOf<T>(source, fallback);
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="condition">condition to match in order to find the desired item</param>
-        public static FirstOf<T> New<T>(Func<T, bool> condition, IEnumerable<T> source, T fallback)
+        public static IScalar<T> New<T>(Func<T, bool> condition, IEnumerable<T> source, T fallback)
             => new FirstOf<T>(condition, source, fallback);
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static FirstOf<T> New<T>(IEnumerable<T> source, IScalar<T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, IScalar<T> fallback)
             => new FirstOf<T>(source, fallback);
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fallback">fallback if no match</param>
-        public static FirstOf<T> New<T>(IEnumerable<T> src, Func<IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> src, Func<IEnumerable<T>, T> fallback)
             => new FirstOf<T>(src, fallback);
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="src">source enumerable</param>
         /// <param name="fallback">fallback if no match</param>
         /// <param name="condition">condition to match</param>
-        public static FirstOf<T> New<T>(Func<T, bool> condition, IEnumerable<T> src, Func<IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(Func<T, bool> condition, IEnumerable<T> src, Func<IEnumerable<T>, T> fallback)
             => new FirstOf<T>(condition, src, fallback);
 
     }

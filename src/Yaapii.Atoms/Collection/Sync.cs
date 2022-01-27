@@ -86,6 +86,6 @@ namespace Yaapii.Atoms.Collection
 
     public static class Sync
     {
-        public static Sync<T> New<T>(params T[] items) => new Sync<T>(items);
+        public static ICollection<T> New<T>(params T[] items) => new Sync<T>(items);
     }
 }

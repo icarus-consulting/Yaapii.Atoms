@@ -49,6 +49,6 @@ namespace Yaapii.Atoms.Enumerable
     /// <typeparam name="T">type of the contents</typeparam>
     public static class Cycled
     {
-        public static Cycled<T> New<T>(IEnumerable<T> enumerable) => new Cycled<T>(enumerable);
+        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable) => new Cycled<T>(enumerable);
     }
 }

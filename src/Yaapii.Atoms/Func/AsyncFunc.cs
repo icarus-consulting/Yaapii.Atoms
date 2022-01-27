@@ -105,7 +105,7 @@ namespace Yaapii.Atoms.Func
         /// ).Apply("Hello, world!").Length;
         /// </summary>
         /// <param name="func">func to call</param>
-        public static AsyncFunc<In, Out> New<In, Out>(System.Func<In, Out> func)
+        public static IFunc<In, Task<Out>> New<In, Out>(System.Func<In, Out> func)
             where Out : class
             => new AsyncFunc<In, Out>(func);
 
@@ -118,7 +118,7 @@ namespace Yaapii.Atoms.Func
         /// ).Apply("Hello, world!").Length;
         /// </summary>
         /// <param name="fnc">func to call</param>
-        public static AsyncFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc)
+        public static IFunc<In, Task<Out>> New<In, Out>(IFunc<In, Out> fnc)
             where Out : class
             => new AsyncFunc<In, Out>(fnc);
     }

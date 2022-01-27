@@ -22,7 +22,7 @@
 
 using System.Collections;
 using System.Collections.Concurrent;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Func;
 
 namespace Yaapii.Atoms.Collection
 {

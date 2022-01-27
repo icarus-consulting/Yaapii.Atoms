@@ -114,61 +114,61 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// Key-value pair matching a string to specified type value.
         /// </summary>
-        public static KvpOf<TValue> New<TValue>(IText key, Func<TValue> value)
+        public static IKvp<TValue> New<TValue>(IText key, Func<TValue> value)
             => new KvpOf<TValue>(key, value);
 
         /// <summary>
         /// Key-value pair matching a string to specified type value.
         /// </summary>
-        public static KvpOf<TValue> New<TValue>(IText key, TValue value)
+        public static IKvp<TValue> New<TValue>(IText key, TValue value)
             => new KvpOf<TValue>(key, value);
 
         /// <summary>
         /// Key-value pair matching a string to specified type value.
         /// </summary>
-        public static KvpOf<TValue> New<TValue>(string key, Func<TValue> value)
+        public static IKvp<TValue> New<TValue>(string key, Func<TValue> value)
             => new KvpOf<TValue>(key, value);
 
         /// <summary>
         /// Key-value pair matching a string to specified type value.
         /// </summary>
-        public static KvpOf<TValue> New<TValue>(string key, TValue value)
+        public static IKvp<TValue> New<TValue>(string key, TValue value)
             => new KvpOf<TValue>(key, value);
 
         /// <summary>
         /// Key-value pair matching a string to specified type value.
         /// </summary>
-        public static KvpOf<TValue> New<TValue>(IScalar<KeyValuePair<string, TValue>> kvp)
+        public static IKvp<TValue> New<TValue>(IScalar<KeyValuePair<string, TValue>> kvp)
             => new KvpOf<TValue>(kvp);
 
         /// <summary>
         /// Key-value pair matching a string to specified type value.
         /// </summary>
-        public static KvpOf<TValue> New<TValue>(Func<KeyValuePair<string, TValue>> kvp)
+        public static IKvp<TValue> New<TValue>(Func<KeyValuePair<string, TValue>> kvp)
             => new KvpOf<TValue>(kvp);
 
         /// <summary>
         /// Key-value pair matching a key type to specified type value.
         /// </summary>
-        public static KvpOf<TKey, TValue> New<TKey, TValue>(TKey key, Func<TValue> value)
+        public static IKvp<TKey, TValue> New<TKey, TValue>(TKey key, Func<TValue> value)
             => new KvpOf<TKey, TValue>(key, value);
 
         /// <summary>
         /// Key-value pair matching a key type to specified type value.
         /// </summary>
-        public static KvpOf<TKey, TValue> New<TKey, TValue>(TKey key, TValue value)
-            => new KvpOf<TKey, TValue> (key, value);
+        public static IKvp<TKey, TValue> New<TKey, TValue>(TKey key, TValue value)
+            => new KvpOf<TKey, TValue>(key, value);
 
         /// <summary>
         /// Key-value pair matching a key type to specified type value.
         /// </summary>
-        public static KvpOf<TKey, TValue> New<TKey, TValue>(IScalar<KeyValuePair<TKey, TValue>> kvp)
-            => new KvpOf<TKey, TValue> (kvp);
+        public static IKvp<TKey, TValue> New<TKey, TValue>(IScalar<KeyValuePair<TKey, TValue>> kvp)
+            => new KvpOf<TKey, TValue>(kvp);
 
         /// <summary>
         /// Key-value pair matching a key type to specified type value.
         /// </summary>
-        public static KvpOf<TKey, TValue> New<TKey, TValue>(Func<KeyValuePair<TKey, TValue>> kvp)
+        public static IKvp<TKey, TValue> New<TKey, TValue>(Func<KeyValuePair<TKey, TValue>> kvp)
             => new KvpOf<TKey, TValue>(kvp);
     }
 

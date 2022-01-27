@@ -20,44 +20,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using Xunit;
-using Yaapii.Atoms.Enumerable;
-
-namespace Yaapii.Atoms.Tests.Enumerable
+namespace Yaapii.Atoms.Enumerable
 {
-    public sealed class LessThanTests
+    /// <summary>
+    /// Enumerable which is empty.
+    /// </summary>
+    public sealed class None : ManyEnvelope<string>
     {
-        [Fact]
-        public void DetectsLess()
-        {
-            Assert.True(
-                new LessThan(
-                    3,
-                    new ManyOf("a", "b")
-                ).Value()
-            );
-        }
+        /// <summary>
+        /// Enumerable which is empty.
+        /// </summary>
+        public None() : base(() => new ManyOf<string>(), false)
+        { }
+    }
 
-        [Fact]
-        public void NoMatchOnMore()
-        {
-            Assert.False(
-                new LessThan(
-                    3,
-                    new ManyOf("a", "b", "c", "d")
-                ).Value()
-            );
-        }
-
-        [Fact]
-        public void NoMatchOnEqual()
-        {
-            Assert.False(
-                new LessThan(
-                    3,
-                    new ManyOf("a", "b", "c")
-                ).Value()
-            );
-        }
+    /// <summary>
+    /// Enumerable which is empty.
+    /// </summary>
+    public sealed class None<T> : ManyEnvelope<T>
+    {
+        /// <summary>
+        /// Enumerable which is empty.
+        /// </summary>
+        public None() : base(() => new ManyOf<T>(), false)
+        { }
     }
 }

@@ -94,7 +94,7 @@ namespace Yaapii.Atoms.Enumerator
         /// </summary>
         /// <param name="enumerator">enumerator to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static HeadOf<T> New<T>(IEnumerator<T> enumerator, int limit) =>
+        public static IEnumerator<T> New<T>(IEnumerator<T> enumerator, int limit) =>
             new HeadOf<T>(enumerator, limit);
     }
 }

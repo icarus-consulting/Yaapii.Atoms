@@ -68,12 +68,6 @@ namespace Yaapii.Atoms.Enumerable
             false
         )
         { }
-
-        /// <summary>
-        /// Union objects in two enumerables.
-        /// </summary>
-        private Union(Func<IEnumerable<T>> unite) : base(unite, false)
-        { }
     }
 
     /// <summary>
@@ -85,13 +79,13 @@ namespace Yaapii.Atoms.Enumerable
         /// Union objects in two enumerables.
         /// </summary>
         /// <param name="compare">Condition to match</param>
-        public static Union<T> New<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) =>
+        public static IEnumerable<T> New<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) =>
             new Union<T>(a, b, compare);
 
         /// <summary>
         /// Union objects in two enumerables.
         /// </summary>
-        public static Union<T> New<T>(IEnumerable<T> a, IEnumerable<T> b) =>
+        public static IEnumerable<T> New<T>(IEnumerable<T> a, IEnumerable<T> b) =>
             new Union<T>(a, b);
     }
 }
