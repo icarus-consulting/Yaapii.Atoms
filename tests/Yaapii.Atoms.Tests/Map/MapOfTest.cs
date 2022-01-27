@@ -317,5 +317,35 @@ namespace Yaapii.Atoms.Map.Tests
             var map = new MapOf(new ManyOf());
             Assert.Equal(0, map.Keys.Count);
         }
+
+        [Fact]
+        public void ImplicitCtorWithMapWorks()
+        {
+            var map =
+                MapOf.New(
+                    KvpOf.New("target",
+                        new FallbackMap(
+                            new MapOf(
+                                "CONTAINS", "contains",
+                                "GT", ">",
+                                "LT", "<",
+                                "EQ", "="
+                            ),
+                            unkown => unkown
+                        )
+                    ),
+                    KvpOf.New("program",
+                        new FallbackMap(
+                            new MapOf(
+                                "CONTAINS", "contains",
+                                "GT", ">",
+                                "LT", "<",
+                                "EQ", "="
+                            ),
+                            unkown => unkown
+                        )
+                    )
+                );
+        }
     }
 }

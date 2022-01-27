@@ -23,19 +23,19 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Func;
 
 namespace Yaapii.Atoms.Tests
 {
     internal class Tidy : IAction
     {
-        private readonly Action _task;
-        private readonly IEnumerable<Uri> _files;
+        private readonly Action act;
+        private readonly IEnumerable<Uri> files;
 
-        public Tidy(Action task, params Uri[] files)
+        public Tidy(Action act, params Uri[] files)
         {
-            _files = files;
-            _task = task;
+            this.files = files;
+            this.act = act;
         }
 
         public void Invoke()
@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Tests
             Delete();
             try
             {
-                _task.Invoke();
+                act.Invoke();
             }
             finally
             {
@@ -57,7 +57,7 @@ namespace Yaapii.Atoms.Tests
                 {
                     if (File.Exists(uri.AbsolutePath)) File.Delete(uri.AbsolutePath);
                 },
-                this._files
+                this.files
             ).Invoke();
 
         }

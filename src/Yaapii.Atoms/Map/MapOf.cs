@@ -210,6 +210,396 @@ namespace Yaapii.Atoms.Map
         { }
 
         /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            string key10, Value value10
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9,
+            key10, value10
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            string key10, Value value10,
+            string key11, Value value11
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9,
+            key10, value10,
+            key11, value11
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            string key10, Value value10,
+            string key11, Value value11,
+            string key12, Value value12
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9,
+            key10, value10,
+            key11, value11,
+            key12, value12
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            string key10, Value value10,
+            string key11, Value value11,
+            string key12, Value value12,
+            string key13, Value value13
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9,
+            key10, value10,
+            key11, value11,
+            key12, value12,
+            key13, value13
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            string key10, Value value10,
+            string key11, Value value11,
+            string key12, Value value12,
+            string key13, Value value13,
+            string key14, Value value14
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9,
+            key10, value10,
+            key11, value11,
+            key12, value12,
+            key13, value13,
+            key14, value14
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            string key10, Value value10,
+            string key11, Value value11,
+            string key12, Value value12,
+            string key13, Value value13,
+            string key14, Value value14,
+            string key15, Value value15
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9,
+            key10, value10,
+            key11, value11,
+            key12, value12,
+            key13, value13,
+            key14, value14,
+            key15, value15
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<string, Value> New<Value>(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            string key10, Value value10,
+            string key11, Value value11,
+            string key12, Value value12,
+            string key13, Value value13,
+            string key14, Value value14,
+            string key15, Value value15,
+            string key16, Value value16
+        )
+        => new MapOf<Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9,
+            key10, value10,
+            key11, value11,
+            key12, value12,
+            key13, value13,
+            key14, value14,
+            key15, value15,
+            key16, value16
+        );
+
+        /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
         public static IDictionary<string, Value> New<Value>(KeyValuePair<string, Value> entry, params KeyValuePair<string, Value>[] more)
@@ -270,6 +660,396 @@ namespace Yaapii.Atoms.Map
         /// <param name="input">input dictionary</param>
         public static IDictionary<string, Value> New<Value>(Func<IDictionary<string, Value>> input)
             => new MapOf<Value>(input);
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2,
+            Key key3, Value value3
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            Key key10, Value value10
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9,
+            key10, value10
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            Key key10, Value value10,
+            Key key11, Value value11
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9,
+            key10, value10,
+            key11, value11
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            Key key10, Value value10,
+            Key key11, Value value11,
+            Key key12, Value value12
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9,
+            key10, value10,
+            key11, value11,
+            key12, value12
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            Key key10, Value value10,
+            Key key11, Value value11,
+            Key key12, Value value12,
+            Key key13, Value value13
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9,
+            key10, value10,
+            key11, value11,
+            key12, value12,
+            key13, value13
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            Key key10, Value value10,
+            Key key11, Value value11,
+            Key key12, Value value12,
+            Key key13, Value value13,
+            Key key14, Value value14
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9,
+            key10, value10,
+            key11, value11,
+            key12, value12,
+            key13, value13,
+            key14, value14
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            Key key10, Value value10,
+            Key key11, Value value11,
+            Key key12, Value value12,
+            Key key13, Value value13,
+            Key key14, Value value14,
+            Key key15, Value value15
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9,
+            key10, value10,
+            key11, value11,
+            key12, value12,
+            key13, value13,
+            key14, value14,
+            key15, value15
+        );
+
+        /// <summary>
+        /// A map from the given keys and values.
+        /// </summary>
+        public static IDictionary<Key, Value> New<Key, Value>(
+            Key key1, Value value1,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            Key key10, Value value10,
+            Key key11, Value value11,
+            Key key12, Value value12,
+            Key key13, Value value13,
+            Key key14, Value value14,
+            Key key15, Value value15,
+            Key key16, Value value16
+        )
+        => new MapOf<Key, Value>(
+            key1, value1,
+            key2, value2,
+            key3, value3,
+            key4, value4,
+            key5, value5,
+            key6, value6,
+            key7, value7,
+            key8, value8,
+            key9, value9,
+            key10, value10,
+            key11, value11,
+            key12, value12,
+            key13, value13,
+            key14, value14,
+            key15, value15,
+            key16, value16
+        );
 
         /// <summary>
         /// A map from the given KeyValuePairs
@@ -355,6 +1135,456 @@ namespace Yaapii.Atoms.Map
     /// </summary>
     public sealed class MapOf<Value> : MapEnvelope<Value>
     {
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2),
+                new KvpOf<Value>(key3, value3)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2),
+                new KvpOf<Value>(key3, value3),
+                new KvpOf<Value>(key4, value4)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2),
+                new KvpOf<Value>(key3, value3),
+                new KvpOf<Value>(key4, value4),
+                new KvpOf<Value>(key5, value5)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2),
+                new KvpOf<Value>(key3, value3),
+                new KvpOf<Value>(key4, value4),
+                new KvpOf<Value>(key5, value5),
+                new KvpOf<Value>(key6, value6)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2),
+                new KvpOf<Value>(key3, value3),
+                new KvpOf<Value>(key4, value4),
+                new KvpOf<Value>(key5, value5),
+                new KvpOf<Value>(key6, value6),
+                new KvpOf<Value>(key7, value7)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2),
+                new KvpOf<Value>(key3, value3),
+                new KvpOf<Value>(key4, value4),
+                new KvpOf<Value>(key5, value5),
+                new KvpOf<Value>(key6, value6),
+                new KvpOf<Value>(key7, value7),
+                new KvpOf<Value>(key8, value8)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2),
+                new KvpOf<Value>(key3, value3),
+                new KvpOf<Value>(key4, value4),
+                new KvpOf<Value>(key5, value5),
+                new KvpOf<Value>(key6, value6),
+                new KvpOf<Value>(key7, value7),
+                new KvpOf<Value>(key8, value8),
+                new KvpOf<Value>(key9, value9)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            string key10, Value value10,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2),
+                new KvpOf<Value>(key3, value3),
+                new KvpOf<Value>(key4, value4),
+                new KvpOf<Value>(key5, value5),
+                new KvpOf<Value>(key6, value6),
+                new KvpOf<Value>(key7, value7),
+                new KvpOf<Value>(key8, value8),
+                new KvpOf<Value>(key9, value9),
+                new KvpOf<Value>(key10, value10)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            string key10, Value value10,
+            string key11, Value value11,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2),
+                new KvpOf<Value>(key3, value3),
+                new KvpOf<Value>(key4, value4),
+                new KvpOf<Value>(key5, value5),
+                new KvpOf<Value>(key6, value6),
+                new KvpOf<Value>(key7, value7),
+                new KvpOf<Value>(key8, value8),
+                new KvpOf<Value>(key9, value9),
+                new KvpOf<Value>(key10, value10),
+                new KvpOf<Value>(key11, value11)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            string key10, Value value10,
+            string key11, Value value11,
+            string key12, Value value12,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2),
+                new KvpOf<Value>(key3, value3),
+                new KvpOf<Value>(key4, value4),
+                new KvpOf<Value>(key5, value5),
+                new KvpOf<Value>(key6, value6),
+                new KvpOf<Value>(key7, value7),
+                new KvpOf<Value>(key8, value8),
+                new KvpOf<Value>(key9, value9),
+                new KvpOf<Value>(key10, value10),
+                new KvpOf<Value>(key11, value11),
+                new KvpOf<Value>(key12, value12)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            string key10, Value value10,
+            string key11, Value value11,
+            string key12, Value value12,
+            string key13, Value value13,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2),
+                new KvpOf<Value>(key3, value3),
+                new KvpOf<Value>(key4, value4),
+                new KvpOf<Value>(key5, value5),
+                new KvpOf<Value>(key6, value6),
+                new KvpOf<Value>(key7, value7),
+                new KvpOf<Value>(key8, value8),
+                new KvpOf<Value>(key9, value9),
+                new KvpOf<Value>(key10, value10),
+                new KvpOf<Value>(key11, value11),
+                new KvpOf<Value>(key12, value12),
+                new KvpOf<Value>(key13, value13)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            string key10, Value value10,
+            string key11, Value value11,
+            string key12, Value value12,
+            string key13, Value value13,
+            string key14, Value value14,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2),
+                new KvpOf<Value>(key3, value3),
+                new KvpOf<Value>(key4, value4),
+                new KvpOf<Value>(key5, value5),
+                new KvpOf<Value>(key6, value6),
+                new KvpOf<Value>(key7, value7),
+                new KvpOf<Value>(key8, value8),
+                new KvpOf<Value>(key9, value9),
+                new KvpOf<Value>(key10, value10),
+                new KvpOf<Value>(key11, value11),
+                new KvpOf<Value>(key12, value12),
+                new KvpOf<Value>(key13, value13),
+                new KvpOf<Value>(key14, value14)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            string key10, Value value10,
+            string key11, Value value11,
+            string key12, Value value12,
+            string key13, Value value13,
+            string key14, Value value14,
+            string key15, Value value15,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2),
+                new KvpOf<Value>(key3, value3),
+                new KvpOf<Value>(key4, value4),
+                new KvpOf<Value>(key5, value5),
+                new KvpOf<Value>(key6, value6),
+                new KvpOf<Value>(key7, value7),
+                new KvpOf<Value>(key8, value8),
+                new KvpOf<Value>(key9, value9),
+                new KvpOf<Value>(key10, value10),
+                new KvpOf<Value>(key11, value11),
+                new KvpOf<Value>(key12, value12),
+                new KvpOf<Value>(key13, value13),
+                new KvpOf<Value>(key14, value14),
+                new KvpOf<Value>(key15, value15)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            string key1, Value value1,
+            string key2, Value value2,
+            string key3, Value value3,
+            string key4, Value value4,
+            string key5, Value value5,
+            string key6, Value value6,
+            string key7, Value value7,
+            string key8, Value value8,
+            string key9, Value value9,
+            string key10, Value value10,
+            string key11, Value value11,
+            string key12, Value value12,
+            string key13, Value value13,
+            string key14, Value value14,
+            string key15, Value value15,
+            string key16, Value value16,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Value>>(
+                new KvpOf<Value>(key1, value1),
+                new KvpOf<Value>(key2, value2),
+                new KvpOf<Value>(key3, value3),
+                new KvpOf<Value>(key4, value4),
+                new KvpOf<Value>(key5, value5),
+                new KvpOf<Value>(key6, value6),
+                new KvpOf<Value>(key7, value7),
+                new KvpOf<Value>(key8, value8),
+                new KvpOf<Value>(key9, value9),
+                new KvpOf<Value>(key10, value10),
+                new KvpOf<Value>(key11, value11),
+                new KvpOf<Value>(key12, value12),
+                new KvpOf<Value>(key13, value13),
+                new KvpOf<Value>(key14, value14),
+                new KvpOf<Value>(key15, value15),
+                new KvpOf<Value>(key16, value16)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
@@ -466,6 +1696,456 @@ namespace Yaapii.Atoms.Map
     /// </summary>
     public sealed class MapOf<Key, Value> : MapEnvelope<Key, Value>
     {
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2),
+                new KvpOf<Key, Value>(key3, value3)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2),
+                new KvpOf<Key, Value>(key3, value3),
+                new KvpOf<Key, Value>(key4, value4)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2),
+                new KvpOf<Key, Value>(key3, value3),
+                new KvpOf<Key, Value>(key4, value4),
+                new KvpOf<Key, Value>(key5, value5)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2),
+                new KvpOf<Key, Value>(key3, value3),
+                new KvpOf<Key, Value>(key4, value4),
+                new KvpOf<Key, Value>(key5, value5),
+                new KvpOf<Key, Value>(key6, value6)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2),
+                new KvpOf<Key, Value>(key3, value3),
+                new KvpOf<Key, Value>(key4, value4),
+                new KvpOf<Key, Value>(key5, value5),
+                new KvpOf<Key, Value>(key6, value6),
+                new KvpOf<Key, Value>(key7, value7)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2),
+                new KvpOf<Key, Value>(key3, value3),
+                new KvpOf<Key, Value>(key4, value4),
+                new KvpOf<Key, Value>(key5, value5),
+                new KvpOf<Key, Value>(key6, value6),
+                new KvpOf<Key, Value>(key7, value7),
+                new KvpOf<Key, Value>(key8, value8)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2),
+                new KvpOf<Key, Value>(key3, value3),
+                new KvpOf<Key, Value>(key4, value4),
+                new KvpOf<Key, Value>(key5, value5),
+                new KvpOf<Key, Value>(key6, value6),
+                new KvpOf<Key, Value>(key7, value7),
+                new KvpOf<Key, Value>(key8, value8),
+                new KvpOf<Key, Value>(key9, value9)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            Key key10, Value Key0,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2),
+                new KvpOf<Key, Value>(key3, value3),
+                new KvpOf<Key, Value>(key4, value4),
+                new KvpOf<Key, Value>(key5, value5),
+                new KvpOf<Key, Value>(key6, value6),
+                new KvpOf<Key, Value>(key7, value7),
+                new KvpOf<Key, Value>(key8, value8),
+                new KvpOf<Key, Value>(key9, value9),
+                new KvpOf<Key, Value>(key10, Key0)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            Key key10, Value Key0,
+            Key key11, Value Key1,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2),
+                new KvpOf<Key, Value>(key3, value3),
+                new KvpOf<Key, Value>(key4, value4),
+                new KvpOf<Key, Value>(key5, value5),
+                new KvpOf<Key, Value>(key6, value6),
+                new KvpOf<Key, Value>(key7, value7),
+                new KvpOf<Key, Value>(key8, value8),
+                new KvpOf<Key, Value>(key9, value9),
+                new KvpOf<Key, Value>(key10, Key0),
+                new KvpOf<Key, Value>(key11, Key1)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            Key key10, Value Key0,
+            Key key11, Value Key1,
+            Key key12, Value Key2,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2),
+                new KvpOf<Key, Value>(key3, value3),
+                new KvpOf<Key, Value>(key4, value4),
+                new KvpOf<Key, Value>(key5, value5),
+                new KvpOf<Key, Value>(key6, value6),
+                new KvpOf<Key, Value>(key7, value7),
+                new KvpOf<Key, Value>(key8, value8),
+                new KvpOf<Key, Value>(key9, value9),
+                new KvpOf<Key, Value>(key10, Key0),
+                new KvpOf<Key, Value>(key11, Key1),
+                new KvpOf<Key, Value>(key12, Key2)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            Key key10, Value Key0,
+            Key key11, Value Key1,
+            Key key12, Value Key2,
+            Key key13, Value Key3,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2),
+                new KvpOf<Key, Value>(key3, value3),
+                new KvpOf<Key, Value>(key4, value4),
+                new KvpOf<Key, Value>(key5, value5),
+                new KvpOf<Key, Value>(key6, value6),
+                new KvpOf<Key, Value>(key7, value7),
+                new KvpOf<Key, Value>(key8, value8),
+                new KvpOf<Key, Value>(key9, value9),
+                new KvpOf<Key, Value>(key10, Key0),
+                new KvpOf<Key, Value>(key11, Key1),
+                new KvpOf<Key, Value>(key12, Key2),
+                new KvpOf<Key, Value>(key13, Key3)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            Key key10, Value Key0,
+            Key key11, Value Key1,
+            Key key12, Value Key2,
+            Key key13, Value Key3,
+            Key key14, Value Key4,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2),
+                new KvpOf<Key, Value>(key3, value3),
+                new KvpOf<Key, Value>(key4, value4),
+                new KvpOf<Key, Value>(key5, value5),
+                new KvpOf<Key, Value>(key6, value6),
+                new KvpOf<Key, Value>(key7, value7),
+                new KvpOf<Key, Value>(key8, value8),
+                new KvpOf<Key, Value>(key9, value9),
+                new KvpOf<Key, Value>(key10, Key0),
+                new KvpOf<Key, Value>(key11, Key1),
+                new KvpOf<Key, Value>(key12, Key2),
+                new KvpOf<Key, Value>(key13, Key3),
+                new KvpOf<Key, Value>(key14, Key4)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            Key key10, Value Key0,
+            Key key11, Value Key1,
+            Key key12, Value Key2,
+            Key key13, Value Key3,
+            Key key14, Value Key4,
+            Key key15, Value Key5,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2),
+                new KvpOf<Key, Value>(key3, value3),
+                new KvpOf<Key, Value>(key4, value4),
+                new KvpOf<Key, Value>(key5, value5),
+                new KvpOf<Key, Value>(key6, value6),
+                new KvpOf<Key, Value>(key7, value7),
+                new KvpOf<Key, Value>(key8, value8),
+                new KvpOf<Key, Value>(key9, value9),
+                new KvpOf<Key, Value>(key10, Key0),
+                new KvpOf<Key, Value>(key11, Key1),
+                new KvpOf<Key, Value>(key12, Key2),
+                new KvpOf<Key, Value>(key13, Key3),
+                new KvpOf<Key, Value>(key14, Key4),
+                new KvpOf<Key, Value>(key15, Key5)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
+        /// <summary>
+        /// A map from the given KeyValuePairs
+        /// </summary>
+        public MapOf(
+            Key key1, Value Key,
+            Key key2, Value value2,
+            Key key3, Value value3,
+            Key key4, Value value4,
+            Key key5, Value value5,
+            Key key6, Value value6,
+            Key key7, Value value7,
+            Key key8, Value value8,
+            Key key9, Value value9,
+            Key key10, Value Key0,
+            Key key11, Value Key1,
+            Key key12, Value Key2,
+            Key key13, Value Key3,
+            Key key14, Value Key4,
+            Key key15, Value Key5,
+            Key key16, Value Key6,
+            bool rejectBuildingAllValues = true
+        ) : this(
+            new ManyOf<IKvp<Key, Value>>(
+                new KvpOf<Key, Value>(key1, Key),
+                new KvpOf<Key, Value>(key2, value2),
+                new KvpOf<Key, Value>(key3, value3),
+                new KvpOf<Key, Value>(key4, value4),
+                new KvpOf<Key, Value>(key5, value5),
+                new KvpOf<Key, Value>(key6, value6),
+                new KvpOf<Key, Value>(key7, value7),
+                new KvpOf<Key, Value>(key8, value8),
+                new KvpOf<Key, Value>(key9, value9),
+                new KvpOf<Key, Value>(key10, Key0),
+                new KvpOf<Key, Value>(key11, Key1),
+                new KvpOf<Key, Value>(key12, Key2),
+                new KvpOf<Key, Value>(key13, Key3),
+                new KvpOf<Key, Value>(key14, Key4),
+                new KvpOf<Key, Value>(key15, Key5),
+                new KvpOf<Key, Value>(key16, Key6)
+            ),
+            rejectBuildingAllValues
+        )
+        { }
+
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>

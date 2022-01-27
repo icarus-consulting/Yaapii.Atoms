@@ -99,6 +99,14 @@ namespace Yaapii.Atoms.Enumerable.Tests
             var b = length.Value();
             Assert.Equal(a, b);
         }
-    }
 
+        [Fact]
+        public void NonGenericEnumerates()
+        {
+            Assert.Equal(
+                new List<string>() { "one", "two", "eight" },
+                new ManyOf("one", "two", "eight")
+            );
+        }
+    }
 }

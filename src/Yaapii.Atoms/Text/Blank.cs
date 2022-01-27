@@ -20,20 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.Collections.Generic;
-using Xunit;
+using System;
 
-namespace Yaapii.Atoms.Enumerable
+namespace Yaapii.Atoms.Text
 {
-    public sealed class StringsTests
+    /// <summary>
+    /// A blank text.
+    /// </summary>
+    public sealed class Blank : IText
     {
-        [Fact]
-        public void Enumerates()
+        /// <summary>
+        /// A blank text.
+        /// </summary>
+        public Blank()
+        { }
+
+        public string AsString()
         {
-            Assert.Equal(
-                new List<string>() { "one", "two", "eight" },
-                new ManyOf("one", "two", "eight")
-            );
+            return String.Empty;
         }
     }
 }

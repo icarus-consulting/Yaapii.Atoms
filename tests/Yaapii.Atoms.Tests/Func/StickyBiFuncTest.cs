@@ -35,8 +35,8 @@ namespace Yaapii.Atoms.Func.Tests
             );
 
             Assert.Equal(
-                func.Apply(true, true) + func.Apply(true, true),
-                func.Apply(true, true) + func.Apply(true, true)
+                func.Invoke(true, true) + func.Invoke(true, true),
+                func.Invoke(true, true) + func.Invoke(true, true)
             );
         }
     }
