@@ -10,7 +10,7 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// A map which is empty.
         /// </summary>
-        public EmptyMap() : base(() => new MapOf(), false)
+        public EmptyMap() : base(() => new MapOf(new ManyOf()), false)
         { }
     }
 
