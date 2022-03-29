@@ -50,30 +50,25 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// <see cref="StreamWriter"/> as a writable <see cref="Stream"/>.
         /// </summary>
-        /// <param name="wtr">a writer</param>
-        public WriterAsOutputStream(StreamWriter wtr) : this(wtr, Encoding.UTF8)
+        public WriterAsOutputStream(StreamWriter writer) : this(writer, Encoding.UTF8)
         { }
 
         /// <summary>
         /// <see cref="StreamWriter"/> as a writable <see cref="Stream"/>.
         /// </summary>
-        /// <param name="wtr">a writer</param>
-        /// <param name="encoding">encoding of the writer</param>
-        public WriterAsOutputStream(StreamWriter wtr, string encoding) : this(wtr, Encoding.GetEncoding(encoding))
+        public WriterAsOutputStream(StreamWriter writer, string encoding) : this(writer, Encoding.GetEncoding(encoding))
         { }
 
         /// <summary>
         /// <see cref="StreamWriter"/> as a writable <see cref="Stream"/>.
         /// </summary>
-        /// <param name="wtr">a writer</param>
-        /// <param name="enc">encoding of the writer</param>
-        public WriterAsOutputStream(StreamWriter wtr, Encoding enc) : this(
-                wtr,
+        public WriterAsOutputStream(StreamWriter writer, Encoding encoding) : this(
+                writer,
                 new Live<Decoder>(() =>
                 {
-                    var ddr = enc.GetDecoder();
-                    ddr.Fallback = DecoderFallback.ExceptionFallback;
-                    return ddr;
+                    var decoder = encoding.GetDecoder();
+                    decoder.Fallback = DecoderFallback.ExceptionFallback;
+                    return decoder;
                 })
             )
         { }
@@ -81,18 +76,15 @@ namespace Yaapii.Atoms.IO
         /// <summary>
         /// <see cref="StreamWriter"/> as a writable <see cref="Stream"/>.
         /// </summary>
-        /// <param name="wtr">a writer</param>
-        /// <param name="ddr">charset decoder for the writer</param>
-        public WriterAsOutputStream(StreamWriter wtr, IScalar<Decoder> ddr) : base()
+        public WriterAsOutputStream(StreamWriter writer, IScalar<Decoder> decoder) : base()
         {
-            this._writer = wtr;
-            this._decoder = ddr;
+            this._writer = writer;
+            this._decoder = decoder;
         }
 
         /// <summary>
         /// <see cref="StreamWriter"/> as a writable <see cref="Stream"/>.
         /// </summary>
-        /// <param name="data">some data</param>
         public void Write(int data)
         {
             this.Write(new byte[] { (byte)data }, 0, 1);
