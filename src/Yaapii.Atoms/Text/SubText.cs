@@ -43,11 +43,11 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start</param>
-        /// <param name="end">where to end</param>
-        public SubText(String text, int strt, int end) : this(
+        /// <param name="len">length of substring</param>
+        public SubText(String text, int strt, int len) : this(
             new LiveText(text),
             strt,
-            end
+            len
         )
         { }
 
@@ -68,11 +68,11 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start</param>
-        /// <param name="end">where to end</param>
-        public SubText(IText text, int strt, int end) : this(
+        /// <param name="len">length of substring</param>
+        public SubText(IText text, int strt, int len) : this(
             text,
             new Live<Int32>(strt),
-            new Live<Int32>(end)
+            new Live<Int32>(len)
         )
         { }
 
@@ -81,7 +81,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start encapsulated in a scalar</param>
-        /// <param name="len">where to end encapsulated in a scalar</param>
+        /// <param name="len">length of substring encapsulated in a scalar</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
         public SubText(
             IText text,
@@ -100,7 +100,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="text">text to extract from</param>
         /// <param name="strt">where to start encapsulated in a scalar</param>
-        /// <param name="len">where to end encapsulated in a scalar</param>
+        /// <param name="len">length of substring encapsulated in a scalar</param>
         public SubText(IText text, Func<Int32> strt, Func<Int32> len) : base(() =>
             {
                 return
