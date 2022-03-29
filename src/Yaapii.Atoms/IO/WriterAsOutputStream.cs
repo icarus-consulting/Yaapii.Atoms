@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.IO
     /// <summary>
     /// <see cref="StreamWriter"/> as a writable <see cref="Stream"/>.
     /// </summary>
-    internal class WriterAsOutputStream : Stream, IDisposable
+    public sealed class WriterAsOutputStream : Stream, IDisposable
     {
         /// <summary>
         /// the writer
@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.IO
         /// <see cref="StreamWriter"/> as a writable <see cref="Stream"/>.
         /// </summary>
         /// <param name="wtr">a writer</param>
-        internal WriterAsOutputStream(StreamWriter wtr) : this(wtr, Encoding.UTF8)
+        public WriterAsOutputStream(StreamWriter wtr) : this(wtr, Encoding.UTF8)
         { }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="wtr">a writer</param>
         /// <param name="encoding">encoding of the writer</param>
-        internal WriterAsOutputStream(StreamWriter wtr, string encoding) : this(wtr, Encoding.GetEncoding(encoding))
+        public WriterAsOutputStream(StreamWriter wtr, string encoding) : this(wtr, Encoding.GetEncoding(encoding))
         { }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="wtr">a writer</param>
         /// <param name="enc">encoding of the writer</param>
-        internal WriterAsOutputStream(StreamWriter wtr, Encoding enc) : this(
+        public WriterAsOutputStream(StreamWriter wtr, Encoding enc) : this(
                 wtr,
                 new Live<Decoder>(() =>
                 {
@@ -83,7 +83,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         /// <param name="wtr">a writer</param>
         /// <param name="ddr">charset decoder for the writer</param>
-        internal WriterAsOutputStream(StreamWriter wtr, IScalar<Decoder> ddr) : base()
+        public WriterAsOutputStream(StreamWriter wtr, IScalar<Decoder> ddr) : base()
         {
             this._writer = wtr;
             this._decoder = ddr;

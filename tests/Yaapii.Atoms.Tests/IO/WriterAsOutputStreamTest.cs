@@ -22,18 +22,20 @@
 
 using System;
 using System.IO;
+using System.Text;
 using Xunit;
 using Yaapii.Atoms.Bytes;
 using Yaapii.Atoms.Enumerable;
+using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.IO.Tests
 {
-    public sealed class WriterAsOutputTest
+    public sealed class WriterAsOutputStreamTest
     {
         [Fact]
-        public void WritesLargeContentToFile()
+        public void WritesContentToFile()
         {
-            var dir = "artifacts/WriterAsOutputTest"; var inputFile = "large-text.txt";
+            var dir = "artifacts/WriterAsOutputStreamTest"; var inputFile = "large-text.txt";
             var inputPath = Path.GetFullPath(Path.Combine(dir, inputFile));
             var outputFile = "text-copy.txt";
             var outputPath = Path.GetFullPath(Path.Combine(dir, outputFile));
@@ -48,7 +50,7 @@ namespace Yaapii.Atoms.IO.Tests
                     new TeeInputStream(
                         new MemoryStream(
                             new BytesOf(
-                                new Text.Joined(",",
+                                new Text.Joined(", ",
                                     new HeadOf<string>(
                                         new Endless<string>("Hello World"),
                                         1000
@@ -66,18 +68,20 @@ namespace Yaapii.Atoms.IO.Tests
             //Read from large file and write to output file (make a copy)
             var filestream = new FileStream(outputPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write);
 
-            long left;
-            left =
-                new LengthOf(
-                    new TeeInput(
-                        new InputOf(
+            long left =
+            new LengthOf(
+                new InputOf(
+                    new TeeInputStream(
+                        new InputStreamOf(
                             new Uri(Path.GetFullPath(inputPath))
                         ),
-                        new WriterAsOutput(
+                        new WriterAsOutputStream(
                             new StreamWriter(filestream)
                         )
                     )
-                ).Value();
+                )
+
+            ).Value();
 
             long right =
                 new LengthOf(
@@ -89,5 +93,36 @@ namespace Yaapii.Atoms.IO.Tests
             Assert.True(left == right, "input and output are not the same size");
         }
 
+        [Fact]
+        public void TryRead()
+        {
+            byte[] bytes = {};
+            var stream = new WriterAsOutputStream(
+                             new StreamWriter(new MemoryStream())
+                             );
+            Assert.ThrowsAny<NotImplementedException>(
+                () => stream.Read(bytes,0,1));
+        }
+
+        [Fact]
+        public void TrySeek()
+        {
+            var stream = new WriterAsOutputStream(
+                             new StreamWriter(new MemoryStream())
+                             );
+            Assert.ThrowsAny<NotImplementedException>(
+                () => stream.Seek(3L, SeekOrigin.Begin));
+        }
+
+        [Fact]
+        public void TrySetLength()
+        {
+            var stream = new WriterAsOutputStream(
+                             new StreamWriter(new MemoryStream())
+                             );
+            Assert.ThrowsAny<NotImplementedException>(
+                () => stream.SetLength(5L));
+        }
     }
 }
+
