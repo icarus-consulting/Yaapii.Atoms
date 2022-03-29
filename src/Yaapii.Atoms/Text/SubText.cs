@@ -33,17 +33,12 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// Extracted subtext from a <see cref="string"/>.
         /// </summary>
-        /// <param name="text">text to extreact from</param>
-        /// <param name="start">where to start</param>
         public SubText(String text, int start) : this(new LiveText(text), start)
         { }
 
         /// <summary>
         /// Extracted subtext from a <see cref="string"/>.
         /// </summary>
-        /// <param name="text">text to extract from</param>
-        /// <param name="start">where to start</param>
-        /// <param name="length">how many characters to extract</param>
         public SubText(String text, int start, int length) : this(
             new LiveText(text),
             start,
@@ -54,8 +49,6 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
-        /// <param name="text">text to extract from</param>
-        /// <param name="start">where to start</param>
         public SubText(IText text, int start) : this(
             text,
             new Live<Int32>(start),
@@ -66,9 +59,6 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
-        /// <param name="text">text to extract from</param>
-        /// <param name="start">where to start</param>
-        /// <param name="length">how many characters to extract</param>
         public SubText(IText text, int start, int length) : this(
             text,
             new Live<Int32>(start),
@@ -79,10 +69,6 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
-        /// <param name="text">text to extract from</param>
-        /// <param name="start">where to start encapsulated in a scalar</param>
-        /// <param name="length">how many characters to extract encapsulated in a scalar</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
         public SubText(
             IText text,
             Live<Int32> start,
@@ -98,9 +84,6 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
-        /// <param name="text">text to extract from</param>
-        /// <param name="start">where to start encapsulated in a scalar</param>
-        /// <param name="length">how many characters to extract encapsulated in a scalar</param>
         public SubText(IText text, Func<Int32> start, Func<Int32> length) : base(() =>
             {
                 return
