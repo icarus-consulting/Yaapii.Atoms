@@ -34,20 +34,20 @@ namespace Yaapii.Atoms.Text
         /// Extracted subtext from a <see cref="string"/>.
         /// </summary>
         /// <param name="text">text to extreact from</param>
-        /// <param name="strt">where to start</param>
-        public SubText(String text, int strt) : this(new LiveText(text), strt)
+        /// <param name="start">where to start</param>
+        public SubText(String text, int start) : this(new LiveText(text), start)
         { }
 
         /// <summary>
         /// Extracted subtext from a <see cref="string"/>.
         /// </summary>
         /// <param name="text">text to extract from</param>
-        /// <param name="strt">where to start</param>
-        /// <param name="len">length of substring</param>
-        public SubText(String text, int strt, int len) : this(
+        /// <param name="start">where to start</param>
+        /// <param name="length">how many characters to extract</param>
+        public SubText(String text, int start, int length) : this(
             new LiveText(text),
-            strt,
-            len
+            start,
+            length
         )
         { }
 
@@ -55,11 +55,11 @@ namespace Yaapii.Atoms.Text
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
         /// <param name="text">text to extract from</param>
-        /// <param name="strt">where to start</param>
-        public SubText(IText text, int strt) : this(
+        /// <param name="start">where to start</param>
+        public SubText(IText text, int start) : this(
             text,
-            new Live<Int32>(strt),
-            new Live<Int32>(() => text.AsString().Length - strt)
+            new Live<Int32>(start),
+            new Live<Int32>(() => text.AsString().Length - start)
         )
         { }
 
@@ -67,12 +67,12 @@ namespace Yaapii.Atoms.Text
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
         /// <param name="text">text to extract from</param>
-        /// <param name="strt">where to start</param>
-        /// <param name="len">length of substring</param>
-        public SubText(IText text, int strt, int len) : this(
+        /// <param name="start">where to start</param>
+        /// <param name="length">how many characters to extract</param>
+        public SubText(IText text, int start, int length) : this(
             text,
-            new Live<Int32>(strt),
-            new Live<Int32>(len)
+            new Live<Int32>(start),
+            new Live<Int32>(length)
         )
         { }
 
@@ -80,18 +80,18 @@ namespace Yaapii.Atoms.Text
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
         /// <param name="text">text to extract from</param>
-        /// <param name="strt">where to start encapsulated in a scalar</param>
-        /// <param name="len">length of substring encapsulated in a scalar</param>
+        /// <param name="start">where to start encapsulated in a scalar</param>
+        /// <param name="length">how many characters to extract encapsulated in a scalar</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
         public SubText(
             IText text,
-            Live<Int32> strt,
-            Live<Int32> len,
+            Live<Int32> start,
+            Live<Int32> length,
             bool live = false
         ) : this(
             text,
-            () => strt.Value(),
-            () => len.Value()
+            () => start.Value(),
+            () => length.Value()
         )
         { }
 
@@ -99,14 +99,14 @@ namespace Yaapii.Atoms.Text
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
         /// <param name="text">text to extract from</param>
-        /// <param name="strt">where to start encapsulated in a scalar</param>
-        /// <param name="len">length of substring encapsulated in a scalar</param>
-        public SubText(IText text, Func<Int32> strt, Func<Int32> len) : base(() =>
+        /// <param name="start">where to start encapsulated in a scalar</param>
+        /// <param name="length">how many characters to extract encapsulated in a scalar</param>
+        public SubText(IText text, Func<Int32> start, Func<Int32> length) : base(() =>
             {
                 return
                     text.AsString().Substring(
-                        strt(),
-                        len()
+                        start(),
+                        length()
                     );
             },
             false
