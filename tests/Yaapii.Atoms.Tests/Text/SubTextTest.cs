@@ -78,6 +78,5 @@ namespace Yaapii.Atoms.Text.Tests
                 ).AsString()
             );
         }
-
     }
 }
