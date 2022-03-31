@@ -34,8 +34,8 @@ namespace Yaapii.Atoms.IO.Tests
         public void HasData()
         {
             string folder = Path.Combine(Directory.GetCurrentDirectory(), "ZipTest");
-            //try
-            //{
+            try
+            {
                 Directory.CreateDirectory(folder);
                 var newFile = File.Create(folder + "\\FileToZipOne.txt");
                 newFile.Close();
@@ -47,12 +47,12 @@ namespace Yaapii.Atoms.IO.Tests
                 var archive = new Zip(folder);
                 Assert.InRange<long>(archive.Stream().Length, 1, long.MaxValue);
 
-            //}
-            //finally
-            //{
-            //    Directory.Delete(folder, true);
-            //}
-        }
+            }
+            finally
+            {
+                Directory.Delete(folder, true);
+            }
+}
 
         [Fact]
         public void HasEntry()
