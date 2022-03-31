@@ -162,5 +162,24 @@ namespace Yaapii.Atoms.Scalar.Tests
 
             Assert.Equal("pre", sticky.Value());
         }
+
+        [Fact]
+        public void DeliversLogicErrorMessage()
+        {
+            try
+            {
+                new ItemAt<string>(
+                    new string[] { "one", "two", "three" },
+                    3
+                ).Value();
+            }
+            catch (Exception ex)
+            {
+                Assert.Equal(
+                    "Cannot get element at position 4: Cannot get item 4 - The enumerable has only 3 items.",
+                    ex.Message
+                );
+            }
+        }
     }
 }

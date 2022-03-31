@@ -173,7 +173,7 @@ namespace Yaapii.Atoms.Enumerator
                 {
                     if (!this.src.MoveNext())
                     {
-                        throw new InvalidOperationException($"Cannot get item {this.pos} - The enumerable has only {cur} items.");
+                        throw new InvalidOperationException($"Cannot get item {this.pos+1} - The enumerable has only {cur} items.");
                     }
                 }
 

@@ -150,8 +150,9 @@ namespace Yaapii.Atoms.Enumerable
                         new NoSuchElementException(
                             new Formatted(
                                 "Cannot get element at position {0}: {1}",
-                                position,
-                                ex.Message
+                                position+1,
+                                ex.Message,
+                                position
                             ).AsString()
                     );
                 }
