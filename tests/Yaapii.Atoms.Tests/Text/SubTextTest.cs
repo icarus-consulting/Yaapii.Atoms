@@ -73,7 +73,8 @@ namespace Yaapii.Atoms.Text.Tests
                 "the",
                 new SubText(
                     new LiveText("this_is:the_end"),
-                    8, 3
+                    8,
+                    3
                 ).AsString()
             );
         }
