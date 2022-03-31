@@ -143,6 +143,17 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// A map from string to string.
         /// </summary>
+        public MapOf(string key, string value, params string[] additional) : this(
+            new Enumerable.Joined<string>(
+                new ManyOf(key, value),
+                additional
+            )
+        )
+        { }
+
+        /// <summary>
+        /// A map from string to string.
+        /// </summary>
         /// <param name="pairSequence">Pairs as a sequence, ordered like this: key-1, value-1, ... key-n, value-n</param>
         public MapOf(IEnumerable<string> pairSequence) : this(
             () =>
