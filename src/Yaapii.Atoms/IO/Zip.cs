@@ -19,6 +19,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+using System;
 using System.IO;
 using System.IO.Compression;
 using Yaapii.Atoms;
@@ -49,15 +50,24 @@ public sealed class Zip : IInput
     public Stream Stream()
     {
         AssumeIsDirectory(this.path);
+
+        var directories = Directory.GetFiles(this.path, "*", SearchOption.AllDirectories);
+        var array = new string[directories.Length];
+        for (int i = 0; i < directories.Length; i++)
+        {
+            array[i] = Path.GetFileName(directories[i]);
+        }
         var memory = new MemoryStream();
         using (var zip = new ZipArchive(memory, ZipArchiveMode.Create, true))
         {
-            foreach (var file in Directory.GetFiles(this.path, "*", SearchOption.AllDirectories))
+            for (int i = 0; i < directories.Length; i++)
             {
-                var entry = zip.CreateEntry(file);
+                var entry = zip.CreateEntry(array[i]);
                 new LengthOf(
                     new TeeInput(
-                        new InputOf(file),
+                        new InputOf(
+                            new Uri(directories[i])
+                        ),
                         new OutputTo(entry.Open())
                     )
                 ).Value();

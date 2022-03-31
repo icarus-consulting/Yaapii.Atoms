@@ -20,9 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using System.IO;
 using System.IO.Compression;
 using Xunit;
+using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -32,8 +34,8 @@ namespace Yaapii.Atoms.IO.Tests
         public void HasData()
         {
             string folder = Path.Combine(Directory.GetCurrentDirectory(), "ZipTest");
-            try
-            {
+            //try
+            //{
                 Directory.CreateDirectory(folder);
                 var newFile = File.Create(folder + "\\FileToZipOne.txt");
                 newFile.Close();
@@ -45,11 +47,11 @@ namespace Yaapii.Atoms.IO.Tests
                 var archive = new Zip(folder);
                 Assert.InRange<long>(archive.Stream().Length, 1, long.MaxValue);
 
-            }
-            finally
-            {
-                Directory.Delete(folder, true);
-            }
+            //}
+            //finally
+            //{
+            //    Directory.Delete(folder, true);
+            //}
         }
 
         [Fact]
@@ -66,14 +68,77 @@ namespace Yaapii.Atoms.IO.Tests
                 newFile = File.Create(Path.Combine(folder, "FileToZipThree.txt"));
                 newFile.Close();
 
-                var streamOfZipped = new Zip(folder);
+                var streamOfZipped = new Zip(folder).Stream();
 
-                var archive = new ZipArchive(streamOfZipped.Stream());
-                Assert.True(archive.GetEntry(Path.Combine(folder, "FileToZipTwo.txt")) != null);
+                var archive = new ZipArchive(streamOfZipped);
+                Assert.True(archive.GetEntry("FileToZipTwo.txt") != null);
             }
             finally
             {
                 Directory.Delete(folder, true);
+            }
+        }   
+
+        [Fact]
+        public void ZipSomeFiles()
+        {
+            var folder = new TempDirectory("abc\\data").Value();
+            var firstInput = Path.GetFullPath(Path.Combine(folder.FullName, "A.txt"));
+            var secondInput = Path.GetFullPath(Path.Combine(folder.FullName, "B.txt"));
+            var thirdInput = Path.GetFullPath(Path.Combine(folder.FullName, "C.txt"));
+            var zipPath = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "abc", "data-compressed.zip"));
+            var zipPathCopy = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "abc", "data-compressedCopy.zip"));
+
+            if (File.Exists(firstInput)) File.Delete(firstInput);
+            if (File.Exists(secondInput)) File.Delete(secondInput);
+            if (File.Exists(thirdInput)) File.Delete(thirdInput);
+            if (File.Exists(zipPath)) File.Delete(zipPath);
+            if (File.Exists(zipPathCopy)) File.Delete(zipPathCopy);
+
+            new LengthOf(
+                new TeeInput(
+                    new InputOf("A123"),
+                    new OutputTo(firstInput)
+                )
+            ).Value();
+
+            new LengthOf(
+                new TeeInput(
+                    new InputOf("B456"),
+                    new OutputTo(secondInput)
+                )
+            ).Value();
+
+            new LengthOf(
+                new TeeInput(
+                    new InputOf("C789"),
+                    new OutputTo(thirdInput)
+                )
+            ).Value();
+
+
+            using (var stream = new Zip(folder.FullName).Stream())
+            {
+                using (var fileStream = new FileStream(zipPath, FileMode.Create))
+                    {
+                        stream.Seek(0, SeekOrigin.Begin);
+                        stream.CopyTo(fileStream);
+                }
+                Assert.True(new ZipArchive(stream).GetEntry("A.txt") != null);
+                Assert.True(new ZipArchive(stream).GetEntry("B.txt") != null);
+                Assert.True(new ZipArchive(stream).GetEntry("C.txt") != null);
+            }
+
+            using (var stream = new Zip(folder.FullName).Stream())
+            {
+                using (var fileStream = new FileStream(zipPathCopy, FileMode.Create))
+                {
+                    stream.Seek(0, SeekOrigin.Begin);
+                    stream.CopyTo(fileStream);
+                }
+                Assert.True(new ZipArchive(stream).GetEntry("A.txt") != null);
+                Assert.True(new ZipArchive(stream).GetEntry("B.txt") != null);
+                Assert.True(new ZipArchive(stream).GetEntry("C.txt") != null);
             }
         }
     }
