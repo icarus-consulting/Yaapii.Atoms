@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using Xunit;
 using Yaapii.Atoms.Func;
 
-namespace Yaapii.Atoms.Func.Tests
+namespace Yaapii.Atoms.Scalar.Tests
 {
     public sealed class EachTests
     {

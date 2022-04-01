@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Func;
 
-namespace Yaapii.Atoms.Func
+namespace Yaapii.Atoms.Scalar
 {
     /// <summary>
     /// Does to all elements in a <see cref="IEnumerable{T}"/>
