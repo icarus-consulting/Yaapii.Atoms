@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Func;
 
 namespace Yaapii.Atoms.Tests
 {
