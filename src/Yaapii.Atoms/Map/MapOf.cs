@@ -135,6 +135,14 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// A map from string to string.
         /// </summary>
+        public MapOf(params string[] pairSequence) : this(
+            new ManyOf(pairSequence)
+        )
+        { }
+
+        /// <summary>
+        /// A map from string to string.
+        /// </summary>
         public MapOf(string key, string value, params string[] additional) : this(
             new Enumerable.Joined<string>(
                 new ManyOf(key, value),
@@ -644,7 +652,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">inputs</param>
-        public static IDictionary<string,Value> New<Value>(params IMapInput<Value>[] inputs)
+        public static IDictionary<string, Value> New<Value>(params IMapInput<Value>[] inputs)
             => new MapOf<Value>(inputs);
 
         /// <summary>
