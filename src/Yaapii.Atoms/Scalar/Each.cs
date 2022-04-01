@@ -31,6 +31,7 @@ namespace Yaapii.Atoms.Scalar
     /// Does to all elements in a <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="In"></typeparam>
+    [Obsolete("This object is in the wrong namespace - do NOT use this object anymore, it will be removed in the future. Use the object in Yaapii.Atoms.Func namespace instead.")]
     public sealed class Each<In> : IAction
     {
         private readonly IAction<In> act;
@@ -43,6 +44,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
+        [Obsolete("This object is in the wrong namespace - do NOT use this object anymore, it will be removed in the future. Use the object in Yaapii.Atoms.Func namespace instead.")]
         public Each(Action<In> proc, params In[] src) : this(new ActionOf<In>(input => proc.Invoke(input)), src)
         { }
 
@@ -53,6 +55,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
+        [Obsolete("This object is in the wrong namespace - do NOT use this object anymore, it will be removed in the future. Use the object in Yaapii.Atoms.Func namespace instead.")]
         public Each(Action<In> proc, IEnumerable<In> src) : this(new ActionOf<In>(ipt => proc.Invoke(ipt)), src)
         { }
 
@@ -62,6 +65,7 @@ namespace Yaapii.Atoms.Scalar
         /// <para>Object is <see cref="IAction"/></para>        /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
+        [Obsolete("This object is in the wrong namespace - do NOT use this object anymore, it will be removed in the future. Use the object in Yaapii.Atoms.Func namespace instead.")]
         public Each(IAction<In> proc, params In[] src) : this(
             proc, new ManyOf<In>(src))
         { }
@@ -74,6 +78,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="action"></param>
         /// <param name="enumerable"></param>
+        [Obsolete("This object is in the wrong namespace - do NOT use this object anymore, it will be removed in the future. Use the object in Yaapii.Atoms.Func namespace instead.")]
         public Each(IAction<In> action, IEnumerable<In> enumerable)
         {
             act = action;
