@@ -33,80 +33,63 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// Extracted subtext from a <see cref="string"/>.
         /// </summary>
-        /// <param name="text">text to extreact from</param>
-        /// <param name="strt">where to start</param>
-        public SubText(String text, int strt) : this(new LiveText(text), strt)
+        public SubText(String text, int start) : this(new LiveText(text), start)
         { }
 
         /// <summary>
         /// Extracted subtext from a <see cref="string"/>.
         /// </summary>
-        /// <param name="text">text to extract from</param>
-        /// <param name="strt">where to start</param>
-        /// <param name="end">where to end</param>
-        public SubText(String text, int strt, int end) : this(
+        public SubText(String text, int start, int length) : this(
             new LiveText(text),
-            strt,
-            end
+            start,
+            length
         )
         { }
 
         /// <summary>
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
-        /// <param name="text">text to extract from</param>
-        /// <param name="strt">where to start</param>
-        public SubText(IText text, int strt) : this(
+        public SubText(IText text, int start) : this(
             text,
-            new Live<Int32>(strt),
-            new Live<Int32>(() => text.AsString().Length - strt)
+            new Live<Int32>(start),
+            new Live<Int32>(() => text.AsString().Length - start)
         )
         { }
 
         /// <summary>
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
-        /// <param name="text">text to extract from</param>
-        /// <param name="strt">where to start</param>
-        /// <param name="end">where to end</param>
-        public SubText(IText text, int strt, int end) : this(
+        public SubText(IText text, int start, int length) : this(
             text,
-            new Live<Int32>(strt),
-            new Live<Int32>(end)
+            new Live<Int32>(start),
+            new Live<Int32>(length)
         )
         { }
 
         /// <summary>
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
-        /// <param name="text">text to extract from</param>
-        /// <param name="strt">where to start encapsulated in a scalar</param>
-        /// <param name="len">where to end encapsulated in a scalar</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
         public SubText(
             IText text,
-            Live<Int32> strt,
-            Live<Int32> len,
+            Live<Int32> start,
+            Live<Int32> length,
             bool live = false
         ) : this(
             text,
-            () => strt.Value(),
-            () => len.Value()
+            () => start.Value(),
+            () => length.Value()
         )
         { }
 
         /// <summary>
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
-        /// <param name="text">text to extract from</param>
-        /// <param name="strt">where to start encapsulated in a scalar</param>
-        /// <param name="len">where to end encapsulated in a scalar</param>
-        public SubText(IText text, Func<Int32> strt, Func<Int32> len) : base(() =>
+        public SubText(IText text, Func<Int32> start, Func<Int32> length) : base(() =>
             {
                 return
                     text.AsString().Substring(
-                        strt(),
-                        len()
+                        start(),
+                        length()
                     );
             },
             false
