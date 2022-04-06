@@ -35,93 +35,94 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void WritesContentToFile()
         {
-            var dir = "artifacts/WriterAsOutputStreamTest"; var inputFile = "large-text.txt";
-            var inputPath = Path.GetFullPath(Path.Combine(dir, inputFile));
-            var outputFile = "text-copy.txt";
-            var outputPath = Path.GetFullPath(Path.Combine(dir, outputFile));
+            var inputFile = new TempFile("large-text.txt");
+            var outputFile = new TempFile("copy-text.txt");
+            using (inputFile)
+            {
+                using (outputFile)
+                {
+                    var inputPath = Path.GetFullPath(inputFile.Value());
+                    var outputPath = Path.GetFullPath(outputFile.Value());
 
-            Directory.CreateDirectory(dir);
-            if (File.Exists(inputPath)) File.Delete(inputPath);
-            if (File.Exists(outputPath)) File.Delete(outputPath);
+                    //Create large file
+                    new LengthOf(
+                        new InputOf(
+                            new TeeInputStream(
+                                new MemoryStream(
+                                    new BytesOf(
+                                        new Text.Joined(",",
+                                            new HeadOf<string>(
+                                                new Endless<string>("Hello World"),
+                                                1000
+                                            )
+                                        )
+                                    ).AsBytes()
+                                ),
+                                new OutputTo(
+                                    new Uri(inputPath)
+                                ).Stream()
+                            )
+                        )
+                    ).Value();
 
-            //Create large file
-            new LengthOf(
-                new InputOf(
-                    new TeeInputStream(
-                        new MemoryStream(
-                            new BytesOf(
-                                new Text.Joined(", ",
-                                    new HeadOf<string>(
-                                        new Endless<string>("Hello World"),
-                                        1000
+                    Assert.True(
+                        new LengthOf(
+                            new InputOf(
+                                new TeeInputStream(
+                                    new InputOf(
+                                        inputPath
+                                        ).Stream(),
+                                    new WriterAsOutputStream(
+                                        new StreamWriter(outputPath)
+                                        )
                                     )
                                 )
-                            ).AsBytes()
-                        ),
-                        new OutputTo(
-                            new Uri(inputPath)
-                        ).Stream()
-                    )
-                )
-            ).Value();
-
-            //Read from large file and write to output file (make a copy)
-            var filestream = new FileStream(outputPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write);
-
-            long left =
-            new LengthOf(
-                new InputOf(
-                    new TeeInputStream(
-                        new InputStreamOf(
-                            new Uri(Path.GetFullPath(inputPath))
-                        ),
-                        new WriterAsOutputStream(
-                            new StreamWriter(filestream)
-                        )
-                    )
-                )
-
-            ).Value();
-
-            long right =
-                new LengthOf(
-                    new InputOf(
-                        new Uri(Path.GetFullPath(outputPath))
-                    )
-                ).Value();
-
-            Assert.True(left == right, "input and output are not the same size");
+                            ).Value() ==
+                        new LengthOf(
+                            new InputOf(
+                                new Uri(Path.GetFullPath(outputPath))
+                                )
+                            ).Value(),
+                        "input and output are not the same size"
+                        );
+                }
+            }
         }
 
         [Fact]
-        public void TryRead()
+        public void RejectsReading()
         {
-            byte[] bytes = {};
-            var stream = new WriterAsOutputStream(
-                             new StreamWriter(new MemoryStream())
-                             );
             Assert.ThrowsAny<NotImplementedException>(
-                () => stream.Read(bytes,0,1));
+                () => new WriterAsOutputStream(
+                          new StreamWriter(
+                              new MemoryStream()
+                          )
+                      ).Read(new byte[] {}, 0, 1)
+            );
         }
 
         [Fact]
-        public void TrySeek()
+        public void RejectsSeeking()
         {
-            var stream = new WriterAsOutputStream(
-                             new StreamWriter(new MemoryStream())
-                             );
             Assert.ThrowsAny<NotImplementedException>(
-                () => stream.Seek(3L, SeekOrigin.Begin));
+                () => new WriterAsOutputStream(
+                          new StreamWriter(
+                              new MemoryStream()
+                          )
+                      ).Seek(3L, SeekOrigin.Begin)
+            );
         }
 
         [Fact]
-        public void TrySetLength()
+        public void RejectsSettingLength()
         {
-            var stream = new WriterAsOutputStream(
-                             new StreamWriter(new MemoryStream())
-                             );
             Assert.ThrowsAny<NotImplementedException>(
-                () => stream.SetLength(5L));
+                () => new WriterAsOutputStream(
+                          new StreamWriter(
+                              new MemoryStream()
+                          )
+                      ).SetLength(5L)
+            );
         }
     }
 }
