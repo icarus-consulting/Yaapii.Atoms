@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -34,17 +35,27 @@ namespace Yaapii.Atoms.Enumerator
     public sealed class Distinct<T> : IEnumerator<T>
     {
         private readonly IEnumerable<IEnumerator<T>> originals;
+        private readonly Func<T, T, bool> comparison;
         private readonly Queue<IEnumerator<T>> buffer = new Queue<IEnumerator<T>>();
         private readonly List<T> hits = new List<T>();
 
         /// <summary>
         /// Enumerator that only gives the distinct elements of multiple enumerators.
         /// </summary>
-        /// <param name="enumerators"></param>
-        public Distinct(IEnumerable<IEnumerator<T>> enumerators)
+        public Distinct(IEnumerable<IEnumerator<T>> enumerators) : this(
+            enumerators,
+            (v1, v2) => v1.Equals(v2)
+        )
+        { }
+
+        /// <summary>
+        /// Enumerator that only gives the distinct elements of multiple enumerators.
+        /// </summary>
+        public Distinct(IEnumerable<IEnumerator<T>> enumerators, Func<T, T, bool> comparison)
         {
-            originals = enumerators;
-            buffer = new Queue<IEnumerator<T>>(enumerators);
+            this.originals = enumerators;
+            this.comparison = comparison;
+            this.buffer = new Queue<IEnumerator<T>>(enumerators);
         }
 
         /// <summary>
@@ -98,7 +109,7 @@ namespace Yaapii.Atoms.Enumerator
                     this.buffer.Dequeue();
                 }
 
-                if (buffer.Count > 0 && !this.hits.Contains(this.buffer.Peek().Current))
+                if (buffer.Count > 0 && !(new Enumerable.Contains<T>(this.hits, v => comparison(v, this.buffer.Peek().Current)).Value()))
                 {
                     this.hits.Add(this.buffer.Peek().Current);
                     break;

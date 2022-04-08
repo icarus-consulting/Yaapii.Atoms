@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using Xunit;
+using Yaapii.Atoms.Number;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
@@ -37,6 +38,31 @@ namespace Yaapii.Atoms.Enumerable.Tests
                         new ManyOf<int>(10, 2, 30)
                     )
                 ).Value() == 5);
+        }
+
+        [Fact]
+        public void MergesComparedEntries()
+        {
+            Assert.Equal(
+                5,
+                new LengthOf(
+                    new Distinct<INumber>(
+                        new ManyOf<IEnumerable<INumber>>(
+                            new ManyOf<INumber>(
+                                new NumberOf(1),
+                                new NumberOf(2),
+                                new NumberOf(3)
+                            ),
+                            new ManyOf<INumber>(
+                                new NumberOf(10),
+                                new NumberOf(2),
+                                new NumberOf(30)
+                            )
+                        ),
+                        (v1, v2) => v1.AsInt().Equals(v2.AsInt())
+                    )
+                ).Value()
+            );
         }
 
         [Fact]
