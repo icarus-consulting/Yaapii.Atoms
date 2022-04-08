@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 
 namespace Yaapii.Atoms.Enumerable
@@ -43,13 +44,25 @@ namespace Yaapii.Atoms.Enumerable
         /// The distinct elements of one or multiple Enumerables.
         /// </summary>
         /// <param name="enumerables">enumerables to get distinct elements from</param>
-        public Distinct(IEnumerable<IEnumerable<T>> enumerables) : base(() =>
+        public Distinct(IEnumerable<IEnumerable<T>> enumerables) : this(
+            enumerables,
+            (v1, v2) => v1.Equals(v2)
+        )
+        { }
+
+        /// <summary>
+        /// The distinct elements of one or multiple Enumerables.
+        /// </summary>
+        /// <param name="enumerables">enumerables to get distinct elements from</param>
+        /// <param name="comparison">comparison to evaluate distinction</param>
+        public Distinct(IEnumerable<IEnumerable<T>> enumerables, Func<T, T, bool> comparison) : base(() =>
             new LiveMany<T>(() =>
                 new Enumerator.Distinct<T>(
                     new Mapped<IEnumerable<T>, IEnumerator<T>>(
                         (e) => e.GetEnumerator(),
                         enumerables
-                    )
+                    ),
+                    comparison
                 )
             ),
             false
@@ -73,5 +86,12 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="enumerables">enumerables to get distinct elements from</param>
         public static IEnumerable<T> New<T>(IEnumerable<IEnumerable<T>> enumerables) => new Distinct<T>(enumerables);
+
+        /// <summary>
+        /// The distinct elements of one or multiple Enumerables.
+        /// </summary>
+        /// <param name="enumerables">enumerables to get distinct elements from</param>
+        /// <param name="comparison">comparison to evaluate distinction</param>
+        public static IEnumerable<T> New<T>(IEnumerable<IEnumerable<T>> enumerables, Func<T, T, bool> comparison) => new Distinct<T>(enumerables, comparison);
     }
 }
