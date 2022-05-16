@@ -118,7 +118,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="IInput"/>.
         /// </summary>
-        public LiveText(IInput input, int max) : this(input, max, Encoding.GetEncoding(0))
+        public LiveText(IInput input, int max) : this(input, max, Encoding.UTF8)
         { }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A <see cref="IText"/> out of <see cref="IBytes"/> object.
         /// </summary>
-        public LiveText(IBytes bytes) : this(bytes, Encoding.GetEncoding(0))
+        public LiveText(IBytes bytes) : this(bytes, Encoding.UTF8)
         { }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A <see cref="IText"/> out of <see cref="string"/>.
         /// </summary>
-        public LiveText(String input) : this(input, Encoding.GetEncoding(0))
+        public LiveText(String input) : this(input, Encoding.UTF8)
         { }
 
         /// <summary>
