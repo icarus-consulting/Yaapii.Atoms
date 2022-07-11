@@ -82,5 +82,28 @@ namespace Yaapii.Lookup.Tests
                 ).ContainsKey(new Version(2, 0, 0, 0))
             );
         }
+
+        [Fact]
+        public void MatchesEndingZero()
+        {
+            Assert.True(
+                new VersionMap(false,
+                    new KvpOf<Version, string>(new Version(1, 0, 0, 0), "ainz"),
+                    new KvpOf<Version, string>(new Version(5, 0, 0, 0), "zway")
+                ).ContainsKey(new Version(1, 0))
+            );
+        }
+
+        [Fact]
+        public void MatchesMajorMinorVersion()
+        {
+            Assert.Equal(
+                "zway",
+                new VersionMap(true,
+                    new KvpOf<Version, string>(new Version(1, 0, 0, 0), "ainz"),
+                    new KvpOf<Version, string>(new Version(5, 0, 0, 0), "zway")
+                )[new Version(5, 0)]
+            );
+        }
     }
 }
