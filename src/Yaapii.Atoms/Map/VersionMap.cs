@@ -179,16 +179,22 @@ namespace Yaapii.Atoms.Map
 
         private Value Match(Version candidate)
         {
+            var prettyCandidate = new Version(
+                candidate.Major,
+                candidate.Minor,
+                candidate.Build == -1 ? 0 : candidate.Build,
+                candidate.Revision == -1 ? 0 : candidate.Revision
+            );
             var match = new Version(0, 0);
             var matched = false;
             foreach (var lowerBound in this.map.Keys)
             {
-                if (candidate >= lowerBound)
+                if (prettyCandidate >= lowerBound)
                 {
                     match = lowerBound;
                     matched = true;
                 }
-                else if (match < candidate)
+                else if (match < prettyCandidate)
                 {
                     break;
                 }
@@ -202,10 +208,10 @@ namespace Yaapii.Atoms.Map
                 }
                 else
                 {
-                    throw this.versionNotFound(candidate, this.map.Keys);
+                    throw this.versionNotFound(prettyCandidate, this.map.Keys);
                 }
             }
-            throw this.versionNotFound(candidate, this.map.Keys);
+            throw this.versionNotFound(prettyCandidate, this.map.Keys);
         }
     }
 }
