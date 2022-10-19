@@ -125,26 +125,34 @@ namespace Yaapii.Atoms.Text
                 {
                     var lower = str.ToLower();
                     var remLower = remove.ToLower();
-                    if (lower.StartsWith(remLower))
+
+                    while (str.StartsWith(remove) || str.EndsWith(remove))
                     {
-                        str = str.Remove(0, remove.Length);
-                    }
-                    if (str.ToLower().EndsWith(remLower))
-                    {
-                        int startIndex = str.Length - remove.Length;
-                        str = str.Remove(startIndex, remove.Length);
+
+                        if (lower.StartsWith(remLower))
+                        {
+                            str = str.Remove(0, remove.Length);
+                        }
+                        if (str.ToLower().EndsWith(remLower))
+                        {
+                            int startIndex = str.Length - remove.Length;
+                            str = str.Remove(startIndex, remove.Length);
+                        }
                     }
                 }
                 else
                 {
-                    if (str.StartsWith(remove))
+                    while (str.StartsWith(remove) || str.EndsWith(remove))
                     {
-                        str = str.Remove(0, remove.Length);
-                    }
-                    if (str.EndsWith(remove))
-                    {
-                        int startIndex = str.Length - remove.Length;
-                        str = str.Remove(startIndex, remove.Length);
+                        if (str.StartsWith(remove))
+                        {
+                            str = str.Remove(0, remove.Length);
+                        }
+                        if (str.EndsWith(remove))
+                        {
+                            int startIndex = str.Length - remove.Length;
+                            str = str.Remove(startIndex, remove.Length);
+                        }
                     }
                 }
                 return str;
