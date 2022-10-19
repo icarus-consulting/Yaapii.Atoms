@@ -2,7 +2,7 @@
 #     CI Build Configuration for master branch pre-release   #
 #------------------------------------------------------------#
 version: "{build}"
-image: Visual Studio 2019
+image: Visual Studio 2022
 configuration: Release
 environment:
   GITHUB_TOKEN:
