@@ -108,5 +108,17 @@ namespace Yaapii.Atoms.Text.Tests
                 new Trimmed(new LiveText(" \b   \t      Hello! \t \b   \t      H"), new LiveText(" \b   \t      H")).AsString() == "ello! \t"
             );
         }
+
+        [Fact]
+        public void RemovesMultipleTextOccurenceFromText()
+        {
+            Assert.Equal(
+                "World ",
+                new Trimmed(
+                    new LiveText("Hello Hello World Hello "),
+                    new LiveText("Hello ")
+                ).AsString()
+            );
+        }
     }
 }
