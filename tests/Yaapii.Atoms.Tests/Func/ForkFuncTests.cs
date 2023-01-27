@@ -29,7 +29,7 @@ namespace Yaapii.Atoms.Tests.Func
     public sealed class ForkFuncTests
     {
         [Fact]
-        public void ReturnsCorrectFunc()
+        public void ChoosesCorrectFunc()
         {
             Assert.True(
                 new ForkFunc<string, bool>(
