@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright(c) 2022 ICARUS Consulting GmbH
+// Copyright(c) 2023 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,10 @@
 using System;
 using System.Collections.Generic;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Map.Tests
+
 {
     public sealed class SortedTest
     {
@@ -97,46 +99,71 @@ namespace Yaapii.Atoms.Map.Tests
             Assert.Equal(expectedKey, keys[index]);
         }
 
-        [Theory]
-        [InlineData(0, -5)]
-        [InlineData(1, 1)]
-        [InlineData(2, 6)]
-        public void EnumeratesKeysWhenLazy(int index, int expectedKey)
+        [Fact]
+        public void ListsValuesFromGenericKeyAndValue()
         {
-            var unsorted = new LazyDict<int, int>(false,
-                new KvpOf<int, int>(1, () => { throw new Exception("i shall not be called"); }),
-                new KvpOf<int, int>(6, () => { throw new Exception("i shall not be called"); }),
-                new KvpOf<int, int>(-5, () => { throw new Exception("i shall not be called"); })
+            Assert.Equal(
+                ManyOf.New(2, 1),
+                new Sorted<string, int>(
+                    MapOf.New(
+                        "b", 1,
+                        "a", 2
+                     ),
+                    StringComparer.CurrentCultureIgnoreCase
+                ).Values
             );
-            var sorted = new Sorted<int, int>(unsorted);
-            var keys = new int[3];
-            sorted.Keys.CopyTo(keys, 0);
-            Assert.Equal(expectedKey, keys[index]);
+
+            Assert.Equal(
+                ManyOf.New(2, 1),
+                new Sorted<int>(
+                    MapOf.New(
+                        "b", 1,
+                        "a", 2
+                     ),
+                    StringComparer.CurrentCultureIgnoreCase
+                ).Values
+            );
+
+            Assert.Equal(
+                ManyOf.New("2", "1"),
+                new Sorted(
+                    MapOf.New(
+                        "b", "1",
+                        "a", "2"
+                     ),
+                    StringComparer.CurrentCultureIgnoreCase
+                ).Values
+            );
         }
 
         [Fact]
-        public void DeliversSingleValueWhenLazy()
+        public void ListsValuesFromGenericValue()
         {
-            var unsorted = new LazyDict<int, int>(false,
-                new KvpOf<int, int>(1, () => 4),
-                new KvpOf<int, int>(6, () => { throw new Exception("i shall not be called"); }),
-                new KvpOf<int, int>(-5, () => { throw new Exception("i shall not be called"); })
+            Assert.Equal(
+                ManyOf.New(2, 1),
+                new Sorted<int>(
+                    MapOf.New(
+                        "b", 1,
+                        "a", 2
+                     ),
+                    StringComparer.CurrentCultureIgnoreCase
+                ).Values
             );
-            var sorted = new Sorted<int, int>(unsorted);
-            Assert.Equal(4, sorted[1]);
         }
 
         [Fact]
-        public void RejectsBuildingAllValuesByDefault()
+        public void ListsValuesFromStringPairs()
         {
-            var unsorted = new LazyDict<int, int>(false,
-                new KvpOf<int, int>(1, () => 4),
-                new KvpOf<int, int>(6, () => { throw new Exception("i shall not be called"); }),
-                new KvpOf<int, int>(-5, () => { throw new Exception("i shall not be called"); })
+            Assert.Equal(
+                ManyOf.New("2", "1"),
+                new Sorted(
+                    MapOf.New(
+                        "b", "1",
+                        "a", "2"
+                     ),
+                    StringComparer.CurrentCultureIgnoreCase
+                ).Values
             );
-            var sorted = new Sorted<int, int>(unsorted);
-            var ex = Assert.Throws<InvalidOperationException>(() => sorted.Values.GetEnumerator());
-            Assert.Equal("Cannot get all values because this is a lazy dictionary. Getting the values would build all keys. If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.", ex.Message);
         }
     }
 }

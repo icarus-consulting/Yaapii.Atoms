@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright(c) 2022 ICARUS Consulting GmbH
+// Copyright(c) 2023 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -113,9 +113,9 @@ namespace Yaapii.Atoms.Map
                 {
                     var keys = new List<Key>(dict.Keys);
                     keys.Sort(cmp);
-                    var result = new LazyDict<Key, Value>(
+                    var result = new MapOf<Key, Value>(
                         new Mapped<Key, IKvp<Key, Value>>(
-                            key => new KvpOf<Key, Value>(key, () => dict[key]),
+                            key => new KvpOf<Key, Value>(key, dict[key]),
                             keys
                         )
                     );
@@ -212,9 +212,9 @@ namespace Yaapii.Atoms.Map
                 {
                     var keys = new List<string>(dict.Keys);
                     keys.Sort(cmp);
-                    var result = new LazyDict<string, Value>(
+                    var result = new MapOf<string, Value>(
                         new Mapped<string, IKvp<string, Value>>(
-                            key => new KvpOf<string, Value>(key, () => dict[key]),
+                            key => new KvpOf<string, Value>(key, dict[key]),
                             keys
                         )
                     );
@@ -310,9 +310,9 @@ namespace Yaapii.Atoms.Map
                 {
                     var keys = new List<string>(dict.Keys);
                     keys.Sort(cmp);
-                    var result = new LazyDict<string, string>(
+                    var result = new MapOf<string, string>(
                         new Mapped<string, IKvp<string, string>>(
-                            key => new KvpOf<string, string>(key, () => dict[key]),
+                            key => new KvpOf<string, string>(key, dict[key]),
                             keys
                         )
                     );
@@ -445,52 +445,5 @@ namespace Yaapii.Atoms.Map
         /// <param name="cmp">Comparer comparing keys</param>
         public static IDictionary<string, Value> New<Value>(IDictionary<string, Value> dict, IComparer<string> cmp)
             => new Sorted<Value>(dict, cmp);
-    }
-
-    /// <summary>
-    /// Simple Comparer comparing two elements
-    /// </summary>
-    /// <typeparam name="T">Type of the elements</typeparam>
-    internal sealed class SimpleComparer<T> : IComparer<T>
-    {
-        private readonly Func<T, T, int> compare;
-
-        /// <summary>
-        /// Comparer from a function comparing two elements
-        /// </summary>
-        /// <param name="compare">Function comparing two elements</param>
-        public SimpleComparer(Func<T, T, int> compare)
-        {
-            this.compare = compare;
-        }
-
-        public int Compare(T x, T y)
-        {
-            return this.compare(x, y);
-        }
-    }
-
-    /// <summary>
-    /// Comparer comparing two KeyValuePairs by key
-    /// </summary>
-    /// <typeparam name="Key">Key Type</typeparam>
-    /// <typeparam name="Value">Value Type</typeparam>
-    internal sealed class KeyComparer<Key, Value> : IComparer<KeyValuePair<Key, Value>>
-    {
-        private readonly IComparer<Key> cmp;
-
-        /// <summary>
-        /// Comparer comparing two KeyValuePairs by key
-        /// </summary>
-        /// <param name="cmp">Comparer compairing the key type</param>
-        public KeyComparer(IComparer<Key> cmp)
-        {
-            this.cmp = cmp;
-        }
-
-        public int Compare(KeyValuePair<Key, Value> x, KeyValuePair<Key, Value> y)
-        {
-            return this.cmp.Compare(x.Key, y.Key);
-        }
     }
 }
