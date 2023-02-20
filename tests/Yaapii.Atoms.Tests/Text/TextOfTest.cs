@@ -210,6 +210,31 @@ namespace Yaapii.Atoms.Text.Tests
                     "Can't read text with format from float");
         }
 
+        [Theory]
+        [InlineData(true, "True")]
+        [InlineData(false, "False")]
+        public void ReadsBoolIntoText(bool input, string expected)
+        {
+            Assert.True(
+                new TextOf(input).AsString() == expected,
+                "Can't read text from bool"
+            );
+        }
+
+        [Theory]
+        [InlineData(true, "True")]
+        [InlineData(false, "False")]
+        public void ReadsBoolIntoTextWithCultureInfo(bool input, string expected)
+        {
+            Assert.True(
+                new TextOf(
+                    input,
+                    new CultureInfo("en-US")
+                ).AsString() == expected,
+                "Can't read text from bool with CultureInfo"
+            );
+        }
+
         [Fact]
         public void ReadsInputIntoTextWithSmallBuffer()
         {
