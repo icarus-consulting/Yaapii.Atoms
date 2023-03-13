@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright(c) 2022 ICARUS Consulting GmbH
+// Copyright(c) 2023 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of a double
         /// </summary>
         /// <param name="input">a <see cref="double"/></param>
-        /// <param name="cultureInfo">The </param>
+        /// <param name="cultureInfo">info about which culture the text should be formatted for</param>
         public TextOf(double input, CultureInfo cultureInfo) : this(
             () => input.ToString(cultureInfo)
         )
@@ -81,8 +81,27 @@ namespace Yaapii.Atoms.Text
         /// A <see cref="IText"/> out of a double
         /// </summary>
         /// <param name="input">a <see cref="float"/></param>
-        /// <param name="cultureInfo">The </param>
+        /// <param name="cultureInfo">info about which culture the text should be formatted for</param>
         public TextOf(float input, CultureInfo cultureInfo) : this(
+            () => input.ToString(cultureInfo)
+        )
+        { }
+
+        /// <summary>
+        /// A <see cref="IText"/> out of a bool
+        /// </summary>
+        /// <param name="input">a <see cref="bool"/></param>
+        public TextOf(bool input) : this(
+            () => input.ToString(CultureInfo.InvariantCulture)
+        )
+        { }
+
+        /// <summary>
+        /// A <see cref="IText"/> out of a bool
+        /// </summary>
+        /// <param name="input">a <see cref="bool"/></param>
+        /// <param name="cultureInfo">info about which culture the text should be formatted for</param>
+        public TextOf(bool input, CultureInfo cultureInfo) : this(
             () => input.ToString(cultureInfo)
         )
         { }
