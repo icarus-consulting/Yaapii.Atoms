@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright(c) 2022 ICARUS Consulting GmbH
+// Copyright(c) 2023 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,22 +21,20 @@
 // SOFTWARE.
 
 using Xunit;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
+using Yaapii.Atoms.Swap;
 
-namespace Yaapii.Atoms.Tests.Func
+namespace Yaapii.Atoms.Func.Tests
 {
-    public sealed class ForkFuncTests
+    public sealed class SwapOfTest
     {
         [Fact]
-        public void ChoosesCorrectFunc()
+        public void ConvertsSystemFuncIntoAtomsFunc()
         {
             Assert.True(
-                new ForkFunc<string, bool>(
-                    new Tooth<string, bool>("true", () => new ScalarOf<bool>(true).Value()),
-                    new Tooth<string, bool>("false", () => new ScalarOf<bool>(false).Value())
-                ).Invoke("true")
-            );           
+            new SwapOf<int,int>(
+                () => 1
+            ).Flip(2) == 1,
+            "cannot convert func into callable");
         }
     }
 }
