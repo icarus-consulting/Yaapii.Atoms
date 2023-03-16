@@ -34,9 +34,9 @@ namespace Yaapii.Atoms.Tests.Swap
         {
             Assert.True(
                 new SwapSwitch<string, bool>(
-                    new SwapIf<string, bool>("true", () => new ScalarOf<bool>(true).Value()),
-                    new SwapIf<string, bool>("false", () => new ScalarOf<bool>(false).Value())
-                ).Flip("true")
+                    "true", new SwapOf<string,bool>(()=>true),
+                    "false", new SwapOf<string, bool>(() => false)
+                ).Flip("true","")
             );
         }
     }
