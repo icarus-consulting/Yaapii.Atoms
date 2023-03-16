@@ -77,7 +77,6 @@ namespace Yaapii.Atoms.Swap
         {
             this.func = func;
         }
-
        
         /// <summary>
         /// Function that has two inputs and an output.
@@ -122,41 +121,11 @@ namespace Yaapii.Atoms.Swap
         public Out Flip(In1 arg1, In2 arg2, In3 arg3)
         {
             return func.Invoke(arg1, arg2, arg3);
-        }
-      
+        }      
 
         public Out Invoke(In1 input1, In2 input2, In3 input3)
         {
             throw new System.NotImplementedException();
-        }
-
-       
+        }  
     }
-
-    //public static class SwapOf
-    //{
-    //    /// <summary>
-    //    /// ctor
-    //    /// </summary>
-    //    /// <param name="fnc"></param>
-    //    public static ISwap<Out> New<Out>(System.Func<Out> fnc) => new SwapOf<Out>(fnc);
-
-    //    /// <summary>
-    //    /// ctor
-    //    /// </summary>
-    //    /// <param name="fnc"></param>
-    //    public static IFunc<In, Out> New<In, Out>(System.Func<In, Out> fnc) =>
-    //        new SwapOf<In, Out>(fnc);
-
-    //    /// <summary>
-    //    /// Function that has input and output
-    //    /// </summary>
-    //    /// <param name="proc">procedure to execute</param>
-    //    /// <param name="result"></param>
-    //    public static IFunc<In, Out> New<In, Out>(IAction<In> proc, Out result) =>
-    //        new SwapOf<In, Out>(proc, result);
-
-    //    public static IBiFunc<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> func) =>
-    //        new SwapOf<In1, In2, Out>(func);
-    //}
 }

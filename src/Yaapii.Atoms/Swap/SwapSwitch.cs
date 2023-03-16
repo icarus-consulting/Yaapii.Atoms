@@ -47,15 +47,5 @@ namespace Yaapii.Atoms.Swap
         }
     }
 
-    /// <summary>
-    /// A tooth for a SwapSwitch
-    /// </summary>
-    public sealed class Tooth<TInput, TOutcome> : KvpEnvelope<TInput, Func<TOutcome>>
-    {
-        /// <summary>
-        /// A tooth for a SwapSwitch
-        /// </summary>
-        public Tooth(TInput condition, Func<TOutcome> consequence) : base(new KvpOf<TInput, Func<TOutcome>>(condition, consequence))
-        { }
-    }
+    
 }

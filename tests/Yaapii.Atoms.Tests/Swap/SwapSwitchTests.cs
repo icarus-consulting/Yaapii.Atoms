@@ -25,7 +25,7 @@ using Yaapii.Atoms.Func;
 using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Swap;
 
-namespace Yaapii.Atoms.Tests.Switch
+namespace Yaapii.Atoms.Tests.Swap
 {
     public sealed class SwapSwitchTests
     {
@@ -34,8 +34,8 @@ namespace Yaapii.Atoms.Tests.Switch
         {
             Assert.True(
                 new SwapSwitch<string, bool>(
-                    new Tooth<string, bool>("true", () => new ScalarOf<bool>(true).Value()),
-                    new Tooth<string, bool>("false", () => new ScalarOf<bool>(false).Value())
+                    new SwapIf<string, bool>("true", () => new ScalarOf<bool>(true).Value()),
+                    new SwapIf<string, bool>("false", () => new ScalarOf<bool>(false).Value())
                 ).Flip("true")
             );
         }

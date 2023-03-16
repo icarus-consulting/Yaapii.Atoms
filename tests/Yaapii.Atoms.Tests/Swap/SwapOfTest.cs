@@ -23,12 +23,12 @@
 using Xunit;
 using Yaapii.Atoms.Swap;
 
-namespace Yaapii.Atoms.Func.Tests
+namespace Yaapii.Atoms.Swap.Tests
 {
     public sealed class SwapOfTest
     {
         [Fact]
-        public void ConvertsSystemFuncIntoAtomsFunc()
+        public void Swaps()
         {
             Assert.True(
             new SwapOf<int,int>(
