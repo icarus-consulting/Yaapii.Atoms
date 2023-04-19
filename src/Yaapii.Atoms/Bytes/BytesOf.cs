@@ -108,7 +108,9 @@ namespace Yaapii.Atoms.Bytes
         /// <param name="chars">enumerable of chars</param>
         /// <param name="enc">encoding of chars</param>
         public BytesOf(IEnumerable<char> chars, Encoding enc) : this(
-                () => chars.Select(c => (Byte)c).ToArray())
+            chars.ToArray(),
+            enc
+        )
         { }
 
         /// <summary>
