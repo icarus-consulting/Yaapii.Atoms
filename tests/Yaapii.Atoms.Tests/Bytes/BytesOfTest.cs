@@ -209,6 +209,22 @@ namespace Yaapii.Atoms.IO.Tests
                 "Can't print exception stacktrace"
             );
         }
+
+        [Fact]
+        public void ReadsCharsIntoBytesWithCorrectEncoding()
+        {
+            var text = "Hello!";
+            Assert.Equal(
+                text,
+                new TextOf(
+                    new BytesOf(
+                        new List.ListOf<char>(text),
+                        Encoding.Unicode
+                    ),
+                    Encoding.Unicode
+                ).AsString()
+            );
+        }
     }
 }
 #pragma warning restore MaxPublicMethodCount // a public methods count maximum
