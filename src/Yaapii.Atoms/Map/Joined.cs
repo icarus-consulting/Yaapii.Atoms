@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
+using System.Linq;
 using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Scalar;
 
@@ -196,16 +197,16 @@ namespace Yaapii.Atoms.Map
                 new LazyDict<string, Value>(
                     new Enumerable.Joined<IKvp<string, Value>>(
                         new Mapped<IDictionary<string, Value>, IEnumerable<IKvp<string, Value>>>(dict =>
-                            new LiveMany<IKvp<string, Value>>(() =>
+                            {
+                                IKvp<string, Value>[] kvps = new IKvp<string, Value>[dict.Keys.Count];
+                                int index = 0;
+                                foreach (var key in dict.Keys)
                                 {
-                                    IEnumerable<IKvp<string, Value>> list = new ManyOf<IKvp<string, Value>>();
-                                    foreach (var key in dict.Keys)
-                                    {
-                                        list = new Enumerable.Joined<IKvp<string, Value>>(list, new KvpOf<string, Value>(key, () => dict[key]));
-                                    }
-                                    return list.GetEnumerator();
+                                    kvps[index] = new KvpOf<string, Value>(key, () => dict[key]);
+                                    index++;
                                 }
-                            ),
+                                return kvps;
+                            },
                             dicts
                         )
                     )

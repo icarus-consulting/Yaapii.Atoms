@@ -20,7 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System.Collections.Generic;
+using System;
 using Xunit;
+using Yaapii.Atoms.Number;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.Map.Tests
 {
@@ -135,6 +139,26 @@ namespace Yaapii.Atoms.Map.Tests
             Assert.Equal(
                 "I am trapped in a dictionary",
                 $"{dict["A"]} {dict["B"]} {dict["C"]}"
+            );
+        }
+
+        [Fact]
+        public void WorksWithBigDictionaries()
+        {
+            var map = new Dictionary<string, double>();
+
+            for (int i = 0; i < 2000; i++)
+            {
+                map[i.ToString()] = Math.PI;
+            }
+            var joinedMap = new Joined<double>(map);
+
+            Assert.Equal(
+                Math.PI,
+                new AvgOf(
+                    Mapped.New(key => joinedMap[key], joinedMap.Keys)
+                ).AsDouble(),
+                3
             );
         }
     }
