@@ -28,6 +28,20 @@ namespace Yaapii.Atoms.Enumerable.Tests
     public sealed class JoinedTest
     {
         [Fact]
+        public void JoinsFirstSecondAndEnum()
+        {
+            Assert.True(
+                new LengthOf(
+                    new Joined<string>(
+                        "first",
+                        "second",
+                        new ManyOf<string>("third", "fourth")                       
+                    )
+                ).Value() == 4,
+            "cannot join first second and enum together");
+        }
+
+        [Fact]
         public void TransformsList()
         {
             Assert.True(
