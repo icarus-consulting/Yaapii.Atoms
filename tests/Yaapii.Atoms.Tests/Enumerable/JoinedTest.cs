@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -27,6 +28,22 @@ namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class JoinedTest
     {
+        [Fact(Skip = "leads to stack overflow")]
+        public void WorksWithBigNestings()
+        {
+            IEnumerable<string> list = new ManyOf<string>();
+
+            for (int i = 0; i < 2000; i++)
+            {
+                list = new Joined<string>(list, (i*Math.PI).ToString());
+            }
+
+            Assert.Equal(
+                2000,
+                new LengthOf(list).Value()
+            );
+        }
+
         [Fact]
         public void TransformsList()
         {

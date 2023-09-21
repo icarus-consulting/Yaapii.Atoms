@@ -146,6 +146,12 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
+        /// Envelope for Enumerable.
+        /// </summary>
+        public ManyEnvelope(IEnumerator<T> origin) : this(() => origin, true)
+        { }
+
+        /// <summary>
         /// Envelope for Enumerables.
         /// </summary>
         public ManyEnvelope(Func<IEnumerator<T>> origin, bool live)

@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Yaapii.Atoms.Func;
 
 #pragma warning disable NoGetOrSet // No Statics
@@ -153,7 +154,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         /// <param name="live">live or sticky</param>
-        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src, bool live) : base(() =>
+        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src, bool live) : base(()=>
             new Enumerator.Mapped<In, Out>(
                 src.GetEnumerator(),
                 fnc

@@ -21,6 +21,8 @@
 // SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using Yaapii.Atoms.List;
 using Yaapii.Atoms.Text;
@@ -29,6 +31,49 @@ namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class MappedTest
     {
+        [Fact(Skip = "leads to stack overflow")]
+        public void WorksWithBigNestings()
+        {
+            IEnumerable<string> list = new ManyOf<string>("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+            
+            for (int i = 0; i < 2000; i++)
+            {
+                list =
+                    Mapped.New(
+                        v => new TextOf(v).AsString(),
+                        Mapped.New(
+                            v => new DoubleOf(v).Value(),
+                            list
+                        )
+                    );
+            }
+
+            Assert.Equal(
+                new ManyOf<string>("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"),
+                list
+            );
+        }
+
+        [Fact]
+        public void CheckEvaluationOfEnumerators()
+        {
+            IEnumerable<string> list = new ManyOf<string>("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+            var count = 0;
+            var result =
+                new Mapped<string, double>(v =>
+                    {
+                        count++;
+                        return new DoubleOf(v).Value();
+                    },
+                    list
+                );
+            var test = new ItemAt<double>(result, 3).Value();
+            Assert.Equal(
+                4,
+                count
+            );
+        }
+
         [Fact]
         public void TransformsList()
         {
