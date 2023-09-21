@@ -148,7 +148,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public ManyEnvelope(IEnumerator<T> origin) : this(() => origin, true)
+        public ManyEnvelope(IEnumerator<T> origin, bool live) : this(() => origin, live)
         { }
 
         /// <summary>
