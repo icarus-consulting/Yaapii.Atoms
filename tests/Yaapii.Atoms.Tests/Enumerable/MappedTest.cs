@@ -75,6 +75,26 @@ namespace Yaapii.Atoms.Enumerable.Tests
         }
 
         [Fact]
+        public void CheckEvaluationOfFuncOnLengthCall()
+        {
+            IEnumerable<string> list = new ManyOf<string>("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+            var count = 0;
+            var result =
+                new Mapped<string, double>(v =>
+                {
+                    count++;
+                    return new DoubleOf(v).Value();
+                },
+                    list
+                );
+            var test = new LengthOf(result).Value();
+            Assert.Equal(
+                10,
+                count
+            );
+        }
+
+        [Fact]
         public void TransformsList()
         {
             Assert.Equal(
