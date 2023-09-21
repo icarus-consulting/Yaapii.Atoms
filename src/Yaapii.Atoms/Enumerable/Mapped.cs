@@ -158,7 +158,8 @@ namespace Yaapii.Atoms.Enumerable
             new Enumerator.Mapped<In, Out>(
                 src.GetEnumerator(),
                 fnc
-            )
+            ),
+            live
         )
         { }
     }

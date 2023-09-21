@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 );
             var test = new ItemAt<double>(result, 3).Value();
             Assert.Equal(
-                1,
+                4,
                 count
             );
         }
@@ -90,7 +90,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 );
             var test = new LengthOf(result).Value();
             Assert.Equal(
-                0,
+                10,
                 count
             );
         }
