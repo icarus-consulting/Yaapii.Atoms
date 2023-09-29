@@ -28,7 +28,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
     public sealed class JoinedTest
     {
         [Fact]
-        public void JoinsFirstSecondAndEnum()
+        public void JoinsFirstSecondAndEnumerable()
         {
             Assert.True(
                 new LengthOf(
