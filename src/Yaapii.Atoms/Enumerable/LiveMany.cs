@@ -32,14 +32,16 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> out of other objects.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class LiveMany<T> : ManyEnvelope<T>
+    public sealed class LiveMany<T> : IEnumerable<T>
     {
+        private readonly IScalar<IEnumerator<T>> origin;
+
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of an array.
         /// </summary>
         /// <param name="items"></param>
         public LiveMany(params T[] items) : this(
-            () => items.AsEnumerable<T>().GetEnumerator()
+            () => new Params<T>(items).GetEnumerator()
         )
         { }
 
@@ -61,13 +63,24 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
-        private LiveMany(IScalar<IEnumerator<T>> origin) : base(
-            new Live<IEnumerable<T>>(
-                () => new LiveEnumeratorAsEnumerable<T>(origin.Value())
-            ),
-            true
-        )
-        { }
+        private LiveMany(IScalar<IEnumerator<T>> origin)
+        {
+            this.origin = origin;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            var enumerator = this.origin.Value();
+            while(enumerator.MoveNext())
+            {
+                yield return enumerator.Current;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
 
         /// <summary>
         /// Makes enumerable from an enumerator
