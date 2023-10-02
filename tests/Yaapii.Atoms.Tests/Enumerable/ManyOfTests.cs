@@ -91,7 +91,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                     new ManyOf<string>(() =>
                     {
                         lst.Add("something");
-                        return lst;
+                        return lst.GetEnumerator();
                     })
                 );
 

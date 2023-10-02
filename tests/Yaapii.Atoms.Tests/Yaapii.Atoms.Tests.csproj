@@ -6,6 +6,7 @@
     <Description>Unittests for Yaapii.Atoms</Description>    
     <PackageTags></PackageTags>
     <DebugType>full</DebugType>
+    <Configurations>Release;Debug</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

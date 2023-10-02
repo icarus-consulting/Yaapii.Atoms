@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.IO
         /// <returns></returns>
         public Stream Stream()
         {
-            return new GZipStream(this._output.Stream(), this._level);
+            return new GZipStream(this._output.Stream(), this._level, true);
         }
     }
 }

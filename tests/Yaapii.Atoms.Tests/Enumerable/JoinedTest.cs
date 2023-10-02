@@ -28,6 +28,23 @@ namespace Yaapii.Atoms.Enumerable.Tests
     public sealed class JoinedTest
     {
         [Fact]
+        public void CanDecorateDeeply()
+        {
+            IEnumerable<int> items = new ManyOf<int>();
+            var expected = string.Empty;
+            for(var level =0;level<2000;level++)
+            {
+                items = new Joined<int>(items, level);
+                expected += level;
+            }
+
+            Assert.Equal(
+                expected,
+                string.Join(string.Empty, items)
+            );
+        }
+
+        [Fact]
         public void TransformsList()
         {
             Assert.True(

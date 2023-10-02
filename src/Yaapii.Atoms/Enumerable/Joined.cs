@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Func;
 
@@ -29,37 +30,23 @@ using Yaapii.Atoms.Func;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// Multiple <see cref="IEnumerable{T}"/> joined together.
+    /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Joined<T> : ManyEnvelope<T>
+    public sealed class Joined<T> : IEnumerable<T>
     {
+        private readonly IEnumerable<IEnumerable<T>> enumerables;
+
         /// <summary>
         /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
         /// </summary>
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
-        public Joined(T first, T second, IEnumerable<T> lst, params T[] items) : base(() =>
-        {
-            int idx = 2;
-            T[] joined = new T[1 + new LengthOf(lst).Value() + items.Length];
-            joined[0] = first;
-            joined[1] = second;
-            var enm = lst.GetEnumerator();
-            while (enm.MoveNext())
-            {
-                joined[idx] = enm.Current;
-                idx++;
-            }
-
-            foreach (var item in items)
-            {
-                joined[idx] = item;
-                idx++;
-            }
-            return new ManyOf<T>(joined);
-        },
-            false
+        public Joined(T first, T second, IEnumerable<T> lst, params T[] items) : this(
+            new Single<T>(first),
+            new Single<T>(second),
+            lst,
+            new Params<T>(items)
         )
         { }
 
@@ -68,26 +55,10 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
-        public Joined(T first, IEnumerable<T> lst, params T[] items) : base(() =>
-            {
-                int idx = 1;
-                T[] joined = new T[1 + new LengthOf(lst).Value() + items.Length];
-                joined[0] = first;
-                var enm = lst.GetEnumerator();
-                while (enm.MoveNext())
-                {
-                    joined[idx] = enm.Current;
-                    idx++;
-                }
-
-                foreach (var item in items)
-                {
-                    joined[idx] = item;
-                    idx++;
-                }
-                return new ManyOf<T>(joined);
-            },
-            false
+        public Joined(T first, IEnumerable<T> lst, params T[] items) : this(
+            new Single<T>(first),
+            lst,
+            new Params<T>(items)
         )
         { }
 
@@ -96,61 +67,48 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
-        public Joined(IEnumerable<T> lst, params T[] items) : base(() =>
-            {
-                int idx = 0;
-                T[] joined = new T[new LengthOf(lst).Value() + items.Length];
-                var enm = lst.GetEnumerator();
-                while (enm.MoveNext())
-                {
-                    joined[idx] = enm.Current;
-                    idx++;
-                }
-
-                foreach (var item in items)
-                {
-                    joined[idx] = item;
-                    idx++;
-                }
-                return new ManyOf<T>(joined);
-            },
-            false
+        public Joined(IEnumerable<T> lst, params T[] items) : this(
+            lst, new Params<T>(items)
         )
         { }
 
         /// <summary>
-        /// Multiple <see cref="IEnumerable{T}"/> joined together.
+        /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
         /// </summary>
         /// <param name="items">enumerables to join</param>
         public Joined(params IEnumerable<T>[] items) : this(
-            new ManyOf<IEnumerable<T>>(items)
+            new Params<IEnumerable<T>>(items)
         )
         { }
 
         /// <summary>
-        /// Multiple <see cref="IEnumerable{T}"/> joined together.
+        /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
         /// </summary>
         /// <param name="items">enumerables to join</param>
-        public Joined(IEnumerable<IEnumerable<T>> items) : base(() =>
-            new LiveMany<T>(() =>
-                new Enumerator.Joined<T>(
-                    new Mapped<IEnumerable<T>, IEnumerator<T>>(//Map the content of list: Get every enumerator out of it and build one whole enumerator from it
-                        new StickyFunc<IEnumerable<T>, IEnumerator<T>>( //Sticky Gate
-                            new FuncOf<IEnumerable<T>, IEnumerator<T>>(
-                                e => e.GetEnumerator() //Get the Enumerator
-                            )
-                        ),
-                        items //List with enumerators
-                    )
-                )
-            ),
-            false
-        )
-        { }
+        public Joined(IEnumerable<IEnumerable<T>> items)
+        {
+            this.enumerables = items;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            foreach(var enumerable in this.enumerables)
+            {
+                foreach(var item in enumerable)
+                {
+                    yield return item;
+                }
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
     }
 
     /// <summary>
-    /// Multiple <see cref="IEnumerable{T}"/> joined together.
+    /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
     /// </summary>
     public static class Joined
     {
@@ -162,13 +120,13 @@ namespace Yaapii.Atoms.Enumerable
         public static IEnumerable<T> New<T>(IEnumerable<T> lst, params T[] items) => new Joined<T>(lst, items);
 
         /// <summary>
-        /// Multiple <see cref="IEnumerable{T}"/> joined together.
+        /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
         /// </summary>
         /// <param name="items">enumerables to join</param>
         public static IEnumerable<T> New<T>(params IEnumerable<T>[] items) => new Joined<T>(items);
 
         /// <summary>
-        /// Multiple <see cref="IEnumerable{T}"/> joined together.
+        /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
         /// </summary>
         /// <param name="items">enumerables to join</param>
         public static IEnumerable<T> New<T>(IEnumerable<IEnumerable<T>> items) => new Joined<T>(items);

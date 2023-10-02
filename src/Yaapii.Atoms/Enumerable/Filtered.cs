@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Yaapii.Atoms.Enumerable
@@ -30,8 +31,11 @@ namespace Yaapii.Atoms.Enumerable
     /// Pass a filter function which will applied to all items, similar to List{T}.Where(...) in LinQ
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Filtered<T> : ManyEnvelope<T>
+    public sealed class Filtered<T> : IEnumerable<T>
     {
+        private readonly IEnumerable<T> src;
+        private readonly Func<T, bool> fnc;
+
         /// <summary>
         /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
         /// </summary>
@@ -70,14 +74,29 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
         /// <param name="live">live or sticky</param>
-        public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src, bool live) : base(() =>
-            new Enumerator.Filtered<T>(
-                src.GetEnumerator(),
-                fnc
-            ),
-            live
-        )
-        { }
+        public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src, bool live)
+        {
+            this.src = src;
+            this.fnc = fnc;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            var enumerator = src.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                if (fnc.Invoke(enumerator.Current))
+                {
+                    yield return enumerator.Current;
+                }
+            }
+            yield break;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
     }
 
     /// <summary>
