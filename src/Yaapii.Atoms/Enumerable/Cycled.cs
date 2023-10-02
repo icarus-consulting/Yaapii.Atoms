@@ -44,7 +44,6 @@ namespace Yaapii.Atoms.Enumerable
 
         public IEnumerator<T> GetEnumerator()
         {
-            var enumerator = this.enumerable.GetEnumerator();
             var copies = new List<T>();
             foreach(var item in this.enumerable)
             {
