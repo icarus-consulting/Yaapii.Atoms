@@ -31,13 +31,17 @@ namespace Yaapii.Atoms.Enumerator.Tests
         [Fact]
         public void MapsContents()
         {
-            Assert.True(
+            Assert.Equal(
+                "1",
                 new ItemAt<string>(
-                    new Mapped<int, string>(
-                        new ManyOf<int>(1).GetEnumerator(),
-                        i => new LiveText(i).AsString()),
-                0).Value() == "1",
-            "cannot map contents of enumerator");
+                    new EnumeratorAsEnumerable<string>(
+                        new Mapped<int, string>(
+                            new ManyOf<int>(1).GetEnumerator(),
+                            i => new LiveText(i).AsString())
+                    ),
+                    0
+                ).Value()
+            );
         }
     }
 }
