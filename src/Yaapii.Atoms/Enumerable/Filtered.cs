@@ -34,6 +34,8 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class Filtered<T> : IEnumerable<T>
     {
         private readonly IEnumerable<T> src;
+        private readonly bool live;
+        private readonly List<bool> matched;
         private readonly Func<T, bool> fnc;
 
         /// <summary>
@@ -77,25 +79,66 @@ namespace Yaapii.Atoms.Enumerable
         public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src, bool live)
         {
             this.src = src;
+            this.live = live;
+            this.matched = new List<bool>();
             this.fnc = fnc;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            var enumerator = src.GetEnumerator();
-            while (enumerator.MoveNext())
+            if(this.live)
             {
-                if (fnc.Invoke(enumerator.Current))
+                foreach(var item in Live())
                 {
-                    yield return enumerator.Current;
+                    yield return item;
                 }
             }
-            yield break;
+            else
+            {
+                foreach(var item in Cached())
+                {
+                    yield return item;
+                }
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+        private IEnumerable<T> Cached()
+        {
+            var current = 0;
+            foreach (var item in this.src)
+            {
+                current++;
+                if (this.matched.Count < current)
+                {
+                    var matches = fnc.Invoke(item);
+                    this.matched.Add(matches);
+                }
+
+                if (this.matched[current - 1])
+                {
+                    yield return item;
+                }
+
+            }
+            yield break;
+        }
+
+        private IEnumerable<T> Live()
+        {
+            foreach (var item in this.src)
+            {
+                if(fnc.Invoke(item))
+                {
+                    yield return item;
+                }
+
+            }
+            yield break;
         }
     }
 

@@ -214,7 +214,7 @@ namespace Yaapii.Atoms.Enumerable
                 T result;
                 try
                 {
-                    if (position <0)
+                    if (position < 0)
                     {
                         throw new InvalidOperationException(
                             new Formatted(
@@ -226,7 +226,7 @@ namespace Yaapii.Atoms.Enumerable
 
                     var enumerator = source.GetEnumerator();
                     bool moved = false;
-                    for(var current =0;current<=position;current++)
+                    for(var current = 0;current<=position;current++)
                     {
                         moved = enumerator.MoveNext();
                         if(current == 0 && !moved)
