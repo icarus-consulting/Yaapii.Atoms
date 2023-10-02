@@ -25,6 +25,7 @@ using System.IO;
 using System.IO.Compression;
 using Xunit;
 using Yaapii.Atoms.Bytes;
+using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -34,20 +35,7 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void WritesToGzipOutput()
         {
-            byte[] bytes = {
-                (byte) 0x1F, //GZIP Header ID1
-                (byte) 0x8b, //GZIP Header ID2
-                (byte) 0x08, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, //Header End
-                (byte) 0x0B, (byte) 0xF2, (byte) 0x48, (byte) 0xCD, (byte) 0xC9, (byte) 0xC9, (byte) 0x57,
-                (byte) 0x04, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0xFF, (byte) 0xFF, (byte) 0x03,
-                (byte) 0x00, (byte) 0x56, (byte) 0xCC, (byte) 0x2A, (byte) 0x9D, (byte) 0x06, (byte) 0x00,
-                (byte) 0x00, (byte) 0x00
-            };
-
             MemoryStream zipped = new MemoryStream();
-            var zipStream = new GZipStream(zipped, CompressionLevel.Optimal);
-            byte[] txt = new BytesOf("Hello!").AsBytes();
-
             new LengthOf(
                 new TeeInput(
                     "Hello!",
@@ -56,8 +44,15 @@ namespace Yaapii.Atoms.IO.Tests
             ).Value();
 
             Assert.Equal(
-                zipped.ToArray(),
-                bytes
+                "Hello!",
+                new TextOf(
+                    new InputOf(
+                        new GZipStream(
+                            new MemoryStream(zipped.ToArray()),
+                            CompressionMode.Decompress
+                        )
+                    )
+                ).AsString()
             );
         }
 
