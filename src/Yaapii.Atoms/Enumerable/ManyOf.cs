@@ -166,7 +166,7 @@ namespace Yaapii.Atoms.Enumerable
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return this.GetEnumerator();
         }
     }
 }

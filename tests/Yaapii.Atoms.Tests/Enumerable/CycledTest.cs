@@ -27,7 +27,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
     public sealed class CycledTest
     {
         [Fact]
-        public void RepeatEnumerableTest()
+        public void RepeatsEnumerable()
         {
             string expected = "two";
             Assert.True(
@@ -35,9 +35,10 @@ namespace Yaapii.Atoms.Enumerable.Tests
                     new Cycled<string>(
                         new ManyOf<string>(
                             "one", expected, "three"
-                            )),
+                            )
+                        ),
                     7
-                    ).Value() == expected);
+                ).Value() == expected);
         }
     }
 }
