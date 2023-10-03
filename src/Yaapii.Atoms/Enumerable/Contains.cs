@@ -48,7 +48,15 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="items">enumerable to search through</param>
         /// <param name="match">check to perform on each item</param>
         public Contains(IEnumerable<T> items, Func<T, bool> match) : base(() =>
-            new Enumerator.Contains<T>(items.GetEnumerator(), match).Value())
+            {
+                var found = false;
+                var enumerator = items.GetEnumerator();
+                while(!found && enumerator.MoveNext())
+                {
+                    found = match(enumerator.Current);
+                }
+                return found;
+            })
         { }
     }
 
