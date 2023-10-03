@@ -93,15 +93,16 @@ namespace Yaapii.Atoms.Map.Tests
                     new MapOf<int, int>(
                         new Repeated<KeyValuePair<int, int>>(
                             new Live<KeyValuePair<int, int>>(() =>
-                                new KeyValuePair<int, int>(random.Next(), 1)),
-                                new Live<int>(() =>
-                                {
-                                    Interlocked.Increment(ref size);
-                                    return size;
-                                })
-                            )
+                                new KeyValuePair<int, int>(random.Next(), 1)
+                            ),
+                            new Live<int>(() =>
+                            {
+                                Interlocked.Increment(ref size);
+                                return size;
+                            })
                         )
-                    );
+                    )
+                );
 
             var a = map.Count;
             var b = map.Count;
