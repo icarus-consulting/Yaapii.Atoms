@@ -55,8 +55,7 @@ namespace Yaapii.Atoms.Enumerator
                     items.Sort(cmp);
 
                     return items.GetEnumerator();
-                }
-                );
+                });
         }
 
         public void Dispose()
