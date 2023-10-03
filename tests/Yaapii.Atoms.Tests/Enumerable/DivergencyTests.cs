@@ -58,9 +58,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.Equal(
                 expected,
-                new Divergency<int>(
-                   a, b
-                )
+                new Divergency<int>(a, b)
             );
         }
     }
