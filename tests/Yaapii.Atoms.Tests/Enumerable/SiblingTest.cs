@@ -55,26 +55,29 @@ namespace Yaapii.Atoms.Enumerable.Tests
         }
 
         [Fact]
-        public void FailForInvalidPosition()
+        public void InvalidPositionResultsInFallback()
         {
-            Assert.True(
+            Assert.Equal(
+                "15",
                 new Sibling<string>(
                     "1",
                     new ManyOf<string>("1", "2", "3"),
                     -1,
                     "15"
-                ).Value() == "15");
+                ).Value()
+            );
         }
 
         [Fact]
         public void FailForEmptyCollection()
         {
-            Assert.Throws<IOException>(
+            Assert.Throws<ArgumentException>(
                 () =>
                     new Sibling<int>(
                         1337,
                         new ManyOf<int>()
-                ).Value());
+                    ).Value()
+            );
         }
 
         [Fact]

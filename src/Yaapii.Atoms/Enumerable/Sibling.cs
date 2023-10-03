@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Enumerable
         public Sibling(T item, IEnumerable<T> source) : this(
             item,
             source,
-            new FuncOf<IEnumerable<T>, T>(itr => { throw new IOException("Can't get right neighbour from iterable"); })
+            new FuncOf<IEnumerable<T>, T>(itr => { throw new ArgumentException("Can't get neighbour from iterable"); })
         )
         { }
 
@@ -92,13 +92,67 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="fallback">fallback func</param>
         /// <param name="relativeposition">requested position relative to the given item</param>
         public Sibling(T item, IEnumerable<T> source, int relativeposition, IFunc<IEnumerable<T>, T> fallback) : base(() =>
-            new Enumerator.Sibling<T>(
-                source.GetEnumerator(),
-                item,
-                relativeposition,
-                fallback
-            ).Value()
-        )
+        {
+            var trace = new Queue<T>();
+            var itemFound = false;
+            var siblingFound = false;
+            var enumerator = source.GetEnumerator();
+            T result = default(T);
+            while (!siblingFound && enumerator.MoveNext())
+            {
+                if (!itemFound && item.CompareTo(enumerator.Current) == 0)
+                {
+                    itemFound = true;
+                }
+                if (relativeposition < 0)
+                {
+                    if (!itemFound)
+                    {
+                        trace.Enqueue(enumerator.Current);
+                        if (trace.Count > Math.Abs(relativeposition))
+                        {
+                            trace.Dequeue();
+                        }
+                    }
+                    else
+                    {
+                        if (trace.Count < Math.Abs(relativeposition))
+                        {
+                            result = fallback.Invoke(source);
+                        }
+                        else
+                        {
+                            result = trace.ToArray()[Math.Abs(relativeposition)-1];
+                            siblingFound = true;
+                        }
+                        break;
+                    }
+                }
+                else
+                {
+                    if (itemFound)
+                    {
+                        while (relativeposition > 0 && enumerator.MoveNext())
+                        {
+                            relativeposition--;
+                        }
+                        if (relativeposition > 0)
+                        {
+                            result = fallback.Invoke(source);
+                        }
+                        else
+                        {
+                            result = enumerator.Current;
+                            siblingFound = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (!siblingFound)
+                result = fallback.Invoke(source);
+            return result;
+        })
         { }
     }
 
