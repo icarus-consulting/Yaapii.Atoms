@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Yaapii.Atoms.Enumerable
@@ -28,20 +29,44 @@ namespace Yaapii.Atoms.Enumerable
     /// Enumerable partitioned by a given size.
     /// <para>Is a IEnumerable</para>
     /// </summary>
-    public sealed class Partitioned<T> : ManyEnvelope<IEnumerable<T>>
+    public sealed class Partitioned<T> : IEnumerable<IEnumerable<T>>
     {
+        private readonly int size;
+        private readonly IEnumerable<T> items;
+
         /// <summary>
         /// Enumerable partitioned by a given size.
         /// </summary>
-        public Partitioned(int size, IEnumerable<T> items) : base(() =>
-            new LiveMany<IEnumerable<T>>(() =>
-                new Enumerator.Partitioned<T>(
-                    size, items.GetEnumerator()
-                )
-            ),
-            false
-        )
-        { }
+        public Partitioned(int size, IEnumerable<T> items)
+        {
+            this.size = size;
+            this.items = items;
+        }
+
+        public IEnumerator<IEnumerable<T>> GetEnumerator()
+        {
+            var source = this.items.GetEnumerator();
+            while(source.MoveNext())
+            {
+                yield return Partition(source);
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        private IEnumerable<T> Partition(IEnumerator<T> source)
+        {
+            var taken = 1;
+            yield return source.Current;
+            while(source.MoveNext())
+            {
+                taken++;
+                yield return source.Current;
+            }
+        }
     }
 
     /// <summary>
