@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Error;
 using Yaapii.Atoms.Scalar;
@@ -31,8 +32,11 @@ namespace Yaapii.Atoms.Enumerable
     /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
     /// </summary>
     /// <typeparam name="T">Type of the enumerable</typeparam>
-    public sealed class NotEmpty<T> : ManyEnvelope<T>
+    public sealed class NotEmpty<T> : IEnumerable<T>
     {
+        private readonly IEnumerable<T> origin;
+        private readonly Exception ex;
+
         /// <summary>
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
@@ -47,19 +51,30 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="origin">Enumerable</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(IEnumerable<T> origin, Exception ex) : base(new Live<IEnumerable<T>>(
-            () =>
-            {
-                new FailPrecise(
-                    new FailEmpty<T>(
-                        origin),
-                    ex).Go();
+        public NotEmpty(IEnumerable<T> origin, Exception ex)
+        {
+            this.origin = origin;
+            this.ex = ex;
+        }
 
-                return origin;
-            }),
-            false
-        )
-        { }
+        public IEnumerator<T> GetEnumerator()
+        {
+            bool empty = true;
+            foreach(var item in this.origin)
+            {
+                empty = false;
+                yield return item;
+            }
+            if (empty)
+            {
+                throw this.ex;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
     }
 
     /// <summary>
