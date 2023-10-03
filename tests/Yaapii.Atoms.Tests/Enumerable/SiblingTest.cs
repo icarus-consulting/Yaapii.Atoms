@@ -32,25 +32,26 @@ namespace Yaapii.Atoms.Enumerable.Tests
         [Fact]
         public void Next()
         {
-            Assert.True(
-            new Sibling<int>(
-                2,
-                new ManyOf<int>(1, 2, 3)
-            ).Value() == 3,
-            "Can't get the right neighbour from the enumerable"
-        );
+            Assert.Equal(
+                3,
+                new Sibling<int>(
+                    2,
+                    new ManyOf<int>(1, 2, 3)
+                ).Value()
+            );
         }
 
         [Fact]
         public void ByPos()
         {
-            Assert.True(
+            Assert.Equal(
+                1,
                 new Sibling<int>(
                     2,
                     new ManyOf<int>(1, 2, 3),
                     -1
-                ).Value() == 1,
-            "Can't take the left neighbour from the enumerable");
+                ).Value()
+            );
         }
 
         [Fact]

@@ -62,7 +62,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="relativeposition">requested position relative to the given item</param>
         /// <param name="item">item to start</param>
-        public Sibling(T item, IEnumerable<T> source, int relativeposition) : this(item, source, relativeposition, new FuncOf<IEnumerable<T>, T>(itr => { throw new IOException("Can't get neighbour at position from iterable"); }))
+        public Sibling(T item, IEnumerable<T> source, int relativeposition) : this(item, source, relativeposition, new FuncOf<IEnumerable<T>, T>(itr => { throw new IOException($"Can't get neighbour at position {relativeposition} from iterable"); }))
         { }
 
         /// <summary>

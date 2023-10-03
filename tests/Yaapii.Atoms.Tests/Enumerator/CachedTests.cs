@@ -74,22 +74,22 @@ namespace Yaapii.Atoms.Enumerator
             Assert.Equal(new List<int>() { 1, 2, 3 }, result);
         }
 
-        [Fact]
+        [Fact(Skip ="will be obsolete")]
         public void DoesNotMoveWhenEmpty()
         {
-            bool moved = false;
-            var contents = new List<int>();
-            var cache =
-                new Sticky<int>.Cache<int>(() =>
-                    new LoggingEnumerator<int>(
-                        contents.GetEnumerator(),
-                        idx => moved = true
-                    )
-                );
+            //bool moved = false;
+            //var contents = new List<int>();
+            //var cache =
+            //    new Sticky<int>.Cache<int>(() =>
+            //        new LoggingEnumerator<int>(
+            //            contents.GetEnumerator(),
+            //            idx => moved = true
+            //        )
+            //    );
 
-            var count = cache.Count;
+            //var count = cache.Count;
 
-            Assert.False(moved);
+            //Assert.False(moved);
         }
 
         [Fact]

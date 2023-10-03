@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Func;
 
@@ -34,8 +35,13 @@ namespace Yaapii.Atoms.Enumerable
     /// </summary>
     /// <typeparam name="In">type of input elements</typeparam>
     /// <typeparam name="Out">type of mapped elements</typeparam>
-    public sealed class Mapped<In, Out> : ManyEnvelope<Out>
+    public sealed class Mapped<In, Out> : IEnumerable<Out>
     {
+        private readonly IBiFunc<In, int, Out> mapping;
+        private readonly IEnumerable<In> src;
+        private readonly bool live;
+        private readonly List<Out> mapped;
+
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
         /// </summary>
@@ -153,14 +159,60 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         /// <param name="live">live or sticky</param>
-        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src, bool live) : base(() =>
-            new Enumerator.Mapped<In, Out>(
-                src.GetEnumerator(),
-                fnc
-            ),
-            live
-        )
-        { }
+        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src, bool live)
+        {
+            this.mapping = fnc;
+            this.src = src;
+            this.live = live;
+            this.mapped = new List<Out>();
+        }
+
+        public IEnumerator<Out> GetEnumerator()
+        {
+            if(this.live)
+            {
+                foreach(var item in Live())
+                {
+                    yield return item;
+                }
+            }
+            else
+            {
+                foreach(var item in Cached())
+                {
+                    yield return item;
+                }
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        private IEnumerable<Out> Live()
+        {
+            var index = 0;
+            foreach(var item in this.src)
+            {
+                yield return this.mapping.Invoke(item, index++);
+            }
+        }
+
+        private IEnumerable<Out> Cached()
+        {
+            var index = 0;
+            foreach(var item in this.src)
+            {
+                index++;
+                if(this.mapped.Count < index)
+                {
+                    this.mapped.Add(this.mapping.Invoke(item, index-1));
+                }
+
+                yield return this.mapped[index-1];
+            }
+        }
     }
 
     /// <summary>

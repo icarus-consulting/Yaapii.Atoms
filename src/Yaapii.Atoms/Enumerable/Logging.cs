@@ -55,11 +55,11 @@ namespace Yaapii.Atoms.Enumerable
 
         public IEnumerator<T> GetEnumerator()
         {
-            return
-                new LoggingEnumerator<T>(
-                    this.origin.GetEnumerator(),
-                    this.log
-                );
+            foreach (var item in this.origin)
+            {
+                this.log.Invoke(item);
+                yield return item;
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
