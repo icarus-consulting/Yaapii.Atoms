@@ -44,7 +44,10 @@ namespace Yaapii.Atoms.Enumerable
 
         public IEnumerator<T> GetEnumerator()
         {
-            yield return this.elm;
+            while (true)
+            {
+                yield return this.elm;
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()

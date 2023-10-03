@@ -68,8 +68,8 @@ namespace Yaapii.Atoms.Enumerable
             var enumerator = this.enumerable.GetEnumerator();
             while (enumerator.MoveNext() && taken < limit)
             {
-                yield return enumerator.Current;
                 taken++;
+                yield return enumerator.Current;
             }
         }
 
