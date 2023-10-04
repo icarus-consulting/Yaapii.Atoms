@@ -34,12 +34,13 @@ namespace Yaapii.Atoms.Enumerable
     {
         private readonly IEnumerable<T> enumerable;
         private readonly IScalar<int> limit;
+        private readonly Ternary<T> result;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
-        public HeadOf(IEnumerable<T> enumerable) : this(enumerable, 1)
+        public HeadOf(IEnumerable<T> enumerable, bool live = false) : this(enumerable, 1, live)
         { }
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public HeadOf(IEnumerable<T> enumerable, int limit) : this(enumerable, new Live<int>(limit))
+        public HeadOf(IEnumerable<T> enumerable, int limit, bool live = false) : this(enumerable, new Live<int>(limit), live)
         { }
 
         /// <summary>
@@ -55,13 +56,23 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public HeadOf(IEnumerable<T> enumerable, IScalar<int> limit) 
+        public HeadOf(IEnumerable<T> enumerable, IScalar<int> limit, bool live = false)
         {
             this.enumerable = enumerable;
             this.limit = limit;
+            this.result =
+                Ternary.New(
+                    Sticky.New(Produced),
+                    LiveMany.New(Produced),
+                    live
+                );
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public IEnumerator<T> GetEnumerator() => this.result.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
+        private IEnumerable<T> Produced()
         {
             var limit = this.limit.Value();
             var taken = 0;
@@ -71,11 +82,6 @@ namespace Yaapii.Atoms.Enumerable
                 taken++;
                 yield return enumerator.Current;
             }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 
