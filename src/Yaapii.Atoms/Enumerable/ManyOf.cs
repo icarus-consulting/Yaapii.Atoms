@@ -35,6 +35,7 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class ManyOf : IEnumerable<string>
     {
         private readonly IEnumerable<string> items;
+        private readonly IEnumerable<string> origin;
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of an array.
@@ -47,20 +48,20 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/>.
         /// </summary>
         /// <param name="e">a enumerator</param>
-        public ManyOf(IEnumerator<string> e) : this(new Live<IEnumerator<string>>(e))
+        public ManyOf(IEnumerator<string> e, bool live = false) : this(new Live<IEnumerator<string>>(e), live)
         { }
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
-        public ManyOf(IScalar<IEnumerator<string>> sc) : this(() => sc.Value())
+        public ManyOf(IScalar<IEnumerator<string>> sc, bool live = false) : this(sc.Value, live)
         { }
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
-        public ManyOf(Func<IEnumerable<string>> fnc) : this(() => fnc().GetEnumerator())
+        public ManyOf(Func<IEnumerable<string>> fnc, bool live = false) : this(() => fnc().GetEnumerator(), live)
         { }
 
         /// <summary>
@@ -75,6 +76,7 @@ namespace Yaapii.Atoms.Enumerable
                     LiveMany.New(Produced),
                     live
                 );
+            this.origin = new EnumeratorAsEnumerable<string>(origin);
         }
 
         public IEnumerator<string> GetEnumerator() => this.items.GetEnumerator();
@@ -83,7 +85,7 @@ namespace Yaapii.Atoms.Enumerable
 
         private IEnumerable<string> Produced()
         {
-            foreach (var item in this.items)
+            foreach (var item in this.origin)
             {
                 yield return item;
             }
