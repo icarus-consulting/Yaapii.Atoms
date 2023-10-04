@@ -35,6 +35,7 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class Joined<T> : IEnumerable<T>
     {
         private readonly IEnumerable<IEnumerable<T>> enumerables;
+        private readonly Ternary<T> result;
 
         /// <summary>
         /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
@@ -84,25 +85,37 @@ namespace Yaapii.Atoms.Enumerable
         /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
         /// </summary>
         /// <param name="items">enumerables to join</param>
-        public Joined(IEnumerable<IEnumerable<T>> items)
+        public Joined(IEnumerable<IEnumerable<T>> items, bool live = false)
         {
             this.enumerables = items;
+            this.result =
+                Ternary.New(
+                    Sticky.New(Produced),
+                    LiveMany.New(Produced),
+                    live
+                );
+
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            foreach(var enumerable in this.enumerables)
-            {
-                foreach(var item in enumerable)
-                {
-                    yield return item;
-                }
-            }
+            return result.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+        private IEnumerable<T> Produced()
+        {
+            foreach (var enumerable in this.enumerables)
+            {
+                foreach (var item in enumerable)
+                {
+                    yield return item;
+                }
+            }
         }
     }
 

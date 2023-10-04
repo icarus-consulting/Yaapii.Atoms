@@ -62,18 +62,6 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src) : this(
-            fnc,
-            src,
-            false
-        )
-        { }
-
-        /// <summary>
-        /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
-        /// </summary>
-        /// <param name="src">enumerable to filter</param>
-        /// <param name="fnc">filter function</param>
         /// <param name="live">live or sticky</param>
         public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src, bool live = false)
         {
