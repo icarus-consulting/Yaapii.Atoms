@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Xunit;
 
 namespace Yaapii.Atoms.Scalar.Tests
@@ -41,6 +42,31 @@ namespace Yaapii.Atoms.Scalar.Tests
             Assert.True(val1 == scalar.Value(),
                 "cannot return value from cache"
             );
+        }
+
+        [Fact]
+        public void TempPerformance()
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            for(var i=0;i<200000;i++)
+            {
+                var sc = new ScalarOf<int>(() => new Random().Next());
+                sc.Value();
+            }
+            sw.Stop();
+
+            var sw2 = new Stopwatch();
+            sw2.Start();
+            for (var i = 0; i < 200000; i++)
+            {
+                var sc = new LazyOf<int>(() => new Random().Next(), (a)=>false);
+                sc.Value();
+            }
+            sw2.Stop();
+
+            Debug.WriteLine($"{sw.ElapsedMilliseconds} vs {sw2.ElapsedMilliseconds}");
+
         }
 
         [Fact]

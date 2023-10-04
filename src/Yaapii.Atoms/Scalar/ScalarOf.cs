@@ -28,6 +28,34 @@ namespace Yaapii.Atoms.Scalar
     /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    public sealed class LazyOf<T> : IScalar<T>
+    {
+        private readonly Lazy<T> origin;
+
+        /// <summary>
+        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
+        /// </summary>
+        /// <param name="src">scalar to cache result from</param>
+        /// <param name="shouldReload">reload condition func</param>
+        public LazyOf(Func<T> src, Func<T, bool> shouldReload)
+        {
+            this.origin = new Lazy<T>(src);
+        }
+
+        /// <summary>
+        /// Get the value.
+        /// </summary>
+        /// <returns>the value</returns>
+        public T Value()
+        {
+            return this.origin.Value;
+        }
+    }
+
+    /// <summary>
+    /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public sealed class ScalarOf<T> : IScalar<T>
     {
         private readonly IScalar<T> origin;

@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Yaapii.Atoms.Enumerable
@@ -29,9 +30,13 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class Sorted<T> : ManyEnvelope<T>
+    public sealed class Sorted<T> : IEnumerable<T>
         where T : IComparable<T>
     {
+        private readonly List<T> source;
+        private readonly bool[] sorted;
+        private readonly Comparer<T> comparer;
+
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
         /// </summary>
@@ -51,13 +56,40 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public Sorted(Comparer<T> cmp, IEnumerable<T> src) : base(() =>
-            new LiveMany<T>(() =>
-                new Enumerator.Sorted<T>(cmp, src.GetEnumerator())
-            ),
-            false
-        )
-        { }
+        public Sorted(Comparer<T> cmp, IEnumerable<T> src)
+        {
+            this.source = new List<T>(src);
+            this.sorted = new bool[] { false };
+            this.comparer = cmp;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            if(!this.IsSorted())
+            {
+                this.Sort();
+            }
+            foreach(var item in this.source)
+            {
+                yield return item;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        private bool IsSorted()
+        {
+            return this.sorted[0];
+        }
+
+        private void Sort()
+        {
+            this.source.Sort(this.comparer);
+            this.sorted[0] = true;
+        }
     }
 
     /// <summary>
