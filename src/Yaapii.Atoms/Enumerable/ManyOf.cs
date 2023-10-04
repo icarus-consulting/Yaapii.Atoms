@@ -34,22 +34,13 @@ namespace Yaapii.Atoms.Enumerable
 
     public sealed class ManyOf : IEnumerable<string>
     {
-        private readonly EnumeratorAsEnumerable<string> origin;
+        private readonly IEnumerable<string> items;
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of an array.
         /// </summary>
         /// <param name="items"></param>
-        public ManyOf(params string[] items) : this(() =>
-            {
-                var lst = new List<string>();
-                for (int i = 0; i < items.Length; i++)
-                {
-                    lst.Add(items[i]);
-                };
-                return lst;
-            }
-        )
+        public ManyOf(params string[] items) : this(() => new Params<string>(items))
         { }
 
         /// <summary>
@@ -76,22 +67,26 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
-        public ManyOf(Func<IEnumerator<string>> origin)
+        public ManyOf(Func<IEnumerator<string>> origin, bool live = false)
         {
-            this.origin = new EnumeratorAsEnumerable<string>(origin);
+            this.items =
+                Ternary.New(
+                    Sticky.New(Produced),
+                    LiveMany.New(Produced),
+                    live
+                );
         }
 
-        public IEnumerator<string> GetEnumerator()
+        public IEnumerator<string> GetEnumerator() => this.items.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
+        private IEnumerable<string> Produced()
         {
-            foreach (var item in this.origin)
+            foreach (var item in this.items)
             {
                 yield return item;
             }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
 
         /// <summary>
@@ -130,6 +125,7 @@ namespace Yaapii.Atoms.Enumerable
 
     public sealed class ManyOf<T> : IEnumerable<T>
     {
+        private readonly IEnumerable<T> result;
         private readonly IEnumerable<T> origin;
 
         /// <summary>
@@ -164,23 +160,30 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
-        public ManyOf(IEnumerable<T> origin)
+        public ManyOf(IEnumerable<T> origin, bool live = false)
         {
+            this.result =
+                Ternary.New(
+                    Sticky.New(Produced),
+                    LiveMany.New(Produced),
+                    live
+                );
             this.origin = origin;
         }
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            foreach(var item in this.origin)
-            {
-                yield return item;
-            }
-
-        }
+        public IEnumerator<T> GetEnumerator() => this.result.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+        private IEnumerable<T> Produced()
+        {
+            foreach (var item in this.origin)
+            {
+                yield return item;
+            }
         }
     }
 }
