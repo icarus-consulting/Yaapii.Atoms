@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head, System.Collections.Generic.IEnumerable<string> lines, params string[] tail) : this(
+        public Paragraph(string head, IEnumerable<string> lines, params string[] tail) : this(
             new Mapped<string, IText>(
                 line => new LiveText(line),
                 new Joined<string>(
@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, System.Collections.Generic.IEnumerable<string> lines, params string[] tail) : this(
+        public Paragraph(string head1, string head2, IEnumerable<string> lines, params string[] tail) : this(
             new Mapped<string, IText>(
                 line => new LiveText(line),
                 new Joined<string>(
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, System.Collections.Generic.IEnumerable<string> lines, params string[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, IEnumerable<string> lines, params string[] tail) : this(
             new Mapped<string, IText>(
                 line => new LiveText(line),
                 new Joined<string>(
@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, System.Collections.Generic.IEnumerable<string> lines, params string[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, IEnumerable<string> lines, params string[] tail) : this(
             new Mapped<string, IText>(
                 line => new LiveText(line),
                 new Joined<string>(
@@ -91,7 +91,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, string head5, System.Collections.Generic.IEnumerable<string> lines, params string[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, string head5, IEnumerable<string> lines, params string[] tail) : this(
             new Mapped<string, IText>(
                 line => new LiveText(line),
                 new Joined<string>(
@@ -105,7 +105,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, System.Collections.Generic.IEnumerable<string> lines, params string[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, IEnumerable<string> lines, params string[] tail) : this(
             new Mapped<string, IText>(
                 line => new LiveText(line),
                 new Joined<string>(
@@ -119,7 +119,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, string head7, System.Collections.Generic.IEnumerable<string> lines, params string[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, string head7, IEnumerable<string> lines, params string[] tail) : this(
             new Mapped<string, IText>(
                 line => new LiveText(line),
                 new Joined<string>(
@@ -136,7 +136,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, System.Collections.Generic.IEnumerable<string> lines, params string[] tail) : this(
+        public Paragraph(IText head1, IEnumerable<string> lines, params string[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1),
                 new Mapped<string, IText>(
@@ -152,7 +152,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, System.Collections.Generic.IEnumerable<string> lines, params string[] tail) : this(
+        public Paragraph(IText head1, IText head2, IEnumerable<string> lines, params string[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2),
                 new Mapped<string, IText>(
@@ -168,7 +168,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, System.Collections.Generic.IEnumerable<string> lines, params string[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IEnumerable<string> lines, params string[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3),
                 new Mapped<string, IText>(
@@ -184,7 +184,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, System.Collections.Generic.IEnumerable<string> lines, params string[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IEnumerable<string> lines, params string[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4),
                 new Mapped<string, IText>(
@@ -200,7 +200,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, System.Collections.Generic.IEnumerable<string> lines, params string[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IEnumerable<string> lines, params string[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4, head5),
                 new Mapped<string, IText>(
@@ -216,7 +216,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, System.Collections.Generic.IEnumerable<string> lines, params string[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IEnumerable<string> lines, params string[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4, head5, head6),
                 new Mapped<string, IText>(
@@ -232,7 +232,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IText head7, System.Collections.Generic.IEnumerable<string> lines, params string[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IText head7, IEnumerable<string> lines, params string[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4, head5, head6, head7),
                 new Mapped<string, IText>(
@@ -251,7 +251,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head, System.Collections.Generic.IEnumerable<IText> lines, params string[] tail) : this(
+        public Paragraph(string head, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -268,7 +268,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, System.Collections.Generic.IEnumerable<IText> lines, params string[] tail) : this(
+        public Paragraph(string head1, string head2, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -285,7 +285,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, System.Collections.Generic.IEnumerable<IText> lines, params string[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -302,7 +302,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, System.Collections.Generic.IEnumerable<IText> lines, params string[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -319,7 +319,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, string head5, System.Collections.Generic.IEnumerable<IText> lines, params string[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, string head5, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -336,7 +336,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, System.Collections.Generic.IEnumerable<IText> lines, params string[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -353,7 +353,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, string head7, System.Collections.Generic.IEnumerable<IText> lines, params string[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, string head7, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -373,7 +373,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head, System.Collections.Generic.IEnumerable<IText> lines, params string[] tail) : this(
+        public Paragraph(IText head, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head),
                 lines,
@@ -387,7 +387,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, System.Collections.Generic.IEnumerable<IText> lines, params string[] tail) : this(
+        public Paragraph(IText head1, IText head2, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2),
                 lines,
@@ -401,7 +401,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, System.Collections.Generic.IEnumerable<IText> lines, params string[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3),
                 lines,
@@ -415,7 +415,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, System.Collections.Generic.IEnumerable<IText> lines, params string[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4),
                 lines,
@@ -429,7 +429,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, System.Collections.Generic.IEnumerable<IText> lines, params string[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4, head5),
                 lines,
@@ -443,7 +443,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, System.Collections.Generic.IEnumerable<IText> lines, params string[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4, head5, head6),
                 lines,
@@ -457,7 +457,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IText head7, System.Collections.Generic.IEnumerable<IText> lines, params string[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IText head7, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4, head5, head6, head7),
                 lines,
@@ -474,7 +474,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head, System.Collections.Generic.IEnumerable<string> lines, params IText[] tail) : this(
+        public Paragraph(string head, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -490,7 +490,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, System.Collections.Generic.IEnumerable<string> lines, params IText[] tail) : this(
+        public Paragraph(string head1, string head2, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -506,7 +506,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, System.Collections.Generic.IEnumerable<string> lines, params IText[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -522,7 +522,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, System.Collections.Generic.IEnumerable<string> lines, params IText[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -538,7 +538,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, string head5, System.Collections.Generic.IEnumerable<string> lines, params IText[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, string head5, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -554,7 +554,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, System.Collections.Generic.IEnumerable<string> lines, params IText[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -570,7 +570,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, string head7, System.Collections.Generic.IEnumerable<string> lines, params IText[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, string head7, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -589,7 +589,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head, System.Collections.Generic.IEnumerable<string> lines, params IText[] tail) : this(
+        public Paragraph(IText head, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head),
                 new Mapped<string, IText>(
@@ -603,7 +603,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, System.Collections.Generic.IEnumerable<string> lines, params IText[] tail) : this(
+        public Paragraph(IText head1, IText head2, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2),
                 new Mapped<string, IText>(
@@ -617,7 +617,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, System.Collections.Generic.IEnumerable<string> lines, params IText[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3),
                 new Mapped<string, IText>(
@@ -631,7 +631,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, System.Collections.Generic.IEnumerable<string> lines, params IText[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4),
                 new Mapped<string, IText>(
@@ -645,7 +645,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, System.Collections.Generic.IEnumerable<string> lines, params IText[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4, head5),
                 new Mapped<string, IText>(
@@ -659,7 +659,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, System.Collections.Generic.IEnumerable<string> lines, params IText[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4, head5, head6),
                 new Mapped<string, IText>(
@@ -673,7 +673,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IText head7, System.Collections.Generic.IEnumerable<string> lines, params IText[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IText head7, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4, head5, head6, head7),
                 new Mapped<string, IText>(
@@ -690,7 +690,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head, System.Collections.Generic.IEnumerable<IText> lines, params IText[] tail) : this(
+        public Paragraph(string head, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -704,7 +704,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, System.Collections.Generic.IEnumerable<IText> lines, params IText[] tail) : this(
+        public Paragraph(string head1, string head2, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -718,7 +718,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, System.Collections.Generic.IEnumerable<IText> lines, params IText[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -732,7 +732,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, System.Collections.Generic.IEnumerable<IText> lines, params IText[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -746,7 +746,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, string head5, System.Collections.Generic.IEnumerable<IText> lines, params IText[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, string head5, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -760,7 +760,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, System.Collections.Generic.IEnumerable<IText> lines, params IText[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -774,7 +774,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, string head7, System.Collections.Generic.IEnumerable<IText> lines, params IText[] tail) : this(
+        public Paragraph(string head1, string head2, string head3, string head4, string head5, string head6, string head7, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
@@ -791,7 +791,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head, System.Collections.Generic.IEnumerable<IText> lines, params IText[] tail) : this(
+        public Paragraph(IText head, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head),
                 lines,
@@ -802,7 +802,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, System.Collections.Generic.IEnumerable<IText> lines, params IText[] tail) : this(
+        public Paragraph(IText head1, IText head2, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2),
                 lines,
@@ -813,7 +813,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, System.Collections.Generic.IEnumerable<IText> lines, params IText[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3),
                 lines,
@@ -824,7 +824,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, System.Collections.Generic.IEnumerable<IText> lines, params IText[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4),
                 lines,
@@ -835,7 +835,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, System.Collections.Generic.IEnumerable<IText> lines, params IText[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4, head5),
                 lines,
@@ -846,7 +846,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, System.Collections.Generic.IEnumerable<IText> lines, params IText[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4, head5, head6),
                 lines,
@@ -857,7 +857,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IText head7, System.Collections.Generic.IEnumerable<IText> lines, params IText[] tail) : this(
+        public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IText head7, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
                 new LiveMany<IText>(head1, head2, head3, head4, head5, head6, head7),
                 lines,
@@ -876,7 +876,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(System.Collections.Generic.IEnumerable<string> lines) : this(new Mapped<string, IText>(line => new TextOf(line), lines))
+        public Paragraph(IEnumerable<string> lines) : this(new Mapped<string, IText>(line => new TextOf(line), lines))
         { }
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
@@ -886,7 +886,7 @@ namespace Yaapii.Atoms.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(System.Collections.Generic.IEnumerable<IText> lines)
+        public Paragraph(IEnumerable<IText> lines)
             : base(new Joined(Environment.NewLine, lines), false)
         { }
     }

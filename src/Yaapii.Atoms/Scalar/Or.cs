@@ -50,7 +50,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Or(Func<In, bool> func, System.Collections.Generic.IEnumerable<In> src) : this(new FuncOf<In, bool>(func), src)
+        public Or(Func<In, bool> func, IEnumerable<In> src) : this(new FuncOf<In, bool>(func), src)
         { }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Or(IFunc<In, Boolean> func, System.Collections.Generic.IEnumerable<In> src) : this(
+        public Or(IFunc<In, Boolean> func, IEnumerable<In> src) : this(
             new Enumerable.Mapped<In, IScalar<Boolean>>(
                 new FuncOf<In, IScalar<Boolean>>(
                     (item) => new Live<Boolean>(func.Invoke(item))
@@ -101,7 +101,7 @@ namespace Yaapii.Atoms.Scalar
         /// ctor
         /// </summary>
         /// <param name="src">list of items</param>
-        private Or(System.Collections.Generic.IEnumerable<IScalar<bool>> src) : this(new Or(src))
+        private Or(IEnumerable<IScalar<bool>> src) : this(new Or(src))
         { }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Yaapii.Atoms.Scalar
         /// ctor
         /// </summary>
         /// <param name="src">list of items</param>
-        public Or(System.Collections.Generic.IEnumerable<bool> src) : this(
+        public Or(IEnumerable<bool> src) : this(
             new Mapped<bool, IScalar<bool>>(
                 item => new Live<bool>(item),
                 src))
@@ -179,7 +179,7 @@ namespace Yaapii.Atoms.Scalar
         /// ctor
         /// </summary>
         /// <param name="src">list of items</param>
-        public Or(System.Collections.Generic.IEnumerable<IScalar<bool>> src)
+        public Or(IEnumerable<IScalar<bool>> src)
             : base(() =>
             {
                 bool foundTrue = false;
@@ -210,7 +210,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public static Or<In> New<In>(Func<In, bool> func, System.Collections.Generic.IEnumerable<In> src)
+        public static Or<In> New<In>(Func<In, bool> func, IEnumerable<In> src)
             => new Or<In>(func, src);
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public static Or<In> New<In>(IFunc<In, Boolean> func, System.Collections.Generic.IEnumerable<In> src)
+        public static Or<In> New<In>(IFunc<In, Boolean> func, IEnumerable<In> src)
             => new Or<In>(func, src);
 
         /// <summary>

@@ -79,7 +79,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
         public Split(IText text, IText rgx, bool remBlank = true) : base(() =>
             {
-                System.Collections.Generic.IEnumerable<string> split =
+                IEnumerable<string> split =
                     new LiveMany<string>(
                         new Regex(rgx.AsString()).Split(text.AsString())
                     );

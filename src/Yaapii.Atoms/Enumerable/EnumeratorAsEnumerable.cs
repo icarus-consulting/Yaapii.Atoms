@@ -8,7 +8,7 @@ namespace Yaapii.Atoms.Enumerable
     /// A given enumerator as enumerable.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class EnumeratorAsEnumerable<T> : System.Collections.Generic.IEnumerable<T>
+    public sealed class EnumeratorAsEnumerable<T> : IEnumerable<T>
     {
         private readonly IEnumerator<T> enumerator;
 

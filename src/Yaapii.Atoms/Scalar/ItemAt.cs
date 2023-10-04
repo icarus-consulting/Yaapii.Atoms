@@ -30,17 +30,17 @@ using Yaapii.Atoms.Text;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// Element from position in a <see cref="System.Collections.Generic.IEnumerable{T}"/>.
+    /// Element from position in a <see cref="IEnumerable{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of element</typeparam>
     public sealed class ItemAt<T> : ScalarEnvelope<T>
     {
         /// <summary>
-        /// First element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> with given Exception thrwon on fallback
+        /// First element in a <see cref="IEnumerable{T}"/> with given Exception thrwon on fallback
         /// </summary>
         /// <param name="source"></param>
         /// <param name="ex"></param>
-        public ItemAt(System.Collections.Generic.IEnumerable<T> source, Exception ex) : this(
+        public ItemAt(IEnumerable<T> source, Exception ex) : this(
             source,
             0,
             ex
@@ -48,27 +48,27 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// Element at position in <see cref="System.Collections.Generic.IEnumerable{T}"/> with given Exception thrown on fallback
+        /// Element at position in <see cref="IEnumerable{T}"/> with given Exception thrown on fallback
         /// </summary>
         /// <param name="source"></param>
         /// <param name="position"></param>
         /// <param name="ex"></param>
-        public ItemAt(System.Collections.Generic.IEnumerable<T> source, int position, Exception ex) : this(
+        public ItemAt(IEnumerable<T> source, int position, Exception ex) : this(
             source,
             position,
-            new FuncOf<System.Collections.Generic.IEnumerable<T>, T>(itr =>
+            new FuncOf<IEnumerable<T>, T>(itr =>
                 throw ex
             )
         )
         { }
 
         /// <summary>
-        /// First element in a <see cref="System.Collections.Generic.IEnumerable{T}"/>.
+        /// First element in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
-        public ItemAt(System.Collections.Generic.IEnumerable<T> source) : this(
+        public ItemAt(IEnumerable<T> source) : this(
             source,
-            new BiFuncOf<Exception, System.Collections.Generic.IEnumerable<T>, T>((ex, itr) =>
+            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, itr) =>
                 throw new NoSuchElementException(
                     new Formatted("Cannot get first element: {0}", ex.Message).AsString()
                 )
@@ -77,35 +77,35 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// First element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> with a fallback value.
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback value.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(System.Collections.Generic.IEnumerable<T> source, T fallback) : this(
+        public ItemAt(IEnumerable<T> source, T fallback) : this(
             source,
-            new FuncOf<System.Collections.Generic.IEnumerable<T>, T>(b => fallback)
+            new FuncOf<IEnumerable<T>, T>(b => fallback)
         )
         { }
 
         /// <summary>
-        /// Element at a position in a <see cref="System.Collections.Generic.IEnumerable{T}"/> with a fallback value.
+        /// Element at a position in a <see cref="IEnumerable{T}"/> with a fallback value.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="position">position</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(System.Collections.Generic.IEnumerable<T> source, int position, T fallback) : this(
+        public ItemAt(IEnumerable<T> source, int position, T fallback) : this(
             source,
             position,
-            new FuncOf<System.Collections.Generic.IEnumerable<T>, T>(b => fallback)
+            new FuncOf<IEnumerable<T>, T>(b => fallback)
         )
         { }
 
         /// <summary>
-        /// First element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
-        public ItemAt(System.Collections.Generic.IEnumerable<T> source, IBiFunc<Exception, System.Collections.Generic.IEnumerable<T>, T> fallback) : this(
+        public ItemAt(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback) : this(
             source,
             0,
             fallback
@@ -113,23 +113,23 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// First element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
-        public ItemAt(System.Collections.Generic.IEnumerable<T> source, Func<System.Collections.Generic.IEnumerable<T>, T> fallback) : this(
+        public ItemAt(IEnumerable<T> source, Func<IEnumerable<T>, T> fallback) : this(
             source,
             0,
-            new FuncOf<System.Collections.Generic.IEnumerable<T>, T>(fallback)
+            new FuncOf<IEnumerable<T>, T>(fallback)
         )
         { }
 
         /// <summary>
-        /// First element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
-        public ItemAt(System.Collections.Generic.IEnumerable<T> source, IFunc<System.Collections.Generic.IEnumerable<T>, T> fallback) : this(
+        public ItemAt(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback) : this(
             source,
             0,
             fallback
@@ -137,14 +137,14 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// Element from position in a <see cref="System.Collections.Generic.IEnumerable{T}"/>.
+        /// Element from position in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
-        public ItemAt(System.Collections.Generic.IEnumerable<T> source, int position) : this(
+        public ItemAt(IEnumerable<T> source, int position) : this(
                 source,
                 position,
-                new BiFuncOf<Exception, System.Collections.Generic.IEnumerable<T>, T>((ex, itr) =>
+                new BiFuncOf<Exception, IEnumerable<T>, T>((ex, itr) =>
                 {
                     throw
                         new NoSuchElementException(
@@ -161,12 +161,12 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// Element from position in a <see cref="System.Collections.Generic.IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(System.Collections.Generic.IEnumerable<T> source, int position, IFunc<System.Collections.Generic.IEnumerable<T>, T> fallback) : this(
+        public ItemAt(IEnumerable<T> source, int position, IFunc<IEnumerable<T>, T> fallback) : this(
             source,
             position,
             (ex, enumerable) => fallback.Invoke(enumerable)
@@ -174,42 +174,42 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// Element from position in a <see cref="System.Collections.Generic.IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(System.Collections.Generic.IEnumerable<T> source, int position, Func<System.Collections.Generic.IEnumerable<T>, T> fallback) : this(
+        public ItemAt(IEnumerable<T> source, int position, Func<IEnumerable<T>, T> fallback) : this(
             source,
             position,
-            new BiFuncOf<Exception, System.Collections.Generic.IEnumerable<T>, T>((ex, enumerable) =>
+            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) =>
                 fallback.Invoke(enumerable)
             )
         )
         { }
 
         /// <summary>
-        /// Element from position in a <see cref="System.Collections.Generic.IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(System.Collections.Generic.IEnumerable<T> source, int position, Func<Exception, System.Collections.Generic.IEnumerable<T>, T> fallback) : this(
+        public ItemAt(IEnumerable<T> source, int position, Func<Exception, IEnumerable<T>, T> fallback) : this(
             source,
             position,
-            new BiFuncOf<Exception, System.Collections.Generic.IEnumerable<T>, T>((ex, enumerable) =>
+            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) =>
                 fallback.Invoke(ex, enumerable)
             )
         )
         { }
 
         /// <summary>
-        /// Element from position in a <see cref="System.Collections.Generic.IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(System.Collections.Generic.IEnumerable<T> source, int position, IBiFunc<Exception, System.Collections.Generic.IEnumerable<T>, T> fallback) : base(() =>
+        public ItemAt(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback) : base(() =>
             {
                 T result;
                 try
@@ -250,112 +250,112 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class ItemAt
     {
         /// <summary>
-        /// First element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> with given Exception thrwon on fallback
+        /// First element in a <see cref="IEnumerable{T}"/> with given Exception thrwon on fallback
         /// </summary>
         /// <param name="source"></param>
         /// <param name="ex"></param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, Exception ex)
+        public static IScalar<T> New<T>(IEnumerable<T> source, Exception ex)
             => new ItemAt<T>(source, ex);
 
         /// <summary>
-        /// Element at position in <see cref="System.Collections.Generic.IEnumerable{T}"/> with given Exception thrown on fallback
+        /// Element at position in <see cref="IEnumerable{T}"/> with given Exception thrown on fallback
         /// </summary>
         /// <param name="source"></param>
         /// <param name="position"></param>
         /// <param name="ex"></param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, int position, Exception ex)
+        public static IScalar<T> New<T>(IEnumerable<T> source, int position, Exception ex)
             => new ItemAt<T>(source, position, ex);
 
         /// <summary>
-        /// First element in a <see cref="System.Collections.Generic.IEnumerable{T}"/>.
+        /// First element in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source)
+        public static IScalar<T> New<T>(IEnumerable<T> source)
             => new ItemAt<T>(source);
 
         /// <summary>
-        /// First element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> with a fallback value.
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback value.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, T fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, T fallback)
             => new ItemAt<T>(source, fallback);
 
         /// <summary>
-        /// Element at a position in a <see cref="System.Collections.Generic.IEnumerable{T}"/> with a fallback value.
+        /// Element at a position in a <see cref="IEnumerable{T}"/> with a fallback value.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="position">position</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, int position, T fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, int position, T fallback)
             => new ItemAt<T>(source, position, fallback);
 
         /// <summary>
-        /// First element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, IBiFunc<Exception, System.Collections.Generic.IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, fallback);
 
         /// <summary>
-        /// First element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, Func<System.Collections.Generic.IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, Func<IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, fallback);
 
         /// <summary>
-        /// First element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
+        /// First element in a <see cref="IEnumerable{T}"/> with a fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, IFunc<System.Collections.Generic.IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, fallback);
 
         /// <summary>
-        /// Element from position in a <see cref="System.Collections.Generic.IEnumerable{T}"/>.
+        /// Element from position in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, int position)
+        public static IScalar<T> New<T>(IEnumerable<T> source, int position)
             => new ItemAt<T>(source, position);
 
         /// <summary>
-        /// Element from position in a <see cref="System.Collections.Generic.IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, int position, IFunc<System.Collections.Generic.IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, int position, IFunc<IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, position, fallback);
 
         /// <summary>
-        /// Element from position in a <see cref="System.Collections.Generic.IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, int position, Func<System.Collections.Generic.IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, int position, Func<IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, position, fallback);
 
         /// <summary>
-        /// Element from position in a <see cref="System.Collections.Generic.IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, int position, Func<Exception, System.Collections.Generic.IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, int position, Func<Exception, IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, position, fallback);
 
         /// <summary>
-        /// Element from position in a <see cref="System.Collections.Generic.IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, int position, IBiFunc<Exception, System.Collections.Generic.IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, position, fallback);
     }
 }

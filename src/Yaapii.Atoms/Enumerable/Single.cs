@@ -7,7 +7,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <summary>
     /// Enumeration of a single item.
     /// </summary>
-    public class Single<T> : System.Collections.Generic.IEnumerable<T>
+    public class Single<T> : IEnumerable<T>
     {
         private readonly T item;
 

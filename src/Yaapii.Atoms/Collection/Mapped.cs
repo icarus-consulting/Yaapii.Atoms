@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerable</param>
-        public Mapped(Func<In, Out> mapping, System.Collections.Generic.IEnumerable<In> src) : this(
+        public Mapped(Func<In, Out> mapping, IEnumerable<In> src) : this(
             mapping, new LiveCollection<In>(src))
         { }
 
@@ -82,7 +82,7 @@ namespace Yaapii.Atoms.Collection
 
         public static ICollection<Out> New<In, Out>(Func<In, Out> mapping, IEnumerator<In> src) => new Mapped<In, Out>(mapping, src);
 
-        public static ICollection<Out> New<In, Out>(Func<In, Out> mapping, System.Collections.Generic.IEnumerable<In> src) => new Mapped<In, Out>(mapping, src);
+        public static ICollection<Out> New<In, Out>(Func<In, Out> mapping, IEnumerable<In> src) => new Mapped<In, Out>(mapping, src);
 
         public static ICollection<Out> New<In, Out>(Func<In, Out> mapping, ICollection<In> src) => new Mapped<In, Out>(mapping, src);
     }

@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Scalar
     /// <typeparam name="T"></typeparam>
     public sealed class ParallelAnd<T> : IScalar<bool>
     {
-        private System.Collections.Generic.IEnumerable<IScalar<bool>> iterable;
+        private IEnumerable<IScalar<bool>> iterable;
 
         /// <summary>
         /// Logical conjunction, in multiple threads. Returns true if all contents return true.
@@ -69,7 +69,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="proc"></param>
         /// <param name="src"></param>
-        public ParallelAnd(IAction<T> proc, System.Collections.Generic.IEnumerable<T> src) : this(
+        public ParallelAnd(IAction<T> proc, IEnumerable<T> src) : this(
             new FuncOf<T, bool>(proc, true), src
         )
         { }
@@ -79,7 +79,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="func"></param>
         /// <param name="src"></param>
-        public ParallelAnd(IFunc<T, bool> func, System.Collections.Generic.IEnumerable<T> src) : this(
+        public ParallelAnd(IFunc<T, bool> func, IEnumerable<T> src) : this(
             new Mapped<T, IScalar<bool>>(
                 i => new ScalarOf<bool>(func.Invoke(i)),
                 src)
@@ -90,7 +90,7 @@ namespace Yaapii.Atoms.Scalar
         /// Logical conjunction, in multiple threads. Returns true if all contents return true.
         /// </summary>
         /// <param name="src"></param>
-        public ParallelAnd(System.Collections.Generic.IEnumerable<IScalar<bool>> src)
+        public ParallelAnd(IEnumerable<IScalar<bool>> src)
         {
             this.iterable = src;
         }
@@ -134,7 +134,7 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="proc"></param>
         /// <param name="src"></param>
-        public static IScalar<bool> New<T>(IAction<T> proc, System.Collections.Generic.IEnumerable<T> src)
+        public static IScalar<bool> New<T>(IAction<T> proc, IEnumerable<T> src)
             => new ParallelAnd<T>(proc, src);
 
         /// <summary>
@@ -142,14 +142,14 @@ namespace Yaapii.Atoms.Scalar
         /// </summary>
         /// <param name="func"></param>
         /// <param name="src"></param>
-        public static IScalar<bool> New<T>(IFunc<T, bool> func, System.Collections.Generic.IEnumerable<T> src)
+        public static IScalar<bool> New<T>(IFunc<T, bool> func, IEnumerable<T> src)
             => new ParallelAnd<T>(func, src);
 
         /// <summary>
         /// Logical conjunction, in multiple threads. Returns true if all contents return true.
         /// </summary>
         /// <param name="src"></param>
-        public static IScalar<bool> New<T>(System.Collections.Generic.IEnumerable<IScalar<bool>> src)
+        public static IScalar<bool> New<T>(IEnumerable<IScalar<bool>> src)
             => new ParallelAnd<T>(src);
     }
 }

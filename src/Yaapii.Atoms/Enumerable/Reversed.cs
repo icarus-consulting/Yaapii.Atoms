@@ -27,7 +27,7 @@ using System.Linq;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// A reversed <see cref="System.Collections.Generic.IEnumerable{T}"/>
+    /// A reversed <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="X">type of items in enumerable</typeparam>
     public sealed class Reversed<X> : IEnumerable<X>
@@ -36,7 +36,7 @@ namespace Yaapii.Atoms.Enumerable
         private readonly Ternary<X> result;
 
         /// <summary>
-        /// A reversed <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
         public Reversed(IEnumerable<X> src, bool live = false)
@@ -67,14 +67,14 @@ namespace Yaapii.Atoms.Enumerable
     }
 
     /// <summary>
-    /// A reversed <see cref="System.Collections.Generic.IEnumerable{T}"/>
+    /// A reversed <see cref="IEnumerable{T}"/>
     /// </summary>
     public static class Reversed
     {
         /// <summary>
-        /// A reversed <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> src) => new Reversed<T>(src);
+        public static IEnumerable<T> New<T>(IEnumerable<T> src) => new Reversed<T>(src);
     }
 }

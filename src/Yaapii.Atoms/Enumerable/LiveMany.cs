@@ -29,15 +29,15 @@ using Yaapii.Atoms.Scalar;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of other objects.
+    /// A <see cref="IEnumerable{T}"/> out of other objects.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class LiveMany<T> : System.Collections.Generic.IEnumerable<T>
+    public sealed class LiveMany<T> : IEnumerable<T>
     {
         private readonly IScalar<IEnumerator<T>> origin;
 
         /// <summary>
-        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of an array.
+        /// A <see cref="IEnumerable{T}"/> out of an array.
         /// </summary>
         /// <param name="items"></param>
         public LiveMany(params T[] items) : this(
@@ -46,21 +46,21 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
         public LiveMany(Func<IEnumerator<T>> fnc) : this(new Live<IEnumerator<T>>(fnc))
         { }
 
         /// <summary>
-        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
-        public LiveMany(Func<System.Collections.Generic.IEnumerable<T>> fnc) : this(new Live<IEnumerator<T>>(() => fnc.Invoke().GetEnumerator()))
+        public LiveMany(Func<IEnumerable<T>> fnc) : this(new Live<IEnumerator<T>>(() => fnc.Invoke().GetEnumerator()))
         { }
 
         /// <summary>
-        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
         private LiveMany(IScalar<IEnumerator<T>> origin)
@@ -86,7 +86,7 @@ namespace Yaapii.Atoms.Enumerable
         /// Makes enumerable from an enumerator
         /// </summary>
         /// <typeparam name="X"></typeparam>
-        private class LiveEnumeratorAsEnumerable<X> : System.Collections.Generic.IEnumerable<X>
+        private class LiveEnumeratorAsEnumerable<X> : IEnumerable<X>
         {
             private readonly IEnumerator<X> origin;
 
@@ -110,21 +110,21 @@ namespace Yaapii.Atoms.Enumerable
     public static class LiveMany
     {
         /// <summary>
-        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of an array.
+        /// A <see cref="IEnumerable{T}"/> out of an array.
         /// </summary>
         /// <param name="items"></param>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(params T[] items) => new LiveMany<T>(items);
+        public static IEnumerable<T> New<T>(params T[] items) => new LiveMany<T>(items);
 
         /// <summary>
-        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(Func<IEnumerator<T>> fnc) => new LiveMany<T>(fnc);
+        public static IEnumerable<T> New<T>(Func<IEnumerator<T>> fnc) => new LiveMany<T>(fnc);
 
         /// <summary>
-        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(Func<System.Collections.Generic.IEnumerable<T>> fnc) => new LiveMany<T>(fnc);
+        public static IEnumerable<T> New<T>(Func<IEnumerable<T>> fnc) => new LiveMany<T>(fnc);
     }
 }

@@ -8,7 +8,7 @@ namespace Yaapii.Atoms.Enumerable
     /// Enumeration from array of items.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Params<T> : System.Collections.Generic.IEnumerable<T>
+    public sealed class Params<T> : IEnumerable<T>
     {
         private readonly T[] items;
 

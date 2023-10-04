@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// Makes a readonly list.
         /// </summary>
-        public LiveList(System.Collections.Generic.IEnumerable<T> src) : this(
+        public LiveList(IEnumerable<T> src) : this(
             () => new List<T>(src)
         )
         { }
@@ -86,7 +86,7 @@ namespace Yaapii.Atoms.List
         /// <summary>
         /// Makes a readonly list.
         /// </summary>
-        public static IList<T> New<T>(System.Collections.Generic.IEnumerable<T> src) =>
+        public static IList<T> New<T>(IEnumerable<T> src) =>
             new LiveList<T>(src);
 
         /// <summary>

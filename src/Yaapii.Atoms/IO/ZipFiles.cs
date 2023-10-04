@@ -33,9 +33,9 @@ namespace Yaapii.Atoms.IO
     /// The files in a ZIP archive.
     /// Note: Extraction is sticky.
     /// </summary>
-    public sealed class ZipFiles : System.Collections.Generic.IEnumerable<string>
+    public sealed class ZipFiles : IEnumerable<string>
     {
-        private readonly IScalar<System.Collections.Generic.IEnumerable<string>> files;
+        private readonly IScalar<IEnumerable<string>> files;
 
         /// <summary>
         /// The files in a ZIP archive.
@@ -57,11 +57,11 @@ namespace Yaapii.Atoms.IO
         public ZipFiles(IInput input, bool leaveOpen)
         {
             this.files =
-                new ScalarOf<System.Collections.Generic.IEnumerable<string>>(() =>
+                new ScalarOf<IEnumerable<string>>(() =>
                 {
                     try
                     {
-                        System.Collections.Generic.IEnumerable<string> files;
+                        IEnumerable<string> files;
                         var copy = new MemoryStream();
                         var inputStream = input.Stream();
                         inputStream.Position = 0;

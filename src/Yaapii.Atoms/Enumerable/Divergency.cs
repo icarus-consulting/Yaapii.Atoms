@@ -30,17 +30,17 @@ namespace Yaapii.Atoms.Enumerable
     /// Items which do only exist in one enumerable.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Divergency<T> : System.Collections.Generic.IEnumerable<T>
+    public class Divergency<T> : IEnumerable<T>
     {
-        private readonly System.Collections.Generic.IEnumerable<T> a;
-        private readonly System.Collections.Generic.IEnumerable<T> b;
+        private readonly IEnumerable<T> a;
+        private readonly IEnumerable<T> b;
         private readonly Func<T, bool> match;
         private readonly Ternary<T> result;
 
         /// <summary>
         /// Items which do only exist in one enumerable.
         /// </summary>
-        public Divergency(System.Collections.Generic.IEnumerable<T> a, System.Collections.Generic.IEnumerable<T> b, bool live = false) : this(
+        public Divergency(IEnumerable<T> a, IEnumerable<T> b, bool live = false) : this(
             a, b, item => true
         )
         { }
@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Items which do only exist in one enumerable.
         /// </summary>
-        public Divergency(System.Collections.Generic.IEnumerable<T> a, System.Collections.Generic.IEnumerable<T> b, Func<T, bool> match, bool live = false)
+        public Divergency(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match, bool live = false)
         {
             this.a = new Filtered<T>(match, a);
             this.b = new Filtered<T>(match, b);
@@ -71,7 +71,7 @@ namespace Yaapii.Atoms.Enumerable
             return this.GetEnumerator();
         }
 
-        private System.Collections.Generic.IEnumerable<T> Produced()
+        private IEnumerable<T> Produced()
         {
             var all1 = new HashSet<T>(EqualityComparer<T>.Default);
             var all2 = new HashSet<T>(EqualityComparer<T>.Default);
@@ -121,12 +121,12 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Items which do only exist in one enumerable.
         /// </summary>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> a, System.Collections.Generic.IEnumerable<T> b, Func<T, bool> match) => new Divergency<T>(a, b, match);
+        public static IEnumerable<T> New<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match) => new Divergency<T>(a, b, match);
 
         /// <summary>
         /// Items which do only exist in one enumerable.
         /// </summary>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> a, System.Collections.Generic.IEnumerable<T> b) => new Divergency<T>(a, b);
+        public static IEnumerable<T> New<T>(IEnumerable<T> a, IEnumerable<T> b) => new Divergency<T>(a, b);
 
     }
 }

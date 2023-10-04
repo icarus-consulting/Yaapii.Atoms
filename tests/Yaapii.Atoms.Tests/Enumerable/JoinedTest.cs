@@ -46,8 +46,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Joined<System.Collections.Generic.IEnumerable<string>>(
-                        new Mapped<string, System.Collections.Generic.IEnumerable<string>>(
+                    new Joined<IEnumerable<string>>(
+                        new Mapped<string, IEnumerable<string>>(
                            str => new ManyOf<string>(str),
                            new ManyOf<string>("x")
                         )

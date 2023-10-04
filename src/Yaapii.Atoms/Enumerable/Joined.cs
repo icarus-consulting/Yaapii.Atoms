@@ -29,20 +29,20 @@ using System.Collections.Generic;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// Multiple <see cref="System.Collections.Generic.IEnumerable{T}"/> Joined2 together.
+    /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Joined<T> : System.Collections.Generic.IEnumerable<T>
+    public sealed class Joined<T> : IEnumerable<T>
     {
-        private readonly System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<T>> enumerables;
+        private readonly IEnumerable<IEnumerable<T>> enumerables;
         private readonly Ternary<T> result;
 
         /// <summary>
-        /// Join a <see cref="System.Collections.Generic.IEnumerable{T}"/> with (multiple) single Elements.
+        /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
         /// </summary>
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
-        public Joined(T first, T second, System.Collections.Generic.IEnumerable<T> lst, params T[] items) : this(
+        public Joined(T first, T second, IEnumerable<T> lst, params T[] items) : this(
             new Single<T>(first),
             new Single<T>(second),
             lst,
@@ -51,11 +51,11 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// Join a <see cref="System.Collections.Generic.IEnumerable{T}"/> with (multiple) single Elements.
+        /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
         /// </summary>
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
-        public Joined(T first, System.Collections.Generic.IEnumerable<T> lst, params T[] items) : this(
+        public Joined(T first, IEnumerable<T> lst, params T[] items) : this(
             new Single<T>(first),
             lst,
             new Params<T>(items)
@@ -63,29 +63,29 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// Join a <see cref="System.Collections.Generic.IEnumerable{T}"/> with (multiple) single Elements.
+        /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
         /// </summary>
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
-        public Joined(System.Collections.Generic.IEnumerable<T> lst, params T[] items) : this(
+        public Joined(IEnumerable<T> lst, params T[] items) : this(
             lst, new Params<T>(items)
         )
         { }
 
         /// <summary>
-        /// Multiple <see cref="System.Collections.Generic.IEnumerable{T}"/> Joined2 together.
+        /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
         /// </summary>
         /// <param name="items">enumerables to join</param>
-        public Joined(params System.Collections.Generic.IEnumerable<T>[] items) : this(
-            new Params<System.Collections.Generic.IEnumerable<T>>(items)
+        public Joined(params IEnumerable<T>[] items) : this(
+            new Params<IEnumerable<T>>(items)
         )
         { }
 
         /// <summary>
-        /// Multiple <see cref="System.Collections.Generic.IEnumerable{T}"/> Joined2 together.
+        /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
         /// </summary>
         /// <param name="items">enumerables to join</param>
-        public Joined(System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<T>> items, bool live = false)
+        public Joined(IEnumerable<IEnumerable<T>> items, bool live = false)
         {
             this.enumerables = items;
             this.result =
@@ -107,7 +107,7 @@ namespace Yaapii.Atoms.Enumerable
             return this.GetEnumerator();
         }
 
-        private System.Collections.Generic.IEnumerable<T> Produced()
+        private IEnumerable<T> Produced()
         {
             foreach (var enumerable in this.enumerables)
             {
@@ -120,27 +120,27 @@ namespace Yaapii.Atoms.Enumerable
     }
 
     /// <summary>
-    /// Multiple <see cref="System.Collections.Generic.IEnumerable{T}"/> Joined2 together.
+    /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
     /// </summary>
     public static class Joined
     {
         /// <summary>
-        /// Join a <see cref="System.Collections.Generic.IEnumerable{T}"/> with (multiple) single Elements.
+        /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
         /// </summary>
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> lst, params T[] items) => new Joined<T>(lst, items);
+        public static IEnumerable<T> New<T>(IEnumerable<T> lst, params T[] items) => new Joined<T>(lst, items);
 
         /// <summary>
-        /// Multiple <see cref="System.Collections.Generic.IEnumerable{T}"/> Joined2 together.
+        /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
         /// </summary>
         /// <param name="items">enumerables to join</param>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(params System.Collections.Generic.IEnumerable<T>[] items) => new Joined<T>(items);
+        public static IEnumerable<T> New<T>(params IEnumerable<T>[] items) => new Joined<T>(items);
 
         /// <summary>
-        /// Multiple <see cref="System.Collections.Generic.IEnumerable{T}"/> Joined2 together.
+        /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
         /// </summary>
         /// <param name="items">enumerables to join</param>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<T>> items) => new Joined<T>(items);
+        public static IEnumerable<T> New<T>(IEnumerable<IEnumerable<T>> items) => new Joined<T>(items);
     }
 }

@@ -30,31 +30,31 @@ using Yaapii.Atoms.Text;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// Last element in a <see cref="System.Collections.Generic.IEnumerable{T}"/>
+    /// Last element in a <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public sealed class LastOf<T> : ScalarEnvelope<T>
     {
         /// <summary>
-        /// Last element in <see cref="System.Collections.Generic.IEnumerable{T}"/> with given Exception thrown on fallback
+        /// Last element in <see cref="IEnumerable{T}"/> with given Exception thrown on fallback
         /// </summary>
         /// <param name="source"></param>
         /// <param name="ex"></param>
-        public LastOf(System.Collections.Generic.IEnumerable<T> source, Exception ex) : this(
+        public LastOf(IEnumerable<T> source, Exception ex) : this(
             source,
-            new FuncOf<System.Collections.Generic.IEnumerable<T>, T>(
+            new FuncOf<IEnumerable<T>, T>(
                 (itr) => throw ex
             )
         )
         { }
 
         /// <summary>
-        /// Last element in a <see cref="System.Collections.Generic.IEnumerable{T}"/>.
+        /// Last element in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
-        public LastOf(System.Collections.Generic.IEnumerable<T> source) : this(
+        public LastOf(IEnumerable<T> source) : this(
                 source,
-                new BiFuncOf<Exception, System.Collections.Generic.IEnumerable<T>, T>((ex, itr) =>
+                new BiFuncOf<Exception, IEnumerable<T>, T>((ex, itr) =>
                 {
                     throw
                         new NoSuchElementException(
@@ -67,45 +67,45 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// Last element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> with a fallback value.
+        /// Last element in a <see cref="IEnumerable{T}"/> with a fallback value.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public LastOf(System.Collections.Generic.IEnumerable<T> source, T fallback) : this(
+        public LastOf(IEnumerable<T> source, T fallback) : this(
             source,
-            new FuncOf<System.Collections.Generic.IEnumerable<T>, T>(b => fallback)
+            new FuncOf<IEnumerable<T>, T>(b => fallback)
         )
         { }
 
         /// <summary>
-        /// Last element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// Last element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public LastOf(System.Collections.Generic.IEnumerable<T> source, IFunc<System.Collections.Generic.IEnumerable<T>, T> fallback) : this(
+        public LastOf(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback) : this(
             source,
             (ex, enumerable) => fallback.Invoke(enumerable)
         )
         { }
 
         /// <summary>
-        /// Last Element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// Last Element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public LastOf(System.Collections.Generic.IEnumerable<T> source, Func<Exception, System.Collections.Generic.IEnumerable<T>, T> fallback) : this(
+        public LastOf(IEnumerable<T> source, Func<Exception, IEnumerable<T>, T> fallback) : this(
             source,
-            new BiFuncOf<Exception, System.Collections.Generic.IEnumerable<T>, T>((ex, enumerable) => fallback.Invoke(ex, enumerable)
+            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) => fallback.Invoke(ex, enumerable)
             )
         )
         { }
 
         /// <summary>
-        /// Last Element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// Last Element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public LastOf(System.Collections.Generic.IEnumerable<T> source, IBiFunc<Exception, System.Collections.Generic.IEnumerable<T>, T> fallback)
+        public LastOf(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback)
             : base(
                   new ItemAt<T>(
                     new Reversed<T>(source),
@@ -118,50 +118,50 @@ namespace Yaapii.Atoms.Enumerable
     public static class LastOf
     {
         /// <summary>
-        /// Last element in <see cref="System.Collections.Generic.IEnumerable{T}"/> with given Exception thrown on fallback
+        /// Last element in <see cref="IEnumerable{T}"/> with given Exception thrown on fallback
         /// </summary>
         /// <param name="source"></param>
         /// <param name="ex"></param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, Exception ex)
+        public static IScalar<T> New<T>(IEnumerable<T> source, Exception ex)
             => new LastOf<T>(source, ex);
 
         /// <summary>
-        /// Last element in a <see cref="System.Collections.Generic.IEnumerable{T}"/>.
+        /// Last element in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source)
+        public static IScalar<T> New<T>(IEnumerable<T> source)
             => new LastOf<T>(source);
 
         /// <summary>
-        /// Last element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> with a fallback value.
+        /// Last element in a <see cref="IEnumerable{T}"/> with a fallback value.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, T fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, T fallback)
             => new LastOf<T>(source, fallback);
 
         /// <summary>
-        /// Last element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// Last element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, IFunc<System.Collections.Generic.IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
             => new LastOf<T>(source, fallback);
 
         /// <summary>
-        /// Last Element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// Last Element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, Func<Exception, System.Collections.Generic.IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, Func<Exception, IEnumerable<T>, T> fallback)
             => new LastOf<T>(source, fallback);
 
         /// <summary>
-        /// Last Element in a <see cref="System.Collections.Generic.IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
+        /// Last Element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> source, IBiFunc<Exception, System.Collections.Generic.IEnumerable<T>, T> fallback)
+        public static IScalar<T> New<T>(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback)
             => new LastOf<T>(source, fallback);
     }
 }

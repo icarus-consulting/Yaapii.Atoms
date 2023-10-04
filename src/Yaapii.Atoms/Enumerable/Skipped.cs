@@ -26,20 +26,20 @@ using System.Collections.Generic;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// A <see cref="System.Collections.Generic.IEnumerable{Tests}"/> which skips a given count of items.
+    /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Skipped<T> : System.Collections.Generic.IEnumerable<T>
+    public sealed class Skipped<T> : IEnumerable<T>
     {
-        private readonly System.Collections.Generic.IEnumerable<T> enumerable;
+        private readonly IEnumerable<T> enumerable;
         private readonly int skip;
 
         /// <summary>
-        /// A <see cref="System.Collections.Generic.IEnumerable{Tests}"/> which skips a given count of items.
+        /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
         /// </summary>
         /// <param name="enumerable">enumerable to skip items in</param>
         /// <param name="skip">how many to skip</param>
-        public Skipped(System.Collections.Generic.IEnumerable<T> enumerable, int skip)
+        public Skipped(IEnumerable<T> enumerable, int skip)
         {
             this.enumerable = enumerable;
             this.skip = skip;
@@ -65,15 +65,15 @@ namespace Yaapii.Atoms.Enumerable
     }
 
     /// <summary>
-    /// A <see cref="System.Collections.Generic.IEnumerable{Tests}"/> which skips a given count of items.
+    /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
     /// </summary>
     public static class Skipped
     {
         /// <summary>
-        /// A <see cref="System.Collections.Generic.IEnumerable{Tests}"/> which skips a given count of items.
+        /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
         /// </summary>
         /// <param name="enumerable">enumerable to skip items in</param>
         /// <param name="skip">how many to skip</param>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> enumerable, int skip) => new Skipped<T>(enumerable, skip);
+        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable, int skip) => new Skipped<T>(enumerable, skip);
     }
 }

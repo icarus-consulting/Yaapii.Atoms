@@ -38,7 +38,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public Mapped(IFunc<In, Out> mapping, System.Collections.Generic.IEnumerable<In> src) : this(mapping.Invoke, src)
+        public Mapped(IFunc<In, Out> mapping, IEnumerable<In> src) : this(mapping.Invoke, src)
         { }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> mapping, System.Collections.Generic.IEnumerable<In> src) : base(() =>
+        public Mapped(Func<In, Out> mapping, IEnumerable<In> src) : base(() =>
             new ListOf<Out>(
                 new Collection.Mapped<In, Out>(mapping, src)
             ),
@@ -87,7 +87,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public static IList<Out> New<In, Out>(IFunc<In, Out> mapping, System.Collections.Generic.IEnumerable<In> src)
+        public static IList<Out> New<In, Out>(IFunc<In, Out> mapping, IEnumerable<In> src)
             => new Mapped<In, Out>(mapping, src);
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public static IList<Out> New<In, Out>(Func<In, Out> mapping, System.Collections.Generic.IEnumerable<In> src)
+        public static IList<Out> New<In, Out>(Func<In, Out> mapping, IEnumerable<In> src)
             => new Mapped<In, Out>(mapping, src);
 
         /// <summary>

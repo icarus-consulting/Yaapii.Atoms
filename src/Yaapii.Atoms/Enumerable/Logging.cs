@@ -31,23 +31,23 @@ namespace Yaapii.Atoms.Enumerable
     /// Enumerable that logs object T when it is iterated.
     /// T is logged right after the underlying enumerator is moved.
     /// </summary>
-    public sealed class Logging<T> : System.Collections.Generic.IEnumerable<T>
+    public sealed class Logging<T> : IEnumerable<T>
     {
-        private readonly System.Collections.Generic.IEnumerable<T> origin;
+        private readonly IEnumerable<T> origin;
         private readonly Action<T> log;
 
         /// <summary>
         /// Enumerable that logs object T to debug console when it is iterated.
         /// T is logged right after the underlying enumerator is moved.
         /// </summary>
-        public Logging(System.Collections.Generic.IEnumerable<T> origin) : this(origin, (item) => Debug.WriteLine(item.ToString()))
+        public Logging(IEnumerable<T> origin) : this(origin, (item) => Debug.WriteLine(item.ToString()))
         { }
 
         /// <summary>
         /// Enumerable that logs object T when it is iterated.
         /// T is logged right after the underlying enumerator is moved.
         /// </summary>
-        public Logging(System.Collections.Generic.IEnumerable<T> origin, Action<T> log)
+        public Logging(IEnumerable<T> origin, Action<T> log)
         {
             this.origin = origin;
             this.log = log;
@@ -78,12 +78,12 @@ namespace Yaapii.Atoms.Enumerable
         /// Enumerable that logs object T to debug console when it is iterated.
         /// T is logged right after the underlying enumerator is moved.
         /// </summary>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> origin) => new Logging<T>(origin);
+        public static IEnumerable<T> New<T>(IEnumerable<T> origin) => new Logging<T>(origin);
 
         /// <summary>
         /// Enumerable that logs object T when it is iterated.
         /// T is logged right after the underlying enumerator is moved.
         /// </summary>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> origin, Action<T> log) => new Logging<T>(origin, log);
+        public static IEnumerable<T> New<T>(IEnumerable<T> origin, Action<T> log) => new Logging<T>(origin, log);
     }
 }

@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Map
     /// A key to many strings.
     /// Since 1.9.2019
     /// </summary>
-    public sealed class KvpOfMany : KvpEnvelope<System.Collections.Generic.IEnumerable<string>>
+    public sealed class KvpOfMany : KvpEnvelope<IEnumerable<string>>
     {
         /// <summary>
         /// A key to many values.
@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public KvpOfMany(string key, System.Collections.Generic.IEnumerable<string> values) : this(key, () => values)
+        public KvpOfMany(string key, IEnumerable<string> values) : this(key, () => values)
         { }
 
         /// <summary>
@@ -67,8 +67,8 @@ namespace Yaapii.Atoms.Map
         /// The function is executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KvpOfMany(string key, Func<System.Collections.Generic.IEnumerable<string>> values) : base(
-            new KvpOf<System.Collections.Generic.IEnumerable<string>>(key, values)
+        public KvpOfMany(string key, Func<IEnumerable<string>> values) : base(
+            new KvpOf<IEnumerable<string>>(key, values)
         )
         { }
 
@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public static IKvp<System.Collections.Generic.IEnumerable<TValue>> New<TValue>(string key, params Func<TValue>[] values)
+        public static IKvp<IEnumerable<TValue>> New<TValue>(string key, params Func<TValue>[] values)
             => new KvpOfMany<TValue>(key, values);
 
         /// <summary>
@@ -85,19 +85,19 @@ namespace Yaapii.Atoms.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public static IKvp<System.Collections.Generic.IEnumerable<TValue>> New<TValue>(string key, params TValue[] values)
+        public static IKvp<IEnumerable<TValue>> New<TValue>(string key, params TValue[] values)
             => new KvpOfMany<TValue>(key, values);
 
         /// <summary>
         /// A key to many strings.
         /// </summary>
-        public static IKvp<System.Collections.Generic.IEnumerable<TValue>> New<TValue>(string key, System.Collections.Generic.IEnumerable<TValue> values)
+        public static IKvp<IEnumerable<TValue>> New<TValue>(string key, IEnumerable<TValue> values)
             => new KvpOfMany<TValue>(key, values);
 
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public static IKvp<System.Collections.Generic.IEnumerable<TValue>> New<TValue>(string key, Func<System.Collections.Generic.IEnumerable<TValue>> values)
+        public static IKvp<IEnumerable<TValue>> New<TValue>(string key, Func<IEnumerable<TValue>> values)
             => new KvpOfMany<TValue>(key, values);
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Yaapii.Atoms.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public static IKvp<TKey, System.Collections.Generic.IEnumerable<TValue>> New<TKey, TValue>(TKey key, params Func<TValue>[] many)
+        public static IKvp<TKey, IEnumerable<TValue>> New<TKey, TValue>(TKey key, params Func<TValue>[] many)
             => new KeyToValues<TKey, TValue>(key, many);
 
         /// <summary>
@@ -113,26 +113,26 @@ namespace Yaapii.Atoms.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public static IKvp<TKey, System.Collections.Generic.IEnumerable<TValue>> New<TKey, TValue>(TKey key, params TValue[] many)
+        public static IKvp<TKey, IEnumerable<TValue>> New<TKey, TValue>(TKey key, params TValue[] many)
             => new KeyToValues<TKey, TValue>(key, many);
 
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public static IKvp<TKey, System.Collections.Generic.IEnumerable<TValue>> New<TKey, TValue>(TKey key, System.Collections.Generic.IEnumerable<TValue> many)
+        public static IKvp<TKey, IEnumerable<TValue>> New<TKey, TValue>(TKey key, IEnumerable<TValue> many)
             => new KeyToValues<TKey, TValue>(key, many);
 
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public static IKvp<TKey, System.Collections.Generic.IEnumerable<TValue>> New<TKey, TValue>(TKey key, Func<System.Collections.Generic.IEnumerable<TValue>> many)
+        public static IKvp<TKey, IEnumerable<TValue>> New<TKey, TValue>(TKey key, Func<IEnumerable<TValue>> many)
             => new KeyToValues<TKey, TValue>(key, many);
     }
 
     /// <summary>
     /// A key to many values.
     /// </summary>
-    public sealed class KvpOfMany<TValue> : KvpEnvelope<System.Collections.Generic.IEnumerable<TValue>>
+    public sealed class KvpOfMany<TValue> : KvpEnvelope<IEnumerable<TValue>>
     {
         /// <summary>
         /// A key to many strings.
@@ -171,14 +171,14 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// A key to many strings.
         /// </summary>
-        public KvpOfMany(string key, System.Collections.Generic.IEnumerable<TValue> values) : this(key, () => values)
+        public KvpOfMany(string key, IEnumerable<TValue> values) : this(key, () => values)
         { }
 
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public KvpOfMany(string key, Func<System.Collections.Generic.IEnumerable<TValue>> values) : base(
-            new KvpOf<System.Collections.Generic.IEnumerable<TValue>>(key, values)
+        public KvpOfMany(string key, Func<IEnumerable<TValue>> values) : base(
+            new KvpOf<IEnumerable<TValue>>(key, values)
         )
         { }
     }
@@ -186,7 +186,7 @@ namespace Yaapii.Atoms.Map
     /// <summary>
     /// A key to many values.
     /// </summary>
-    public sealed class KeyToValues<TKey, TValue> : KvpEnvelope<TKey, System.Collections.Generic.IEnumerable<TValue>>
+    public sealed class KeyToValues<TKey, TValue> : KvpEnvelope<TKey, IEnumerable<TValue>>
     {
         /// <summary>
         /// A key to many values.
@@ -225,14 +225,14 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public KeyToValues(TKey key, System.Collections.Generic.IEnumerable<TValue> many) : this(key, () => many)
+        public KeyToValues(TKey key, IEnumerable<TValue> many) : this(key, () => many)
         { }
 
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public KeyToValues(TKey key, Func<System.Collections.Generic.IEnumerable<TValue>> many) : base(
-            new KvpOf<TKey, System.Collections.Generic.IEnumerable<TValue>>(key, many)
+        public KeyToValues(TKey key, Func<IEnumerable<TValue>> many) : base(
+            new KvpOf<TKey, IEnumerable<TValue>>(key, many)
         )
         { }
     }

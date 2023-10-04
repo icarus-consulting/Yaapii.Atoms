@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Map
         /// Sorts the given map with the default comperator of the key
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<Key, Value>> pairs)
+        public Sorted(IEnumerable<KeyValuePair<Key, Value>> pairs)
             : this(pairs, Comparer<Key>.Default)
         { }
 
@@ -63,7 +63,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two keys</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<Key, Value>> pairs, Func<Key, Key, int> compare)
+        public Sorted(IEnumerable<KeyValuePair<Key, Value>> pairs, Func<Key, Key, int> compare)
             : this(pairs, new SimpleComparer<Key>(compare))
         { }
 
@@ -72,7 +72,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two elements</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<Key, Value>> pairs, Func<KeyValuePair<Key, Value>, KeyValuePair<Key, Value>, int> compare)
+        public Sorted(IEnumerable<KeyValuePair<Key, Value>> pairs, Func<KeyValuePair<Key, Value>, KeyValuePair<Key, Value>, int> compare)
             : this(pairs, new SimpleComparer<KeyValuePair<Key, Value>>(compare))
         { }
 
@@ -81,7 +81,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing keys</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<Key> cmp)
+        public Sorted(IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<Key> cmp)
             : this(pairs, new KeyComparer<Key, Value>(cmp))
         { }
 
@@ -90,7 +90,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing elements</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<KeyValuePair<Key, Value>> cmp)
+        public Sorted(IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<KeyValuePair<Key, Value>> cmp)
             : base(
                 () =>
                 {
@@ -153,7 +153,7 @@ namespace Yaapii.Atoms.Map
         /// Sorts the given map with the default comperator of the key
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<string, Value>> pairs)
+        public Sorted(IEnumerable<KeyValuePair<string, Value>> pairs)
             : this(pairs, Comparer<string>.Default)
         { }
 
@@ -162,7 +162,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two keys</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<string, Value>> pairs, Func<string, string, int> compare)
+        public Sorted(IEnumerable<KeyValuePair<string, Value>> pairs, Func<string, string, int> compare)
             : this(pairs, new SimpleComparer<string>(compare))
         { }
 
@@ -171,7 +171,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two elements</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<string, Value>> pairs, Func<KeyValuePair<string, Value>, KeyValuePair<string, Value>, int> compare)
+        public Sorted(IEnumerable<KeyValuePair<string, Value>> pairs, Func<KeyValuePair<string, Value>, KeyValuePair<string, Value>, int> compare)
             : this(pairs, new SimpleComparer<KeyValuePair<string, Value>>(compare))
         { }
 
@@ -180,7 +180,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing keys</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<string, Value>> pairs, IComparer<string> cmp)
+        public Sorted(IEnumerable<KeyValuePair<string, Value>> pairs, IComparer<string> cmp)
             : this(pairs, new KeyComparer<string, Value>(cmp))
         { }
 
@@ -189,7 +189,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing elements</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<string, Value>> pairs, IComparer<KeyValuePair<string, Value>> cmp)
+        public Sorted(IEnumerable<KeyValuePair<string, Value>> pairs, IComparer<KeyValuePair<string, Value>> cmp)
             : base(
                 () =>
                 {
@@ -251,7 +251,7 @@ namespace Yaapii.Atoms.Map
         /// Sorts the given map with the default comperator of the key
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<string, string>> pairs)
+        public Sorted(IEnumerable<KeyValuePair<string, string>> pairs)
             : this(pairs, Comparer<string>.Default)
         { }
 
@@ -260,7 +260,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two keys</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<string, string>> pairs, Func<string, string, int> compare)
+        public Sorted(IEnumerable<KeyValuePair<string, string>> pairs, Func<string, string, int> compare)
             : this(pairs, new SimpleComparer<string>(compare))
         { }
 
@@ -269,7 +269,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two elements</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<string, string>> pairs, Func<KeyValuePair<string, string>, KeyValuePair<string, string>, int> compare)
+        public Sorted(IEnumerable<KeyValuePair<string, string>> pairs, Func<KeyValuePair<string, string>, KeyValuePair<string, string>, int> compare)
             : this(pairs, new SimpleComparer<KeyValuePair<string, string>>(compare))
         { }
 
@@ -278,7 +278,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing keys</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<string, string>> pairs, IComparer<string> cmp)
+        public Sorted(IEnumerable<KeyValuePair<string, string>> pairs, IComparer<string> cmp)
             : this(pairs, new KeyComparer<string, string>(cmp))
         { }
 
@@ -287,7 +287,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing elements</param>
-        public Sorted(System.Collections.Generic.IEnumerable<KeyValuePair<string, string>> pairs, IComparer<KeyValuePair<string, string>> cmp)
+        public Sorted(IEnumerable<KeyValuePair<string, string>> pairs, IComparer<KeyValuePair<string, string>> cmp)
             : base(
                 () =>
                 {
@@ -341,7 +341,7 @@ namespace Yaapii.Atoms.Map
         /// Sorts the given map with the default comperator of the key
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
-        public static IDictionary<Key, Value> New<Key, Value>(System.Collections.Generic.IEnumerable<KeyValuePair<Key, Value>> pairs)
+        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs)
             => new Sorted<Key, Value>(pairs);
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two keys</param>
-        public static IDictionary<Key, Value> New<Key, Value>(System.Collections.Generic.IEnumerable<KeyValuePair<Key, Value>> pairs, Func<Key, Key, int> compare)
+        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, Func<Key, Key, int> compare)
             => new Sorted<Key, Value>(pairs, compare);
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two elements</param>
-        public static IDictionary<Key, Value> New<Key, Value>(System.Collections.Generic.IEnumerable<KeyValuePair<Key, Value>> pairs, Func<KeyValuePair<Key, Value>, KeyValuePair<Key, Value>, int> compare)
+        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, Func<KeyValuePair<Key, Value>, KeyValuePair<Key, Value>, int> compare)
             => new Sorted<Key, Value>(pairs, compare);
 
         /// <summary>
@@ -365,7 +365,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing keys</param>
-        public static IDictionary<Key, Value> New<Key, Value>(System.Collections.Generic.IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<Key> cmp)
+        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<Key> cmp)
             => new Sorted<Key, Value>(pairs, cmp);
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing elements</param>
-        public static IDictionary<Key, Value> New<Key, Value>(System.Collections.Generic.IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<KeyValuePair<Key, Value>> cmp)
+        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<KeyValuePair<Key, Value>> cmp)
             => new Sorted<Key, Value>(pairs, cmp);
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace Yaapii.Atoms.Map
         /// Sorts the given map with the default comperator of the key
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
-        public static IDictionary<string, Value> New<Value>(System.Collections.Generic.IEnumerable<KeyValuePair<string, Value>> pairs)
+        public static IDictionary<string, Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs)
             => new Sorted<Value>(pairs);
 
         /// <summary>
@@ -411,7 +411,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two keys</param>
-        public static IDictionary<string, Value> New<Value>(System.Collections.Generic.IEnumerable<KeyValuePair<string, Value>> pairs, Func<string, string, int> compare)
+        public static IDictionary<string, Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, Func<string, string, int> compare)
             => new Sorted<Value>(pairs, compare);
 
         /// <summary>
@@ -419,7 +419,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two elements</param>
-        public static IDictionary<string, Value> New<Value>(System.Collections.Generic.IEnumerable<KeyValuePair<string, Value>> pairs, Func<KeyValuePair<string, Value>, KeyValuePair<string, Value>, int> compare)
+        public static IDictionary<string, Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, Func<KeyValuePair<string, Value>, KeyValuePair<string, Value>, int> compare)
             => new Sorted<Value>(pairs, compare);
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing keys</param>
-        public static IDictionary<string, Value> New<Value>(System.Collections.Generic.IEnumerable<KeyValuePair<string, Value>> pairs, IComparer<string> cmp)
+        public static IDictionary<string, Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, IComparer<string> cmp)
             => new Sorted<Value>(pairs, cmp);
 
         /// <summary>
@@ -435,7 +435,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing elements</param>
-        public static IDictionary<string, Value> New<Value>(System.Collections.Generic.IEnumerable<KeyValuePair<string, Value>> pairs, IComparer<KeyValuePair<string, Value>> cmp)
+        public static IDictionary<string, Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, IComparer<KeyValuePair<string, Value>> cmp)
             => new Sorted<Value>(pairs, cmp);
 
         /// <summary>

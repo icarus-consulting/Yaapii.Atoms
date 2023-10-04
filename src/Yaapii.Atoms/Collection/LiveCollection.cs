@@ -47,10 +47,10 @@ namespace Yaapii.Atoms.Collection
         { }
 
         /// <summary>
-        /// Makes a collection from an <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// Makes a collection from an <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src"></param>
-        public LiveCollection(System.Collections.Generic.IEnumerable<T> src) : base(
+        public LiveCollection(IEnumerable<T> src) : base(
             () => src.GetEnumerator(),
             true
         )
@@ -60,6 +60,6 @@ namespace Yaapii.Atoms.Collection
     public static class LiveCollection
     {
         public static ICollection<T> New<T>(IEnumerator<T> src) => new LiveCollection<T>(src);
-        public static ICollection<T> New<T>(System.Collections.Generic.IEnumerable<T> src) => new LiveCollection<T>(src);
+        public static ICollection<T> New<T>(IEnumerable<T> src) => new LiveCollection<T>(src);
     }
 }

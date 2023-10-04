@@ -7,7 +7,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <summary>
     /// Enumerable which memoizes already visited items.
     /// </summary>
-    public class Sticky<T> : System.Collections.Generic.IEnumerable<T>
+    public class Sticky<T> : IEnumerable<T>
     {
         private readonly object exclusive;
         private readonly Lazy<IEnumerator<T>> source;
@@ -17,13 +17,13 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public Sticky(System.Collections.Generic.IEnumerable<T> source) : this(() => source)
+        public Sticky(IEnumerable<T> source) : this(() => source)
         { }
 
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public Sticky(Func<System.Collections.Generic.IEnumerable<T>> source) : this(() => source().GetEnumerator())
+        public Sticky(Func<IEnumerable<T>> source) : this(() => source().GetEnumerator())
         { }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Yaapii.Atoms.Enumerable
             return this.GetEnumerator();
         }
 
-        private System.Collections.Generic.IEnumerable<T> Partial()
+        private IEnumerable<T> Partial()
         {
             var i = 0;
             var enumerator = this.source.Value;
@@ -100,7 +100,7 @@ namespace Yaapii.Atoms.Enumerable
             }
         }
 
-        private System.Collections.Generic.IEnumerable<T> Full()
+        private IEnumerable<T> Full()
         {
             foreach(var item in this.buffer)
             {
@@ -114,13 +114,13 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> New<T>(System.Collections.Generic.IEnumerable<T> source) =>
+        public static Sticky<T> New<T>(IEnumerable<T> source) =>
             new Sticky<T>(source);
 
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> New<T>(Func<System.Collections.Generic.IEnumerable<T>> source) =>
+        public static Sticky<T> New<T>(Func<IEnumerable<T>> source) =>
             new Sticky<T>(source);
 
         /// <summary>

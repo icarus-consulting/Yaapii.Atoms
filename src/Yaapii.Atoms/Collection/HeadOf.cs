@@ -52,7 +52,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="lmt">requested number of items</param>
         /// <param name="src">enumerable of items</param>
-        public HeadOf(int lmt, System.Collections.Generic.IEnumerable<T> src) : this(lmt, new LiveCollection<T>(src))
+        public HeadOf(int lmt, IEnumerable<T> src) : this(lmt, new LiveCollection<T>(src))
         { }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Yaapii.Atoms.Collection
     {
         public static ICollection<T> New<T>(int lmt, params T[] src) => new HeadOf<T>(lmt, src);
         public static ICollection<T> New<T>(int lmt, ICollection<T> src) => new HeadOf<T>(lmt, src);
-        public static ICollection<T> New<T>(int lmt, System.Collections.Generic.IEnumerable<T> src) => new HeadOf<T>(lmt, src);
+        public static ICollection<T> New<T>(int lmt, IEnumerable<T> src) => new HeadOf<T>(lmt, src);
         public static ICollection<T> New<T>(int lmt, IEnumerator<T> src) => new HeadOf<T>(lmt, src);
     }
 }

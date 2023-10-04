@@ -44,9 +44,9 @@ namespace Yaapii.Atoms.Collection
         /// ctor
         /// </summary>
         /// <param name="src">source collection</param>
-        public Reversed(System.Collections.Generic.IEnumerable<T> src) : this(new LiveCollection<T>(src))
+        public Reversed(IEnumerable<T> src) : this(new LiveCollection<T>(src))
         { }
-        public static Reversed<T> New(System.Collections.Generic.IEnumerable<T> src) => new Reversed<T>(src);
+        public static Reversed<T> New(IEnumerable<T> src) => new Reversed<T>(src);
 
         /// <summary>
         /// ctor
@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Collection
     {
         public static ICollection<T> New<T>(params T[] src) => new Reversed<T>(src);
 
-        public static ICollection<T> New<T>(System.Collections.Generic.IEnumerable<T> src) => new Reversed<T>(src);
+        public static ICollection<T> New<T>(IEnumerable<T> src) => new Reversed<T>(src);
 
         public static ICollection<T> New<T>(ICollection<T> src) => new Reversed<T>(src);
     }

@@ -29,20 +29,20 @@ using Yaapii.Atoms.Scalar;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// Ensures that <see cref="System.Collections.Generic.IEnumerable{T}" /> is not empty/>
+    /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
     /// </summary>
     /// <typeparam name="T">Type of the enumerable</typeparam>
-    public sealed class NotEmpty<T> : System.Collections.Generic.IEnumerable<T>
+    public sealed class NotEmpty<T> : IEnumerable<T>
     {
-        private readonly System.Collections.Generic.IEnumerable<T> origin;
+        private readonly IEnumerable<T> origin;
         private readonly Exception ex;
         private readonly Ternary<T> result;
 
         /// <summary>
-        /// Ensures that <see cref="System.Collections.Generic.IEnumerable{T}" /> is not empty/>
+        /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
-        public NotEmpty(System.Collections.Generic.IEnumerable<T> origin, bool live = false) : this(
+        public NotEmpty(IEnumerable<T> origin, bool live = false) : this(
             origin,
             new Exception("Enumerable is empty"),
             live
@@ -50,11 +50,11 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// Ensures that <see cref="System.Collections.Generic.IEnumerable{T}" /> is not empty/>
+        /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(System.Collections.Generic.IEnumerable<T> origin, Exception ex, bool live = false)
+        public NotEmpty(IEnumerable<T> origin, Exception ex, bool live = false)
         {
             this.origin = origin;
             this.ex = ex;
@@ -76,7 +76,7 @@ namespace Yaapii.Atoms.Enumerable
             return this.GetEnumerator();
         }
 
-        private System.Collections.Generic.IEnumerable<T> Produced()
+        private IEnumerable<T> Produced()
         {
             bool empty = true;
             foreach (var item in this.origin)
@@ -92,21 +92,21 @@ namespace Yaapii.Atoms.Enumerable
     }
 
     /// <summary>
-    /// Ensures that <see cref="System.Collections.Generic.IEnumerable{T}" /> is not empty/>
+    /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
     /// </summary>
     public static class NotEmpty
     {
         /// <summary>
-        /// Ensures that <see cref="System.Collections.Generic.IEnumerable{T}" /> is not empty/>
+        /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> origin, bool live = false) => new NotEmpty<T>(origin, false);
+        public static IEnumerable<T> New<T>(IEnumerable<T> origin, bool live = false) => new NotEmpty<T>(origin, false);
 
         /// <summary>
-        /// Ensures that <see cref="System.Collections.Generic.IEnumerable{T}" /> is not empty/>
+        /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> origin, Exception ex, bool live = false) => new NotEmpty<T>(origin, ex, false);
+        public static IEnumerable<T> New<T>(IEnumerable<T> origin, Exception ex, bool live = false) => new NotEmpty<T>(origin, ex, false);
     }
 }

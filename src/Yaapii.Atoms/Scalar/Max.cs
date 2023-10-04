@@ -28,14 +28,14 @@ using Yaapii.Atoms.Scalar;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// The greatest item in the given <see cref="System.Collections.Generic.IEnumerable{T}"/>
+    /// The greatest item in the given <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public sealed class Max<T> : ScalarEnvelope<T>
         where T : IComparable<T>
     {
         /// <summary>
-        /// The greatest item in the given <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(params Func<T>[] items) : this(
@@ -47,10 +47,10 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// The greatest item in the given <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public Max(System.Collections.Generic.IEnumerable<T> items) : this(
+        public Max(IEnumerable<T> items) : this(
             new Enumerable.Mapped<T, IScalar<T>>(item => new Live<T>(item), items))
         { }
 
@@ -63,17 +63,17 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// The greatest item in the given <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(params IScalar<T>[] items) : this(new ManyOf<IScalar<T>>(items))
         { }
 
         /// <summary>
-        /// The greatest item in the given <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public Max(System.Collections.Generic.IEnumerable<IScalar<T>> items)
+        public Max(IEnumerable<IScalar<T>> items)
             : base(() =>
             {
                 var e = items.GetEnumerator();
@@ -99,7 +99,7 @@ namespace Yaapii.Atoms.Enumerable
     public static class Max
     {
         /// <summary>
-        /// The greatest item in the given <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
         public static IScalar<T> New<T>(params Func<T>[] items)
@@ -107,10 +107,10 @@ namespace Yaapii.Atoms.Enumerable
             => new Max<T>(items);
 
         /// <summary>
-        /// The greatest item in the given <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> items)
+        public static IScalar<T> New<T>(IEnumerable<T> items)
             where T : IComparable<T>
             => new Max<T>(items);
 
@@ -123,7 +123,7 @@ namespace Yaapii.Atoms.Enumerable
             => new Max<T>(items);
 
         /// <summary>
-        /// The greatest item in the given <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
         public static IScalar<T> New<T>(params IScalar<T>[] items)
@@ -131,10 +131,10 @@ namespace Yaapii.Atoms.Enumerable
             => new Max<T>(items);
 
         /// <summary>
-        /// The greatest item in the given <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<IScalar<T>> items)
+        public static IScalar<T> New<T>(IEnumerable<IScalar<T>> items)
             where T : IComparable<T>
             => new Max<T>(items);
     }

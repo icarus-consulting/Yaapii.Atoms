@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 5,
                 new LengthOf(
                     new Distinct<INumber>(
-                        new ManyOf<System.Collections.Generic.IEnumerable<INumber>>(
+                        new ManyOf<IEnumerable<INumber>>(
                             new ManyOf<INumber>(
                                 new NumberOf(1),
                                 new NumberOf(2),
@@ -71,7 +71,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new LengthOf(
                     new Distinct<int>(
-                        new ManyOf<System.Collections.Generic.IEnumerable<int>>(
+                        new ManyOf<IEnumerable<int>>(
                             new ManyOf<int>(1, 2, 3),
                             new ManyOf<int>(10, 2, 30)
                         )

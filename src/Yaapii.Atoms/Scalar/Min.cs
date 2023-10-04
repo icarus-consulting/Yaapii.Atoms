@@ -28,14 +28,14 @@ using Yaapii.Atoms.Scalar;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// Find the smallest item in a <see cref="System.Collections.Generic.IEnumerable{T}"/>
+    /// Find the smallest item in a <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public sealed class Min<T> : ScalarEnvelope<T>
         where T : IComparable<T>
     {
         /// <summary>
-        /// Find the smallest item in a <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items"><see cref="Func{TResult}"/> functions which retrieve items to compare</param>
         public Min(params Func<T>[] items) : this(
@@ -45,10 +45,10 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// Find the smallest item in a <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">items to compare</param>
-        public Min(System.Collections.Generic.IEnumerable<T> items) : this(
+        public Min(IEnumerable<T> items) : this(
             new Enumerable.Mapped<T, IScalar<T>>(
                 item => new Live<T>(item),
                 items))
@@ -72,10 +72,10 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// Find the smallest item in a <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">items to compare</param>
-        public Min(System.Collections.Generic.IEnumerable<IScalar<T>> items)
+        public Min(IEnumerable<IScalar<T>> items)
             : base(() =>
             {
                 var e = items.GetEnumerator();
@@ -101,7 +101,7 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class Min
     {
         /// <summary>
-        /// Find the smallest item in a <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items"><see cref="Func{TResult}"/> functions which retrieve items to compare</param>
         public static IScalar<T> New<T>(params Func<T>[] items)
@@ -109,10 +109,10 @@ namespace Yaapii.Atoms.Enumerable
             => new Min<T>(items);
 
         /// <summary>
-        /// Find the smallest item in a <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">items to compare</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> items)
+        public static IScalar<T> New<T>(IEnumerable<T> items)
             where T : IComparable<T>
             => new Min<T>(items);
 
@@ -133,10 +133,10 @@ namespace Yaapii.Atoms.Enumerable
             => new Min<T>(items);
 
         /// <summary>
-        /// Find the smallest item in a <see cref="System.Collections.Generic.IEnumerable{T}"/>
+        /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">items to compare</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<IScalar<T>> items)
+        public static IScalar<T> New<T>(IEnumerable<IScalar<T>> items)
             where T : IComparable<T>
             => new Min<T>(items);
     }

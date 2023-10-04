@@ -67,7 +67,7 @@ namespace Yaapii.Atoms.Number
         /// A sum of doubles
         /// </summary>
         /// <param name="src">source doubles</param>
-        public SumOf(System.Collections.Generic.IEnumerable<double> src) : base(
+        public SumOf(IEnumerable<double> src) : base(
             new ScalarOf<double>(() =>
             {
                 double sum = 0D;
@@ -110,7 +110,7 @@ namespace Yaapii.Atoms.Number
         /// A sum of integers
         /// </summary>
         /// <param name="src">source integers</param>
-        public SumOf(System.Collections.Generic.IEnumerable<int> src) : base(
+        public SumOf(IEnumerable<int> src) : base(
             new ScalarOf<double>(() =>
             {
                 double sum = 0D;
@@ -153,7 +153,7 @@ namespace Yaapii.Atoms.Number
         /// A sum of longs
         /// </summary>
         /// <param name="src">source longs</param>
-        public SumOf(System.Collections.Generic.IEnumerable<long> src) : base(
+        public SumOf(IEnumerable<long> src) : base(
             new ScalarOf<double>(() =>
             {
                 double sum = 0D;
@@ -196,7 +196,7 @@ namespace Yaapii.Atoms.Number
         /// A sum of floats
         /// </summary>
         /// <param name="src">source floats</param>
-        public SumOf(System.Collections.Generic.IEnumerable<float> src) : base(
+        public SumOf(IEnumerable<float> src) : base(
             new ScalarOf<double>(() =>
             {
                 double sum = 0D;

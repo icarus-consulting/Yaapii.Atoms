@@ -26,10 +26,10 @@ using System.Collections.Generic;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> that repeats one element infinitely.
+    /// A <see cref="IEnumerable{T}"/> that repeats one element infinitely.
     /// </summary>
     /// <typeparam name="T">type of the elements</typeparam>
-    public sealed class Endless<T> : System.Collections.Generic.IEnumerable<T>
+    public sealed class Endless<T> : IEnumerable<T>
     {
         private readonly T elm;
 
@@ -62,6 +62,6 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable"/> that repeats one element infinitely.
         /// </summary>
         /// <param name="elm">element to repeat</param>
-        public static System.Collections.Generic.IEnumerable<T> New<T>(T elm) => new Endless<T>(elm);
+        public static IEnumerable<T> New<T>(T elm) => new Endless<T>(elm);
     }
 }

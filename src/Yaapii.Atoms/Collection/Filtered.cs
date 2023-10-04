@@ -68,7 +68,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="func">filter func</param>
         /// <param name="src">items to filter</param>
-        public Filtered(Func<T, Boolean> func, System.Collections.Generic.IEnumerable<T> src) : base(
+        public Filtered(Func<T, Boolean> func, IEnumerable<T> src) : base(
             new Live<ICollection<T>>(() =>
                 new LiveCollection<T>(
                     new Enumerable.Filtered<T>(
@@ -85,7 +85,7 @@ namespace Yaapii.Atoms.Collection
 
     public static class Filtered
     {
-        public static ICollection<T> New<T>(Func<T, Boolean> func, System.Collections.Generic.IEnumerable<T> src) => new Filtered<T>(func, src);
+        public static ICollection<T> New<T>(Func<T, Boolean> func, IEnumerable<T> src) => new Filtered<T>(func, src);
         public static ICollection<T> New<T>(Func<T, Boolean> func, IEnumerator<T> src) => new Filtered<T>(func, src);
         public static ICollection<T> New<T>(Func<T, Boolean> func, T item1, T item2, params T[] items) => new Filtered<T>(func, item1, item2, items);
     }

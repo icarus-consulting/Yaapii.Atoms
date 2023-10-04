@@ -27,28 +27,28 @@ using Yaapii.Atoms.Scalar;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// <see cref="System.Collections.Generic.IEnumerable{T}"/> whose items are reduced to one item using the given function.
+    /// <see cref="IEnumerable{T}"/> whose items are reduced to one item using the given function.
     /// </summary>
     /// <typeparam name="T">type of elements in a list to reduce</typeparam>
     public sealed class Reduced<T> : ScalarEnvelope<T>
     {
         /// <summary>
-        /// <see cref="System.Collections.Generic.IEnumerable{Element}"/> whose items are folded to one item using the given function.
+        /// <see cref="IEnumerable{Element}"/> whose items are folded to one item using the given function.
         /// </summary>
         /// <param name="elements">enumerable to reduce</param>
         /// <param name="fnc">reducing function</param>
-        public Reduced(System.Collections.Generic.IEnumerable<T> elements, IBiFunc<T, T, T> fnc) : this(
+        public Reduced(IEnumerable<T> elements, IBiFunc<T, T, T> fnc) : this(
             elements,
             fnc.Invoke
         )
         { }
 
         /// <summary>
-        /// <see cref="System.Collections.Generic.IEnumerable{Element}"/> whose items are reduced to one item using the given function.
+        /// <see cref="IEnumerable{Element}"/> whose items are reduced to one item using the given function.
         /// </summary>
         /// <param name="elements">enumerable to reduce</param>
         /// <param name="fnc">reducing function</param>
-        public Reduced(System.Collections.Generic.IEnumerable<T> elements, Func<T, T, T> fnc) : base(() =>
+        public Reduced(IEnumerable<T> elements, Func<T, T, T> fnc) : base(() =>
             {
                 var enm = elements.GetEnumerator();
 
@@ -65,22 +65,22 @@ namespace Yaapii.Atoms.Enumerable
     }
 
     /// <summary>
-    /// <see cref="System.Collections.Generic.IEnumerable{T}"/> whose items are reduced to one item using the given function.
+    /// <see cref="IEnumerable{T}"/> whose items are reduced to one item using the given function.
     /// </summary>
     public static class Reduced
     {
         /// <summary>
-        /// <see cref="System.Collections.Generic.IEnumerable{Element}"/> whose items are folded to one item using the given function.
+        /// <see cref="IEnumerable{Element}"/> whose items are folded to one item using the given function.
         /// </summary>
         /// <param name="elements">enumerable to reduce</param>
         /// <param name="fnc">reducing function</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> elements, IBiFunc<T, T, T> fnc) => new Reduced<T>(elements, fnc);
+        public static IScalar<T> New<T>(IEnumerable<T> elements, IBiFunc<T, T, T> fnc) => new Reduced<T>(elements, fnc);
 
         /// <summary>
-        /// <see cref="System.Collections.Generic.IEnumerable{Element}"/> whose items are reduced to one item using the given function.
+        /// <see cref="IEnumerable{Element}"/> whose items are reduced to one item using the given function.
         /// </summary>
         /// <param name="elements">enumerable to reduce</param>
         /// <param name="fnc">reducing function</param>
-        public static IScalar<T> New<T>(System.Collections.Generic.IEnumerable<T> elements, Func<T, T, T> fnc) => new Reduced<T>(elements, fnc);
+        public static IScalar<T> New<T>(IEnumerable<T> elements, Func<T, T, T> fnc) => new Reduced<T>(elements, fnc);
     }
 }

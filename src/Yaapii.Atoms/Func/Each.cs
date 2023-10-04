@@ -28,13 +28,13 @@ using Yaapii.Atoms.Func;
 namespace Yaapii.Atoms.Func
 {
     /// <summary>
-    /// Does to all elements in a <see cref="System.Collections.Generic.IEnumerable{T}"/>
+    /// Does to all elements in a <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="In"></typeparam>
     public sealed class Each<In> : IAction
     {
         private readonly IAction<In> act;
-        private readonly System.Collections.Generic.IEnumerable<In> enumerable;
+        private readonly IEnumerable<In> enumerable;
 
         /// <summary>
         /// Executes the given Action for every element in the params.
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Each(Action<In> proc, System.Collections.Generic.IEnumerable<In> src) : this(new ActionOf<In>(ipt => proc.Invoke(ipt)), src)
+        public Each(Action<In> proc, IEnumerable<In> src) : this(new ActionOf<In>(ipt => proc.Invoke(ipt)), src)
         { }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="action"></param>
         /// <param name="enumerable"></param>
-        public Each(IAction<In> action, System.Collections.Generic.IEnumerable<In> enumerable)
+        public Each(IAction<In> action, IEnumerable<In> enumerable)
         {
             act = action;
             this.enumerable = enumerable;
@@ -111,7 +111,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="act">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public static IAction New<In>(Action<In> act, System.Collections.Generic.IEnumerable<In> src)
+        public static IAction New<In>(Action<In> act, IEnumerable<In> src)
             => new Each<In>(act, src);
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Yaapii.Atoms.Func
         /// </summary>
         /// <param name="action"></param>
         /// <param name="enumerable"></param>
-        public static IAction New<In>(IAction<In> action, System.Collections.Generic.IEnumerable<In> enumerable)
+        public static IAction New<In>(IAction<In> action, IEnumerable<In> enumerable)
             => new Each<In>(action, enumerable);
     }
 }
