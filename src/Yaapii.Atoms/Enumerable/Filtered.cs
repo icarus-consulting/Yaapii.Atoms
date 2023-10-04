@@ -34,9 +34,8 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class Filtered<T> : IEnumerable<T>
     {
         private readonly IEnumerable<T> src;
-        private readonly bool live;
-        private readonly List<bool> matched;
         private readonly Func<T, bool> fnc;
+        private readonly Ternary<T> result;
 
         /// <summary>
         /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
@@ -76,30 +75,22 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
         /// <param name="live">live or sticky</param>
-        public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src, bool live)
+        public Filtered(Func<T, Boolean> fnc, IEnumerable<T> src, bool live = false)
         {
             this.src = src;
-            this.live = live;
-            this.matched = new List<bool>();
             this.fnc = fnc;
+            this.result =
+                new Ternary<T>(
+                    new Sticky<T>(Produced),
+                    new LiveMany<T>(Produced),
+                    live
+                );
+
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            if(this.live)
-            {
-                foreach(var item in Live())
-                {
-                    yield return item;
-                }
-            }
-            else
-            {
-                foreach(var item in Cached())
-                {
-                    yield return item;
-                }
-            }
+            return this.result.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -107,28 +98,7 @@ namespace Yaapii.Atoms.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerable<T> Cached()
-        {
-            var current = 0;
-            foreach (var item in this.src)
-            {
-                current++;
-                if (this.matched.Count < current)
-                {
-                    var matches = fnc.Invoke(item);
-                    this.matched.Add(matches);
-                }
-
-                if (this.matched[current - 1])
-                {
-                    yield return item;
-                }
-
-            }
-            yield break;
-        }
-
-        private IEnumerable<T> Live()
+        private IEnumerable<T> Produced()
         {
             foreach (var item in this.src)
             {
@@ -138,7 +108,6 @@ namespace Yaapii.Atoms.Enumerable
                 }
 
             }
-            yield break;
         }
     }
 
