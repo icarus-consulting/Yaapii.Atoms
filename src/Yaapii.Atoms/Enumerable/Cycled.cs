@@ -51,15 +51,15 @@ namespace Yaapii.Atoms.Enumerable
                 yield return item;
             }
 
-            var current = 0;
+            var current = -1;
             while(true)
             {
-                yield return copies[current];
                 current++;
                 if(current >= copies.Count)
                 {
                     current = 0;
                 }
+                yield return copies[current];
             }
         }
 

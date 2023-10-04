@@ -29,16 +29,17 @@ namespace Yaapii.Atoms.Enumerable.Tests
         [Fact]
         public void RepeatsEnumerable()
         {
-            string expected = "two";
-            Assert.True(
+            Assert.Equal(
+                "two",
                 new ItemAt<string>(
                     new Cycled<string>(
                         new ManyOf<string>(
-                            "one", expected, "three"
+                            "one", "two", "three"
                             )
                         ),
                     7
-                ).Value() == expected);
+                ).Value()
+            );
         }
     }
 }

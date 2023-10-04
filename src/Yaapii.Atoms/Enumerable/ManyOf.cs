@@ -32,8 +32,10 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> out of strings.
     /// </summary>
 
-    public sealed class ManyOf : ManyEnvelope<string>
+    public sealed class ManyOf : IEnumerable<string>
     {
+        private readonly EnumeratorAsEnumerable<string> origin;
+
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of an array.
         /// </summary>
@@ -74,11 +76,23 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
-        public ManyOf(Func<IEnumerator<string>> origin) : base(
-            origin,
-            false
-        )
-        { }
+        public ManyOf(Func<IEnumerator<string>> origin)
+        {
+            this.origin = new EnumeratorAsEnumerable<string>(origin);
+        }
+
+        public IEnumerator<string> GetEnumerator()
+        {
+            foreach (var item in this.origin)
+            {
+                yield return item;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of an array.
@@ -101,12 +115,12 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
-        //public static IEnumerable<T> New<T>(Func<IEnumerable<T>> fnc) => new ManyOf<T>(() => fnc());
+        public static IEnumerable<T> New<T>(Func<IEnumerable<T>> fnc) => new ManyOf<T>(() => fnc().GetEnumerator());
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
-        public static IEnumerable<T> New<T>(Func<IEnumerator<T>> origin) => new EnumeratorAsEnumerable<T>(origin);
+        public static IEnumerable<T> New<T>(Func<IEnumerator<T>> origin) => new ManyOf<T>(origin);
     }
 
     /// <summary>
