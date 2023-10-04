@@ -23,7 +23,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace Yaapii.Atoms.Enumerable
 {
@@ -36,11 +35,12 @@ namespace Yaapii.Atoms.Enumerable
         private readonly IEnumerable<T> a;
         private readonly IEnumerable<T> b;
         private readonly Func<T, bool> match;
+        private readonly Ternary<T> result;
 
         /// <summary>
         /// Items which do only exist in one enumerable.
         /// </summary>
-        public Divergency(IEnumerable<T> a, IEnumerable<T> b) : this(
+        public Divergency(IEnumerable<T> a, IEnumerable<T> b, bool live = false) : this(
             a, b, item => true
         )
         { }
@@ -48,32 +48,51 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Items which do only exist in one enumerable.
         /// </summary>
-        public Divergency(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match)
+        public Divergency(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match, bool live = false)
         {
             this.a = new Filtered<T>(match, a);
             this.b = new Filtered<T>(match, b);
             this.match = match;
+            this.result =
+                new Ternary<T>(
+                    new Sticky<T>(() => this.Produced()),
+                    new LiveMany<T>(() => this.Produced()),
+                    live
+                );
         }
 
         public IEnumerator<T> GetEnumerator()
+        {
+            return this.result.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        private IEnumerable<T> Produced()
         {
             var all1 = new HashSet<T>(EqualityComparer<T>.Default);
             var all2 = new HashSet<T>(EqualityComparer<T>.Default);
             var notin1 = new HashSet<T>(EqualityComparer<T>.Default);
             var notin2 = new HashSet<T>(EqualityComparer<T>.Default);
+
             foreach (var element in this.a)
             {
-                all1.Add(element);
+                if (this.match(element))
+                    all1.Add(element);
             }
 
             foreach (var element in this.b)
             {
-                all2.Add(element);
+                if (this.match(element))
+                    all2.Add(element);
             }
 
             foreach (var element in this.b)
             {
-                if (all1.Add(element))
+                if (this.match(element) && all1.Add(element))
                 {
                     notin1.Add(element);
                 }
@@ -81,21 +100,16 @@ namespace Yaapii.Atoms.Enumerable
 
             foreach (var element in this.a)
             {
-                if (all2.Add(element))
+                if (this.match(element) && all2.Add(element))
                 {
                     notin2.Add(element);
                 }
             }
 
-            foreach(var item in new Joined<T>(notin2, notin1))
+            foreach (var item in new Joined<T>(notin2, notin1))
             {
                 yield return item;
             }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 
