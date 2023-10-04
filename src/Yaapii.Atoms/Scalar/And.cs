@@ -34,7 +34,7 @@ namespace Yaapii.Atoms.Scalar
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(Func<In, bool> func, IEnumerable<In> src) : this(new FuncOf<In, bool>(func), src)
+        public And(Func<In, bool> func, System.Collections.Generic.IEnumerable<In> src) : this(new FuncOf<In, bool>(func), src)
         { }
 
         /// <summary> Logical and. Returns true if all calls to <see cref="IFunc{In, Out}"/> were true. </summary>
@@ -46,7 +46,7 @@ namespace Yaapii.Atoms.Scalar
         /// <summary> ctor </summary>
         /// <param name="func"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(IFunc<In, Boolean> func, IEnumerable<In> src) :
+        public And(IFunc<In, Boolean> func, System.Collections.Generic.IEnumerable<In> src) :
             this(
                 new Enumerable.Mapped<In, IScalar<Boolean>>(
                     new FuncOf<In, IScalar<Boolean>>((item) =>
@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Scalar
 
         /// <summary></summary>
         /// <param name="src"></param>
-        private And(IEnumerable<IScalar<Boolean>> src)
+        private And(System.Collections.Generic.IEnumerable<IScalar<bool>> src)
             : base(() =>
             {
                 Boolean result = true;
@@ -114,7 +114,7 @@ namespace Yaapii.Atoms.Scalar
 
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
-        public And(IEnumerable<bool> src) : this(
+        public And(System.Collections.Generic.IEnumerable<bool> src) : this(
             new Mapped<bool, IScalar<bool>>(
                 tBool => new Live<bool>(tBool),
                 src))
@@ -122,7 +122,7 @@ namespace Yaapii.Atoms.Scalar
 
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
-        public And(IEnumerable<IScalar<Boolean>> src)
+        public And(System.Collections.Generic.IEnumerable<IScalar<bool>> src)
             : base(() =>
             {
                 Boolean result = true;
@@ -147,7 +147,7 @@ namespace Yaapii.Atoms.Scalar
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public static IScalar<bool> New<In>(Func<In, bool> func, IEnumerable<In> src)
+        public static IScalar<bool> New<In>(Func<In, bool> func, System.Collections.Generic.IEnumerable<In> src)
             => new And<In>(func, src);
 
         /// <summary> Logical and. Returns true if all calls to <see cref="IFunc{In, Out}"/> were true. </summary>
@@ -159,7 +159,7 @@ namespace Yaapii.Atoms.Scalar
         /// <summary> ctor </summary>
         /// <param name="func"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public static IScalar<bool> New<In>(IFunc<In, Boolean> func, IEnumerable<In> src)
+        public static IScalar<bool> New<In>(IFunc<In, Boolean> func, System.Collections.Generic.IEnumerable<In> src)
             => new And<In>(func, src);
 
         /// <summary> True if all functions return true with given input value </summary>

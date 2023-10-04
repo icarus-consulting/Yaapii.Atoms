@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="strs">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Joined(String delimit, IEnumerable<String> strs, bool live = false) :
+        public Joined(String delimit, System.Collections.Generic.IEnumerable<string> strs, bool live = false) :
             this(
                 new LiveText(delimit),
                 new Mapped<string, IText>(
@@ -114,7 +114,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Joined(String delimit, IEnumerable<IText> txts, bool live = false) : this(
+        public Joined(String delimit, System.Collections.Generic.IEnumerable<IText> txts, bool live = false) : this(
             new LiveText(delimit),
             () => txts,
             live
@@ -127,7 +127,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Joined(String delimit, System.Func<IEnumerable<IText>> txts, bool live = false) : this(
+        public Joined(String delimit, System.Func<System.Collections.Generic.IEnumerable<IText>> txts, bool live = false) : this(
             new LiveText(delimit),
             txts,
             live
@@ -140,7 +140,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Joined(IText delimit, IScalar<IEnumerable<IText>> txts, bool live = false) : this(
+        public Joined(IText delimit, IScalar<System.Collections.Generic.IEnumerable<IText>> txts, bool live = false) : this(
             delimit,
             () => txts.Value(),
             live
@@ -153,7 +153,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Joined(IText delimit, IEnumerable<IText> txts, bool live = false) : this(
+        public Joined(IText delimit, System.Collections.Generic.IEnumerable<IText> txts, bool live = false) : this(
             delimit,
             () => txts,
             live
@@ -166,7 +166,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">scalars of texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        private Joined(IText delimit, Func<IEnumerable<IText>> txts, bool live = false) : base(() =>
+        private Joined(IText delimit, Func<System.Collections.Generic.IEnumerable<IText>> txts, bool live = false) : base(() =>
             String.Join(
                 delimit.AsString(),
                 new Mapped<IText, string>(

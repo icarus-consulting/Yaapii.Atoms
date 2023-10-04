@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="candidate">The canidate to check for valid texts</param>
         /// <param name="valid">The valid texts</param>
-        public Strict(string candidate, IEnumerable<string> valid) : this(
+        public Strict(string candidate, System.Collections.Generic.IEnumerable<string> valid) : this(
             candidate,
             true,
             valid
@@ -72,7 +72,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="candidate">The canidate to check for valid texts</param>
         /// <param name="ignoreCase">Ignore case in the canidate and valid texts</param>
         /// <param name="valid">The valid texts</param>
-        public Strict(string candidate, bool ignoreCase, IEnumerable<string> valid) : this(
+        public Strict(string candidate, bool ignoreCase, System.Collections.Generic.IEnumerable<string> valid) : this(
             new LiveText(candidate), ignoreCase, new Mapped<string, IText>((str) => new LiveText(str), valid)
         )
         { }
@@ -126,7 +126,7 @@ namespace Yaapii.Atoms.Text
         /// </summary>
         /// <param name="candidate">The canidate to check for valid texts</param>
         /// <param name="valid">The valid texts</param>
-        public Strict(IText candidate, IEnumerable<IText> valid) : this(
+        public Strict(IText candidate, System.Collections.Generic.IEnumerable<IText> valid) : this(
             candidate,
             true,
             valid
@@ -139,7 +139,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="candidate">The canidate to check for valid texts</param>
         /// <param name="ignoreCase">Ignore case in the canidate and valid texts</param>
         /// <param name="valid">The valid texts</param>
-        public Strict(IText candidate, bool ignoreCase, IEnumerable<IText> valid) : this(
+        public Strict(IText candidate, bool ignoreCase, System.Collections.Generic.IEnumerable<IText> valid) : this(
             candidate,
             valid,
             new ScalarOf<StringComparison>(() => ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal))
@@ -151,7 +151,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="candidate">The canidate to check for valid texts</param>
         /// <param name="valid">The valid texts</param>
         /// <param name="stringComparer">Ignore case in the canidate and valid texts</param>
-        private Strict(IText candidate, IEnumerable<IText> valid, IScalar<StringComparison> stringComparer) : base(() =>
+        private Strict(IText candidate, System.Collections.Generic.IEnumerable<IText> valid, IScalar<StringComparison> stringComparer) : base(() =>
         {
             var result = false;
             var str = candidate.AsString();

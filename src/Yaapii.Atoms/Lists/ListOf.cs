@@ -49,7 +49,7 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="src">source enumerable</param>
-        public ListOf(IEnumerable<T> src) : base(
+        public ListOf(System.Collections.Generic.IEnumerable<T> src) : base(
             () => src.GetEnumerator(),
             false
         )
@@ -76,7 +76,7 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="src">source enumerable</param>
-        public static IList<T> New<T>(IEnumerable<T> src)
+        public static IList<T> New<T>(System.Collections.Generic.IEnumerable<T> src)
             => new ListOf<T>(src);
     }
 }

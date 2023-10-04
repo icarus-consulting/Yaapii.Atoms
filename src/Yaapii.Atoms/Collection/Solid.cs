@@ -51,9 +51,9 @@ namespace Yaapii.Atoms.Collection
         /// ctor
         /// </summary>
         /// <param name="src">source enumerable</param>
-        public Solid(IEnumerable<T> src) : this(new LiveCollection<T>(src))
+        public Solid(System.Collections.Generic.IEnumerable<T> src) : this(new LiveCollection<T>(src))
         { }
-        public static Solid<T> New(IEnumerable<T> src) => new Solid<T>(src);
+        public static Solid<T> New(System.Collections.Generic.IEnumerable<T> src) => new Solid<T>(src);
 
         /// <summary>
         /// ctor
@@ -80,7 +80,7 @@ namespace Yaapii.Atoms.Collection
 
         public static ICollection<T> New<T>(IEnumerator<T> src) => new Solid<T>(src);
 
-        public static ICollection<T> New<T>(IEnumerable<T> src) => new Solid<T>(src);
+        public static ICollection<T> New<T>(System.Collections.Generic.IEnumerable<T> src) => new Solid<T>(src);
 
         public static ICollection<T> New<T>(ICollection<T> src) => new Solid<T>(src);
     }

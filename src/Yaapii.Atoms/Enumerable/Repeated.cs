@@ -27,16 +27,16 @@ using Yaapii.Atoms.Scalar;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
+    /// <see cref="System.Collections.Generic.IEnumerable{T}"/> which repeats one element multiple times.
     /// </summary>
     /// <typeparam name="T">type of element to repeat</typeparam>
-    public sealed class Repeated<T> : IEnumerable<T>
+    public sealed class Repeated<T> : System.Collections.Generic.IEnumerable<T>
     {
         private readonly IScalar<T> element;
         private readonly IScalar<int> times;
 
         /// <summary>
-        /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
+        /// <see cref="System.Collections.Generic.IEnumerable{T}"/> which repeats one element multiple times.
         /// </summary>
         /// <param name="elm">function to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
@@ -45,7 +45,7 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
+        /// <see cref="System.Collections.Generic.IEnumerable{T}"/> which repeats one element multiple times.
         /// </summary>
         /// <param name="elm">element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
@@ -89,37 +89,37 @@ namespace Yaapii.Atoms.Enumerable
     }
 
     /// <summary>
-    /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
+    /// <see cref="System.Collections.Generic.IEnumerable{T}"/> which repeats one element multiple times.
     /// </summary>
     public static class Repeated
     {
         /// <summary>
-        /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
+        /// <see cref="System.Collections.Generic.IEnumerable{T}"/> which repeats one element multiple times.
         /// </summary>
         /// <param name="elm">function to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
-        public static IEnumerable<T> New<T>(System.Func<T> elm, int cnt) => new Repeated<T>(elm, cnt);
+        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Func<T> elm, int cnt) => new Repeated<T>(elm, cnt);
 
         /// <summary>
-        /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
+        /// <see cref="System.Collections.Generic.IEnumerable{T}"/> which repeats one element multiple times.
         /// </summary>
         /// <param name="elm">element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
-        public static IEnumerable<T> New<T>(T elm, int cnt) => new Repeated<T>(elm, cnt);
+        public static System.Collections.Generic.IEnumerable<T> New<T>(T elm, int cnt) => new Repeated<T>(elm, cnt);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
-        public static IEnumerable<T> New<T>(IScalar<T> elm, int cnt) => new Repeated<T>(elm, cnt);
+        public static System.Collections.Generic.IEnumerable<T> New<T>(IScalar<T> elm, int cnt) => new Repeated<T>(elm, cnt);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
-        public static IEnumerable<T> New<T>(IScalar<T> elm, IScalar<int> cnt) => new Repeated<T>(elm, cnt);
+        public static System.Collections.Generic.IEnumerable<T> New<T>(IScalar<T> elm, IScalar<int> cnt) => new Repeated<T>(elm, cnt);
     }
 }
 

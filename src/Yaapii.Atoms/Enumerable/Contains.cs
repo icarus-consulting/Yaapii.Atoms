@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="item">item to lookup</param>
         /// <param name="src">enumerable to test</param>
-        public Contains(IEnumerable<T> src, T item) : this(
+        public Contains(System.Collections.Generic.IEnumerable<T> src, T item) : this(
             src,
             (cdd) => cdd.Equals(item))
         { }
@@ -47,7 +47,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="items">enumerable to search through</param>
         /// <param name="match">check to perform on each item</param>
-        public Contains(IEnumerable<T> items, Func<T, bool> match) : base(() =>
+        public Contains(System.Collections.Generic.IEnumerable<T> items, Func<T, bool> match) : base(() =>
             {
                 var found = false;
                 var enumerator = items.GetEnumerator();
@@ -66,8 +66,8 @@ namespace Yaapii.Atoms.Enumerable
     /// <typeparam name="T"></typeparam>
     public static class Contains
     {
-        public static IScalar<bool> New<T>(IEnumerable<T> src, T item) => new Contains<T>(src, item);
+        public static IScalar<bool> New<T>(System.Collections.Generic.IEnumerable<T> src, T item) => new Contains<T>(src, item);
 
-        public static IScalar<bool> New<T>(IEnumerable<T> items, Func<T, bool> match) => new Contains<T>(items, match);
+        public static IScalar<bool> New<T>(System.Collections.Generic.IEnumerable<T> items, Func<T, bool> match) => new Contains<T>(items, match);
     }
 }

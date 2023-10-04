@@ -28,13 +28,13 @@ namespace Yaapii.Atoms.Enumerable
     /// <summary>
     /// Union objects in two enumerables.
     /// </summary>
-    public class Union<T> : ManyEnvelope<T>
+    public class Union<T> : IEnumerable<T>
     {
         /// <summary>
         /// Union objects in two enumerables.
         /// </summary>
         /// <param name="compare">Condition to match</param>
-        public Union(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) : base(() =>
+        public Union(System.Collections.Generic.IEnumerable<T> a, System.Collections.Generic.IEnumerable<T> b, Func<T, T, bool> compare) : base(() =>
             {
                 var result = new List<T>();
                 foreach (var aItem in a)
@@ -53,7 +53,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Union objects in two enumerables.
         /// </summary>
-        public Union(IEnumerable<T> a, IEnumerable<T> b) : base(() =>
+        public Union(System.Collections.Generic.IEnumerable<T> a, System.Collections.Generic.IEnumerable<T> b) : base(() =>
             {
                 var result = new List<T>();
                 foreach (var item in b)
@@ -79,13 +79,13 @@ namespace Yaapii.Atoms.Enumerable
         /// Union objects in two enumerables.
         /// </summary>
         /// <param name="compare">Condition to match</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) =>
+        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> a, System.Collections.Generic.IEnumerable<T> b, Func<T, T, bool> compare) =>
             new Union<T>(a, b, compare);
 
         /// <summary>
         /// Union objects in two enumerables.
         /// </summary>
-        public static IEnumerable<T> New<T>(IEnumerable<T> a, IEnumerable<T> b) =>
+        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> a, System.Collections.Generic.IEnumerable<T> b) =>
             new Union<T>(a, b);
     }
 }

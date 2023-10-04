@@ -27,10 +27,10 @@ using System.Collections.Generic;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+    /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class Sorted<T> : IEnumerable<T>
+    public sealed class Sorted<T> : System.Collections.Generic.IEnumerable<T>
         where T : IComparable<T>
     {
         private readonly List<T> source;
@@ -38,25 +38,25 @@ namespace Yaapii.Atoms.Enumerable
         private readonly Comparer<T> comparer;
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> with the given items sorted by default.
         /// </summary>
         /// <param name="src">enumerable to sort</param>
         public Sorted(params T[] src) : this(Comparer<T>.Default, src)
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
         /// <param name="src">enumerable to sort</param>
-        public Sorted(IEnumerable<T> src) : this(Comparer<T>.Default, src)
+        public Sorted(System.Collections.Generic.IEnumerable<T> src) : this(Comparer<T>.Default, src)
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public Sorted(Comparer<T> cmp, IEnumerable<T> src)
+        public Sorted(Comparer<T> cmp, System.Collections.Generic.IEnumerable<T> src)
         {
             this.source = new List<T>(src);
             this.sorted = new bool[] { false };
@@ -93,32 +93,32 @@ namespace Yaapii.Atoms.Enumerable
     }
 
     /// <summary>
-    /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+    /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
     public static class Sorted
     {
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> with the given items sorted by default.
         /// </summary>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> New<T>(params T[] src) where T : IComparable<T> =>
+        public static System.Collections.Generic.IEnumerable<T> New<T>(params T[] src) where T : IComparable<T> =>
             new Sorted<T>(src);
 
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> src) where T : IComparable<T> =>
+        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> src) where T : IComparable<T> =>
             new Sorted<T>(src);
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> New<T>(Comparer<T> cmp, IEnumerable<T> src)
+        public static System.Collections.Generic.IEnumerable<T> New<T>(Comparer<T> cmp, System.Collections.Generic.IEnumerable<T> src)
             where T : IComparable<T> =>
             new Sorted<T>(cmp, src);
     }

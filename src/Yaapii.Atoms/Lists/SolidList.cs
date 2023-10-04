@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="items">items to decorate</param>
-        public SolidList(IEnumerable<T> items) : base(() =>
+        public SolidList(System.Collections.Generic.IEnumerable<T> items) : base(() =>
             new SyncList<T>(
                 new ListOf<T>(items)
             ),
@@ -88,7 +88,7 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="items">items to decorate</param>
-        public static IList<T> New<T>(IEnumerable<T> items)
+        public static IList<T> New<T>(System.Collections.Generic.IEnumerable<T> items)
             => new SolidList<T>(items);
 
         /// <summary>

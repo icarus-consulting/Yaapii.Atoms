@@ -44,7 +44,7 @@ namespace Yaapii.Atoms.Collection
         /// A <see cref="ICollection{T}"/> with default sorting (ascending)
         /// </summary>
         /// <param name="src">the source enumerable</param>
-        public Sorted(IEnumerable<T> src) : this(
+        public Sorted(System.Collections.Generic.IEnumerable<T> src) : this(
             Comparer<T>.Default,
             new LiveCollection<T>(src))
         { }
@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Collection
         /// </summary>
         /// <param name="cmp">the comparer</param>
         /// <param name="src">the source enumerable</param>
-        public Sorted(Comparer<T> cmp, IEnumerable<T> src) : this(cmp, new LiveCollection<T>(src))
+        public Sorted(Comparer<T> cmp, System.Collections.Generic.IEnumerable<T> src) : this(cmp, new LiveCollection<T>(src))
         { }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Yaapii.Atoms.Collection
         /// <summary>
         public static ICollection<T> New<T>(params T[] src) where T : IComparable<T> => new Sorted<T>(src);
 
-        public static ICollection<T> New<T>(IEnumerable<T> src) where T : IComparable<T> => new Sorted<T>(src);
+        public static ICollection<T> New<T>(System.Collections.Generic.IEnumerable<T> src) where T : IComparable<T> => new Sorted<T>(src);
 
         public static ICollection<T> New<T>(Comparer<T> cmp, params T[] src) where T : IComparable<T> => new Sorted<T>(cmp, src);
 

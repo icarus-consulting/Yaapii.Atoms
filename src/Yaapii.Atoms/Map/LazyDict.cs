@@ -56,7 +56,7 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(IEnumerable<IKvp> kvps, bool rejectBuildingAllValues = true)
+        public LazyDict(System.Collections.Generic.IEnumerable<IKvp> kvps, bool rejectBuildingAllValues = true)
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
@@ -284,7 +284,7 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public static LazyDict<Value> New<Value>(IEnumerable<IKvp<Value>> kvps, bool rejectBuildingAllValues = true)
+        public static LazyDict<Value> New<Value>(System.Collections.Generic.IEnumerable<IKvp<Value>> kvps, bool rejectBuildingAllValues = true)
             => new LazyDict<Value>(kvps, rejectBuildingAllValues);
 
         /// <summary>
@@ -302,7 +302,7 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public static LazyDict<Key, Value> New<Key, Value>(IEnumerable<IKvp<Key, Value>> kvps, bool rejectBuildingAllValues = true)
+        public static LazyDict<Key, Value> New<Key, Value>(System.Collections.Generic.IEnumerable<IKvp<Key, Value>> kvps, bool rejectBuildingAllValues = true)
             => new LazyDict<Key, Value>(kvps, rejectBuildingAllValues);
     }
 
@@ -331,7 +331,7 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(IEnumerable<IKvp<Value>> kvps, bool rejectBuildingAllValues = true)
+        public LazyDict(System.Collections.Generic.IEnumerable<IKvp<Value>> kvps, bool rejectBuildingAllValues = true)
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
@@ -569,7 +569,7 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(IEnumerable<IKvp<Key, Value>> kvps, bool rejectBuildingAllValues = true)
+        public LazyDict(System.Collections.Generic.IEnumerable<IKvp<Key, Value>> kvps, bool rejectBuildingAllValues = true)
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =

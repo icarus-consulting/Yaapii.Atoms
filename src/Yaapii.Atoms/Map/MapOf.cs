@@ -57,7 +57,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="src"></param>
         /// <param name="list"></param>
-        public MapOf(IDictionary<string, string> src, IEnumerable<KeyValuePair<string, string>> list) : this(
+        public MapOf(IDictionary<string, string> src, System.Collections.Generic.IEnumerable<KeyValuePair<string, string>> list) : this(
             new Enumerable.Joined<KeyValuePair<string, string>>(
                 src,
                 list
@@ -91,7 +91,7 @@ namespace Yaapii.Atoms.Map
         /// Rejects building of all values
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
-        public MapOf(IEnumerable<IKvp> entries) : this(
+        public MapOf(System.Collections.Generic.IEnumerable<IKvp> entries) : this(
             entries, true
         )
         { }
@@ -101,7 +101,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
         /// <param name="rejectBuildingAllValues">if you have KVPs with value functions, it is by default prevented to build all values by getting the enumerator. You can deactivate that here.</param>
-        public MapOf(IEnumerable<IKvp> entries, bool rejectBuildingAllValues) : this(
+        public MapOf(System.Collections.Generic.IEnumerable<IKvp> entries, bool rejectBuildingAllValues) : this(
             new LazyDict(entries, rejectBuildingAllValues)
         )
         { }
@@ -119,7 +119,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given entries.
         /// </summary>
         /// <param name="entries">enumerable of entries</param>
-        public MapOf(IEnumerable<KeyValuePair<string, string>> entries) : this(
+        public MapOf(System.Collections.Generic.IEnumerable<KeyValuePair<string, string>> entries) : this(
             () =>
             {
                 var temp = new Dictionary<string, string>();
@@ -155,7 +155,7 @@ namespace Yaapii.Atoms.Map
         /// A map from string to string.
         /// </summary>
         /// <param name="pairSequence">Pairs as a sequence, ordered like this: key-1, value-1, ... key-n, value-n</param>
-        public MapOf(IEnumerable<string> pairSequence) : this(
+        public MapOf(System.Collections.Generic.IEnumerable<string> pairSequence) : this(
             () =>
             {
                 var idx = -1;
@@ -195,7 +195,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">enumerable of map inputs</param>
-        public MapOf(IEnumerable<IMapInput> inputs) : this(
+        public MapOf(System.Collections.Generic.IEnumerable<IMapInput> inputs) : this(
             () =>
             {
                 IDictionary<string, string> dict = new LazyDict();
@@ -631,7 +631,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
         /// <param name="rejectBuildingAllValues">if you have KVPs with value functions, it is by default prevented to build all values by getting the enumerator. You can deactivate that here.</param>
-        public static IDictionary<string, Value> New<Value>(IEnumerable<IKvp<Value>> entries, bool rejectBuildingAllValues = true)
+        public static IDictionary<string, Value> New<Value>(System.Collections.Generic.IEnumerable<IKvp<Value>> entries, bool rejectBuildingAllValues = true)
             => new MapOf<Value>(entries, rejectBuildingAllValues);
 
         /// <summary>
@@ -645,7 +645,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given entries.
         /// </summary>
         /// <param name="entries">enumerable of entries</param>
-        public static IDictionary<string, Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> entries)
+        public static IDictionary<string, Value> New<Value>(System.Collections.Generic.IEnumerable<KeyValuePair<string, Value>> entries)
             => new MapOf<Value>(entries);
 
         /// <summary>
@@ -659,7 +659,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">enumerable of map inputs</param>
-        public static IDictionary<string, Value> New<Value>(IEnumerable<IMapInput<Value>> inputs)
+        public static IDictionary<string, Value> New<Value>(System.Collections.Generic.IEnumerable<IMapInput<Value>> inputs)
             => new MapOf<Value>(inputs);
 
         /// <summary>
@@ -1078,7 +1078,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="src"></param>
         /// <param name="list"></param>
-        public static IDictionary<Key, Value> New<Key, Value>(IDictionary<Key, Value> src, IEnumerable<KeyValuePair<Key, Value>> list)
+        public static IDictionary<Key, Value> New<Key, Value>(IDictionary<Key, Value> src, System.Collections.Generic.IEnumerable<KeyValuePair<Key, Value>> list)
             => new MapOf<Key, Value>(src, list);
 
         /// <summary>
@@ -1099,7 +1099,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
         /// <param name="rejectBuildingAllValues">if you have KVPs with value functions, it is by default prevented to build all values by getting the enumerator. You can deactivate that here.</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<IKvp<Key, Value>> entries, bool rejectBuildingAllValues = true)
+        public static IDictionary<Key, Value> New<Key, Value>(System.Collections.Generic.IEnumerable<IKvp<Key, Value>> entries, bool rejectBuildingAllValues = true)
             => new MapOf<Key, Value>(entries, rejectBuildingAllValues);
 
         /// <summary>
@@ -1113,7 +1113,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given entries.
         /// </summary>
         /// <param name="entries">enumerable of entries</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> entries)
+        public static IDictionary<Key, Value> New<Key, Value>(System.Collections.Generic.IEnumerable<KeyValuePair<Key, Value>> entries)
             => new MapOf<Key, Value>(entries);
 
         /// <summary>
@@ -1127,7 +1127,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">enumerable of map inputs</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<IMapInput<Key, Value>> inputs)
+        public static IDictionary<Key, Value> New<Key, Value>(System.Collections.Generic.IEnumerable<IMapInput<Key, Value>> inputs)
             => new MapOf<Key, Value>(inputs);
 
         /// <summary>
@@ -1631,7 +1631,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
         /// <param name="rejectBuildingAllValues">if you have KVPs with value functions, it is by default prevented to build all values by getting the enumerator. You can deactivate that here.</param>
-        public MapOf(IEnumerable<IKvp<Value>> entries, bool rejectBuildingAllValues = true) : this(
+        public MapOf(System.Collections.Generic.IEnumerable<IKvp<Value>> entries, bool rejectBuildingAllValues = true) : this(
             new LazyDict<Value>(entries, rejectBuildingAllValues)
         )
         { }
@@ -1649,7 +1649,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given entries.
         /// </summary>
         /// <param name="entries">enumerable of entries</param>
-        public MapOf(IEnumerable<KeyValuePair<string, Value>> entries) : this(
+        public MapOf(System.Collections.Generic.IEnumerable<KeyValuePair<string, Value>> entries) : this(
             () =>
             {
                 var temp = new Dictionary<string, Value>();
@@ -1675,7 +1675,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">enumerable of map inputs</param>
-        public MapOf(IEnumerable<IMapInput<Value>> inputs) : this(
+        public MapOf(System.Collections.Generic.IEnumerable<IMapInput<Value>> inputs) : this(
             () =>
             {
                 IDictionary<string, Value> dict = new LazyDict<Value>();
@@ -2180,7 +2180,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="src"></param>
         /// <param name="list"></param>
-        public MapOf(IDictionary<Key, Value> src, IEnumerable<KeyValuePair<Key, Value>> list) : this(
+        public MapOf(IDictionary<Key, Value> src, System.Collections.Generic.IEnumerable<KeyValuePair<Key, Value>> list) : this(
             new Enumerable.Joined<KeyValuePair<Key, Value>>(
                 src,
                 list
@@ -2214,7 +2214,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
         /// <param name="rejectBuildingAllValues">if you have KVPs with value functions, it is by default prevented to build all values by getting the enumerator. You can deactivate that here.</param>
-        public MapOf(IEnumerable<IKvp<Key, Value>> entries, bool rejectBuildingAllValues = true) : this(
+        public MapOf(System.Collections.Generic.IEnumerable<IKvp<Key, Value>> entries, bool rejectBuildingAllValues = true) : this(
             new LazyDict<Key, Value>(entries, rejectBuildingAllValues)
         )
         { }
@@ -2232,7 +2232,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given entries.
         /// </summary>
         /// <param name="entries">enumerable of entries</param>
-        public MapOf(IEnumerable<KeyValuePair<Key, Value>> entries) : this(
+        public MapOf(System.Collections.Generic.IEnumerable<KeyValuePair<Key, Value>> entries) : this(
             () =>
             {
                 var temp = new Dictionary<Key, Value>();
@@ -2256,7 +2256,7 @@ namespace Yaapii.Atoms.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">enumerable of map inputs</param>
-        public MapOf(IEnumerable<IMapInput<Key, Value>> inputs) : this(
+        public MapOf(System.Collections.Generic.IEnumerable<IMapInput<Key, Value>> inputs) : this(
             () =>
             {
                 IDictionary<Key, Value> dict = new LazyDict<Key, Value>();

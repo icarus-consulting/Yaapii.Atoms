@@ -31,7 +31,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <summary>
     /// A <see cref="ArrayList"/> converted to IEnumerable&lt;object&gt;
     /// </summary>
-    public sealed class ManyOfArrayList : ManyEnvelope<object>
+    public sealed class ManyOfArrayList : IEnumerable<object>
     {
         /// <summary>
         /// A ArrayList converted to IEnumerable&lt;object&gt;
@@ -54,7 +54,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <summary>
     /// A <see cref="ArrayList"/> converted to IEnumerable&lt;T&gt;
     /// </summary>
-    public sealed class ManyOfArrayList<T> : ManyEnvelope<T>
+    public sealed class ManyOfArrayList<T> : IEnumerable<T>
     {
         /// <summary>
         /// A ArrayList converted to IEnumerable&lt;object&gt;

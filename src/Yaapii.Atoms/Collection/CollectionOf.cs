@@ -46,10 +46,10 @@ namespace Yaapii.Atoms.Collection
         { }
 
         /// <summary>
-        /// Makes a collection from an <see cref="IEnumerable{T}"/>
+        /// Makes a collection from an <see cref="System.Collections.Generic.IEnumerable{T}"/>
         /// </summary>
         /// <param name="src"></param>
-        public CollectionOf(IEnumerable<T> src) : base(
+        public CollectionOf(System.Collections.Generic.IEnumerable<T> src) : base(
             () =>
             {
                 ICollection<T> list = new LinkedList<T>();
@@ -70,7 +70,7 @@ namespace Yaapii.Atoms.Collection
 
         public static ICollection<T> New<T>(IEnumerator<T> src) => new CollectionOf<T>(src);
 
-        public static ICollection<T> New<T>(IEnumerable<T> src) => new CollectionOf<T>(src);
+        public static ICollection<T> New<T>(System.Collections.Generic.IEnumerable<T> src) => new CollectionOf<T>(src);
 
     }
 }

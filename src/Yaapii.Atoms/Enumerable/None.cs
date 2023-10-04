@@ -25,7 +25,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <summary>
     /// Enumerable which is empty.
     /// </summary>
-    public sealed class None : ManyEnvelope<string>
+    public sealed class None : IEnumerable<string>
     {
         /// <summary>
         /// Enumerable which is empty.
@@ -37,7 +37,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <summary>
     /// Enumerable which is empty.
     /// </summary>
-    public sealed class None<T> : ManyEnvelope<T>
+    public sealed class None<T> : IEnumerable<T>
     {
         /// <summary>
         /// Enumerable which is empty.

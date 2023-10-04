@@ -23,115 +23,115 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// A <see cref="IEnumerable{T}"/> out of strings.
+    /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of strings.
     /// </summary>
 
-    public sealed class ManyOf : IEnumerable<string>
+    public sealed class ManyOf : System.Collections.Generic.IEnumerable<string>
     {
-        private readonly IEnumerable<string> items;
-        private readonly IEnumerable<string> origin;
+        private readonly Func<IEnumerator<string>> origin;
+        private readonly System.Collections.Generic.IEnumerable<string> items;
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of an array.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of an array.
         /// </summary>
         /// <param name="items"></param>
         public ManyOf(params string[] items) : this(() => new Params<string>(items))
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/>.
         /// </summary>
         /// <param name="e">a enumerator</param>
-        public ManyOf(IEnumerator<string> e, bool live = false) : this(new Live<IEnumerator<string>>(e), live)
+        public ManyOf(IEnumerator<string> e) : this(new Live<IEnumerator<string>>(e))
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
-        public ManyOf(IScalar<IEnumerator<string>> sc, bool live = false) : this(sc.Value, live)
+        public ManyOf(IScalar<IEnumerator<string>> sc) : this(() => sc.Value())
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
-        public ManyOf(Func<IEnumerable<string>> fnc, bool live = false) : this(() => fnc().GetEnumerator(), live)
+        public ManyOf(Func<System.Collections.Generic.IEnumerable<string>> fnc) : this(() => fnc().GetEnumerator())
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
         public ManyOf(Func<IEnumerator<string>> origin, bool live = false)
         {
+            this.origin = origin;
             this.items =
                 Ternary.New(
-                    Sticky.New(Produced),
                     LiveMany.New(Produced),
+                    Sticky.New(Produced),
                     live
                 );
-            this.origin = new EnumeratorAsEnumerable<string>(origin);
         }
 
         public IEnumerator<string> GetEnumerator() => this.items.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        private IEnumerable<string> Produced()
+        private System.Collections.Generic.IEnumerable<string> Produced()
         {
-            foreach (var item in this.origin)
+            var enumerator = this.origin();
+            while(enumerator.MoveNext())
             {
-                yield return item;
+                yield return enumerator.Current;
             }
         }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of an array.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of an array.
         /// </summary>
         /// <param name="items"></param>
-        public static IEnumerable<T> New<T>(params T[] items) => new ManyOf<T>(items);
+        public static System.Collections.Generic.IEnumerable<T> New<T>(params T[] items) => new ManyOf<T>(items);
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/>.
         /// </summary>
         /// <param name="e">a enumerator</param>
-        public static IEnumerable<T> New<T>(IEnumerator<T> e) => new ManyOf<T>(e);
+        public static System.Collections.Generic.IEnumerable<T> New<T>(IEnumerator<T> e) => new ManyOf<T>(e);
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
-        public static IEnumerable<T> New<T>(IScalar<IEnumerator<T>> sc) => new ManyOf<T>(sc);
+        public static System.Collections.Generic.IEnumerable<T> New<T>(IScalar<IEnumerator<T>> sc) => new ManyOf<T>(sc);
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
-        public static IEnumerable<T> New<T>(Func<IEnumerable<T>> fnc) => new ManyOf<T>(() => fnc().GetEnumerator());
+        public static System.Collections.Generic.IEnumerable<T> New<T>(Func<System.Collections.Generic.IEnumerable<T>> fnc) => new ManyOf<T>(() => fnc().GetEnumerator());
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
-        public static IEnumerable<T> New<T>(Func<IEnumerator<T>> origin) => new ManyOf<T>(origin);
+        public static System.Collections.Generic.IEnumerable<T> New<T>(Func<IEnumerator<T>> origin) => new ManyOf<T>(origin);
     }
 
     /// <summary>
-    /// A <see cref="IEnumerable{T}"/> out of other objects.
+    /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of other objects.
     /// </summary>
     /// <typeparam name="T"></typeparam>
 
-    public sealed class ManyOf<T> : IEnumerable<T>
+    public sealed class ManyOf<T> : System.Collections.Generic.IEnumerable<T>
     {
-        private readonly IEnumerable<T> result;
-        private readonly IEnumerable<T> origin;
+        private readonly System.Collections.Generic.IEnumerable<T> result;
+        private readonly System.Collections.Generic.IEnumerable<T> origin;
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of an array.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of an array.
         /// </summary>
         /// <param name="items"></param>
         public ManyOf(params T[] items) : this(
@@ -140,29 +140,29 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/>.
         /// </summary>
         /// <param name="e">a enumerator</param>
         public ManyOf(IEnumerator<T> e) : this(new EnumeratorAsEnumerable<T>(e))
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         public ManyOf(IScalar<IEnumerator<T>> sc) : this(new EnumeratorAsEnumerable<T>(sc.Value()))
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         public ManyOf(Func<IEnumerator<T>> sc) : this(new EnumeratorAsEnumerable<T>(sc))
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
-        public ManyOf(IEnumerable<T> origin, bool live = false)
+        public ManyOf(System.Collections.Generic.IEnumerable<T> origin, bool live = false)
         {
             this.result =
                 Ternary.New(
@@ -180,7 +180,7 @@ namespace Yaapii.Atoms.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerable<T> Produced()
+        private System.Collections.Generic.IEnumerable<T> Produced()
         {
             foreach (var item in this.origin)
             {

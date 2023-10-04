@@ -26,18 +26,18 @@ using System.Collections.Generic;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// A <see cref="IEnumerable{T}"/> that starts from the beginning when ended.
+    /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> that starts from the beginning when ended.
     /// </summary>
     /// <typeparam name="T">type of the contents</typeparam>
-    public sealed class Cycled<T> : IEnumerable<T>
+    public sealed class Cycled<T> : System.Collections.Generic.IEnumerable<T>
     {
-        private readonly IEnumerable<T> enumerable;
+        private readonly System.Collections.Generic.IEnumerable<T> enumerable;
 
         /// <summary>
         /// A <see cref="IEnumerator{T}"/> that starts from the beginning when ended.
         /// </summary>
         /// <param name="enumerable">an enum to cycle</param>
-        public Cycled(IEnumerable<T> enumerable)
+        public Cycled(System.Collections.Generic.IEnumerable<T> enumerable)
         {
             this.enumerable = enumerable;
         }
@@ -70,11 +70,11 @@ namespace Yaapii.Atoms.Enumerable
     }
 
     /// <summary>
-    /// A <see cref="IEnumerable{T}"/> that starts from the beginning when ended.
+    /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> that starts from the beginning when ended.
     /// </summary>
     /// <typeparam name="T">type of the contents</typeparam>
     public static class Cycled
     {
-        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable) => new Cycled<T>(enumerable);
+        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> enumerable) => new Cycled<T>(enumerable);
     }
 }

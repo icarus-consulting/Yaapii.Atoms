@@ -27,12 +27,12 @@ using Yaapii.Atoms.Scalar;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
+    /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> limited to an item maximum.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class HeadOf<T> : IEnumerable<T>
+    public sealed class HeadOf<T> : System.Collections.Generic.IEnumerable<T>
     {
-        private readonly IEnumerable<T> enumerable;
+        private readonly System.Collections.Generic.IEnumerable<T> enumerable;
         private readonly IScalar<int> limit;
         private readonly Ternary<T> result;
 
@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Enumerable
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
-        public HeadOf(IEnumerable<T> enumerable, bool live = false) : this(enumerable, 1, live)
+        public HeadOf(System.Collections.Generic.IEnumerable<T> enumerable, bool live = false) : this(enumerable, 1, live)
         { }
 
         /// <summary>
@@ -48,22 +48,22 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public HeadOf(IEnumerable<T> enumerable, int limit, bool live = false) : this(enumerable, new Live<int>(limit), live)
+        public HeadOf(System.Collections.Generic.IEnumerable<T> enumerable, int limit, bool live = false) : this(enumerable, new Live<int>(limit), live)
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> limited to an item maximum.
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public HeadOf(IEnumerable<T> enumerable, IScalar<int> limit, bool live = false)
+        public HeadOf(System.Collections.Generic.IEnumerable<T> enumerable, IScalar<int> limit, bool live = false)
         {
             this.enumerable = enumerable;
             this.limit = limit;
             this.result =
                 Ternary.New(
-                    Sticky.New(Produced),
                     LiveMany.New(Produced),
+                    Sticky.New(Produced),
                     live
                 );
         }
@@ -72,7 +72,7 @@ namespace Yaapii.Atoms.Enumerable
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        private IEnumerable<T> Produced()
+        private System.Collections.Generic.IEnumerable<T> Produced()
         {
             var limit = this.limit.Value();
             var taken = 0;
@@ -86,7 +86,7 @@ namespace Yaapii.Atoms.Enumerable
     }
 
     /// <summary>
-    /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
+    /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> limited to an item maximum.
     /// </summary>
     public static class HeadOf
     {
@@ -94,21 +94,21 @@ namespace Yaapii.Atoms.Enumerable
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable) => new HeadOf<T>(enumerable);
+        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> enumerable) => new HeadOf<T>(enumerable);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable, int limit) => new HeadOf<T>(enumerable, limit);
+        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> enumerable, int limit) => new HeadOf<T>(enumerable, limit);
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> limited to an item maximum.
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable, IScalar<int> limit) => new HeadOf<T>(enumerable, limit);
+        public static System.Collections.Generic.IEnumerable<T> New<T>(System.Collections.Generic.IEnumerable<T> enumerable, IScalar<int> limit) => new HeadOf<T>(enumerable, limit);
     }
 }
 

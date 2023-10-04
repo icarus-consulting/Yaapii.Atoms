@@ -43,7 +43,7 @@ namespace Yaapii.Atoms.Number
         /// The maximum of the source integers
         /// </summary>
         /// <param name="src">integers to find max in</param>
-        public MaxOf(IEnumerable<int> src) : base(
+        public MaxOf(System.Collections.Generic.IEnumerable<int> src) : base(
             new ScalarOf<double>(() =>
             {
                 var max = double.MinValue;
@@ -99,7 +99,7 @@ namespace Yaapii.Atoms.Number
         /// The maximum of the source integers
         /// </summary>
         /// <param name="src">integers to find max in</param>
-        public MaxOf(IEnumerable<double> src) : base(
+        public MaxOf(System.Collections.Generic.IEnumerable<double> src) : base(
             new ScalarOf<double>(() =>
             {
                 var max = double.MinValue;
@@ -155,7 +155,7 @@ namespace Yaapii.Atoms.Number
         /// The maximum of the source integers
         /// </summary>
         /// <param name="src">integers to find max in</param>
-        public MaxOf(IEnumerable<long> src) : base(
+        public MaxOf(System.Collections.Generic.IEnumerable<long> src) : base(
             new ScalarOf<double>(() =>
             {
                 var max = double.MinValue;
@@ -211,7 +211,7 @@ namespace Yaapii.Atoms.Number
         /// The maximum of the source integers
         /// </summary>
         /// <param name="src">integers to find max in</param>
-        public MaxOf(IEnumerable<float> src) : base(
+        public MaxOf(System.Collections.Generic.IEnumerable<float> src) : base(
             new ScalarOf<double>(() =>
             {
                 var max = double.MinValue;

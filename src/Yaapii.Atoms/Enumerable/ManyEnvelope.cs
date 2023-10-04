@@ -77,10 +77,10 @@ namespace Yaapii.Atoms.Enumerable
         {
             this.items =
                 new Ternary<string>(
-                    new Sticky<string>(
+                    new LiveMany<string>(() =>
                         new EnumeratorAsEnumerable<string>(origin)
                     ),
-                    new LiveMany<string>(() =>
+                    new Sticky<string>(
                         new EnumeratorAsEnumerable<string>(origin)
                     ),
                     () => live

@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Map
         public VersionMap(bool openEnd, params IKvp<Version, string>[] kvps) : this(new ManyOf<IKvp<Version, string>>(kvps), openEnd)
         { }
 
-        public VersionMap(IEnumerable<IKvp<Version, string>> kvps, bool openEnd) : base(() => new VersionMap<string>(kvps, openEnd), false)
+        public VersionMap(System.Collections.Generic.IEnumerable<IKvp<Version, string>> kvps, bool openEnd) : base(() => new VersionMap<string>(kvps, openEnd), false)
         { }
     }
 
@@ -55,7 +55,7 @@ namespace Yaapii.Atoms.Map
         private readonly IDictionary<Version, Value> map;
         private readonly InvalidOperationException reject = new InvalidOperationException("Not supported, this is only a lookup map for versions.");
         private readonly bool openEnd;
-        private readonly Func<Version, IEnumerable<Version>, InvalidOperationException> versionNotFound =
+        private readonly Func<Version, System.Collections.Generic.IEnumerable<Version>, InvalidOperationException> versionNotFound =
             (version, available) =>
             new InvalidOperationException(
                 $"Cannot find value for version {version.ToString()}, the version must be within: "
@@ -88,7 +88,7 @@ namespace Yaapii.Atoms.Map
         /// It matches the version range, not the exact version.
         /// This means if you have two kvps inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
         /// </summary>
-        public VersionMap(IEnumerable<IKvp<Version, Value>> kvps, bool openEnd)
+        public VersionMap(System.Collections.Generic.IEnumerable<IKvp<Version, Value>> kvps, bool openEnd)
         {
             this.map = new LazyDict<Version, Value>(kvps);
             this.openEnd = openEnd;

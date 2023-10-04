@@ -29,21 +29,21 @@ namespace Yaapii.Atoms.Enumerable
     /// Enumerable partitioned by a given size.
     /// <para>Is a IEnumerable</para>
     /// </summary>
-    public sealed class Partitioned<T> : IEnumerable<IEnumerable<T>>
+    public sealed class Partitioned<T> : System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<T>>
     {
         private readonly int size;
-        private readonly IEnumerable<T> items;
+        private readonly System.Collections.Generic.IEnumerable<T> items;
 
         /// <summary>
         /// Enumerable partitioned by a given size.
         /// </summary>
-        public Partitioned(int size, IEnumerable<T> items)
+        public Partitioned(int size, System.Collections.Generic.IEnumerable<T> items)
         {
             this.size = size;
             this.items = items;
         }
 
-        public IEnumerator<IEnumerable<T>> GetEnumerator()
+        public IEnumerator<System.Collections.Generic.IEnumerable<T>> GetEnumerator()
         {
             var source = this.items.GetEnumerator();
             while(source.MoveNext())
@@ -57,11 +57,11 @@ namespace Yaapii.Atoms.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerable<T> Partition(IEnumerator<T> source)
+        private System.Collections.Generic.IEnumerable<T> Partition(IEnumerator<T> source)
         {
             var taken = 1;
             yield return source.Current;
-            while(source.MoveNext())
+            while(taken < this.size && source.MoveNext())
             {
                 taken++;
                 yield return source.Current;
@@ -78,6 +78,6 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Enumerable partitioned by a given size.
         /// </summary>
-        public static IEnumerable<IEnumerable<T>> New<T>(int size, IEnumerable<T> items) => new Partitioned<T>(size, items);
+        public static System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<T>> New<T>(int size, System.Collections.Generic.IEnumerable<T> items) => new Partitioned<T>(size, items);
     }
 }

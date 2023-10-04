@@ -64,7 +64,7 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="src">The lists to join together</param>
-        public Joined(IEnumerable<IList<T>> src) : base(() =>
+        public Joined(System.Collections.Generic.IEnumerable<IList<T>> src) : base(() =>
             {
                 return
                     new ListOf<T>(
@@ -104,7 +104,7 @@ namespace Yaapii.Atoms.List
         /// ctor
         /// </summary>
         /// <param name="src">The lists to join together</param>
-        public static IList<T> New<T>(IEnumerable<IList<T>> src)
+        public static IList<T> New<T>(System.Collections.Generic.IEnumerable<IList<T>> src)
             => new Joined<T>(src);
     }
 }

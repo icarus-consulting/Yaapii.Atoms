@@ -105,7 +105,7 @@ namespace Yaapii.Atoms.Number
         /// </code>
         /// </summary>
         /// <param name="src"></param>
-        public AvgOf(IEnumerable<double> src) : base(
+        public AvgOf(System.Collections.Generic.IEnumerable<double> src) : base(
             new ScalarOf<double>(() =>
             {
                 double sum = 0D;
@@ -179,7 +179,7 @@ namespace Yaapii.Atoms.Number
         /// </code>
         /// </summary>
         /// <param name="src"></param>
-        public AvgOf(IEnumerable<int> src) : base(
+        public AvgOf(System.Collections.Generic.IEnumerable<int> src) : base(
             new ScalarOf<double>(() =>
             {
                 double sum = 0D;
@@ -253,7 +253,7 @@ namespace Yaapii.Atoms.Number
         /// </code>
         /// </summary>
         /// <param name="src"></param>
-        public AvgOf(IEnumerable<long> src) : base(
+        public AvgOf(System.Collections.Generic.IEnumerable<long> src) : base(
             new ScalarOf<double>(() =>
             {
                 double sum = 0D;
@@ -327,7 +327,7 @@ namespace Yaapii.Atoms.Number
         /// </code>
         /// </summary>
         /// <param name="src"></param>
-        public AvgOf(IEnumerable<float> src) : base(
+        public AvgOf(System.Collections.Generic.IEnumerable<float> src) : base(
             new ScalarOf<double>(() =>
             {
                 double sum = 0D;

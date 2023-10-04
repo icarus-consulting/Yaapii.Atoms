@@ -347,7 +347,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public ActionSwitch(IEnumerable<IKvp<Action<In>>> consequences) : this(
+        public ActionSwitch(System.Collections.Generic.IEnumerable<IKvp<Action<In>>> consequences) : this(
             consequences,
             (unknown, input) => throw new ArgumentException($"Cannot find action for '{unknown}'")
         )
@@ -356,7 +356,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public ActionSwitch(IEnumerable<IKvp<Action<In>>> consequences, Action<string, In> fallback)
+        public ActionSwitch(System.Collections.Generic.IEnumerable<IKvp<Action<In>>> consequences, Action<string, In> fallback)
         {
             this.map = new MapOf<Action<In>>(consequences);
             this.fallback = fallback;
@@ -695,7 +695,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public ActionSwitch(IEnumerable<IKvp<Action<In1, In2>>> consequences) : this(
+        public ActionSwitch(System.Collections.Generic.IEnumerable<IKvp<Action<In1, In2>>> consequences) : this(
             consequences,
             (unknown, input1, input2) => throw new ArgumentException($"Cannot find action for '{unknown}'")
         )
@@ -704,7 +704,7 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public ActionSwitch(IEnumerable<IKvp<Action<In1, In2>>> consequences, Action<string, In1, In2> fallback)
+        public ActionSwitch(System.Collections.Generic.IEnumerable<IKvp<Action<In1, In2>>> consequences, Action<string, In1, In2> fallback)
         {
             this.map = new MapOf<Action<In1, In2>>(consequences);
             this.fallback = fallback;
@@ -984,13 +984,13 @@ namespace Yaapii.Atoms.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(IEnumerable<IKvp<Action<In1, In2>>> consequences) =>
+        public static IAction<string, In1, In2> New<In1, In2>(System.Collections.Generic.IEnumerable<IKvp<Action<In1, In2>>> consequences) =>
             new ActionSwitch<In1, In2>(consequences);
 
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(IEnumerable<IKvp<Action<In1, In2>>> consequences, Action<string, In1, In2> fallback) =>
+        public static IAction<string, In1, In2> New<In1, In2>(System.Collections.Generic.IEnumerable<IKvp<Action<In1, In2>>> consequences, Action<string, In1, In2> fallback) =>
             new ActionSwitch<In1, In2>(consequences);
     }
 }

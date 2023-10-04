@@ -30,7 +30,7 @@ using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.IO
 {
-    public sealed class DirectoryOf : IEnumerable<string>
+    public sealed class DirectoryOf : System.Collections.Generic.IEnumerable<string>
     {
 
         /// <summary>

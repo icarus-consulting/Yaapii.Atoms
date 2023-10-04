@@ -61,15 +61,15 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(IEnumerable<IDictionary<string, string>> dicts, bool rejectBuildingAllValues = true) : base(
+        public Joined(System.Collections.Generic.IEnumerable<IDictionary<string, string>> dicts, bool rejectBuildingAllValues = true) : base(
             () =>
                 new LazyDict(
                 new Enumerable.Joined<IKvp>(
-                    new Mapped<IDictionary<string, string>, IEnumerable<IKvp>>(dict =>
+                    new Mapped<IDictionary<string, string>, System.Collections.Generic.IEnumerable<IKvp>>(dict =>
                         new ManyOf<IKvp>(
                             new ScalarOf<IEnumerator<IKvp>>(() =>
                             {
-                                IEnumerable<IKvp> list = new ManyOf<IKvp>();
+                                System.Collections.Generic.IEnumerable<IKvp> list = new ManyOf<IKvp>();
                                 foreach (var key in dict.Keys)
                                 {
                                     list = new Enumerable.Joined<IKvp>(list, new KvpOf(key, () => dict[key]));
@@ -112,7 +112,7 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// Joined map.
         /// </summary>
-        public static IDictionary<string,Value> New<Value>(IEnumerable<IDictionary<string, Value>> dicts, bool live = false)
+        public static IDictionary<string,Value> New<Value>(System.Collections.Generic.IEnumerable<IDictionary<string, Value>> dicts, bool live = false)
             => new Joined<Value>(dicts, live);
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// Joined map.
         /// </summary>
-        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<IDictionary<Key, Value>> dicts, bool live = false)
+        public static IDictionary<Key, Value> New<Key, Value>(System.Collections.Generic.IEnumerable<IDictionary<Key, Value>> dicts, bool live = false)
             => new Joined<Key, Value>(dicts, live);
     }
 
@@ -191,14 +191,14 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(IEnumerable<IDictionary<string, Value>> dicts, bool live = false) : base(
+        public Joined(System.Collections.Generic.IEnumerable<IDictionary<string, Value>> dicts, bool live = false) : base(
             () =>
                 new LazyDict<string, Value>(
                     new Enumerable.Joined<IKvp<string, Value>>(
-                        new Mapped<IDictionary<string, Value>, IEnumerable<IKvp<string, Value>>>(dict =>
+                        new Mapped<IDictionary<string, Value>, System.Collections.Generic.IEnumerable<IKvp<string, Value>>>(dict =>
                             new LiveMany<IKvp<string, Value>>(() =>
                                 {
-                                    IEnumerable<IKvp<string, Value>> list = new ManyOf<IKvp<string, Value>>();
+                                    System.Collections.Generic.IEnumerable<IKvp<string, Value>> list = new ManyOf<IKvp<string, Value>>();
                                     foreach (var key in dict.Keys)
                                     {
                                         list = new Enumerable.Joined<IKvp<string, Value>>(list, new KvpOf<string, Value>(key, () => dict[key]));
@@ -262,14 +262,14 @@ namespace Yaapii.Atoms.Map
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(IEnumerable<IDictionary<Key, Value>> dicts, bool live = false) : base(
+        public Joined(System.Collections.Generic.IEnumerable<IDictionary<Key, Value>> dicts, bool live = false) : base(
             () =>
                 new LazyDict<Key, Value>(
                     new Enumerable.Joined<IKvp<Key, Value>>(
-                        new Mapped<IDictionary<Key, Value>, IEnumerable<IKvp<Key, Value>>>(dict =>
+                        new Mapped<IDictionary<Key, Value>, System.Collections.Generic.IEnumerable<IKvp<Key, Value>>>(dict =>
                             new LiveMany<IKvp<Key, Value>>(() =>
                                 {
-                                    IEnumerable<IKvp<Key, Value>> list = new ManyOf<IKvp<Key, Value>>();
+                                    System.Collections.Generic.IEnumerable<IKvp<Key, Value>> list = new ManyOf<IKvp<Key, Value>>();
                                     foreach (var key in dict.Keys)
                                     {
                                         list = new Enumerable.Joined<IKvp<Key, Value>>(list, new KvpOf<Key, Value>(key, () => dict[key]));

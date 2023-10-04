@@ -422,7 +422,7 @@ namespace Yaapii.Atoms.Swap
         /// <summary>
         /// A set of conversions where the desired is selected by its name.
         /// </summary>
-        public SwapSwitch(IEnumerable<IKvp<ISwap<TInput, TOutput>>> swap) : this(
+        public SwapSwitch(System.Collections.Generic.IEnumerable<IKvp<ISwap<TInput, TOutput>>> swap) : this(
             swap,
             (unknown, input) => throw new ArgumentException($"Cannot swap unknown type '{unknown}'")
         )
@@ -431,7 +431,7 @@ namespace Yaapii.Atoms.Swap
         /// <summary>
         /// A set of conversions where the desired is selected by its name.
         /// </summary>
-        public SwapSwitch(IEnumerable<IKvp<ISwap<TInput, TOutput>>> swap, Func<string, TInput, TOutput> fallback)
+        public SwapSwitch(System.Collections.Generic.IEnumerable<IKvp<ISwap<TInput, TOutput>>> swap, Func<string, TInput, TOutput> fallback)
         {
             this.swaps =
                 FallbackMap.New(
@@ -863,7 +863,7 @@ namespace Yaapii.Atoms.Swap
         /// <summary>
         /// A set of conversions where the desired is selected by its name.
         /// </summary>
-        public SwapSwitch(IEnumerable<IKvp<ISwap<TInput1, TInput2, TOutput>>> swap) : this(
+        public SwapSwitch(System.Collections.Generic.IEnumerable<IKvp<ISwap<TInput1, TInput2, TOutput>>> swap) : this(
             swap,
             (unknown, input1, input2) => throw new ArgumentException($"Cannot swap unknown type '{unknown}'")
         )
@@ -872,7 +872,7 @@ namespace Yaapii.Atoms.Swap
         /// <summary>
         /// A set of conversions where the desired is selected by its name.
         /// </summary>
-        public SwapSwitch(IEnumerable<IKvp<ISwap<TInput1, TInput2, TOutput>>> swap, Func<string, TInput1, TInput2, TOutput> fallback)
+        public SwapSwitch(System.Collections.Generic.IEnumerable<IKvp<ISwap<TInput1, TInput2, TOutput>>> swap, Func<string, TInput1, TInput2, TOutput> fallback)
         {
             this.swaps =
                 new FallbackMap<ISwap<TInput1, TInput2, TOutput>>(
@@ -1307,7 +1307,7 @@ namespace Yaapii.Atoms.Swap
         /// <summary>
         /// A set of conversions where the desired is selected by its name.
         /// </summary>
-        public SwapSwitch(IEnumerable<IKvp<TKey, ISwap<TInput1, TInput2, TOutput>>> swap) : this(
+        public SwapSwitch(System.Collections.Generic.IEnumerable<IKvp<TKey, ISwap<TInput1, TInput2, TOutput>>> swap) : this(
             swap,
             (unknown, input1, input2) => throw new ArgumentException($"Cannot swap unknown type '{unknown}'")
         )
@@ -1316,7 +1316,7 @@ namespace Yaapii.Atoms.Swap
         /// <summary>
         /// A set of conversions where the desired is selected by its name.
         /// </summary>
-        public SwapSwitch(IEnumerable<IKvp<TKey, ISwap<TInput1, TInput2, TOutput>>> swap, Func<TKey, TInput1, TInput2, TOutput> fallback)
+        public SwapSwitch(System.Collections.Generic.IEnumerable<IKvp<TKey, ISwap<TInput1, TInput2, TOutput>>> swap, Func<TKey, TInput1, TInput2, TOutput> fallback)
         {
             this.swaps =
                 new FallbackMap<TKey, ISwap<TInput1, TInput2, TOutput>>(

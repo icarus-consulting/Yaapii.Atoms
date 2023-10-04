@@ -27,19 +27,19 @@ using System.Collections.Generic;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+    /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class SortedBy<T, TKey> : IEnumerable<T>
+    public sealed class SortedBy<T, TKey> : System.Collections.Generic.IEnumerable<T>
         where TKey : IComparable<TKey>
     {
-        private readonly IEnumerable<T> source;
+        private readonly System.Collections.Generic.IEnumerable<T> source;
         private readonly SortedDictionary<TKey, T> map;
         private readonly Func<T, TKey> subjectExtraction;
         private readonly bool[] sorted;
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> with the given items sorted by default.
         /// </summary>
         /// <param name="swap">func to swap the type to a sortable type</param>
         /// <param name="src">enumerable to sort</param>
@@ -51,11 +51,11 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
         /// <param name="swap">func to swap the type to a sortable type</param>
         /// <param name="src">enumerable to sort</param>
-        public SortedBy(Func<T, TKey> swap, IEnumerable<T> src) : this(
+        public SortedBy(Func<T, TKey> swap, System.Collections.Generic.IEnumerable<T> src) : this(
             swap,
             Comparer<TKey>.Default,
             src
@@ -63,11 +63,11 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
         /// <param name="swap">func to swap the type to a sortable type</param>
         /// <param name="src">enumerable to sort</param>
-        public SortedBy(Func<T, TKey> swap, Comparison<TKey> compare, IEnumerable<T> src) : this(
+        public SortedBy(Func<T, TKey> swap, Comparison<TKey> compare, System.Collections.Generic.IEnumerable<T> src) : this(
             swap,
             Comparer<TKey>.Create(compare),
             src
@@ -75,12 +75,12 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
         /// <param name="subjectExtraction">func to swap the type to a sortable type</param>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public SortedBy(Func<T, TKey> subjectExtraction, Comparer<TKey> cmp, IEnumerable<T> src)
+        public SortedBy(Func<T, TKey> subjectExtraction, Comparer<TKey> cmp, System.Collections.Generic.IEnumerable<T> src)
         {
             this.map = new SortedDictionary<TKey,T>(cmp);
             this.subjectExtraction = subjectExtraction;
@@ -121,35 +121,35 @@ namespace Yaapii.Atoms.Enumerable
     }
 
     /// <summary>
-    /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+    /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
     public static class SortedBy
     {
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> with the given items sorted by default.
         /// </summary>
         /// <param name="swap">func to swap the type to a sortable type</param>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> New<T, TKey>(Func<T, TKey> swap, params T[] src) where TKey : IComparable<TKey> =>
+        public static System.Collections.Generic.IEnumerable<T> New<T, TKey>(Func<T, TKey> swap, params T[] src) where TKey : IComparable<TKey> =>
             new SortedBy<T, TKey>(swap, src);
 
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
         /// <param name="swap">func to swap the type to a sortable type</param>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> New<T, TKey>(Func<T, TKey> swap, IEnumerable<T> src) where TKey : IComparable<TKey> =>
+        public static System.Collections.Generic.IEnumerable<T> New<T, TKey>(Func<T, TKey> swap, System.Collections.Generic.IEnumerable<T> src) where TKey : IComparable<TKey> =>
             new SortedBy<T, TKey>(swap, src);
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// A <see cref="System.Collections.Generic.IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
         /// <param name="swap">func to swap the type to a sortable type</param>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> New<T, TKey>(Func<T, TKey> swap, Comparer<TKey> cmp, IEnumerable<T> src) where TKey : IComparable<TKey> =>
+        public static System.Collections.Generic.IEnumerable<T> New<T, TKey>(Func<T, TKey> swap, Comparer<TKey> cmp, System.Collections.Generic.IEnumerable<T> src) where TKey : IComparable<TKey> =>
             new SortedBy<T, TKey>(swap, cmp, src);
     }
 }

@@ -8,9 +8,9 @@ namespace Yaapii.Atoms.Enumerable
     /// A given enumerator as enumerable.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class EnumeratorAsEnumerable<T> : IEnumerable<T>
+    public sealed class EnumeratorAsEnumerable<T> : System.Collections.Generic.IEnumerable<T>
     {
-        private readonly Lazy<IEnumerator<T>> enumerator;
+        private readonly IEnumerator<T> enumerator;
 
         /// <summary>
         /// A given enumerator as enumerable.
@@ -23,14 +23,15 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         public EnumeratorAsEnumerable(Func<IEnumerator<T>> enumerator)
         {
-            this.enumerator = new Lazy<IEnumerator<T>>(enumerator);
+            this.enumerator = new Enumerator.Sticky<T>(enumerator);
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            while(this.enumerator.Value.MoveNext())
+            this.enumerator.Reset();
+            while (this.enumerator.MoveNext())
             {
-                yield return this.enumerator.Value.Current;
+                yield return this.enumerator.Current;
             }
             yield break;
         }
