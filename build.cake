@@ -330,7 +330,7 @@ Task("NuGet")
 // Credentials
 ///////////////////////////////////////////////////////////////////////////////
 Task("Credentials")
-.WithCriteria(() => isAppVeyor)
+.WithCriteria(() => isAppVeyor && BuildSystem.AppVeyor.Environment.Repository.Tag.IsTag)
 .Does(() =>
 {
     Information(Figlet("Credentials"));
