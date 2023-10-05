@@ -79,15 +79,15 @@ namespace Yaapii.Atoms.Enumerable
         private IEnumerable<T> Produced()
         {
             var set = new HashSet<T>(this.comparison);
-            var list = new List<T>();
-            foreach(var element in this.a)
+            foreach(var element in this.b)
             {
                 set.Add(element);
             }
 
-            foreach (T element in set)
+            foreach (T element in this.a)
             {
-                yield return element;
+                if(!set.Add(element))
+                    yield return element;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Yaapii.Atoms.Enumerable
 
             public bool Equals(T x, T y)
             {
-                return this.comparison.Invoke(x, y);
+                return this.comparison.Invoke(y, x);
             }
 
             public int GetHashCode(T obj)
