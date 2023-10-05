@@ -36,6 +36,7 @@ namespace Yaapii.Atoms.Enumerable
         private readonly List<T> source;
         private readonly bool[] sorted;
         private readonly Comparer<T> comparer;
+        private readonly bool live;
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
@@ -56,16 +57,17 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public Sorted(Comparer<T> cmp, IEnumerable<T> src)
+        public Sorted(Comparer<T> cmp, IEnumerable<T> src, bool live = false)
         {
             this.source = new List<T>(src);
             this.sorted = new bool[] { false };
             this.comparer = cmp;
+            this.live = live;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            if(!this.IsSorted())
+            if(!this.IsSorted() || this.live)
             {
                 this.Sort();
             }

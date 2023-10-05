@@ -47,13 +47,35 @@ namespace Yaapii.Atoms.Enumerable
         public Filtered(Func<T, Boolean> fnc, T item1, T item2, params T[] items) : this(
             fnc,
             new Joined<T>(
+                live: true,
                 new LiveMany<T>(
                     item1,
                     item2
                 ),
-                items
+                new Params<T>(items)
             ),
             false
+        )
+        { }
+
+        /// <summary>
+        /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
+        /// </summary>
+        /// <param name="fnc">filter function</param>
+        /// <param name="item1">first item to filter</param>
+        /// <param name="item2">secound item to filter</param>
+        /// <param name="items">other items to filter</param>
+        public Filtered(Func<T, Boolean> fnc, T item1, T item2, bool live, params T[] items) : this(
+            fnc,
+            new Joined<T>(
+                live: true,
+                new LiveMany<T>(
+                    item1,
+                    item2
+                ),
+                new Params<T>(items)
+            ),
+            live
         )
         { }
 

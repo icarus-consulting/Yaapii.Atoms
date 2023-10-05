@@ -50,8 +50,8 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         public Divergency(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match, bool live = false)
         {
-            this.a = new Filtered<T>(match, a);
-            this.b = new Filtered<T>(match, b);
+            this.a = new Filtered<T>(match, a, live: true);
+            this.b = new Filtered<T>(match, b, live: true);
             this.match = match;
             this.result =
                 Ternary.New(

@@ -49,7 +49,8 @@ namespace Yaapii.Atoms.List
         public Mapped(Func<In, Out> mapping, IEnumerator<In> src) : base(() =>
             new Enumerable.Mapped<In, Out>(
                 mapping,
-                new EnumeratorAsEnumerable<In>(src)
+                new EnumeratorAsEnumerable<In>(src),
+                false
             ).GetEnumerator(),
             false
         )
@@ -74,7 +75,7 @@ namespace Yaapii.Atoms.List
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
         public Mapped(Func<In, Out> mapping, ICollection<In> src) : base(() =>
-            new Enumerable.Mapped<In, Out>(mapping, src).GetEnumerator(),
+            new Enumerable.Mapped<In, Out>(mapping, src, false).GetEnumerator(),
             false
         )
         { }

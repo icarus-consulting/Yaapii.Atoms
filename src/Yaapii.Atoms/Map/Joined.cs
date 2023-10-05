@@ -64,24 +64,26 @@ namespace Yaapii.Atoms.Map
         public Joined(IEnumerable<IDictionary<string, string>> dicts, bool rejectBuildingAllValues = true) : base(
             () =>
                 new LazyDict(
-                new Enumerable.Joined<IKvp>(
-                    new Mapped<IDictionary<string, string>, IEnumerable<IKvp>>(dict =>
-                        new ManyOf<IKvp>(
-                            new ScalarOf<IEnumerator<IKvp>>(() =>
-                            {
-                                IEnumerable<IKvp> list = new ManyOf<IKvp>();
-                                foreach (var key in dict.Keys)
+                    new Enumerable.Joined<IKvp>(
+                        new Mapped<IDictionary<string, string>, IEnumerable<IKvp>>(dict =>
+                            new LiveMany<IKvp>(() =>
+                                new Live<IEnumerator<IKvp>>(() =>
                                 {
-                                    list = new Enumerable.Joined<IKvp>(list, new KvpOf(key, () => dict[key]));
-                                }
-                                return list.GetEnumerator();
-                            })
+                                    IEnumerable<IKvp> list = new ManyOf<IKvp>();
+                                    foreach (var key in dict.Keys)
+                                    {
+                                        list = new Enumerable.Joined<IKvp>(list, new KvpOf(key, () => dict[key]));
+                                    }
+                                    return list.GetEnumerator();
+                                }).Value()
+                            ),
+                            dicts,
+                            live: false
                         ),
-                        dicts
+                        live: false
                     )
-                )
-            ),
-            rejectBuildingAllValues
+                ),
+                rejectBuildingAllValues
         )
         { }
 

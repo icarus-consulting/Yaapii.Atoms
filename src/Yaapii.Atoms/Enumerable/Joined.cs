@@ -42,7 +42,8 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
-        public Joined(T first, T second, IEnumerable<T> lst, params T[] items) : this(
+        public Joined(T first, T second, IEnumerable<T> lst, bool live = false, params T[] items) : this(
+            live,
             new Single<T>(first),
             new Single<T>(second),
             lst,
@@ -55,10 +56,23 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
-        public Joined(T first, IEnumerable<T> lst, params T[] items) : this(
-            new Single<T>(first),
-            lst,
-            new Params<T>(items)
+        public Joined(T first, IEnumerable<T> lst, bool live = false, params T[] items) : this(
+            new Params<IEnumerable<T>>(
+                new Single<T>(first),
+                lst,
+                new Params<T>(items)
+            ),
+            live
+        )
+        { }
+
+        /// <summary>
+        /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
+        /// </summary>
+        /// <param name="lst">enumerable of items to join</param>
+        /// <param name="items">array of items to join</param>
+        public Joined(bool live, IEnumerable<T> lst, params T[] items) : this(
+            lst, live, items
         )
         { }
 
@@ -68,7 +82,17 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
         public Joined(IEnumerable<T> lst, params T[] items) : this(
-            lst, new Params<T>(items)
+            lst, false, items
+        )
+        { }
+
+        /// <summary>
+        /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
+        /// </summary>
+        /// <param name="lst">enumerable of items to join</param>
+        /// <param name="items">array of items to join</param>
+        public Joined(IEnumerable<T> lst, bool live = false, params T[] items) : this(
+            new Params<IEnumerable<T>>(lst, new Params<T>(items)), live
         )
         { }
 
@@ -77,7 +101,16 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="items">enumerables to join</param>
         public Joined(params IEnumerable<T>[] items) : this(
-            new Params<IEnumerable<T>>(items)
+            false, items
+        )
+        { }
+
+        /// <summary>
+        /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
+        /// </summary>
+        /// <param name="items">enumerables to join</param>
+        public Joined(bool live = false, params IEnumerable<T>[] items) : this(
+            new Params<IEnumerable<T>>(items), live
         )
         { }
 
