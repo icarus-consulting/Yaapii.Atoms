@@ -71,16 +71,18 @@ namespace Yaapii.Atoms.Enumerable.Tests
         public void UsesCompareFunction()
         {
             Assert.Equal(
-                new ListOf<string>("c:/abraham/a.jpg", "c:/caesar/c.jpg"),
-                new Union<string>(
-                    new ListOf<string>("c:/abraham/a.jpg", "c:/bertram/b.jpg", "c:/caesar/c.jpg"),
-                    new ListOf<string>("a", "c"),
-                    (aItem, bItem) =>
-                        new Equals<string>(
-                            Path.GetFileNameWithoutExtension(aItem),
-                            bItem
-                        ).Value()
-                )
+                "c:/abraham/a.jpg c:/caesar/c.jpg",
+                new Text.Joined(" ", 
+                    new Union<string>(
+                        new ListOf<string>("c:/abraham/a.jpg", "c:/bertram/b.jpg", "c:/caesar/c.jpg"),
+                        new ListOf<string>("a", "c"),
+                        (aItem, bItem) =>
+                            new Equals<string>(
+                                Path.GetFileNameWithoutExtension(aItem),
+                                bItem
+                            ).Value()
+                    )
+                ).AsString()
             );
         }
     }

@@ -78,7 +78,7 @@ namespace Yaapii.Atoms.Enumerable
         public IEnumerator<T> GetEnumerator()
         {
             foreach (var item in this.src)
-                yield return item;
+                yield return (T)item;
         }
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();

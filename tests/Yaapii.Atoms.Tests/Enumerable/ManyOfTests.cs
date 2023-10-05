@@ -108,5 +108,13 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new ManyOf("one", "two", "eight")
             );
         }
+
+        [Fact]
+        public void CanBeEmpty()
+        {
+            Assert.False(
+                new ManyOf().GetEnumerator().MoveNext()
+            );
+        }
     }
 }
