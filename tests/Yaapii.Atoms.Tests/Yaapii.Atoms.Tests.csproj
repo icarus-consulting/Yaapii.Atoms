@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>    
-    <TargetFramework>netcoreapp2.1</TargetFramework>    
+    <TargetFramework>net7.0</TargetFramework>    
     <Version>0.5.0</Version>    
     <Description>Unittests for Yaapii.Atoms</Description>    
     <PackageTags></PackageTags>
@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.console" Version="2.3.1" />
     <PackageReference Include="xunit.extensibility.core" Version="2.3.1" />
