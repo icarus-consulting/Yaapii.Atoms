@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Enumerable
         public Joined(T first, T second, IEnumerable<T> lst, params T[] items) : base(() =>
         {
             int idx = 2;
-            T[] joined = new T[1 + new LengthOf(lst).Value() + items.Length];
+            T[] joined = new T[2 + new LengthOf(lst).Value() + items.Length];
             joined[0] = first;
             joined[1] = second;
             var enm = lst.GetEnumerator();
