@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
+using System.Linq;
 using Yaapii.Atoms.Func;
 
 #pragma warning disable NoGetOrSet // No Statics
@@ -40,25 +41,11 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
         public Joined(T first, T second, IEnumerable<T> lst, params T[] items) : base(() =>
-        {
-            int idx = 2;
-            T[] joined = new T[1 + new LengthOf(lst).Value() + items.Length];
-            joined[0] = first;
-            joined[1] = second;
-            var enm = lst.GetEnumerator();
-            while (enm.MoveNext())
-            {
-                joined[idx] = enm.Current;
-                idx++;
-            }
-
-            foreach (var item in items)
-            {
-                joined[idx] = item;
-                idx++;
-            }
-            return new ManyOf<T>(joined);
-        },
+             ManyOf.New(first).Concat(
+                 ManyOf.New(second).Concat(
+                    lst.Concat(items)
+                )
+            ),
             false
         )
         { }
@@ -69,24 +56,9 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
         public Joined(T first, IEnumerable<T> lst, params T[] items) : base(() =>
-            {
-                int idx = 1;
-                T[] joined = new T[1 + new LengthOf(lst).Value() + items.Length];
-                joined[0] = first;
-                var enm = lst.GetEnumerator();
-                while (enm.MoveNext())
-                {
-                    joined[idx] = enm.Current;
-                    idx++;
-                }
-
-                foreach (var item in items)
-                {
-                    joined[idx] = item;
-                    idx++;
-                }
-                return new ManyOf<T>(joined);
-            },
+            ManyOf.New(first).Concat(
+                lst.Concat(items)
+            ),
             false
         )
         { }
@@ -97,23 +69,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="lst">enumerable of items to join</param>
         /// <param name="items">array of items to join</param>
         public Joined(IEnumerable<T> lst, params T[] items) : base(() =>
-            {
-                int idx = 0;
-                T[] joined = new T[new LengthOf(lst).Value() + items.Length];
-                var enm = lst.GetEnumerator();
-                while (enm.MoveNext())
-                {
-                    joined[idx] = enm.Current;
-                    idx++;
-                }
-
-                foreach (var item in items)
-                {
-                    joined[idx] = item;
-                    idx++;
-                }
-                return new ManyOf<T>(joined);
-            },
+            lst.Concat(items),
             false
         )
         { }
@@ -132,18 +88,14 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="items">enumerables to join</param>
         public Joined(IEnumerable<IEnumerable<T>> items) : base(() =>
-            new LiveMany<T>(() =>
-                new Enumerator.Joined<T>(
-                    new Mapped<IEnumerable<T>, IEnumerator<T>>(//Map the content of list: Get every enumerator out of it and build one whole enumerator from it
-                        new StickyFunc<IEnumerable<T>, IEnumerator<T>>( //Sticky Gate
-                            new FuncOf<IEnumerable<T>, IEnumerator<T>>(
-                                e => e.GetEnumerator() //Get the Enumerator
-                            )
-                        ),
-                        items //List with enumerators
-                    )
-                )
-            ),
+            {
+                IEnumerable<T> result = new ManyOf<T>();
+                foreach(var item in items)
+                {
+                    result = result.Concat(item);
+                }
+                return result;
+            },
             false
         )
         { }

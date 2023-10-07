@@ -21,14 +21,104 @@
 // SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using Yaapii.Atoms.List;
+using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
     public sealed class MappedTest
     {
+        [Fact(Skip = "leads to stack overflow")]
+        public void WorksWithBigNestings()
+        {
+            IEnumerable<string> list = new ManyOf<string>("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+            
+            for (int i = 0; i < 2000; i++)
+            {
+                list =
+                    Mapped.New(
+                        v => new TextOf(v).AsString(),
+                        Mapped.New(
+                            v => new DoubleOf(v).Value(),
+                            list
+                        )
+                    );
+            }
+
+            Assert.Equal(
+                new ManyOf<string>("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"),
+                list
+            );
+        }
+
+        [Fact]
+        public void CheckEvaluationOfEnumerators()
+        {
+            IEnumerable<string> list = new ManyOf<string>("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+            var count = 0;
+            var result =
+                new Mapped<string, double>(v =>
+                    {
+                        count++;
+                        return new DoubleOf(v).Value();
+                    },
+                    list
+                );
+            var test = new ItemAt<double>(result, 3).Value();
+            Assert.Equal(
+                4,
+                count
+            );
+        }
+
+        [Fact]
+        public void CheckEvaluationOfFuncOnLengthCall()
+        {
+            IEnumerable<string> list = new ManyOf<string>("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+            var count = 0;
+            var result =
+                new Mapped<string, double>(v =>
+                {
+                    count++;
+                    return new DoubleOf(v).Value();
+                },
+                    list
+                );
+            var test = new LengthOf(result).Value();
+            Assert.Equal(
+                10,
+                count
+            );
+        }
+
+        [Theory]
+        [InlineData(true, 2)]
+        [InlineData(false, 1)]
+        public void IsLive(bool live, int expected)
+        {
+            IEnumerable<string> list = new ManyOf<string>("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+            var count = 0;
+            var result =
+                new Mapped<string, double>(v =>
+                    {
+                        count++;
+                        return new DoubleOf(v).Value();
+                    },
+                    list,
+                    live
+                );
+            var test = new FirstOf<double>(result).Value();
+            test = new FirstOf<double>(result).Value();
+            Assert.Equal(
+                expected,
+                count
+            );
+        }
+
         [Fact]
         public void TransformsList()
         {
