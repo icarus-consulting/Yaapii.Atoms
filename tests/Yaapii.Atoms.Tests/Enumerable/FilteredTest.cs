@@ -36,8 +36,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new LengthOf(
-                    new Filtered<string>(
-                       (input) => input != "B",
+                    new Filtered<string>((input) => input != "B",
                        new List<string>() { "A", "B", "C" }
                     )
                 ).Value() == 2,

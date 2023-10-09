@@ -27,7 +27,7 @@ using System.Collections.Generic;
 namespace Yaapii.Atoms.Enumerable
 {
     /// <summary>
-    /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+    /// A <see cref="IEnumerable{T}"/> sorted by the given comparison .
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
     public sealed class Sorted<T> : IEnumerable<T>
@@ -35,7 +35,7 @@ namespace Yaapii.Atoms.Enumerable
     {
         private readonly List<T> source;
         private readonly bool[] sorted;
-        private readonly Comparer<T> comparer;
+        private readonly IComparer<T> comparer;
         private readonly bool live;
 
         /// <summary>
@@ -46,10 +46,30 @@ namespace Yaapii.Atoms.Enumerable
         { }
 
         /// <summary>
+        /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
+        /// </summary>
+        /// <param name="src">enumerable to sort</param>
+        public Sorted(bool live, params T[] src) : this(Comparer<T>.Default, src, live)
+        { }
+
+        /// <summary>
         /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
         /// <param name="src">enumerable to sort</param>
-        public Sorted(IEnumerable<T> src) : this(Comparer<T>.Default, src)
+        public Sorted(IEnumerable<T> src, bool live = false) : this(Comparer<T>.Default, src, live)
+        { }
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// </summary>
+        /// <param name="src">enumerable to sort</param>
+        public Sorted(Func<T, T, int> comparison, IEnumerable<T> src, bool live = false) : this(
+            Comparer<T>.Create(
+                new Comparison<T>((left, right) => comparison(left, right))
+            ),
+            src,
+            live
+        )
         { }
 
         /// <summary>
@@ -57,7 +77,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public Sorted(Comparer<T> cmp, IEnumerable<T> src, bool live = false)
+        public Sorted(IComparer<T> cmp, IEnumerable<T> src, bool live = false)
         {
             this.source = new List<T>(src);
             this.sorted = new bool[] { false };
@@ -104,25 +124,40 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
         /// </summary>
         /// <param name="src">enumerable to sort</param>
+        public static IEnumerable<T> New<T>(bool live = false, params T[] src) where T : IComparable<T> =>
+            new Sorted<T>(live, src);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
+        /// </summary>
+        /// <param name="src">enumerable to sort</param>
         public static IEnumerable<T> New<T>(params T[] src) where T : IComparable<T> =>
             new Sorted<T>(src);
-
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> src) where T : IComparable<T> =>
-            new Sorted<T>(src);
+        public static IEnumerable<T> New<T>(IEnumerable<T> src, bool live = false) where T : IComparable<T> =>
+            new Sorted<T>(src, live);
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> New<T>(Comparer<T> cmp, IEnumerable<T> src)
+        public static IEnumerable<T> New<T>(IComparer<T> cmp, IEnumerable<T> src, bool live = false)
             where T : IComparable<T> =>
-            new Sorted<T>(cmp, src);
+            new Sorted<T>(cmp, src, live);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// </summary>
+        /// <param name="comparison">comparer</param>
+        /// <param name="src">enumerable to sort</param>
+        public static IEnumerable<T> New<T>(Func<T, T, int> comparison, IEnumerable<T> src, bool live)
+            where T : IComparable<T> =>
+            new Sorted<T>(comparison, src, live);
     }
 }
 
