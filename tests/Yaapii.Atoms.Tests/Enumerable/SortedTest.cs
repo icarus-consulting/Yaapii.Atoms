@@ -57,12 +57,26 @@ namespace Yaapii.Atoms.Enumerable.Tests
         }
 
         [Fact]
+        public void SortsByComparisonFunc()
+        {
+            Assert.True(
+                new Text.Joined(", ",
+                    Sorted.New(
+                        (left, right) => string.Compare(left, right) * -1,
+                        ManyOf.New("a", "c", "hello", "dude", "Friend")
+                    )
+                ).AsString() == "hello, Friend, dude, c, a",
+                "Can't sort an enumerable with a custom comparator"); ;
+        }
+
+        [Fact]
         public void SortsAnEmptyArray()
         {
             Assert.Empty(
                 new Sorted<int>(
                     new ManyOf<int>()
-                ));
+                )
+            );
         }
     }
 }
