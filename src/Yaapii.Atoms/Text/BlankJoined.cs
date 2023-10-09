@@ -77,7 +77,7 @@ namespace Yaapii.Atoms.Text
         /// Texts joined together seperated by a blank.
         /// </summary>
         public BlankJoined(Func<IEnumerable<string>> txts, bool live = false) : base(() =>
-            string.Join(", ", txts()), live
+            string.Join(" ", txts()), live
         )
         { }
     }

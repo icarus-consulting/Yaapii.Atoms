@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Text.Tests
         public void JoinsStrings()
         {
             Assert.Equal(
-                "hello, world",
+                "hello world",
                 new BlankJoined(
                     "hello",
                     "world"
@@ -42,10 +42,10 @@ namespace Yaapii.Atoms.Text.Tests
         public void JoinsTexts()
         {
             Assert.Equal(
-                "hello, world",
+                "hello world",
                 new BlankJoined(
-                    new LiveText("foo"),
-                    new LiveText("bar")
+                    new LiveText("hello"),
+                    new LiveText("world")
                 ).AsString()
             );
         }

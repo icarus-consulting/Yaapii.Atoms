@@ -44,8 +44,8 @@ namespace Yaapii.Atoms.Text.Tests
             Assert.Equal(
                 "hello, world",
                 new CommaJoined(
-                    new LiveText("foo"),
-                    new LiveText("bar")
+                    new LiveText("hello"),
+                    new LiveText("world")
                 ).AsString()
             );
         }
