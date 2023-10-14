@@ -128,7 +128,7 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class ManyOf<T> : IEnumerable<T>
     {
         private readonly IEnumerable<T> result;
-        private readonly IEnumerable<T> origin;
+        private readonly Func<IEnumerable<T>> origin;
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of an array.
@@ -162,7 +162,14 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
         /// </summary>
         /// <param name="origin">scalar to return the IEnumerator</param>
-        public ManyOf(IEnumerable<T> origin, bool live = false)
+        public ManyOf(IEnumerable<T> origin, bool live = false) : this(() => origin, live)
+        { }
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> encapsulated in a <see cref="IScalar{T}"/>"/>.
+        /// </summary>
+        /// <param name="origin">scalar to return the IEnumerator</param>
+        public ManyOf(Func<IEnumerable<T>> origin, bool live = false)
         {
             this.result =
                 Ternary.New(
