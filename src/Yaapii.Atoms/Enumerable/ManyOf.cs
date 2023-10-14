@@ -173,8 +173,8 @@ namespace Yaapii.Atoms.Enumerable
         {
             this.result =
                 Ternary.New(
-                    Sticky.New(Produced),
                     LiveMany.New(Produced),
+                    Sticky.New(Produced),
                     live
                 );
             this.origin = origin;

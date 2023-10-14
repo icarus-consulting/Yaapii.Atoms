@@ -55,8 +55,8 @@ namespace Yaapii.Atoms.Enumerable
             this.match = match;
             this.result =
                 Ternary.New(
-                    Sticky.New(this.Produced),
                     LiveMany.New(this.Produced),
+                    Sticky.New(this.Produced),
                     live
                 );
         }
