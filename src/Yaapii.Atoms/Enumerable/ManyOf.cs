@@ -189,7 +189,7 @@ namespace Yaapii.Atoms.Enumerable
 
         private IEnumerable<T> Produced()
         {
-            foreach (var item in this.origin)
+            foreach (var item in this.origin())
             {
                 yield return item;
             }
