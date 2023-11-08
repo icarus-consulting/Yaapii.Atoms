@@ -33,7 +33,6 @@ namespace Yaapii.Atoms.Enumerable
             {
                 yield return this.enumerator.Current;
             }
-            yield break;
         }
 
         IEnumerator IEnumerable.GetEnumerator()

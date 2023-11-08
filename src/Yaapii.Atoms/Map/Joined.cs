@@ -66,24 +66,16 @@ namespace Yaapii.Atoms.Map
                 new LazyDict(
                     new Enumerable.Joined<IKvp>(
                         new Mapped<IDictionary<string, string>, IEnumerable<IKvp>>(dict =>
-                            new LiveMany<IKvp>(() =>
-                                new Live<IEnumerator<IKvp>>(() =>
-                                {
-                                    IEnumerable<IKvp> list = new ManyOf<IKvp>();
-                                    foreach (var key in dict.Keys)
-                                    {
-                                        list = new Enumerable.Joined<IKvp>(list, new KvpOf(key, () => dict[key]));
-                                    }
-                                    return list.GetEnumerator();
-                                }).Value()
+                            Mapped.New(
+                                key => new KvpOf(key, () => dict[key]),
+                                dict.Keys
                             ),
-                            dicts,
-                            live: false
-                        ),
-                        live: false
-                    )
+                            dicts
+                        )
+                    ),
+                    rejectBuildingAllValues
                 ),
-                rejectBuildingAllValues
+            live: false
         )
         { }
 
@@ -197,22 +189,15 @@ namespace Yaapii.Atoms.Map
             () =>
                 new LazyDict<string, Value>(
                     new Enumerable.Joined<IKvp<string, Value>>(
-                        new Mapped<IDictionary<string, Value>, IEnumerable<IKvp<string, Value>>>(dict =>
-                            new LiveMany<IKvp<string, Value>>(() =>
-                                {
-                                    IEnumerable<IKvp<string, Value>> list = new ManyOf<IKvp<string, Value>>();
-                                    foreach (var key in dict.Keys)
-                                    {
-                                        list = new Enumerable.Joined<IKvp<string, Value>>(list, new KvpOf<string, Value>(key, () => dict[key]));
-                                    }
-                                    return list.GetEnumerator();
-                                }
+                        Mapped.New(dict =>
+                            Mapped.New(
+                                key => new KvpOf<string, Value>(key, () => dict[key]),
+                                dict.Keys
                             ),
                             dicts
                         )
                     )
-                )
-            ,
+                ),
             live
         )
         { }
@@ -268,16 +253,10 @@ namespace Yaapii.Atoms.Map
             () =>
                 new LazyDict<Key, Value>(
                     new Enumerable.Joined<IKvp<Key, Value>>(
-                        new Mapped<IDictionary<Key, Value>, IEnumerable<IKvp<Key, Value>>>(dict =>
-                            new LiveMany<IKvp<Key, Value>>(() =>
-                                {
-                                    IEnumerable<IKvp<Key, Value>> list = new ManyOf<IKvp<Key, Value>>();
-                                    foreach (var key in dict.Keys)
-                                    {
-                                        list = new Enumerable.Joined<IKvp<Key, Value>>(list, new KvpOf<Key, Value>(key, () => dict[key]));
-                                    }
-                                    return list.GetEnumerator();
-                                }
+                        Mapped.New(dict =>
+                            Mapped.New(
+                                key => new KvpOf<Key, Value>(key, () => dict[key]),
+                                dict.Keys
                             ),
                             dicts
                         )

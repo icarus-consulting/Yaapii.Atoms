@@ -82,7 +82,7 @@ namespace Yaapii.Atoms.Map
             new LazyDict(
                 new Enumerable.Joined<IKvp>(
                     live: true,
-                    new LiveMany<IKvp>(entry),
+                    new Single<IKvp>(entry),
                     more
                 )
             ),
@@ -1623,7 +1623,7 @@ namespace Yaapii.Atoms.Map
         public MapOf(IKvp<Value> entry, params IKvp<Value>[] more) : base(() =>
             new LazyDict<Value>(
                 new Enumerable.Joined<IKvp<Value>>(
-                    new ManyOf<IKvp<Value>>(entry),
+                    new Single<IKvp<Value>>(entry),
                     more
                 )
             ),
@@ -2206,7 +2206,7 @@ namespace Yaapii.Atoms.Map
         public MapOf(IKvp<Key, Value> entry, params IKvp<Key, Value>[] more) : base(() =>
              new LazyDict<Key, Value>(
                  new Enumerable.Joined<IKvp<Key, Value>>(
-                     new ManyOf<IKvp<Key, Value>>(entry),
+                     new Single<IKvp<Key, Value>>(entry),
                      more
                  )
              ),
