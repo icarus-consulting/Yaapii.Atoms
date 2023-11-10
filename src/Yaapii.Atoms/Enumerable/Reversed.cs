@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,22 +30,40 @@ namespace Yaapii.Atoms.Enumerable
     /// A reversed <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="X">type of items in enumerable</typeparam>
-    public sealed class Reversed<X> : ManyEnvelope<X>
+    public sealed class Reversed<X> : IEnumerable<X>
     {
+        private readonly IEnumerable<X> src;
+        private readonly Ternary<X> result;
+
         /// <summary>
         /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
-        public Reversed(IEnumerable<X> src) : base(() =>
-            new LiveMany<X>(() =>
+        public Reversed(IEnumerable<X> src, bool live = false)
+        {
+            this.src = src;
+            this.result =
+                Ternary.New(
+                    LiveMany.New(Produced),
+                    Sticky.New(Produced),
+                    live
+                );
+        }
+
+        public IEnumerator<X> GetEnumerator() => this.result.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        private IEnumerable<X> Produced()
+        {
+            foreach(var item in this.src.Reverse())
             {
-                var lst = src.ToList<X>();
-                lst.Reverse();
-                return lst.GetEnumerator();
-            }),
-            false
-        )
-        { }
+                yield return item;
+            }
+        }
     }
 
     /// <summary>

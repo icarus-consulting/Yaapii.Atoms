@@ -59,6 +59,7 @@ namespace Yaapii.Atoms.IO.Tests
         [Fact]
         public void RejectsWhenClosed()
         {
+            
             var path = Path.GetFullPath("assets/GZipOutput.txt");
 
             Assert.Throws<ArgumentException>(() =>

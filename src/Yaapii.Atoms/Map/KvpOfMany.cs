@@ -105,7 +105,7 @@ namespace Yaapii.Atoms.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public static IKvp<TKey,IEnumerable<TValue>> New<TKey, TValue>(TKey key, params Func<TValue>[] many)
+        public static IKvp<TKey, IEnumerable<TValue>> New<TKey, TValue>(TKey key, params Func<TValue>[] many)
             => new KeyToValues<TKey, TValue>(key, many);
 
         /// <summary>

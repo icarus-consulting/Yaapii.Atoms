@@ -104,15 +104,16 @@ namespace Yaapii.Atoms.Enumerable.Tests
         [Fact]
         public void TransformsListUsingIndex()
         {
-            Assert.True(
+            Assert.Equal(
+                "WORLD1",
                 new ItemAt<IText>(
                     new Enumerable.Mapped<String, IText>(
                         (input, index) => new Upper(new LiveText(input + index)),
                         new ManyOf<string>("hello", "world", "damn")
                         ),
                     1
-                ).Value().AsString() == "WORLD1",
-            "Can't get index of enumerable");
+                ).Value().AsString()
+            );
         }
 
 
@@ -126,8 +127,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new Mapped<string, string>(
                     item => item,
                     new ManyOf<string>(
-                        new LoggingEnumerator<string>(
-                            origin.GetEnumerator(),
+                        new Logging<string>(
+                            origin,
                             idx => advances++
                         )
                     )
@@ -149,8 +150,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new Mapped<string, string>(
                     item => item,
                     new ManyOf<string>(
-                        new LoggingEnumerator<string>(
-                            origin.GetEnumerator(),
+                        new Logging<string>(
+                            origin,
                             idx => advances++
                         )
                     )

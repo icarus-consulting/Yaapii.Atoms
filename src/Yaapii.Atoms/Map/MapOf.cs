@@ -36,6 +36,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         public MapOf(KeyValuePair<string, string> entry, params KeyValuePair<string, string>[] more) : this(
             new Enumerable.Joined<KeyValuePair<string, string>>(
+                live: true,
                 new LiveMany<KeyValuePair<string, string>>(more),
                 entry
             )
@@ -59,9 +60,11 @@ namespace Yaapii.Atoms.Map
         /// <param name="list"></param>
         public MapOf(IDictionary<string, string> src, IEnumerable<KeyValuePair<string, string>> list) : this(
             new Enumerable.Joined<KeyValuePair<string, string>>(
+                live: true,
                 src,
                 list
-            ))
+            )
+        )
         { }
 
         /// <summary>
@@ -78,7 +81,8 @@ namespace Yaapii.Atoms.Map
         public MapOf(IKvp entry, params IKvp[] more) : base(() =>
             new LazyDict(
                 new Enumerable.Joined<IKvp>(
-                    new ManyOf<IKvp>(entry),
+                    live: true,
+                    new Single<IKvp>(entry),
                     more
                 )
             ),
@@ -145,7 +149,8 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         public MapOf(string key, string value, params string[] additional) : this(
             new Enumerable.Joined<string>(
-                new ManyOf(key, value),
+                live: true,
+                new LiveMany<string>(key, value),
                 additional
             )
         )
@@ -1618,7 +1623,7 @@ namespace Yaapii.Atoms.Map
         public MapOf(IKvp<Value> entry, params IKvp<Value>[] more) : base(() =>
             new LazyDict<Value>(
                 new Enumerable.Joined<IKvp<Value>>(
-                    new ManyOf<IKvp<Value>>(entry),
+                    new Single<IKvp<Value>>(entry),
                     more
                 )
             ),
@@ -2201,7 +2206,7 @@ namespace Yaapii.Atoms.Map
         public MapOf(IKvp<Key, Value> entry, params IKvp<Key, Value>[] more) : base(() =>
              new LazyDict<Key, Value>(
                  new Enumerable.Joined<IKvp<Key, Value>>(
-                     new ManyOf<IKvp<Key, Value>>(entry),
+                     new Single<IKvp<Key, Value>>(entry),
                      more
                  )
              ),

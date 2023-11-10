@@ -58,12 +58,12 @@ namespace Yaapii.Atoms.Scalar.Tests
         [Fact]
         public void DeliversElementByPos()
         {
-            Assert.True(
+            Assert.Equal(
+                2,
                 new ItemAt<int>(
                     new ManyOf<int>(1, 2, 3),
                     1
-                ).Value() == 2,
-                "Can't take the item by position from the enumerable"
+                ).Value()
             );
         }
 
@@ -106,7 +106,7 @@ namespace Yaapii.Atoms.Scalar.Tests
         [Fact]
         public void FallbackShowsError()
         {
-            Assert.Throws<NoSuchElementException>(() =>
+            Assert.Throws<InvalidOperationException>(() =>
                 new ItemAt<string>(
                     new ManyOf<string>(),
                     12,

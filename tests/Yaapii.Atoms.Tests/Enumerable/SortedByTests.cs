@@ -31,14 +31,15 @@ namespace Yaapii.Atoms.Enumerable.Tests
         [Fact]
         public void SortsAnArrayByTextNumber()
         {
-            Assert.True(
+            Assert.Equal(
+                "nr-6, nr0, nr2, nr3, nr10, nr44",
                 new Text.Joined(", ",
                     new SortedBy<string, int>(
                         s => new IntOf(s.Substring(2)).Value(),
                         new ManyOf("nr3", "nr2", "nr10", "nr44", "nr-6", "nr0")
                     )
-                ).AsString() == "nr-6, nr0, nr2, nr3, nr10, nr44",
-            "Can't sort an enumerable");
+                ).AsString()
+            );
         }
 
         [Fact]

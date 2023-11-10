@@ -24,7 +24,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable
 {
@@ -32,15 +31,25 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
     /// </summary>
     /// <typeparam name="T">type of items in enumerable</typeparam>
-    public sealed class Replaced<T> : ManyEnvelope<T>
+    public sealed class Replaced<T> : IEnumerable<T>
     {
+        private readonly IEnumerable<T> origin;
+        private readonly IFunc<T, bool> condition;
+        private readonly T replacement;
+        private readonly Ternary<T> result;
+
         /// <summary>
         /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
         /// </summary>
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>
         /// <param name="replacement">item to insert instead</param>
-        public Replaced(IEnumerable<T> origin, Func<T, bool> condition, T replacement) : this(origin, new FuncOf<T, bool>(condition), replacement)
+        public Replaced(IEnumerable<T> origin, Func<T, bool> condition, T replacement, bool live = false) : this(
+            origin,
+            new FuncOf<T, bool>(condition),
+            replacement,
+            live
+        )
         { }
 
         /// <summary>
@@ -49,13 +58,15 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="origin">enumerable</param>
         /// <param name="index">index at which to replace the item</param>
         /// <param name="replacement">item to insert instead</param>
-        public Replaced(IEnumerable<T> origin, int index, T replacement) : this(
+        public Replaced(IEnumerable<T> origin, int index, T replacement, bool live = false) : this(
             new Mapped<T, T>(
                 (item, itemIndex) => itemIndex == index ? replacement : item,
-                origin
+                origin,
+                live: true
             ),
             item => false,
-            replacement
+            replacement,
+            live
         )
         { }
 
@@ -65,29 +76,45 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>
         /// <param name="replacement">item to insert instead</param>
-        public Replaced(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement) : base(new Live<IEnumerable<T>>(
-            () =>
+        public Replaced(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement, bool live = false)
+        {
+            this.origin = origin;
+            this.condition = condition;
+            this.replacement = replacement;
+            this.result =
+                Ternary.New(
+                    LiveMany.New(Produced),
+                    Sticky.New(Produced),
+                    live
+                );
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this.result.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        private IEnumerable<T> Produced()
+        {
+            var e = this.origin.GetEnumerator();
+
+            while (e.MoveNext())
             {
-                var result = new List<T>();
-                var e = origin.GetEnumerator();
-
-                while (e.MoveNext())
+                if (condition.Invoke(e.Current))
                 {
-                    if (condition.Invoke(e.Current))
-                    {
-                        result.Add(replacement);
-                    }
-                    else
-                    {
-                        result.Add(e.Current);
-                    }
+                    yield return replacement;
                 }
-
-                return result;
-            }),
-            false
-        )
-        { }
+                else
+                {
+                    yield return e.Current;
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -101,8 +128,8 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>
         /// <param name="replacement">item to insert instead</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> origin, Func<T, bool> condition, T replacement) =>
-            new Replaced<T>(origin, condition, replacement);
+        public static IEnumerable<T> New<T>(IEnumerable<T> origin, Func<T, bool> condition, T replacement, bool live = false) =>
+            new Replaced<T>(origin, condition, replacement, live);
 
         /// <summary>
         /// A <see cref="IEnumerable"/> where an item at a given index is replaced.
@@ -110,8 +137,8 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="origin">enumerable</param>
         /// <param name="index">index at which to replace the item</param>
         /// <param name="replacement">item to insert instead</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> origin, int index, T replacement) =>
-            new Replaced<T>(origin, index, replacement);
+        public static IEnumerable<T> New<T>(IEnumerable<T> origin, int index, T replacement, bool live = false) =>
+            new Replaced<T>(origin, index, replacement, live);
 
         /// <summary>
         /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
@@ -119,7 +146,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>
         /// <param name="replacement">item to insert instead</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement) =>
-            new Replaced<T>(origin, condition, replacement);
+        public static IEnumerable<T> New<T>(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement, bool live = false) =>
+            new Replaced<T>(origin, condition, replacement, live);
     }
 }

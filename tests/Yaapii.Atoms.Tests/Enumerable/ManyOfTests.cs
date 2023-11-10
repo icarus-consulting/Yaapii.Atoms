@@ -91,7 +91,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                     new ManyOf<string>(() =>
                     {
                         lst.Add("something");
-                        return lst;
+                        return lst.GetEnumerator();
                     })
                 );
 
@@ -106,6 +106,14 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.Equal(
                 new List<string>() { "one", "two", "eight" },
                 new ManyOf("one", "two", "eight")
+            );
+        }
+
+        [Fact]
+        public void CanBeEmpty()
+        {
+            Assert.False(
+                new ManyOf().GetEnumerator().MoveNext()
             );
         }
     }

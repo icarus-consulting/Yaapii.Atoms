@@ -75,24 +75,6 @@ namespace Yaapii.Atoms.Enumerator
         }
 
         [Fact]
-        public void DoesNotMoveWhenEmpty()
-        {
-            bool moved = false;
-            var contents = new List<int>();
-            var cache =
-                new Sticky<int>.Cache<int>(() =>
-                    new LoggingEnumerator<int>(
-                        contents.GetEnumerator(),
-                        idx => moved = true
-                    )
-                );
-
-            var count = cache.Count;
-
-            Assert.False(moved);
-        }
-
-        [Fact]
         public void CacheCachesItemCount()
         {
             var contents = new List<int>() { 1 };

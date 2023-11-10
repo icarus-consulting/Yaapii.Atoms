@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Func;
 
@@ -34,8 +35,12 @@ namespace Yaapii.Atoms.Enumerable
     /// </summary>
     /// <typeparam name="In">type of input elements</typeparam>
     /// <typeparam name="Out">type of mapped elements</typeparam>
-    public sealed class Mapped<In, Out> : ManyEnvelope<Out>
+    public sealed class Mapped<In, Out> : IEnumerable<Out>
     {
+        private readonly IBiFunc<In, int, Out> mapping;
+        private readonly IEnumerable<In> src;
+        private readonly Ternary<Out> result;
+
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
         /// </summary>
@@ -153,14 +158,36 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         /// <param name="live">live or sticky</param>
-        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src, bool live) : base(() =>
-            new Enumerator.Mapped<In, Out>(
-                src.GetEnumerator(),
-                fnc
-            ),
-            live
-        )
-        { }
+        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src, bool live)
+        {
+            this.mapping = fnc;
+            this.src = src;
+            this.result =
+                Ternary.New(
+                    LiveMany.New(Produced),
+                    Sticky.New(Produced),
+                    live
+                );
+        }
+
+        public IEnumerator<Out> GetEnumerator()
+        {
+            return this.result.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        private IEnumerable<Out> Produced()
+        {
+            var index = 0;
+            foreach(var item in this.src)
+            {
+                yield return this.mapping.Invoke(item, index++);
+            }
+        }
     }
 
     /// <summary>
@@ -187,59 +214,27 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static IEnumerable<Out> New<In, Out>(Func<In, Out> fnc, IEnumerable<In> src) => new Mapped<In, Out>(fnc, src);
+        public static IEnumerable<Out> New<In, Out>(Func<In, Out> fnc, IEnumerable<In> src, bool live = false) => new Mapped<In, Out>(fnc, src, live);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Index, Out}"/> function with index.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static IEnumerable<Out> New<In, Out>(Func<In, int, Out> fnc, IEnumerable<In> src) => new Mapped<In, Out> (fnc, src);
+        public static IEnumerable<Out> New<In, Out>(Func<In, int, Out> fnc, IEnumerable<In> src, bool live = false) => new Mapped<In, Out> (fnc, src, false);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static IEnumerable<Out> New<In, Out>(IFunc<In, Out> fnc, IEnumerable<In> src) => new Mapped<In, Out>(fnc, src);
+        public static IEnumerable<Out> New<In, Out>(IFunc<In, Out> fnc, IEnumerable<In> src, bool live = false) => new Mapped<In, Out>(fnc, src, false);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static IEnumerable<Out> New<In, Out>(IBiFunc<In, int, Out> fnc, IEnumerable<In> src) => new Mapped<In, Out>(fnc, src);
-
-        /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Out}"/> function.
-        /// </summary>
-        /// <param name="src">enumerable to map</param>
-        /// <param name="fnc">function used to map</param>
-        /// <param name="live">live or sticky</param>
-        public static IEnumerable<Out> New<In, Out>(Func<In, Out> fnc, IEnumerable<In> src, bool live) => new Mapped<In, Out>(fnc, src, live);
-
-        /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Index, Out}"/> function with index.
-        /// </summary>
-        /// <param name="src">enumerable to map</param>
-        /// <param name="fnc">function used to map</param>
-        /// <param name="live">live or sticky</param>
-        public static IEnumerable<Out> New<In, Out>(Func<In, int, Out> fnc, IEnumerable<In> src, bool live) => new Mapped<In, Out>(fnc, src, live);
-
-        /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
-        /// </summary>
-        /// <param name="src">enumerable to map</param>
-        /// <param name="fnc">function used to map</param>
-        /// <param name="live">live or sticky</param>
-        public static IEnumerable<Out> New<In, Out>(IFunc<In, Out> fnc, IEnumerable<In> src, bool live) => new Mapped<In, Out>(fnc, src, live);
-
-        /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
-        /// </summary>
-        /// <param name="src">enumerable to map</param>
-        /// <param name="fnc">function used to map</param>
-        /// <param name="live">live or sticky</param>
-        public static IEnumerable<Out> New<In, Out>(IBiFunc<In, int, Out> fnc, IEnumerable<In> src, bool live) => new Mapped<In, Out>(fnc, src, live);
+        public static IEnumerable<Out> New<In, Out>(IBiFunc<In, int, Out> fnc, IEnumerable<In> src, bool live = false) => new Mapped<In, Out>(fnc, src, live);
     }
 }

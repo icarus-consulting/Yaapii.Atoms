@@ -210,11 +210,39 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
         public ItemAt(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback) : base(() =>
-            new Enumerator.ItemAt<T>(
-                source.GetEnumerator(),
-                position,
-                fallback
-            ).Value()
+            {
+                T result;
+                try
+                {
+                    if (position < 0)
+                    {
+                        throw new InvalidOperationException(
+                            new Formatted(
+                                "The position must be non-negative but is {0}",
+                                position
+                            ).AsString()
+                        );
+                    }
+
+                    var enumerator = source.GetEnumerator();
+                    bool moved = false;
+                    for(var current = 0;current<=position;current++)
+                    {
+                        moved = enumerator.MoveNext();
+                        if(current == 0 && !moved)
+                            throw new InvalidOperationException($"Enumerable is empty.");
+                        else if (!moved)
+                            throw new InvalidOperationException($"Cannot get item {position + 1} - The enumerable has only {current} items.");
+                    }
+
+                    result = enumerator.Current;
+                }
+                catch (Exception ex)
+                {
+                    result = fallback.Invoke(ex, source);
+                }
+                return result;
+            }
         )
         { }
     }

@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.List
 {
@@ -37,7 +38,7 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public Mapped(IFunc<In, Out> mapping, IEnumerable<In> src) : this((input) => mapping.Invoke(input), src)
+        public Mapped(IFunc<In, Out> mapping, IEnumerable<In> src) : this(mapping.Invoke, src)
         { }
 
         /// <summary>
@@ -46,15 +47,11 @@ namespace Yaapii.Atoms.List
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
         public Mapped(Func<In, Out> mapping, IEnumerator<In> src) : base(() =>
-            new LiveList<Out>(() =>
-            {
-                var result = new List<Out>();
-                while (src.MoveNext())
-                {
-                    result.Add(mapping.Invoke(src.Current));
-                }
-                return result;
-            }),
+            new Enumerable.Mapped<In, Out>(
+                mapping,
+                new EnumeratorAsEnumerable<In>(src),
+                false
+            ).GetEnumerator(),
             false
         )
         { }
@@ -78,7 +75,7 @@ namespace Yaapii.Atoms.List
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
         public Mapped(Func<In, Out> mapping, ICollection<In> src) : base(() =>
-            new Enumerator.Mapped<In, Out>(src.GetEnumerator(), mapping),
+            new Enumerable.Mapped<In, Out>(mapping, src, false).GetEnumerator(),
             false
         )
         { }

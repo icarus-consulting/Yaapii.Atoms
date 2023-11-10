@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Error;
 using Yaapii.Atoms.Scalar;
@@ -33,6 +34,9 @@ namespace Yaapii.Atoms.List
     /// <typeparam name="T">Type of the list</typeparam>
     public sealed class NotEmpty<T> : ListEnvelope<T>
     {
+        private readonly IList<T> origin;
+        private readonly Exception ex;
+
         /// <summary>
         /// Ensures that <see cref="IList{T}" /> is not empty/>
         /// </summary>
@@ -47,20 +51,8 @@ namespace Yaapii.Atoms.List
         /// </summary>
         /// <param name="origin">List</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(IList<T> origin, Exception ex) : base(
-            new Live<IEnumerable<T>>(
-                () =>
-                {
-                    new FailPrecise(
-                        new FailEmpty<T>(
-                            origin
-                        ),
-                        ex
-                    ).Go();
-
-                    return origin;
-                }
-            ),
+        public NotEmpty(IList<T> origin, Exception ex) : base(() =>
+            new Enumerable.NotEmpty<T>(origin, ex).GetEnumerator(),
             false
         )
         { }

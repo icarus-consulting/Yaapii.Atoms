@@ -50,7 +50,8 @@ namespace Yaapii.Atoms.Map
         public Solid(IEnumerable<Tuple<Key, Value>> pairs) : this(
             new Mapped<Tuple<Key, Value>, KeyValuePair<Key, Value>>(
                 tpl => new KeyValuePair<Key, Value>(tpl.Item1, tpl.Item2),
-                pairs
+                pairs,
+                live: true
             )
         )
         { }
@@ -103,7 +104,7 @@ namespace Yaapii.Atoms.Map
         public Solid(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
             new LiveMap<Key, Value>(() =>
                 new MapOf<Key, Value>(
-                    new Enumerable.Joined<KeyValuePair<Key, Value>>(map, list)
+                    new Enumerable.Joined<KeyValuePair<Key, Value>>(live: true, map, list)
                 )
             )
         )

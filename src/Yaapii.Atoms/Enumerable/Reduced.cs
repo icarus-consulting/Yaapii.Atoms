@@ -39,7 +39,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <param name="fnc">reducing function</param>
         public Reduced(IEnumerable<T> elements, IBiFunc<T, T, T> fnc) : this(
             elements,
-            (arg1, arg2) => fnc.Invoke(arg1, arg2)
+            fnc.Invoke
         )
         { }
 

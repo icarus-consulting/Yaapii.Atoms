@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Yaapii.Atoms.Enumerable
@@ -29,9 +30,14 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class SortedBy<T, TKey> : ManyEnvelope<T>
+    public sealed class SortedBy<T, TKey> : IEnumerable<T>
         where TKey : IComparable<TKey>
     {
+        private readonly IEnumerable<T> source;
+        private readonly SortedDictionary<TKey, T> map;
+        private readonly Func<T, TKey> subjectExtraction;
+        private readonly bool[] sorted;
+
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
         /// </summary>
@@ -71,16 +77,47 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
-        /// <param name="swap">func to swap the type to a sortable type</param>
+        /// <param name="subjectExtraction">func to swap the type to a sortable type</param>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public SortedBy(Func<T, TKey> swap, Comparer<TKey> cmp, IEnumerable<T> src) : base(() =>
-            new LiveMany<T>(() =>
-                new Enumerator.SortedBy<T, TKey>(swap, cmp, src.GetEnumerator())
-            ),
-            false
-        )
-        { }
+        public SortedBy(Func<T, TKey> subjectExtraction, Comparer<TKey> cmp, IEnumerable<T> src)
+        {
+            this.map = new SortedDictionary<TKey,T>(cmp);
+            this.subjectExtraction = subjectExtraction;
+            this.source = src;
+            this.sorted = new bool[1] { false };
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            if (!this.IsSorted())
+            {
+                this.Sort();
+            }
+            foreach (var item in this.map)
+            {
+                yield return item.Value;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        private bool IsSorted()
+        {
+            return this.sorted[0];
+        }
+
+        private void Sort()
+        {
+            foreach(var item in this.source)
+            {
+                this.map[this.subjectExtraction.Invoke(item)] = item;
+            }
+            this.sorted[0] = true;
+        }
     }
 
     /// <summary>

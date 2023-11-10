@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Error;
 using Yaapii.Atoms.Scalar;
@@ -31,15 +32,21 @@ namespace Yaapii.Atoms.Enumerable
     /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
     /// </summary>
     /// <typeparam name="T">Type of the enumerable</typeparam>
-    public sealed class NotEmpty<T> : ManyEnvelope<T>
+    public sealed class NotEmpty<T> : IEnumerable<T>
     {
+        private readonly IEnumerable<T> origin;
+        private readonly Exception ex;
+        private readonly Ternary<T> result;
+
         /// <summary>
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
-        public NotEmpty(IEnumerable<T> origin) : this(
+        public NotEmpty(IEnumerable<T> origin, bool live = false) : this(
             origin,
-            new Exception("Enumerable is empty"))
+            new Exception("Enumerable is empty"),
+            live
+        )
         { }
 
         /// <summary>
@@ -47,19 +54,41 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="origin">Enumerable</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(IEnumerable<T> origin, Exception ex) : base(new Live<IEnumerable<T>>(
-            () =>
-            {
-                new FailPrecise(
-                    new FailEmpty<T>(
-                        origin),
-                    ex).Go();
+        public NotEmpty(IEnumerable<T> origin, Exception ex, bool live = false)
+        {
+            this.origin = origin;
+            this.ex = ex;
+            this.result =
+                Ternary.New(
+                    LiveMany.New(Produced),
+                    Sticky.New(Produced),
+                    live
+                );
+        }
 
-                return origin;
-            }),
-            false
-        )
-        { }
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this.result.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        private IEnumerable<T> Produced()
+        {
+            bool empty = true;
+            foreach (var item in this.origin)
+            {
+                empty = false;
+                yield return item;
+            }
+            if (empty)
+            {
+                throw this.ex;
+            }
+        }
     }
 
     /// <summary>
@@ -71,13 +100,13 @@ namespace Yaapii.Atoms.Enumerable
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> origin) => new NotEmpty<T>(origin);
+        public static IEnumerable<T> New<T>(IEnumerable<T> origin, bool live = false) => new NotEmpty<T>(origin, false);
 
         /// <summary>
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> origin, Exception ex) => new NotEmpty<T>(origin, ex);
+        public static IEnumerable<T> New<T>(IEnumerable<T> origin, Exception ex, bool live = false) => new NotEmpty<T>(origin, ex, false);
     }
 }

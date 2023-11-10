@@ -98,6 +98,9 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new Distinct<string>(
                     new ManyOf<string>("test", "test")
                 );
+
+            var first = string.Join("", dst);
+            var second = string.Join("", dst);
             Assert.Equal(
                 new LengthOf(dst).Value(),
                 new LengthOf(dst).Value()

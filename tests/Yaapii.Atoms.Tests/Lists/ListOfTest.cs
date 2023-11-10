@@ -70,10 +70,10 @@ namespace Yaapii.Atoms.List.Tests
                 new ListOf<string>(
                     new Enumerator.Sticky<string>(
                         new Enumerator.Sticky<string>.Cache<string>(() =>
-                            new LoggingEnumerator<string>(
-                                origin.GetEnumerator(),
+                            new Logging<string>(
+                                origin,
                                 idx => advances++
-                            )
+                            ).GetEnumerator()
                         )
                     )
                 );

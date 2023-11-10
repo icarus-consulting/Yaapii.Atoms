@@ -59,7 +59,7 @@ namespace Yaapii.Atoms.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="strs">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Joined(String delimit, IEnumerable<String> strs, bool live = false) :
+        public Joined(String delimit, IEnumerable<string> strs, bool live = false) :
             this(
                 new LiveText(delimit),
                 new Mapped<string, IText>(

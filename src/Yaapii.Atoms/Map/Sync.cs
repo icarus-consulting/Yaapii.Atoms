@@ -40,7 +40,7 @@ namespace Yaapii.Atoms.Map
         /// </summary>
         /// <param name="list"></param>
         public Synced(KeyValuePair<Key, Value>[] list) : this(
-            new ManyOf<KeyValuePair<Key, Value>>(list)
+            new LiveMany<KeyValuePair<Key, Value>>(list)
         )
         { }
 
@@ -51,7 +51,7 @@ namespace Yaapii.Atoms.Map
         /// <param name="list">list of entries to merge</param>
         public Synced(Dictionary<Key, Value> map, KeyValuePair<Key, Value>[] list) : this(
             map,
-            new ManyOf<KeyValuePair<Key, Value>>(list)
+            new LiveMany<KeyValuePair<Key, Value>>(list)
         )
         { }
 
@@ -85,7 +85,7 @@ namespace Yaapii.Atoms.Map
         public Synced(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
             new LiveMap<Key, Value>(() =>
                 new MapOf<Key, Value>(
-                    new Enumerable.Joined<KeyValuePair<Key, Value>>(map, list)
+                    new Enumerable.Joined<KeyValuePair<Key, Value>>(live:true, map, list)
                 )
             )
         )
@@ -169,7 +169,7 @@ namespace Yaapii.Atoms.Map
         public Sync(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
             new LiveMap<Key, Value>(() =>
                 new MapOf<Key, Value>(
-                    new Enumerable.Joined<KeyValuePair<Key, Value>>(map, list)
+                    new Enumerable.Joined<KeyValuePair<Key, Value>>(live: true, map, list)
                 )
             )
         )

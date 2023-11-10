@@ -30,7 +30,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Enumerable which is empty.
         /// </summary>
-        public None() : base(() => new ManyOf<string>(), false)
+        public None() : base(() => new ManyOf<string>(), true)
         { }
     }
 
@@ -42,7 +42,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <summary>
         /// Enumerable which is empty.
         /// </summary>
-        public None() : base(() => new ManyOf<T>(), false)
+        public None() : base(() => new ManyOf<T>(), true)
         { }
     }
 }

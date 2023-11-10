@@ -101,7 +101,7 @@ namespace Yaapii.Atoms.Scalar
         /// ctor
         /// </summary>
         /// <param name="src">list of items</param>
-        private Or(IEnumerable<IScalar<Boolean>> src) : this(new Or(src))
+        private Or(IEnumerable<IScalar<bool>> src) : this(new Or(src))
         { }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Yaapii.Atoms.Scalar
         /// ctor
         /// </summary>
         /// <param name="src">list of items</param>
-        public Or(IEnumerable<IScalar<Boolean>> src)
+        public Or(IEnumerable<IScalar<bool>> src)
             : base(() =>
             {
                 bool foundTrue = false;

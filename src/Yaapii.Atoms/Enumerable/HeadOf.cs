@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System.Collections;
 using System.Collections.Generic;
 using Yaapii.Atoms.Scalar;
 
@@ -29,13 +30,17 @@ namespace Yaapii.Atoms.Enumerable
     /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class HeadOf<T> : ManyEnvelope<T>
+    public sealed class HeadOf<T> : IEnumerable<T>
     {
+        private readonly IEnumerable<T> enumerable;
+        private readonly IScalar<int> limit;
+        private readonly Ternary<T> result;
+
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
-        public HeadOf(IEnumerable<T> enumerable) : this(enumerable, 1)
+        public HeadOf(IEnumerable<T> enumerable, bool live = false) : this(enumerable, 1, live)
         { }
 
         /// <summary>
@@ -43,7 +48,7 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public HeadOf(IEnumerable<T> enumerable, int limit) : this(enumerable, new Live<int>(limit))
+        public HeadOf(IEnumerable<T> enumerable, int limit, bool live = false) : this(enumerable, new Live<int>(limit), live)
         { }
 
         /// <summary>
@@ -51,13 +56,33 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public HeadOf(IEnumerable<T> enumerable, IScalar<int> limit) : base(() =>
-            new LiveMany<T>(() =>
-                new Enumerator.HeadOf<T>(enumerable.GetEnumerator(), limit.Value())
-            ),
-            false
-        )
-        { }
+        public HeadOf(IEnumerable<T> enumerable, IScalar<int> limit, bool live = false)
+        {
+            this.enumerable = enumerable;
+            this.limit = limit;
+            this.result =
+                Ternary.New(
+                    LiveMany.New(Produced),
+                    Sticky.New(Produced),
+                    live
+                );
+        }
+
+        public IEnumerator<T> GetEnumerator() => this.result.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
+        private IEnumerable<T> Produced()
+        {
+            var limit = this.limit.Value();
+            var taken = 0;
+            var enumerator = this.enumerable.GetEnumerator();
+            while (enumerator.MoveNext() && taken < limit)
+            {
+                taken++;
+                yield return enumerator.Current;
+            }
+        }
     }
 
     /// <summary>

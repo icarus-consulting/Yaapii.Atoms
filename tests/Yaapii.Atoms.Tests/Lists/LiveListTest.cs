@@ -95,9 +95,11 @@ namespace Yaapii.Atoms.List.Tests
                 new LiveList<int>(() =>
                     new ListOf<int>(
                         new HeadOf<int>(
-                            new Endless<int>(1),
+                            new Endless<int>(size),
                             new Live<int>(() =>
-                                Interlocked.Increment(ref size)
+                                {
+                                    return Interlocked.Increment(ref size);
+                                }
                             )
                         )
                     )

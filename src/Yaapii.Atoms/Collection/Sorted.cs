@@ -81,7 +81,7 @@ namespace Yaapii.Atoms.Collection
         public Sorted(Comparer<T> cmp, ICollection<T> src) : base(
             () =>
                 new LiveCollection<T>(
-                    new Enumerator.Sorted<T>(cmp, src.GetEnumerator())
+                    new Enumerable.Sorted<T>(cmp, src)
                 ),
             false
         )

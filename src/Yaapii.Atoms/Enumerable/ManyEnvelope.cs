@@ -23,8 +23,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Yaapii.Atoms.Enumerator;
-using Yaapii.Atoms.Scalar;
 
 namespace Yaapii.Atoms.Enumerable
 {
@@ -34,9 +32,7 @@ namespace Yaapii.Atoms.Enumerable
     /// </summary>
     public abstract class ManyEnvelope : IEnumerable<string>
     {
-        private readonly bool live;
-        private readonly Func<IEnumerator<string>> origin;
-        private readonly ScalarOf<IList<string>> fixedList;
+        private readonly Ternary<string> items;
 
         /// <summary>
         /// Envelope for Enumerable.
@@ -79,19 +75,16 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         public ManyEnvelope(Func<IEnumerator<string>> origin, bool live)
         {
-            this.live = live;
-            this.origin = origin;
-            this.fixedList =
-                new ScalarOf<IList<string>>(() =>
-                {
-                    var result = new List<string>();
-                    var enm = origin();
-                    while (enm.MoveNext())
-                    {
-                        result.Add(enm.Current);
-                    }
-                    return result;
-                });
+            this.items =
+                new Ternary<string>(
+                    new LiveMany<string>(() =>
+                        new EnumeratorAsEnumerable<string>(origin)
+                    ),
+                    new Sticky<string>(
+                        new EnumeratorAsEnumerable<string>(origin)
+                    ),
+                    () => live
+                );
         }
 
         /// <summary>
@@ -100,16 +93,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <returns>The enumerator</returns>
         public IEnumerator<string> GetEnumerator()
         {
-            IEnumerator<string> result;
-            if (this.live)
-            {
-                result = this.origin();
-            }
-            else
-            {
-                result = this.fixedList.Value().GetEnumerator();
-            }
-            return result;
+            return this.items.GetEnumerator();
         }
 
         /// <summary>
@@ -129,9 +113,7 @@ namespace Yaapii.Atoms.Enumerable
     /// <typeparam name="T"></typeparam>
     public abstract class ManyEnvelope<T> : IEnumerable<T>
     {
-        private readonly bool live;
-        private readonly Enumerator.Sticky<T>.Cache<T> enumeratorCache;
-        private readonly Func<IEnumerator<T>> origin;
+        private readonly IEnumerable<T> content;
 
         /// <summary>
         /// Envelope for Enumerable.
@@ -150,9 +132,12 @@ namespace Yaapii.Atoms.Enumerable
         /// </summary>
         public ManyEnvelope(Func<IEnumerator<T>> origin, bool live)
         {
-            this.live = live;
-            this.enumeratorCache = new Sticky<T>.Cache<T>(origin);
-            this.origin = origin;
+            this.content =
+                new Ternary<T>(
+                    new Sticky<T>(new EnumeratorAsEnumerable<T>(origin)),
+                    new LiveMany<T>(() => new EnumeratorAsEnumerable<T>(origin)),
+                    live
+                );
         }
 
         /// <summary>
@@ -161,16 +146,7 @@ namespace Yaapii.Atoms.Enumerable
         /// <returns>The enumerator</returns>
         public IEnumerator<T> GetEnumerator()
         {
-            IEnumerator<T> result;
-            if (this.live)
-            {
-                result = this.origin();
-            }
-            else
-            {
-                result = new Enumerator.Sticky<T>(this.enumeratorCache);
-            }
-            return result;
+            return this.content.GetEnumerator();
         }
 
         /// <summary>

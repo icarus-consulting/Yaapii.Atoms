@@ -17,6 +17,7 @@
     <PackageReleaseNotes>https://github.com/icarus-consulting/Yaapii.Atoms/releases</PackageReleaseNotes>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\sgKey.snk</AssemblyOriginatorKeyFile>
+    <Configurations>Release;Debug</Configurations>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'ReleaseSources'">

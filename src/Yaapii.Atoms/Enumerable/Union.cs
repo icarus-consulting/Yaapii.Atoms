@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Yaapii.Atoms.Enumerable
@@ -28,46 +29,87 @@ namespace Yaapii.Atoms.Enumerable
     /// <summary>
     /// Union objects in two enumerables.
     /// </summary>
-    public class Union<T> : ManyEnvelope<T>
+    public class Union<T> : IEnumerable<T>
     {
+        private readonly IEnumerable<T> a;
+        private readonly IEnumerable<T> b;
+        private readonly IEqualityComparer<T> comparison;
+        private readonly Ternary<T> result;
+
         /// <summary>
         /// Union objects in two enumerables.
         /// </summary>
         /// <param name="compare">Condition to match</param>
-        public Union(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) : base(() =>
-            {
-                var result = new List<T>();
-                foreach (var aItem in a)
-                {
-                    if (new Contains<T>(b, bItem => compare.Invoke(aItem, bItem)).Value())
-                    {
-                        result.Add(aItem);
-                    }
-                }
-                return result;
-            },
-            false
+        public Union(IEnumerable<T> a, IEnumerable<T> b, bool live = false) : this(
+            a, b, new Comparison<T>((left,right) => left.Equals(right)), live
         )
         { }
 
         /// <summary>
         /// Union objects in two enumerables.
         /// </summary>
-        public Union(IEnumerable<T> a, IEnumerable<T> b) : base(() =>
-            {
-                var result = new List<T>();
-                foreach (var item in b)
-                {
-                    if (new Contains<T>(a, item).Value())
-                    {
-                        result.Add(item);
-                    }
-                }
-                return result;
-            },
-            false
+        public Union(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare, bool live = false) : this(
+            a,
+            b,
+            new Comparison<T>(compare),
+            live
         )
         { }
+
+        /// <summary>
+        /// Union objects in two enumerables.
+        /// </summary>
+        public Union(IEnumerable<T> a, IEnumerable<T> b, IEqualityComparer<T> compare, bool live = false)
+        {
+            this.a = a;
+            this.b = b;
+            this.comparison = compare;
+            this.result =
+                Ternary.New(
+                    LiveMany.New(Produced),
+                    Sticky.New(Produced),
+                    live
+                );
+        }
+
+        public IEnumerator<T> GetEnumerator() => this.result.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
+        private IEnumerable<T> Produced()
+        {
+            var set = new HashSet<T>(this.comparison);
+            foreach(var element in this.b)
+            {
+                set.Add(element);
+            }
+
+            foreach (T element in this.a)
+            {
+                if(!set.Add(element))
+                    yield return element;
+            }
+        }
+
+        private sealed class Comparison<TItem> : IEqualityComparer<T>
+        {
+            private readonly Func<T, T, bool> comparison;
+
+            public Comparison(Func<T, T, bool> comparison)
+            {
+                this.comparison = comparison;
+            }
+
+            public bool Equals(T x, T y)
+            {
+                return this.comparison.Invoke(y, x);
+            }
+
+            public int GetHashCode(T obj)
+            {
+                return 0;
+            }
+        }
     }
 
     /// <summary>

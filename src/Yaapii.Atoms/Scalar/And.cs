@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Scalar
 
         /// <summary></summary>
         /// <param name="src"></param>
-        private And(IEnumerable<IScalar<Boolean>> src)
+        private And(IEnumerable<IScalar<bool>> src)
             : base(() =>
             {
                 Boolean result = true;
@@ -122,7 +122,7 @@ namespace Yaapii.Atoms.Scalar
 
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
-        public And(IEnumerable<IScalar<Boolean>> src)
+        public And(IEnumerable<IScalar<bool>> src)
             : base(() =>
             {
                 Boolean result = true;

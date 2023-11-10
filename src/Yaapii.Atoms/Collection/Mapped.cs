@@ -65,7 +65,7 @@ namespace Yaapii.Atoms.Collection
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source collection</param>
         public Mapped(Func<In, Out> mapping, ICollection<In> src) : base(() =>
-            new Enumerator.Mapped<In, Out>(src.GetEnumerator(), mapping),
+            new Enumerable.Mapped<In, Out>(mapping, src).GetEnumerator(),
             false
         )
         { }
