@@ -54,6 +54,15 @@ namespace Yaapii.Atoms.List
         /// List envelope. Can make a readonly list from a scalar.
         /// </summary>
         /// <param name="live">value is handled live or sticky</param>
+        public ListEnvelope(IEnumerable<T> lst, bool live) : this(lst.GetEnumerator,
+            live
+        )
+        { }
+
+        /// <summary>
+        /// List envelope. Can make a readonly list from a scalar.
+        /// </summary>
+        /// <param name="live">value is handled live or sticky</param>
         public ListEnvelope(IScalar<IEnumerable<T>> lst, bool live) : this(() =>
             lst.Value().GetEnumerator(),
             live
