@@ -21,25 +21,27 @@
 // SOFTWARE.
 
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 using Yaapii.Atoms.Misc;
 using Yaapii.Atoms.Text;
 
-namespace Yaapii.Atoms.Enumerable.Tests
+namespace Yaapii.Atoms.List.Tests
 {
     public sealed class SortedTest
     {
         [Fact]
         public void SortsAnArray()
         {
-            Assert.True(
+            Assert.Equal(
+                "-6, 0, 2, 3, 10, 44",
                 new Text.Joined(", ",
                     Mapped.New(i => i.ToString(),
                         Sorted.New(
-                            ManyOf.New(3, 2, 10, 44, -6, 0)
+                            ListOf.New(3, 2, 10, 44, -6, 0)
                         )
                     )
-                ).AsString() == "-6, 0, 2, 3, 10, 44",
-            "Can't sort an enumerable");
+                ).AsString()
+            );
         }
 
         [Fact]
@@ -47,12 +49,11 @@ namespace Yaapii.Atoms.Enumerable.Tests
         {
             Assert.True(
                 new Text.Joined(", ",
-                    new Sorted<string>(
+                    Sorted.New(
                         IReverseCompare<string>.Default,
-                        new ManyOf<string>(
-                            "a", "c", "hello", "dude", "Friend"
-                        )
-                    )).AsString() == "hello, Friend, dude, c, a",
+                        ListOf.New("a", "c", "hello", "dude", "Friend")
+                    )
+                ).AsString() == "hello, Friend, dude, c, a",
                 "Can't sort an enumerable with a custom comparator");
         }
 
@@ -73,7 +74,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
         public void SortsAnEmptyArray()
         {
             Assert.Empty(
-                new Sorted<int>(
+                Sorted.New(
                     new ManyOf<int>()
                 )
             );
