@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright(c) 2023 ICARUS Consulting GmbH
+// Copyright(c) 2024 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using System;
+using System.Globalization;
 using Xunit;
 
 namespace Yaapii.Atoms.Time.Tests
@@ -44,6 +45,31 @@ namespace Yaapii.Atoms.Time.Tests
                 new DateAsText(
                     new DateTime(2017, 12, 13, 14, 15, 16, 17, DateTimeKind.Local),
                     "yyyy-MM-dd HH:mm:ss").AsString() == "2017-12-13 14:15:16");
+        }
+
+        [Fact]
+        public void FormatsWithInvariantCulture()
+        {
+            Assert.Equal(
+                "12/13/2017 14:15:16",
+                new DateAsText(
+                    new DateTime(2017, 12, 13, 14, 15, 16, 17, DateTimeKind.Unspecified),
+                    ""
+                ).AsString()
+            );
+        }
+
+        [Fact]
+        public void FormatsWithCustomCulture()
+        {
+            Assert.Equal(
+                "13.12.2017 14:15:16",
+                new DateAsText(
+                    new DateTime(2017, 12, 13, 14, 15, 16, 17, DateTimeKind.Unspecified),
+                    "",
+                    CultureInfo.GetCultureInfo("de-de")
+                ).AsString()
+            );
         }
     }
 }
