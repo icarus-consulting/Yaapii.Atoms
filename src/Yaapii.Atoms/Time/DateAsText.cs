@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright(c) 2023 ICARUS Consulting GmbH
+// Copyright(c) 2024 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -43,47 +43,64 @@ namespace Yaapii.Atoms.Time
         /// <summary>
         /// A date formatted as ISO
         /// </summary>
-        /// <param name="date"></param>
+        /// <param name="date">a date</param>
         public DateAsText(DateTime date) : this(new Live<DateTime>(date), "o")
         { }
 
         /// <summary>
         /// A date formatted as ISO
         /// </summary>
-        /// <param name="date"></param>
+        /// <param name="date">a date</param>
+        /// <param name="provider">a format provider</param>
+        public DateAsText(DateTime date, IFormatProvider provider) : this(date, "o", provider)
+        { }
+
+        /// <summary>
+        /// A date formatted as ISO
+        /// </summary>
+        /// <param name="date">a date</param>
         public DateAsText(IScalar<DateTime> date) : this(date, "o")
         { }
 
         /// <summary>
-        /// A date formatted by using a format-string and <see cref="CultureInfo.CurrentCulture"/>
+        /// A date formatted by using a format-string and <see cref="CultureInfo.InvariantCulture"/>
         /// </summary>
         /// <param name="date">a date</param>
         /// <param name="format">a format pattern</param>
-        public DateAsText(DateTime date, string format) : this(new Live<DateTime>(date), new TextOf(format), CultureInfo.CurrentCulture)
+        public DateAsText(DateTime date, string format) : this(new Live<DateTime>(date), new TextOf(format), CultureInfo.InvariantCulture)
         { }
 
         /// <summary>
-        /// A date formatted by using a format-string and <see cref="CultureInfo.CurrentCulture"/>
+        /// A date formatted by using a format-string and <see cref="CultureInfo.InvariantCulture"/>
         /// </summary>
         /// <param name="date">a date</param>
         /// <param name="format">a format pattern</param>
-        public DateAsText(IScalar<DateTime> date, string format) : this(date, new LiveText(format), CultureInfo.CurrentCulture)
+        /// <param name="provider">a format provider</param>
+        public DateAsText(DateTime date, string format, IFormatProvider provider) : this(new Live<DateTime>(date), new TextOf(format), provider)
         { }
 
         /// <summary>
-        /// A date formatted by using a format-string and <see cref="CultureInfo.CurrentCulture"/>
+        /// A date formatted by using a format-string and <see cref="CultureInfo.InvariantCulture"/>
         /// </summary>
         /// <param name="date">a date</param>
         /// <param name="format">a format pattern</param>
-        public DateAsText(DateTime date, IText format) : this(new Live<DateTime>(date), format, CultureInfo.CurrentCulture)
+        public DateAsText(IScalar<DateTime> date, string format) : this(date, new LiveText(format), CultureInfo.InvariantCulture)
         { }
 
         /// <summary>
-        /// A date formatted by using a format-string and <see cref="CultureInfo.CurrentCulture"/>
+        /// A date formatted by using a format-string and <see cref="CultureInfo.InvariantCulture"/>
         /// </summary>
         /// <param name="date">a date</param>
         /// <param name="format">a format pattern</param>
-        public DateAsText(IScalar<DateTime> date, IText format) : this(date, format, CultureInfo.CurrentCulture)
+        public DateAsText(DateTime date, IText format) : this(new Live<DateTime>(date), format, CultureInfo.InvariantCulture)
+        { }
+
+        /// <summary>
+        /// A date formatted by using a format-string and <see cref="CultureInfo.InvariantCulture"/>
+        /// </summary>
+        /// <param name="date">a date</param>
+        /// <param name="format">a format pattern</param>
+        public DateAsText(IScalar<DateTime> date, IText format) : this(date, format, CultureInfo.InvariantCulture)
         { }
 
         /// <summary>
@@ -106,7 +123,7 @@ namespace Yaapii.Atoms.Time
         /// <returns></returns>
         public string AsString()
         {
-            return formatted.Value();
+            return this.formatted.Value();
         }
 
         /// <summary>
@@ -116,7 +133,7 @@ namespace Yaapii.Atoms.Time
         /// <returns></returns>
         public bool Equals(IText other)
         {
-            return formatted.Value().Equals(other.AsString());
+            return this.formatted.Value().Equals(other.AsString());
         }
     }
 }
