@@ -42,6 +42,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
         }
 
         [Theory]
+        [InlineData(new string[] { "a", "a", "b", "c", "b" }, new string[] { "d" }, new string[] { })]
+        [InlineData(new string[] { "a", "a", "b", "c", "b" }, new string[] { "a" }, new string[] { "a" })]
         [InlineData(new string[] { "a", "b" }, new string[] { "a", "b" }, new string[] { "a", "b" })]
         [InlineData(new string[] { "a", "b" }, new string[] { "a" }, new string[] { "a" })]
         public void MatchesString(IEnumerable<string> a, IEnumerable<string> b, IEnumerable<string> expected)
@@ -55,6 +57,8 @@ namespace Yaapii.Atoms.Enumerable.Tests
         }
 
         [Theory]
+        [InlineData(new int[] { 1, 1, 2, 3, 2 }, new int[] { 4 }, new int[] { })]
+        [InlineData(new int[] { 1, 1, 2, 3, 2 }, new int[] { 1, 2 }, new int[] { 1, 2 })]
         [InlineData(new int[] { 1, 2 }, new int[] { 1, 2 }, new int[] { 1, 2 })]
         [InlineData(new int[] { 1, 2 }, new int[] { 1 }, new int[] { 1 })]
         public void MatchesInt(IEnumerable<int> a, IEnumerable<int> b, IEnumerable<int> expected)
