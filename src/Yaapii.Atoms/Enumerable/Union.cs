@@ -84,7 +84,7 @@ namespace Yaapii.Atoms.Enumerable
                 set.Add(element);
             }
 
-            foreach (T element in this.a)
+            foreach (T element in new Distinct<T>(this.a))
             {
                 if(!set.Add(element))
                     yield return element;
