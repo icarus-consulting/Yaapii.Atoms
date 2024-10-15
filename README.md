@@ -18,12 +18,12 @@ It follows all the rules suggested in the two "[Elegant Objects](https://www.ama
 </a>
 
 # Table Of Contents
-- [Design Change](#Design-change-V1.0-vs-V2.0)
+- [Design Change](#design-change-version-10-vs-20)
 - [Migration](#migration)
 - [Maps](#maps)
 - [Functions](#functions)
 - [IO Input / Output](#io-input--output)
-- [Lists](#lists)
+- [Enumerables](#enumerables)
 - [Scalar](#scalar)
 - [Text](#text)
 - [LinQ Analogy](#linq-analogy)
