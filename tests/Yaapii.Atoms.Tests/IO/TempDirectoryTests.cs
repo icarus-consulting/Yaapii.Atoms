@@ -145,6 +145,14 @@ namespace Yaapii.Atoms.IO.Tests
             }
         }
 
+        /// <summary>
+        /// May require special permissions for creating symbolic links.
+        /// If the test fails because of that, run it as administrator or give your user account the needed permission:
+        /// 1. Run secpol.msc as administrator
+        /// 2. Open "Local Policies" -> "User Rights Assignment" -> "Create symbolic links"
+        /// 3. Add your user
+        /// 4. You may need to log out and log in again
+        /// </summary>
         [Fact]
         public void DeletesBrokenSymlink()
         {
@@ -178,6 +186,14 @@ namespace Yaapii.Atoms.IO.Tests
             }
         }
 
+        /// <summary>
+        /// May require special permissions for creating symbolic links.
+        /// If the test fails because of that, run it as administrator or give your user account the needed permission:
+        /// 1. Run secpol.msc as administrator
+        /// 2. Open "Local Policies" -> "User Rights Assignment" -> "Create symbolic links"
+        /// 3. Add your user
+        /// 4. You may need to log out and log in again
+        /// </summary>
         [Fact]
         public void DoesNotDeleteContentsOfLinkedDirectory()
         {
@@ -225,6 +241,14 @@ namespace Yaapii.Atoms.IO.Tests
             }
         }
 
+        /// <summary>
+        /// May require special permissions for creating symbolic links.
+        /// If the test fails because of that, run it as administrator or give your user account the needed permission:
+        /// 1. Run secpol.msc as administrator
+        /// 2. Open "Local Policies" -> "User Rights Assignment" -> "Create symbolic links"
+        /// 3. Add your user
+        /// 4. You may need to log out and log in again
+        /// </summary>
         [Fact]
         public void DoesNotDeleteLinkedFile()
         {
