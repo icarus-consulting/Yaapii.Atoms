@@ -23,6 +23,7 @@
 using System;
 using System.IO;
 using Xunit;
+using Yaapii.Atoms.Enumerable;
 
 namespace Yaapii.Atoms.IO.Tests
 {
@@ -133,6 +134,133 @@ namespace Yaapii.Atoms.IO.Tests
             {
                 Assert.False(
                     Directory.Exists(tempPath)
+                );
+            }
+            finally
+            {
+                if (Directory.Exists(tempPath))
+                {
+                    Directory.Delete(tempPath, true);
+                }
+            }
+        }
+
+        [Fact]
+        public void DeletesBrokenSymlink()
+        {
+            var tempPath =
+                Path.Combine(
+                    Path.GetTempPath(),
+                    Guid.NewGuid().ToString()
+                );
+            try
+            {
+                using (var td = new TempDirectory(tempPath))
+                {
+                    td.Value();
+                    var linkTarget = Path.Combine(tempPath, "linkTarget");
+                    var link = Path.Combine(tempPath, "link");
+                    Directory.CreateDirectory(linkTarget);
+                    Directory.CreateSymbolicLink(link, linkTarget);
+                    Directory.Delete(linkTarget);
+                }
+
+                Assert.False(
+                    Directory.Exists(tempPath)
+                );
+            }
+            finally
+            {
+                if (Directory.Exists(tempPath))
+                {
+                    Directory.Delete(tempPath, true);
+                }
+            }
+        }
+
+        [Fact]
+        public void DoesNotDeleteContentsOfLinkedDirectory()
+        {
+            var tempPath =
+                Path.Combine(
+                    Path.GetTempPath(),
+                    Guid.NewGuid().ToString()
+                );
+
+            try
+            {
+                var deleteThisDirectory = Path.Combine(tempPath, "deleteMe");
+
+                var otherDirectory = Path.Combine(tempPath, "otherDirectory");
+                Directory.CreateDirectory(otherDirectory);
+                var dontDeleteThisFile = Path.Combine(otherDirectory, "dontDeleteThisFile.txt");
+                File.WriteAllText(dontDeleteThisFile, "test");
+
+                using (var td = new TempDirectory(deleteThisDirectory))
+                {
+                    td.Value();
+                    Directory.CreateSymbolicLink(
+                        Path.Combine(deleteThisDirectory, "directoryLink"),
+                        otherDirectory
+                    );
+                }
+
+                Assert.Equal(
+                    new ManyOf(
+                        "otherDirectory",
+                        "otherDirectory/dontDeleteThisFile.txt"
+                    ),
+                    Mapped.New(
+                        (fullPath) => Path.GetRelativePath(tempPath, fullPath).Replace('\\', '/'),
+                        Directory.EnumerateFileSystemEntries(tempPath, "", SearchOption.AllDirectories)
+                    )
+                );
+            }
+            finally
+            {
+                if (Directory.Exists(tempPath))
+                {
+                    Directory.Delete(tempPath, true);
+                }
+            }
+        }
+
+        [Fact]
+        public void DoesNotDeleteLinkedFile()
+        {
+            var tempPath =
+                Path.Combine(
+                    Path.GetTempPath(),
+                    Guid.NewGuid().ToString()
+                );
+
+            try
+            {
+                var deleteThisDirectory = Path.Combine(tempPath, "deleteMe");
+
+                var otherDirectory = Path.Combine(tempPath, "otherDirectory");
+                Directory.CreateDirectory(otherDirectory);
+                var dontDeleteThisFile = Path.Combine(otherDirectory, "dontDeleteThisFile.txt");
+                File.WriteAllText(dontDeleteThisFile, "test");
+
+                using (var td = new TempDirectory(deleteThisDirectory))
+                {
+                    td.Value();
+                    File.CreateSymbolicLink(
+                        Path.Combine(deleteThisDirectory, "fileLink"),
+                        dontDeleteThisFile
+                    );
+                }
+
+                Assert.Equal(
+                    new ManyOf(
+                        "otherDirectory",
+                        "otherDirectory/dontDeleteThisFile.txt"
+                    ),
+                    Mapped.New(
+                        (fullPath) => Path.GetRelativePath(tempPath, fullPath).Replace('\\', '/'),
+                        Directory.EnumerateFileSystemEntries(tempPath, "", SearchOption.AllDirectories)
+                    )
                 );
             }
             finally

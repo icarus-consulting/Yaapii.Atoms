@@ -54,6 +54,10 @@
     <None Remove="Assets\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="SymbolicLinkSupport" Version="1.2.0" />
+  </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>

@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using SymbolicLinkSupport;
 using System;
 using System.IO;
 using Yaapii.Atoms.Scalar;
@@ -78,20 +79,24 @@ namespace Yaapii.Atoms.IO
 
         private void DeleteDirectory(string path)
         {
-            foreach (string subDir in Directory.GetDirectories(path))
+            var isNoSymLink = !new DirectoryInfo(path).IsSymbolicLink();
+            if (isNoSymLink)
             {
-                DeleteDirectory(subDir);
-            }
-
-            foreach (string fileName in Directory.EnumerateFiles(path))
-            {
-                var fileInfo = new FileInfo(fileName)
+                foreach (string subDir in Directory.GetDirectories(path))
                 {
-                    Attributes = FileAttributes.Normal
-                };
-                fileInfo.Delete();
+                    DeleteDirectory(subDir);
+                }
+
+                foreach (string fileName in Directory.EnumerateFiles(path))
+                {
+                    var fileInfo = new FileInfo(fileName)
+                    {
+                        Attributes = FileAttributes.Normal
+                    };
+                    fileInfo.Delete();
+                }
             }
-            Directory.Delete(path, true);
+            Directory.Delete(path, recursive: isNoSymLink);
         }
     }
 }
