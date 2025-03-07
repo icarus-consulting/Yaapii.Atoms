@@ -134,8 +134,8 @@ namespace Yaapii.Atoms.Enumerable
         {
             this.content =
                 new Ternary<T>(
-                    new Sticky<T>(new EnumeratorAsEnumerable<T>(origin)),
                     new LiveMany<T>(() => new EnumeratorAsEnumerable<T>(origin)),
+                    new Sticky<T>(new EnumeratorAsEnumerable<T>(origin)),
                     live
                 );
         }
