@@ -10,7 +10,7 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Copyright (c) 2023 ICARUS Consulting GmbH</Copyright>
+    <Copyright>Copyright (c) 2025 ICARUS Consulting GmbH</Copyright>
     <PackageTags>yaapii, elegant objects, cactoos, oop, encapsulation, primitives</PackageTags>
     <PackageProjectUrl>https://github.com/icarus-consulting/Yaapii.Atoms</PackageProjectUrl>
     <RepositoryUrl>https://github.com/icarus-consulting/Yaapii.Atoms.git</RepositoryUrl>
