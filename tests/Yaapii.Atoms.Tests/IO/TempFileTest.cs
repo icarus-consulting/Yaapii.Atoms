@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using System.IO;
 using Xunit;
 
@@ -29,39 +30,59 @@ namespace Yaapii.Atoms.IO.Tests
     {
 
         [Fact]
-        public void CreateAndDeleteTemporyFile()
+        public void CreateAndDeleteTemporaryFile()
         {
             var file = new TempFile();
             using (file)
             {
-                Assert.True(File.Exists(file.Value()));
+                Assert.True(
+                    File.Exists(file.Value())
+                );
             }
-            Assert.False(File.Exists(file.Value()));
+            Assert.False(
+                File.Exists(file.Value())
+            );
         }
 
 
         [Theory]
         [InlineData("txt")]
         [InlineData(".txt")]
-        public void CreateAndDeleteTemporyFileWithGivenExtension(string extension)
+        public void CreateAndDeleteTemporaryFileWithGivenExtension(string extension)
         {
             var file = new TempFile(extension);
             using (file)
             {
-                Assert.True(File.Exists(file.Value()));
+                Assert.True(
+                    File.Exists(file.Value()),
+                    $"Temp file '{file}' should exist"
+                );
             }
-            Assert.False(File.Exists(file.Value()));
+            Assert.False(
+                File.Exists(file.Value()),
+                $"Temp file '{file}' should not exist"
+            );
         }
 
         [Fact]
-        public void CreateAndDeleteTemporyFileByFileInfo()
+        public void CreateAndDeleteTemporaryFileByFileInfo()
         {
-            var file = Path.GetTempFileName();
+            var file =
+                Path.Combine(
+                    Path.GetTempPath(),
+                    Guid.NewGuid().ToString() + ".tmp"
+                );
             using (var tmpFile = new TempFile(new FileInfo(file)))
             {
-                Assert.True(File.Exists(tmpFile.Value()));
+                Assert.True(
+                    File.Exists(tmpFile.Value()),
+                    $"Temp file '{file}' should exist"
+                );
             }
-            Assert.False(File.Exists(file));
+            Assert.False(
+                File.Exists(file),
+                $"Temp file '{file}' should not exist"
+            );
         }
     }
 }
