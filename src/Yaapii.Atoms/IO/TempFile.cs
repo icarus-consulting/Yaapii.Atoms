@@ -39,10 +39,6 @@ namespace Yaapii.Atoms.IO
         /// An empty Temporary file that will created on first use and deleted when
         /// the object is disposed.
         /// </summary>
-        /// <summary>
-        /// Temporary file with given extension.
-        /// The temporary file is deleted when the object is disposed.
-        /// </summary>
         public TempFile(string extension) : this(
             new ScalarOf<string>(() =>
             {
