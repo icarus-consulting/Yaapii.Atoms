@@ -12,7 +12,7 @@ var configuration           = "Release";
 ///////////////////////////////////////////////////////////////////////////////
 var buildArtifacts          = Directory("./artifacts");
 var deployment              = Directory("./artifacts/deployment");
-var version                 = "3.0.0";
+var version                 = "4.1.0";
 
 ///////////////////////////////////////////////////////////////////////////////
 // MODULES
@@ -289,11 +289,14 @@ Task("NuGet")
         OutputDirectory = buildArtifacts,
         NoRestore = true
     };
-    settings.ArgumentCustomization = args => args.Append("--include-symbols").Append("-p:SymbolPackageFormat=snupkg");
+    settings.ArgumentCustomization = args =>
+        args
+        .Append("--include-symbols")
+        .Append("-p:SymbolPackageFormat=snupkg")
+        .Append($"-p:PackageVersion={version}");
     settings.MSBuildSettings =
         new DotNetCoreMSBuildSettings()
-        .SetVersionPrefix(version)
-        SetPackageVersion(version);
+        .SetVersionPrefix(version);
 
     var settingsSources = new DotNetCorePackSettings()
     {
@@ -305,8 +308,7 @@ Task("NuGet")
     };
     settingsSources.MSBuildSettings =
         new DotNetCoreMSBuildSettings()
-        .SetVersionPrefix(version)
-        SetPackageVersion(version);
+        .SetVersionPrefix(version);
 
     foreach (var module in GetSubDirectories(modules))
     {
@@ -318,7 +320,11 @@ Task("NuGet")
                 settings
             );
 
-            settingsSources.ArgumentCustomization = args => args.Append($"-p:PackageId={name}.Sources").Append("-p:IncludeBuildOutput=false");
+            settingsSources.ArgumentCustomization = args =>
+                args
+                .Append($"-p:PackageId={name}.Sources")
+                .Append("-p:IncludeBuildOutput=false")
+                .Append($"-p:PackageVersion={version}");
             DotNetCorePack(
                 module.ToString(),
                 settingsSources
@@ -367,7 +373,7 @@ Task("NuGetFeed")
 .Does(() => 
 {
     Information(Figlet("NuGet Feed"));
-    return;
+
     var nugets = GetFiles($"{buildArtifacts.Path}/*.nupkg");
     foreach(var package in nugets)
     {
