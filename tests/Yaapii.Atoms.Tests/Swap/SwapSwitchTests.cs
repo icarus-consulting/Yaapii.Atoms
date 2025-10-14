@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright(c) 2022 ICARUS Consulting GmbH
+// Copyright(c) 2025 ICARUS Consulting GmbH
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,6 @@
 // SOFTWARE.
 
 using Xunit;
-using Yaapii.Atoms.Func;
-using Yaapii.Atoms.Scalar;
 using Yaapii.Atoms.Swap;
 
 namespace Yaapii.Atoms.Tests.Swap
@@ -34,9 +32,9 @@ namespace Yaapii.Atoms.Tests.Swap
         {
             Assert.True(
                 new SwapSwitch<string, bool>(
-                    "true", new SwapOf<string,bool>(()=>true),
+                    "true", new SwapOf<string, bool>(() => true),
                     "false", new SwapOf<string, bool>(() => false)
-                ).Flip("true","")
+                ).Flip("true", "")
             );
         }
     }
