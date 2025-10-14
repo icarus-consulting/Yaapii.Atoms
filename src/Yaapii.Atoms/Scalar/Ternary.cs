@@ -26,6 +26,82 @@ using Yaapii.Atoms.Func;
 namespace Yaapii.Atoms.Scalar
 {
     /// <summary>
+    /// A ternary operation using the given input and functions.
+    /// </summary>
+    public sealed class Ternary<Out> : ScalarEnvelope<Out>
+    {
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
+        public Ternary(Boolean condition, Out consequent, Out alternative) : this(
+            condition,
+            consequent,
+            () => alternative
+        )
+        { }
+
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
+        public Ternary(Boolean condition, Func<Out> consequent, Out alternative) : this(
+            condition,
+            consequent,
+            () => alternative
+        )
+        { }
+
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
+        public Ternary(Boolean condition, Out consequent, Func<Out> alternative) : this(
+            condition,
+            () => consequent,
+            alternative
+        )
+        { }
+
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
+        public Ternary(Boolean condition, Func<Out> consequent, Func<Out> alternative) : this(
+            new Live<Boolean>(condition),
+            new Live<Out>(consequent),
+            new Live<Out>(alternative)
+        )
+        { }
+
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
+        public Ternary(IFunc<Boolean> condition, IFunc<Out> consequent, IFunc<Out> alternative) : this(
+            new Live<Boolean>(condition),
+            new Live<Out>(consequent),
+            new Live<Out>(alternative)
+        )
+        { }
+
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
+        public Ternary(IScalar<Boolean> condition, Out consequent, Out alternative) : this(
+            condition,
+            new Live<Out>(consequent),
+            new Live<Out>(alternative)
+        )
+        { }
+
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
+        public Ternary(IScalar<Boolean> condition, IScalar<Out> consequent, IScalar<Out> alternative) : base(() =>
+        {
+            var result = condition.Value() ? consequent : alternative;
+            return result.Value();
+        })
+        { }
+    }
+
+    /// <summary>
     /// A ternary operation.
     /// </summary>
     /// <typeparam name="In">type of input</typeparam>
@@ -39,12 +115,12 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public Ternary(In input, System.Func<In, Boolean> condition, System.Func<In, Out> consequent, System.Func<In, Out> alternative)
-        :
-            this(input,
-                new FuncOf<In, Boolean>(condition),
-                new FuncOf<In, Out>(consequent),
-                new FuncOf<In, Out>(alternative))
+        public Ternary(In input, System.Func<In, Boolean> condition, System.Func<In, Out> consequent, System.Func<In, Out> alternative) : this(
+            input,
+            new FuncOf<In, Boolean>(condition),
+            new FuncOf<In, Out>(consequent),
+            new FuncOf<In, Out>(alternative)
+        )
         { }
 
         /// <summary>
@@ -54,12 +130,11 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public Ternary(In input, IFunc<In, Boolean> condition, IFunc<In, Out> consequent, IFunc<In, Out> alternative)
-            : this(
-                new Live<bool>(() => condition.Invoke(input)),
-                new Live<Out>(() => consequent.Invoke(input)),
-                new Live<Out>(() => alternative.Invoke(input))
-            )
+        public Ternary(In input, IFunc<In, Boolean> condition, IFunc<In, Out> consequent, IFunc<In, Out> alternative) : this(
+            new Live<bool>(() => condition.Invoke(input)),
+            new Live<Out>(() => consequent.Invoke(input)),
+            new Live<Out>(() => alternative.Invoke(input))
+        )
         { }
 
         /// <summary>
@@ -68,8 +143,11 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public Ternary(Boolean condition, Out consequent, Out alternative)
-            : this(new Live<Boolean>(condition), consequent, alternative)
+        public Ternary(Boolean condition, Out consequent, Out alternative) : this(
+            new Live<Boolean>(condition),
+            consequent,
+            alternative
+        )
         { }
 
         /// <summary>
@@ -78,8 +156,11 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public Ternary(IScalar<Boolean> condition, Out consequent, Out alternative)
-            : this(condition, new Live<Out>(consequent), new Live<Out>(alternative))
+        public Ternary(IScalar<Boolean> condition, Out consequent, Out alternative) : this(
+            condition,
+            new Live<Out>(consequent),
+            new Live<Out>(alternative)
+        )
         { }
 
         /// <summary>
@@ -88,20 +169,19 @@ namespace Yaapii.Atoms.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public Ternary(IScalar<Boolean> condition, IScalar<Out> consequent, IScalar<Out> alternative)
-            : base(() =>
+        public Ternary(IScalar<Boolean> condition, IScalar<Out> consequent, IScalar<Out> alternative) : base(() =>
+        {
+            IScalar<Out> result;
+            if (condition.Value())
             {
-                IScalar<Out> result;
-                if (condition.Value())
-                {
-                    result = consequent;
-                }
-                else
-                {
-                    result = alternative;
-                }
-                return result.Value();
-            })
+                result = consequent;
+            }
+            else
+            {
+                result = alternative;
+            }
+            return result.Value();
+        })
         { }
     }
 
@@ -110,47 +190,72 @@ namespace Yaapii.Atoms.Scalar
         /// <summary>
         /// A ternary operation using the given input and functions.
         /// </summary>
-        /// <param name="input">input</param>
-        /// <param name="condition">condition</param>
-        /// <param name="consequent">consequent</param>
-        /// <param name="alternative">alternative</param>
+        public static IScalar<Out> New<Out>(Boolean condition, Out consequent, Out alternative)
+            => new Ternary<Out>(condition, consequent, alternative);
+
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
+        public static IScalar<Out> New<Out>(Boolean condition, Func<Out> consequent, Out alternative)
+            => new Ternary<Out>(condition, consequent, alternative);
+
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
+        public static IScalar<Out> New<Out>(Boolean condition, Out consequent, Func<Out> alternative)
+            => new Ternary<Out>(condition, consequent, alternative);
+
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
+        public static IScalar<Out> New<Out>(Boolean condition, Func<Out> consequent, Func<Out> alternative)
+            => new Ternary<Out>(condition, consequent, alternative);
+
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
+        public static IScalar<Out> New<Out>(IFunc<Boolean> condition, IFunc<Out> consequent, IFunc<Out> alternative)
+            => new Ternary<Out>(condition, consequent, alternative);
+
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
+        public static IScalar<Out> New<Out>(IScalar<Boolean> condition, Out consequent, Out alternative)
+            => new Ternary<Out>(condition, consequent, alternative);
+
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
+        public static IScalar<Out> New<Out>(IScalar<Boolean> condition, IScalar<Out> consequent, IScalar<Out> alternative)
+            => new Ternary<Out>(condition, consequent, alternative);
+
+        /// <summary>
+        /// A ternary operation using the given input and functions.
+        /// </summary>
         public static IScalar<Out> New<In, Out>(In input, System.Func<In, Boolean> condition, System.Func<In, Out> consequent, System.Func<In, Out> alternative)
             => new Ternary<In, Out>(input, condition, consequent, alternative);
 
         /// <summary>
         /// A ternary operation using the given input and functions.
         /// </summary>
-        /// <param name="input">input</param>
-        /// <param name="condition">condition</param>
-        /// <param name="consequent">consequent</param>
-        /// <param name="alternative">alternative</param>
         public static IScalar<Out> New<In, Out>(In input, IFunc<In, Boolean> condition, IFunc<In, Out> consequent, IFunc<In, Out> alternative)
             => new Ternary<In, Out>(input, condition, consequent, alternative);
 
         /// <summary>
         /// A ternary operation using the given input and functions.
         /// </summary>
-        /// <param name="condition">condition</param>
-        /// <param name="consequent">consequent</param>
-        /// <param name="alternative">alternative</param>
         public static IScalar<Out> New<In, Out>(Boolean condition, Out consequent, Out alternative)
             => new Ternary<In, Out>(condition, consequent, alternative);
 
         /// <summary>
         /// A ternary operation using the given input and functions.
         /// </summary>
-        /// <param name="condition">condition</param>
-        /// <param name="consequent">consequent</param>
-        /// <param name="alternative">alternative</param>
         public static IScalar<Out> New<In, Out>(IScalar<Boolean> condition, Out consequent, Out alternative)
             => new Ternary<In, Out>(condition, consequent, alternative);
 
         /// <summary>
         /// A ternary operation using the given input and functions.
         /// </summary>
-        /// <param name="condition">condition</param>
-        /// <param name="consequent">consequent</param>
-        /// <param name="alternative">alternative</param>
         public static IScalar<Out> New<In, Out>(IScalar<Boolean> condition, IScalar<Out> consequent, IScalar<Out> alternative)
             => new Ternary<In, Out>(condition, consequent, alternative);
     }

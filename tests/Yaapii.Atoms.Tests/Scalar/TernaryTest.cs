@@ -35,7 +35,8 @@ namespace Yaapii.Atoms.Scalar.Tests
                     new True(),
                     6,
                     16
-                ).Value() == 6);
+                ).Value() == 6
+            );
         }
 
         [Fact]
@@ -46,18 +47,20 @@ namespace Yaapii.Atoms.Scalar.Tests
                     new False(),
                     6,
                     16
-                ).Value() == 16);
+                ).Value() == 16
+            );
         }
 
         [Fact]
         public void ConditionBoolean()
         {
             Assert.True(
-            new Ternary<bool, int>(
-                true,
-                6,
-                16
-            ).Value() == 6);
+                new Ternary<bool, int>(
+                    true,
+                    6,
+                    16
+                ).Value() == 6
+            );
         }
 
         [Fact]
@@ -69,7 +72,44 @@ namespace Yaapii.Atoms.Scalar.Tests
                     input => input > 3,
                     input => input = 8,
                     input => input = 2
-                ).Value() == 8);
+                ).Value() == 8
+            );
+        }
+
+        [Fact]
+        public void ConditionTrueOneGeneric()
+        {
+            Assert.True(
+                new Ternary<int>(
+                    new True(),
+                    6,
+                    16
+                ).Value() == 6
+            );
+        }
+
+        [Fact]
+        public void ConditionFalseOneGeneric()
+        {
+            Assert.True(
+                new Ternary<int>(
+                    new False(),
+                    6,
+                    16
+                ).Value() == 16
+            );
+        }
+
+        [Fact]
+        public void ConditionBooleanOneGeneric()
+        {
+            Assert.True(
+                new Ternary<int>(
+                    true,
+                    6,
+                    16
+                ).Value() == 6
+            );
         }
     }
 }
