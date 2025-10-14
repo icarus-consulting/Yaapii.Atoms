@@ -290,7 +290,10 @@ Task("NuGet")
         NoRestore = true
     };
     settings.ArgumentCustomization = args => args.Append("--include-symbols").Append("-p:SymbolPackageFormat=snupkg");
-    settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(version);
+    settings.MSBuildSettings =
+        new DotNetCoreMSBuildSettings()
+        .SetVersionPrefix(version)
+        SetPackageVersion(version);
 
     var settingsSources = new DotNetCorePackSettings()
     {
@@ -300,7 +303,10 @@ Task("NuGet")
         NoBuild = false,
         VersionSuffix = ""
     };
-    settingsSources.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(version);
+    settingsSources.MSBuildSettings =
+        new DotNetCoreMSBuildSettings()
+        .SetVersionPrefix(version)
+        SetPackageVersion(version);
 
     foreach (var module in GetSubDirectories(modules))
     {
