@@ -398,17 +398,18 @@ Task("NuGetFeed")
             );
         }
     }
-    var symbols = GetFiles($"{buildArtifacts.Path}/*.snupkg");
-    foreach(var symbol in symbols)
-    {
-        NuGetPush(
-            symbol,
-            new NuGetPushSettings {
-                Source = nuGetSource,
-                ApiKey = nugetReleaseToken
-            }
-        );
-    }
+    // Symbols are pushed together with the main packages
+    //var symbols = GetFiles($"{buildArtifacts.Path}/*.snupkg");
+    //foreach(var symbol in symbols)
+    //{
+    //    NuGetPush(
+    //        symbol,
+    //        new NuGetPushSettings {
+    //            Source = nuGetSource,
+    //            ApiKey = nugetReleaseToken
+    //        }
+    //    );
+    //}
 });
 
 ///////////////////////////////////////////////////////////////////////////////
