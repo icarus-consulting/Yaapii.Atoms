@@ -27,45 +27,62 @@ using Yaapii.Atoms.Scalar;
 namespace Yaapii.Atoms.IO
 {
     /// <summary>
-    /// Temporary file.
-    /// The temporary file is deleted when the object is disposed.
+    /// An empty Temporary file that will created on first use and deleted when
+    /// the object is disposed.
     /// </summary>
-    public sealed class TempFile : IScalar<String>, IDisposable
+    public sealed class TempFile : IScalar<string>, IDisposable
     {
-        private readonly IScalar<string> _path;
+        private readonly IScalar<string> path;
 
+
+        /// <summary>
+        /// An empty Temporary file that will created on first use and deleted when
+        /// the object is disposed.
+        /// </summary>
         /// <summary>
         /// Temporary file with given extension.
         /// The temporary file is deleted when the object is disposed.
         /// </summary>
-        /// <param name="extension">The file extension for the temprary file</param>
-        public TempFile(string extension) : this(new ScalarOf<string>(() =>
-        {
-            var file = Path.GetTempFileName();
-            extension = extension.TrimStart('.');
-            var renamed = $"{file.Substring(0, file.LastIndexOf('.'))}.{extension}";
-            File.Move(file, renamed);
-            return renamed;
-        }))
+        public TempFile(string extension) : this(
+            new ScalarOf<string>(() =>
+            {
+                var file = Path.GetTempFileName();
+                extension = extension.TrimStart('.');
+                var renamed = $"{file.Substring(0, file.LastIndexOf('.'))}.{extension}";
+                File.Move(file, renamed);
+                return renamed;
+            })
+        )
         { }
 
         /// <summary>
+        /// Temporary file from <see cref="FileInfo"/>.
         /// The temporary file is deleted when the object is disposed.
         /// </summary>
-        /// <param name="file">The file</param>
-        public TempFile(FileInfo file) : this(new ScalarOf<string>(() => file.FullName))
+        public TempFile(FileInfo file) : this(
+            new ScalarOf<string>(() =>
+                {
+                    file.Create().Dispose();
+                    return file.FullName;
+                }
+            )
+        )
         { }
 
         /// <summary>
-        /// Ctor
+        /// Temporary file.
+        /// The temporary file is deleted when the object is disposed.
         /// </summary>
-        public TempFile() :
-            this(new ScalarOf<string>(() => Path.GetTempFileName()))
+        public TempFile() : this(
+            new ScalarOf<string>(() =>
+                Path.GetTempFileName()
+            )
+        )
         { }
 
         private TempFile(IScalar<string> path)
         {
-            _path = path;
+            this.path = path;
         }
 
         /// <summary>
@@ -74,7 +91,7 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         public string Value()
         {
-            return _path.Value();
+            return this.path.Value();
         }
 
         /// <summary>
@@ -82,7 +99,9 @@ namespace Yaapii.Atoms.IO
         /// </summary>
         public void Dispose()
         {
-            File.Delete(_path.Value());
+            File.Delete(
+                this.path.Value()
+            );
         }
     }
 }
