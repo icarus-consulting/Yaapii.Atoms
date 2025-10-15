@@ -270,6 +270,55 @@ Task("AssertPackages")
 });
 
 ///////////////////////////////////////////////////////////////////////////////
+// Generate NuGet Readme
+///////////////////////////////////////////////////////////////////////////////
+Task("GenerateNuGetReadme")
+.Does(() =>
+{
+    Information(Figlet("NuGet Readme"));
+
+    var originalPath =
+        MakeAbsolute(
+            File("./README.md")
+        ).FullPath;
+    var targetPath =
+        System.IO.Path.Combine(
+            buildArtifacts,
+            "README.md"
+        );
+
+    var lines = System.IO.File.ReadAllLines(originalPath);
+    var cleanedLines = new List<string>();
+    var skip = false;
+
+    foreach (var line in lines)
+    {
+        // remove badges
+        if (line.Trim().StartsWith("[!"))
+        {
+            continue;
+        }
+        // remove maintainer section
+        if (line.Trim().StartsWith("## Maintainer"))
+        {
+            skip = true;
+            continue;
+        }
+        if (skip && line.Trim().StartsWith("#"))
+        {
+            skip = false;
+        }
+        if (!skip)
+        {
+            cleanedLines.Add(line);
+        }
+    }
+
+    System.IO.File.WriteAllLines(targetPath, cleanedLines);
+
+});
+
+///////////////////////////////////////////////////////////////////////////////
 // NuGet
 ///////////////////////////////////////////////////////////////////////////////
 Task("NuGet")
@@ -278,6 +327,7 @@ Task("NuGet")
 .IsDependentOn("AssertPackages")
 .IsDependentOn("Restore")
 .IsDependentOn("Build")
+.IsDependentOn("GenerateNuGetReadme")
 .Does(() =>
 {
     Information(Figlet("NuGet"));
@@ -427,6 +477,7 @@ Task("Default")
 .IsDependentOn("GenerateCoverage")
 .IsDependentOn("UploadCoverage")
 .IsDependentOn("AssertPackages")
+.IsDependentOn("GenerateNuGetReadme")
 .IsDependentOn("NuGet")
 .IsDependentOn("NuGetFeed");
 
