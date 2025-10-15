@@ -286,7 +286,6 @@ Task("GenerateNuGetReadme")
             buildArtifacts,
             "README.md"
         );
-
     var lines = System.IO.File.ReadAllLines(originalPath);
     var cleanedLines = new List<string>();
     var skip = false;
@@ -315,7 +314,6 @@ Task("GenerateNuGetReadme")
     }
 
     System.IO.File.WriteAllLines(targetPath, cleanedLines);
-
 });
 
 ///////////////////////////////////////////////////////////////////////////////
