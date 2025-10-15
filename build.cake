@@ -367,7 +367,7 @@ Task("Credentials")
 // NuGet Feed
 ///////////////////////////////////////////////////////////////////////////////
 Task("NuGetFeed")
-.WithCriteria(() => isAppVeyor && BuildSystem.AppVeyor.Environment.Repository.Tag.IsTag)
+//.WithCriteria(() => isAppVeyor && BuildSystem.AppVeyor.Environment.Repository.Tag.IsTag)
 .IsDependentOn("NuGet")
 .IsDependentOn("Credentials")
 .Does(() => 
@@ -379,37 +379,39 @@ Task("NuGetFeed")
     {
         if (package.GetFilename().ToString().Contains(".Sources"))
         {
-            NuGetPush(
-                package,
-                new NuGetPushSettings {
-                    Source = appVeyorNuGetFeed,
-                    ApiKey = appVeyorFeedToken
-                }
-            );
+            Information($"Sources: {package.GetFilename().ToString()}");
+            //NuGetPush(
+            //    package,
+            //    new NuGetPushSettings {
+            //        Source = appVeyorNuGetFeed,
+            //        ApiKey = appVeyorFeedToken
+            //    }
+            //);
         }
         else
         {
-            NuGetPush(
-                package,
-                new NuGetPushSettings {
-                    Source = nuGetSource,
-                    ApiKey = nugetReleaseToken
-                }
-            );
+            Information($"Package: {package.GetFilename().ToString()}");
+            //NuGetPush(
+            //    package,
+            //    new NuGetPushSettings {
+            //        Source = nuGetSource,
+            //        ApiKey = nugetReleaseToken
+            //    }
+            //);
         }
     }
-    // Symbols are pushed together with the main packages
-    //var symbols = GetFiles($"{buildArtifacts.Path}/*.snupkg");
-    //foreach(var symbol in symbols)
-    //{
-    //    NuGetPush(
-    //        symbol,
-    //        new NuGetPushSettings {
-    //            Source = nuGetSource,
-    //            ApiKey = nugetReleaseToken
-    //        }
-    //    );
-    //}
+    var symbols = GetFiles($"{buildArtifacts.Path}/*.snupkg");
+    foreach(var symbol in symbols)
+    {
+        Information($"Symbol: {symbol.GetFilename().ToString()}");
+        //NuGetPush(
+        //    symbol,
+        //    new NuGetPushSettings {
+        //        Source = nuGetSource,
+        //        ApiKey = nugetReleaseToken
+        //    }
+        //);
+    }
 });
 
 ///////////////////////////////////////////////////////////////////////////////
