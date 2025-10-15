@@ -77,4 +77,13 @@
     <DebugType>portable</DebugType>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
+
+
+  <PropertyGroup>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../artifacts/README.md" Pack="true" PackagePath="" Link="Auto generated NuGet README.md" />
+  </ItemGroup>
 </Project>
