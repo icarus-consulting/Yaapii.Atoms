@@ -457,6 +457,7 @@ Task("NuGetFeed")
             new NuGetPushSettings {
                 Source = nuGetSource,
                 ApiKey = nugetReleaseToken
+                SkipDuplicate = true    // In case the symbol package has already been published by together with the main package
             }
         );
     }
