@@ -10,9 +10,6 @@ This is a .NET port of the java library [Cactoos](https://github.com/yegor256/ca
 It follows all the rules suggested in the two "[Elegant Objects](https://www.amazon.de/Elegant-Objects-Yegor-Bugayenko/dp/1519166915)" books.
 
 ## Maintainer[s]:
-<a href="https://github.com/koeeenig" style="margin-left: 5px">
-    <img src="https://avatars.githubusercontent.com/u/18014331?v=4" width="50" title="koeeenig">
-</a>
 <a href="https://github.com/mse1188" style="margin-left: 5px">
     <img src="https://avatars.githubusercontent.com/u/31698290?v=4" width="50" title="mse1188">
 </a>
