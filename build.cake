@@ -141,7 +141,6 @@ Task("Build")
 // Unit Tests
 ///////////////////////////////////////////////////////////////////////////////
 Task("UnitTests")
-.IsDependentOn("Build")
 .Does(() => 
 {
     Information(Figlet("Unit Tests"));
@@ -324,7 +323,6 @@ Task("NuGet")
 .IsDependentOn("Clean")
 .IsDependentOn("AssertPackages")
 .IsDependentOn("Restore")
-.IsDependentOn("Build")
 .IsDependentOn("GenerateNuGetReadme")
 .Does(() =>
 {
