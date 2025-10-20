@@ -106,10 +106,14 @@ Task("Build")
         new DotNetCoreBuildSettings()
         {
             Configuration = configuration,
-            NoRestore = true,
-            MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(version)
+            NoRestore = true
         };
-        var skipped = new List<string>();
+    settings.ArgumentCustomization = args =>
+        args
+        .Append($"-p:AssemblyVersion={version}")
+        .Append($"-p:FileVersion={version}");
+
+    var skipped = new List<string>();
     foreach(var module in GetSubDirectories(modules))
     {
         var name = module.GetDirectoryName();
@@ -339,10 +343,9 @@ Task("NuGet")
         args
         .Append("--include-symbols")
         .Append("-p:SymbolPackageFormat=snupkg")
-        .Append($"-p:PackageVersion={version}");
-    settings.MSBuildSettings =
-        new DotNetCoreMSBuildSettings()
-        .SetVersionPrefix(version);
+        .Append($"-p:PackageVersion={version}")
+        .Append($"-p:AssemblyVersion={version}")
+        .Append($"-p:FileVersion={version}");
 
     var settingsSources = new DotNetCorePackSettings()
     {
@@ -352,9 +355,6 @@ Task("NuGet")
         NoBuild = false,
         VersionSuffix = ""
     };
-    settingsSources.MSBuildSettings =
-        new DotNetCoreMSBuildSettings()
-        .SetVersionPrefix(version);
 
     foreach (var module in GetSubDirectories(modules))
     {
