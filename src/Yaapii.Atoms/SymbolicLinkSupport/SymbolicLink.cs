@@ -15,7 +15,7 @@ namespace SymbolicLinkSupport
         /// Flag to indicate that the reparse point is relative
         /// </summary>
         /// <remarks>
-        /// This is SYMLINK_FLAG_RELATIVE from from ntifs.h
+        /// This is SYMLINK_FLAG_RELATIVE from ntifs.h
         /// See https://msdn.microsoft.com/en-us/library/cc232006.aspx
         /// </remarks>
         private const uint symlinkReparsePointFlagRelative = 0x00000001;
