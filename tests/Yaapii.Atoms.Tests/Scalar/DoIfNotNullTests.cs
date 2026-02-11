@@ -21,7 +21,7 @@ namespace Yaapii.Atoms.Tests.Scalar
         [Fact]
         public void DeliversFallback()
         {
-            string nullValue = null;
+            string nullValue = default;
 
             Assert.Equal(
                 "fallback",
