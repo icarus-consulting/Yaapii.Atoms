@@ -22,6 +22,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Yaapii.Atoms.Scalar.Tests
@@ -58,6 +60,32 @@ namespace Yaapii.Atoms.Scalar.Tests
             lst1.Add(42);
 
             Assert.False(lst1.GetHashCode() == scalar.Value().GetHashCode(), "reload doesn't work");
+        }
+
+        [Fact]
+        public void OnlyBuildsValueOnce()
+        {
+            var count = 0;
+            var scalar =
+                new ScalarOf<int>(() =>
+                {
+                    Task.Delay(
+                        TimeSpan.FromSeconds(10)
+                    ).Wait();
+                    count++;
+                    return 0;
+                });
+
+            Parallel.For(
+                0,
+                10,
+                (i) =>
+                {
+                    scalar.Value();
+                }
+            );
+
+            Assert.Equal(1, count);
         }
     }
 }

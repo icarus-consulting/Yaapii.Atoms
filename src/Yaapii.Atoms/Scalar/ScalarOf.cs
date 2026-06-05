@@ -119,14 +119,17 @@ namespace Yaapii.Atoms.Scalar
         /// <returns>the value</returns>
         public T Value()
         {
-            if (this.filled[0] != true)
+            lock (this.cache)
             {
-                this.cache.SetValue(this.origin.Value(), 0);
-                this.filled[0] = true;
-            }
-            else if (this.shouldReload(this.cache[0]))
-            {
-                this.cache[0] = this.origin.Value();
+                if (this.filled[0] != true)
+                {
+                    this.cache.SetValue(this.origin.Value(), 0);
+                    this.filled[0] = true;
+                }
+                else if (this.shouldReload(this.cache[0]))
+                {
+                    this.cache[0] = this.origin.Value();
+                }
             }
             return this.cache[0];
         }
