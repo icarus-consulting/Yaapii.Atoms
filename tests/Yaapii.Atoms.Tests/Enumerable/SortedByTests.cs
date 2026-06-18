@@ -48,7 +48,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
             Assert.True(
                 new Text.Joined(", ",
                     new SortedBy<string, int>(
-                        s => new IntOf(s.Substring(s.Length-1)).Value(),
+                        s => new IntOf(s.Substring(s.Length - 1)).Value(),
                         IReverseCompare<int>.Default,
                         new ManyOf<string>(
                             "a2", "c3", "hello9", "dude6", "Friend7"
@@ -65,6 +65,18 @@ namespace Yaapii.Atoms.Enumerable.Tests
                     i => i,
                     new ManyOf<int>()
                 ));
+        }
+
+        [Fact]
+        public void SortsOnly()
+        {
+            var words = ManyOf.New("May", "the", "fourth", "be", "with", "you");
+            var expected = ManyOf.New("be", "May", "the", "you", "with", "fourth");
+
+            Assert.Equal(
+                expected,
+                SortedBy.New(s => s.Length, words)
+            );
         }
     }
 }
