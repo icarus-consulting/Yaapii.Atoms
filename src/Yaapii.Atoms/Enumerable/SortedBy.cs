@@ -33,7 +33,7 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class SortedBy<T, TKey> : IEnumerable<T>
         where TKey : IComparable<TKey>
     {
-        private List<T> result;
+        private readonly List<T> result;
         private readonly Func<T, TKey> subjectExtraction;
         private readonly Comparer<TKey> comparer;
         private readonly bool[] sorted;
