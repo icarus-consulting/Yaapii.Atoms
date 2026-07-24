@@ -79,6 +79,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="../../artifacts/README.md" Pack="true" PackagePath="" Link="Auto generated NuGet README.md" />
+    <None Include="../../README.md" Pack="true" PackagePath="" />
+    <None Include="../../artifacts/README.md" Link="Auto generated NuGet README.md" />
   </ItemGroup>
 </Project>
