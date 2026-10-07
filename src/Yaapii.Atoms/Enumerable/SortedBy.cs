@@ -33,9 +33,9 @@ namespace Yaapii.Atoms.Enumerable
     public sealed class SortedBy<T, TKey> : IEnumerable<T>
         where TKey : IComparable<TKey>
     {
-        private readonly IEnumerable<T> source;
-        private readonly SortedDictionary<TKey, T> map;
+        private readonly List<T> result;
         private readonly Func<T, TKey> subjectExtraction;
+        private readonly Comparer<TKey> comparer;
         private readonly bool[] sorted;
 
         /// <summary>
@@ -78,13 +78,13 @@ namespace Yaapii.Atoms.Enumerable
         /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
         /// <param name="subjectExtraction">func to swap the type to a sortable type</param>
-        /// <param name="cmp">comparer</param>
+        /// <param name="comparer">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public SortedBy(Func<T, TKey> subjectExtraction, Comparer<TKey> cmp, IEnumerable<T> src)
+        public SortedBy(Func<T, TKey> subjectExtraction, Comparer<TKey> comparer, IEnumerable<T> src)
         {
-            this.map = new SortedDictionary<TKey,T>(cmp);
+            this.result = new List<T>(src);
             this.subjectExtraction = subjectExtraction;
-            this.source = src;
+            this.comparer = comparer;
             this.sorted = new bool[1] { false };
         }
 
@@ -94,9 +94,9 @@ namespace Yaapii.Atoms.Enumerable
             {
                 this.Sort();
             }
-            foreach (var item in this.map)
+            foreach (var item in this.result)
             {
-                yield return item.Value;
+                yield return item;
             }
         }
 
@@ -112,10 +112,9 @@ namespace Yaapii.Atoms.Enumerable
 
         private void Sort()
         {
-            foreach(var item in this.source)
-            {
-                this.map[this.subjectExtraction.Invoke(item)] = item;
-            }
+            this.result.Sort((a, b) =>
+                this.comparer.Compare(subjectExtraction(a), subjectExtraction(b))
+            );
             this.sorted[0] = true;
         }
     }

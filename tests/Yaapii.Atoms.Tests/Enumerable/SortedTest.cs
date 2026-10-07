@@ -22,7 +22,6 @@
 
 using Xunit;
 using Yaapii.Atoms.Misc;
-using Yaapii.Atoms.Text;
 
 namespace Yaapii.Atoms.Enumerable.Tests
 {
@@ -66,7 +65,7 @@ namespace Yaapii.Atoms.Enumerable.Tests
                         ManyOf.New("a", "c", "hello", "dude", "Friend")
                     )
                 ).AsString() == "hello, Friend, dude, c, a",
-                "Can't sort an enumerable with a custom comparator"); ;
+                "Can't sort an enumerable with a custom comparator");
         }
 
         [Fact]
@@ -76,6 +75,18 @@ namespace Yaapii.Atoms.Enumerable.Tests
                 new Sorted<int>(
                     new ManyOf<int>()
                 )
+            );
+        }
+
+        [Fact]
+        public void SortsOnly()
+        {
+            var words = ManyOf.New("c", "a", "a", "zät");
+            var expected = ManyOf.New("a", "a", "c", "zät");
+
+            Assert.Equal(
+                expected,
+                Sorted.New(words)
             );
         }
     }
