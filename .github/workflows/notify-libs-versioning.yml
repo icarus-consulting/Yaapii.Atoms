@@ -1,0 +1,38 @@
+name: notify-libs-versioning
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  notify:
+    if: github.event.pull_request.merged == true
+
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: Create GitHub App token
+          id: app-token
+          uses: actions/create-github-app-token@v1
+          with:
+            app-id: ${{ secrets.CI_BOT_APP_ID }}
+            private-key: ${{ secrets.CI_BOT_PRIVATE_KEY }}
+            owner: icarus-consulting
+            repositories: Libs.Versioning
+          
+        - name: Dispatch event
+          uses: peter-evans/repository-dispatch@v3
+          with:
+            token: ${{ steps.app-token.outputs.token }}
+            repository: icarus-consulting/Libs.Versioning
+            event-type: submodule-pr-merged
+            client-payload: >-
+             {
+               "repo": "${{ github.repository }}",
+               "pr_number": "${{ github.event.pull_request.number }}",
+               "title": ${{ toJson(github.event.pull_request.title) }},
+               "url": "${{ github.event.pull_request.html_url }}",
+               "author": "${{ github.event.pull_request.user.login }}",
+               "labels": ${{ toJson(github.event.pull_request.labels.*.name) }}
+             }
